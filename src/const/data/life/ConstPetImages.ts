@@ -2,7 +2,7 @@
  * 펫 성장 단계별 이미지 — PET_STAGES 와 같은 순서.
  * 데이터 파일(ConstLifeRewards)은 node 테스트에서도 읽으므로 이미지 require 는 여기 따로 둔다.
  *
- * 앱 아이콘의 판다 캐릭터가 초보 학습자에서 한자 대가로 성장한다.
+ * 앱 아이콘의 사자 캐릭터가 초보 학습자에서 세계사 대가로 성장한다.
  */
 export const PET_STAGE_IMAGES: number[] = [
 	require('@/src/assets/illustrations/panda-stage-1.webp'),

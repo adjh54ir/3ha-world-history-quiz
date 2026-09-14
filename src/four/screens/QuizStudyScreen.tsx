@@ -227,7 +227,7 @@ const QuizStudyScreen = () => {
 	};
 
 	const completionImages = FourImages.screen_fox_study_complete;
-	/** 복습은 축하가 아니다 — 트로피 대신 책을 든 판다로 다시 공부하는 상태를 보여 준다 */
+	/** 복습은 축하가 아니다 — 트로피 대신 책을 든 사자로 다시 공부하는 상태를 보여 준다 */
 	const reviewImage = FourImages.screen_fox_review_start;
 
 	const [isLoading, setIsLoading] = useState(true);

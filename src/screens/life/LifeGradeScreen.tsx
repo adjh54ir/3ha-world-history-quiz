@@ -54,7 +54,7 @@ const LifeGradeScreen = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['left', 'right']}>
-			<LifeHeader title="등급" subtitle="경험치를 모아 한자 판다를 키워요" showBack onPressGuide={guide.open} />
+			<LifeHeader title="등급" subtitle="경험치를 모아 역사 사자를 키워요" showBack onPressGuide={guide.open} />
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" onScrollBeginDrag={Keyboard.dismiss}>
 				<Animated.View style={[styles.stack, enterStyle]}>
 					{/* 지금 등급 */}
@@ -189,7 +189,7 @@ const LifeGradeScreen = () => {
 
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
 			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'경험치를 모으면 한자 판다가 다음 단계로 자라요.',
+				'경험치를 모으면 역사 사자가 다음 단계로 자라요.',
 				'학습·퀴즈·출석·챌린지 모두 경험치가 돼요.',
 				'경험치는 줄지 않으니 등급이 내려갈 일은 없어요.',
 			]} />

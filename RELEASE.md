@@ -257,7 +257,7 @@ ios/LifeHanja/GoogleService-Info.plist
 |---|---|---|
 | 앱 아이콘 | `assets/icon.png` | iOS 1024×1024 알파 없음 필요. Android 도 같은 파일 사용 |
 | Android 적응형 아이콘 | `assets/adaptive-icon.png` (foreground) | 배경색 `#1249C9` (`app.json`) |
-| 네이티브 스플래시 | `src/assets/illustrations/panda-avatar.png` | `expo-splash-screen` 플러그인, 폭 220, 배경 `#1249C9` |
+| 네이티브 스플래시 | `assets/icon.png` | `expo-splash-screen` 플러그인, 폭 220, 배경 `#1249C9` |
 | 커스텀 스플래시 | `src/screens/common/AnimatedSplash.tsx` | JS 로 그리는 연출 |
 | 웹 파비콘 | `assets/favicon.png` | 스토어 무관 |
 

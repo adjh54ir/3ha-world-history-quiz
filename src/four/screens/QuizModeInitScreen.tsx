@@ -76,7 +76,7 @@ import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from './c
 const QuizModeInitScreen = () => {
 	const navigation = useNavigation();
 	const [accordionOpen, setAccordionOpen] = useState(false);
-	/** 홈과 같은 캐릭터·펫을 세운다 — 키우던 판다와 출석 수호신이 퀴즈 앞까지 따라온다 */
+	/** 홈과 같은 캐릭터·펫을 세운다 — 키우던 사자와 출석 수호신이 퀴즈 앞까지 따라온다 */
 	const pet = usePet();
 	const attendancePet = useAttendancePet();
 	const guide = useCharacterGuideOnce('quiz-mode-init');

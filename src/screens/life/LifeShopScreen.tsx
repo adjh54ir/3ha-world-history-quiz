@@ -138,9 +138,9 @@ const SHOP_ITEM_TABS: Record<string, ItemTabKey> = {
  * 상점 — 헤더의 코인 칩을 누르면 열린다.
  * -------------------------------------------------
  * 코인이 쌓이기만 하면 모을 이유가 사라진다. 출석·퀴즈·복습·성장·뽑기·꾸미기에 골고루 쓸 수 있게 둔다.
- * 캐릭터(판다)는 경험치로 자라고, 펫(청룡)은 먹이로 자란다 — 파는 물건도 그 둘로 나뉜다.
+ * 캐릭터(사자)는 경험치로 자라고, 펫(청룡)은 먹이로 자란다 — 파는 물건도 그 둘로 나뉜다.
  * 1) 스트릭 보호권 : 하루 결석을 막는다 (출석 스트릭 보험)
- * 2) 캐릭터 간식   : 코인을 경험치로 바꿔 판다 성장을 앞당긴다
+ * 2) 캐릭터 간식   : 코인을 경험치로 바꿔 사자 성장을 앞당긴다
  * 3) 행운의 상자   : 값보다 기대값이 낮은 대신 크게 터질 수 있는 소모처
  * 4) 화면 꾸미기   : 글방·칭호·좌대·액자·카드 테·낙관을 화면 제자리에 놓는다 (영구 보유)
  */
@@ -1111,7 +1111,7 @@ const LifeShopScreen = () => {
 			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} characterImage={SHOPKEEPER_IMAGE} title="뿔 사장의 상점 안내" accent={Colors.accentAmber} lines={[
 				'어서 와요! 한자 상회를 맡고 있는 코뿔소, 뿔 사장이에요.',
 				'보호권은 출석 스트릭을 지켜 주고, 간식은 코인을 캐릭터 경험치로 바꿔 줘요.',
-				'캐릭터는 판다, 펫은 청룡이에요. 간식은 판다를, 먹이는 청룡을 키워요!',
+				'캐릭터는 사자, 펫은 청룡이에요. 간식은 사자를, 먹이는 청룡을 키워요!',
 				'꾸미기 탭에는 글방·칭호·좌대·액자·카드 테·낙관이 있어요. 캐릭터에 입히지 않고 화면에 놓여요!',
 			]} />
 		</SafeAreaView>
@@ -1122,7 +1122,7 @@ const LifeShopScreen = () => {
  * 꾸미기 미리보기 — 지금 적용 중인 여섯 갈래를 한 장에 모아 세운다.
  * -------------------------------------------------
  * 꾸미기는 홈·나의 활동·학습 카드·출석 도장에 흩어져 붙는다. 사고 나서 해당 화면까지 가 봐야
- * 어떻게 보이는지 알 수 있었다. 상점 안에서 캐릭터(판다)와 펫(청룡)에 적용된 모습을 그대로 보여 준다.
+ * 어떻게 보이는지 알 수 있었다. 상점 안에서 캐릭터(사자)와 펫(청룡)에 적용된 모습을 그대로 보여 준다.
  *
  * @param preview 아직 안 산 꾸미기를 잠깐 덧씌워 본다 — 저장된 값은 그대로 두고 이 판에서만 바뀐다
  * @param compact 사장 대화 카드 안에 들어갈 때 — 무대를 줄이고 설명 줄을 뺀다
@@ -1158,7 +1158,7 @@ const DecorPreviewStage = ({ compact, focus }: { compact: boolean; focus?: LifeT
 	const showSeal = !focus || focus === 'seal';
 
 	// 대화 카드 안에서는 무대를 한 뼘 줄인다 — 말풍선과 버튼이 같이 들어가야 한다
-	const pandaSize = scaleWidth(compact ? 74 : 92);
+	const mascotSize = scaleWidth(compact ? 74 : 92);
 	const dragonSize = scaleWidth(compact ? 58 : 70);
 	const roomSize = { width: scaleWidth(compact ? 196 : 232), height: scaleWidth(compact ? 88 : 104) };
 
@@ -1169,7 +1169,7 @@ const DecorPreviewStage = ({ compact, focus }: { compact: boolean; focus?: LifeT
 				<View style={[styles.previewStageRow, compact && styles.previewStageRowCompact, { height: roomSize.height }]}>
 					{/* 글방 — 사 둔 사람에게만 캐릭터 뒤에 깔린다 */}
 					<StudyRoomBackdrop width={roomSize.width} height={roomSize.height} />
-					<PetAvatar size={pandaSize} plate={false} animated={false} />
+					<PetAvatar size={mascotSize} plate={false} animated={false} />
 					<View style={styles.previewPet}>
 						<View style={styles.previewPerch} pointerEvents="none">
 							<PetPerch size={dragonSize * 0.94} />
@@ -1621,8 +1621,8 @@ const createStyles = (Colors: Palette) =>
 		},
 		// 대화 카드 안에 들어갈 때 — 좌우 여백을 줄여 말풍선·버튼과 같이 들어간다
 		previewBoxCompact: { paddingVertical: SpacingV.md, paddingHorizontal: Spacing.md, gap: SpacingV.xs },
-		// 판다와 청룡이 나란히 선다 — 글방은 그 뒤에 깔린다
-		// 둘 사이 간격은 md 로 둔다 — sm 이면 판다 팔과 청룡 꼬리가 붙어 보였다
+		// 사자와 청룡이 나란히 선다 — 글방은 그 뒤에 깔린다
+		// 둘 사이 간격은 md 로 둔다 — sm 이면 사자 팔과 청룡 꼬리가 붙어 보였다
 		previewStageRow: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: Spacing.md },
 		previewStageRowCompact: { gap: Spacing.sm },
 		previewPet: { alignItems: 'center', justifyContent: 'flex-end' },

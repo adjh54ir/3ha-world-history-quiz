@@ -144,7 +144,7 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 								]}
 							/>
 						</View>
-						{/* 축하하는 판다 — 메달 옆에 붙어 "누가 준 상인지"를 만든다 */}
+						{/* 축하하는 사자 — 메달 옆에 붙어 "누가 준 상인지"를 만든다 */}
 						<Image source={BADGE_MASCOT} style={styles.mascot} contentFit="contain" accessible={false} />
 					</View>
 

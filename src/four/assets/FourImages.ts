@@ -37,7 +37,7 @@ const study = [
 	require('@/src/assets/illustrations/hanja-situation-22.webp'),
 ];
 
-/** 등급 마스코트 — 판다가 자라는 여섯 단계 */
+/** 등급 마스코트 — 사자가 자라는 여섯 단계 */
 const stage = [
 	require('@/src/assets/illustrations/panda-stage-1.webp'),
 	require('@/src/assets/illustrations/panda-stage-2.webp'),

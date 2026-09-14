@@ -191,7 +191,7 @@ const QuizResultScreen = () => {
 	const isFocused = useIsFocused();
 	const scrollRef = useRef<ScrollView>(null);
 	const [refreshing, setRefreshing] = useState(false);
-	// 등급·캐릭터는 앱 본체(판다)의 것을 그대로 쓴다 — 이식 화면이 들고 있던 별도 등급표는 쓰지 않는다
+	// 등급·캐릭터는 앱 본체(사자)의 것을 그대로 쓴다 — 이식 화면이 들고 있던 별도 등급표는 쓰지 않는다
 	const pet = usePet();
 	const attendancePet = useAttendancePet();
 	/**

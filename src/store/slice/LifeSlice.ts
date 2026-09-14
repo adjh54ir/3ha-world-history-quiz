@@ -166,7 +166,7 @@ const initialState: LifeState = {
 	graduatedCount: 0,
 	bestTime: 0,
 	bestTower: 0,
-	petName: '한자 판다',
+	petName: '역사 사자',
 	reminder: { enabled: false, hour: 20, minute: 0 },
 	strokeAnim: true,
 	petFeeds: 0,

@@ -1,9 +1,9 @@
 /**
- * 화면 사용법을 판다가 말풍선으로 알려 주는 공통 안내
+ * 화면 사용법을 사자가 말풍선으로 알려 주는 공통 안내
  * -------------------------------------------------
  * 이식 화면(src/four)의 CharacterGuide 를 life 화면 규격으로 옮긴 것이다.
  * - 노출 기록(1회만 보여주기)은 이식 화면과 같은 저장소 키를 쓴다 — 초기화 한 번으로 둘 다 지워지도록 훅을 그대로 가져다 쓴다.
- * - 캐릭터는 지금 앱이 쓰는 펫(성장 단계 판다)을 그대로 세운다.
+ * - 캐릭터는 지금 앱이 쓰는 펫(성장 단계 사자)을 그대로 세운다.
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -43,7 +43,7 @@ export const LifeGuideButton = ({ onPress, color, size = 20 }: { onPress: () => 
 
 interface Props {
 	visible: boolean;
-	/** 판다가 순서대로 말할 문장들. 탭하면 다음 문장으로 넘어간다 */
+	/** 사자가 순서대로 말할 문장들. 탭하면 다음 문장으로 넘어간다 */
 	lines: string[];
 	onClose: () => void;
 	/** 말풍선 상단 라벨 */
@@ -52,12 +52,12 @@ interface Props {
 	accent?: string;
 	/** 마지막 문장에서 누를 버튼 문구 */
 	confirmLabel?: string;
-	/** 화면 고유 안내 캐릭터. 생략하면 현재 판다를 표시한다. */
+	/** 화면 고유 안내 캐릭터. 생략하면 현재 사자를 표시한다. */
 	characterImage?: number;
 }
 
 /**
- * 판다가 아래에서 올라와 화면 사용법을 한 문장씩 말한다.
+ * 사자가 아래에서 올라와 화면 사용법을 한 문장씩 말한다.
  * - 탭하면 다음 문장, 마지막에서 닫힌다. 타이핑 중에 탭하면 문장을 한 번에 다 보여준다.
  * - 1회만 노출하려면 useCharacterGuideOnce 와 함께 쓴다.
  */
@@ -168,7 +168,7 @@ const LifeCharacterGuide = ({ visible, lines, onClose, title = '이렇게 써보
 							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : tone }]}>{isLast ? confirmLabel : '다음'}</Text>
 							<IconComponent type="materialIcons" name={isLast ? 'check' : 'arrow-forward'} size={15} color={isLast ? Colors.textInverse : tone} />
 						</TouchableOpacity>
-						{/* 말풍선 꼬리 — 아래 판다를 향한다 */}
+						{/* 말풍선 꼬리 — 아래 사자를 향한다 */}
 						<View style={[styles.tail, { borderTopColor: Colors.surface }]} />
 						<View style={[styles.tailBorder, { borderTopColor: `${tone}55` }]} />
 					</View>
