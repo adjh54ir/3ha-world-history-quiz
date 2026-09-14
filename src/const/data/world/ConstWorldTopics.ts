@@ -55,7 +55,6 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		modes: [
 			{ key: 'roman', label: '로마 이름', question: '이 신의 로마식 이름은?', ask: 'name', answer: 'roman' },
 			{ key: 'domain', label: '무엇을 맡았나', question: '이 인물이 맡은 자리는?', ask: 'name', answer: 'domain' },
-			// 그림이 있는 항목은 58개뿐이다. 나머지는 이 모드에서 그냥 빠진다 (문제 생성기가 접는다)
 			{ key: 'portrait', label: '그림 맞히기', question: '그림 속 인물은?', ask: 'image', answer: 'name', askAs: 'myth' },
 			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 인물은?', ask: 'summary', answer: 'name' },
 		],

@@ -57,7 +57,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./src/assets/illustrations/panda-avatar.png",
+          "image": "./assets/icon.png",
           "imageWidth": 220,
           "resizeMode": "contain",
           "backgroundColor": "#1249C9"

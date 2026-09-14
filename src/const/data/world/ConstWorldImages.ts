@@ -9,8 +9,7 @@ import { selectPlanetImage } from './ConstPlanetImages';
  * 주제마다 그림 열쇠가 되는 필드가 다르고(수도는 국가 코드, 신화·태양계는 영문 이름) 그림 묶음도 따로다.
  * 화면마다 이 대응표를 다시 쓰면 한 군데만 고치고 다른 데를 잊는다.
  *
- * 그림이 없는 항목이 섞여 있는 것은 정상이다 (신화 90개 중 58개, 태양계 20개 중 9개).
- * 없으면 undefined 를 주고, 화면은 그 자리를 비워 둔다.
+ * 신화와 태양계는 모든 항목에 그림이 있으며, 없으면 undefined 를 주고 화면은 그 자리를 비워 둔다.
  */
 const SOURCES: Partial<Record<WorldType.TopicKey, { field: string; pick: (code: string) => number | undefined }>> = {
 	capital: { field: 'code', pick: selectFlag },

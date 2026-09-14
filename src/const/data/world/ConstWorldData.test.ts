@@ -151,7 +151,10 @@ test('그림이 붙은 항목마다 파일과 require 가 다 있다', () => {
 				fs.existsSync(new URL(`../../../assets/${source.dir}/${code}.webp`, import.meta.url)),
 				`${entry.id} 의 그림(${source.dir}/${code}.webp)이 없다`,
 			);
-			assert.ok(module.includes(`\n\t${code}: require(`), `${entry.id} 의 그림(${code})이 ${source.module} 에 빠져 있다`);
+			assert.ok(
+				module.includes(`require('@/src/assets/${source.dir}/${code}.webp')`),
+				`${entry.id} 의 그림(${code})이 ${source.module} 에 빠져 있다`,
+			);
 		});
 		assert.ok(counted > 0, `${key} 주제에 그림이 붙은 항목이 하나도 없다`);
 	});
