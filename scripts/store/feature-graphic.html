@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>한자 급수 퀴즈 · Play 스토어 그래픽 이미지 (1024 x 500)</title>
+<style>
+	/*
+	 * 구글 플레이 그래픽 이미지(Feature graphic) — 정확히 1024 x 500 로 렌더한다.
+	 * 렌더 방법은 scripts/store/README.md 참고 (헤드리스 크롬 스크린샷).
+	 *
+	 * 안전 영역: 플레이 콘솔이 기기에 따라 좌우를 잘라 보여 주는 경우가 있어
+	 * 글자와 버튼은 가장자리에서 최소 64px 안쪽에 둔다. (장식은 넘어가도 된다)
+	 */
+	* { box-sizing: border-box; margin: 0; padding: 0; }
+
+	:root {
+		--ink: #0C2118;          /* 가장 짙은 배경 */
+		--ink-2: #173927;        /* 배경 그라디언트 끝 */
+		--sage: #CBE0C6;         /* 본문 글자 (연한 세이지) */
+		--sage-dim: #97B896;     /* 보조 글자 */
+		--brand: #22C55E;        /* 앱 메인 그린 — CTA */
+		--brand-lite: #34E37A;
+		--brand-deep: #147A3B;
+		--line: rgba(203, 224, 198, 0.18);
+		--char-bg: #B4CEAC;      /* 캐릭터 아트워크의 배경 초록 */
+	}
+
+	html, body { width: 1024px; height: 500px; }
+
+	body {
+		background: var(--ink);
+		font-family: 'Apple SD Gothic Neo', -apple-system, 'Noto Sans KR', sans-serif;
+		-webkit-font-smoothing: antialiased;
+		overflow: hidden;
+	}
+
+	.canvas {
+		position: relative;
+		width: 1024px;
+		height: 500px;
+		background:
+			radial-gradient(760px 520px at 78% 46%, rgba(34, 197, 94, 0.26), transparent 62%),
+			radial-gradient(620px 420px at 2% 96%, rgba(34, 197, 94, 0.13), transparent 62%),
+			linear-gradient(135deg, var(--ink) 0%, var(--ink-2) 100%);
+		overflow: hidden;
+	}
+
+	/* ---------------- 왼쪽: 이름 · 강점 · 다운로드 ---------------- */
+	.copy {
+		position: absolute;
+		left: 64px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 524px;
+	}
+
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		height: 32px;
+		padding: 0 14px;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		background: rgba(203, 224, 198, 0.07);
+		color: var(--sage);
+		font-size: 14.5px;
+		font-weight: 600;
+		letter-spacing: -0.3px;
+		white-space: nowrap;
+	}
+	.eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+
+	.title {
+		margin-top: 16px;
+		font-size: 70px;
+		font-weight: 800;
+		line-height: 1.04;
+		letter-spacing: -3px;
+		color: #FFFFFF;
+		white-space: nowrap;
+	}
+	.title em { font-style: normal; color: var(--brand-lite); }
+
+	.sub {
+		margin-top: 13px;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 1.45;
+		letter-spacing: -0.7px;
+		color: var(--sage);
+	}
+	.sub b { color: #FFFFFF; font-weight: 800; }
+
+	.chips { display: flex; gap: 7px; margin-top: 20px; }
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		height: 34px;
+		padding: 0 12px;
+		border: 1px solid var(--line);
+		border-radius: 10px;
+		background: rgba(203, 224, 198, 0.06);
+		color: var(--sage);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: -0.4px;
+		white-space: nowrap;
+	}
+	.chip .tick { color: var(--brand); font-size: 11px; }
+
+	/* 스토어에서 바로 받는 느낌 — 앱 메인 그린 버튼 */
+	.cta-row { display: flex; align-items: center; gap: 14px; margin-top: 26px; }
+
+	.cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 11px;
+		height: 58px;
+		padding: 0 24px;
+		border-radius: 15px;
+		background: linear-gradient(180deg, var(--brand-lite) 0%, var(--brand) 55%, var(--brand-deep) 100%);
+		box-shadow: 0 12px 28px rgba(34, 197, 94, 0.34);
+		color: #052A13;
+		font-size: 20px;
+		font-weight: 800;
+		letter-spacing: -0.7px;
+		white-space: nowrap;
+	}
+	/* 구글 공식 배지는 넣을 수 없어, 재생 삼각형만 CSS 로 그려 같은 느낌을 낸다 */
+	.cta .play {
+		width: 0;
+		height: 0;
+		border-left: 15px solid #052A13;
+		border-top: 9px solid transparent;
+		border-bottom: 9px solid transparent;
+	}
+
+	.cta-note {
+		color: var(--sage-dim);
+		font-size: 14.5px;
+		font-weight: 600;
+		line-height: 1.4;
+		letter-spacing: -0.4px;
+	}
+	.cta-note b { display: block; color: var(--sage); font-weight: 700; }
+
+	/* ---------------- 오른쪽: 캐릭터 ---------------- */
+	.art {
+		position: absolute;
+		right: 30px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 400px;
+		height: 400px;
+	}
+
+	/* 캐릭터 뒤에 깔리는 초록 후광 — 원형 테두리와 배경 사이를 부드럽게 잇는다 */
+	.art::before {
+		content: '';
+		position: absolute;
+		left: -46px;
+		top: -46px;
+		width: 492px;
+		height: 492px;
+		border-radius: 50%;
+		background: radial-gradient(circle, rgba(34, 197, 94, 0.22) 0%, rgba(34, 197, 94, 0) 68%);
+	}
+
+	.portrait {
+		position: absolute;
+		left: 22px;
+		top: 0;
+		width: 356px;
+		height: 356px;
+		border-radius: 50%;
+		border: 3px solid rgba(52, 227, 122, 0.5);
+		background: var(--char-bg);
+		overflow: hidden;
+		box-shadow: 0 24px 56px rgba(0, 0, 0, 0.46);
+	}
+	.portrait img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 46%;
+		transform: scale(1.14);
+		display: block;
+	}
+
+	/* 캐릭터 주변에 뜬 한자 카드 — 무엇을 푸는 앱인지 한눈에 */
+	.card {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 3px;
+		width: 88px;
+		height: 88px;
+		border-radius: 22px;
+		background: linear-gradient(180deg, #FFFFFF 0%, #EAF3E7 100%);
+		box-shadow: 0 14px 30px rgba(0, 0, 0, 0.36);
+	}
+	.card .han { font-size: 39px; font-weight: 700; line-height: 1; color: #14331E; }
+	.card .read { font-size: 11.5px; font-weight: 700; letter-spacing: -0.3px; color: #4B7A57; }
+
+	.card-a { left: 0; top: 14px; transform: rotate(-9deg); }
+	.card-b { right: 0; top: 170px; transform: rotate(8deg); }
+
+	/* 수치 하나는 글 백 줄보다 세다 */
+	.stat {
+		position: absolute;
+		left: 26px;
+		right: 26px;
+		bottom: 8px;
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		gap: 9px;
+		height: 52px;
+		border: 1px solid rgba(34, 197, 94, 0.42);
+		border-radius: 16px;
+		background: rgba(8, 28, 18, 0.9);
+	}
+	.stat .num { font-size: 26px; font-weight: 800; line-height: 1; color: var(--brand-lite); letter-spacing: -1px; }
+	.stat .cap { font-size: 13px; font-weight: 600; color: var(--sage-dim); letter-spacing: -0.4px; }
+</style>
+</head>
+<body>
+	<div class="canvas">
+		<div class="copy">
+			<span class="eyebrow"><i class="dot"></i>한국어문회 · 한자교육진흥회 급수 대비</span>
+
+			<h1 class="title">한자 <em>급수</em> 퀴즈</h1>
+
+			<p class="sub">급수별 배정한자 <b>6,182자</b>를<br />훈음 · 부수 · 총획 퀴즈로 익힌다</p>
+
+			<div class="chips">
+				<span class="chip"><i class="tick">●</i>8급 ~ 특급 전 급수</span>
+				<span class="chip"><i class="tick">●</i>모의고사 · 오답 복습</span>
+				<span class="chip"><i class="tick">●</i>획순 애니메이션</span>
+			</div>
+
+			<div class="cta-row">
+				<span class="cta"><i class="play"></i>Google Play 에서 받기</span>
+				<span class="cta-note"><b>무료 설치</b>지금 바로 시작</span>
+			</div>
+		</div>
+
+		<div class="art">
+			<div class="portrait">
+				<img src="../../src/assets/mainIcon.webp" alt="" />
+			</div>
+
+			<div class="card card-a"><span class="han">漢</span><span class="read">한나라 한</span></div>
+			<div class="card card-b"><span class="han">字</span><span class="read">글자 자</span></div>
+
+			<div class="stat">
+				<span class="num">6,182자</span>
+				<span class="cap">급수별 배정한자 전부 수록</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

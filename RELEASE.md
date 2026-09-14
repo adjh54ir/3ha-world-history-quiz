@@ -1,1009 +1,425 @@
-# 출시 가이드 — 한국어 상식 퀴즈 (Google Play · App Store 통합)
+# 생활한자 퀴즈 — 스토어 출시 매뉴얼 (Google Play / App Store)
 
-이 문서 하나로 양대 스토어 출시에 필요한 모든 값·절차·점검 항목을 다룹니다.
-기존 `STORE_ANDROID.md` / `STORE_IOS.md` / `IAP_SETUP.md` / `RELEASE_CHECKLIST.md` / `fastlane.md` 를 통합한 문서입니다.
+> 이 저장소의 실제 코드·설정을 읽어서 정리한 출시 문서입니다.
+> 문구(메타데이터)의 **원본**은 `fastlane/metadata/` 이고, 이 문서는 그 값과 출시 절차·정책 답변안을 함께 담습니다.
+> 자동화 레인 상세는 `fastlane.md` · `fastlane/README.md` 참고.
 
-- 앱 이름: **한국어 상식 퀴즈**
-- 패키지 / 번들 ID: `com.tha.koreaquiz` (Android·iOS 동일)
-- 버전: `1.0.0` — 단일 출처는 `app.json`의 `expo.version`
-- 수록 문항(내부 기준): 메인 10,896 · 서브 퀴즈 428 = **11,324** — 근거는 1-2
-  (스토어 문구에서는 총량을 헤드라인으로 쓰지 않습니다. 1-2 하단 참고)
-- 문의 · 지원 이메일: `adjh54ir@gmail.com`
-- 저작권 표기: `2026 EcodeLab`
-- 문서 최종 검증일: **2026-08-15** (코드·설정 실측 기준)
+작성 기준일: 2026-09-11 / 기준: `main` 브랜치 현재 워킹트리
 
 ---
 
-## 0. 프로젝트 식별 정보 (콘솔 등록 시 그대로 사용)
+## 0. 지금 바로 고쳐야 하는 것 (출시 차단 항목)
+
+| # | 문제 | 위치 | 조치 |
+|---|---|---|---|
+| 1 | **EAS 프로젝트 ID·OTA URL 이 다른 앱(한픽)과 동일** — `4125cad1-b423-4398-9683-d676ee94bbf0` 은 `3ha-hanpick/app.json` 과 같은 값입니다. 이대로 OTA 를 올리면 두 앱이 같은 채널을 공유합니다 | `app.json` `extra.eas.projectId`, `updates.url` | `eas init` 으로 생활한자 전용 프로젝트를 만들고 두 값 교체 |
+| 2 | **App Store Connect App ID 가 한픽 값** — `6785401301` 은 한픽의 앱 ID | `eas.json` `submit.production.ios.ascAppId` | App Store Connect 에 생활한자 앱 생성 후 새 ID 로 교체 |
+| 3 | **AdMob App ID 가 한픽과 동일** — `~3451831828`(Android) / `~9825668482`(iOS) 가 `3ha-hanpick/app.json` 과 같은 값 | `app.json` plugins + 최하단 `react-native-google-mobile-ads` 블록, iOS `Info.plist` `GADApplicationIdentifier` | AdMob 콘솔에서 생활한자 앱을 등록하고 App ID·광고 단위 ID 전부 교체 |
+| 4 | **키스토어·서비스 계정 키가 git 에 커밋되어 있음** | `android/app/release.keystore`, `android/gradle.properties`(비밀번호 평문), `credentials/google-service-account.json`, `.env`, `.env.production`, `GoogleService-Info.plist` | §5.3 보안 경고 참고 |
+| 5 | **개인정보처리방침 URL 없음** — 두 스토어 모두 필수 | 문서 원문은 `term/LifeHanja.tsx` 에 있으나 웹에 게시되지 않음 | 웹에 게시 후 §9·§10 에 기입 |
+| 6 | 스토어 리뷰 링크 무동작 — `.env` 의 스토어 URL 이 빈 값이고 `.env.production` 에는 키 자체가 없음 | `.env:8-9`, `.env.production`, `src/const/EnvCompat.ts:20-21`, `src/screens/life/LifeSettingScreen.tsx:365` | 스토어 등록 후 `EXPO_PUBLIC_APP_STORE_URL`, `EXPO_PUBLIC_GOOGLE_PLAY_STORE_URL` 채우기 |
+| 7 | 스토어 메타데이터 본문이 **한픽 문구 그대로** — 급수 시험·어문회·모의고사 이야기라 이 앱과 맞지 않음 | `fastlane/metadata/ko/*`, `fastlane/metadata/android/ko-KR/*`, `STORE_LISTING.md` | 생활한자 기준으로 재작성 (§6) |
+| 8 | 앱 내 약관 화면이 구버전 문구 | `src/screens/modal/SettingModal.tsx` | `term/LifeHanja.tsx` 내용으로 교체 |
+| 9 | 스크린샷 0장 (`fastlane/screenshots` 디렉터리 없음) | — | §8 규격대로 촬영 |
+| 10 | Play changelog 가 `changelogs/2.txt` 뿐 — 현재 versionCode 는 3 | `fastlane/metadata/android/ko-KR/changelogs/` | `3.txt` 추가 |
+
+---
+
+## 1. 앱 기본 식별 정보
 
 | 항목 | 값 | 출처 |
-| --- | --- | --- |
-| Expo slug | `3ha-korean-quiz` | `app.json` |
-| Expo owner | `ecodelab` | `app.json` |
-| EAS projectId | `4125cad1-b423-4398-9683-d676ee94bbf0` | `app.json > extra.eas` |
-| EAS Update URL | `https://u.expo.dev/4125cad1-b423-4398-9683-d676ee94bbf0` | `app.json > updates` |
-| runtimeVersion | `1.0.0` | `app.json` |
-| Apple ID (제출 계정) | `adjh54@naver.com` | `eas.json > submit.production.ios` |
-| App Store Connect App ID | `6785401301` | `eas.json` |
-| Apple Team ID | `XH6C349554` | `eas.json`, Xcode `DEVELOPMENT_TEAM` |
-| iOS 최소 지원 버전 | iOS 15.1 | `IPHONEOS_DEPLOYMENT_TARGET` |
-| iOS MARKETING_VERSION / BUILD | `1.0.0` / `1` | Xcode 프로젝트 |
-| Android applicationId | `com.tha.koreaquiz` | `android/app/build.gradle` |
-| Android versionName / versionCode | `1.0.0` / `1` | `android/app/build.gradle` |
-| 버전 코드·빌드 번호 관리 | EAS `appVersionSource: remote` + production `autoIncrement: true` | `eas.json` |
-| Play 서비스 계정 키 | `./credentials/google-service-account.json` | `eas.json > submit` |
-| Play 제출 트랙 | production (`releaseStatus: draft`), preview는 internal | `eas.json > submit` |
-| 지원 언어 | 한국어 `ko` · 영어 `en` · 프랑스어 `fr` | `locales/` |
-| 신규 아키텍처 / Hermes | `newArchEnabled=true`, `hermesEnabled=true` | `android/gradle.properties` |
-| Expo / RN / React | `expo ~55.0.26`, `react-native 0.83.6`, `react 19.2.0` | `package.json` |
-| 환경변수 파일 | `.env`(광고·Supabase·IAP 키 전부) / `.env.production`(`APP_MODE`, `API_URL`만) | 저장소 루트 |
-| 환경변수 접근 | `@env` → `src/const/EnvCompat.ts` 별칭 (`babel.config.js`) | `babel.config.js:13` |
-| 실제 노출 광고 | AdMob 상단 배너 1종 (전면·보상형·앱오프닝·네이티브 컴포넌트는 미사용) | `AppLayout.tsx:100` |
-| 백엔드 | Supabase (랭킹 · 구매 소유권 · 학습 백업) | `supabase/*.sql` |
+|---|---|---|
+| 표시 이름 | 생활한자 퀴즈 | `app.json` `expo.name`, iOS `CFBundleDisplayName` |
+| 스토어 등록명 (iOS) | 생활한자 퀴즈 | `fastlane/metadata/ko/name.txt` |
+| 스토어 등록명 (Play) | `한픽: 한자 급수 퀴즈` ⚠️ 이전 앱 값 | `fastlane/metadata/android/ko-KR/title.txt` |
+| iOS Bundle ID | `com.tha.lifehanja` | `app.json`, `project.pbxproj:495` |
+| Android package | `com.tha.lifehanja` | `app.json`, `build.gradle:92` |
+| Apple Team ID | `XH6C349554` | `eas.json`, `project.pbxproj:474` |
+| App Store Connect App ID | `6785401301` ⚠️ 한픽 값 | `eas.json` submit.production.ios.ascAppId |
+| Apple 계정 | `adjh54@naver.com` | `eas.json` |
+| EAS project ID | `4125cad1-b423-4398-9683-d676ee94bbf0` ⚠️ 한픽과 동일 | `app.json` extra.eas |
+| EAS owner | `ecodelab` | `app.json` |
+| Xcode workspace / scheme | `ios/LifeHanja.xcworkspace` / `LifeHanja` | `fastlane/Fastfile:11-12` |
+| URL scheme | `lifehanja` | `app.json` |
+| 카테고리 | 교육 (Education) | 스토어 설정 |
+| 가격 | 무료 (광고 포함, 인앱 결제 없음) | — |
 
-> ⚠️ **버전 관리 이중화 주의** — `android/app/build.gradle`의 `versionCode 1`은 고정값이고,
-> EAS production 프로필은 `autoIncrement`로 원격 버전을 올립니다. 로컬 Gradle 빌드(`yarn build:aab`)로
-> AAB를 만들면 versionCode가 항상 1이라 Play 업로드가 거부됩니다. 스토어 제출용은 EAS(`yarn deploy:android`)
-> 또는 `yarn fl:and:bumpcode` 후 빌드하세요.
+### 버전 현황
 
-### 서명 (Android)
+| 위치 | 버전 | 빌드 |
+|---|---|---|
+| `app.json` | **키 없음** (`expo.version` 미정의) | 네이티브 값 사용 |
+| `ios/LifeHanja.xcodeproj` | MARKETING_VERSION 1.1.0 | CURRENT_PROJECT_VERSION 3 |
+| `android/app/build.gradle` | 1.1.0 | versionCode 3 |
 
-| 항목 | 값 |
-| --- | --- |
-| 키스토어 파일 | `android/gradle.properties > RELEASE_STORE_FILE = release.keystore` |
-| 키 별칭 | `three-hundred-app` |
-| 비밀번호 | `android/gradle.properties`의 `RELEASE_STORE_PASSWORD` / `RELEASE_KEY_PASSWORD` |
-| 앱 서명 방식 | Play 앱 서명 사용 |
-
-> ⚠️ 현재 `android/app/` 에는 `debug.keystore`만 있고 `release.keystore`가 없습니다.
-> 로컬 릴리즈 빌드를 하려면 키스토어를 배치하거나, EAS 원격 자격증명(`eas credentials`)으로 서명하세요.
-> 또한 위 비밀번호가 `gradle.properties`에 평문으로 커밋되어 있습니다. 실제 릴리즈 키를 쓰기 전에
-> `.gitignore` 처리 또는 환경변수 주입으로 옮기는 것을 권장합니다.
-
----
-
-## 1. 공통 준비물
-
-### 1-1. 개인정보처리방침 · 지원 URL (양대 스토어 필수)
-
-| 항목 | 값 |
-| --- | --- |
-| 개인정보처리방침 URL | `TODO` — 아래 절차로 게시 후 그 주소 입력 |
-| 지원 URL (iOS 필수) | 같은 페이지 사용 (문의처 포함) |
-
-앱 안에는 전문이 이미 있습니다(`src/screens/common/setting/TermScreen.tsx`, 설정 탭 > 약관).
-콘솔은 **공개 URL**을 요구하므로 같은 내용을 웹에 게시합니다.
-
-1. GitHub Pages(또는 Notion 공개 페이지)에 `privacy.html` 한 장 게시
-2. `TermScreen.tsx`의 마크다운 본문을 그대로 옮김
-3. 하단에 문의처 `adjh54ir@gmail.com` 포함 → Play "웹사이트", App Store "지원 URL"에도 동일 주소 사용
-
-방침 본문은 2026-08-13에 전면 교체되어 앱 이름이 "한국어 상식 퀴즈"로 맞춰졌고, 사실과 달랐던 위치 정보
-수집 문단도 삭제되었습니다. 시행일은 본문 기준 **2026-08-11**입니다. 게시할 웹 페이지도 반드시 최신 본문으로 올리세요.
-
-> ⚠️ 남은 불일치 1건 (2026-08-15 기준 **미조치**) — 방침·약관에 **"인공지능(AI) 기술을 사용한다"** 는 조항이
-> 그대로 남아 있습니다: `TermScreen.tsx:36` "## 인공지능", `TermScreen.tsx:223` "## 인공지능(AI) 이용".
-> 코드에는 AI SDK·API 호출이 없습니다(OpenAI/Anthropic/Gemini 등 미검출). 사용하지 않는 기능을 수집·처리
-> 근거로 적어 두면 양대 스토어의 데이터 선언과 어긋나므로 **두 문단 삭제 후 게시**하세요.
-
-> 참고 — 약관의 "이용자 생성 콘텐츠" 조항은 `본 애플리케이션이 ... 기능을 제공하는 경우`라는 조건부 문장이라
-> "사용자 생성 콘텐츠 없음" 선언과 충돌하지 않습니다.
-
-> Firebase Analytics/Crashlytics, AdMob, Supabase를 사용하므로 방침은 필수이며,
-> 수집 항목·목적·보관 기간·제3자 제공(Google, Supabase)·문의처가 포함되어야 합니다.
-
-### 1-2. 수록 문항 수 (코드 기준 · 스토어 문구의 근거)
-
-`LearnHubService.getDomainList()` / `getSubQuizDomainList()`가 반환하는 `meta.total` 값입니다.
-데이터가 늘면 스토어 문구도 함께 갱신하세요.
-
-**메인 주제 (홈 · 학습 · 검색 · 통계에 반영) — 9개**
-
-| 주제 | 문항 수 | 데이터 파일 |
-| --- | --- | --- |
-| 관용구 | 4,251 | `src/const/data/idiom/ConstIdiomData001~009.ts` |
-| 속담 | 3,001 | `src/const/data/ConstProverbData.ts` |
-| 사자성어 | 1,458 | `src/const/data/ConstFourIdiomData.ts` |
-| 맞춤법 | 1,043 | `src/const/data/ConstSpellingData.ts` |
-| 순우리말 | 746 | `src/const/data/ConstPureKoreanData.ts` |
-| 달력 속 기념일 | 103 | `src/const/data/sub-quiz/ConstKoreanHolidayData.ts` |
-| 한국을 빛낸 100명의 위인들 | 100 | `src/const/data/sub-quiz/ConstGreatFigureQuizData.ts` |
-| 촌수 (남) | 97 | `src/const/data/ConstChonMaleData.tsx` |
-| 촌수 (여) | 97 | `src/const/data/ConstChonFemaleData.tsx` |
-| **메인 합계** | **10,896** | |
-
-**서브 퀴즈 (메인 점수·통계와 분리된 보너스 콘텐츠) — 8개**
-
-| 주제 | 문항 수 | 데이터 파일 |
-| --- | --- | --- |
-| 넌센스 | 156 | `src/const/data/ConstNonSenseData.ts` |
-| 연도로 보는 한국사 | 81 | `src/const/data/sub-quiz/ConstKoreanHistoryTimelineData.ts` |
-| 삼국시대 왕 | 39 | `src/const/data/sub-quiz/ConstThreeKingdomsKingQuizData.ts` |
-| 세시풍속 | 39 | `src/const/data/sub-quiz/ConstFolkCustomQuizData.ts` |
-| 나이 별칭 | 32 | `src/const/data/sub-quiz/ConstAgeNameQuizData.ts` |
-| 역대 대통령 | 30 | `src/const/data/sub-quiz/ConstPresidentQuizData.ts` |
-| 조선시대 왕 | 27 | `src/const/data/sub-quiz/ConstJoseonKingQuizData.ts` |
-| 24절기 | 24 | `src/const/data/sub-quiz/ConstSolarTermQuizData.ts` |
-| **서브 합계** | **428** | |
-
-**총 11,324문항** (2026-08-15 실측)
-
-> 주제 구분 기준은 `src/services/LearnHubService.ts`의 `SUB_QUIZ_KEYS` 입니다.
-> 현재 값: `president`, `joseon-king`, `three-kingdoms-king`, `nonsense`, `history-timeline`,
-> `age-name`, `solar-term`, `folk-custom`. **`holiday`(달력 속 기념일)는 메인 주제로 이동했습니다.**
-> 주제 이름과 한 줄 소개도 같은 파일의 `domains` 정의를 그대로 썼습니다.
-
-**재측정 방법** — 데이터가 늘면 아래로 다시 뽑고 스토어 문구를 갱신하세요.
-
-```bash
-# 임시 테스트 파일로 실제 total 값을 출력 (측정 후 파일 삭제)
-cat > src/__counts.spec.ts <<'EOF'
-import LearnHubService from '@/src/services/LearnHubService';
-it('counts', () => {
-  const f = (d: any) => `${d.title}\t${d.total}`;
-  console.log('MAIN\n' + LearnHubService.getDomainList().map(f).join('\n'));
-  console.log('SUB\n' + LearnHubService.getSubQuizDomainList().map(f).join('\n'));
-});
-EOF
-npx jest src/__counts.spec.ts; rm src/__counts.spec.ts
-```
-
-> 📌 **문구 원칙** — 스토어 카피에서 총 문항 수를 헤드라인으로 쓰지 않습니다. "1만 문항" 같은 수량 강조는
-> 경쟁 앱과 구분되지 않고 데이터가 바뀔 때마다 문구·스크린샷을 함께 고쳐야 합니다. 수량은 주제별 목록
-> 안에서만 근거로 노출하고, 첫 줄은 "무엇을 얻는가"로 씁니다.
-
-### 1-3. 스크린샷 촬영 가이드 (공통)
-
-권장 구성 6장: 홈 → 카드 학습 → 퀴즈 진행 → 결과/점수 → 내 활동(학습 리포트) → 검색.
-
-> ⚠️ 상단 배너가 **숨겨지는 경로는 아래 7개뿐**입니다(`src/screens/common/layout/AppLayout.tsx`의
-> `AD_BLOCKED_ROUTES`, 2026-08-15 실측):
-> `/special/shorts`, `/learn/study`, `/special/ranking`, `/special/exam`, `/special/weak-focus`,
-> `/special/level-test`, `/special/type-test`.
+> `eas.json` 의 `cli.appVersionSource` 가 `local` 이므로 네이티브 값이 그대로 쓰입니다. 두 네이티브 값은 현재 일치합니다.
 >
-> 즉 **퀴즈 풀이·결과 화면(`/quiz/*`), 주간 리그(`/special/league`), 홈·검색·통계·내 활동에는 배너가 노출됩니다.**
-> 배너 없는 컷을 원하면 위 7개 경로 화면을 쓰고, 퀴즈 화면을 촬영할 때는 배너가 함께 찍히는 것을 전제로
-> 구도를 잡으세요(광고를 지운 합성 이미지는 리젝 사유).
-
-- 상태 표시줄이 포함되면 실제 기기 시간·배터리가 지저분하게 보이지 않도록 정리합니다.
-- 실제 앱에 없는 화면을 합성하면 리젝 사유입니다.
+> ⚠️ `fastlane/Fastfile` 의 `read_app_version` / `bump` 레인은 `app.json` 의 `expo.version` 을 읽고 씁니다. 지금은 그 키가 없어 **항상 `1.0.0` 으로 폴백**합니다. `yarn fl:ios:bump` 계열을 쓰려면 `app.json` 에 `version` 을 추가하거나 레인을 gradle/pbxproj 기준으로 고쳐야 합니다.
 
 ---
 
-## 2. Google Play 출시
-
-Console 경로 표기: `Play Console > 앱 선택 > ...`
-
-### 2-1. 스토어 등록정보
-
-경로: `성장 > 스토어 개요 > 기본 스토어 등록정보`
-
-| 항목 | 제한 | 값 |
-| --- | --- | --- |
-| 앱 이름 | 30자 | 한국어 상식 퀴즈 |
-| 간단한 설명 | 80자 | 아래 블록 |
-| 자세한 설명 | 4,000자 | 아래 블록 |
-
-#### 간단한 설명 (80자)
-
-검색 결과와 앱 카드 상단에 노출되는 한 줄 요약입니다. "무료", "최고" 같은 과장 표현이나 이모지 남용은
-정책 위반 소지가 있으니 피합니다. 숫자 나열은 눈에 걸리지 않고 데이터가 바뀔 때마다 고쳐야 하므로 쓰지 않습니다.
-
-```
-속담·관용구·사자성어부터 맞춤법까지, 매일 한 판씩 푸는 우리말 상식 퀴즈
-```
-
-(공백 포함 41자 / 80자)
-
-대안 (A/B 테스트용):
-
-```
-오늘 한 판이면 충분해요. 속담·관용구·사자성어·맞춤법을 뜻과 예문까지 익히는 우리말 퀴즈
-```
-
-(공백 포함 50자 / 80자)
-
-- 앞 12자가 검색 결과에서 가장 먼저 읽히므로 주제 키워드(속담·관용구·사자성어)를 앞에 둡니다.
-- "1만 문항" 류의 수량 강조는 빼되, 자세한 설명 안의 주제별 목록에는 실제 수치를 남겨 근거를 제공합니다.
-
-#### 자세한 설명 (4,000자)
-
-첫 3줄이 "더보기" 이전에 노출되므로 가장 중요한 내용을 위에 배치합니다.
-키워드를 부자연스럽게 반복하면 정책 위반이므로 문장 안에 자연스럽게 녹입니다.
-
-```
-아는 줄 알았던 속담, 헷갈리는 맞춤법, 뜻은 모르고 쓰던 사자성어.
-하루 한 판이면 뜻과 예문, 유래까지 자연스럽게 남습니다.
-로그인 없이 바로 시작할 수 있고, 학습 기록은 기기 안에 저장됩니다.
-
-■ 메인 주제
-· 관용구 4,251문항 — 일상에 녹아든 우리말 표현을 익혀요
-· 속담 3,001문항 — 삶의 지혜가 담긴 우리말 속담
-· 사자성어 1,458문항 — 네 글자 한자 속 지혜를 익혀요
-· 맞춤법 1,043문항 — 헷갈리는 표기, 정확하게 익혀요
-· 순우리말 746문항 — 아름다운 우리말 단어의 뜻을 익혀요
-· 달력 속 기념일 — 쉬는 날·기리는 날에 담긴 뜻을 익혀요
-· 한국을 빛낸 100명의 위인들 — 시대별 대표 인물 100명을 만나요
-· 촌수 (남/여) — 가족 호칭과 촌수를 익혀요
-
-■ 서브 퀴즈 (보너스 콘텐츠)
-· 넌센스 — 재치로 푸는 말장난 퀴즈
-· 연도로 보는 한국사 — 주요 사건을 시간 순서로 익혀요
-· 삼국시대 왕 — 고구려·백제·신라·가야의 왕을 만나요
-· 조선시대 왕 — 27왕의 업적과 사건을 맞혀요
-· 역대 대통령 — 대한민국 대통령과 시대를 연결해요
-· 나이 별칭 — 약관·이립·불혹, 나이를 부르는 옛말
-· 24절기 — 입춘부터 대한까지 계절의 마디를 익혀요
-· 세시풍속 — 명절마다 무엇을 했는지 알아봐요
-
-■ 학습
-· 카드 학습 — 앞면에서 단어를 보고, 넘기면 뜻과 예문을 확인해요
-· 숏폼 학습 — 짧게 넘겨 보며 익히는 세로형 카드
-· 오늘의 읽을거리 — 우리말 이야기를 읽으며 자연스럽게 익혀요
-· 학습 진도 — 주제마다 학습한 카드 수와 남은 카드를 확인해요
-
-■ 퀴즈 모드
-· 오늘의 퀴즈 — 매일 새로 준비되는 오늘치 문제
-· OX 퀴즈 · 초성 퀴즈 · 빈칸 채우기 · 짝 맞추기
-· 데일리 믹스 — 여러 주제를 섞어 한 번에
-· 묶음 퀴즈 — 원하는 범위만 골라 집중적으로
-· 타임 챌린지 — 제한 시간 안에 콤보를 이어 최고 점수에 도전
-· 시험 대비 팩 — KBS한국어능력시험, 공무원 국어, 수능 국어 어휘, 한국사능력검정
-
-■ 복습
-· 오답 복습 — 틀린 문제만 모아 다시 풀기
-· 즐겨찾기 퀴즈 — 저장해 둔 문제만 골라 다시 풀기
-· 약점 집중 코스 — 정답률이 낮은 주제부터 보완
-· 보관함 — 공부한 표현을 모아 다시 보기
-
-■ 검색
-· 수록된 표현을 한 번에 찾아보기 (서브 퀴즈 주제까지 함께 검색)
-· 주제 · 카테고리 · 난이도로 좁혀 보기
-· 즐겨찾기만, 오답만 골라 보기
-
-■ 기록과 경쟁
-· 내 활동 — 학습 리포트, 주제별 진도, 오늘의 퀴즈·타임 챌린지 기록
-· 학습 리포트 — 최근 7일·30일 또는 직접 고른 기간의 학습량과 정답률
-· 주제별 진도 — 학습 진도와 퀴즈 진도를 탭으로 나눠 보고, 약한 주제부터 정렬
-· 주제별 점수와 등급 — 문제를 풀수록 주제별 캐릭터 단계가 올라갑니다
-· 출석체크와 배지 · 배지 도감
-· 주간 리그 · 타임 챌린지 랭킹 — 다른 사용자와 점수 겨루기
-· 한국어 레벨 테스트 · 한국어 유형 테스트 — 실력과 학습 성향 진단
-
-■ 그 밖에
-· 촌수 계산기 — 가족 관계와 호칭을 바로 확인
-· 학습 알림 — 원하는 시각에 리마인더
-· 학습 기록 백업 — 기기를 바꿔도 진도를 그대로
-
-■ 이런 분께 추천합니다
-· 국어 어휘력과 문해력을 다시 다지고 싶은 분
-· 사자성어·속담을 뜻과 유래까지 정확히 알고 싶은 분
-· 자주 틀리는 맞춤법을 정리하고 싶은 분
-· 출퇴근길 자투리 시간에 교양을 쌓고 싶은 분
-· 자녀와 함께 우리말 문제를 풀어 보고 싶은 분
-
-■ 안내
-· 로그인 없이 모든 기능을 사용할 수 있습니다.
-· 학습 기록은 기기 안에 저장됩니다.
-· 광고가 포함되어 있으며, 인앱 결제로 광고를 제거할 수 있습니다.
-· 문의: adjh54ir@gmail.com
-```
-
-### 2-2. 그래픽 애셋
-
-경로: `성장 > 스토어 개요 > 기본 스토어 등록정보 > 그래픽`
-
-| 항목 | 사양 | 필수 | 파일 경로 |
-| --- | --- | --- | --- |
-| 앱 아이콘 | 512 × 512 PNG (32비트, 알파 포함) | 필수 | `src/assets/play_store_512.png` |
-| 그래픽 이미지(피처 그래픽) | 1024 × 500 PNG/JPG | 필수 | `TODO` — 미제작. `assets/main-icon.png` + 앱 이름 + 배경 `#FDEFD6`(adaptiveIcon 배경색)로 제작 |
-| 휴대전화 스크린샷 | 2~8장, 16:9 또는 9:16, 각 변 320~3840px | 필수(최소 2장) | `fastlane/metadata/android/ko-KR/images/phoneScreenshots/` — **현재 미생성**(fastlane 폴더에 설정 파일만 있고 이미지 0장) |
-| 7·10인치 태블릿 스크린샷 | 최대 8장 | 선택 | 생략 (Android는 태블릿 필수 아님) |
-| 프로모션 동영상 | YouTube URL | 선택 | 미사용 (1.0.0 생략) |
-
-### 2-3. 스토어 설정
-
-경로: `성장 > 스토어 개요 > 스토어 설정`
+## 2. 기술 스택 / 빌드 환경
 
 | 항목 | 값 |
-| --- | --- |
-| 앱 또는 게임 | 앱 |
-| 카테고리 | 교육 |
-| 태그 | 어휘 학습 / 언어 학습 / 두뇌 트레이닝 / 퀴즈 / 학습 도구 (콘솔 태그 목록에서 가장 가까운 5개) |
-| 이메일 주소 (필수) | adjh54ir@gmail.com |
-| 전화번호 (선택) | 미입력 (공개 노출되므로 생략) |
-| 웹사이트 (선택) | 개인정보처리방침 게시 URL (1-1 참고) |
-| 외부 마케팅 수신 동의 | 아니요 |
-
-### 2-4. 앱 콘텐츠 (정책 선언)
-
-경로: `정책 및 프로그램 > 앱 콘텐츠`. 모든 항목을 완료해야 출시 가능.
-
-**앱 액세스 권한**
-
-| 항목 | 값 |
-| --- | --- |
-| 전체 또는 일부 기능이 제한되는가 | 아니요 — 모든 기능을 로그인 없이 사용 가능 |
-| 테스트 계정 필요 여부 | 불필요 |
-
-**광고**
-
-| 항목 | 값 |
-| --- | --- |
-| 앱에 광고가 포함되어 있나요 | 예 |
-| 광고 SDK | Google AdMob (`react-native-google-mobile-ads`) |
-| 광고 형식 | **배너만** (2026-08-15 실측) |
-
-> ⚠️ **실측 결과 현재 노출되는 광고는 상단 배너 하나뿐입니다.** `AdmobBannerAd`만 `AppLayout.tsx:100`에서
-> 렌더되고, `AdmobFrontAd`(전면)·`AdmobRewardAd`/`AdmobRewardFrontAd`(보상형)·`AdmobAppOpenAd`(앱 오프닝)·
-> `AdmobNativeAd`(네이티브)는 `src/screens/common/ads/` 안에만 있고 어떤 화면에서도 임포트되지 않습니다.
-> 출시 전에 **① 배너만 유지 → 선언·문구를 배너 기준으로 통일**, 또는 **② 전면/보상형을 실제로 붙인 뒤 선언**
-> 중 하나를 정하세요. 지금 상태로 "전면·보상형 포함"이라 선언하면 실제 앱과 어긋납니다.
-
-> `src/screens/common/ads/levelplay/`(`LevelPlayBannerAd.tsx`, `LevelPlayFrontAd.tsx`)와
-> `ironsource-mediation` 의존성이 남아 있으나 어떤 화면에서도 임포트되지 않습니다. 실제 노출 SDK는 AdMob
-> 하나이므로 AdMob만 선언합니다.
-
-**콘텐츠 등급 (IARC 설문)**
-
-| 항목 | 값 |
-| --- | --- |
-| 설문 카테고리 | 참고자료, 뉴스 또는 교육용 |
-| 폭력 / 성적 콘텐츠 / 비속어 / 약물 | 모두 없음 |
-| 사용자 간 상호작용 | 아니요 — 랭킹 닉네임은 앱이 무작위 생성, 자유 입력·채팅 없음 |
-| 위치 정보 공유 | 아니요 |
-| 디지털 구매 | 예 (광고 제거 인앱 상품) |
-| 예상 등급 | 전체 이용가 |
-
-> 랭킹 닉네임은 `src/utils/NicknameUtils.ts` 생성기가 "수식어 + 명사 + #4자리"로 무작위 발급하며 사용자가
-> 자유 입력할 수 없습니다(`isGeneratedNickname` 형식 검증). 닉네임 직접 입력을 허용하면 이 문항과 등급을 재산정해야 합니다.
-
-**타겟층 및 콘텐츠**
-
-| 항목 | 값 |
-| --- | --- |
-| 타겟 연령대 | 16~17세, 18세 이상 |
-| 아동에게 어필하는 디자인인가 | 아니요 |
-| Google Play 패밀리 정책 적용 | 아니요 |
-
-> 방침·약관이 **만 16세 미만을 대상으로 하지 않는다**고 명시하므로 13~15세를 선택하면 방침과 어긋납니다.
-> 만 13세 미만을 포함하면 패밀리 정책이 적용되어 AdMob `tagForChildDirectedTreatment`와 데이터 수집 방식을 함께 바꿔야 합니다.
-
-**데이터 보안 (Data safety)** — 현재 코드 기준 초안
-
-| 데이터 유형 | 수집 | 공유 | 목적 | 필수 여부 | 근거 |
-| --- | --- | --- | --- | --- | --- |
-| 앱 상호작용(이벤트/화면 조회) | 예 | 예 | 분석 | 선택 | Firebase Analytics |
-| 진단(크래시 로그, 성능) | 예 | 예 | 분석, 앱 기능 | 선택 | Firebase Crashlytics |
-| 기기 또는 기타 ID (광고 ID) | 예 | 예 | 광고 | 선택 | AdMob + ATT |
-| 구매 내역 | 예 | 예 | 앱 기능 | 필수 | 광고 제거 구매 동기화(Supabase) |
-| 사용자 ID | 예 | 예 | 앱 기능 | 필수 | 구매 소유권 확인(Supabase) |
-| 사용자 생성 콘텐츠(닉네임) | 아니요 | - | - | - | 앱이 무작위 생성하므로 UGC 아님 |
-
-| 항목 | 값 |
-| --- | --- |
-| 전송 중 암호화 | 예 (HTTPS) |
-| 데이터 삭제 요청 방법 제공 | 예 — 이메일 요청(adjh54ir@gmail.com), 방침에 명시됨 |
-
-> 퀴즈 진행 상황·오답노트·즐겨찾기·학습 리포트는 기기 내부(AsyncStorage)에만 저장되며 전송되지 않으므로
-> "수집"으로 선언하지 않습니다. 랭킹 점수만 Supabase로 전송되며, 랭킹 참여(닉네임 발급) 시에 한합니다.
-
-**기타 선언** — 정부 앱 / 금융 / 건강 / 뉴스 / COVID-19 접촉 확인 / 독립 보안 검토: 모두 **아니요**.
-
-### 2-5. 권한 선언
-
-| 권한 | 용도 | 별도 선언 |
-| --- | --- | --- |
-| `POST_NOTIFICATIONS` | 학습 알림(일일 리마인더) | 불필요 |
-
-차단된 권한(`app.json > android.blockedPermissions`): `SCHEDULE_EXACT_ALARM`, `USE_EXACT_ALARM`,
-`READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `RECORD_AUDIO`.
-
-> 정확한 알람 권한을 **차단했으므로 권한 선언서 제출이 불필요**합니다. 학습 리마인더는
-> `src/utils/NotifactionHelper.ts`에서 `AlarmType.SET_AND_ALLOW_WHILE_IDLE`로 예약하며, 설정 시각에서 수 분 오차가 생길 수 있습니다.
-> `expo prebuild` 후 `android/app/src/main/AndroidManifest.xml`에 차단 권한이 되살아나지 않았는지 확인하세요.
-
-### 2-6. 출시 트랙 / 릴리스
-
-경로: `출시 > 프로덕션 > 새 버전 만들기`
-
-| 항목 | 값 |
-| --- | --- |
-| 앱 번들 (.aab) | `build/app.aab` (`yarn deploy:android`) 또는 `yarn fl:and:aab` |
-| 버전 이름 | 1.0.0 |
-| 버전 코드 | EAS 자동 증가 (`autoIncrement`) |
-| 앱 서명 키 | Play 앱 서명 사용 |
-| 국가/지역 | 전체 국가·지역 (한국어·영어·프랑스어 등록정보 제공) |
-| 단계적 출시 비율 | 20% 시작 → 크래시 없음 확인 후 50% → 100% |
-
-#### 출시 노트 (500자, 언어별)
-
-한국어:
-
-```
-첫 출시입니다.
-
-· 메인 주제 — 관용구, 속담, 사자성어, 맞춤법, 순우리말, 달력 속 기념일, 위인, 촌수(남/여)
-· 서브 퀴즈 — 넌센스, 한국사 연표, 삼국시대 왕, 조선시대 왕, 역대 대통령, 나이 별칭, 24절기, 세시풍속
-· 오늘의 퀴즈, OX·초성·빈칸·짝 맞추기, 데일리 믹스, 묶음 퀴즈, 타임 챌린지
-· 시험 대비 팩 — KBS한국어능력시험, 공무원 국어, 수능 국어 어휘, 한국사능력검정
-· 오답 복습, 즐겨찾기 퀴즈, 약점 집중 코스, 보관함
-· 학습 리포트와 주제별 진도, 출석체크와 배지, 주간 리그와 랭킹
-· 한국어 레벨 테스트, 유형 테스트, 촌수 계산기, 학습 알림
-
-이용하시면서 불편한 점은 adjh54ir@gmail.com으로 알려 주세요.
-```
-
-영어:
-
-```
-First release.
-
-· Main topics: idioms, proverbs, four-character idioms, spelling, native Korean words, calendar holidays, historical figures, family-relation degrees
-· Bonus quizzes: riddles, Korean history timeline, Three Kingdoms rulers, Joseon kings, presidents, age names, the 24 solar terms, seasonal customs
-· Daily quiz, O/X, initial sound, fill-in-the-blank, matching, daily mix, bundle quiz and time challenge
-· Exam packs for the KBS Korean Language Test, civil-service Korean, CSAT vocabulary and the Korean History Proficiency Test
-· Wrong-answer review, bookmarked quiz, weak-point course and library
-· Learning reports, per-topic progress, attendance check, badges, weekly league and rankings
-· Korean level test, learning-type test, kinship calculator and study reminders
-
-Feedback is welcome at adjh54ir@gmail.com.
-```
-
-> 프랑스어(`fr`) 등록정보를 추가한다면 위 영어 노트를 번역해 함께 등록합니다.
+|---|---|
+| Expo SDK | 55 (`expo ~55.0.26`) — 문서: https://docs.expo.dev/versions/v55.0.0/ |
+| React Native | 0.83.6 / React 19.2.0 |
+| 아키텍처 | New Architecture 활성 (`newArchEnabled=true`), Hermes 활성 |
+| 라우팅 | expo-router (`app/` 디렉터리, `main: expo-router/entry`) |
+| 상태 | Redux Toolkit + redux-persist (AsyncStorage) |
+| 패키지 매니저 | yarn 4.17.0 |
+| Node (EAS) | 24.16.0 (`eas.json` base) |
+| Android minSdk / target / compileSdk | Expo SDK 55 기본값 (gradle 에 숫자 명시 없음) — `cd android && ./gradlew :app:properties \| grep -i sdk` 로 확인 후 Play Console 요구 API 레벨 충족 여부 검증 |
+| ABI | armeabi-v7a, arm64-v8a, x86, x86_64 |
+| Edge-to-edge | 활성 (`edgeToEdgeEnabled=true`) |
+| 화면 방향 | portrait 고정 |
+| iOS 태블릿 지원 | `supportsTablet: true`, `requireFullScreen: true` → **iPad 스크린샷 필수** |
+| 다국어 | 미지원 — 한국어 전용 (i18n 라이브러리·`locales/` 없음, iOS `CFBundleLocalizations` = ko) |
 
 ---
 
-## 3. App Store 출시
-
-Console 경로 표기: `App Store Connect > 나의 App > ...`
-태블릿 지원이 `supportsTablet: true`이므로 **iPad 스크린샷이 필수**입니다.
-
-### 3-1. App 정보 (버전 무관)
-
-경로: `앱 선택 > 일반 > App 정보`
-
-| 항목 | 제한 | 값 |
-| --- | --- | --- |
-| 이름 | 30자 | 한국어 상식 퀴즈 |
-| 부제 | 30자 | 속담·관용구·맞춤법, 매일 한 판 (18자) |
-| 개인정보 처리방침 URL | | `TODO` (1-1 참고) |
-| 카테고리 (기본 / 보조) | | 교육 / 참고 |
-| 콘텐츠 권한 | | 제3자 콘텐츠를 포함하지 않음 |
-| 연령 등급 | | 4+ (3-4 설문) |
-
-부제는 앱 이름의 "한국어·상식·퀴즈"를 반복하지 않고, 검색에 걸리는 주제 키워드 3개 + 사용 습관을 씁니다.
-부제는 이름·키워드와 함께 검색 대상이므로 수량 대신 키워드를 넣는 편이 유리합니다.
-
-```
-속담·관용구·맞춤법, 매일 한 판
-```
-
-### 3-2. 버전별 정보 (1.0.0)
-
-경로: `앱 선택 > iOS 앱 > 1.0.0 준비 중`
-
-| 항목 | 제한 | 값 |
-| --- | --- | --- |
-| 프로모션 텍스트 | 170자 | 아래 블록 |
-| 설명 | 4,000자 | 아래 블록 |
-| 키워드 | 100자 (쉼표 구분, 공백 없이) | 아래 블록 |
-| 지원 URL | 필수 | `TODO` — 방침 페이지에 문의처 포함해 게시 |
-| 마케팅 URL | 선택 | 미사용 |
-| 저작권 | | 2026 EcodeLab |
-
-#### 프로모션 텍스트 (170자) — 심사 없이 언제든 교체 가능
-
-```
-오늘의 퀴즈로 하루를 시작해 보세요. 속담·관용구·사자성어·맞춤법을 뜻과 예문, 유래까지 함께 읽고 OX·초성·빈칸·짝 맞추기로 확인합니다. 틀린 문제는 오답 복습과 약점 집중 코스로 메우고, 실력은 타임 챌린지 랭킹과 주간 리그에서 겨뤄 보세요.
-```
-
-(공백 포함 138자 / 170자)
-
-#### 설명 (4,000자)
-
-App Store는 설명 텍스트가 검색에 반영되지 않습니다(검색은 이름·부제·키워드만).
-키워드를 욱여넣지 말고 읽기 좋게 씁니다. 첫 2~3줄만 접히지 않고 보입니다.
-
-```
-아는 줄 알았던 속담, 헷갈리는 맞춤법, 뜻은 모르고 쓰던 사자성어.
-하루 한 판이면 뜻과 예문, 유래까지 자연스럽게 남습니다.
-로그인 없이 바로 시작할 수 있고, 학습 기록은 기기 안에 저장됩니다.
-
-■ 메인 주제
-· 관용구 4,251문항 — 일상에 녹아든 우리말 표현을 익혀요
-· 속담 3,001문항 — 삶의 지혜가 담긴 우리말 속담
-· 사자성어 1,458문항 — 네 글자 한자 속 지혜를 익혀요
-· 맞춤법 1,043문항 — 헷갈리는 표기, 정확하게 익혀요
-· 순우리말 746문항 — 아름다운 우리말 단어의 뜻을 익혀요
-· 달력 속 기념일 — 쉬는 날·기리는 날에 담긴 뜻을 익혀요
-· 한국을 빛낸 100명의 위인들 — 시대별 대표 인물 100명을 만나요
-· 촌수 (남/여) — 가족 호칭과 촌수를 익혀요
-
-■ 서브 퀴즈 (보너스 콘텐츠)
-· 넌센스 — 재치로 푸는 말장난 퀴즈
-· 연도로 보는 한국사 — 주요 사건을 시간 순서로 익혀요
-· 삼국시대 왕 — 고구려·백제·신라·가야의 왕을 만나요
-· 조선시대 왕 — 27왕의 업적과 사건을 맞혀요
-· 역대 대통령 — 대한민국 대통령과 시대를 연결해요
-· 나이 별칭 — 약관·이립·불혹, 나이를 부르는 옛말
-· 24절기 — 입춘부터 대한까지 계절의 마디를 익혀요
-· 세시풍속 — 명절마다 무엇을 했는지 알아봐요
-
-■ 학습
-· 카드 학습 — 앞면에서 단어를 보고, 넘기면 뜻과 예문을 확인해요
-· 숏폼 학습 — 짧게 넘겨 보며 익히는 세로형 카드
-· 오늘의 읽을거리 — 우리말 이야기를 읽으며 자연스럽게 익혀요
-· 학습 진도 — 주제마다 학습한 카드 수와 남은 카드를 확인해요
-
-■ 퀴즈 모드
-· 오늘의 퀴즈 — 매일 새로 준비되는 오늘치 문제
-· OX 퀴즈 · 초성 퀴즈 · 빈칸 채우기 · 짝 맞추기
-· 데일리 믹스 — 여러 주제를 섞어 한 번에
-· 묶음 퀴즈 — 원하는 범위만 골라 집중적으로
-· 타임 챌린지 — 제한 시간 안에 콤보를 이어 최고 점수에 도전
-· 시험 대비 팩 — KBS한국어능력시험, 공무원 국어, 수능 국어 어휘, 한국사능력검정
-
-■ 복습
-· 오답 복습 — 틀린 문제만 모아 다시 풀기
-· 즐겨찾기 퀴즈 — 저장해 둔 문제만 골라 다시 풀기
-· 약점 집중 코스 — 정답률이 낮은 주제부터 보완
-· 보관함 — 공부한 표현을 모아 다시 보기
-
-■ 검색
-· 수록된 표현을 한 번에 찾아보기 (서브 퀴즈 주제까지 함께 검색)
-· 주제 · 카테고리 · 난이도로 좁혀 보기
-· 즐겨찾기만, 오답만 골라 보기
-
-■ 기록과 경쟁
-· 내 활동 — 학습 리포트, 주제별 진도, 오늘의 퀴즈·타임 챌린지 기록
-· 학습 리포트 — 최근 7일·30일 또는 직접 고른 기간의 학습량과 정답률
-· 주제별 진도 — 학습 진도와 퀴즈 진도를 탭으로 나눠 보고, 약한 주제부터 정렬
-· 주제별 점수와 등급 — 문제를 풀수록 주제별 캐릭터 단계가 올라갑니다
-· 출석체크와 배지 · 배지 도감
-· 주간 리그 · 타임 챌린지 랭킹 — 다른 사용자와 점수 겨루기
-· 한국어 레벨 테스트 · 한국어 유형 테스트 — 실력과 학습 성향 진단
-
-■ 그 밖에
-· 촌수 계산기 — 가족 관계와 호칭을 바로 확인
-· 학습 알림 — 원하는 시각에 리마인더
-· 학습 기록 백업 — 기기를 바꿔도 진도를 그대로
-
-■ 이런 분께 추천합니다
-· 국어 어휘력과 문해력을 다시 다지고 싶은 분
-· 사자성어·속담을 뜻과 유래까지 정확히 알고 싶은 분
-· 자주 틀리는 맞춤법을 정리하고 싶은 분
-· 자투리 시간에 교양을 쌓고 싶은 분
-· 자녀와 함께 우리말 문제를 풀어 보고 싶은 분
-
-■ 안내
-· 로그인 없이 모든 기능을 사용할 수 있습니다.
-· 학습 기록은 기기 안에 저장됩니다.
-· 광고가 포함되어 있으며, App 내 구입으로 광고를 제거할 수 있습니다. 구매 복원을 지원합니다.
-· 문의: adjh54ir@gmail.com
-```
-
-#### 키워드 (100자, 공백 없이)
-
-```
-사자성어,순우리말,넌센스,어휘력,국어,한자,낱말,교양,위인,문해력,초성,조선,삼국,대통령,촌수,한국사,국어공부,두뇌,절기,기념일,공무원,수능
-```
-
-(공백 없이 80자 / 100자)
-
-- 이름·부제에 있는 `한국어`, `상식`, `퀴즈`, `속담`, `관용구`, `맞춤법`은 자동 조합되므로 제외.
-- 부제를 바꾸면서 `맞춤법`이 부제로 올라갔고, 그 자리에 `사자성어`를 넣었습니다.
-- `초성`·`조선`·`삼국`·`촌수`·`절기`·`기념일`은 실제 기능(초성 퀴즈, 조선시대 왕, 삼국시대 왕, 촌수 계산기,
-  24절기, 달력 속 기념일).
-- `공무원`·`수능`은 시험 대비 팩의 실제 코스명(`src/const/ConstExamPacks.ts`: KBS한국어능력시험 / 공무원 국어 /
-  수능 국어 어휘 / 한국사능력검정). 없는 기능 키워드는 넣지 않습니다.
-
-#### 이번 버전의 새로운 기능
-
-```
-첫 출시입니다. 관용구·속담·사자성어·맞춤법·순우리말·기념일·위인·촌수를 메인 주제로, 넌센스·한국사 연표·삼국시대 왕·조선시대 왕·역대 대통령·나이 별칭·24절기·세시풍속을 보너스 퀴즈로 담았습니다. 시험 대비 팩, 오답 복습, 약점 집중 코스, 학습 리포트, 타임 챌린지 랭킹까지 함께 이용해 보세요.
-이용하시면서 불편한 점은 adjh54ir@gmail.com으로 알려 주세요.
-```
-
-### 3-3. 스크린샷 및 미리보기
-
-| 디스플레이 | 해상도(세로) | 필수 | 파일 경로 |
-| --- | --- | --- | --- |
-| iPhone 6.9" | 1290 × 2796 또는 1320 × 2868 | **필수** | `fastlane/screenshots/ko/` (`yarn fl:ios:screens`) — **현재 미생성** |
-| iPhone 6.5" | 1242 × 2688 또는 1284 × 2778 | 선택 (6.9" 자동 축소) | 생략 |
-| iPad 13" | 2064 × 2752 | **필수** (`supportsTablet: true`) | iPad Pro 13" 시뮬레이터로 촬영 |
-| App 미리보기 동영상 | 15~30초, 최대 3개 | 선택 | 미사용 |
-
-> `supportsTablet`을 끄면 iPad 스크린샷 의무가 사라지지만, 현재 true로 준비 중이므로 iPad 레이아웃이
-> 깨지지 않는지 확인한 뒤 촬영합니다.
-
-### 3-4. 연령 등급 설문
-
-| 문항 | 값 |
-| --- | --- |
-| 폭력(만화/사실적) | 없음 |
-| 성적 콘텐츠 또는 노출 | 없음 |
-| 비속어 또는 저속한 유머 | 없음 |
-| 술·담배·약물 | 없음 |
-| 공포/무서운 테마 | 없음 |
-| 모의 도박 / 도박 | 없음 |
-| 의료/치료 정보 | 없음 |
-| 사용자 생성 콘텐츠 | 없음 — 랭킹 닉네임은 앱이 무작위 생성 |
-| 제한 없는 웹 접근 | 아니요 |
-| 메시지/커뮤니케이션 기능 | 아니요 |
-| **결과 등급** | 4+ |
-
-> App Store 연령 등급은 **콘텐츠 기준**이라 4+가 맞습니다. 약관의 "만 16세 이상" 조건은 계약상 요건이며 등급과 별개입니다.
-
-### 3-5. App 개인정보 보호 (App Privacy)
-
-| 데이터 유형 | 수집 | 앱에 연결됨 | 추적에 사용 | 목적 | 근거 |
-| --- | --- | --- | --- | --- | --- |
-| 식별자 > 기기 ID (IDFA) | 예 | 예 | **예** | 서드파티 광고 | AdMob |
-| 식별자 > 사용자 ID | 예 | 예 | 아니요 | 앱 기능 | Supabase 구매 소유권 |
-| 사용 데이터 > 제품 상호작용 | 예 | 아니요 | 아니요 | 분석 | Firebase Analytics |
-| 진단 > 충돌 데이터 | 예 | 아니요 | 아니요 | 앱 기능, 분석 | Firebase Crashlytics |
-| 진단 > 성능 데이터 | 예 | 아니요 | 아니요 | 분석 | Firebase |
-| 구매 > 구매 내역 | 예 | 예 | 아니요 | 앱 기능 | 광고 제거 구매 동기화 |
-| 사용자 콘텐츠 > 기타 | 아니요 | - | - | - | 닉네임은 앱이 무작위 생성 |
-
-**App Tracking Transparency (ATT)**
-
-| 항목 | 값 |
-| --- | --- |
-| ATT 사용 | 예 (`react-native-permissions` + `AppTrackingTransparency`) |
-| `NSUserTrackingUsageDescription` | 사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다. |
-| 추적 데이터 | IDFA |
-
-> ATT 프롬프트 이전에 IDFA에 접근하면 리젝됩니다. 심사 메모에 "앱 최초 실행 시 ATT 동의를 요청하며,
-> 거부 시 비개인화 광고만 노출"을 명시하세요. 설정 탭 > 권한 관리에서 사용자가 추적 권한 상태를 확인할 수 있습니다.
-
-### 3-6. App 심사 정보
-
-| 항목 | 값 |
-| --- | --- |
-| 로그인 필요 | 아니요 |
-| 데모 계정 | 불필요 |
-| 연락처 이름 / 성 | `TODO` — 실명 (ASC 계정 소유자와 동일) |
-| 전화번호 | `TODO` — 국가번호 포함 (예: +82 10-0000-0000) |
-| 이메일 | adjh54ir@gmail.com |
-| 첨부 파일 | 미사용 |
-
-심사 메모:
-
-```
-- 본 앱은 로그인 없이 모든 기능을 사용할 수 있습니다.
-- 광고: Google AdMob 상단 배너 광고만 사용합니다(전면·보상형 미사용).
-  숏폼, 카드 학습, 랭킹, 시험 대비 팩, 약점 집중, 레벨/유형 테스트 화면에서는 상단 배너를 노출하지 않습니다.
-- ATT: 앱 실행 후 광고 노출 전에 추적 동의를 요청하며, 거부 시 비개인화 광고만 표시합니다.
-- 인앱 구입: '광고 제거'(com.tha.koreaquiz.remove_ad) 비소모성 상품 1개이며,
-  설정 탭 상단의 '광고 제거' 영역에서 '구매 복원'을 제공합니다.
-- 알림: 사용자가 직접 설정한 시각에만 학습 리마인더를 발송합니다.
-- 랭킹: 닉네임은 앱이 무작위로 발급하며 사용자가 직접 입력할 수 없습니다. 채팅·메시지 기능은 없습니다.
-- 콘텐츠 오류 제보: 문항 상세에서 메일 앱을 여는 방식이며, 메일 앱이 없으면 안내 문구만 표시됩니다.
-```
-
-### 3-7. 가격 및 사용 가능 여부
-
-| 항목 | 값 |
-| --- | --- |
-| 가격 | 무료 (App 내 구입 있음) |
-| 국가 또는 지역 | 전체 국가·지역 |
-| 사전 주문 | 아니요 |
-| 배포 방식 | 공개 (App Store) |
-
-### 3-8. 빌드 제출 시 추가 확인
-
-| 항목 | 값 |
-| --- | --- |
-| 수출 규정 준수 (암호화) | HTTPS 표준 암호화만 사용 → 면제 대상 |
-| `ITSAppUsesNonExemptEncryption` | `false` 설정 시 매 빌드 질문 생략 |
-| 콘텐츠 권한 | 제3자 콘텐츠 포함하지 않음 |
-| IDFA 사용 | 예 — "앱 내 광고 노출" 체크 |
-| 자동 릴리스 | 심사 통과 후 수동 릴리스 권장 |
-
-> 사자성어·속담 등 콘텐츠 출처가 제3자 저작물이라면 "콘텐츠 권한"을 재검토하고 근거를 심사 메모에 적습니다.
-> 서브 퀴즈 데이터는 항목별 `source` 정보를 들고 있어(`SubQuizService`) 해설에 출처가 함께 노출됩니다.
-
----
-
-## 4. 인앱 결제 (광고 제거)
-
-| 항목 | 값 |
-| --- | --- |
-| 상품 ID (SKU) | `com.tha.koreaquiz.remove_ad` |
-| 상품 유형 | 비소모성(iOS) / 관리형 상품 1회성(Android) |
-| 가격 | ₩3,900 (대한민국 기준, 타 국가 자동 환산) |
-| 표시 이름 | 광고 제거 |
-| 설명 | 앱 내 광고를 영구히 제거합니다. 기기를 바꿔도 구매 복원으로 다시 적용됩니다. |
-| 환경변수 | `EXPO_PUBLIC_IAP_REMOVE_AD_KEY` (`.env`) |
-| 코드 위치 | `src/const/EnvCompat.ts` → `IAP_REMOVE_AD_KEY` → `src/services/PurchaseService.ts:15` `REMOVE_AD_SKU` |
-
-> ⚠️ 상품 ID는 코드·양쪽 스토어에서 **완전히 동일**해야 합니다. 한 번 등록한 상품 ID는 삭제·재사용 불가입니다.
-> 코드는 환경변수가 있으면 그 값을, 없으면 기본값을 사용합니다.
-
-### 4-1. 사전 조건
-
-- **Apple**: App Store Connect > 비즈니스(계약·세금·금융) > *유료 앱 계약* 활성 + 은행/세금 정보 완료
-- **Google**: Play Console 결제 프로필 등록 완료 + 앱이 **최소 1회 내부 테스트 트랙에 업로드**되어 있어야 함
-
-계약이 "처리 중"이면 상품을 등록해도 `fetchProducts`가 빈 배열을 반환합니다.
-
-### 4-2. Apple — App Store Connect
-
-1. 내 앱 > 해당 앱 > **앱 내 구입**
-2. 새로 만들기 > **비소모성**
-3. 참조 이름 `광고 제거` / 제품 ID `com.tha.koreaquiz.remove_ad` / 가격 ₩3,900
-4. **현지화 정보** 최소 1개 언어 — 표시 이름 `광고 제거`, 설명 `앱 내 광고를 영구적으로 제거합니다.`
-5. **심사 정보** — 스크린샷 1장 필수(설정 탭의 `InAppRemoveAdsSection` 캡처) + 검토 메모
-6. 상태를 **심사 준비 완료**로 저장 → 앱 바이너리와 **함께** 첫 심사에 제출
-
-**Sandbox 테스트**: ASC > 사용자 및 액세스 > Sandbox > 테스터 생성 → 실기기 `설정 > 개발자 > Sandbox Apple Account` 로그인
-(실제 Apple ID로 로그인하지 말 것).
-
-**시뮬레이터 로컬 테스트**: `ios/KoreaQuiz.storekit` 사용. Xcode에서 `ios/KoreaQuiz.xcworkspace` 열고
-Product > Scheme > Edit Scheme > Run > Options > **StoreKit Configuration** = `KoreaQuiz.storekit`.
-
-> 비소모성 상품이므로 **"구매 복원" 버튼이 앱 내에 반드시 있어야 하며**, 없으면 Guideline 3.1.1로 리젝됩니다. (구현 완료)
-
-### 4-3. Google — Play Console
-
-1. 앱 선택 > 수익 창출 > **제품 > 인앱 상품**
-2. 상품 ID `com.tha.koreaquiz.remove_ad` / 이름 `광고 제거` / 설명 / 가격 ₩3,900
-3. **활성**으로 저장 (초안이면 앱에서 조회되지 않음)
-
-**라이선스 테스터**: Play Console > (전체 계정) 설정 > 라이선스 테스트 > 테스터 Gmail 추가 → 응답 `RESPOND_NORMALLY`.
-
-주의:
-- **내부 테스트 트랙에 AAB를 먼저 업로드**해야 인앱 상품이 조회됩니다.
-- 업로드 AAB의 `applicationId`·서명 키가 콘솔 등록본과 같아야 합니다.
-- `com.android.vending.BILLING` 권한은 이미 AndroidManifest에 선언되어 있습니다.
-- 테스트 재구매는 Play 스토어 > 결제 및 정기 결제에서 테스트 주문 취소 후 가능(비소모성은 소유 시 재구매 불가).
-
-### 4-4. Supabase 스키마
-
-`supabase/` 아래 SQL **3개를 모두** Supabase SQL Editor에서 1회씩 실행하세요. 하나라도 빠지면 해당 기능이
-런타임에서 조용히 실패합니다.
-
-| 파일 | 용도 | 미실행 시 증상 |
-| --- | --- | --- |
-| `purchases.sql` | 광고 제거 구매 소유권 동기화 | 기기 변경 후 복원이 스토어 이력에만 의존 |
-| `ranking.sql` | 전체·타임챌린지·주간 리그 랭킹 | 랭킹/주간 리그 화면 데이터 없음 |
-| `backup.sql` | 학습 진도 클라우드 백업·복원(코드 발급) | 백업/복원 실패 |
-
-세 스키마 모두 `korea_quiz_` 프리픽스와 익명 인증(`auth.uid()`)을 씁니다.
-Auth > Providers > **Anonymous sign-ins 활성화** 필요.
-
-### 4-5. 동작 흐름
-
-```
-앱 시작
- └ initPurchase()
-    ├ loadAdsRemoved()      로컬 플래그 즉시 로드 (광고 노출 판단 지연 방지)
-    ├ ensureConnected()     스토어 연결 (실패 시 이후 호출에서 자동 재시도)
-    └ verifyEntitlement()   스토어 실제 구매 이력으로 권한 재검증
-         소유 O → 플래그 true + Supabase 기록 갱신
-         소유 X → Supabase 기록 확인 → 없으면 플래그 false 로 정정
-         조회 실패(오프라인) → 기존 캐시 유지
-
-구매 버튼 → purchaseRemoveAds() → purchaseUpdatedListener
- └ purchaseState === 'pending' 이면 권한 미부여 (편의점 결제 등 대기 상태)
- └ 완료 시 플래그 저장 → Supabase 업로드 → finishTransaction
-
-복원 버튼 → restorePurchases() → 스토어 이력 → 없으면 Supabase 기록 확인
-```
-
-권한의 진실의 원천은 **스토어 구매 이력**이며, AsyncStorage(`AD_REMOVED`)는 오프라인 캐시입니다.
-
-### 4-6. 결제 문제 대응
-
-| 증상 | 원인 |
-| --- | --- |
-| 가격이 계속 ₩3,900 폴백 | 상품 초안 상태 / 계약 미완료 / 테스트 트랙 미업로드 |
-| `fetchProducts` 빈 배열 | 상품 ID 오타, 번들 ID 불일치, 서명 키 불일치 |
-| Android "이 앱은 결제를 지원하지 않음" | 라이선스 테스터 미등록 또는 디버그 서명 AAB |
-| iOS 결제창이 안 뜸 | Sandbox 계정 미로그인, StoreKit Configuration 미선택 |
-| 재구매 안 됨 | 정상(비소모성). 테스트는 구매 취소 후 재시도 |
-
----
-
-## 5. 광고 (AdMob) — 출시 전 필수 교체
-
-| 항목 | 현재 값 (2026-08-15 실측) | 조치 |
-| --- | --- | --- |
-| `app.json > react-native-google-mobile-ads.androidAppId` | `ca-app-pub-3940256099942544~3347511713` (**Google 테스트 ID**) | 운영 App ID로 교체 |
-| `app.json > iosAppId` | `ca-app-pub-3940256099942544~1458002511` (**Google 테스트 ID**) | 운영 App ID로 교체 |
-| `.env` 광고 단위 ID 6종 | **`ca-app-pub-1` 자리표시자** — 실제 운영 ID는 바로 아래에 **주석 처리**되어 있음 | 주석을 풀고 자리표시자 줄을 지우기 |
-| `.env.production` | `EXPO_PUBLIC_APP_MODE`, `EXPO_PUBLIC_API_URL` 두 개뿐 | 광고·Supabase·IAP 키는 `.env`에서 로드됨을 전제로 유지하거나, 운영 키를 이 파일로 분리 |
-
-> ⚠️ **현재 상태로 스토어 빌드를 올리면 운영에서도 Google 테스트 광고가 뜹니다.**
-> `resolveAdUnitId`(`src/screens/common/ads/adUnitId.ts`)는 `ca-app-pub-<16자리>/<7~12자리>` 형식이 아니면
-> 테스트 유닛으로 폴백하고 `⚠️ 광고 유닛 ID가 설정되지 않아 테스트 광고로 대체합니다.` 경고만 남깁니다.
-> `ca-app-pub-1`은 이 형식이 아니므로 전량 폴백 대상입니다.
+## 3. 출시 전 체크리스트
 
 ```bash
-# 자리표시자가 남아 있는지 확인 (출력이 있으면 아직 교체 전)
-grep -nE "^EXPO_PUBLIC_GOOGLE_ADMOV.*=ca-app-pub-1$" .env
+yarn lint            # ESLint
+npx tsc --noEmit     # 타입 체크
+yarn test            # node:test (src/**/*.test.ts)
+yarn verify:words    # 단어 데이터 검증 (표준국어대사전 대조)
 ```
 
-- 실 단위 ID 판별 로직: `src/screens/common/ads/adUnitId.ts` (`resolveAdUnitId` / `isRealAdUnitId`,
-  테스트는 `src/screens/common/ads/__tests__/adUnitId.spec.ts`).
-- `.env`에 있는 단위 키는 `{ANDROID,IOS}_{BANNER,FRONT,REWARD}` 6종뿐입니다. 앱 오프닝
-  (`GOOGLE_ADMOV_*_OPEN_APP`)·네이티브(`GOOGLE_ADMOV_*_NATIVE_ADVANCED`) 키는 없고, 해당 컴포넌트도 미사용입니다.
-- 배너 미노출 화면 목록: `src/screens/common/layout/AppLayout.tsx`의 `AD_BLOCKED_ROUTES` (1-3에 실제 목록).
-- 광고 제거 구매자에게 배너가 차단되는지 실기기 확인(전면·보상형은 현재 미노출).
-
-> ⚠️ AdMob 관련 변경은 임의 진행 금지 항목입니다. 변경 내용을 먼저 정리·승인 후 적용하세요.
+- [ ] 위 4개 통과
+- [ ] `build.gradle` / `project.pbxproj` 버전·빌드번호 일치 (현재 1.1.0 / 3)
+- [ ] `fastlane/metadata/**/release_notes.txt`, `changelogs/<versionCode>.txt` 를 이번 버전 내용으로 갱신 (현재 changelog 파일은 `2.txt` 뿐)
+- [ ] `.env.production` 의 AdMob 단위 ID 가 **생활한자 운영 ID** 인지 확인 (한픽 ID 나 테스트 ID 로 출시하면 수익이 엉킴)
+- [ ] 실기기에서 릴리즈 빌드 스모크 테스트 (광고 노출, 알림 예약, 효과음 재생, 스플래시)
+- [ ] Crashlytics 로 테스트 크래시 1건 올려서 수집 확인
+- [ ] 개인정보처리방침 URL 접속 확인
 
 ---
 
-## 6. 빌드 · 제출 명령
+## 4. 빌드 & 제출 명령
 
-### 6-1. EAS
+두 갈래가 모두 준비되어 있습니다. **한쪽만 골라서** 쓰세요.
 
-```bash
-# Android: AAB 로컬 빌드 → Play 제출
-yarn deploy:android      # eas build -p android --profile production --local → eas submit
-
-# iOS: IPA 로컬 빌드 → App Store 제출
-yarn deploy:ios          # eas build --platform ios --profile production --local → eas submit
-```
-
-프로필(`eas.json`): `development`(APK·dev client) / `preview`(APK·internal 트랙) / `production`(store·autoIncrement).
-환경: `production` = `APP_ENV=production`, `EXPO_PUBLIC_APP_MODE=prd`.
-
-### 6-2. Fastlane
-
-최초 1회:
+### 4.1 EAS (권장 — 이미 설정 완료)
 
 ```bash
-gem install bundler
-yarn fl:install                    # bundle install && fastlane install_plugins
-cp fastlane/.env.example fastlane/.env
+# Android: 로컬 빌드 → Play 업로드(프로덕션 트랙, draft 상태로 생성)
+yarn deploy:android
+
+# iOS: 로컬 빌드 → App Store Connect 업로드
+yarn deploy:ios
 ```
 
-`fastlane/.env`에 채울 값: Apple ID / 팀 ID / App Store Connect API 키, match git 저장소 URL + 비밀번호,
-Google Play 서비스 계정 JSON 경로, (선택) Firebase 앱 ID.
+프로필(`eas.json`):
 
-> 🔒 `fastlane/.env`, `AuthKey*.p8`, `play-service-account.json`은 `.gitignore` 대상입니다. 커밋 금지.
+| 프로필 | 채널 | 배포 | Android 산출물 | APP_ENV |
+|---|---|---|---|---|
+| development | development | internal | apk | development |
+| preview | preview | internal | apk | preview |
+| production | production | store | aab | production |
 
-| iOS 단축어 | 동작 |
-| --- | --- |
-| `yarn fl:ios:setup` | yarn 설치 + (필요 시) prebuild + `pod install` |
-| `yarn fl:ios:signing` | 코드사이닝 동기화 (`match`) |
-| `yarn fl:ios:build` | 릴리즈 `.ipa` → `build/KoreaQuiz.ipa` |
-| `yarn fl:ios:beta` | 빌드 → **TestFlight** 업로드 → dSYM 업로드 |
-| `yarn fl:ios:release` | 빌드 → **App Store** 메타데이터/빌드 제출 |
-| `yarn fl:ios:firebase` | Firebase App Distribution 배포 |
-| `yarn fl:ios:screens` | 스크린샷 촬영(`snapshot`) + 프레임 |
-| `yarn fl:ios:dsyms` | dSYM 다운로드 → Crashlytics 업로드 |
-| `yarn fl:ios:bump` | `app.json` 버전 +0.0.1 |
-| `yarn fl:ios:ci` | build → TestFlight → dSYM |
+제출 설정: Android 는 `credentials/google-service-account.json` 으로 `production` 트랙에 **draft** 로 올라갑니다(Play Console 에서 수동 출시). iOS 는 위 §1 의 Apple 계정/ascAppId 사용 — **ascAppId 를 먼저 교체**해야 합니다(§0-2).
 
-| Android 단축어 | 동작 |
-| --- | --- |
-| `yarn fl:and:setup` | yarn 설치 + (필요 시) prebuild |
-| `yarn fl:and:apk` | 릴리즈 `.apk` 빌드 |
-| `yarn fl:and:aab` | 릴리즈 `.aab` 빌드 (스토어용) |
-| `yarn fl:and:beta` | versionCode↑ → AAB → **Play 내부테스트** |
-| `yarn fl:and:release` | **Play 프로덕션** 출시 |
-| `yarn fl:and:promote` | 내부 → 프로덕션 트랙 승격 |
-| `yarn fl:and:firebase` | Firebase App Distribution 배포 |
-| `yarn fl:and:bump` / `bumpcode` | `app.json` 버전 / `versionCode` 증가 |
-| `yarn fl:and:ci` | bump → AAB → Play internal |
-
-인자가 필요하면 lane 직접 실행:
+### 4.2 fastlane
 
 ```bash
-bundle exec fastlane ios bump type:minor
-bundle exec fastlane ios signing type:development readonly:false
+yarn fl:install        # bundle install + 플러그인
+cp fastlane/.env.example fastlane/.env   # 값 채우기 (커밋 금지)
+
+# iOS
+yarn fl:ios:signing    # match 로 인증서 동기화
+yarn fl:ios:beta       # 빌드 → TestFlight → dSYM 업로드
+yarn fl:ios:release    # 빌드 → deliver(메타데이터+빌드) 제출
+
+# Android
+yarn fl:and:aab        # 릴리즈 AAB
+yarn fl:and:beta       # 내부 테스트 트랙 업로드
+yarn fl:and:release    # 프로덕션 출시
+yarn fl:and:promote    # internal → production 승격
 ```
 
-### 6-3. 산출물 위치
+빌드번호: `fl:ios:build` 는 `BUILD_NUMBER` 미지정 시 **타임스탬프(YYYYMMDDHHmm)** 를 씁니다.
+`deliver` 는 기본적으로 `submit_for_review: false`, `automatic_release: false` (`fastlane/Deliverfile`) — 자동 제출하려면 `SUBMIT_FOR_REVIEW=true`.
 
-| 종류 | 경로 |
-| --- | --- |
-| iOS IPA | `build/KoreaQuiz.ipa` (EAS는 `build/app.ipa`) |
-| Android AAB | `android/app/build/outputs/bundle/release/app-release.aab` (EAS는 `build/app.aab`) |
-| Android APK | `android/app/build/outputs/apk/release/app-release.apk` |
-| 스크린샷 | `fastlane/screenshots/` (iOS), `fastlane/metadata/android/` (Android) |
+### 4.3 Gradle 직접
 
-### 6-4. 자격증명 발급
+```bash
+yarn build:aab   # android/app/build/outputs/bundle/release/app-release.aab
+yarn build:apk   # 내부 배포용
+```
 
-- **App Store Connect API Key** (권장, 2FA 없이 자동화): ASC > 사용자 및 액세스 > 통합 > App Store Connect API >
-  `.p8` 발급 → `.env`의 `APP_STORE_CONNECT_API_KEY_KEY_ID / ISSUER_ID / KEY_FILEPATH`.
-- **match** (인증서/프로비저닝): private git repo 생성 → `MATCH_GIT_URL`, `MATCH_PASSWORD` →
-  최초 1회 `bundle exec fastlane ios signing type:appstore readonly:false`.
-- **Google Play 서비스 계정**: GCP 콘솔에서 서비스 계정 생성 → Play Console 권한 부여 → JSON 키 저장
-  (`credentials/google-service-account.json`, fastlane은 `PLAY_JSON_KEY_FILE`).
-- **Firebase App Distribution** (선택): `FIREBASE_IOS_APP_ID` / `FIREBASE_ANDROID_APP_ID`,
-  인증은 `firebase login:ci` 토큰 또는 서비스 계정.
+### 4.4 난독화 매핑 파일 (R8 mapping.txt)
+
+Play Console 의 "이 App Bundle 유형과 연결된 가독화 파일이 없습니다" 경고는 **매핑 파일이 빠진 AAB**를 올렸을 때 나옵니다.
+
+- 난독화 설정: `android/gradle.properties` 의 `android.enableMinifyInReleaseBuilds=true` (R8 ON) — `app.json` 의 `expo-build-properties` 에도 같은 값이 있습니다
+- 규칙 파일: `android/app/proguard-rules.pro`
+- 매핑 산출물: `android/app/build/outputs/mapping/release/mapping.txt`
+
+AGP 는 `bundleRelease` 로 만든 AAB 안에 매핑을 자동으로 넣습니다
+(`BUNDLE-METADATA/com.android.tools.build.obfuscation/proguard.map`). 따라서 **R8 이 켜진 상태로 빌드한 AAB 를 올리면 경고가 사라집니다.**
+
+경고가 계속 나오면 순서대로 확인:
+
+1. 빌드 시점에 R8 이 실제로 돌았는지 — `android/app/build/outputs/mapping/release/mapping.txt` 파일이 존재하는지 확인
+2. 파일이 없으면 클린 빌드: `cd android && ./gradlew clean bundleRelease`
+3. 그래도 없으면 매핑을 직접 업로드: Play Console → 앱 번들 탐색기 → 해당 버전 → **다운로드 탭 → ReTrace 매핑 파일 업로드**
+4. APK 배포(내부 테스트)라면 매핑이 자동 포함되지 않으므로 3번 방식으로 직접 올려야 합니다
+
+> 매핑 파일은 버전코드마다 다릅니다. 릴리스마다 `mapping.txt` 를 따로 보관하세요 (`build/` 는 clean 시 지워짐).
 
 ---
 
-## 7. 출시 전 체크리스트
+## 5. 서명 / 자격증명
 
-### 7-1. 테스트 전용 코드 차단 (필수)
+### 5.1 iOS
 
-| 항목 | 위치 | 현재 값 | 판정 |
-| --- | --- | --- | --- |
-| 광고 테스트 도구 (광고제거 되돌리기·강제 미구매) | `src/services/PurchaseService.ts:42` `ADS_TEST_TOOLS_ENABLED` | `__DEV__` | ✅ 릴리즈 자동 제외 |
-| 개발자 치트 섹션 (모든 퀴즈/학습 완료) | `app/(tabs)/my.tsx` → `__DEV__` 블록 | `__DEV__` | ✅ 릴리즈 자동 제외 |
+- 방식: **fastlane match** (`fastlane/Matchfile`, type `appstore`, storage `git`)
+- 필요 환경변수: `MATCH_GIT_URL`, `MATCH_PASSWORD`, `MATCH_READONLY`
+- App Store Connect API 키 권장(2FA 회피): `APP_STORE_CONNECT_API_KEY_KEY_ID` / `_ISSUER_ID` / `_KEY_FILEPATH(./fastlane/AuthKey.p8)`
+- EAS 를 쓸 경우 EAS 가 관리하는 자격증명과 match 자격증명이 **충돌하지 않도록** 한쪽으로 통일
 
-```bash
-# 하드코딩된 true 로 되돌아가지 않았는지만 확인 (기대 출력: ADS_TEST_TOOLS_ENABLED = __DEV__)
-grep -n "ADS_TEST_TOOLS_ENABLED = " src/services/PurchaseService.ts
+### 5.2 Android
+
+- 릴리즈 서명: `android/app/release.keystore`, alias `three-hundred-app` (`android/gradle.properties`)
+- Play App Signing 사용 시 이 키는 **업로드 키**입니다. 분실하면 업로드 키 재등록 절차 필요.
+- Play 업로드 서비스 계정: `credentials/google-service-account.json` (권한: Play Console → 사용자 및 권한 → 릴리즈 관리)
+
+### 5.3 보안 경고 (중요)
+
+현재 다음 파일들이 git 에 **추적되고 있습니다** (`git ls-files` 확인):
+
+```
+.env
+.env.production
+android/app/release.keystore
+android/gradle.properties        (RELEASE_STORE_PASSWORD / RELEASE_KEY_PASSWORD 평문)
+credentials/google-service-account.json
+GoogleService-Info.plist
+ios/LifeHanja/GoogleService-Info.plist
 ```
 
-`__DEV__`가 아니라 `true`로 바뀌어 있으면 릴리즈 빌드에도 테스트 도구가 실린 것이므로 되돌리세요.
+저장소가 공개(public)라면 릴리즈 서명 키와 Play 업로드 권한이 외부에 노출된 상태입니다. 권장 조치:
 
-### 7-2. 빌드
+1. 저장소 공개 여부 확인. 공개였다면 **서비스 계정 키를 즉시 폐기하고 재발급**하고, 업로드 키 교체를 Play Console 에서 진행.
+2. `.gitignore` 에 `android/app/release.keystore`, `android/gradle.properties`, `credentials/`, `.env*` 추가 후 `git rm --cached` 로 인덱스에서 제거.
+3. 서명 비밀번호는 `~/.gradle/gradle.properties` 또는 환경변수로 이동.
+4. 과거 커밋에 남은 키는 히스토리 재작성(`git filter-repo`) 없이는 사라지지 않습니다 — 재작성 전까지는 키가 유효하다고 가정하고 대응하세요.
 
-- `npx tsc --noEmit` 에러 0건, `npx jest` 통과
-- `.env.production`으로 빌드되는지 (`EXPO_PUBLIC_APP_MODE=prd`)
-- 버전/빌드 번호 증가: `app.json`, `android/app/build.gradle`, Xcode 프로젝트 (또는 EAS `autoIncrement`)
-- AAB: `yarn deploy:android` / `yarn fl:and:aab` — IPA: `yarn deploy:ios` / Xcode Archive
-
-### 7-3. 공통 제출 확인
-
-- [ ] AdMob App ID(`app.json`)가 운영 값이다 (현재 테스트 ID)
-- [ ] `.env` 광고 단위 ID 6종이 `ca-app-pub-1` 자리표시자가 아니다 (현재 자리표시자, §5 grep으로 확인)
-- [ ] 스토어 선언·문구의 광고 형식이 실제 노출(배너)과 일치한다
-- [ ] Supabase `purchases.sql` · `ranking.sql` · `backup.sql` 3개를 모두 실행했다
-- [ ] 인앱 상품 ID가 코드와 일치하고 콘솔에서 활성/심사 준비 완료 상태다
-- [ ] 실기기 + 샌드박스/라이선스 테스터로 구매 → 광고 제거 → 재시작 후 유지 확인
-- [ ] 앱 삭제·재설치 후 "구매 복원"으로 복구 확인
-- [ ] 개인정보처리방침 URL이 실제로 열리고 데이터 선언과 내용이 일치한다
-- [ ] 스토어 문구의 주제별 문항 수가 `LearnHubService`의 현재 `total`과 일치한다 (1-2 재측정 스크립트)
-- [ ] 스크린샷이 실제 최신 화면과 일치한다
-
-### 7-4. Android 전용
-
-- [ ] 내부 테스트 트랙에서 결제·광고·알림을 실기기로 확인했다
-- [ ] `AndroidManifest.xml`에 차단 권한(`SCHEDULE_EXACT_ALARM` 등)이 되살아나지 않았다
-- [ ] versionCode가 이전 업로드보다 크다
-
-### 7-5. iOS 전용
-
-- [ ] ATT 동의 요청이 IDFA 접근보다 먼저 실행된다
-- [ ] 설정 탭에 '구매 복원' 버튼이 있고 동작한다
-- [ ] 인앱 상품이 바이너리와 함께 제출된다
-- [ ] iPad(13")에서 레이아웃이 깨지지 않는다
+이 조치는 되돌리기 어려운 작업(히스토리 재작성, 키 폐기)을 포함하므로 진행 전 백업과 팀 합의를 권합니다.
 
 ---
 
-## 8. 트러블슈팅
+## 6. 스토어 메타데이터 (업로드되는 실제 값)
 
-- **`bundle: command not found`** → `gem install bundler` 후 재시도.
-- **iOS 빌드가 Linux에서 실패** → 정상. iOS는 macOS/Xcode 필요.
-- **Pods 오류** → `yarn fl:ios:setup`으로 `pod install` 재실행. 네이티브 변경 시 `npx expo prebuild` 후 재빌드.
-- **스크린샷 lane 미동작** → `snapshot`은 Xcode UITest, `screengrab`은 Android Espresso 테스트 타깃 필요.
-- **버전 관리** → 표시 버전의 단일 출처는 `app.json`. iOS 빌드넘버는 빌드 시 타임스탬프(또는 `BUILD_NUMBER`),
-  Android `versionCode`는 `bumpcode` 또는 EAS `autoIncrement`.
-- **빌드 실패 시 복구**
+| 스토어 | 경로 |
+|---|---|
+| App Store (deliver) | `fastlane/metadata/ko/` — `name.txt` · `subtitle.txt` · `description.txt` · `keywords.txt` · `promotional_text.txt` · `release_notes.txt` |
+| Google Play (supply) | `fastlane/metadata/android/ko-KR/` — `title.txt` · `short_description.txt` · `full_description.txt` · `changelogs/<versionCode>.txt` · `images/featureGraphic.png` |
 
-```bash
-pkill -f xcodebuild; pkill -f metro; (cd android && ./gradlew --stop)
-rm -rf ~/Library/Developer/Xcode/DerivedData/KoreaQuiz-*
-rm -rf node_modules "$TMPDIR/metro-cache" && yarn install && npx pod-install
-```
+문구를 고칠 땐 **두 곳을 함께** 고칩니다(본문 동일).
+
+### 6.1 현재 값 상태
+
+> ⚠️ **`name.txt` 를 뺀 나머지 문구는 전부 한픽(한자 급수 시험 앱) 것입니다.** 어문회·진흥회·배정한자 6,182자·모의고사 이야기라 이 앱의 기능과 맞지 않습니다. 출시 전 전면 재작성이 필요합니다.
+
+| 필드 | 현재 값 | 상태 | 제한 |
+|---|---|---|---|
+| 앱 이름 (iOS) | 생활한자 퀴즈 | 정상 | 30자 |
+| 제목 (Play title) | 한픽: 한자 급수 퀴즈 | ⚠️ 교체 | 30자 |
+| 부제 (iOS subtitle) | 급수 한자부터 모의고사까지, 합격까지 함께 | ⚠️ 교체 | 30자 |
+| 짧은 설명 (Play) | 급수별 배정한자 6,182자를… | ⚠️ 교체 | 80자 |
+| 키워드 (iOS) | 한자,한자능력검정시험,급수시험,어문회,… | ⚠️ 교체 | 100자(쉼표 포함) |
+| 프로모션 텍스트 (iOS) | 한국어문회·한자교육진흥회 배정한자 6,182자를… | ⚠️ 교체 | 170자 |
+| 상세 설명 | 급수 시험 앱 본문 | ⚠️ 교체 | iOS 4000자, Play 4000자 |
+| 릴리즈 노트 | `release_notes.txt` / `changelogs/2.txt` | ⚠️ 교체 + `3.txt` 추가 | iOS 4000자, Play 500자 |
+
+> ⚠️ Play changelog 는 **500자 제한**입니다. iOS release_notes 를 그대로 복사하면 초과할 수 있으니 확인하세요.
+
+### 6.2 다국어
+
+앱과 스토어 메타데이터 모두 **한국어 전용**입니다. 앱에 i18n 구성이 없고 `fastlane/metadata/` 에도 `ko` / `android/ko-KR` 만 있습니다.
+
+### 6.3 앱 설명에 명시할 사실 (심사 답변용)
+
+- 학습 기록·보상·설정은 **기기 내부에만** 저장(AsyncStorage + redux-persist), 서버 전송 없음
+- 회원가입·로그인 없음, 백엔드 API 없음
+- 무료, 배너/전면/앱오프닝 광고 포함, 인앱 결제 없음
+- 수록량: 생활 한자어 약 5,046개 (`src/const/data/life/ConstLifeWords.ts`), 학습 카테고리 26개 (`ConstLifeCategories.ts`)
+- 학습 요소: 카테고리별 단어 학습, 퀴즈, 오답 노트, 오늘의 문제, 필순 따라쓰기, 출석·스트릭, 코인·경험치·펫 성장, 상점
 
 ---
 
-## 9. 남은 TODO 요약
+## 7. 아이콘 / 스플래시 에셋
 
-2026-08-15 코드·설정 실측 기준. 위에서 아래로 갈수록 덜 급합니다.
+| 용도 | 파일 | 비고 |
+|---|---|---|
+| 앱 아이콘 | `assets/icon.png` | iOS 1024×1024 알파 없음 필요. Android 도 같은 파일 사용 |
+| Android 적응형 아이콘 | `assets/adaptive-icon.png` (foreground) | 배경색 `#1249C9` (`app.json`) |
+| 네이티브 스플래시 | `src/assets/illustrations/panda-avatar.png` | `expo-splash-screen` 플러그인, 폭 220, 배경 `#1249C9` |
+| 커스텀 스플래시 | `src/screens/common/AnimatedSplash.tsx` | JS 로 그리는 연출 |
+| 웹 파비콘 | `assets/favicon.png` | 스토어 무관 |
 
-| # | 항목 | 위치 | 상태 |
-| --- | --- | --- | --- |
-| 1 | `.env` 광고 단위 ID 6종이 `ca-app-pub-1` 자리표시자 — 주석 처리된 운영 ID로 교체 (안 하면 운영에서 테스트 광고 노출) | 5 | 미조치 |
-| 2 | AdMob App ID가 Google 테스트 ID (`app.json`) — 운영 값 교체 | 5 | 미조치 |
-| 3 | 광고 형식 확정: 배너만 유지할지, 미사용 상태인 전면·보상형을 붙일지 결정 후 선언·문구 통일 | 2-4, 5 | 미결정 |
-| 4 | 개인정보처리방침 공개 URL 게시 후 양대 콘솔 입력 | 1-1 | 미조치 |
-| 5 | 방침·약관의 "인공지능(AI)" 문단 2개 삭제 (`TermScreen.tsx:36`, `:223`) | 1-1 | 미조치 |
-| 6 | Android 릴리즈 키스토어 배치(현재 `debug.keystore`만) + `gradle.properties` 평문 비밀번호 정리 | 0 | 미조치 |
-| 7 | Supabase SQL 3종(`purchases`·`ranking`·`backup`) 실행 확인 | 4-4 | 확인 필요 |
-| 8 | Play 피처 그래픽 1024×500 제작 | 2-2 | 미제작 |
-| 9 | iPhone 6.9" / iPad 13" / Android 폰 스크린샷 촬영 (현재 0장) | 1-3, 2-2, 3-3 | 미조치 |
-| 10 | App 심사 정보의 담당자 실명·전화번호 입력 | 3-6 | 미조치 |
-| 11 | 미사용 코드 정리(선택): `ads/levelplay/` + `ironsource-mediation` 의존성, `ConstTowerData`·`ConstTowerQuizData` | — | 선택 |
+> `assets/android-icon-foreground.png` · `-background.png` · `-monochrome.png` · `assets/splash.png` · `splash-blank.png` · `splash-icon.png` 은 저장소에 있지만 `app.json` 이 참조하지 않습니다. 모노크롬(테마) 아이콘을 쓰려면 `app.json` 의 `adaptiveIcon` 에 `backgroundImage` · `monochromeImage` 를 추가해야 합니다.
+
+**Play Console 별도 업로드**: 앱 아이콘 512×512 PNG(`src/assets/play_store_512.png` 활용 가능), **그래픽 이미지 1024×500** — `fastlane/metadata/android/ko-KR/images/featureGraphic.png` 에 파일이 있으나 한픽용인지 확인 후 교체하세요.
+
+---
+
+## 8. 스크린샷 규격 (현재 0장 — 전부 촬영 필요)
+
+### App Store (필수)
+
+| 기기 | 해상도 | 장수 |
+|---|---|---|
+| iPhone 6.9" (16 Pro Max / 15 Pro Max) | 1320×2868 또는 1290×2796 | 최소 1, 최대 10 |
+| iPad 13" | 2064×2752 또는 2048×2732 | `supportsTablet: true` 이므로 **필수** |
+
+> 6.9" 를 올리면 하위 iPhone 사이즈는 자동 축소 적용됩니다. iPad 지원을 끄고 싶다면 `app.json` 의 `supportsTablet` 을 `false` 로 바꾸면 iPad 스크린샷 의무가 사라집니다.
+
+자동화: `yarn fl:ios:screens` (snapshot, `fastlane/Snapfile`) — UI 테스트 타깃이 없으면 수동 촬영.
+
+### Google Play (필수)
+
+| 항목 | 규격 |
+|---|---|
+| 휴대전화 스크린샷 | 최소 2장(권장 4~8), 16:9 또는 9:16, 짧은 변 ≥ 320px, 긴 변 ≤ 3840px |
+| 7"/10" 태블릿 | 태블릿 지원 표기 시 권장 |
+| 그래픽 이미지 | 1024×500 PNG/JPG (필수) |
+
+자동화: `bundle exec fastlane android screenshots` (screengrab, `fastlane/Screengrabfile`) — Espresso 테스트가 없으면 수동 촬영.
+
+### 촬영 추천 화면 (코드 기준)
+
+홈(출석·스트릭·펫) → 단어 학습(카테고리 카드) → 퀴즈 → 오늘의 문제 → 한자 탑 / 타임 챌린지 → 상점(코인·코스튬) → 학습 통계
+
+---
+
+## 9. Google Play Console 설정
+
+### 9.1 앱 콘텐츠(App content) 답변안
+
+| 항목 | 답변 | 근거 |
+|---|---|---|
+| 개인정보처리방침 URL | **작성 필요** | 광고 SDK·Analytics 사용 → 필수 |
+| 광고 포함 | **예** | AdMob 배너/전면/앱오프닝 |
+| 앱 액세스 권한 | 제한 없음 (로그인 불필요) | 회원 기능 없음 |
+| 콘텐츠 등급 | IARC 설문 → 교육/참고, 폭력·성적 콘텐츠 없음, 광고 있음 → 전체이용가 예상 | — |
+| 타깃 층 및 콘텐츠 | **13세 이상** 권장 | 아래 주의 |
+| 뉴스 앱 | 아니요 | |
+| 코로나19 접촉 확인 앱 | 아니요 | |
+| 데이터 보안 | §9.2 | |
+| 정부 앱 | 아니요 | |
+| 금융 기능 | 없음 | |
+| 광고 ID 사용 | **예** | `com.google.android.gms.permission.AD_ID` 선언됨 |
+
+> **주의 — 아동 대상(Families) 정책**: 타깃 연령에 13세 미만을 포함하면 AdMob 광고를 **아동 대상 처리(TFUA/TFCD)** 로 설정해야 하고, `AD_ID` 권한 사용이 제한됩니다. 현재 코드에는 아동 대상 광고 설정이 없으므로, 타깃 연령은 **13세 이상**으로 두는 편이 현재 구현과 일치합니다.
+
+### 9.2 데이터 보안(Data safety) 답변안
+
+앱 자체는 서버로 데이터를 보내지 않지만, **SDK 가 수집**합니다.
+
+| 데이터 유형 | 수집 | 공유 | 목적 | 출처 |
+|---|---|---|---|---|
+| 기기 또는 기타 ID (광고 ID) | 예 | 예(Google) | 광고, 분석 | AdMob |
+| 앱 상호작용 등 이벤트 | 예 | 아니요 | 분석 | Firebase Analytics |
+| 진단(크래시 로그, 성능) | 예 | 아니요 | 앱 기능·분석 | Crashlytics |
+| 대략적 위치 | AdMob 이 IP 기반으로 처리할 수 있음 → Google 안내 확인 | — | 광고 | AdMob |
+| 개인정보(이름·이메일 등) | **아니요** | — | — | 로그인 없음 |
+| 학습 기록 | **수집 안 함**(기기 내 저장) | — | — | AsyncStorage |
+
+- 전송 중 암호화: 예 (SDK 는 HTTPS)
+- 사용자 데이터 삭제 요청 방법: 앱 삭제 시 로컬 데이터 소멸 — 개인정보처리방침에 명시
+
+### 9.3 권한 근거 (심사 문의 대비)
+
+| 권한 | 용도 |
+|---|---|
+| `INTERNET` | 광고·Analytics·Crashlytics |
+| `POST_NOTIFICATIONS` | 학습 리마인더 알림 |
+| `RECEIVE_BOOT_COMPLETED` | 재부팅 후 예약 알림 복원 |
+| `com.google.android.gms.permission.AD_ID` | AdMob 광고 ID |
+
+`SCHEDULE_EXACT_ALARM` / `USE_EXACT_ALARM` / `VIBRATE` / 외부 저장소 권한은 매니페스트에서 **명시적으로 제거**(`tools:node="remove"`)되어 있습니다. 정확 알람 권한은 Play 정책상 알람/캘린더 앱만 허용되므로 학습 리마인더에는 `AlarmType.SET_AND_ALLOW_WHILE_IDLE` 을 사용합니다(`src/utils/NotifactionHelper.ts`). 이 결정은 유지하세요.
+
+### 9.4 출시 트랙 순서
+
+내부 테스트(internal) → 비공개 테스트(closed) → 프로덕션. `eas.json` 은 preview 프로필이 internal 트랙, production 이 production 트랙(draft)로 설정되어 있습니다.
+
+---
+
+## 10. App Store Connect 설정
+
+| 항목 | 값 / 답변 |
+|---|---|
+| 카테고리 | 교육 (2차: 참고) |
+| 연령 등급 | 4+ 예상 (폭력/성인 콘텐츠 없음) — 심사 설문에서 광고 여부 반영 |
+| 개인정보처리방침 URL | **작성 필요** (필수) |
+| 저작권 | 예: `2026 EcodeLab` |
+| 심사 정보 | 로그인 불필요 → 데모 계정 없음. 메모에 "회원가입 없이 모든 기능 사용 가능, 학습 데이터는 기기 내 저장" 기재 |
+| 수출 규정 | `ITSAppUsesNonExemptEncryption = false` (Info.plist) → 추가 서류 불필요 |
+| IDFA 사용 | **예** (Deliverfile `submission_information`: uses_idfa true, serves_ads true, tracks_install true, limits_tracking true) |
+| ATT | `NSUserTrackingUsageDescription` 설정됨, 앱 시작 시 `requestAppTrackingPermission()` 호출 (`app/_layout.tsx:105`) |
+| SKAdNetwork | Info.plist 에 AdMob 네트워크 ID 목록 등록됨 |
+| 지원 URL | **필요** (미정) |
+| 마케팅 URL | 선택 |
+
+### 개인정보 보호 세부사항(Nutrition Label) 답변안
+
+| 데이터 | 수집 | 추적 목적 | 연결 |
+|---|---|---|---|
+| 식별자 → 기기 ID(IDFA) | 예 | **예(추적)** | 사용자에 미연결 |
+| 사용 데이터 → 제품 상호작용 | 예 | 아니요 | 미연결 |
+| 진단 → 크래시/성능 데이터 | 예 | 아니요 | 미연결 |
+| 연락처·위치·콘텐츠 | 아니요 | — | — |
+
+> IDFA 를 추적 목적으로 신고하면 ATT 프롬프트 노출이 **필수**입니다 — 현재 구현되어 있습니다.
+
+---
+
+## 11. 광고(AdMob) 구성
+
+| 항목 | 값 |
+|---|---|
+| Android App ID | `ca-app-pub-1996095472780376~3451831828` ⚠️ 한픽과 동일 (`app.json` plugins + 최하단 블록) |
+| iOS App ID | `ca-app-pub-1996095472780376~9825668482` ⚠️ 한픽과 동일 (`app.json` plugins, Info.plist `GADApplicationIdentifier`) |
+| 광고 단위 ID | `.env` / `.env.production` 의 `EXPO_PUBLIC_GOOGLE_ADMOV_{ANDROID,IOS}_{BANNER,FRONT,REWARD,APP_OPEN}` |
+| 포맷 | 배너 · 전면 · 앱오프닝 · 리워드 |
+| 노출 정책 | `src/services/ads/AdGuardService.ts` — 형식별 1일 클릭 5회 초과 시 24시간 해당 형식만 숨김, 전면·앱오프닝은 하루 5회 노출 상한 |
+
+출시 전: AdMob 콘솔에 **생활한자 앱을 별도 등록**하고 App ID·단위 ID 를 교체하세요(§0-3). 한픽 ID 로 출시하면 두 앱 수익·리포트가 섞입니다.
+
+> `EXPO_PUBLIC_IAP_REMOVE_AD_KEY` 가 `src/const/EnvCompat.ts:32` 에 정의되어 있으나 인앱 결제 라이브러리는 설치되어 있지 않습니다. 광고 제거 상품을 출시하지 않는다면 스토어의 "인앱 구매" 항목은 **없음**으로 신고하세요.
+
+---
+
+## 12. OTA 업데이트 (expo-updates)
+
+- `updates.url`: `https://u.expo.dev/4125cad1-b423-4398-9683-d676ee94bbf0` ⚠️ 한픽 프로젝트와 동일 — §0-1 먼저 해결
+- `runtimeVersion`: `1.0.0` (고정 문자열) — **현재 앱 버전(1.1.0)과 어긋나 있습니다.** 네이티브 변경이 있는 릴리즈에서는 반드시 올려야 구버전에 잘못된 번들이 내려가지 않습니다.
+- 채널: `production` (eas.json)
+- OTA 로는 기능 추가/변경을 자유롭게 내릴 수 없습니다(양 스토어 정책상 앱의 주요 목적 변경 금지).
+
+앱 내 버전 안내는 `src/screens/common/modal/VersionCheckModal.tsx` 가 `react-native-version-check` 로 스토어 최신 버전을 조회합니다 — **스토어 최초 등록 후에야 동작**합니다.
+
+---
+
+## 13. 출시 후
+
+- [ ] iOS dSYM 업로드: `yarn fl:ios:dsyms` (Crashlytics 심볼화)
+- [ ] Play Console → 프로덕션 트랙 draft 를 수동 출시(rollout %)
+- [ ] Crashlytics / Analytics 첫 24시간 모니터링
+- [ ] 스토어 등록 완료 후 `.env*` 의 스토어 URL 을 실제 링크로 교체 (§0-6)
+- [ ] 다음 버전 준비 시 버전 올리기 — `fl:*:bump` 레인은 §1 의 경고 확인 후 사용
+
+---
+
+## 14. 참고 문서
+
+- 제품 정의: `PRODUCT.md`
+- 스토어 등록 문구: `STORE_LISTING.md`
+- 약관·개인정보처리방침 원문: `term/LifeHanja.tsx`
+- Expo SDK 55: https://docs.expo.dev/versions/v55.0.0/
+- fastlane 레인 상세: `fastlane.md`, `fastlane/README.md`
+- 사운드 라이선스 정리: `SOUND_SOURCING_20.md`

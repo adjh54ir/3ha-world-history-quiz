@@ -1,0 +1,4 @@
+# fastlane 플러그인 — `bundle exec fastlane add_plugin <name>` 로 추가/동기화됩니다.
+gem 'fastlane-plugin-firebase_app_distribution'  # Firebase App Distribution 배포
+gem 'fastlane-plugin-versioning'                 # iOS 버전/빌드넘버 정밀 제어
+gem 'fastlane-plugin-increment_version_code'     # Android versionCode 자동 증가

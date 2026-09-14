@@ -1,0 +1,29 @@
+export enum MainStorageKeyType {
+	TODAY_QUIZ_LIST = 'TodayQuizList',
+	USER_STUDY_HISTORY = 'UserStudyHistory', // 학습
+	TIME_CHALLENGE_HISTORY = 'TimeChallengeHistory', // 챌린지
+	USER_QUIZ_HISTORY = 'UserQuizHistory', // 퀴즈
+	SETTING_INFO = 'SettingInfo',
+	AD_REMOVED = 'AD_REMOVED',
+	USER_PROVERB_BOOKS = 'USER_PROVERB_BOOKS',
+	TOWER_CHALLENGE_PROGRESS = 'TOWER_CHALLENGE_PROGRESS',
+	USER_PROVERB_PRACTICE_RECORDS = 'USER_PROVERB_PRACTICE_RECORDS',
+	FAVORITES_STORAGE_KEY = 'FAVORITES_STORAGE_KEY',
+	DAILY_MISSION_CLAIMED = 'DAILY_MISSION_CLAIMED', // 일일 미션 보상 수령 날짜 목록
+	LAST_SEEN_GRADE = 'LAST_SEEN_GRADE', // 마지막으로 확인한 점수 등급 인덱스(레벨업 감지용)
+	STREAK_REWARD_CLAIMED = 'STREAK_REWARD_CLAIMED', // 지급 완료된 연속 출석 마일스톤 목록
+	SHOW_HANGUL_READING = 'SHOW_HANGUL_READING', // 학습/열람 화면에서 한자 독음(한글) 표시 여부
+	SOUND_ENABLED = 'SOUND_ENABLED', // 효과음(SFX) on/off
+	SOUND_VOLUME = 'SOUND_VOLUME', // 효과음 볼륨 (0~1)
+	BGM_ENABLED = 'BGM_ENABLED', // 배경음악(BGM) on/off
+	BGM_VOLUME = 'BGM_VOLUME', // 배경음악 볼륨 (0~1)
+	HAPTIC_ENABLED = 'HAPTIC_ENABLED', // 정답/오답 진동 on/off
+	WORD_CHAIN_BEST = 'WORD_CHAIN_BEST', // 끝말잇기 최고 기록(이어간 개수)
+	DAILY_ACTIVITY = 'DAILY_ACTIVITY', // 날짜별 활동 카운터(요일 미션·주간 리포트용)
+	STREAK_FREEZE = 'STREAK_FREEZE', // 연속 출석 보호권(스트릭 프리즈) 보유/사용 기록
+	REVIEW_SCHEDULE = 'REVIEW_SCHEDULE', // 오답 간격 반복(Leitner) 복습 일정
+	THEME_MODE = 'THEME_MODE', // 테마 모드(light | dark)
+	KIDS_MODE = 'KIDS_MODE', // 큰 글씨 모드 사용 여부 (저장 키는 옛 부모/자녀 모드 이름 그대로 둔다 — 기존 사용자 설정 유지)
+	HANJA_FONT_KEY = 'HANJA_FONT_KEY', // 한자 글씨체 선택값(ConstHanjaFont 의 key)
+	HANJA_FAVORITES = 'HANJA_FAVORITES', // 낱글자 사전 즐겨찾기(한자 글자 목록)
+}

@@ -19,6 +19,13 @@ allprojects {
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
+    // notifee 로컬 maven 저장소
+    maven { url "$rootDir/../node_modules/@notifee/react-native/android/libs" }
+  }
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+      compilerOptions {
+          freeCompilerArgs.add("-Xskip-metadata-version-check")
+      }
   }
 }
 

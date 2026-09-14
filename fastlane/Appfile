@@ -1,0 +1,14 @@
+# Appfile — 앱 식별자/계정 정보 (값은 fastlane/.env 또는 환경변수로 주입)
+# 실제 비밀값은 커밋하지 말고 .env(=.env.example 복사)에 넣으세요.
+
+# iOS
+app_identifier(ENV["IOS_BUNDLE_ID"] || "com.tha.lifehanja")
+apple_id(ENV["APPLE_ID"])                 # Apple 개발자 계정 이메일
+itc_team_id(ENV["ITC_TEAM_ID"])           # App Store Connect 팀 ID (선택)
+team_id(ENV["APPLE_TEAM_ID"])             # Apple Developer 포털 팀 ID
+
+# Android
+for_platform :android do
+  package_name(ENV["ANDROID_PACKAGE"] || "com.tha.lifehanja")
+  json_key_file(ENV["PLAY_JSON_KEY_FILE"]) # Google Play 서비스 계정 JSON 경로
+end

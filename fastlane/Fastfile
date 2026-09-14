@@ -1,0 +1,231 @@
+# =====================================================================
+#  Fastfile — 생활한자 퀴즈 (Expo / React Native, iOS + Android)
+#  - iOS:    LifeHanja.xcworkspace / scheme "LifeHanja" / com.tha.lifehanja
+#  - Android: android/ (Gradle) / com.tha.lifehanja
+#  비밀값은 fastlane/.env 로 주입 (fastlane/.env.example 참고)
+# =====================================================================
+
+require "json"
+
+# ---- 공용 상수 ----------------------------------------------------------
+IOS_WORKSPACE = "./ios/LifeHanja.xcworkspace"
+IOS_SCHEME    = "LifeHanja"
+ANDROID_DIR   = File.expand_path("../android", __dir__)
+APP_JSON      = File.expand_path("../app.json", __dir__)
+BUILD_OUTPUT  = "./build"
+
+default_platform(:ios)
+
+# ---- app.json(Expo) 버전 유틸 ------------------------------------------
+def read_app_version
+  data = JSON.parse(File.read(APP_JSON))
+  data.dig("expo", "version") || "1.0.0"
+end
+
+def bump_app_json_version(bump_type)
+  data = JSON.parse(File.read(APP_JSON))
+  major, minor, patch = (data["expo"]["version"] || "1.0.0").split(".").map(&:to_i)
+  case bump_type.to_s
+  when "major" then major += 1; minor = 0; patch = 0
+  when "minor" then minor += 1; patch = 0
+  else patch += 1
+  end
+  new_version = "#{major}.#{minor}.#{patch}"
+  data["expo"]["version"] = new_version
+  File.write(APP_JSON, JSON.pretty_generate(data) + "\n")
+  UI.success("app.json 버전 → #{new_version}")
+  new_version
+end
+
+# =====================================================================
+#  공통(플랫폼 무관) 레인
+# =====================================================================
+platform :ios do
+  desc "의존성 설치 + Expo prebuild + Pod 설치"
+  lane :setup do
+    sh("cd .. && yarn install --frozen-lockfile || yarn install")
+    # 네이티브 폴더가 손상/부재 시에만 prebuild (clean 은 수동)
+    sh("cd .. && npx expo prebuild --platform ios --no-install") unless File.directory?("../ios/Pods")
+    cocoapods(podfile: "./ios/Podfile", repo_update: true)
+  end
+
+  desc "app.json 버전 올리기 (옵션: type:patch|minor|major)"
+  lane :bump do |o|
+    bump_app_json_version(o[:type] || "patch")
+  end
+
+  # ------------------------------------------------------------------
+  #  iOS
+  # ------------------------------------------------------------------
+  desc "iOS 코드사이닝 동기화 (match)"
+  lane :signing do |o|
+    match(type: o[:type] || "appstore", readonly: o[:readonly].nil? ? true : o[:readonly])
+  end
+
+  desc "iOS 릴리즈 빌드(.ipa) 생성"
+  lane :build do
+    signing(type: "appstore", readonly: true)
+    build_number = (ENV["BUILD_NUMBER"] || Time.now.strftime("%Y%m%d%H%M")).to_s
+    increment_build_number(xcodeproj: "./ios/LifeHanja.xcodeproj", build_number: build_number)
+    gym(
+      workspace: IOS_WORKSPACE,
+      scheme: IOS_SCHEME,
+      configuration: "Release",
+      export_method: "app-store",
+      output_directory: BUILD_OUTPUT,
+      output_name: "LifeHanja.ipa",
+      clean: true,
+      include_bitcode: false,
+      include_symbols: true
+    )
+  end
+
+  desc "TestFlight 업로드(베타)"
+  lane :beta do
+    build
+    pilot(
+      skip_waiting_for_build_processing: true,
+      changelog: ENV["CHANGELOG"] || "버그 수정 및 개선",
+      distribute_external: false
+    )
+    upload_dsyms
+  end
+
+  desc "Firebase App Distribution 배포 (iOS)"
+  lane :firebase_ios do
+    build
+    firebase_app_distribution(
+      app: ENV["FIREBASE_IOS_APP_ID"],
+      groups: ENV["FIREBASE_TESTER_GROUPS"] || "testers",
+      release_notes: ENV["CHANGELOG"] || "내부 테스트 빌드",
+      ipa_path: "#{BUILD_OUTPUT}/LifeHanja.ipa"
+    )
+  end
+
+  desc "App Store 제출 (메타데이터 + 빌드)"
+  lane :release do
+    build
+    deliver(
+      ipa: "#{BUILD_OUTPUT}/LifeHanja.ipa",
+      skip_screenshots: true,
+      skip_metadata: false,
+      force: true,
+      submit_for_review: ENV["SUBMIT_FOR_REVIEW"] == "true",
+      automatic_release: ENV["AUTO_RELEASE"] == "true"
+    )
+  end
+
+  desc "iOS 스크린샷 촬영 + 프레임 + (선택)업로드"
+  lane :screenshots do
+    snapshot
+    frameit(silver: true, path: "./fastlane/screenshots") rescue UI.message("frameit 생략")
+  end
+
+  desc "최신 dSYM 다운로드 후 Crashlytics 업로드"
+  lane :upload_dsyms do
+    download_dsyms(version: read_app_version) rescue UI.message("download_dsyms 생략")
+    upload_symbols_to_crashlytics(gsp_path: "./GoogleService-Info.plist") rescue UI.message("dSYM 업로드 생략")
+  end
+
+  desc "iOS: 빌드→TestFlight→dSYM (CI 풀 파이프라인)"
+  lane :ci do
+    beta
+  end
+end
+
+# =====================================================================
+#  Android
+# =====================================================================
+platform :android do
+  desc "의존성 설치 + Expo prebuild(android)"
+  lane :setup do
+    sh("cd .. && yarn install --frozen-lockfile || yarn install")
+    sh("cd .. && npx expo prebuild --platform android --no-install") unless File.directory?("../android/app")
+  end
+
+  desc "app.json 버전 올리기 (옵션: type:patch|minor|major)"
+  lane :bump do |o|
+    bump_app_json_version(o[:type] || "patch")
+  end
+
+  desc "versionCode 자동 증가"
+  lane :bump_code do
+    increment_version_code(gradle_file_path: "android/app/build.gradle")
+  end
+
+  desc "릴리즈 APK 빌드"
+  lane :build_apk do
+    gradle(project_dir: ANDROID_DIR, task: "clean")
+    gradle(project_dir: ANDROID_DIR, task: "assemble", build_type: "Release")
+  end
+
+  desc "릴리즈 AAB(번들) 빌드 — 스토어 업로드용"
+  lane :build_aab do
+    gradle(project_dir: ANDROID_DIR, task: "clean")
+    gradle(project_dir: ANDROID_DIR, task: "bundle", build_type: "Release")
+  end
+
+  desc "Play 내부 테스트(internal) 업로드"
+  lane :beta do
+    bump_code
+    build_aab
+    supply(
+      track: "internal",
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      release_status: "draft",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Firebase App Distribution 배포 (Android)"
+  lane :firebase_android do
+    build_apk
+    firebase_app_distribution(
+      app: ENV["FIREBASE_ANDROID_APP_ID"],
+      groups: ENV["FIREBASE_TESTER_GROUPS"] || "testers",
+      release_notes: ENV["CHANGELOG"] || "내부 테스트 빌드",
+      apk_path: "android/app/build/outputs/apk/release/app-release.apk"
+    )
+  end
+
+  desc "Play 프로덕션 출시"
+  lane :release do
+    bump_code
+    build_aab
+    supply(
+      track: "production",
+      aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      release_status: ENV["AUTO_RELEASE"] == "true" ? "completed" : "draft",
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false
+    )
+  end
+
+  desc "내부 → 프로덕션 트랙 승격"
+  lane :promote do
+    supply(
+      track: "internal",
+      track_promote_to: "production",
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Android 스크린샷 촬영(screengrab)"
+  lane :screenshots do
+    build_apk
+    screengrab
+  end
+
+  desc "Android: 빌드→내부테스트 (CI 풀 파이프라인)"
+  lane :ci do
+    beta
+  end
+end

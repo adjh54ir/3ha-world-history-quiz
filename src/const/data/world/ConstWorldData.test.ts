@@ -1,0 +1,228 @@
+/**
+ * 세계 상식 데이터 무결성 검증 — `node --test src/const/data/world/ConstWorldData.test.ts`
+ *
+ * 손으로 늘려 가는 JSON 이라, 눈으로는 놓치는 것만 기계로 잡는다.
+ * 사실관계가 맞는지는 여기서 못 본다 (사람이 봐야 한다). 여기서 보는 것은 이렇다.
+ *  - id·표제가 겹치지 않는가
+ *  - 학습 카드가 빈칸으로 뜨지 않는가 (설명·곁가지 두 줄)
+ *  - 모든 퀴즈 모드가 실제로 문항을 낼 수 있는가 (보기 넷을 채울 값이 있는가)
+ *  - 문제에 답이 드러나 있지 않은가 (설명 안에 답 이름이 들어 있는 경우)
+ */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { test } from 'node:test';
+import type { WorldType } from '../../../types/data/WorldType.ts';
+import { DarkColors, LightColors } from '../../ConstColors.ts';
+import { WORLD_TOPICS } from './ConstWorldTopics.ts';
+import { buildQuestion, buildQuestions, pick } from '../../../services/world/WorldQuizFactory.ts';
+import capital from './capital.json' with { type: 'json' };
+import landmark from './landmark.json' with { type: 'json' };
+import myth from './myth.json' with { type: 'json' };
+import space from './space.json' with { type: 'json' };
+import constellation from './constellation.json' with { type: 'json' };
+import worldcup from './worldcup.json' with { type: 'json' };
+import olympic from './olympic.json' with { type: 'json' };
+
+const ENTRIES: Record<string, WorldType.Entry[]> = {
+	capital: capital as WorldType.Entry[],
+	landmark: landmark as WorldType.Entry[],
+	myth: myth as WorldType.Entry[],
+	space: space as WorldType.Entry[],
+	constellation: constellation as WorldType.Entry[],
+	worldcup: worldcup as WorldType.Entry[],
+	olympic: olympic as WorldType.Entry[],
+};
+
+/** 시드 고정 난수 — 돌릴 때마다 같은 문항이 나와야 실패를 재현할 수 있다 */
+const seeded = (seed: number) => () => {
+	seed = (seed * 1103515245 + 12345) % 2147483648;
+	return seed / 2147483648;
+};
+
+/** 한 모드가 문항을 낼 수 있어야 하는 최소 개수 — 이보다 적으면 퀴즈 한 판이 안 나온다 */
+const MIN_QUESTIONS = 8;
+
+test('주제마다 JSON 이 있고 비어 있지 않다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		const entries = ENTRIES[topic.key];
+		assert.ok(entries, `${topic.key} 주제의 데이터가 없다`);
+		assert.ok(entries.length >= 20, `${topic.key} 항목이 ${entries.length}개뿐이다`);
+	});
+	assert.equal(Object.keys(ENTRIES).length, WORLD_TOPICS.length, 'JSON 과 주제 목록의 개수가 어긋난다');
+});
+
+test('id 와 표제가 겹치지 않는다', () => {
+	const seenId = new Set<string>();
+	WORLD_TOPICS.forEach((topic) => {
+		const seenName = new Set<string>();
+		ENTRIES[topic.key].forEach((entry) => {
+			assert.ok(entry.id.startsWith(`${topic.key}-`), `${entry.id} 는 주제 이름으로 시작해야 한다`);
+			assert.ok(!seenId.has(entry.id), `id 가 겹친다: ${entry.id}`);
+			assert.ok(!seenName.has(entry.name), `${topic.key} 안에서 표제가 겹친다: ${entry.name}`);
+			seenId.add(entry.id);
+			seenName.add(entry.name);
+		});
+	});
+});
+
+test('학습 카드에 빈칸이 생기지 않는다', () => {
+	Object.values(ENTRIES).flat().forEach((entry) => {
+		assert.ok([1, 2, 3, 4].includes(entry.level), `${entry.id} 의 난이도가 1~4 가 아니다`);
+		assert.ok(entry.name.trim().length > 0, `${entry.id} 에 표제가 없다`);
+		assert.ok(entry.summary.trim().length > 0, `${entry.id} 에 설명이 없다`);
+		assert.equal(entry.facts.length, 2, `${entry.id} 의 곁가지는 두 줄이어야 한다`);
+		entry.facts.forEach((fact) => assert.ok(fact.trim().length > 0, `${entry.id} 에 빈 곁가지가 있다`));
+		assert.ok(Object.keys(entry.fields).length > 0, `${entry.id} 에 값이 하나도 없다`);
+	});
+});
+
+test('모든 퀴즈 모드가 실제로 문항을 낸다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		const pool = ENTRIES[topic.key];
+		topic.modes.forEach((mode) => {
+			const questions = buildQuestions(pool, topic, pool, seeded(7), [mode]);
+			assert.ok(
+				questions.length >= MIN_QUESTIONS,
+				`${topic.key}/${mode.key} 가 ${questions.length}문항밖에 못 낸다 (보기 넷을 채울 값이 모자라다)`,
+			);
+		});
+	});
+});
+
+test('문항의 보기 넷이 서로 다르고 정답을 담고 있다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		const pool = ENTRIES[topic.key];
+		topic.modes.forEach((mode) => {
+			buildQuestions(pool, topic, pool, seeded(13), [mode]).forEach((question) => {
+				assert.equal(question.options.length, 4, `${question.id} 의 보기가 넷이 아니다`);
+				assert.equal(new Set(question.options).size, 4, `${question.id} 의 보기에 같은 값이 있다`);
+				assert.ok(question.options.includes(question.answer), `${question.id} 의 보기에 정답이 없다`);
+				assert.ok(!question.options.includes(question.prompt), `${question.id} 의 보기에 문제가 그대로 들어 있다`);
+			});
+		});
+	});
+});
+
+test('문제 자리의 값이 항목마다 달라 답이 하나로 정해진다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		topic.modes.forEach((mode) => {
+			const pool = ENTRIES[topic.key];
+			const seen = new Map<string, string>();
+			pool.forEach((entry) => {
+				// 문항으로 만들어지지 않는 항목(값이 없는 항목)은 따질 것도 없다
+				if (!buildQuestion(entry, topic, mode, pool, seeded(3))) {
+					return;
+				}
+				const prompt = pick(entry, mode.ask);
+				const before = seen.get(prompt);
+				assert.ok(
+					before === undefined,
+					`${topic.key}/${mode.key} 에서 같은 문제가 둘이다: "${prompt}" (${before} · ${entry.id})`,
+				);
+				seen.set(prompt, entry.id);
+			});
+		});
+	});
+});
+
+/**
+ * 그림이 붙는 주제 — 어느 필드가 열쇠고, 파일이 어디 있고, 어느 상수가 require 로 거는지.
+ * 그림이 일부 항목에만 붙는 주제도 여기서 함께 지킨다.
+ */
+const IMAGE_SOURCES: Record<string, { field: string; dir: string; module: string }> = {
+	capital: { field: 'code', dir: 'flags', module: 'ConstFlagImages.ts' },
+	myth: { field: 'image', dir: 'myth', module: 'ConstMythImages.ts' },
+	space: { field: 'image', dir: 'planets', module: 'ConstPlanetImages.ts' },
+};
+
+test('그림이 붙은 항목마다 파일과 require 가 다 있다', () => {
+	// 파일이 하나만 빠져도 그림 자리가 빈칸으로 뜬다. JSON 은 파일 이름만 들고 있어 눈으로는 못 잡는다.
+	Object.entries(IMAGE_SOURCES).forEach(([key, source]) => {
+		const module = fs.readFileSync(new URL(`./${source.module}`, import.meta.url), 'utf8');
+		let counted = 0;
+		ENTRIES[key].forEach((entry) => {
+			// 그림이 없는 항목이 섞여 있는 것은 정상이다.
+			const code = entry.fields[source.field];
+			if (!code) {
+				return;
+			}
+			counted += 1;
+			assert.ok(
+				fs.existsSync(new URL(`../../../assets/${source.dir}/${code}.webp`, import.meta.url)),
+				`${entry.id} 의 그림(${source.dir}/${code}.webp)이 없다`,
+			);
+			assert.ok(module.includes(`\n\t${code}: require(`), `${entry.id} 의 그림(${code})이 ${source.module} 에 빠져 있다`);
+		});
+		assert.ok(counted > 0, `${key} 주제에 그림이 붙은 항목이 하나도 없다`);
+	});
+});
+
+test('그림 문항 모드는 그림이 붙은 필드를 물어본다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		topic.modes
+			.filter((mode) => mode.askAs)
+			.forEach((mode) => {
+				const source = IMAGE_SOURCES[topic.key];
+				assert.ok(source, `${topic.key}/${mode.key} 가 그림 문항인데 그림 출처가 정해지지 않았다`);
+				assert.equal(mode.ask, source.field, `${topic.key}/${mode.key} 는 ${source.field} 를 물어야 그림을 찾는다`);
+				const withImage = ENTRIES[topic.key].filter((entry) => entry.fields[source.field]).length;
+				assert.ok(withImage >= MIN_QUESTIONS, `${topic.key}/${mode.key} 에 그림이 붙은 항목이 ${withImage}개뿐이라 한 판이 안 나온다`);
+			});
+	});
+});
+
+/** 두 색의 명도 대비 (WCAG) — 1 에 가까울수록 구분이 안 된다 */
+const contrast = (a: string, b: string): number => {
+	const luminance = (hex: string) => {
+		const full = hex.replace('#', '');
+		const channel = (at: number) => {
+			const value = parseInt(full.slice(at, at + 2), 16) / 255;
+			return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+		};
+		return 0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4);
+	};
+	const [bright, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+	return (bright + 0.05) / (dark + 0.05);
+};
+
+/** 아이콘·굵은 글자가 읽히는 최소 대비 (WCAG 비텍스트 기준) */
+const MIN_CONTRAST = 3;
+
+test('주제 색이 틴트 위에서 읽힌다', () => {
+	// 주제 카드는 tint 를 면으로 깔고 color 로 아이콘·글자를 얹는다.
+	// 밝은 앰버·초록을 그대로 쓰면 대비가 2:1 로 떨어져 아이콘이 배경에 묻힌다 (그래서 *Dark 토큰을 따로 뒀다).
+	([['라이트', LightColors], ['다크', DarkColors]] as const).forEach(([theme, palette]) => {
+		WORLD_TOPICS.forEach((topic) => {
+			const ratio = contrast(palette[topic.color], palette[topic.tint]);
+			assert.ok(
+				ratio >= MIN_CONTRAST,
+				`${theme}에서 ${topic.key} 의 ${topic.color}/${topic.tint} 대비가 ${ratio.toFixed(2)} 뿐이다 (${MIN_CONTRAST} 이상 필요)`,
+			);
+		});
+	});
+});
+
+test('주제 아이콘이 실제로 있는 이름이다', () => {
+	// 없는 이름을 적으면 화면에 아무것도 안 그려진다 — 오류도 안 난다.
+	const path = new URL('../../../../node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/glyphmaps/MaterialCommunityIcons.json', import.meta.url);
+	assert.ok(fs.existsSync(path), '아이콘 목록을 찾지 못했다 — @expo/vector-icons 경로가 바뀌었으면 이 테스트를 고쳐라');
+	const glyphs = JSON.parse(fs.readFileSync(path, 'utf8')) as Record<string, number>;
+	WORLD_TOPICS.forEach((topic) => {
+		assert.ok(glyphs[topic.icon] !== undefined, `${topic.key} 의 아이콘 이름 "${topic.icon}" 은 MaterialCommunityIcons 에 없다`);
+	});
+});
+
+test('설명 보고 맞히기 문제에 답 이름이 들어 있지 않다', () => {
+	WORLD_TOPICS.forEach((topic) => {
+		topic.modes
+			.filter((mode) => mode.ask === 'summary')
+			.forEach((mode) => {
+				ENTRIES[topic.key].forEach((entry) => {
+					assert.ok(
+						!entry.summary.includes(entry.name),
+						`${entry.id} 의 설명에 답(${entry.name})이 그대로 적혀 있다 — ${mode.key} 문항에서 답이 드러난다`,
+					);
+				});
+			});
+	});
+});

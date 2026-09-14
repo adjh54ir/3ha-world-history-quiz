@@ -1,0 +1,21 @@
+# Deliverfile — App Store 메타데이터/스크린샷 업로드 설정
+app_identifier(ENV["IOS_BUNDLE_ID"] || "com.tha.lifehanja")
+username(ENV["APPLE_ID"])
+
+# 메타데이터/스크린샷 경로 — 한국어 메타데이터는 fastlane/metadata/ko 에 들어 있다
+metadata_path("./fastlane/metadata")
+screenshots_path("./fastlane/screenshots")
+
+# 자동 제출/배포 옵션
+submit_for_review(false)   # 검수 자동 제출 여부
+automatic_release(false)   # 승인 후 자동 출시 여부
+force(true)                # HTML 미리보기 확인 생략(자동화용)
+precheck_include_in_app_purchases(false)
+
+submission_information({
+  add_id_info_uses_idfa: true,            # AdMob 사용 → IDFA 사용
+  add_id_info_serves_ads: true,
+  add_id_info_tracks_action: false,
+  add_id_info_tracks_install: true,
+  add_id_info_limits_tracking: true
+})

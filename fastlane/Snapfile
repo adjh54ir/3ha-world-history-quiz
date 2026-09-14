@@ -1,0 +1,20 @@
+# Snapfile — iOS 스크린샷 자동 촬영(snapshot) 설정
+# UI 테스트 타깃이 있어야 동작합니다. (Xcode UITest + SnapshotHelper)
+workspace("./ios/LifeHanja.xcworkspace")
+scheme("LifeHanja")
+
+devices([
+  "iPhone 15 Pro Max",
+  "iPhone 15",
+  "iPhone SE (3rd generation)",
+  "iPad Pro (12.9-inch) (6th generation)"
+])
+
+languages([
+  "ko-KR"
+])
+
+output_directory("./fastlane/screenshots")
+clear_previous_screenshots(true)
+override_status_bar(true)   # 깔끔한 상태바(9:41, 풀 배터리)
+concurrent_simulators(true)

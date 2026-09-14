@@ -1,0 +1,13 @@
+# Screengrabfile — Android 스크린샷 자동 촬영(screengrab) 설정
+# Espresso 테스트가 있어야 동작합니다.
+app_package_name(ENV["ANDROID_PACKAGE"] || "com.tha.lifehanja")
+
+use_tests_in_packages(["com.tha.lifehanja.screenshots"])
+
+app_apk_path("./android/app/build/outputs/apk/release/app-release.apk")
+tests_apk_path("./android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk")
+
+locales(["ko-KR"])
+clear_previous_screenshots(true)
+output_directory("./fastlane/metadata/android")
+```

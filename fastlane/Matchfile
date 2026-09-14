@@ -1,0 +1,14 @@
+# Matchfile — iOS 코드사이닝 인증서/프로비저닝을 git 저장소로 안전하게 동기화
+# 사용 전 별도의 private git repo 를 만들어 MATCH_GIT_URL 에 지정하세요.
+git_url(ENV["MATCH_GIT_URL"])
+storage_mode("git")
+
+# development / appstore / adhoc / enterprise
+type("appstore")
+
+app_identifier([ENV["IOS_BUNDLE_ID"] || "com.tha.lifehanja"])
+username(ENV["APPLE_ID"])
+team_id(ENV["APPLE_TEAM_ID"])
+
+# CI 환경에서는 readonly 로 두어 인증서 변조 방지 (MATCH_READONLY=true)
+readonly(ENV["MATCH_READONLY"] == "true")
