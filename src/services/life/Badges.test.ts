@@ -10,9 +10,8 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { test } from 'node:test';
 import { BADGES, BADGE_RARITY } from '../../const/data/life/ConstLifeRewards.ts';
-import { DECORS } from '../../const/data/life/ConstLifeDecor.ts';
 import { LIFE_LEVELS } from '../../const/data/life/ConstLifeLevels.ts';
-import { LIFE_CATEGORIES } from '../../const/data/life/ConstLifeCategories.ts';
+import { WORLD_TOPICS } from '../../const/data/world/ConstWorldTopics.ts';
 import { badgeProgress, checkNewBadges, type BadgeSnapshot } from './LifeRules.ts';
 
 /**
@@ -38,20 +37,16 @@ const EMPTY: BadgeSnapshot = {
 	exp: 0,
 	bestCombo: 0,
 	fastCount: 0,
-	chestCount: 0,
 	missionDoneCount: 0,
 	stars: 0,
 	categoryDoneCount: 0,
-	categoryTotal: LIFE_CATEGORIES.length,
+	categoryTotal: WORLD_TOPICS.length,
 	attendanceDays: 0,
 	favoriteCount: 0,
-	decorCount: 0,
-	decorTotal: DECORS.length,
 	levelDoneCount: 0,
 	levelTotal: LIFE_LEVELS.length,
 	totalCorrect: 0,
 	petFedCount: 0,
-	upgradeLevel: 0,
 	wrongCleared: false,
 };
 
@@ -69,20 +64,16 @@ const MAXED: BadgeSnapshot = {
 	exp: 1000000,
 	bestCombo: 100000,
 	fastCount: 100000,
-	chestCount: 100000,
 	missionDoneCount: 100000,
 	stars: 100000,
-	categoryDoneCount: LIFE_CATEGORIES.length,
-	categoryTotal: LIFE_CATEGORIES.length,
+	categoryDoneCount: WORLD_TOPICS.length,
+	categoryTotal: WORLD_TOPICS.length,
 	attendanceDays: 100000,
 	favoriteCount: 100000,
-	decorCount: DECORS.length,
-	decorTotal: DECORS.length,
 	levelDoneCount: LIFE_LEVELS.length,
 	levelTotal: LIFE_LEVELS.length,
 	totalCorrect: 100000,
 	petFedCount: 100000,
-	upgradeLevel: 100000,
 	wrongCleared: true,
 };
 

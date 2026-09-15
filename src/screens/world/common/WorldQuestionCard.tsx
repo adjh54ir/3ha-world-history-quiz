@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -32,6 +32,11 @@ const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => 
 	const styles = useThemedStyles(createStyles);
 	const image = askAs ? selectPromptImage(askAs, question.prompt) : undefined;
 
+	// 위인 초상은 앱이 아니라 위키미디어에서 받아 온다 — 끊기면 빈 네모만 남아 무엇을 묻는지 알 수 없다.
+	// 못 받은 문항의 id 를 들고 있는다 (참/거짓으로 두면 다음 문항에서 직접 되돌려야 한다)
+	const [brokenAt, setBrokenAt] = useState<string | null>(null);
+	const broken = brokenAt === question.id;
+
 	const optionStyle = (option: string) => {
 		if (picked === null) {
 			return styles.option;
@@ -49,12 +54,19 @@ const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => 
 		<View style={styles.stack}>
 			<View style={styles.card}>
 				<Text style={styles.question}>{question.question}</Text>
-				{image ? (
-					<View style={[styles.art, { backgroundColor: tint }]}>
-						<Image source={image} style={styles.image} contentFit="contain" transition={160} />
-					</View>
-				) : (
+				{!image ? (
 					<Text style={styles.prompt}>{question.prompt}</Text>
+				) : (
+					<View style={[styles.art, { backgroundColor: tint }]}>
+						{broken ? (
+							<View style={styles.artBroken}>
+								<IconComponent type="materialcommunityicons" name="image-off-outline" size={30} color={Colors.textMuted} />
+								<Text style={styles.artBrokenText}>그림을 불러오지 못했어요</Text>
+							</View>
+						) : (
+							<Image source={image} style={styles.image} contentFit="contain" transition={160} onError={() => setBrokenAt(question.id)} />
+						)}
+					</View>
 				)}
 			</View>
 
@@ -69,7 +81,17 @@ const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => 
 				))}
 			</View>
 
-			{picked !== null ? <Text style={styles.hint}>{question.entry.summary}</Text> : null}
+			{picked !== null ? (
+				<View style={styles.explain}>
+					<Text style={styles.hint}>{question.entry.summary}</Text>
+					{question.entry.facts.map((fact) => (
+						<View key={fact} style={styles.factRow}>
+							<View style={styles.dot} />
+							<Text style={styles.factText}>{fact}</Text>
+						</View>
+					))}
+				</View>
+			) : null}
 		</View>
 	);
 };
@@ -90,6 +112,8 @@ const createStyles = (Colors: Palette) =>
 		prompt: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.textStrong, textAlign: 'center', paddingVertical: SpacingV.md },
 		art: { height: scaleHeight(160), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', padding: Spacing.md },
 		image: { width: '100%', height: '100%' },
+		artBroken: { alignItems: 'center', gap: SpacingV.xs },
+		artBrokenText: { fontSize: Typography.caption, color: Colors.textMuted },
 
 		options: { gap: SpacingV.sm },
 		option: {
@@ -107,7 +131,17 @@ const createStyles = (Colors: Palette) =>
 		},
 		optionDim: { opacity: 0.5 },
 		optionText: { flex: 1, fontSize: Typography.callout, fontWeight: FontWeight.medium, color: Colors.text },
-		hint: { fontSize: Typography.bodySm, color: Colors.textSecondary, lineHeight: scaledSize(20), textAlign: 'center' },
+		// 해설은 카드와 같은 판 위에 올린다 — 보기 바로 아래 맨바닥에 두면 어디까지가 해설인지 경계가 없다
+		explain: {
+			gap: SpacingV.xs,
+			padding: Spacing.lg,
+			borderRadius: Radius.lg,
+			backgroundColor: Colors.surfaceAlt,
+		},
+		hint: { fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.text, lineHeight: scaledSize(20) },
+		factRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
+		dot: { width: scaledSize(4), height: scaledSize(4), borderRadius: scaledSize(2), backgroundColor: Colors.textMuted, marginTop: scaledSize(8) },
+		factText: { flex: 1, fontSize: Typography.footnote, color: Colors.textSecondary, lineHeight: scaledSize(18) },
 	});
 
 export default WorldQuestionCard;

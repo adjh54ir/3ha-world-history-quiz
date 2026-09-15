@@ -220,7 +220,7 @@ const ScheduleStreakReminder = (streak: number, hour = 20, minute = 0) => serial
         const body =
             streak > 0
                 ? `🔥 ${streak}일 연속 학습 중! 오늘 아직 안 했어요 — 지금 하면 기록이 이어져요.`
-                : '오늘 한자 한 자만 익혀도 연속 학습이 시작돼요.';
+                : '오늘 한 문제만 풀어도 연속 학습이 시작돼요.';
 
         await notifee.createTriggerNotification(
             {
@@ -258,11 +258,11 @@ const CancelStreakReminder = () => serialize(async () => {
     }
 });
 
-/** 오늘의 한국어 아침 알림 고정 id (중복 예약 방지/취소용) */
+/** 아침 알림 고정 id (중복 예약 방지/취소용) */
 const DAILY_WORD_REMINDER_ID = 'daily-word-reminder';
 
 /**
- * 오늘의 한국어 매일 반복 알림 예약 (기본 08:00)
+ * 아침 학습 알림 매일 반복 예약 (기본 08:00)
  * - 같은 id로 기존 예약을 먼저 취소해 중복을 방지합니다.
  */
 const ScheduleDailyWordReminder = (hour = 8, minute = 0) => serialize(async () => {
@@ -282,8 +282,8 @@ const ScheduleDailyWordReminder = (hour = 8, minute = 0) => serialize(async () =
         await notifee.createTriggerNotification(
             {
                 id: DAILY_WORD_REMINDER_ID,
-                title: '📚 오늘의 한국어',
-                body: '오늘의 한국어 한 단어, 지금 확인해볼까요?',
+                title: '📚 오늘의 세계 상식',
+                body: '오늘의 문제 다섯 개, 지금 풀어 볼까요?',
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,
@@ -305,7 +305,7 @@ const ScheduleDailyWordReminder = (hour = 8, minute = 0) => serialize(async () =
     }
 });
 
-/** 오늘의 한국어 아침 알림 취소 */
+/** 아침 학습 알림 취소 */
 const CancelDailyWordReminder = () => serialize(async () => {
     try {
         await notifee.cancelTriggerNotification(DAILY_WORD_REMINDER_ID);
@@ -328,7 +328,7 @@ const REVIEW_REMINDER_ID = 'review-reminder';
 
 /**
  * 오답 복습 매일 반복 알림 예약
- * - 본문에 오늘 복습할 글자 수를 실어 알림만 봐도 할 일을 알 수 있게 한다.
+ * - 본문에 오늘 복습할 개수를 실어 알림만 봐도 할 일을 알 수 있게 한다.
  * - 반복 알림은 예약 당시 본문을 그대로 재사용하므로, 앱을 켤 때 다시 걸어 숫자를 갱신한다.
  */
 const ScheduleReviewReminder = (body: string, hour: number, minute: number) => serialize(async () => {

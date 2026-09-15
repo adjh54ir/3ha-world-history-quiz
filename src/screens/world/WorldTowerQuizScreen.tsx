@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import WorldQuestionCard from './common/WorldQuestionCard';
@@ -30,10 +30,15 @@ const NEXT_DELAY = 900;
 const WorldTowerQuizScreen = () => {
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
+	const params = useLocalSearchParams<{ topic?: string }>();
+	/** 오르기 전 화면에서 고른 주제 — 없으면 전체에서 섞어 낸다 */
+	const pickedTopic = params.topic as WorldType.TopicKey | undefined;
 
 	const [floor, setFloor] = useState(1);
 	const [lives, setLives] = useState(TOWER_LIVES);
-	const [questions, setQuestions] = useState<WorldType.Question[]>(() => challengeQuestions(towerLevelOf(1), TOWER_FLOOR_SIZE));
+	const [questions, setQuestions] = useState<WorldType.Question[]>(() =>
+		challengeQuestions(towerLevelOf(1), TOWER_FLOOR_SIZE, Math.random, pickedTopic),
+	);
 	const [at, setAt] = useState(0);
 	const [picked, setPicked] = useState<string | null>(null);
 	const [over, setOver] = useState(false);
@@ -56,9 +61,9 @@ const WorldTowerQuizScreen = () => {
 		playFinish();
 		const next = floor + 1;
 		setFloor(next);
-		setQuestions(challengeQuestions(towerLevelOf(next), TOWER_FLOOR_SIZE));
+		setQuestions(challengeQuestions(towerLevelOf(next), TOWER_FLOOR_SIZE, Math.random, pickedTopic));
 		setAt(0);
-	}, [floor]);
+	}, [floor, pickedTopic]);
 
 	// 답을 고르면 잠깐 보여 주고 다음 문제로 — 화면을 벗어나면 타이머를 걷는다
 	useEffect(() => {
@@ -101,7 +106,7 @@ const WorldTowerQuizScreen = () => {
 		resetWorldBuffer();
 		setFloor(1);
 		setLives(TOWER_LIVES);
-		setQuestions(challengeQuestions(towerLevelOf(1), TOWER_FLOOR_SIZE));
+		setQuestions(challengeQuestions(towerLevelOf(1), TOWER_FLOOR_SIZE, Math.random, pickedTopic));
 		setAt(0);
 		setPicked(null);
 		setOver(false);

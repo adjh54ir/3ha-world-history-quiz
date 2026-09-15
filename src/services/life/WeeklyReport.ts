@@ -6,7 +6,7 @@
  * 굴러가는 7일 창이면 언제 들어와도 같은 길이의 두 구간을 견준다.
  *
  * 자료는 이미 있는 것만 쓴다 — 새 저장소를 만들지 않는다.
- *   학습한 단어 : DailyActivityUtils 의 날짜별 'study' 카운터 (보관 14일 = 두 구간에 딱 맞는다)
+ *   학습한 항목 : DailyActivityUtils 의 날짜별 'study' 카운터 (보관 14일 = 두 구간에 딱 맞는다)
  *   푼 문제·정답 : LifeSlice 의 퀴즈 기록(playedAt 이 ISO 일시)
  *   출석        : LifeSlice 의 출석일 목록
  */
@@ -16,7 +16,7 @@ import { shiftDateKey, toDateKey } from './LifeRules.ts';
 
 /** 한 구간(7일)의 집계 */
 export interface WeekMetrics {
-	/** 처음 익힌 단어 수 */
+	/** 처음 익힌 항목 수 */
 	learned: number;
 	/** 푼 문제 수 */
 	solved: number;
@@ -51,7 +51,7 @@ export const accuracy = (week: WeekMetrics): number => (week.solved > 0 ? Math.r
  * 두 구간을 집계한다.
  * @param records   퀴즈 기록 (최신순이어도 상관없다 — 날짜로만 고른다)
  * @param attendance 출석일 YYYY-MM-DD 목록
- * @param studyByDate 날짜별 학습 단어 수 (DailyActivityUtils 로그에서 뽑아 넘긴다)
+ * @param studyByDate 날짜별 학습 항목 수 (DailyActivityUtils 로그에서 뽑아 넘긴다)
  * @param today     기준일. 넘기지 않으면 기기의 오늘
  */
 export const buildWeeklyReport = (
@@ -111,7 +111,7 @@ export const weeklyShareText = (report: WeeklyReport): string => {
 	const line = (label: string, now: number, before: number, unit: string): string => `${label} ${now}${unit} ${arrow(now - before)}`;
 	return [
 		`생활 한자 · 주간 리포트 ${report.from} ~ ${report.to}`,
-		line('📘 새 단어', thisWeek.learned, lastWeek.learned, '개'),
+		line('📘 새 항목', thisWeek.learned, lastWeek.learned, '개'),
 		line('❓ 푼 문제', thisWeek.solved, lastWeek.solved, '문제'),
 		line('🎯 정답률', accuracy(thisWeek), accuracy(lastWeek), '%'),
 		line('📅 출석', thisWeek.attended, lastWeek.attended, '일'),

@@ -18,7 +18,7 @@ interface Props {
 	rightIcon?: string;
 	rightLabel?: string;
 	onPressRight?: () => void;
-	/** 제목 오른쪽에 붙일 요소 (코인 칩 등) */
+	/** 제목 오른쪽에 붙일 보조 요소 */
 	right?: React.ReactNode;
 	/** 물음표(도움말 다시보기) 버튼 — 넘기면 제목 오른쪽에 붙는다 */
 	onPressGuide?: () => void;

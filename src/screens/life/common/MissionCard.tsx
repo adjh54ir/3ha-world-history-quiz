@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
-import { Image } from 'expo-image';
 import { useDispatch } from 'react-redux';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -10,15 +9,12 @@ import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useLife } from '@/src/hooks/useLife';
 import { useAnimationRunner, useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { MISSIONS, REWARD } from '@/src/const/data/life/ConstLifeRewards';
+import { EXP, MISSIONS } from '@/src/const/data/life/ConstLifeRewards';
 import { isMissionDone, toDateKey } from '@/src/services/life/LifeRules';
 import { claimMissions } from '@/src/store/slice/LifeSlice';
 import { playPop } from '@/src/utils/SoundUtils';
 import type { LifeType } from '@/src/types/data/LifeType';
 import { scaleHeight, scaleWidth } from '@/src/utils';
-
-const CLOSED_CHEST = require('@/src/assets/illustrations/game-chest-closed.webp');
-const OPEN_CHEST = require('@/src/assets/illustrations/game-chest-open.webp');
 
 interface Props {
 	/** 미션 줄을 누르면 그 일을 할 수 있는 화면으로 보낸다 */
@@ -66,10 +62,10 @@ const MissionRow = ({ mission, value, done, onPress }: { mission: LifeType.Missi
 };
 
 /**
- * 다 채운 날의 보물상자 — 빛무리가 커졌다 작아지고 상자가 흔들린다.
+ * 다 채운 날의 경험치 보상 — 빛무리가 커졌다 작아지고 메달이 흔들린다.
  * 눌러야 보상이 나오므로 "여기를 누르라"는 신호가 계속 있어야 한다.
  */
-const RewardChest = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boolean; onClaim: () => void }) => {
+const MissionReward = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boolean; onClaim: () => void }) => {
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const glow = useRef(new Animated.Value(0)).current;
@@ -111,7 +107,7 @@ const RewardChest = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boo
 			disabled={!ready}
 			scaleTo={0.92}
 			accessibilityRole="button"
-			accessibilityLabel={ready ? '오늘의 미션 보상 받기' : '오늘의 미션 보물상자'}>
+			accessibilityLabel={ready ? '오늘의 미션 경험치 받기' : '오늘의 미션 보상'}>
 			{ready && (
 				<Animated.View
 					pointerEvents="none"
@@ -130,22 +126,24 @@ const RewardChest = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boo
 						? { transform: [{ rotate: shake.interpolate({ inputRange: [-1, 1], outputRange: ['-9deg', '9deg'] }) }] }
 						: undefined
 				}>
-				<Image
-					source={claimed ? OPEN_CHEST : CLOSED_CHEST}
-					style={[styles.rewardImage, !ready && !claimed && styles.rewardImageDim]}
-					contentFit="contain"
-					accessible={false}
-				/>
+				<View style={[styles.rewardMedal, !ready && !claimed && styles.rewardMedalDim]}>
+					<IconComponent
+						type="materialCommunityIcons"
+						name={claimed ? 'check-decagram' : 'star-four-points'}
+						size={34}
+						color={claimed ? Colors.success : Colors.accentAmber}
+					/>
+				</View>
 			</Animated.View>
 			<View style={[styles.rewardChip, claimed && styles.rewardChipDone, ready && styles.rewardChipReady]}>
 				<IconComponent
 					type="materialCommunityIcons"
-					name={claimed ? 'check-bold' : ready ? 'gift-open-outline' : 'circle-multiple'}
+					name={claimed ? 'check-bold' : 'star-outline'}
 					size={13}
 					color={claimed ? onSurface(Colors.success) : ready ? Colors.textInverse : Colors.accentAmber}
 				/>
 				<Text style={[styles.rewardText, claimed && styles.rewardTextDone, ready && styles.rewardTextReady]}>
-					{claimed ? '완료' : ready ? '받기' : `+${REWARD.mission}`}
+					{claimed ? '완료' : ready ? '받기' : `+${EXP.mission}EXP`}
 				</Text>
 			</View>
 		</PressableScale>
@@ -153,7 +151,7 @@ const RewardChest = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boo
 };
 
 /**
- * 오늘의 미션 — 홈 히어로 바로 아래. 셋 다 채우면 보물상자가 빛나고, 눌러야 보상이 나온다.
+ * 오늘의 미션 — 홈 히어로 바로 아래. 셋 다 채우면 경험치 보상이 빛난다.
  * 날짜가 바뀌면 슬라이스의 ensureDaily 가 미션도 같이 새로 만들어 준다.
  */
 const MissionCard = ({ onPressMission }: Props) => {
@@ -164,14 +162,13 @@ const MissionCard = ({ onPressMission }: Props) => {
 	const today = missions?.date === toDateKey() ? missions : null;
 	const doneCount = MISSIONS.filter((item) => today && isMissionDone(today, item.key)).length;
 	const claimed = !!today?.claimed;
-	/** 셋 다 채웠는데 아직 안 받았다 — 상자가 빛나는 상태 */
+	/** 셋 다 채웠는데 아직 안 받았다 — 보상이 빛나는 상태 */
 	const ready = doneCount === MISSIONS.length && !claimed;
 	// 홈의 다른 카드처럼 아래에서 떠오르며 등장한다 (히어로 다음 순서)
 	const enterStyle = useScreenEnter(16, 300);
 
 	const onClaim = useCallback(() => {
 		playPop();
-		// 보상 연출(코인·상자 열기)은 루트의 ChestModal 이 이어받는다
 		dispatch(claimMissions());
 	}, [dispatch]);
 
@@ -184,11 +181,11 @@ const MissionCard = ({ onPressMission }: Props) => {
 						{claimed
 							? '오늘 보상까지 다 받았어요. 내일 또 만나요!'
 							: ready
-								? `미션 완료! 보물상자를 눌러 +${REWARD.mission} 코인을 받으세요`
-								: `${doneCount} / ${MISSIONS.length} 완료 · 다 채우면 보물상자`}
+								? `미션 완료! 보상 버튼을 눌러 +${EXP.mission}EXP를 받으세요`
+								: `${doneCount} / ${MISSIONS.length} 완료 · 다 채우면 ${EXP.mission}EXP`}
 					</Text>
 				</View>
-				<RewardChest ready={ready} claimed={claimed} onClaim={onClaim} />
+				<MissionReward ready={ready} claimed={claimed} onClaim={onClaim} />
 			</View>
 			{/* 진행 점 세 개 — 몇 개 남았는지 글자 없이도 보인다 */}
 			<View style={styles.dots}>
@@ -236,9 +233,8 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: scaleWidth(37),
 			backgroundColor: Colors.accentAmber,
 		},
-		rewardImage: { width: scaleWidth(68), height: scaleWidth(58), marginTop: -SpacingV.sm },
-		// 아직 못 채운 날은 상자를 살짝 죽여 둔다 — 다 채웠을 때의 대비가 커진다
-		rewardImageDim: { opacity: 0.55 },
+		rewardMedal: { width: scaleWidth(68), height: scaleWidth(58), marginTop: -SpacingV.sm, alignItems: 'center', justifyContent: 'center' },
+		rewardMedalDim: { opacity: 0.55 },
 		rewardChip: {
 			flexDirection: 'row',
 			alignItems: 'center',

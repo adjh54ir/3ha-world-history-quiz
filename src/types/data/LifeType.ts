@@ -3,7 +3,7 @@ import type { ColorToken } from '@/src/const/ConstColors';
 /**
  * 생활 한자 학습 데이터 타입
  * -------------------------------------------------
- * 학습 단위는 "한자어(단어)" 다. 급수가 아니라 쓰이는 분야(카테고리)로 묶는다.
+ * 학습 단위는 "항목" 이다 (지금 도메인은 세계 상식 — ConstWorldDomain 참고). 주제(카테고리)로 묶는다.
  */
 export namespace LifeType {
 	/**
@@ -106,7 +106,6 @@ export namespace LifeType {
 	export interface QuizBonus {
 		fast: number;
 		maxCombo: number;
-		coins: number;
 	}
 
 	/** 퀴즈 출제 방식 */
@@ -140,40 +139,6 @@ export namespace LifeType {
 		wordIds: string[];
 		done: boolean;
 		correct: number;
-	}
-
-	/**
-	 * 꾸미기 갈래 — 캐릭터에 입히지 않고 화면의 정해진 자리에 놓인다.
-	 * -------------------------------------------------
-	 * 캐릭터에 직접 입히던 방식(머리·얼굴·목)은 성장 단계 그림마다 좌표를 다시 재야 해서 단계가 오르면 어긋났다.
-	 * 이쪽은 전부 화면의 고정 슬롯이라 펫 단계와 아무 상관이 없다.
-	 *
-	 * - study : 홈 히어로 캐릭터 뒤에 깔리는 글방
-	 * - title : 캐릭터 이름 옆에 붙는 칭호
-	 * - perch : 청룡 펫이 올라서는 좌대
-	 * - frame : 나의 활동 펫 카드를 둘러싸는 액자
-	 * - skin  : 학습 카드 테두리
-	 * - seal  : 출석 도장에 찍히는 낙관 글자
-	 */
-	export type DecorKind = 'study' | 'title' | 'perch' | 'frame' | 'skin' | 'seal';
-
-	export interface Decor {
-		id: string;
-		kind: DecorKind;
-		label: string;
-		/** 어디에 어떻게 보이는지 한 줄 */
-		hint: string;
-		price: number;
-		/** 목록 타일에 쓰는 MaterialCommunityIcons 이름 */
-		icon: string;
-		/** 주 색(테두리·글자) */
-		color: ColorToken;
-		/** 바탕 색(면) */
-		tint: ColorToken;
-		/** 칭호·낙관처럼 글자가 그대로 찍히는 갈래에서 쓰는 글자 */
-		text?: string;
-		/** 글방에 놓을 상점 에셋 키 — 그림 require 는 화면이 푼다 (데이터 파일은 그림을 모른다) */
-		props?: string[];
 	}
 
 	export interface PetStage {

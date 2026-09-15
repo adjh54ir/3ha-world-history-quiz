@@ -18,7 +18,7 @@ import { MODAL_MAX_WIDTH, scaleHeight, scaleWidth } from '@/src/utils';
 
 /**
  * 레벨업 — 펫 단계가 오르면 탭 화면으로 돌아왔을 때 한 번 크게 축하한다 (루트 레이아웃에 한 번만 올린다).
- * 새 단계 그림이 튀어 오르고, 뒤에서 빛살이 천천히 돈다. 보물상자보다 먼저 뜬다.
+ * 새 단계 그림이 튀어 오르고, 뒤에서 빛살이 천천히 돈다.
  */
 const LevelUpModal = () => {
 	const Colors = useColors();
@@ -27,8 +27,7 @@ const LevelUpModal = () => {
 	const { pendingLevelUp, petName } = useLife();
 	const pathname = usePathname();
 	const level = pendingLevelUp ?? null;
-	// 상점에서 펫 간식을 먹여 단계가 오르면 그 자리에서 축하한다 (탭으로 돌아갈 때까지 미루지 않는다)
-	const visible = level !== null && (pathname.startsWith('/main') || pathname.startsWith('/shop'));
+	const visible = level !== null && pathname.startsWith('/main');
 	const stage = level !== null ? PET_STAGES[Math.min(PET_STAGES.length, Math.max(1, level)) - 1] : null;
 
 	const pop = useRef(new Animated.Value(0)).current;

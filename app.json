@@ -5,7 +5,7 @@
     "scheme": "worldhistoryquiz",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tha.worldhistoryquiz",
@@ -57,7 +57,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/icon.png",
+          "image": "./assets/splash.png",
           "imageWidth": 220,
           "resizeMode": "contain",
           "backgroundColor": "#1249C9"

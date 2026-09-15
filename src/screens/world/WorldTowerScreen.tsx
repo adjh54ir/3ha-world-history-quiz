@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
+import { useWorldGuide } from './common/WorldGuide';
+import WorldTopicPicker from './common/WorldTopicPicker';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
@@ -12,6 +14,7 @@ import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } fro
 import { TOWER_FLOOR_SIZE, TOWER_LIVES } from '@/src/services/life/LifeRules';
 import { TOWER_LEVEL_LABEL } from '@/src/services/world/WorldChallenge';
 import { useLife } from '@/src/hooks/useLife';
+import type { WorldType } from '@/src/types/data/WorldType';
 import { Paths } from '@/src/navigation/conf/Paths';
 import { playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight } from '@/src/utils';
@@ -36,10 +39,17 @@ const WorldTowerScreen = () => {
 	const enterStyle = useScreenEnter();
 	const life = useLife();
 	const best = life.bestTower ?? 0;
+	/** 어느 주제로 오를지 — 고르지 않으면 예전처럼 전체에서 섞어 낸다 */
+	const [topic, setTopic] = useState<WorldType.TopicKey | undefined>(undefined);
+	const { button, guide } = useWorldGuide('world-tower', [
+		'층마다 문제를 풀고 한 층씩 올라가요.',
+		'세 층마다 어려워지고, 목숨이 다하면 그 자리가 최고 기록이 돼요.',
+		'주제를 골라 오르면 자신 있는 분야로만 기록을 겨룰 수 있어요.',
+	]);
 
 	const start = () => {
 		playPop();
-		router.push(`/${Paths.TOWER_QUIZ}`);
+		router.push({ pathname: `/${Paths.TOWER_QUIZ}`, params: topic ? { topic } : {} } as never);
 	};
 
 	return (
@@ -47,12 +57,15 @@ const WorldTowerScreen = () => {
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.hero}>
+						<View style={styles.heroTop}>{button}</View>
 						<View style={styles.heroBadge}>
 							<IconComponent type="materialcommunityicons" name="stairs-up" size={34} color={Colors.textInverse} />
 						</View>
 						<Text style={styles.heroTitle}>타워 챌린지</Text>
 						<Text style={styles.heroSub}>{best > 0 ? `지금까지 ${best}층까지 올랐어요` : '한 층씩 올라가 어디까지 갈 수 있는지 겨뤄요'}</Text>
 					</View>
+
+					<WorldTopicPicker value={topic} onChange={setTopic} label="어느 주제로 오를까요?" />
 
 					<View style={styles.ruleRow}>
 						<View style={styles.rule}>
@@ -101,6 +114,7 @@ const WorldTowerScreen = () => {
 				</PressableScale>
 			</View>
 			<BottomHomeButton />
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -108,10 +122,12 @@ const WorldTowerScreen = () => {
 const createStyles = (Colors: Palette) =>
 	StyleSheet.create({
 		safe: { flex: 1, backgroundColor: Colors.background },
-		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xl },
+		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
 		stack: { gap: SpacingV.lg },
 
 		hero: { alignItems: 'center', gap: SpacingV.xs, paddingVertical: SpacingV.lg },
+		// 안내 버튼은 히어로 오른쪽 위 — 가운데 정렬된 배지·제목의 흐름을 건드리지 않는다
+		heroTop: { alignSelf: 'flex-end' },
 		heroBadge: {
 			width: scaledSize(76),
 			height: scaledSize(76),

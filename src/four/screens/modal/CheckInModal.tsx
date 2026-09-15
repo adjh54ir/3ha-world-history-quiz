@@ -11,8 +11,6 @@ import { MODAL_MAX_WIDTH, scaledSize, scaleHeight, scaleWidth } from '@/src/four
 import IconComponent from '../common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import { useAttendancePet, useStreak } from '@/src/hooks/useLife';
-import { SHOP_ITEM_IMAGES } from '@/src/const/data/life/ConstShopImages';
-import { useDecorSeal } from '@/src/screens/life/common/LifeDecor';
 import { ATTENDANCE_FEED_CYCLE, attendanceFeedReward, daysToFeedMilestone } from '@/src/services/life/LifeRules';
 import DateUtils from '@/src/four/utils/DateUtils';
 import { Typography, FontWeight, Spacing, SpacingV, Radius, HitSlop } from '@/src/four/const/ConstDesign';
@@ -34,9 +32,8 @@ LocaleConfig.locales.ko = {
 LocaleConfig.defaultLocale = 'ko';
 
 const CHECK_IN_MASCOT = FourImages.screen_fox_check_in;
-/** 하루치 먹이 · 특별 출석 묶음 — 상점과 같은 에셋을 써서 "같은 물건"으로 보이게 한다 */
-const FEED_IMAGE = SHOP_ITEM_IMAGES.petFeed;
-const FEED_CRATE_IMAGE = SHOP_ITEM_IMAGES.guardianCrate;
+const FEED_IMAGE = require('@/src/assets/illustrations/attendance-pet-feed.webp');
+const FEED_CRATE_IMAGE = require('@/src/assets/illustrations/attendance-pet-feed-bundle.webp');
 
 interface CheckInModalProps {
 	visible: boolean;
@@ -66,8 +63,6 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 	 * 먹이를 한 번도 주지 않았으면 아직 알조차 없다 — 없는 알을 미리 보여 주지 않고 사자만 세운다.
 	 */
 	const petImage = petImageRaw;
-	/** 낙관 — 사 둔 것이 있으면 그 글자와 색으로 찍힌다 (기본은 붉은 出席) */
-	const seal = useDecorSeal();
 	/** 오늘 받은(또는 오늘 찍으면 받을) 먹이 수 — 7일마다 오는 특별 출석이면 여러 개다 */
 	const todayFeeds = attendanceFeedReward(isCheckedIn ? streak : streak + 1);
 	const isSpecial = todayFeeds > 1;
@@ -278,9 +273,9 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 										)}
 									</View>
 										{/* 인장 — 두 캐릭터 발밑에 비스듬히 찍힌다. 낙관을 사 두면 글자와 색이 바뀐다 */}
-									<View style={[styles.stampSeal, { borderColor: seal.color, backgroundColor: seal.tint }]}>
-										<Text allowFontScaling={false} style={[styles.stampSealText, { color: seal.color }]}>
-											{seal.text}
+									<View style={styles.stampSeal}>
+										<Text allowFontScaling={false} style={styles.stampSealText}>
+											出席
 										</Text>
 									</View>
 								</View>

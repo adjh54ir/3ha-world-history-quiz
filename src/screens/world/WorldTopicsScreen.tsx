@@ -1,19 +1,27 @@
 import React, { useMemo } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
+import { useWorldGuide } from './common/WorldGuide';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { WORLD_TOPICS } from '@/src/const/data/world/ConstWorldTopics';
 import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
+import { selectEntryImage } from '@/src/const/data/world/ConstWorldImages';
 import { Paths } from '@/src/navigation/conf/Paths';
 import { playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+
+/** 카드 머리에 세우는 미리보기 장수 — 넉 장을 넣으면 한 장이 손톱만 해진다 */
+const PREVIEW_COUNT = 3;
+/** 미리보기 칸이 작다 — 받아 오는 그림(위인 초상)도 그 크기로만 받는다 */
+const PREVIEW_WIDTH = 160;
 
 /**
  * 세계 상식 — 주제 고르기.
@@ -27,9 +35,32 @@ const WorldTopicsScreen = () => {
 	const styles = useThemedStyles(createStyles);
 	const enterStyle = useScreenEnter();
 
-	/** 주제별 항목 수 — 데이터가 안 바뀌므로 한 번만 센다 */
+	const { button, guide } = useWorldGuide('world-topics', [
+		'주제를 고르면 그 안에서 학습과 퀴즈를 바로 시작할 수 있어요.',
+		'카드 아래 왼쪽은 학습, 오른쪽은 퀴즈예요.',
+		'주제마다 묻는 방식이 여러 가지라 같은 주제도 매번 다르게 나와요.',
+	]);
+
+	/**
+	 * 주제별 항목 수와 카드 머리에 걸 미리보기 — 데이터가 안 바뀌므로 한 번만 센다.
+	 * 그림이 없는 주제(랜드마크·별자리·대회)는 빈 배열이고, 그 자리는 주제 아이콘이 대신한다.
+	 */
 	const counts = useMemo(
-		() => WORLD_TOPICS.map((topic) => ({ topic, count: WORLD_ENTRIES[topic.key].length })),
+		() =>
+			WORLD_TOPICS.map((topic) => {
+				const pool = WORLD_ENTRIES[topic.key];
+				const previews: NonNullable<ReturnType<typeof selectEntryImage>>[] = [];
+				for (const entry of pool) {
+					if (previews.length >= PREVIEW_COUNT) {
+						break;
+					}
+					const image = selectEntryImage(topic.key, entry, PREVIEW_WIDTH);
+					if (image) {
+						previews.push(image);
+					}
+				}
+				return { topic, count: pool.length, previews };
+			}),
 		[],
 	);
 	const total = counts.reduce((sum, item) => sum + item.count, 0);
@@ -44,15 +75,26 @@ const WorldTopicsScreen = () => {
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.header}>
-						<Text style={styles.title}>세계 상식</Text>
-						<Text style={styles.subtitle}>{`${WORLD_TOPICS.length}개 주제 · ${total.toLocaleString()}개 항목`}</Text>
+						<View style={styles.headerText}>
+							<Text style={styles.title}>세계 상식</Text>
+							<Text style={styles.subtitle}>{`${WORLD_TOPICS.length}개 주제 · ${total.toLocaleString()}개 항목`}</Text>
+						</View>
+						{button}
 					</View>
 
 					<View style={styles.grid}>
-						{counts.map(({ topic, count }) => (
+						{counts.map(({ topic, count, previews }) => (
 							<View key={topic.key} style={[styles.card, { backgroundColor: Colors.surface }]}>
 								<View style={[styles.cardArt, { backgroundColor: Colors[topic.tint] }]}>
-									<IconComponent type="materialcommunityicons" name={topic.icon} size={30} color={Colors[topic.color]} />
+									{previews.length > 0 ? (
+										<View style={styles.previewRow}>
+											{previews.map((image, at) => (
+												<Image key={at} source={image} style={styles.preview} contentFit="contain" transition={160} />
+											))}
+										</View>
+									) : (
+										<IconComponent type="materialcommunityicons" name={topic.icon} size={30} color={Colors[topic.color]} />
+									)}
 								</View>
 								<View style={styles.cardBody}>
 									<Text style={styles.cardLabel} numberOfLines={1}>
@@ -87,6 +129,7 @@ const WorldTopicsScreen = () => {
 				</Animated.View>
 			</ScrollView>
 			<BottomHomeButton />
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -97,7 +140,8 @@ const createStyles = (Colors: Palette) =>
 		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
 		stack: { gap: SpacingV.lg },
 
-		header: { gap: SpacingV.xs },
+		header: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: Spacing.md },
+		headerText: { flex: 1, gap: SpacingV.xs },
 		title: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		subtitle: { fontSize: Typography.bodySm, color: Colors.textSecondary },
 
@@ -112,7 +156,10 @@ const createStyles = (Colors: Palette) =>
 			borderColor: Colors.border,
 			...Shadow.card,
 		},
-		cardArt: { height: scaleHeight(72), alignItems: 'center', justifyContent: 'center' },
+		cardArt: { height: scaleHeight(72), alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.sm },
+		// 석 장을 겹치지 않고 나란히 — 칸이 좁아 간격은 4 로 못 박는다
+		previewRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: scaleWidth(6) },
+		preview: { width: scaledSize(32), height: scaledSize(32), borderRadius: Radius.sm },
 		cardBody: { paddingHorizontal: Spacing.md, paddingTop: SpacingV.sm, gap: SpacingV.xs },
 		cardLabel: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		cardDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, lineHeight: scaledSize(17) },

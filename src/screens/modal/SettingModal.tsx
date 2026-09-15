@@ -4,6 +4,7 @@ import {Keyboard, Animated, Easing, Linking, ScrollView, StyleSheet, Text, Touch
 import { scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
 import Markdown from 'react-native-markdown-display';
 import AppModal from '../common/atomic/AppModal';
+import { LANDMARK_CREDITS } from '@/src/const/data/world/ConstLandmarkCredits';
 import IconComponent from '../common/atomic/IconComponent';
 import { Palette } from '@/src/const/ConstColors';
 import { FontWeight, Layout, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -34,7 +35,7 @@ const useSheetEnter = () => {
 const markdown = `
 # **1) 개인정보 처리방침**
 
-본 개인정보 처리방침은 EcodeLab(이하 "서비스 제공자")이 광고 지원(Ad Supported) 서비스로 제작한 모바일 애플리케이션 **생활 한자**(이하 "애플리케이션")에 적용됩니다. 본 서비스는 "있는 그대로(AS IS)" 제공됩니다.
+본 개인정보 처리방침은 EcodeLab(이하 "서비스 제공자")이 광고 지원(Ad Supported) 서비스로 제작한 모바일 애플리케이션 **세계 상식 퀴즈**(이하 "애플리케이션")에 적용됩니다. 본 서비스는 "있는 그대로(AS IS)" 제공됩니다.
 
 ---
 
@@ -136,7 +137,7 @@ const markdown = `
 
 # **2) 이용약관**
 
-본 이용약관은 EcodeLab(이하 "서비스 제공자")이 광고 지원(Ad Supported) 서비스로 제작한 모바일 애플리케이션 **생활 한자**(이하 "애플리케이션")에 적용됩니다.
+본 이용약관은 EcodeLab(이하 "서비스 제공자")이 광고 지원(Ad Supported) 서비스로 제작한 모바일 애플리케이션 **세계 상식 퀴즈**(이하 "애플리케이션")에 적용됩니다.
 
 ---
 
@@ -279,38 +280,32 @@ type OssSection = { title: string; caption: string; items: OssItem[] };
 /**
  * 오픈소스 고지 목록.
  * -------------------------------------------------
- * - 앞 두 묶음(자료·사운드)은 저작자 표시가 **라이선스 조건**이라 반드시 앱 안에 남아야 한다.
- *   근거 문서: `src/assets/fonts/ATTRIBUTIONS.md`, `assets/sounds/ATTRIBUTIONS.md`
+ * - 랜드마크 사진과 사운드는 저작자 표시가 **라이선스 조건**이라 반드시 앱 안에 남아야 한다.
+ *   근거: `src/const/data/world/ConstLandmarkCredits.ts`, `assets/sounds/ATTRIBUTIONS.md`
+ *   랜드마크 96장은 표에서 그대로 만들어 세운다 — 손으로 옮겨 적으면 사진을 바꿀 때 어긋난다.
+ * - 한자 서체·필순 자료 고지는 걷어냈다. 학습 도메인이 세계 상식으로 바뀌면서 둘 다 앱에서 빠졌고,
+ *   쓰지 않는 자료를 고지에 남겨 두면 고지 자체가 사실과 어긋난다.
  * - 라이브러리 버전은 실제 설치본(node_modules) 기준. 의존성을 올리면 여기도 같이 고친다.
  */
 const openSourceSections: OssSection[] = [
 	{
-		title: '서체',
-		caption: '저작자 표시가 라이선스 조건인 항목입니다',
-		items: [
-			{
-				name: 'Source Han Serif K (한자 서체)',
-				license: 'SIL Open Font License 1.1',
-				credit: 'Adobe',
-				url: 'https://github.com/adobe-fonts/source-han-serif',
-			},
-		],
+		title: '랜드마크 사진',
+		caption: '위키미디어에서 받아 오는 사진입니다 — 저작자 표시가 라이선스 조건입니다',
+		items: LANDMARK_CREDITS.map((credit) => ({
+			name: `${credit.name} — ${credit.artist}`,
+			license: credit.license,
+			credit: credit.artist,
+			url: `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(credit.file)}`,
+		})),
 	},
 	{
-		title: '필순 자료',
-		caption: '저작자 표시가 라이선스 조건인 항목입니다',
+		title: '위인 초상',
+		caption: '위키미디어에서 받아 오는 초상입니다 — 모두 퍼블릭 도메인이라 표시 의무는 없습니다',
 		items: [
 			{
-				name: '한자 획순 (바깥선)',
-				license: 'ARPHIC PUBLIC LICENSE',
-				credit: 'Make Me a Hanzi · Arphic Technology',
-				url: 'https://github.com/skishore/makemeahanzi',
-			},
-			{
-				name: '한자 획순 (중심선 · 한국 자형 33자)',
-				license: 'CC BY-SA 3.0',
-				credit: 'KanjiVG · Ulrich Apel',
-				url: 'http://kanjivg.tagaini.net',
+				name: '세계 위인 초상 122장',
+				license: 'Public domain',
+				url: 'https://commons.wikimedia.org/wiki/Main_Page',
 			},
 		],
 	},

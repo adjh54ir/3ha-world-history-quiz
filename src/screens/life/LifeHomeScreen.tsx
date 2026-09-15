@@ -11,20 +11,17 @@ import MascotImage from '@/src/screens/common/atomic/MascotImage';
 import { showToast } from '@/src/screens/common/atomic/GlobalToast';
 import ActionCard from './common/ActionCard';
 import MissionCard from './common/MissionCard';
-import CoinChip from './common/CoinChip';
-import CoinIcon, { CoinRise } from './common/CoinIcon';
-import { PetPerch, StudyRoomBackdrop, TitlePlaque } from './common/LifeDecor';
 import PetAvatar from './common/PetAvatar';
 import LifeCharacterGuide, { LifeGuideButton, useCharacterGuideOnce } from './common/LifeCharacterGuide';
 import ProgressBar from './common/ProgressBar';
 import { Palette, onSurface } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
-import { useActiveEffects, useAttendancePet, useDecor, useInventory, useLife, usePet, useStreak } from '@/src/hooks/useLife';
+import { useAttendancePet, useLife, usePet, useStreak } from '@/src/hooks/useLife';
 import { useAnimationRunner, useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { checkIn, ensureDaily } from '@/src/store/slice/LifeSlice';
-import { BADGES, REWARD, shopUpgradeEffect } from '@/src/const/data/life/ConstLifeRewards';
-import { attendanceFeedReward, attendanceReward, isWeekend, TIME_CHALLENGE_SEC, TOWER_LIVES } from '@/src/services/life/LifeRules';
+import { BADGES } from '@/src/const/data/life/ConstLifeRewards';
+import { attendanceExpReward, attendanceFeedReward, TIME_CHALLENGE_SEC, TOWER_LIVES } from '@/src/services/life/LifeRules';
 import { Paths, tabPath } from '@/src/navigation/conf/Paths';
 import { playAttendance, playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -34,35 +31,31 @@ import CheckInModal from '@/src/four/screens/modal/CheckInModal';
 import StudyModeModal from './modal/StudyModeModal';
 import BadgeMedal from './common/BadgeMedal';
 import BadgeDetailModal, { type BadgeDetail } from './modal/BadgeDetailModal';
-import { BagItemModal, type BagItem } from './modal/ShopDialogs';
-import { Image } from 'expo-image';
 import TowerRewardSection from '@/src/four/screens/common/TowerRewardSection';
 import { MainStorageKeyType } from '@/src/four/types/MainStorageKeyType';
 import { selectPetImage } from '@/src/const/data/life/ConstPetImages';
 
-const ATTEND_MASCOT = require('@/src/assets/illustrations/panda-attendance.webp');
+const ATTEND_MASCOT = require('@/src/assets/illustrations/lion-attendance.webp');
 
 /** 지금 시각대에 맞는 인사말 */
 const greeting = () => {
 	const hour = DateUtils.getLocalHour();
-	if (hour < 6) return '늦은 밤, 한 단어만 더 볼까요?' as const;
-	if (hour < 12) return '좋은 아침! 오늘의 한자로 시작해요' as const;
-	if (hour < 18) return '오후에도 한 걸음, 한 단어' as const;
-	return '하루를 정리하며 한자 한 줌' as const;
+	if (hour < 6) return '늦은 밤, 한 문제만 더 볼까요?' as const;
+	if (hour < 12) return '좋은 아침! 오늘의 퀴즈로 시작해요' as const;
+	if (hour < 18) return '오후에도 한 걸음, 한 가지씩' as const;
+	return '하루를 정리하며 세계 한 바퀴' as const;
 };
 
 /** 펫을 누를 때마다 돌아가며 나오는 말 */
-const PET_SPEECH = ['오늘도 한 단어, 같이 해요!', '한자는 뜻을 알면 훨씬 쉬워요', '조금씩 매일이 제일 빨라요', '출석 도장 잊지 마세요!'] as const;
+const PET_SPEECH = ['오늘도 한 가지, 같이 해요!', '세계는 넓고 볼 것은 많아요', '조금씩 매일이 제일 빨라요', '출석 도장 잊지 마세요!'] as const;
 
 /** 출석 수호신(청룡)이 하는 말 — 사자와 같은 말풍선을 쓰므로 문장으로 누가 말하는지 알린다 */
-const DRAGON_SPEECH = ['청룡이에요. 먹이 주면 무럭무럭 자라요!', '출석 도장을 찍으면 먹이가 하나 생겨요', '나의 활동에서 저를 먹일 수 있어요', '같이 한자 공부해요!'] as const;
+const DRAGON_SPEECH = ['청룡이에요. 먹이 주면 무럭무럭 자라요!', '출석 도장을 찍으면 먹이가 하나 생겨요', '나의 활동에서 저를 먹일 수 있어요', '같이 세계 한 바퀴 돌아요!'] as const;
 
 /**
  * 히어로 무대 높이 — 글방 배경과 캐릭터 줄이 같은 값을 쓴다.
  * 따로 두면 글방이 줄 아래로 삐져나와 "사자를 누르면 한마디 해요" 글씨 뒤에 바닥 띠가 깔렸다.
  */
-const HERO_STAGE_HEIGHT = scaleWidth(124);
-
 /** 이만큼 내려가면 "맨 위로" 버튼을 띄운다 */
 const SCROLL_TOP_THRESHOLD = scaleHeight(420);
 
@@ -88,22 +81,12 @@ const LifeHomeScreen = () => {
 	const life = useLife();
 	const pet = usePet();
 	const attendancePet = useAttendancePet();
-	/** 가진 소모품 — 상점과 같은 목록 */
-	const ownedItems = useInventory();
-	/** 지금 걸려 있는 효과 — 상점과 같은 목록. 사 둔 부적·강화가 무엇을 하고 있는지 홈에서 바로 읽는다 */
-	const activeEffects = useActiveEffects();
-	const { streak, checkedToday, shields, willUseShield } = useStreak();
+	const { streak, checkedToday } = useStreak();
 	const enterStyle = useScreenEnter();
-	/** 글방을 사 뒀는지 — 캐릭터 무대 높이를 배경에 맞출지 정한다 */
-	const studyRoom = useDecor('study');
 	const run = useAnimationRunner();
 	const scrollRef = useRef<ScrollView>(null);
 	const [showTop, setShowTop] = useState(false);
 	const stamp = useRef(new Animated.Value(1)).current;
-	/** 출석 버튼 금화가 차오르는 정도(0~1) — height 를 움직이므로 네이티브 드라이버를 못 쓴다 */
-	const coinFill = useRef(new Animated.Value(0)).current;
-	/** 버튼에서 튀어 오르는 금화 — transform 만 쓰므로 네이티브 드라이버로 따로 돌린다 */
-	const coinBurst = useRef(new Animated.Value(0)).current;
 	const speechAnim = useRef(new Animated.Value(0)).current;
 	const [speech, setSpeech] = useState<string | null>(null);
 	/** 출석 달력 팝업 — 도장을 찍고 나면 달력과 펫 보상 진행도를 함께 보여 준다 */
@@ -112,8 +95,6 @@ const LifeHomeScreen = () => {
 	const [showStudyMode, setShowStudyMode] = useState(false);
 	/** 상세로 펼쳐 둔 뱃지 — 홈 뱃지 줄에서 하나를 누르면 채워진다 */
 	const [badgeDetail, setBadgeDetail] = useState<BadgeDetail | null>(null);
-	/** 가방에서 누른 물건 — 무슨 물건이고 어디서 쓰는지 팝업으로 읽는다 */
-	const [bagItem, setBagItem] = useState<BagItem | null>(null);
 	const [showStamp, setShowStamp] = useState(false);
 	const stampAnim = useRef(new Animated.Value(0)).current;
 	/** 도장을 지우는 타이머 — 화면을 벗어나도 살아남으므로 핸들을 들고 있는다 */
@@ -123,9 +104,7 @@ const LifeHomeScreen = () => {
 
 	/** 타워 챌린지에서 깬 층의 보상 — 타워 화면이 AsyncStorage 에 직접 쓰므로 여기서 읽어 온다 */
 	const [towerRewards, setTowerRewards] = useState<number[]>([]);
-	const attendanceCoins =
-		(attendanceReward(streak + 1) + shopUpgradeEffect('attendanceLantern', life.shopUpgrades?.attendanceLantern ?? 0)) *
-		((life.attendanceBoosts ?? 0) > 0 ? 2 : 1);
+	const attendanceExp = attendanceExpReward(streak + 1);
 
 	// 탭으로 돌아올 때마다 확인한다 — 날짜가 바뀌었거나 설정에서 초기화한 뒤에도 오늘의 퀴즈가 비지 않게
 	useFocusEffect(
@@ -149,23 +128,11 @@ const LifeHomeScreen = () => {
 
 	/**
 	 * 출석 팝업을 연다 — 도장은 팝업 안 '출석하고 보상받기' 버튼으로 직접 찍는다.
-	 * 누른 자리에서 금화가 아래부터 차오르고 낱개 금화가 위로 튀어, 무엇을 받으러 가는지가 먼저 보인다.
 	 */
 	const openCheckIn = useCallback(() => {
 		playPop();
-		if (!checkedToday) {
-			coinFill.setValue(0);
-			coinBurst.setValue(0);
-			run(Animated.timing(coinFill, { toValue: 1, duration: 620, easing: Easing.out(Easing.cubic), useNativeDriver: false }));
-			run(Animated.timing(coinBurst, { toValue: 1, duration: 900, easing: Easing.out(Easing.quad), useNativeDriver: true }));
-		}
 		setShowCheckIn(true);
-	}, [checkedToday, coinBurst, coinFill, run]);
-
-	/** 이미 찍은 날은 금화가 처음부터 가득 차 있다 */
-	useEffect(() => {
-		coinFill.setValue(checkedToday ? 1 : 0);
-	}, [checkedToday, coinFill]);
+	}, []);
 
 	/**
 	 * 출석 도장을 찍고 보상을 받는다 — 팝업의 버튼에서만 부른다.
@@ -175,17 +142,13 @@ const LifeHomeScreen = () => {
 		if (checkedToday) {
 			return;
 		}
-		// 보호권으로 어제를 막으면 스트릭이 끊기지 않고 이어진다 — 리듀서가 같은 판단으로 소모한다
 		dispatch(checkIn());
 		playAttendance();
-		if (willUseShield) {
-			showToast('스트릭 보호권을 썼어요', 'shield-check', { subMessage: `어제 결석을 막아 ${streak + 1}일 연속이 이어져요` });
-		}
 		stamp.setValue(0.6);
 		run(Animated.spring(stamp, { toValue: 1, friction: 4, tension: 160, useNativeDriver: true }));
 		// 7일마다 오는 특별 출석은 먹이를 여러 개 준다 — 리듀서와 같은 규칙으로 미리 세어 알린다
 		const feeds = attendanceFeedReward(streak + 1);
-		showToast(`출석 완료! +${attendanceCoins} 코인 · 펫 먹이 ${feeds}개`, 'calendar-check', {
+		showToast(`출석 완료! +${attendanceExp}EXP · 펫 먹이 ${feeds}개`, 'calendar-check', {
 			image: ATTEND_MASCOT,
 			subMessage: feeds > 1 ? `${streak + 1}일 특별 출석! 먹이를 ${feeds}개 받았어요` : streak + 1 > 1 ? `${streak + 1}일 연속 출석 중이에요` : '내일도 만나요!',
 		});
@@ -200,7 +163,7 @@ const LifeHomeScreen = () => {
 			}
 			stampTimer.current = setTimeout(() => setShowStamp(false), 3200);
 		});
-	}, [attendanceCoins, checkedToday, dispatch, run, stamp, stampAnim, streak, willUseShield]);
+	}, [attendanceExp, checkedToday, dispatch, run, stamp, stampAnim, streak]);
 
 	/**
 	 * 앱을 켜면 출석 팝업이 저절로 뜬다 — 도장은 사용자가 버튼으로 찍는다.
@@ -330,16 +293,8 @@ const LifeHomeScreen = () => {
 								<Text style={styles.streakText} numberOfLines={1}>
 									{streak > 0 ? `${streak}일 연속 출석` : '오늘 출석하고 스트릭 시작'}
 								</Text>
-								{/* 보호권 — 있을 때만 방패와 수를 붙인다 */}
-								{shields > 0 && (
-									<View style={styles.shieldTag}>
-										<IconComponent type="materialCommunityIcons" name="shield-half-full" size={11} color={Colors.brandBlockText} />
-										<Text style={styles.shieldTagText}>{shields}</Text>
-									</View>
-								)}
 							</View>
 							<View style={styles.heroTopRight}>
-								<CoinChip />
 								{/* 화면 사용법 다시보기 — 히어로는 진한 파랑 판이라 밝은 톤으로 둔다 */}
 								<LifeGuideButton onPress={guide.open} color={Colors.brandBlockMuted} size={20} />
 							</View>
@@ -365,21 +320,13 @@ const LifeHomeScreen = () => {
 						</View>
 
 						{/* 캐릭터는 화면 한가운데 고정, 출석 수호신은 그 오른쪽에 겹쳐 세운다 */}
-						<View style={[styles.heroDuo, !!studyRoom && styles.heroDuoRoom]}>
-							{/* 글방 — 사 둔 사람에게만 캐릭터 뒤에 깔린다 (안 샀으면 아무것도 안 그린다) */}
-							<StudyRoomBackdrop width={scaleWidth(288)} height={HERO_STAGE_HEIGHT} />
+						<View style={styles.heroDuo}>
 							<PetAvatar size={scaleWidth(112)} plate={false} onPress={onPressPet} />
 							<View style={styles.heroPetSlot} pointerEvents="box-none">
 								<FloatingPet pet={attendancePet} onPress={onPressDragon} />
 							</View>
 						</View>
 						<Text style={styles.petHint}>역사 사자를 누르면 한마디 해요</Text>
-						{/*
-						 * 칭호 — 사 둔 사람에게만 이름 위 한 줄로 붙는다. 히어로는 진한 파랑 면이라 흰 톤으로 얹는다.
-						 * 이름 줄에 같이 넣지 않는 이유 — 이름 + 칭호 + 레벨 칩을 한 줄에 두면 좁은 폰에서 줄이 넘쳤다.
-						 */}
-						<TitlePlaque onBrand />
-
 						<View style={styles.levelRow}>
 							<Text style={styles.petName} numberOfLines={1}>
 								{pet.petName}
@@ -399,17 +346,12 @@ const LifeHomeScreen = () => {
 								style={[styles.checkButton, checkedToday && styles.checkButtonDone]}
 								onPress={openCheckIn}
 								accessibilityRole="button"
-								accessibilityLabel={checkedToday ? '오늘 출석 완료' : `출석 체크, 코인 ${attendanceCoins}개`}>
-								{/* 코인 보상이라 글리프 대신 금화를 세운다 — 누르면 아래부터 금빛이 차오른다 */}
-								<CoinIcon size={scaleWidth(24)} fill={coinFill} />
+								accessibilityLabel={checkedToday ? '오늘 출석 완료' : `출석 체크, 경험치 ${attendanceExp}`}>
+								<IconComponent type="materialCommunityIcons" name="star-four-points-circle" size={scaleWidth(24)} color={Colors.brandBlockText} />
 								<Text style={[styles.checkText, checkedToday && styles.checkTextDone]}>
-									{checkedToday ? '오늘 출석 완료' : `출석 체크  +${attendanceCoins} 코인`}
+									{checkedToday ? '오늘 출석 완료' : `출석 체크  +${attendanceExp}EXP`}
 								</Text>
 							</PressableScale>
-							{/* 튀어 오르는 금화 — 버튼 위 허공에 그려 레이아웃을 밀지 않는다 */}
-							<View style={styles.checkBurst} pointerEvents="none">
-								<CoinRise progress={coinBurst} size={scaleWidth(16)} />
-							</View>
 						</Animated.View>
 
 						{/* 모은 뱃지 — 희귀도 색 메달로 세우고, 누르면 상세가 열린다 (없으면 줄 자체를 두지 않는다) */}
@@ -432,111 +374,7 @@ const LifeHomeScreen = () => {
 						)}
 					</View>
 
-					{/*
-					 * 내 가방 — 가진 소모품을 홈에서 바로 보여 준다.
-					 * 상점까지 들어가야 뭘 갖고 있는지 알 수 있어서, 사 둔 부적·방패를 쓰지 않고 잊었다.
-					 * 목록은 상점과 같은 한 벌(useInventory)이고, 하나도 없으면 줄 자체를 두지 않는다.
-					 */}
-					{ownedItems.length > 0 && (
-						<View style={styles.bagCard}>
-							<View style={styles.bagHead}>
-								<IconComponent type="materialCommunityIcons" name="bag-personal" size={16} color={Colors.primaryDark} />
-								<Text style={styles.bagTitle}>내 가방</Text>
-								<PressableScale
-									style={styles.bagMore}
-									onPress={() => go(Paths.SHOP)}
-									scaleTo={0.94}
-									accessibilityRole="button"
-									accessibilityLabel="상점에서 가방 자세히 보기">
-									<Text style={styles.bagMoreText}>상점</Text>
-									<IconComponent type="materialIcons" name="chevron-right" size={14} color={Colors.primaryDark} />
-								</PressableScale>
-							</View>
-							<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bagRow}>
-								{ownedItems.map((item) => (
-									<PressableScale
-										key={item.key}
-										style={styles.bagChip}
-										onPress={() => {
-											playPop();
-											setBagItem(item);
-										}}
-										scaleTo={0.94}
-										accessibilityRole="button"
-										accessibilityLabel={`${item.label} ${item.count}개, 자세히 보기`}>
-										<View style={styles.bagAssetBox}>
-											<Image source={item.image} style={styles.bagAsset} contentFit="contain" accessible={false} />
-											<View style={styles.bagBadge}>
-												<Text style={styles.bagCount}>{item.count}</Text>
-											</View>
-										</View>
-										<Text style={styles.bagLabel} numberOfLines={1}>
-											{item.label}
-										</Text>
-									</PressableScale>
-								))}
-							</ScrollView>
-						</View>
-					)}
-
-					{/*
-					 * 지금 걸려 있는 효과 — 가방(개수)과 따로 세운다.
-					 * 보호권·부적처럼 "들고 있으면 저절로 쓰이는" 것과 영구 강화가 무엇을 하고 있는지
-					 * 상점까지 들어가지 않아도 홈에서 읽힌다. 아무것도 안 걸려 있으면 줄 자체를 두지 않는다.
-					 */}
-					{activeEffects.length > 0 && (
-						<View style={styles.effectCard}>
-							<View style={styles.bagHead}>
-								<IconComponent type="materialCommunityIcons" name="flash" size={16} color={Colors.success} />
-								<Text style={styles.effectTitle}>지금 걸려 있는 효과</Text>
-								<View style={styles.effectCount}>
-									<Text style={styles.effectCountText}>{activeEffects.length}</Text>
-								</View>
-							</View>
-							<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.effectRow}>
-								{activeEffects.map((effect) => (
-									<View key={effect.key} style={styles.effectChip}>
-										<Image source={effect.image} style={styles.effectAsset} contentFit="contain" accessible={false} />
-										<View style={styles.effectBody}>
-											<Text style={styles.effectLabel} numberOfLines={1}>
-												{effect.label}
-											</Text>
-											<Text style={styles.effectText} numberOfLines={2}>
-												{effect.effect}
-											</Text>
-										</View>
-										<View style={[styles.effectBadge, effect.forever && styles.effectBadgeForever]}>
-											<IconComponent
-												type="materialCommunityIcons"
-												name={effect.forever ? 'infinity' : 'timer-sand'}
-												size={10}
-												color={effect.forever ? Colors.secondaryDark : Colors.primaryDark}
-											/>
-											<Text style={[styles.effectBadgeText, effect.forever && styles.effectBadgeTextForever]}>{effect.badge}</Text>
-										</View>
-									</View>
-								))}
-							</ScrollView>
-						</View>
-					)}
-
-					{/* ── 주말 2배 배너 — 토·일에만 보인다 ── */}
-					{isWeekend() && (
-						<View style={styles.weekendBanner}>
-							<View style={styles.weekendIcon}>
-								<IconComponent type="materialCommunityIcons" name="party-popper" size={20} color={Colors.accentOrange} />
-							</View>
-							<View style={styles.weekendText}>
-								<Text style={styles.weekendTitle}>{`주말 코인 ${REWARD.weekendMultiplier}배`}</Text>
-								<Text style={styles.weekendDesc} numberOfLines={1}>
-									토·일에 푸는 퀴즈·챌린지 코인이 두 배로 들어와요
-								</Text>
-							</View>
-							<Text style={styles.weekendBadge}>{`×${REWARD.weekendMultiplier}`}</Text>
-						</View>
-					)}
-
-					{/* ── 오늘의 미션 — 퀴즈 · 학습 · 오답 복습 셋을 채우면 보물상자 ── */}
+					{/* ── 오늘의 미션 — 퀴즈 · 학습 · 오답 복습 ── */}
 					<MissionCard
 						onPressMission={(key) => (key === 'review' ? go(Paths.WORLD_QUIZ, { source: 'wrong' }) : go(Paths.WORLD))}
 					/>
@@ -559,10 +397,13 @@ const LifeHomeScreen = () => {
 							style={styles.gridCard}
 							iconName="cards"
 							label="학습 모드"
-							description="주제별 카드로 세계 상식을 하나씩 익혀요"
+							description="카드로 한 장씩, 숏폼으로 주르륵 — 골라서 익혀요"
 							color={Colors.secondaryDark}
 							tint={Colors.secondarySoft}
-							onPress={() => go(Paths.WORLD)}
+							onPress={() => {
+								playPop();
+								setShowStudyMode(true);
+							}}
 						/>
 					</View>
 
@@ -639,8 +480,6 @@ const LifeHomeScreen = () => {
 
 			{/* 뱃지 상세 — 이름·설명·획득 조건·희귀도를 한 장에 */}
 			<BadgeDetailModal detail={badgeDetail} onClose={() => setBadgeDetail(null)} />
-			{/* 가방 물건 상세 — 상점의 가방과 같은 팝업을 쓴다 */}
-			<BagItemModal item={bagItem} onClose={() => setBagItem(null)} />
 
 			{/* 학습 방식 고르기 — 고르면 시트를 먼저 닫고 이동한다 */}
 			<StudyModeModal
@@ -648,7 +487,7 @@ const LifeHomeScreen = () => {
 				onClose={() => setShowStudyMode(false)}
 				onPickCard={() => {
 					setShowStudyMode(false);
-					go(Paths.LEARN);
+					go(Paths.WORLD);
 				}}
 				onPickShorts={() => {
 					setShowStudyMode(false);
@@ -672,7 +511,7 @@ const LifeHomeScreen = () => {
 			/>
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
 			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'홈은 하루를 시작하는 자리예요. 출석 도장을 찍으면 코인과 경험치를 받아요.',
+				'홈은 하루를 시작하는 자리예요. 출석 도장을 찍으면 경험치와 펫 먹이를 받아요.',
 				'사자를 누르면 한마디 하고, 학습할수록 단계가 올라가요.',
 				'아래 카드로 학습·퀴즈·챌린지에 바로 들어갈 수 있어요.',
 			]} />
@@ -707,10 +546,6 @@ const FloatingPet = ({ pet, onPress }: { pet: ReturnType<typeof useAttendancePet
 						? `${pet.stage.label}, 안 준 먹이 ${waiting}개. 누르면 먹이러 가요`
 						: `${pet.stage.label}, 먹이 ${pet.fed}개 준 출석 수호신`
 				}>
-				{/* 좌대 — 펫보다 먼저 그려 발밑으로 들어간다 */}
-				<View style={styles.floatPerch} pointerEvents="none">
-					<PetPerch size={scaleWidth(58)} />
-				</View>
 				<MascotImage source={pet.image} size={scaleWidth(66)} motion="float" shadow={false} />
 				{/* 안 준 먹이 — 출석으로 받은 먹이가 가방에 잠들지 않게 청룡 위에 직접 붙인다 */}
 				{waiting > 0 && (
@@ -741,7 +576,7 @@ const createStyles = (Colors: Palette) =>
 		// 그림자를 자르지 않으려고 hero 에 overflow:hidden 을 주지 않는다 — 광택 레이어가 스스로 같은 반경을 갖는다
 		heroGlow: { ...StyleSheet.absoluteFillObject, borderRadius: Radius.xl },
 		heroTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: SpacingV.xs },
-		// 코인 칩과 물음표는 한 덩어리로 오른쪽 끝에 붙인다
+		// 화면 사용법 버튼을 오른쪽 끝에 붙인다
 		heroTopRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 		streakChip: {
 			flexDirection: 'row',
@@ -756,7 +591,7 @@ const createStyles = (Colors: Palette) =>
 		shieldTag: { flexDirection: 'row', alignItems: 'center', gap: scaleWidth(1), marginLeft: scaleWidth(2), paddingHorizontal: scaleWidth(5), height: scaleHeight(18), borderRadius: Radius.pill, backgroundColor: 'rgba(255,255,255,0.2)' },
 		shieldTagText: { fontSize: scaledSize(10), fontWeight: FontWeight.heavy, color: Colors.brandBlockText },
 
-		/** 내 가방 — 가진 소모품 칩 한 줄. 상점의 가방 줄과 같은 생김새다 */
+		/** 이전 버전의 가방 카드 스타일 */
 		bagCard: {
 			gap: SpacingV.sm,
 			paddingVertical: SpacingV.md,
@@ -850,22 +685,6 @@ const createStyles = (Colors: Palette) =>
 		bagCount: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: Colors.textInverse },
 		bagLabel: { fontSize: Typography.caption, color: Colors.textSecondary, textAlign: 'center' },
 
-		weekendBanner: {
-			flexDirection: 'row',
-			alignItems: 'center',
-			gap: Spacing.md,
-			paddingVertical: SpacingV.md,
-			paddingHorizontal: Spacing.lg,
-			borderRadius: Radius.xl,
-			backgroundColor: Colors.warningSoft,
-			borderWidth: 1,
-			borderColor: Colors.accentAmberSoft,
-		},
-		weekendIcon: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.md, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surface },
-		weekendText: { flex: 1, gap: scaleHeight(2) },
-		weekendTitle: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textStrong },
-		weekendDesc: { fontSize: Typography.caption, color: Colors.textSecondary },
-		weekendBadge: { fontSize: Typography.h3, fontWeight: FontWeight.heavy, color: Colors.accentOrange },
 		streakText: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold, color: Colors.brandBlockText },
 
 		// 캐릭터 + 출석 수호신 — 발밑을 맞춰 나란히 세운다
@@ -873,9 +692,7 @@ const createStyles = (Colors: Palette) =>
 		heroDuo: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'flex-end' },
 		// 글방을 깔았을 때만 높이를 배경과 같게 고정한다 — 안 그러면 배경이 아래 글씨 위로 삐져나온다.
 		// 안 산 사람에게 빈 높이를 미리 잡아 두면 캐릭터 위에 이유 없는 여백이 생긴다
-		heroDuoRoom: { height: HERO_STAGE_HEIGHT },
 		// 좌대 자리 — 펫 그림(66) 바닥에 맞춰 가운데 아래에 붙인다
-		floatPerch: { position: 'absolute', left: 0, right: 0, bottom: scaleWidth(3), alignItems: 'center' },
 		// 캐릭터(112) 반지름 56 + 한 뼘(8) → 중앙 기준 오른쪽에 앉힌다. 둘의 그림이 닿지 않는 최소 거리다
 		heroPetSlot: { position: 'absolute', left: '50%', bottom: 0, marginLeft: scaleWidth(64), width: scaleWidth(66) },
 
@@ -919,8 +736,6 @@ const createStyles = (Colors: Palette) =>
 
 		// 히어로가 가운데 정렬이라 폭을 주지 않으면 버튼이 글자 폭으로 쪼그라든다
 		checkWrap: { width: '100%' },
-		// 금화가 튀는 자리 — 버튼 가운데에서 시작해 위로 흩어진다
-		checkBurst: { position: 'absolute', left: 0, right: 0, top: 0, height: scaleHeight(50), marginTop: SpacingV.sm },
 		checkButton: {
 			flexDirection: 'row',
 			alignItems: 'center',

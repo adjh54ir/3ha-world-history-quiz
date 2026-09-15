@@ -13,7 +13,7 @@ import { BADGES, badgeRarity } from '@/src/const/data/life/ConstLifeRewards';
 import type { LifeType } from '@/src/types/data/LifeType';
 import { MODAL_MAX_WIDTH, scaleHeight, scaleWidth } from '@/src/utils';
 
-const BADGE_MASCOT = require('@/src/assets/illustrations/panda-result-great.webp');
+const BADGE_MASCOT = require('@/src/assets/illustrations/lion-result-great.webp');
 
 /** 무대 뒤에서 도는 빛줄기 개수 — 홀수라야 회전이 대칭으로 겹쳐 보이지 않는다 */
 const RAY_COUNT = 9;

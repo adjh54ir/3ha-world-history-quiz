@@ -14,15 +14,13 @@ import DeveloperAppsModal from '@/src/screens/modal/DeveloperAppsModal';
 import { OpenSourceModal, TermsOfServiceModal } from '@/src/screens/modal/SettingModal';
 import LifeHeader from './common/LifeHeader';
 import LifeCharacterGuide, { useCharacterGuideOnce } from './common/LifeCharacterGuide';
-import HanjaFontModal from './modal/HanjaFontModal';
 import { ColorToken, Palette } from '@/src/const/ConstColors';
 import { ThemeMode, useColors, useTheme, useThemedStyles } from '@/src/hooks/useTheme';
-import { HanjaFontStyle, useHanjaFont } from '@/src/hooks/useHanjaFont';
-import { useHangulReading } from '@/src/four/hooks/useHangulReading';
+import { HanjaFontStyle } from '@/src/hooks/useHanjaFont';
 import { useLife, usePet, useStreak } from '@/src/hooks/useLife';
 import { useAnimationRunner, useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { DEV_COINS, devCompleteQuiz, devFillCoins, LifeState, markLearned, resetAll, resetProgress, restoreLife, setReminder, setStrokeAnim } from '@/src/store/slice/LifeSlice';
+import { devCompleteQuiz, LifeState, markLearned, resetAll, resetProgress, restoreLife, setReminder } from '@/src/store/slice/LifeSlice';
 import { applyReminder } from '@/src/services/life/LifeReminder';
 import { clearPortedProgress, restorePortedProgress, type PortedSnapshot } from '@/src/services/life/PortedStorage';
 import { DOMAIN_CATEGORIES, DOMAIN_ITEMS } from '@/src/const/data/world/ConstWorldDomain';
@@ -80,17 +78,17 @@ const RESET_META: Record<
 		color: 'accentOrange',
 		tint: 'warningSoft',
 		title: '학습 기록을 지울까요?',
-		summary: '학습 완료 표시, 오답 노트, 퀴즈 기록, 오늘의 퀴즈가 지워집니다. 코인·펫·뱃지·꾸미기는 그대로 남아요.',
+		summary: '학습 완료 표시, 오답 노트, 퀴즈 기록, 오늘의 퀴즈가 지워집니다. 경험치·펫·뱃지는 그대로 남아요.',
 		done: '학습·퀴즈 기록을 지웠어요',
 	},
 	all: {
 		label: '전체 초기화',
-		desc: '기록과 코인·펫·뱃지까지 전부',
+		desc: '기록과 경험치·펫·뱃지까지 전부',
 		icon: 'delete-outline',
 		color: 'errorDark',
 		tint: 'errorSoft',
 		title: '모든 데이터를 지울까요?',
-		summary: '학습·퀴즈 기록은 물론 코인, 펫, 뱃지, 꾸미기까지 모두 사라집니다. 되돌릴 수 없어요.',
+		summary: '학습·퀴즈 기록은 물론 경험치, 펫, 뱃지까지 모두 사라집니다. 되돌릴 수 없어요.',
 		done: '모든 데이터를 지웠어요',
 	},
 };
@@ -173,15 +171,12 @@ const LifeSettingScreen = () => {
 	const guide = useCharacterGuideOnce('life-setting');
 	const dispatch = useDispatch();
 	const { mode: themeMode, setMode: setThemeMode, isDark } = useTheme();
-	const hanjaFont = useHanjaFont();
 	const life = useLife();
 	const pet = usePet();
 	const { streak } = useStreak();
 	const run = useAnimationRunner();
 	const enterStyle = useScreenEnter();
 
-	const [fontVisible, setFontVisible] = useState(false);
-	const { showHangul, setShowHangul } = useHangulReading();
 	const [sfx, setSfx] = useState(isSfxEnabled);
 	const [bgm, setBgm] = useState(isBgmEnabled);
 	const [resetTarget, setResetTarget] = useState<ResetTarget | null>(null);
@@ -282,20 +277,6 @@ const LifeSettingScreen = () => {
 		showToast(value ? '학습·퀴즈에서 배경음이 나와요' : '배경음을 껐어요', value ? 'music-note' : 'music-note-off');
 	};
 
-	/** 획순 애니메이션 on/off — 단어 상세의 획순 재생을 끈다 */
-	const onToggleStroke = (value: boolean) => {
-		playPop();
-		dispatch(setStrokeAnim(value));
-		showToast(value ? '획순 애니메이션을 켰어요' : '획순 애니메이션을 껐어요', value ? 'draw-pen' : 'pen-off');
-	};
-
-	/** 한글 훈음 표시 on/off — 학습 카드·숏폼·퀴즈·단어 상세에 함께 걸린다 */
-	const onToggleHangul = (value: boolean) => {
-		playPop();
-		setShowHangul(value);
-		showToast(value ? '한글 훈음을 보여 줘요' : '한자만 보여 줘요', value ? 'eye-outline' : 'eye-off-outline');
-	};
-
 	/** 알림 저장 + 예약 — 권한이 없으면 스위치를 되돌린다 */
 	const applyAlarm = async (next: LifeState['reminder'], message?: string) => {
 		const ok = await applyReminder(next);
@@ -381,7 +362,7 @@ const LifeSettingScreen = () => {
 		const message = [
 			'요즘 제가 재미있게 쓰고 있는 앱이 있어서 추천드려요! 😊',
 			'',
-			APP_NAME || '생활 한자',
+			APP_NAME || '세계 상식 퀴즈',
 			APP_DESCRIPTION,
 			'',
 			'👇 아래 링크에서 받아보세요',
@@ -406,7 +387,7 @@ const LifeSettingScreen = () => {
 		const total = week.reduce((sum, item) => sum + item.total, 0);
 		const correct = week.reduce((sum, item) => sum + item.correct, 0);
 		const message = [
-			`📘 ${APP_NAME || '생활 한자'} 이번 주 기록`,
+			`📘 ${APP_NAME || '세계 상식 퀴즈'} 이번 주 기록`,
 			'',
 			`· 연속 출석 ${streak}일`,
 			`· 배운 항목 ${life.learned.length} / ${DOMAIN_ITEMS.length}개`,
@@ -431,12 +412,6 @@ const LifeSettingScreen = () => {
 	const onCompleteQuiz = () => {
 		dispatch(devCompleteQuiz());
 		showToast('오늘의 퀴즈를 만점 완료로 두었어요', 'clipboard-check-outline');
-	};
-
-	/** [DEV] 코인을 더한다 — 상점 물건을 손으로 벌지 않고 바로 보기 위한 단축키 */
-	const onFillCoins = () => {
-		dispatch(devFillCoins(DEV_COINS));
-		showToast(`코인 ${DEV_COINS.toLocaleString()}개를 추가했어요`, 'circle-multiple');
 	};
 
 	/** 가로 목록의 앱 카드 — 지금 플랫폼 스토어로 보낸다 (아직 안 나온 앱은 안내만) */
@@ -522,72 +497,6 @@ const LifeSettingScreen = () => {
 							})}
 						</View>
 						<Text style={styles.themeHint}>{THEME_OPTIONS[themeIndex].hint}</Text>
-					</View>
-
-					{/* 한자 글씨체 — 학습·퀴즈 화면의 한자 자형을 바꾼다 */}
-					<Text style={styles.sectionTitle}>한자 글씨체</Text>
-					<View style={styles.card}>
-						<Row
-							icon="format-font"
-							label="글씨체"
-							onPress={() => setFontVisible(true)}
-							right={
-								<View style={styles.fontRight}>
-									<Text style={styles.fontPreview}>漢</Text>
-									<Text style={styles.fontValue} numberOfLines={1}>
-										{`${hanjaFont.option.label} · ${hanjaFont.sizeOption.label}`}
-									</Text>
-									<IconComponent type="materialIcons" name="chevron-right" size={20} color={Colors.textMuted} />
-								</View>
-							}
-							styles={styles}
-							Colors={Colors}
-						/>
-					</View>
-					<Text style={styles.themeHint}>
-						{`${hanjaFont.option.hint} · 글자 크기 ${hanjaFont.sizeOption.label}`}
-					</Text>
-
-					{/* 학습 표시 — 획순 연출과 한글 훈음을 전역으로 끈다 (단어 상세·학습 카드·숏폼·퀴즈에 함께 걸린다) */}
-					<Text style={styles.sectionTitle}>학습 표시</Text>
-					<View style={styles.card}>
-						<View style={styles.row}>
-							<View style={styles.rowIcon}>
-								<IconComponent type="materialCommunityIcons" name={life.strokeAnim ? 'draw-pen' : 'pen-off'} size={18} color={Colors.primaryDark} />
-							</View>
-							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel}>획순 애니메이션</Text>
-								<Text style={styles.rowDesc}>
-									{life.strokeAnim ? '단어 상세에서 한자를 획순대로 써 보여 줍니다' : '획순을 그리지 않고 글씨체로 바로 보여 줍니다'}
-								</Text>
-							</View>
-							<Switch
-								style={styles.switch}
-								value={life.strokeAnim}
-								onValueChange={onToggleStroke}
-								trackColor={{ false: Colors.borderStrong, true: Colors.primaryLight }}
-								thumbColor={life.strokeAnim ? Colors.primary : Colors.surface}
-							/>
-						</View>
-						<View style={styles.divider} />
-						<View style={styles.row}>
-							<View style={styles.rowIcon}>
-								<IconComponent type="materialCommunityIcons" name={showHangul ? 'eye-outline' : 'eye-off-outline'} size={18} color={Colors.primaryDark} />
-							</View>
-							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel}>한글 훈음 표시</Text>
-								<Text style={styles.rowDesc}>
-									{showHangul ? '한자 옆에 독음과 훈음을 함께 보여 줍니다' : '한자만 보여 줍니다 — 스스로 읽어 보며 익힐 때'}
-								</Text>
-							</View>
-							<Switch
-								style={styles.switch}
-								value={showHangul}
-								onValueChange={onToggleHangul}
-								trackColor={{ false: Colors.borderStrong, true: Colors.primaryLight }}
-								thumbColor={showHangul ? Colors.primary : Colors.surface}
-							/>
-						</View>
 					</View>
 
 					{/* 소리 — 효과음과 배경음을 따로 끈다 */}
@@ -831,11 +740,9 @@ const LifeSettingScreen = () => {
 						<>
 							<Text style={styles.sectionTitle}>개발용 (DEV)</Text>
 							<View style={styles.card}>
-								<Row icon="school" label="모든 단어 학습 완료로 설정" onPress={onCompleteAllStudy} styles={styles} Colors={Colors} />
+								<Row icon="school" label="모든 항목 학습 완료로 설정" onPress={onCompleteAllStudy} styles={styles} Colors={Colors} />
 								<View style={styles.divider} />
 								<Row icon="clipboard-check-outline" label="오늘의 퀴즈 완료로 설정" onPress={onCompleteQuiz} styles={styles} Colors={Colors} />
-								<View style={styles.divider} />
-								<Row icon="circle-multiple" label={`코인 ${DEV_COINS.toLocaleString()}개 추가`} onPress={onFillCoins} styles={styles} Colors={Colors} />
 							</View>
 						</>
 					)}
@@ -846,17 +753,6 @@ const LifeSettingScreen = () => {
 				</Animated.View>
 			</ScrollView>
 
-			<HanjaFontModal
-				visible={fontVisible}
-				current={hanjaFont.key}
-				currentSize={hanjaFont.sizeKey}
-				onSelect={(key) => {
-					hanjaFont.setKey(key);
-					showToast('글씨체를 바꿨어요', 'format-font');
-				}}
-				onSelectSize={hanjaFont.setSizeKey}
-				onClose={() => setFontVisible(false)}
-			/>
 			<CmmDelConfirmModal
 				visible={!!confirm}
 				title={confirm ? confirm.title : undefined}

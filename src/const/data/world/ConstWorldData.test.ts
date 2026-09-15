@@ -14,9 +14,11 @@ import { test } from 'node:test';
 import type { WorldType } from '../../../types/data/WorldType.ts';
 import { DarkColors, LightColors } from '../../ConstColors.ts';
 import { WORLD_TOPICS } from './ConstWorldTopics.ts';
+import { LANDMARK_CREDITS } from './ConstLandmarkCredits.ts';
 import { buildQuestion, buildQuestions, pick } from '../../../services/world/WorldQuizFactory.ts';
 import capital from './capital.json' with { type: 'json' };
 import landmark from './landmark.json' with { type: 'json' };
+import figure from './figure.json' with { type: 'json' };
 import myth from './myth.json' with { type: 'json' };
 import space from './space.json' with { type: 'json' };
 import constellation from './constellation.json' with { type: 'json' };
@@ -26,6 +28,7 @@ import olympic from './olympic.json' with { type: 'json' };
 const ENTRIES: Record<string, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
+	figure: figure as WorldType.Entry[],
 	myth: myth as WorldType.Entry[],
 	space: space as WorldType.Entry[],
 	constellation: constellation as WorldType.Entry[],
@@ -126,7 +129,7 @@ test('문제 자리의 값이 항목마다 달라 답이 하나로 정해진다'
 });
 
 /**
- * 그림이 붙는 주제 — 어느 필드가 열쇠고, 파일이 어디 있고, 어느 상수가 require 로 거는지.
+ * 그림을 앱에 담아 둔 주제 — 어느 필드가 열쇠고, 파일이 어디 있고, 어느 상수가 require 로 거는지.
  * 그림이 일부 항목에만 붙는 주제도 여기서 함께 지킨다.
  */
 const IMAGE_SOURCES: Record<string, { field: string; dir: string; module: string }> = {
@@ -160,12 +163,52 @@ test('그림이 붙은 항목마다 파일과 require 가 다 있다', () => {
 	});
 });
 
+/**
+ * 그림을 위키미디어에서 받아 오는 주제 — 앱에 파일이 없으니 파일 이름의 생김새만 본다.
+ * 주소가 실제로 살아 있는지는 여기서 못 본다 (`node --test` 가 바깥으로 나가지 않는다).
+ */
+const REMOTE_IMAGE_SOURCES: Record<string, { field: string }> = {
+	figure: { field: 'image' },
+	landmark: { field: 'image' },
+};
+
+test('위키 그림을 쓰는 주제는 항목마다 쓸 만한 파일 이름을 들고 있다', () => {
+	// 이름이 비거나 겹치면 초상 문항에서 빈칸이 뜨거나 답이 둘이 된다.
+	Object.entries(REMOTE_IMAGE_SOURCES).forEach(([key, source]) => {
+		const seen = new Set<string>();
+		ENTRIES[key].forEach((entry) => {
+			const file = entry.fields[source.field];
+			assert.ok(file, `${entry.id} 에 그림 파일 이름이 없다`);
+			assert.match(file, /\.(jpg|jpeg|png|webp|gif)$/i, `${entry.id} 의 그림(${file})이 그림 파일 이름이 아니다`);
+			assert.ok(!seen.has(file), `${key} 안에서 그림이 겹친다: ${file} (${entry.id})`);
+			seen.add(file);
+		});
+	});
+});
+
+test('랜드마크 사진은 저작자 표시 표와 한 벌이다', () => {
+	/**
+	 * 사진 96장 가운데 퍼블릭 도메인은 17장뿐이고 나머지는 CC BY·CC BY-SA 다 — 저작자 표시가 라이선스 조건이다.
+	 * 사진만 갈아 끼우고 표를 안 고치면 고지가 다른 사람을 가리킨다. 그건 눈으로는 안 보인다.
+	 */
+	const credits = new Map(LANDMARK_CREDITS.map((credit) => [credit.file, credit]));
+	assert.equal(LANDMARK_CREDITS.length, ENTRIES.landmark.length, '표 개수가 랜드마크 개수와 다르다');
+	ENTRIES.landmark.forEach((entry) => {
+		const credit = credits.get(entry.fields.image);
+		assert.ok(credit, `${entry.id} (${entry.name}) 의 사진 출처가 표에 없다`);
+		assert.equal(credit.name, entry.name, `${entry.fields.image} 의 표 이름이 항목 이름과 다르다`);
+		assert.ok(credit.license, `${entry.fields.image} 에 라이선스가 비어 있다`);
+		assert.ok(credit.artist, `${entry.fields.image} 에 저작자가 비어 있다`);
+	});
+});
+
 test('그림 문항 모드는 그림이 붙은 필드를 물어본다', () => {
+	const ALL_IMAGE_SOURCES: Record<string, { field: string }> = { ...IMAGE_SOURCES, ...REMOTE_IMAGE_SOURCES };
 	WORLD_TOPICS.forEach((topic) => {
 		topic.modes
 			.filter((mode) => mode.askAs)
 			.forEach((mode) => {
-				const source = IMAGE_SOURCES[topic.key];
+				const source = ALL_IMAGE_SOURCES[topic.key];
 				assert.ok(source, `${topic.key}/${mode.key} 가 그림 문항인데 그림 출처가 정해지지 않았다`);
 				assert.equal(mode.ask, source.field, `${topic.key}/${mode.key} 는 ${source.field} 를 물어야 그림을 찾는다`);
 				const withImage = ENTRIES[topic.key].filter((entry) => entry.fields[source.field]).length;

@@ -43,7 +43,7 @@ type Props = {
 
 /**
  * 네이티브 스플래시가 사라진 직후 잠깐 덮어 주는 커스텀 스플래시.
- * - 네이티브의 서 있는 팬더 → 힘을 모으는 팬더 → 앱 아이콘 순으로 짧은 3컷을 만든다.
+ * - 네이티브의 역사 사자 → 달려가는 역사 사자 → 앱 아이콘 순으로 짧은 3컷을 만든다.
  * - 안드로이드 12+ 는 OS 가 아이콘 크기를 고정해 버려서, 큰 아이콘은 이렇게 JS 로 그려야 한다.
  * - 준비 자세에서 앱 아이콘으로 교차 전환한 뒤, 살짝 확대하며 홈 화면에 녹아든다.
  */
@@ -147,7 +147,7 @@ const AnimatedSplash = ({ onReveal, onFinish }: Props) => {
 	return (
 		<Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.backdrop, { opacity: backdropOpacity }]}>
 			<Animated.Image
-				source={require('@/src/assets/illustrations/panda-splash-charge.webp')}
+				source={require('@/src/assets/illustrations/lion-splash-charge.webp')}
 				resizeMode="contain"
 				onLoadEnd={reveal}
 				style={[

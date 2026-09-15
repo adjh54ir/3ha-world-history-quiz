@@ -5,6 +5,7 @@ import { Image } from 'expo-image';
 import { useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
+import { useWorldGuide } from './common/WorldGuide';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -26,7 +27,7 @@ const PAGE = Dimensions.get('window').height;
  *
  * 카드 학습과 같은 내용을 보여 주지만 넘기는 맛이 다르다.
  * 주제를 고르지 않고 들어오면 전체에서 섞어 낸다 (심심할 때 훑어보는 자리).
- * 화면에 머문 항목은 배운 것으로 친다 — 진도·코인·미션이 카드 학습과 똑같이 오른다.
+ * 화면에 머문 항목은 배운 것으로 친다 — 진도·경험치·미션이 카드 학습과 똑같이 오른다.
  */
 const WorldShortsScreen = () => {
 	const Colors = useColors();
@@ -34,6 +35,10 @@ const WorldShortsScreen = () => {
 	const params = useLocalSearchParams<{ topic?: string }>();
 	const life = useLife();
 	const [at, setAt] = useState(0);
+	const { button, guide } = useWorldGuide('world-shorts', [
+		'위아래로 넘기며 한 화면에 한 항목씩 훑어요.',
+		'머문 항목은 배운 것으로 쳐요 — 가볍게 넘겨도 진도가 쌓여요.',
+	], '#FFFFFF');
 
 	const cards = useMemo(() => {
 		const pool = params.topic ? (WORLD_ENTRIES[params.topic as WorldType.TopicKey] ?? ALL_WORLD_ENTRIES) : ALL_WORLD_ENTRIES;
@@ -103,7 +108,10 @@ const WorldShortsScreen = () => {
 			<View style={styles.counter} pointerEvents="none">
 				<Text style={styles.counterText}>{`${at + 1} / ${cards.length}`}</Text>
 			</View>
+			{/* 카드가 화면을 꽉 채우는 화면이라 머리글이 없다 — 안내 버튼도 같은 높이에 띄운다 */}
+			<View style={styles.guideButton}>{button}</View>
 			<BottomHomeButton />
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -134,6 +142,17 @@ const createStyles = (Colors: Palette) =>
 			backgroundColor: Colors.overlay,
 		},
 		counterText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, color: '#FFFFFF' },
+		guideButton: {
+			position: 'absolute',
+			top: scaleHeight(12),
+			right: Spacing.lg,
+			width: scaledSize(30),
+			height: scaledSize(30),
+			borderRadius: Radius.pill,
+			alignItems: 'center',
+			justifyContent: 'center',
+			backgroundColor: Colors.overlay,
+		},
 	});
 
 export default WorldShortsScreen;

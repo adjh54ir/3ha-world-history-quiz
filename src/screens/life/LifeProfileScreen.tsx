@@ -1,19 +1,14 @@
 import React from 'react';
 import { Animated, Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import LifeHeader from './common/LifeHeader';
 import LifeCharacterGuide, { LifeGuideButton, useCharacterGuideOnce } from './common/LifeCharacterGuide';
-import CoinChip from './common/CoinChip';
-import CoinIcon from './common/CoinIcon';
 import EmptyState from './common/EmptyState';
 import PetAvatar from './common/PetAvatar';
 import BadgeMedal, { BadgeRarityChip } from './common/BadgeMedal';
-import { PetPerch, StudyRoomBackdrop, TitlePlaque, useDecorFrame } from './common/LifeDecor';
 import BadgeDetailModal, { type BadgeDetail } from './modal/BadgeDetailModal';
-import { BagItemModal, type BagItem } from './modal/ShopDialogs';
 import MascotImage from '@/src/screens/common/atomic/MascotImage';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,12 +16,10 @@ import { ATTENDANCE_PET_IMAGES, PET_STAGE_IMAGES } from '@/src/const/data/life/C
 import ProgressBar from './common/ProgressBar';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
-import { useDecor, useFeedAttendancePet, useInventory, useLife, usePet, useStreak } from '@/src/hooks/useLife';
+import { useFeedAttendancePet, useLife, usePet } from '@/src/hooks/useLife';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { ATTENDANCE_PET_STAGES, BADGES, PET_STAGES } from '@/src/const/data/life/ConstLifeRewards';
-import { DECORS } from '@/src/const/data/life/ConstLifeDecor';
-import { Paths } from '@/src/navigation/conf/Paths';
 import { playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 
@@ -34,16 +27,13 @@ import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
  * 캐릭터가 서는 자리 높이 — 글방 배경과 캐릭터 줄이 같은 값을 쓴다.
  * 따로 두면 배경이 줄 밖으로 삐져나와 이름·게이지 뒤에 바닥 띠가 깔린다.
  */
-const PET_ROOM_HEIGHT = scaleWidth(152);
-
 /**
  * 나의 활동 탭 — "내가 가진 것" 을 위에서 아래로 훑는 화면.
  * -------------------------------------------------
- * 내 보유 → 캐릭터 → 펫 → 뱃지 순서다. 지갑을 먼저 펼치고, 그 코인으로 키우는 것들이 뒤따른다.
+ * 내 보유 → 캐릭터 → 펫 → 뱃지 순서다.
  *
  * 여기서 내린 것들과 그 이유
  * - 챌린지 기록·주간 출석 : 통계 탭과 같은 숫자다. 두 곳에서 관리하면 한쪽이 먼저 낡는다.
- * - 스트릭 보호권 : 사고 쓰는 일은 상점 한 곳에서 한다. 상점의 '지금 걸려 있는 효과' 에서 확인한다.
  * - 설정 톱니 : 설정 탭이 따로 있다. 그 자리는 화면 사용법(물음표)에 넘겼다.
  */
 const LifeProfileScreen = () => {
@@ -55,38 +45,15 @@ const LifeProfileScreen = () => {
 	// 먹이 주기 규칙은 홈 출석 팝업과 공유한다 (useFeedAttendancePet)
 	const { canFeed, grownUp, feed: onFeed, ...attendancePet } = useFeedAttendancePet();
 	// 보호권 카드는 내렸지만 가진 장수는 여전히 '가방 속 물건' 에 포함된다
-	const { shields } = useStreak();
 	const enterStyle = useScreenEnter();
 	/** 상세로 펼쳐 둔 뱃지 — 뱃지 칸을 누르면 채워진다 (못 딴 뱃지도 조건을 볼 수 있다) */
 	const [badgeDetail, setBadgeDetail] = React.useState<BadgeDetail | null>(null);
 	/** 뱃지 전체 목록을 펼쳤는지 — 접혀 있을 때는 진열장과 다음 목표 세 개만 보인다 */
 	const [showAllBadges, setShowAllBadges] = React.useState(false);
-	/** 사 둔 액자 — 없으면 null 이라 펫 카드가 원래 모습으로 남는다 */
-	const frame = useDecorFrame();
-	/** 글방을 사 뒀는지 — 캐릭터 뒤에 배경이 깔리면 둥근 판은 빼야 두 겹으로 겹치지 않는다 */
-	const studyRoom = useDecor('study');
-	/** 가진 소모품 — 홈·상점과 같은 목록(useInventory). 숫자만 세던 자리에 실제 물건을 늘어놓는다 */
-	const ownedItems = useInventory();
-	/** 가방에서 누른 물건 — 무슨 물건이고 어디서 쓰는지 팝업으로 읽는다 (홈과 같은 팝업) */
-	const [bagItem, setBagItem] = React.useState<BagItem | null>(null);
-
-	/** 가방 속 물건 수 — 상점에서 산 소모품과 아직 안 연 상자를 다 센다 */
-	const bagCount =
-		(life.petFeeds ?? 0) +
-		shields +
-		(life.quizBoosts ?? 0) +
-		(life.wrongGuards ?? 0) +
-		(life.chestSeals ?? 0) +
-		(life.learnBoosts ?? 0) +
-		(life.attendanceBoosts ?? 0) +
-		(life.pendingChests?.length ?? 0);
-	/**
-	 * 보유 칸 세 개 — 코인은 위 큰 줄에서 따로 읽어 주므로 여기 넣지 않는다.
-	 * 꾸미기는 화면 꾸미기(글방·칭호·좌대·액자·카드 테·낙관)를 센다.
-	 */
+	/** 성장 현황을 보여 주는 보유 칸 세 개 */
 	const vault = [
-		{ label: '가방 속 물건', value: `${bagCount}`, unit: '개', icon: 'bag-personal' },
-		{ label: '꾸미기', value: `${life.decors?.length ?? 0}`, unit: `/${DECORS.length}`, icon: 'palette-outline' },
+		{ label: '펫 먹이', value: `${life.petFeeds ?? 0}`, unit: '개', icon: 'food-drumstick' },
+		{ label: '출석', value: `${life.attendance.length}`, unit: '일', icon: 'calendar-check' },
 		{ label: '뱃지', value: `${life.badges.length}`, unit: `/${BADGES.length}`, icon: 'shield-star' },
 	];
 
@@ -106,20 +73,16 @@ const LifeProfileScreen = () => {
 			{/* 톱니를 내리고 그 자리에 화면 사용법(물음표)을 둔다 — 설정은 설정 탭으로 들어간다 */}
 			<LifeHeader
 				title="나의 활동"
-				subtitle="내가 모은 것과 가진 것"
+				subtitle="학습 기록과 성장 현황"
 				right={
 					<View style={styles.headerRight}>
-						<CoinChip />
 						<LifeGuideButton onPress={guide.open} />
 					</View>
 				}
 			/>
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" onScrollBeginDrag={Keyboard.dismiss}>
 				<Animated.View style={[styles.sections, enterStyle]}>
-					{/*
-					 * 내 보유 — 화면 맨 위 지갑 판. 캐릭터보다 위에 둔다(지갑을 먼저 펼치고 그 코인으로 키운다).
-					 * 밝은 카드 대신 진한 판 + 위쪽 광택으로 게임 HUD 처럼 세웠다 — 홈 히어로·상점 선반과 같은 언어다.
-					 */}
+					{/* 내 보유 — 밝은 카드 대신 진한 판 + 위쪽 광택으로 성장 현황을 모았다. */}
 					<View style={styles.vaultPanel}>
 						<LinearGradient
 							pointerEvents="none"
@@ -130,16 +93,7 @@ const LifeProfileScreen = () => {
 						/>
 						<View style={styles.vaultHead}>
 							<Text style={styles.vaultTitle}>내 보유</Text>
-							<Text style={styles.vaultHint}>상점에서 산 물건과 모아 온 것</Text>
-						</View>
-
-						{/* 코인 — 지갑의 주인공이라 실제 금화와 함께 한 줄로 크게 읽는다 */}
-						<View style={styles.walletRow}>
-							<CoinIcon size={scaleWidth(38)} />
-							<View style={styles.walletText}>
-								<Text style={styles.walletLabel}>보유 코인</Text>
-								<Text style={styles.walletValue}>{life.coins.toLocaleString()}</Text>
-							</View>
+						<Text style={styles.vaultHint}>학습하며 모아 온 보상</Text>
 						</View>
 
 						<View style={styles.vaultRow}>
@@ -157,64 +111,13 @@ const LifeProfileScreen = () => {
 							))}
 						</View>
 
-						{/*
-						 * 가방 — 개수만 세던 칸 아래에 실제 물건을 늘어놓는다.
-						 * 게임 인벤토리처럼 에셋 + 개수 배지로 세우고, 누르면 어디에 쓰는 물건인지 읽힌다.
-						 * 하나도 없으면 줄 자체를 두지 않는다(빈 칸이 판을 늘리지 않게).
-						 */}
-						{ownedItems.length > 0 && (
-							<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.bagRow}>
-								{ownedItems.map((item) => (
-									<PressableScale
-										key={item.key}
-										style={styles.bagChip}
-										onPress={() => {
-											playPop();
-											setBagItem(item);
-										}}
-										scaleTo={0.94}
-										accessibilityRole="button"
-										accessibilityLabel={`${item.label} ${item.count}개, 자세히 보기`}>
-										<View style={styles.bagAssetBox}>
-											<Image source={item.image} style={styles.bagAsset} contentFit="contain" accessible={false} />
-											<View style={styles.bagBadge}>
-												<Text style={styles.bagCount}>{item.count}</Text>
-											</View>
-										</View>
-										<Text style={styles.bagLabel} numberOfLines={1}>
-											{item.label}
-										</Text>
-									</PressableScale>
-								))}
-							</ScrollView>
-						)}
+				</View>
 
-						<PressableScale
-							style={styles.shopButton}
-							onPress={() => {
-								playPop();
-								router.push(`/${Paths.SHOP}` as never);
-							}}
-							scaleTo={0.97}
-							accessibilityRole="button"
-							accessibilityLabel="상점으로 가기">
-							<IconComponent type="materialCommunityIcons" name="storefront" size={18} color="#2A1A05" />
-							<Text style={styles.shopButtonText}>상점으로 가기</Text>
-							<IconComponent type="materialIcons" name="chevron-right" size={20} color="#2A1A05" />
-						</PressableScale>
+				<View style={styles.petCard}>
+					<View style={styles.petRoom}>
+						<PetAvatar size={scaleWidth(140)} />
 					</View>
-
-					{/* 펫 — 액자를 사 두면 카드에 테가 둘러진다 */}
-					<View style={[styles.petCard, frame]}>
-						{/* 글방 — 사 둔 사람에게만 캐릭터 뒤에 깔린다. 높이를 고정해 아래 글씨 위로 넘치지 않게 한다 */}
-						<View style={[styles.petRoom, !!studyRoom && styles.petRoomOn]}>
-							<StudyRoomBackdrop width={scaleWidth(252)} height={PET_ROOM_HEIGHT} />
-							{/* 글방을 깔았으면 캐릭터 뒤 둥근 판은 뺀다 — 배경 두 겹이 겹치면 어느 쪽도 안 읽힌다 */}
-							<PetAvatar size={scaleWidth(140)} plate={!studyRoom} />
-						</View>
-						<Text style={styles.petName}>{pet.petName}</Text>
-						{/* 칭호 — 사 둔 사람에게만 이름 아래에 현판이 붙는다 */}
-						<TitlePlaque />
+					<Text style={styles.petName}>{pet.petName}</Text>
 						<Text style={styles.petStage}>
 							Lv.{pet.level} {pet.stage.label} · {pet.exp.toLocaleString()}EXP
 						</Text>
@@ -245,10 +148,6 @@ const LifeProfileScreen = () => {
 						</View>
 						<View style={styles.attendancePetPanel}>
 							<View style={styles.attendancePetStage}>
-								{/* 좌대 — 펫보다 먼저 그려 발밑으로 들어간다 */}
-								<View style={styles.attendancePetPerch} pointerEvents="none">
-									<PetPerch size={scaleWidth(78)} />
-								</View>
 								{/*
 									 * 먹이를 한 번도 주지 않았으면 알조차 아직 없다 — 첫 단계 그림을 흐리게 깔면
 									 * "이미 알을 받았다" 로 읽혀 먹이를 줄 이유가 사라진다. 빈 둥지만 둔다.
@@ -295,7 +194,7 @@ const LifeProfileScreen = () => {
 											? '다 자랐어요 · 먹이를 더 줄 필요가 없어요'
 											: canFeed
 												? `먹이 주기 · ${attendancePet.feeds}개 보유`
-												: '먹이가 없어요 · 출석 보상이나 상점에서 받아요'}
+										: '먹이가 없어요 · 출석 보상으로 받아요'}
 									</Text>
 								</PressableScale>
 							</View>
@@ -417,11 +316,9 @@ const LifeProfileScreen = () => {
 			</ScrollView>
 			{/* 뱃지 상세 — 이름·설명·획득 조건·희귀도를 한 장에 */}
 			<BadgeDetailModal detail={badgeDetail} onClose={() => setBadgeDetail(null)} />
-			{/* 가방 속 물건 상세 — 홈·상점과 같은 팝업 */}
-			<BagItemModal item={bagItem} onClose={() => setBagItem(null)} />
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
 			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'맨 위 지갑에서 코인과 가진 것을 한눈에 봐요.',
+				'맨 위에서 출석과 학습 보상을 한눈에 봐요.',
 				'청룡 펫은 먹이를 줄 때마다 자라요. 먹이 주기 버튼을 눌러 보세요.',
 				'뱃지는 딴 것부터 진열되고, 전체 목록은 눌러서 펼쳐 봐요.',
 			]} />
@@ -447,7 +344,6 @@ const createStyles = (Colors: Palette) =>
 		// 캐릭터가 서는 자리 — 글방 배경과 같은 높이라 배경이 이름·게이지 위로 넘치지 않는다
 		petRoom: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'flex-end' },
 		// 글방을 깔았을 때만 배경과 같은 높이를 잡는다 — 안 산 사람에게는 빈 여백이 생기지 않는다
-		petRoomOn: { height: PET_ROOM_HEIGHT },
 		petCard: {
 			backgroundColor: Colors.surface,
 			borderRadius: Radius.xl,
@@ -654,7 +550,7 @@ const createStyles = (Colors: Palette) =>
 		/**
 		 * 내 보유 — 게임 HUD 판.
 		 * 밝은 카드로 두면 아래 카드들과 같은 무게로 읽혀 "지갑" 으로 안 보였다.
-		 * 진한 브랜드 면 + 위쪽 광택으로 홈 히어로·상점 선반과 같은 언어를 쓴다.
+		 * 진한 브랜드 면 + 위쪽 광택으로 홈 히어로와 같은 언어를 쓴다.
 		 */
 		vaultPanel: {
 			gap: SpacingV.md,
@@ -670,19 +566,6 @@ const createStyles = (Colors: Palette) =>
 		vaultHead: { gap: scaleHeight(2) },
 		vaultTitle: { fontSize: Typography.subtitle, fontWeight: FontWeight.heavy, color: Colors.brandBlockText },
 		vaultHint: { fontSize: Typography.caption, color: Colors.brandBlockMuted },
-
-		/** 코인 줄 — 금화 한 장을 실제로 세워 두고 액수를 크게 읽는다 */
-		walletRow: {
-			flexDirection: 'row',
-			alignItems: 'center',
-			gap: Spacing.md,
-			padding: Spacing.md,
-			borderRadius: Radius.lg,
-			backgroundColor: 'rgba(0, 0, 0, 0.18)',
-		},
-		walletText: { flex: 1, gap: scaleHeight(1) },
-		walletLabel: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.brandBlockMuted },
-		walletValue: { fontSize: Typography.h2, fontWeight: FontWeight.heavy, color: '#FFE9A8', fontVariant: ['tabular-nums'] },
 
 		vaultRow: { flexDirection: 'row', gap: Spacing.sm },
 		/** 가방 줄 — 진한 판 위에 놓이는 인벤토리 칸들 */
@@ -727,17 +610,6 @@ const createStyles = (Colors: Palette) =>
 		// 단위(개·/24)는 숫자보다 한 단계 작게 — 값이 먼저 읽힌다
 		vaultUnit: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.brandBlockMuted },
 		vaultLabel: { fontSize: Typography.caption, color: Colors.brandBlockMuted },
-		// 상점 버튼 — 진한 판 위에서는 금빛이 가장 먼저 눈에 들어온다
-		shopButton: {
-			flexDirection: 'row',
-			alignItems: 'center',
-			justifyContent: 'center',
-			gap: Spacing.xs,
-			height: scaleHeight(48),
-			borderRadius: Radius.pill,
-			backgroundColor: Colors.accentAmber,
-		},
-		shopButtonText: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: '#2A1A05' },
 	});
 
 export default LifeProfileScreen;

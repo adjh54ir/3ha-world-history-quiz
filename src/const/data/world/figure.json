@@ -1,0 +1,1954 @@
+[
+ {
+  "id": "figure-001",
+  "name": "호메로스",
+  "level": 2,
+  "summary": "《일리아스》와 《오디세이아》를 남긴 고대 그리스의 이야기꾼.",
+  "facts": [
+   "트로이아 전쟁과 오디세우스의 귀향을 노래했다.",
+   "실제로 한 사람이었는지는 지금도 논쟁거리다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "시인",
+   "image": "Homer_British_Museum.jpg"
+  }
+ },
+ {
+  "id": "figure-002",
+  "name": "피타고라스",
+  "level": 2,
+  "summary": "직각삼각형 세 변의 관계를 정리로 남긴 고대 그리스 수학자.",
+  "facts": [
+   "수가 세상의 근본이라 믿는 학파를 이끌었다.",
+   "소리의 높낮이가 현의 길이 비로 정해진다는 것도 밝혔다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "수학자",
+   "image": "Kapitolinischer_Pythagoras_adjusted.jpg"
+  }
+ },
+ {
+  "id": "figure-003",
+  "name": "공자",
+  "level": 1,
+  "summary": "인과 예를 가르쳐 유교의 뿌리가 된 춘추 시대 사상가.",
+  "facts": [
+   "제자들이 그 말을 모아 《논어》를 엮었다.",
+   "뜻을 펼칠 군주를 찾아 여러 나라를 십사 년이나 떠돌았다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "중국",
+   "role": "철학자",
+   "image": "Konfuzius-1770.jpg"
+  }
+ },
+ {
+  "id": "figure-004",
+  "name": "노자",
+  "level": 2,
+  "summary": "억지로 하지 않는 삶을 말한 《도덕경》의 저자로 전해지는 인물.",
+  "facts": [
+   "도가 사상의 출발점으로 꼽힌다.",
+   "물처럼 낮은 곳으로 흐르는 삶을 으뜸으로 봤다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "중국",
+   "role": "철학자",
+   "image": "Laozi.jpg"
+  }
+ },
+ {
+  "id": "figure-005",
+  "name": "소크라테스",
+  "level": 1,
+  "summary": "묻고 또 물어 스스로 깨닫게 한 아테네의 철학자.",
+  "facts": [
+   "책을 한 권도 남기지 않아 제자들의 기록으로만 전한다.",
+   "재판에서 사형을 받고 독배를 마셨다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "철학자",
+   "image": "Socrates_Louvre.jpg"
+  }
+ },
+ {
+  "id": "figure-006",
+  "name": "히포크라테스",
+  "level": 2,
+  "summary": "병을 신의 벌이 아니라 자연의 일로 본 의학의 아버지.",
+  "facts": [
+   "의사의 윤리를 담은 선서에 이름이 남았다.",
+   "관찰하고 기록하는 진료법을 세웠다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "의학자",
+   "image": "Hippocrates_rubens.jpg"
+  }
+ },
+ {
+  "id": "figure-007",
+  "name": "플라톤",
+  "level": 1,
+  "summary": "이데아를 말하고 아카데메이아를 연 소크라테스의 제자.",
+  "facts": [
+   "스승을 주인공으로 삼은 대화편을 여럿 남겼다.",
+   "《국가》에서 철인이 다스리는 나라를 그렸다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "철학자",
+   "image": "Plato,_MC_571,_Roman_-_Musei_Capitolini_-_Rome,_Italy_-_DSC05999.jpg"
+  }
+ },
+ {
+  "id": "figure-008",
+  "name": "아리스토텔레스",
+  "level": 1,
+  "summary": "논리학부터 생물학까지 손대 학문의 틀을 세운 만학의 아버지.",
+  "facts": [
+   "플라톤의 제자이자 알렉산드로스 대왕의 스승이었다.",
+   "리케이온을 세워 자료를 모으고 가르쳤다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "철학자",
+   "image": "Aristotle_Altemps_Inv8575.jpg"
+  }
+ },
+ {
+  "id": "figure-009",
+  "name": "유클리드",
+  "level": 2,
+  "summary": "《원론》으로 기하학을 하나의 체계로 묶은 알렉산드리아의 학자.",
+  "facts": [
+   "다섯 공준에서 출발해 정리를 차곡차곡 쌓아 올렸다.",
+   "이천 년 넘게 기하학 교과서로 읽혔다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "수학자",
+   "image": "Euklid.jpg"
+  }
+ },
+ {
+  "id": "figure-010",
+  "name": "아르키메데스",
+  "level": 2,
+  "summary": "목욕탕에서 부력의 원리를 깨닫고 뛰쳐나갔다는 시라쿠사의 학자.",
+  "facts": [
+   "지렛대와 도르래의 원리를 밝혀 무기로도 썼다.",
+   "원주율을 좁은 범위로 계산해 냈다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "수학자",
+   "image": "Archimedes1.jpg"
+  }
+ },
+ {
+  "id": "figure-011",
+  "name": "헤로도토스",
+  "level": 3,
+  "summary": "페르시아 전쟁을 기록해 역사의 아버지라 불리는 사람.",
+  "facts": [
+   "《역사》는 서양 최초의 본격 역사서로 꼽힌다.",
+   "여러 나라를 직접 돌며 보고 들은 것을 적었다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "역사가",
+   "image": "Marble_bust_of_Herodotos_MET_DT11742_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-012",
+  "name": "사마천",
+  "level": 3,
+  "summary": "궁형을 당하고도 《사기》를 끝까지 써낸 한나라의 역사가.",
+  "facts": [
+   "제왕과 인물별로 나눠 적는 기전체를 완성했다.",
+   "뒤이은 중국 역사서의 본보기가 됐다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "중국",
+   "role": "역사가",
+   "image": "Si_maqian.jpg"
+  }
+ },
+ {
+  "id": "figure-013",
+  "name": "프톨레마이오스",
+  "level": 3,
+  "summary": "지구를 우주의 중심에 둔 천동설을 집대성한 알렉산드리아의 학자.",
+  "facts": [
+   "《알마게스트》는 천 년 넘게 천문학의 기준이 됐다.",
+   "당시 알려진 세계를 그린 지도도 남겼다."
+  ],
+  "fields": {
+   "era": "고대",
+   "country": "그리스",
+   "role": "천문학자",
+   "image": "PSM_V78_D326_Ptolemy.png"
+  }
+ },
+ {
+  "id": "figure-014",
+  "name": "이븐 시나",
+  "level": 4,
+  "summary": "《의학정전》으로 동서양 의학을 이은 페르시아의 학자.",
+  "facts": [
+   "유럽 의과대학에서 수백 년 동안 교재로 썼다.",
+   "철학과 천문학에도 두루 밝았다."
+  ],
+  "fields": {
+   "era": "중세",
+   "country": "이란",
+   "role": "의학자",
+   "image": "Avicenna.jpg"
+  }
+ },
+ {
+  "id": "figure-015",
+  "name": "토마스 아퀴나스",
+  "level": 4,
+  "summary": "믿음과 이성이 어긋나지 않는다고 본 중세 스콜라 철학의 대표 학자.",
+  "facts": [
+   "《신학대전》에 자기 사상을 집대성했다.",
+   "아리스토텔레스 철학을 중세 유럽으로 끌어들였다."
+  ],
+  "fields": {
+   "era": "중세",
+   "country": "이탈리아",
+   "role": "철학자",
+   "image": "St-thomas-aquinas.jpg"
+  }
+ },
+ {
+  "id": "figure-016",
+  "name": "마르코 폴로",
+  "level": 2,
+  "summary": "원나라까지 다녀와 《동방견문록》을 남긴 베네치아 상인.",
+  "facts": [
+   "감옥에서 만난 작가에게 이야기를 받아 적게 했다.",
+   "유럽 사람들의 동방 여행 욕심에 불을 붙였다."
+  ],
+  "fields": {
+   "era": "중세",
+   "country": "이탈리아",
+   "role": "탐험가",
+   "image": "Marco_Polo_portrait.jpg"
+  }
+ },
+ {
+  "id": "figure-017",
+  "name": "단테",
+  "level": 2,
+  "summary": "지옥·연옥·천국을 여행하는 《신곡》을 쓴 피렌체의 시인.",
+  "facts": [
+   "라틴어 대신 이탈리아 말로 써서 근대 이탈리아어의 뿌리가 됐다.",
+   "정쟁에 밀려 고향에서 쫓겨난 채 생을 마쳤다."
+  ],
+  "fields": {
+   "era": "중세",
+   "country": "이탈리아",
+   "role": "시인",
+   "image": "Portrait_de_Dante.jpg"
+  }
+ },
+ {
+  "id": "figure-018",
+  "name": "잔 다르크",
+  "level": 2,
+  "summary": "백년전쟁에서 프랑스 군을 이끈 열일곱 살 소녀.",
+  "facts": [
+   "오를레앙을 구해 내고 샤를 7세의 대관식을 이끌었다.",
+   "화형당한 뒤 오백 년이 지나 성인으로 추대됐다."
+  ],
+  "fields": {
+   "era": "중세",
+   "country": "프랑스",
+   "role": "군인",
+   "image": "Ingres_coronation_charles_vii.jpg"
+  }
+ },
+ {
+  "id": "figure-019",
+  "name": "구텐베르크",
+  "level": 2,
+  "summary": "금속활자 인쇄기로 책값을 확 낮춘 마인츠의 기술자.",
+  "facts": [
+   "첫 대량 인쇄물로 42행 성서를 찍었다.",
+   "지식이 퍼지는 속도를 통째로 바꿔 놓았다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "독일",
+   "role": "발명가",
+   "image": "Gutenberg.jpg"
+  }
+ },
+ {
+  "id": "figure-020",
+  "name": "보티첼리",
+  "level": 3,
+  "summary": "〈비너스의 탄생〉과 〈봄〉을 그린 피렌체의 화가.",
+  "facts": [
+   "메디치 가문의 후원을 받으며 신화를 즐겨 그렸다.",
+   "가늘고 흐르는 선이 특징이다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "이탈리아",
+   "role": "화가",
+   "image": "Sandro_Botticelli_083.jpg"
+  }
+ },
+ {
+  "id": "figure-021",
+  "name": "레오나르도 다 빈치",
+  "level": 1,
+  "summary": "〈모나리자〉를 그리고 해부와 기계까지 파고든 르네상스의 천재.",
+  "facts": [
+   "거울에 비춰야 읽히는 글씨로 수첩 수천 장을 남겼다.",
+   "하늘을 나는 기계를 미리 그려 두기도 했다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "이탈리아",
+   "role": "화가",
+   "image": "Leonardo_da_Vinci_-_presumed_self-portrait_-_WGA12798.jpg"
+  }
+ },
+ {
+  "id": "figure-022",
+  "name": "뒤러",
+  "level": 3,
+  "summary": "판화를 예술로 끌어올린 뉘른베르크의 화가.",
+  "facts": [
+   "스물여덟에 그린 자화상이 특히 유명하다.",
+   "이탈리아 르네상스를 북유럽에 옮겨 심었다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "독일",
+   "role": "화가",
+   "image": "Dürer_Alte_Pinakothek.jpg"
+  }
+ },
+ {
+  "id": "figure-023",
+  "name": "코페르니쿠스",
+  "level": 1,
+  "summary": "지구가 태양을 돈다고 주장해 하늘의 중심을 바꾼 성직자.",
+  "facts": [
+   "《천구의 회전에 관하여》를 죽기 직전에야 펴냈다.",
+   "생각을 뒤집는 일을 두고 이 사람의 이름을 딴 말이 생겼다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "폴란드",
+   "role": "천문학자",
+   "image": "Nikolaus_Kopernikus.jpg"
+  }
+ },
+ {
+  "id": "figure-024",
+  "name": "미켈란젤로",
+  "level": 1,
+  "summary": "〈다비드〉를 깎고 시스티나 예배당 천장을 그린 거장.",
+  "facts": [
+   "스스로를 화가보다 조각가로 여겼다.",
+   "천장화를 사 년 넘게 거의 혼자 그렸다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "이탈리아",
+   "role": "조각가",
+   "image": "Miguel_Ángel,_por_Daniele_da_Volterra_(detalle).jpg"
+  }
+ },
+ {
+  "id": "figure-025",
+  "name": "라파엘로",
+  "level": 2,
+  "summary": "〈아테네 학당〉을 그리고 서른일곱에 세상을 뜬 르네상스 화가.",
+  "facts": [
+   "성모자 그림으로 특히 이름을 얻었다.",
+   "다 빈치·미켈란젤로와 함께 르네상스 3대 거장으로 꼽힌다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "이탈리아",
+   "role": "화가",
+   "image": "Raffaello_Sanzio.jpg"
+  }
+ },
+ {
+  "id": "figure-026",
+  "name": "신사임당",
+  "level": 2,
+  "summary": "풀벌레와 포도를 섬세하게 그린 조선 전기의 예술가.",
+  "facts": [
+   "시와 글씨에도 능했다.",
+   "아들 이이도 조선을 대표하는 학자가 됐다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "한국",
+   "role": "화가",
+   "image": "ShinSaimdangOldPortrait.webp"
+  }
+ },
+ {
+  "id": "figure-027",
+  "name": "이순신",
+  "level": 1,
+  "summary": "임진왜란에서 거북선을 앞세워 바다를 지킨 조선의 장군.",
+  "facts": [
+   "명량에서 배 열세 척으로 큰 함대를 막아 냈다.",
+   "칠 년 동안의 일을 《난중일기》에 적었다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "한국",
+   "role": "군인",
+   "image": "전_이순신_초상_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-028",
+  "name": "세르반테스",
+  "level": 2,
+  "summary": "기사 소설에 빠진 시골 노인을 그린 《돈키호테》의 작가.",
+  "facts": [
+   "해전에서 왼손을 크게 다쳤다.",
+   "근대 소설의 문을 연 작품으로 평가받는다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "스페인",
+   "role": "소설가",
+   "image": "Cervantes_Jáuregui.jpg"
+  }
+ },
+ {
+  "id": "figure-029",
+  "name": "셰익스피어",
+  "level": 1,
+  "summary": "《햄릿》과 《로미오와 줄리엣》을 쓴 영국 연극의 대명사.",
+  "facts": [
+   "희곡 서른일곱 편과 소네트 백쉰네 편을 남겼다.",
+   "런던 글로브 극장에서 작품을 올렸다."
+  ],
+  "fields": {
+   "era": "15~16세기",
+   "country": "영국",
+   "role": "극작가",
+   "image": "Shakespeare.jpg"
+  }
+ },
+ {
+  "id": "figure-030",
+  "name": "갈릴레이",
+  "level": 1,
+  "summary": "망원경으로 하늘을 보고 목성의 위성을 찾아낸 과학자.",
+  "facts": [
+   "떨어지는 물체를 실험으로 따져 근대 물리학을 열었다.",
+   "지동설을 주장하다 종교재판을 받았다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "이탈리아",
+   "role": "천문학자",
+   "image": "Galileo.arp.300pix.jpg"
+  }
+ },
+ {
+  "id": "figure-031",
+  "name": "케플러",
+  "level": 3,
+  "summary": "행성이 타원을 그리며 돈다는 세 법칙을 찾아낸 천문학자.",
+  "facts": [
+   "스승 브라헤가 남긴 관측 자료를 파고들어 법칙을 얻었다.",
+   "타원 궤도라는 생각이 원 궤도의 오랜 믿음을 깼다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "독일",
+   "role": "천문학자",
+   "image": "JKepler.jpg"
+  }
+ },
+ {
+  "id": "figure-032",
+  "name": "렘브란트",
+  "level": 2,
+  "summary": "빛과 어둠을 극적으로 쓴 〈야경〉의 화가.",
+  "facts": [
+   "평생 자화상을 백 점 가까이 남겼다.",
+   "말년에는 빚에 쫓겨 가난하게 지냈다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "네덜란드",
+   "role": "화가",
+   "image": "Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg"
+  }
+ },
+ {
+  "id": "figure-033",
+  "name": "페르메이르",
+  "level": 3,
+  "summary": "〈진주 귀고리를 한 소녀〉를 그린 델프트의 화가.",
+  "facts": [
+   "남아 있는 작품이 서른다섯 점 남짓뿐이다.",
+   "창으로 들어오는 부드러운 빛을 즐겨 그렸다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "네덜란드",
+   "role": "화가",
+   "image": "Cropped_version_of_Jan_Vermeer_van_Delft_002.jpg"
+  }
+ },
+ {
+  "id": "figure-034",
+  "name": "데카르트",
+  "level": 2,
+  "summary": "\"나는 생각한다, 그러므로 나는 존재한다\"를 남긴 근대 철학의 출발점.",
+  "facts": [
+   "좌표로 도형을 식처럼 다루는 해석기하학을 열었다.",
+   "모든 것을 의심해 보는 데서 철학을 시작했다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "프랑스",
+   "role": "철학자",
+   "image": "Frans_Hals_-_Portret_van_René_Descartes.jpg"
+  }
+ },
+ {
+  "id": "figure-035",
+  "name": "뉴턴",
+  "level": 1,
+  "summary": "만유인력과 운동 법칙으로 하늘과 땅을 한 식에 담은 물리학자.",
+  "facts": [
+   "《프린키피아》에 운동 세 법칙을 적었다.",
+   "빛이 프리즘에서 여러 색으로 갈라지는 것도 밝혔다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "영국",
+   "role": "물리학자",
+   "image": "Portrait_of_Sir_Isaac_Newton,_1689_(brightened).jpg"
+  }
+ },
+ {
+  "id": "figure-036",
+  "name": "비발디",
+  "level": 2,
+  "summary": "협주곡 〈사계〉를 쓴 베네치아의 붉은 머리 사제.",
+  "facts": [
+   "고아원 부속 학교에서 소녀들에게 음악을 가르쳤다.",
+   "협주곡만 오백 곡 넘게 남겼다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "이탈리아",
+   "role": "작곡가",
+   "image": "Vivaldi.jpg"
+  }
+ },
+ {
+  "id": "figure-037",
+  "name": "바흐",
+  "level": 1,
+  "summary": "《마태 수난곡》과 《평균율 클라비어곡집》을 남긴 음악의 아버지.",
+  "facts": [
+   "교회 음악 감독으로 일하며 매주 새 곡을 썼다.",
+   "아들 여럿도 이름난 작곡가가 됐다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "독일",
+   "role": "작곡가",
+   "image": "Bach.jpg"
+  }
+ },
+ {
+  "id": "figure-038",
+  "name": "헨델",
+  "level": 3,
+  "summary": "오라토리오 《메시아》를 쓰고 영국에서 활동한 바로크 작곡가.",
+  "facts": [
+   "「할렐루야」 대목은 지금도 연말이면 울려 퍼진다.",
+   "런던에서 오페라 극장을 직접 꾸렸다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "독일",
+   "role": "작곡가",
+   "image": "George_Frideric_Handel_by_Balthasar_Denner.jpg"
+  }
+ },
+ {
+  "id": "figure-039",
+  "name": "제임스 와트",
+  "level": 3,
+  "summary": "증기기관의 열 손실을 줄여 산업혁명의 속도를 올린 기술자.",
+  "facts": [
+   "응축기를 따로 붙여 연료를 크게 아꼈다.",
+   "일률의 단위에 이름이 남았다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "영국",
+   "role": "발명가",
+   "image": "Watt_James_von_Breda.jpg"
+  }
+ },
+ {
+  "id": "figure-040",
+  "name": "하이든",
+  "level": 3,
+  "summary": "교향곡의 틀을 다져 교향곡의 아버지라 불리는 작곡가.",
+  "facts": [
+   "교향곡을 백 곡 넘게 썼다.",
+   "에스테르하지 가문에서 삼십 년 가까이 일했다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "오스트리아",
+   "role": "작곡가",
+   "image": "Joseph_Haydn.jpg"
+  }
+ },
+ {
+  "id": "figure-041",
+  "name": "린네",
+  "level": 3,
+  "summary": "생물에 속명과 종명 두 낱말로 이름을 붙이는 법을 세운 학자.",
+  "facts": [
+   "《자연의 체계》에서 동식물을 갈래지어 정리했다.",
+   "사람에게도 호모 사피엔스라는 이름을 붙였다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "스웨덴",
+   "role": "생물학자",
+   "image": "Carolus_Linnaeus.jpg"
+  }
+ },
+ {
+  "id": "figure-042",
+  "name": "오일러",
+  "level": 3,
+  "summary": "눈이 먼 뒤에도 논문을 쏟아 낸 역사상 가장 많이 쓴 수학자.",
+  "facts": [
+   "함수 기호와 원주율 기호를 널리 퍼뜨렸다.",
+   "쾨니히스베르크 다리 문제를 풀며 그래프 이론을 열었다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "스위스",
+   "role": "수학자",
+   "image": "Leonhard_Euler.jpg"
+  }
+ },
+ {
+  "id": "figure-043",
+  "name": "칸트",
+  "level": 2,
+  "summary": "《순수이성비판》으로 인식의 한계를 따진 쾨니히스베르크의 철학자.",
+  "facts": [
+   "산책 시간이 어찌나 정확한지 이웃이 시계를 맞췄다고 전한다.",
+   "평생 고향 도시를 거의 떠나지 않았다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "독일",
+   "role": "철학자",
+   "image": "Immanuel_Kant_-_Gemaelde_2.jpg"
+  }
+ },
+ {
+  "id": "figure-044",
+  "name": "모차르트",
+  "level": 1,
+  "summary": "다섯 살에 곡을 쓰고 서른다섯에 세상을 뜬 음악 신동.",
+  "facts": [
+   "오페라 《마술피리》와 《피가로의 결혼》을 남겼다.",
+   "마지막 작품 《레퀴엠》은 끝내 완성하지 못했다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "오스트리아",
+   "role": "작곡가",
+   "image": "Wolfgang-amadeus-mozart_1.jpg"
+  }
+ },
+ {
+  "id": "figure-045",
+  "name": "라부아지에",
+  "level": 3,
+  "summary": "타는 일이 산소와 결합하는 일임을 밝혀 근대 화학을 연 학자.",
+  "facts": [
+   "질량 보존 법칙을 실험으로 못 박았다.",
+   "프랑스 혁명 중 단두대에서 생을 마쳤다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "프랑스",
+   "role": "화학자",
+   "image": "Antoine_lavoisier_color.jpg"
+  }
+ },
+ {
+  "id": "figure-046",
+  "name": "제너",
+  "level": 3,
+  "summary": "소의 마마를 이용해 천연두를 막는 종두법을 찾아낸 의사.",
+  "facts": [
+   "소젖 짜는 사람이 천연두에 잘 걸리지 않는 것을 눈여겨봤다.",
+   "백신이라는 말이 소를 뜻하는 라틴어에서 나왔다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "영국",
+   "role": "의학자",
+   "image": "Edward_Jenner2.jpg"
+  }
+ },
+ {
+  "id": "figure-047",
+  "name": "페스탈로치",
+  "level": 3,
+  "summary": "전쟁고아를 거두며 머리·가슴·손을 함께 기르자고 한 교육자.",
+  "facts": [
+   "가난한 아이들을 위한 학교를 여러 번 세웠다.",
+   "근대 초등교육의 뿌리로 꼽힌다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "스위스",
+   "role": "교육자",
+   "image": "Johann_Heinrich_Pestalozzi_(Real_Academia_de_Bellas_Artes_de_San_Fernando,_Madrid).jpg"
+  }
+ },
+ {
+  "id": "figure-048",
+  "name": "김홍도",
+  "level": 2,
+  "summary": "씨름과 서당처럼 백성의 하루를 그린 조선의 풍속화가.",
+  "facts": [
+   "도화서 화원으로 임금의 초상도 그렸다.",
+   "산수화와 신선 그림에도 뛰어났다."
+  ],
+  "fields": {
+   "era": "17~18세기",
+   "country": "한국",
+   "role": "화가",
+   "image": "Kim_Hongdo.jpg"
+  }
+ },
+ {
+  "id": "figure-049",
+  "name": "베토벤",
+  "level": 1,
+  "summary": "귀가 들리지 않게 된 뒤에도 교향곡 9번을 완성한 작곡가.",
+  "facts": [
+   "교향곡 5번은 「운명」이라는 별명으로 불린다.",
+   "9번 마지막 악장의 선율이 유럽 연합의 노래가 됐다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "작곡가",
+   "image": "Beethoven.jpg"
+  }
+ },
+ {
+  "id": "figure-050",
+  "name": "가우스",
+  "level": 3,
+  "summary": "열 살에 1부터 100까지 단숨에 더했다는 수학의 왕자.",
+  "facts": [
+   "정십칠각형을 자와 컴퍼스로 그리는 법을 찾아냈다.",
+   "측지와 천문 계산에서도 큰 자취를 남겼다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "수학자",
+   "image": "Carl_Friedrich_Gauss_1840_by_Jensen.jpg"
+  }
+ },
+ {
+  "id": "figure-051",
+  "name": "훔볼트",
+  "level": 4,
+  "summary": "남아메리카를 누비며 자연을 하나의 그물로 본 근대 지리학의 아버지.",
+  "facts": [
+   "오리노코강과 안데스를 오르내리며 자료를 모았다.",
+   "남아메리카 서해안을 흐르는 해류에 이름이 남았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "탐험가",
+   "image": "Stieler,_Joseph_Karl_-_Alexander_von_Humboldt_-_1843.jpg"
+  }
+ },
+ {
+  "id": "figure-052",
+  "name": "슈베르트",
+  "level": 2,
+  "summary": "〈마왕〉과 〈송어〉를 쓰고 서른한 살에 떠난 가곡의 왕.",
+  "facts": [
+   "가곡만 육백 곡 넘게 남겼다.",
+   "교향곡 8번은 두 악장에서 멈춰 「미완성」으로 불린다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "오스트리아",
+   "role": "작곡가",
+   "image": "Franz_Schubert_by_Wilhelm_August_Rieder_1875_larger_version_crop.png"
+  }
+ },
+ {
+  "id": "figure-053",
+  "name": "루이 브라유",
+  "level": 3,
+  "summary": "손끝으로 읽는 여섯 점 글자를 만든 시각장애 교사.",
+  "facts": [
+   "세 살에 사고로 시력을 잃었다.",
+   "군대가 쓰던 야간 암호에서 힌트를 얻었다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "교육자",
+   "image": "Engraving_of_Louis_Braille_by_Henri_Thiriat_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-054",
+  "name": "링컨",
+  "level": 1,
+  "summary": "남북전쟁을 이끌며 노예 해방을 선언한 미국의 열여섯 번째 대통령.",
+  "facts": [
+   "게티즈버그에서 \"국민의, 국민에 의한, 국민을 위한\"을 말했다.",
+   "전쟁이 끝난 직후 극장에서 총에 맞았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "미국",
+   "role": "정치인",
+   "image": "Abraham_Lincoln_O-77_matte_collodion_print.jpg"
+  }
+ },
+ {
+  "id": "figure-055",
+  "name": "패러데이",
+  "level": 3,
+  "summary": "자석으로 전기를 만들어 내는 전자기 유도를 찾아낸 학자.",
+  "facts": [
+   "제본소 견습공으로 시작해 왕립연구소에 들어갔다.",
+   "어린이를 위한 크리스마스 과학 강연을 시작했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "물리학자",
+   "image": "M_Faraday_Th_Phillips_oil_1842.jpg"
+  }
+ },
+ {
+  "id": "figure-056",
+  "name": "다게르",
+  "level": 4,
+  "summary": "은판에 상을 맺게 해 사진을 널리 퍼뜨린 발명가.",
+  "facts": [
+   "이 방식으로 찍은 사진을 다게레오타이프라 부른다.",
+   "원래는 무대 배경을 그리던 화가였다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "발명가",
+   "image": "Louis_Daguerre_2.jpg"
+  }
+ },
+ {
+  "id": "figure-057",
+  "name": "안데르센",
+  "level": 1,
+  "summary": "〈인어공주〉와 〈미운 오리 새끼〉를 쓴 동화 작가.",
+  "facts": [
+   "가난한 구두장이의 아들로 태어났다.",
+   "동화 백쉰여 편이 백 개 넘는 말로 옮겨졌다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "덴마크",
+   "role": "작가",
+   "image": "Hans_Christian_Andersen_by_Thora_Hallager_1869.jpg"
+  }
+ },
+ {
+  "id": "figure-058",
+  "name": "쇼팽",
+  "level": 1,
+  "summary": "평생 피아노 곡만 붙들고 산 피아노의 시인.",
+  "facts": [
+   "스무 살에 고향을 떠나 파리에서 지냈다.",
+   "세상을 뜬 뒤 심장은 유언대로 바르샤바로 돌아갔다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "폴란드",
+   "role": "작곡가",
+   "image": "Frederic_Chopin_photo.jpeg"
+  }
+ },
+ {
+  "id": "figure-059",
+  "name": "다윈",
+  "level": 1,
+  "summary": "《종의 기원》에서 자연선택으로 생물의 변화를 설명한 학자.",
+  "facts": [
+   "비글호를 타고 오 년 동안 세계를 돌았다.",
+   "갈라파고스의 핀치 부리가 중요한 단서가 됐다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "생물학자",
+   "image": "Charles_Robert_Darwin_by_John_Collier.jpg"
+  }
+ },
+ {
+  "id": "figure-060",
+  "name": "제인 오스틴",
+  "level": 3,
+  "summary": "《오만과 편견》으로 시골 저택의 결혼과 계급을 그린 작가.",
+  "facts": [
+   "살아 있는 동안에는 이름을 밝히지 않고 책을 냈다.",
+   "영국 10파운드 지폐에 초상이 실려 있다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "소설가",
+   "image": "CassandraAusten-JaneAusten(c.1810)_hires.jpg"
+  }
+ },
+ {
+  "id": "figure-061",
+  "name": "빅토르 위고",
+  "level": 2,
+  "summary": "《레 미제라블》과 《노트르담 드 파리》를 쓴 프랑스 문학의 거인.",
+  "facts": [
+   "권력에 맞서다 십구 년을 망명지에서 보냈다.",
+   "장례식에 파리 시민 수십만 명이 몰렸다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "소설가",
+   "image": "Victor_Hugo_by_Étienne_Carjat_1876_-_full.jpg"
+  }
+ },
+ {
+  "id": "figure-062",
+  "name": "멘델레예프",
+  "level": 2,
+  "summary": "원소를 성질에 따라 표로 늘어놓고 빈칸까지 예언한 화학자.",
+  "facts": [
+   "비워 둔 자리에 새 원소가 실제로 발견됐다.",
+   "원자번호 101번 원소에 이름이 남았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "러시아",
+   "role": "화학자",
+   "image": "Dmitri_Mendeleev.jpg"
+  }
+ },
+ {
+  "id": "figure-063",
+  "name": "디킨스",
+  "level": 2,
+  "summary": "《올리버 트위스트》와 《크리스마스 캐럴》을 쓴 빅토리아 시대 작가.",
+  "facts": [
+   "열두 살에 구두약 공장에서 일했다.",
+   "잡지에 이어 싣는 연재로 큰 인기를 얻었다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "소설가",
+   "image": "Dickens_Gurney_head.jpg"
+  }
+ },
+ {
+  "id": "figure-064",
+  "name": "파스퇴르",
+  "level": 2,
+  "summary": "미생물이 부패와 질병을 일으킨다는 것을 밝힌 학자.",
+  "facts": [
+   "우유를 낮은 열로 살균하는 방법에 이름이 남았다.",
+   "광견병 백신을 만들어 물린 소년을 살렸다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "화학자",
+   "image": "Louis_Pasteur.jpg"
+  }
+ },
+ {
+  "id": "figure-065",
+  "name": "멘델",
+  "level": 2,
+  "summary": "수도원 뜰에서 완두를 길러 유전 법칙을 찾아낸 수사.",
+  "facts": [
+   "팔 년 동안 완두 수만 포기를 관찰했다.",
+   "살아 있을 때는 논문이 거의 주목받지 못했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "체코",
+   "role": "생물학자",
+   "image": "Gregor_Mendel_2.jpg"
+  }
+ },
+ {
+  "id": "figure-066",
+  "name": "노벨",
+  "level": 2,
+  "summary": "다이너마이트를 만들고 그 돈으로 상을 만들라 유언한 발명가.",
+  "facts": [
+   "니트로글리세린을 안전하게 다루는 법을 찾아냈다.",
+   "물리·화학·생리의학·문학·평화 다섯 부문에 해마다 상을 준다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "스웨덴",
+   "role": "발명가",
+   "image": "AlfredNobel_cropped.jpg"
+  }
+ },
+ {
+  "id": "figure-067",
+  "name": "마크 트웨인",
+  "level": 2,
+  "summary": "《톰 소여의 모험》과 《허클베리 핀의 모험》을 쓴 미국 작가.",
+  "facts": [
+   "미시시피강 증기선의 수로 안내인으로 일했다.",
+   "필명은 강의 수심을 재던 뱃사람 말에서 왔다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "미국",
+   "role": "소설가",
+   "image": "MarkTwain.LOC.jpg"
+  }
+ },
+ {
+  "id": "figure-068",
+  "name": "도스토옙스키",
+  "level": 3,
+  "summary": "《죄와 벌》과 《카라마조프가의 형제들》을 쓴 러시아 작가.",
+  "facts": [
+   "사형 직전에 형이 바뀌어 시베리아로 유형을 갔다.",
+   "사람 마음의 밑바닥을 파고든 소설로 유명하다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "러시아",
+   "role": "소설가",
+   "image": "Vasily_Perov_-_Портрет_Ф.М.Достоевского_-_Google_Art_Project.jpg"
+  }
+ },
+ {
+  "id": "figure-069",
+  "name": "톨스토이",
+  "level": 2,
+  "summary": "《전쟁과 평화》와 《안나 카레니나》를 쓴 러시아 대문호.",
+  "facts": [
+   "백작 집안에서 태어나 자기 영지에 농민 학교를 세웠다.",
+   "말년에는 재산을 버리고 소박하게 살려 했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "러시아",
+   "role": "소설가",
+   "image": "L.N.Tolstoy_Prokudin-Gorsky.jpg"
+  }
+ },
+ {
+  "id": "figure-070",
+  "name": "나이팅게일",
+  "level": 1,
+  "summary": "크림전쟁 야전병원을 바꿔 놓은 등불을 든 여인.",
+  "facts": [
+   "위생을 고쳐 병사 사망률을 크게 낮췄다.",
+   "통계를 그림으로 그려 설득하는 법을 개척했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "간호사",
+   "image": "Florence_Nightingale_(H_Hering_NPG_x82368).jpg"
+  }
+ },
+ {
+  "id": "figure-071",
+  "name": "베르디",
+  "level": 3,
+  "summary": "《아이다》와 《라 트라비아타》를 쓴 이탈리아 오페라의 거장.",
+  "facts": [
+   "「히브리 노예들의 합창」은 통일 운동의 노래가 됐다.",
+   "말년에 가난한 음악가를 위한 요양원을 세웠다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "이탈리아",
+   "role": "작곡가",
+   "image": "Primo_ritratto_boldiniano_di_Verdi.jpg"
+  }
+ },
+ {
+  "id": "figure-072",
+  "name": "맥스웰",
+  "level": 4,
+  "summary": "전기와 자기를 네 개의 식으로 묶고 빛이 전자기파임을 밝힌 학자.",
+  "facts": [
+   "세계 최초의 컬러 사진 원리를 보여 줬다.",
+   "토성 고리가 작은 알갱이들이라는 것도 계산으로 알아냈다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "물리학자",
+   "image": "James_Clerk_Maxwell_big.jpg"
+  }
+ },
+ {
+  "id": "figure-073",
+  "name": "브람스",
+  "level": 3,
+  "summary": "교향곡 1번을 이십 년 넘게 다듬은 독일 낭만주의 작곡가.",
+  "facts": [
+   "〈자장가〉는 지금도 가장 널리 불리는 곡 가운데 하나다.",
+   "슈만 부부와 평생 깊은 인연을 맺었다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "작곡가",
+   "image": "JohannesBrahms.jpg"
+  }
+ },
+ {
+  "id": "figure-074",
+  "name": "모네",
+  "level": 1,
+  "summary": "〈인상, 해돋이〉로 인상주의라는 이름을 만든 화가.",
+  "facts": [
+   "같은 대상을 시간과 빛에 따라 여러 번 그렸다.",
+   "지베르니 정원의 수련을 말년 내내 그렸다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "화가",
+   "image": "Claude_Monet_1899_Nadar_crop.jpg"
+  }
+ },
+ {
+  "id": "figure-075",
+  "name": "로댕",
+  "level": 2,
+  "summary": "〈생각하는 사람〉과 〈칼레의 시민〉을 빚은 근대 조각의 문을 연 사람.",
+  "facts": [
+   "〈지옥의 문〉을 삼십 년 넘게 붙들었다.",
+   "울퉁불퉁한 표면으로 빛을 살린 것이 특징이다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "조각가",
+   "image": "Auguste_Rodin_fotografato_da_Nadar_nel_1891.jpg"
+  }
+ },
+ {
+  "id": "figure-076",
+  "name": "세잔",
+  "level": 3,
+  "summary": "사과와 생빅투아르산을 거듭 그린 근대 회화의 아버지.",
+  "facts": [
+   "자연을 원기둥·구·원뿔로 보라고 말했다.",
+   "입체파 화가들에게 큰 영향을 줬다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "화가",
+   "image": "Paul-Cezanne.jpg"
+  }
+ },
+ {
+  "id": "figure-077",
+  "name": "차이콥스키",
+  "level": 2,
+  "summary": "발레 《백조의 호수》와 《호두까기 인형》을 쓴 러시아 작곡가.",
+  "facts": [
+   "〈1812년 서곡〉에서는 대포 소리까지 악보에 적었다.",
+   "십사 년 동안 얼굴 한 번 안 본 후원자의 도움을 받았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "러시아",
+   "role": "작곡가",
+   "image": "Tchaikovsky_by_Reutlinger_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-078",
+  "name": "에디슨",
+  "level": 1,
+  "summary": "백열전구와 축음기를 세상에 내놓은 미국의 발명왕.",
+  "facts": [
+   "평생 특허를 천 건 넘게 등록했다.",
+   "멘로파크에 연구소를 세워 발명을 조직적으로 했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "미국",
+   "role": "발명가",
+   "image": "Thomas_Edison2.jpg"
+  }
+ },
+ {
+  "id": "figure-079",
+  "name": "쥘 베른",
+  "level": 3,
+  "summary": "《해저 2만리》와 《80일간의 세계 일주》를 쓴 공상과학의 선구자.",
+  "facts": [
+   "잠수함과 달 탐사를 소설 속에서 먼저 그렸다.",
+   "작품이 백 개 넘는 말로 옮겨졌다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "프랑스",
+   "role": "소설가",
+   "image": "Jules_Verne_by_Étienne_Carjat.jpg"
+  }
+ },
+ {
+  "id": "figure-080",
+  "name": "드보르자크",
+  "level": 3,
+  "summary": "교향곡 〈신세계로부터〉를 쓴 체코 국민악파 작곡가.",
+  "facts": [
+   "미국 음악원 원장으로 뉴욕에서 지냈다.",
+   "고향의 민속 가락을 관현악에 녹였다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "체코",
+   "role": "작곡가",
+   "image": "Dvorak.jpg"
+  }
+ },
+ {
+  "id": "figure-081",
+  "name": "카를 벤츠",
+  "level": 3,
+  "summary": "휘발유 엔진을 단 세 바퀴 자동차로 특허를 받은 기술자.",
+  "facts": [
+   "아내가 백여 킬로미터를 몰아 자동차의 쓸모를 증명했다.",
+   "1886년에 받은 특허가 자동차의 시작으로 꼽힌다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "발명가",
+   "image": "Carl-Benz_coloriert.jpg"
+  }
+ },
+ {
+  "id": "figure-082",
+  "name": "반 고흐",
+  "level": 1,
+  "summary": "〈별이 빛나는 밤〉과 해바라기를 그린 후기 인상주의 화가.",
+  "facts": [
+   "십 년 남짓 동안 그림을 이천 점 가까이 그렸다.",
+   "동생 테오와 주고받은 편지가 수백 통 남아 있다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "네덜란드",
+   "role": "화가",
+   "image": "Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_(454045).jpg"
+  }
+ },
+ {
+  "id": "figure-083",
+  "name": "해리엇 터브먼",
+  "level": 3,
+  "summary": "스스로 노예에서 벗어난 뒤 수십 명을 북으로 이끈 지하철도의 안내자.",
+  "facts": [
+   "열세 번 넘게 남부로 되돌아가 사람들을 데려왔다.",
+   "남북전쟁 때는 정찰병으로도 일했다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "미국",
+   "role": "인권 운동가",
+   "image": "Harriet_Tubman_(circa_1885).jpg"
+  }
+ },
+ {
+  "id": "figure-084",
+  "name": "에이다 러브레이스",
+  "level": 3,
+  "summary": "기계가 숫자 너머의 일도 할 수 있다고 내다본 최초의 프로그래머.",
+  "facts": [
+   "배비지의 해석기관을 위한 계산 절차를 적었다.",
+   "시인 바이런의 딸이다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "수학자",
+   "image": "Ada_Byron_daguerreotype_by_Antoine_Claudet_1843_or_1850_-_cropped.png"
+  }
+ },
+ {
+  "id": "figure-085",
+  "name": "뢴트겐",
+  "level": 3,
+  "summary": "정체를 몰라 X라 이름 붙인 새로운 빛을 찾아낸 물리학자.",
+  "facts": [
+   "아내의 손을 찍은 사진이 최초의 인체 촬영이 됐다.",
+   "첫 번째 노벨 물리학상을 받았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "물리학자",
+   "image": "Roentgen2.jpg"
+  }
+ },
+ {
+  "id": "figure-086",
+  "name": "헤르츠",
+  "level": 4,
+  "summary": "전자기파가 실제로 있다는 것을 실험으로 보여 준 물리학자.",
+  "facts": [
+   "진동수의 단위에 이름이 남았다.",
+   "서른여섯이라는 이른 나이에 세상을 떠났다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "물리학자",
+   "image": "HEINRICH_HERTZ.JPG"
+  }
+ },
+ {
+  "id": "figure-087",
+  "name": "리스터",
+  "level": 4,
+  "summary": "수술 도구와 상처를 소독해 감염 사망을 확 줄인 외과 의사.",
+  "facts": [
+   "석탄산을 써서 수술실을 소독했다.",
+   "무균 수술의 길을 열었다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "영국",
+   "role": "의학자",
+   "image": "Joseph_Lister_1902.jpg"
+  }
+ },
+ {
+  "id": "figure-088",
+  "name": "괴테",
+  "level": 2,
+  "summary": "《파우스트》와 《젊은 베르테르의 슬픔》을 남긴 독일 문학의 봉우리.",
+  "facts": [
+   "《파우스트》를 육십 년에 걸쳐 썼다.",
+   "식물학과 색채 연구에도 손을 댔다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "독일",
+   "role": "시인",
+   "image": "Goethe_(Stieler_1828).jpg"
+  }
+ },
+ {
+  "id": "figure-089",
+  "name": "정약용",
+  "level": 2,
+  "summary": "유배지에서 《목민심서》를 비롯해 오백 권을 써낸 조선의 실학자.",
+  "facts": [
+   "거중기를 만들어 수원 화성 공사를 도왔다.",
+   "십팔 년을 강진에서 유배로 보냈다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "한국",
+   "role": "실학자",
+   "image": "Jeong_Yak-yong.jpg"
+  }
+ },
+ {
+  "id": "figure-090",
+  "name": "김정희",
+  "level": 3,
+  "summary": "추사체라는 글씨를 이루고 〈세한도〉를 남긴 조선의 학자.",
+  "facts": [
+   "제주 유배 중에 제자에게 〈세한도〉를 그려 줬다.",
+   "옛 비석을 읽어 역사를 따지는 금석학에도 밝았다."
+  ],
+  "fields": {
+   "era": "19세기",
+   "country": "한국",
+   "role": "서예가",
+   "image": "Kim_Jeong-hui.jpg"
+  }
+ },
+ {
+  "id": "figure-091",
+  "name": "가우디",
+  "level": 2,
+  "summary": "직선을 피하고 자연의 곡선을 쌓아 올린 바르셀로나의 건축가.",
+  "facts": [
+   "사그라다 파밀리아는 아직도 공사가 이어지고 있다.",
+   "구엘 공원과 카사 밀라도 같은 손에서 나왔다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "스페인",
+   "role": "건축가",
+   "image": "Antoni_gaudi.jpg"
+  }
+ },
+ {
+  "id": "figure-092",
+  "name": "클림트",
+  "level": 2,
+  "summary": "금박을 입힌 〈키스〉로 이름난 빈의 화가.",
+  "facts": [
+   "기존 미술계를 등지고 분리파를 만들었다.",
+   "금세공을 하던 아버지에게서 금박 쓰는 법을 배웠다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "오스트리아",
+   "role": "화가",
+   "image": "Klimt.jpg"
+  }
+ },
+ {
+  "id": "figure-093",
+  "name": "플랑크",
+  "level": 3,
+  "summary": "에너지가 알갱이처럼 나뉜다는 생각으로 양자론의 문을 연 학자.",
+  "facts": [
+   "1900년에 내놓은 가설이 양자역학의 출발점이 됐다.",
+   "이름을 딴 상수가 물리학의 기본 상수로 쓰인다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "독일",
+   "role": "물리학자",
+   "image": "Max_Planck_(1858-1947).jpg"
+  }
+ },
+ {
+  "id": "figure-094",
+  "name": "마리 퀴리",
+  "level": 1,
+  "summary": "폴로늄과 라듐을 찾아내고 노벨상을 두 분야에서 받은 과학자.",
+  "facts": [
+   "방사능이라는 말을 처음 썼다.",
+   "제1차 세계대전 때 이동식 X선 차량을 전선에 보냈다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "폴란드",
+   "role": "물리학자",
+   "image": "Marie_Curie_c._1920s.jpg"
+  }
+ },
+ {
+  "id": "figure-095",
+  "name": "아인슈타인",
+  "level": 1,
+  "summary": "상대성 이론으로 시간과 공간의 틀을 바꾼 물리학자.",
+  "facts": [
+   "노벨상은 상대성 이론이 아니라 광전 효과로 받았다.",
+   "특허청 심사관으로 일하며 논문을 썼다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "독일",
+   "role": "물리학자",
+   "image": "Albert_Einstein_Head_cleaned.jpg"
+  }
+ },
+ {
+  "id": "figure-096",
+  "name": "닐스 보어",
+  "level": 3,
+  "summary": "전자가 정해진 궤도에만 머문다는 원자 모형을 내놓은 물리학자.",
+  "facts": [
+   "코펜하겐에 연구소를 세워 젊은 물리학자를 길렀다.",
+   "아인슈타인과 양자역학을 두고 오래 논쟁했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "덴마크",
+   "role": "물리학자",
+   "image": "Niels_Bohr.jpg"
+  }
+ },
+ {
+  "id": "figure-097",
+  "name": "라마누잔",
+  "level": 3,
+  "summary": "정규 교육 없이 수천 개의 공식을 쏟아 낸 인도의 수학 천재.",
+  "facts": [
+   "영국 학자 하디에게 보낸 편지 한 통으로 케임브리지에 갔다.",
+   "서른두 살에 세상을 떠났다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "인도",
+   "role": "수학자",
+   "image": "Srinivasa_Ramanujan_-_OPC_-_1.jpg"
+  }
+ },
+ {
+  "id": "figure-098",
+  "name": "앨런 튜링",
+  "level": 2,
+  "summary": "계산하는 기계를 이론으로 먼저 그려 낸 컴퓨터 과학의 아버지.",
+  "facts": [
+   "제2차 세계대전 때 독일의 암호 기계를 풀어냈다.",
+   "기계가 생각하는지 가늠하는 시험을 제안했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "영국",
+   "role": "수학자",
+   "image": "Alan_Turing_(1912-1954)_in_1936_at_Princeton_University_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-099",
+  "name": "바버라 매클린톡",
+  "level": 4,
+  "summary": "옥수수에서 자리를 옮겨 다니는 유전자를 찾아낸 학자.",
+  "facts": [
+   "발표 당시에는 너무 앞서가 인정받지 못했다.",
+   "삼십 년이 지나 단독으로 노벨상을 받았다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "생물학자",
+   "image": "Barbara_McClintock_(1902-1992)_shown_in_her_laboratory_in_1947.jpg"
+  }
+ },
+ {
+  "id": "figure-100",
+  "name": "플레밍",
+  "level": 2,
+  "summary": "곰팡이가 자란 접시에서 페니실린을 알아본 세균학자.",
+  "facts": [
+   "휴가를 다녀와 보니 세균이 곰팡이 둘레에서만 죽어 있었다.",
+   "항생제 시대를 열어 수많은 목숨을 구했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "영국",
+   "role": "의학자",
+   "image": "Synthetic_Production_of_Penicillin_TR1468.jpg"
+  }
+ },
+ {
+  "id": "figure-101",
+  "name": "라이트 형제",
+  "level": 1,
+  "summary": "1903년 키티호크에서 동력 비행에 처음 성공한 두 형제.",
+  "facts": [
+   "자전거 가게를 하며 비행기를 만들었다.",
+   "첫 비행은 십이 초 동안 삼십육 미터를 날았다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "발명가",
+   "image": "WrightBrothers.jpg"
+  }
+ },
+ {
+  "id": "figure-102",
+  "name": "아문센",
+  "level": 2,
+  "summary": "1911년 남극점에 가장 먼저 발을 디딘 탐험가.",
+  "facts": [
+   "개썰매를 쓴 것이 경쟁자를 앞선 비결이었다.",
+   "북서항로를 배로 처음 통과하기도 했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "노르웨이",
+   "role": "탐험가",
+   "image": "Amundsen_in_fur_skins.jpg"
+  }
+ },
+ {
+  "id": "figure-103",
+  "name": "유리 가가린",
+  "level": 2,
+  "summary": "1961년 보스토크 1호를 타고 사람으로서 처음 우주에 나간 비행사.",
+  "facts": [
+   "지구를 한 바퀴 도는 데 백여덟 분이 걸렸다.",
+   "\"지구는 푸르다\"는 말을 남겼다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "러시아",
+   "role": "우주비행사",
+   "image": "Yuri_Gagarin_(1961)_-_Restoration.jpg"
+  }
+ },
+ {
+  "id": "figure-104",
+  "name": "닐 암스트롱",
+  "level": 1,
+  "summary": "1969년 아폴로 11호로 달에 처음 발을 디딘 사람.",
+  "facts": [
+   "\"한 사람에게는 작은 걸음\"이라는 말을 남겼다.",
+   "해군 조종사와 시험 비행사를 거쳤다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "우주비행사",
+   "image": "Neil_Armstrong_pose.jpg"
+  }
+ },
+ {
+  "id": "figure-105",
+  "name": "피카소",
+  "level": 1,
+  "summary": "대상을 여러 각도로 쪼개 붙이는 입체파를 연 화가.",
+  "facts": [
+   "〈게르니카〉로 폭격의 참상을 고발했다.",
+   "평생 작품을 이만 점 넘게 남겼다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "스페인",
+   "role": "화가",
+   "image": "Pablo_picasso_1.jpg"
+  }
+ },
+ {
+  "id": "figure-106",
+  "name": "마티스",
+  "level": 3,
+  "summary": "강렬한 색을 앞세운 야수파를 이끈 화가.",
+  "facts": [
+   "말년에는 몸이 아파 색종이를 오려 붙여 작업했다.",
+   "원래는 법률 사무소에서 일하다 그림으로 돌아섰다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "프랑스",
+   "role": "화가",
+   "image": "Portrait_of_Henri_Matisse_1933_May_20.jpg"
+  }
+ },
+ {
+  "id": "figure-107",
+  "name": "프리다 칼로",
+  "level": 2,
+  "summary": "교통사고의 고통과 자기 얼굴을 거듭 그린 멕시코 화가.",
+  "facts": [
+   "작품의 삼분의 일 남짓이 자화상이다.",
+   "멕시코의 전통 색과 무늬를 그림에 끌어들였다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "멕시코",
+   "role": "화가",
+   "image": "Frida_Kahlo,_by_Guillermo_Kahlo_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-108",
+  "name": "이중섭",
+  "level": 3,
+  "summary": "소를 굵은 선으로 그린 한국 근대 미술의 대표 화가.",
+  "facts": [
+   "가난해 담뱃갑 은박지에도 그림을 그렸다.",
+   "가족과 헤어진 그리움을 편지와 그림에 담았다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "한국",
+   "role": "화가",
+   "image": "이중섭_화백.jpg"
+  }
+ },
+ {
+  "id": "figure-109",
+  "name": "몬테소리",
+  "level": 2,
+  "summary": "아이가 스스로 고르고 해 보게 하는 교육법을 만든 의사.",
+  "facts": [
+   "이탈리아 최초의 여성 의사 가운데 한 명이다.",
+   "로마의 빈민가에 어린이집을 열어 방법을 다듬었다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "이탈리아",
+   "role": "교육자",
+   "image": "Maria_Montessori_(portrait).jpg"
+  }
+ },
+ {
+  "id": "figure-110",
+  "name": "타고르",
+  "level": 3,
+  "summary": "아시아 사람으로 처음 노벨 문학상을 받은 시인.",
+  "facts": [
+   "시집 《기탄잘리》로 상을 받았다.",
+   "인도와 방글라데시의 국가를 지었다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "인도",
+   "role": "시인",
+   "image": "Rabindranath_Tagore_in_1909.jpg"
+  }
+ },
+ {
+  "id": "figure-111",
+  "name": "루쉰",
+  "level": 3,
+  "summary": "《아Q정전》과 《광인일기》로 낡은 중국을 찌른 작가.",
+  "facts": [
+   "의학을 공부하다 글로 사람을 고치겠다며 붓을 들었다.",
+   "중국 근대 문학의 출발점으로 꼽힌다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "중국",
+   "role": "소설가",
+   "image": "LuXun1930.jpg"
+  }
+ },
+ {
+  "id": "figure-112",
+  "name": "헤밍웨이",
+  "level": 2,
+  "summary": "짧고 단단한 문장으로 《노인과 바다》를 쓴 미국 작가.",
+  "facts": [
+   "제1차 세계대전에는 구급차 운전병으로, 제2차 세계대전에는 종군기자로 나갔다.",
+   "노벨 문학상과 퓰리처상을 모두 받았다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "소설가",
+   "image": "ErnestHemingway.jpg"
+  }
+ },
+ {
+  "id": "figure-113",
+  "name": "생텍쥐페리",
+  "level": 2,
+  "summary": "《어린 왕자》를 쓴, 비행기를 몰던 작가.",
+  "facts": [
+   "우편 비행사로 사막과 안데스 상공을 날았다.",
+   "정찰 비행을 나갔다가 지중해에서 돌아오지 못했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "프랑스",
+   "role": "소설가",
+   "image": "11exupery-inline1-500.jpg"
+  }
+ },
+ {
+  "id": "figure-114",
+  "name": "안네 프랑크",
+  "level": 1,
+  "summary": "은신처에서 이 년 넘게 일기를 쓴 열다섯 살 소녀.",
+  "facts": [
+   "암스테르담 건물 뒤편 방에 여덟 명이 숨어 지냈다.",
+   "일기는 아버지의 손으로 세상에 나와 칠십 개 넘는 말로 옮겨졌다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "독일",
+   "role": "작가",
+   "image": "Anne_Frank_passport_photo,_May_1942.jpg"
+  }
+ },
+ {
+  "id": "figure-115",
+  "name": "헬렌 켈러",
+  "level": 1,
+  "summary": "보지도 듣지도 못한 채 대학을 마치고 장애인 권리를 외친 사람.",
+  "facts": [
+   "설리번 선생과 손바닥에 글자를 써 말을 배웠다.",
+   "대학을 우등으로 졸업한 첫 시청각 장애인이다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "인권 운동가",
+   "image": "Helen_Keller_circa_1920_-_restored.jpg"
+  }
+ },
+ {
+  "id": "figure-116",
+  "name": "간디",
+  "level": 1,
+  "summary": "폭력을 쓰지 않는 저항으로 인도 독립 운동을 이끈 지도자.",
+  "facts": [
+   "소금세에 맞서 삼백구십 킬로미터를 걸었다.",
+   "남아프리카에서 변호사로 일하며 차별에 맞섰다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "인도",
+   "role": "인권 운동가",
+   "image": "Mahatma-Gandhi,_studio,_1931.jpg"
+  }
+ },
+ {
+  "id": "figure-117",
+  "name": "마틴 루서 킹",
+  "level": 1,
+  "summary": "\"나에게는 꿈이 있습니다\" 연설로 알려진 흑인 민권 운동 지도자.",
+  "facts": [
+   "버스 승차 거부 운동을 이끌어 분리 좌석을 무너뜨렸다.",
+   "서른다섯에 노벨 평화상을 받았다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "인권 운동가",
+   "image": "Martin_Luther_King,_Jr..jpg"
+  }
+ },
+ {
+  "id": "figure-118",
+  "name": "로자 파크스",
+  "level": 2,
+  "summary": "버스에서 자리를 비켜 주지 않아 민권 운동에 불을 붙인 사람.",
+  "facts": [
+   "체포를 계기로 몽고메리 버스 승차 거부가 시작됐다.",
+   "미국 의회에서 민권 운동의 어머니로 불렸다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "미국",
+   "role": "인권 운동가",
+   "image": "Rosa_Parks_1955_3_(cropped).jpg"
+  }
+ },
+ {
+  "id": "figure-119",
+  "name": "안중근",
+  "level": 1,
+  "summary": "하얼빈역에서 이토 히로부미를 저격한 대한제국의 의병 참모중장.",
+  "facts": [
+   "감옥에서 《동양평화론》을 쓰다 끝내지 못했다.",
+   "손가락을 끊어 맹세한 단지동맹으로도 알려졌다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "한국",
+   "role": "독립운동가",
+   "image": "An_Jung-geun.JPG"
+  }
+ },
+ {
+  "id": "figure-120",
+  "name": "유관순",
+  "level": 1,
+  "summary": "아우내 장터에서 만세 시위를 이끈 3·1 운동의 상징.",
+  "facts": [
+   "이화학당에 다니다 고향으로 내려가 시위를 준비했다.",
+   "서대문 형무소에 갇혀 모진 고문 끝에 순국했다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "한국",
+   "role": "독립운동가",
+   "image": "Ryu_Gwan-sun.jpg"
+  }
+ },
+ {
+  "id": "figure-121",
+  "name": "김구",
+  "level": 2,
+  "summary": "대한민국 임시정부를 이끈 독립운동가이자 《백범일지》의 저자.",
+  "facts": [
+   "한인애국단을 만들어 의열 투쟁을 조직했다.",
+   "광복 뒤에는 통일 정부를 세우려 애썼다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "한국",
+   "role": "독립운동가",
+   "image": "Kim_Gu_in_1949.jpg"
+  }
+ },
+ {
+  "id": "figure-122",
+  "name": "신채호",
+  "level": 3,
+  "summary": "《조선상고사》를 써서 우리 역사를 다시 세운 독립운동가.",
+  "facts": [
+   "역사를 \"아와 비아의 투쟁\"이라 정의했다.",
+   "언론에 글을 실어 민족의식을 일깨웠다."
+  ],
+  "fields": {
+   "era": "20세기",
+   "country": "한국",
+   "role": "역사가",
+   "image": "단재신채호.jpg"
+  }
+ }
+]

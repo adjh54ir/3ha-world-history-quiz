@@ -16,7 +16,7 @@ interface Props {
 	onClose: () => void;
 	/** 카드 학습 — 분야를 고르고 캐러셀로 넘겨 본다 */
 	onPickCard: () => void;
-	/** 숏폼 학습 — 한 화면에 한 단어, 위로 넘긴다 */
+	/** 숏폼 학습 — 한 화면에 한 항목, 위로 넘긴다 */
 	onPickShorts: () => void;
 }
 
@@ -61,7 +61,7 @@ const ModeRow = ({
 
 /**
  * 학습 방식 고르기 — 홈의 "학습 모드" 카드를 누르면 아래에서 올라온다.
- * 카드 학습과 숏폼 학습은 같은 단어를 다르게 보여 주는 두 갈래라, 화면을 나누지 않고 한 시트에서 고른다.
+ * 카드 학습과 숏폼 학습은 같은 항목을 다르게 보여 주는 두 갈래라, 화면을 나누지 않고 한 시트에서 고른다.
  */
 const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) => {
 	const Colors = useColors();
@@ -76,7 +76,7 @@ const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) =
 				<View style={styles.headRow}>
 					<View style={styles.headText}>
 						<Text style={styles.title}>어떻게 학습할까요?</Text>
-						<Text style={styles.subtitle}>고른 단어를 두 가지 방식으로 볼 수 있어요</Text>
+						<Text style={styles.subtitle}>같은 내용을 두 가지 방식으로 볼 수 있어요</Text>
 					</View>
 					<ModalIconButton name="close" color={Colors.textSecondary} onPress={onClose} accessibilityLabel="닫기" />
 				</View>
@@ -86,7 +86,7 @@ const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) =
 						index={0}
 						icon="cards"
 						label="카드 학습"
-						description="카드를 좌우로 넘기며 한 장씩 익혀요"
+						description="주제를 고르고 한 장씩 넘기며 익혀요"
 						color={Colors.primaryDark}
 						tint={Colors.primarySoft}
 						onPress={onPickCard}
@@ -95,7 +95,7 @@ const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) =
 						index={1}
 						icon="gesture-swipe-vertical"
 						label="숏폼 학습"
-						description="한 화면에 한 단어. 위로 넘기며 쭉 훑어요"
+						description="한 화면에 한 항목. 위로 넘기며 쭉 훑어요"
 						color={Colors.secondaryDark}
 						tint={Colors.secondarySoft}
 						onPress={onPickShorts}

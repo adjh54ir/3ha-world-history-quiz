@@ -1,4 +1,5 @@
 import type { WorldType } from '@/src/types/data/WorldType';
+import { selectFigureImage, selectLandmarkImage } from './ConstFigureImages';
 import { selectFlag } from './ConstFlagImages';
 import { selectMythImage } from './ConstMythImages';
 import { selectPlanetImage } from './ConstPlanetImages';
@@ -10,22 +11,46 @@ import { selectPlanetImage } from './ConstPlanetImages';
  * 화면마다 이 대응표를 다시 쓰면 한 군데만 고치고 다른 데를 잊는다.
  *
  * 신화와 태양계는 모든 항목에 그림이 있으며, 없으면 undefined 를 주고 화면은 그 자리를 비워 둔다.
+ *
+ * 돌려주는 값이 두 가지다
+ * -------------------------------------------------
+ * number — `require` 로 앱에 담은 그림 (국기·신화·태양계)
+ * string — 위키미디어에서 받아 올 주소 (위인). expo-image 는 둘 다 `source` 로 그대로 받는다.
  */
-const SOURCES: Partial<Record<WorldType.TopicKey, { field: string; pick: (code: string) => number | undefined }>> = {
+export type EntryImage = number | string;
+
+/**
+ * `width` 는 주소로 받아 오는 그림(위인·랜드마크)에만 쓴다 — 앱에 담은 그림은 받을 것이 없어 그냥 무시한다.
+ */
+const SOURCES: Partial<Record<WorldType.TopicKey, { field: string; pick: (code: string, width?: number) => EntryImage | undefined }>> = {
 	capital: { field: 'code', pick: selectFlag },
+	figure: { field: 'image', pick: selectFigureImage },
+	landmark: { field: 'image', pick: selectLandmarkImage },
 	myth: { field: 'image', pick: selectMythImage },
 	space: { field: 'image', pick: selectPlanetImage },
 };
 
-export const selectEntryImage = (topic: WorldType.TopicKey, entry: WorldType.Entry): number | undefined => {
+/**
+ * @param width 받아 올 그림 폭(px) — 작은 썸네일 자리에서 낮춰 잡으면 데이터를 아낀다. 앱에 담은 그림에는 영향이 없다
+ */
+export const selectEntryImage = (topic: WorldType.TopicKey, entry: WorldType.Entry, width?: number): EntryImage | undefined => {
 	const source = SOURCES[topic];
 	const code = source && entry.fields[source.field];
-	return source && code ? source.pick(code) : undefined;
+	return source && code ? source.pick(code, width) : undefined;
 };
 
 /** 그림 문항에서 문제로 걸 그림 — `askAs` 가 가리키는 묶음에서 찾는다 */
-export const selectPromptImage = (askAs: NonNullable<WorldType.QuizMode['askAs']>, code: string): number | undefined => {
-	const pick = askAs === 'flag' ? selectFlag : askAs === 'myth' ? selectMythImage : selectPlanetImage;
+export const selectPromptImage = (askAs: NonNullable<WorldType.QuizMode['askAs']>, code: string): EntryImage | undefined => {
+	const pick =
+		askAs === 'flag'
+			? selectFlag
+			: askAs === 'myth'
+				? selectMythImage
+				: askAs === 'space'
+					? selectPlanetImage
+					: askAs === 'landmark'
+						? selectLandmarkImage
+						: selectFigureImage;
 	return pick(code);
 };
 

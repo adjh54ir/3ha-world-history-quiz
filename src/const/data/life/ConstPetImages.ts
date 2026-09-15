@@ -5,12 +5,12 @@
  * 앱 아이콘의 사자 캐릭터가 초보 학습자에서 세계사 대가로 성장한다.
  */
 export const PET_STAGE_IMAGES: number[] = [
-	require('@/src/assets/illustrations/panda-stage-1.webp'),
-	require('@/src/assets/illustrations/panda-stage-2.webp'),
-	require('@/src/assets/illustrations/panda-stage-3.webp'),
-	require('@/src/assets/illustrations/panda-stage-4.webp'),
-	require('@/src/assets/illustrations/panda-stage-5.webp'),
-	require('@/src/assets/illustrations/panda-stage-6-golden.webp'),
+	require('@/src/assets/illustrations/lion-stage-1.webp'),
+	require('@/src/assets/illustrations/lion-stage-2.webp'),
+	require('@/src/assets/illustrations/lion-stage-3.webp'),
+	require('@/src/assets/illustrations/lion-stage-4.webp'),
+	require('@/src/assets/illustrations/lion-stage-5.webp'),
+	require('@/src/assets/illustrations/lion-stage-6-golden.webp'),
 ];
 
 /** 단계(1부터) → 이미지. 범위를 벗어나면 마지막 그림 */

@@ -28,12 +28,10 @@ import GlobalToast from '@/src/screens/common/atomic/GlobalToast';
 import AnimatedSplash from '@/src/screens/common/AnimatedSplash';
 import ErrorBoundary from '@/src/screens/common/ErrorBoundary';
 import LifeWatcher from '@/src/screens/life/common/LifeWatcher';
-import ChestModal from '@/src/screens/life/modal/ChestModal';
 import LevelUpModal from '@/src/screens/life/modal/LevelUpModal';
 import PetGrowthModal from '@/src/screens/life/modal/PetGrowthModal';
 import { Paths } from '@/src/navigation/conf/Paths';
 import { checkDeviceNetConListener } from '@/src/utils/NetworkUtils';
-import { loadHanjaFont } from '@/src/utils/FontUtils';
 import { loadSoundSettings, prepareAudioSession } from '@/src/utils/SoundUtils';
 import { requestAppTrackingPermission } from '@/src/utils/PermissionUtils';
 import AdGuardService from '@/src/services/ads/AdGuardService';
@@ -168,8 +166,6 @@ export default function RootLayout() {
 				await loadSoundSettings();
 				// 오디오 세션을 미리 mixWithOthers 로 잡는다 — 사용자가 듣던 음악·영상이 앱 진입만으로 끊기지 않게 한다
 				prepareAudioSession();
-				// 한자 서체는 스플래시가 떠 있는 동안 올린다 — 화면이 그려진 뒤 바뀌면 글자가 한 번 튄다
-				await loadHanjaFont();
 				AdGuardService.init(); // 광고 클릭 차단 상태 복원
 			} catch (e) {
 				console.warn('앱 초기화 중 오류:', e);
@@ -201,10 +197,7 @@ export default function RootLayout() {
 										<Stack screenOptions={{ headerShown: false, gestureEnabled: false, fullScreenGestureEnabled: false }}>
 											<Stack.Screen name="index" />
 											<Stack.Screen name={Paths.MAIN_TAB} />
-											<Stack.Screen name={Paths.LEARN} />
 											<Stack.Screen name={Paths.GRADE} />
-											<Stack.Screen name={Paths.SHOP} />
-											<Stack.Screen name={Paths.STUDY} />
 											<Stack.Screen name={Paths.SHORTS} />
 											<Stack.Screen name={Paths.QUIZ} />
 											<Stack.Screen name={Paths.WRONG} />
@@ -220,8 +213,6 @@ export default function RootLayout() {
 										<GlobalToast />
 										{/* 새 뱃지 알림 · 매일 알림 재예약 — 화면과 무관하게 상태를 지켜본다 */}
 										<LifeWatcher />
-										{/* 보물상자 — 만점·미션 완료로 생긴 상자를 탭 화면에서 열게 한다 */}
-										<ChestModal />
 										{/* 레벨업 — 펫 단계가 오르면 탭 화면에서 한 번 축하한다 (상자보다 먼저) */}
 										<LevelUpModal />
 										{/* 수호신 성장 — 먹이를 줘 단계가 오르면 검은 화면으로 덮고 새 모습을 보여 준다 */}

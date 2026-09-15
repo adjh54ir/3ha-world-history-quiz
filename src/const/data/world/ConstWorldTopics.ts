@@ -41,7 +41,26 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		modes: [
 			{ key: 'country', label: '나라 맞히기', question: '이 랜드마크가 있는 나라는?', ask: 'name', answer: 'country' },
 			{ key: 'city', label: '어디에 있나', question: '이 랜드마크가 있는 곳은?', ask: 'name', answer: 'city' },
+			{ key: 'photo', label: '사진 맞히기', question: '사진 속 랜드마크는?', ask: 'image', answer: 'name', askAs: 'landmark' },
 			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 랜드마크는?', ask: 'summary', answer: 'name' },
+		],
+	},
+	{
+		key: 'figure',
+		label: '세계 위인',
+		description: '세상을 바꾼 사람들, 언제 어디서 무엇을',
+		icon: 'account-star',
+		color: 'primaryDeep',
+		tint: 'secondarySoft',
+		// 오답을 같은 시대에서 먼저 뽑는다 — 20세기 인물의 오답이 고대 철학자면 읽지 않고도 걸러진다
+		groupBy: 'era',
+		modes: [
+			{ key: 'country', label: '어느 나라 사람', question: '이 인물은 어느 나라 사람일까?', ask: 'name', answer: 'country' },
+			{ key: 'role', label: '무엇을 한 사람', question: '이 인물이 한 일은?', ask: 'name', answer: 'role' },
+			{ key: 'era', label: '언제 살았나', question: '이 인물이 주로 활동한 때는?', ask: 'name', answer: 'era' },
+			// 초상은 앱에 담지 않고 위키미디어에서 받아 온다 (ConstFigureImages 참고)
+			{ key: 'portrait', label: '초상 맞히기', question: '초상 속 인물은?', ask: 'image', answer: 'name', askAs: 'figure' },
+			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 인물은?', ask: 'summary', answer: 'name' },
 		],
 	},
 	{

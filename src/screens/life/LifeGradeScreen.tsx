@@ -8,28 +8,27 @@ import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import LifeHeader from './common/LifeHeader';
 import LifeCharacterGuide, { useCharacterGuideOnce } from './common/LifeCharacterGuide';
 import PetAvatar from './common/PetAvatar';
-import { StudyRoomBackdrop, TitlePlaque } from './common/LifeDecor';
 import ProgressBar from './common/ProgressBar';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useLife, usePet } from '@/src/hooks/useLife';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { EXP, PET_STAGES, REWARD } from '@/src/const/data/life/ConstLifeRewards';
+import { EXP, PET_STAGES } from '@/src/const/data/life/ConstLifeRewards';
 import { expToActions, QUIZ_COUNT } from '@/src/services/life/LifeRules';
 import { PET_STAGE_IMAGES } from '@/src/const/data/life/ConstPetImages';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 
 /**
  * 경험치를 얻는 길.
- * 퀴즈·학습은 EXP 표를 그대로 쓰고(코인과 값이 다르다), 나머지는 받은 코인만큼 경험치가 된다.
+ * 학습과 활동에서 받는 경험치를 한곳에 정리한다.
  */
 const EXP_SOURCES = [
 	{ icon: 'check-circle-outline', label: '퀴즈 정답 하나', amount: EXP.correct, note: '타워·타임 챌린지도 같아요' },
 	{ icon: 'cards-outline', label: '단어 하나 학습 완료', amount: EXP.learnWord, note: '처음 익힌 단어만 세요' },
-	{ icon: 'calendar-check', label: '출석 체크', amount: REWARD.attendance, note: '' },
-	{ icon: 'calendar-star', label: '오늘의 퀴즈 완료', amount: REWARD.daily, note: '5문제를 다 풀면 추가로' },
-	{ icon: 'clipboard-check-outline', label: '오늘의 미션 모두 완료', amount: REWARD.mission, note: '' },
+	{ icon: 'calendar-check', label: '출석 체크', amount: EXP.attendance, note: '연속 출석 보너스가 더해져요' },
+	{ icon: 'calendar-star', label: '오늘의 퀴즈 완료', amount: EXP.daily, note: '5문제를 다 풀면 추가로' },
+	{ icon: 'clipboard-check-outline', label: '오늘의 미션 모두 완료', amount: EXP.mission, note: '' },
 ] as const;
 
 /**
@@ -49,7 +48,7 @@ const LifeGradeScreen = () => {
 	const closePreview = useCallback(() => setPreviewAt(null), []);
 
 	const topStage = PET_STAGES[PET_STAGES.length - 1];
-	/** 다음 단계까지 남은 EXP 를 "퀴즈 몇 판 / 단어 몇 개" 로 바꿔 둔다 (보너스는 안 세므로 최소치다) */
+	/** 다음 단계까지 남은 EXP 를 "퀴즈 몇 판 / 항목 몇 개" 로 바꿔 둔다 (보너스는 안 세므로 최소치다) */
 	const remain = expToActions(pet.next ? pet.next.minExp - exp : 0);
 
 	return (
@@ -59,14 +58,10 @@ const LifeGradeScreen = () => {
 				<Animated.View style={[styles.stack, enterStyle]}>
 					{/* 지금 등급 */}
 					<View style={styles.hero}>
-						{/* 글방 — 사 둔 사람에게만 캐릭터 뒤에 깔린다 (홈·통계 히어로와 같은 꾸미기) */}
 						<View style={styles.heroPetStage}>
-							<StudyRoomBackdrop width={scaleWidth(232)} height={scaleWidth(104)} />
-							<PetAvatar size={scaleWidth(104)} plate={false} />
+							<PetAvatar size={scaleWidth(104)} />
 						</View>
 						<Text style={styles.heroStage}>{pet.stage.label}</Text>
-						{/* 칭호 — 사 둔 사람에게만 단계 이름 아래에 현판이 붙는다 */}
-						<TitlePlaque onBrand />
 						<View style={styles.heroChip}>
 							<Text style={styles.heroChipText}>{`Lv.${pet.level} · 전체 ${PET_STAGES.length}단계`}</Text>
 						</View>
@@ -103,7 +98,7 @@ const LifeGradeScreen = () => {
 					</View>
 
 					{/* 단계 목록 */}
-					<Text style={styles.sectionTitle}>{`한자 등급 ${PET_STAGES.length}단계`}</Text>
+					<Text style={styles.sectionTitle}>{`성장 단계 ${PET_STAGES.length}단계`}</Text>
 					<View style={styles.stageCard}>
 						{PET_STAGES.map((stage, at) => {
 							const level = at + 1;
@@ -180,7 +175,7 @@ const LifeGradeScreen = () => {
 								<Text style={styles.howAmount}>{`+${item.amount}EXP`}</Text>
 							</View>
 						))}
-						<Text style={styles.howFootnote}>코인은 쓰면 줄지만 경험치는 쌓이기만 해요. 등급은 절대 내려가지 않아요.</Text>
+						<Text style={styles.howFootnote}>경험치는 쌓이기만 해서 등급은 내려가지 않아요.</Text>
 					</View>
 				</Animated.View>
 			</ScrollView>

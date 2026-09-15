@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Animated, Easing, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
 import WorldQuestionCard from './common/WorldQuestionCard';
+import { useWorldGuide } from './common/WorldGuide';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -15,7 +16,10 @@ import { buildMixedQuestions, buildQuestions } from '@/src/services/world/WorldQ
 import { pickEntries } from '@/src/services/world/WorldRules';
 import { collectWorldAnswer, flushWorldQuiz, resetWorldBuffer } from '@/src/services/world/WorldBridge';
 import { selectEntry } from '@/src/const/data/world/ConstWorldEntries';
-import { useLife } from '@/src/hooks/useLife';
+import { useLife, useStreak } from '@/src/hooks/useLife';
+import Confetti from '@/src/four/components/Confetti';
+import DateUtils from '@/src/utils/DateUtils';
+import { dailyShareText } from '@/src/services/life/LifeRules';
 import type { LifeType } from '@/src/types/data/LifeType';
 import type { WorldType } from '@/src/types/data/WorldType';
 import { Paths } from '@/src/navigation/conf/Paths';
@@ -26,8 +30,36 @@ import { scaledSize, scaleHeight } from '@/src/utils';
 const QUIZ_COUNT = 10;
 /** 머리글에 무엇을 보여 줄지 — 주제 퀴즈는 주제 이름을 그대로 쓴다 */
 const SOURCE_LABEL: Partial<Record<LifeType.QuizSource, string>> = { daily: '오늘의 퀴즈', wrong: '오답 복습' };
-/** 답을 고른 뒤 다음 문제로 넘어가기까지 — 정답 표시를 읽을 시간은 준다 */
-const NEXT_DELAY = 900;
+/** 답을 고른 뒤 다음 문제로 넘어가기까지 — 해설을 읽을 시간은 준다 */
+const NEXT_DELAY = 1600;
+/** 이 비율 위로 맞히면 폭죽을 터뜨린다 */
+const CONFETTI_RATIO = 0.8;
+
+/**
+ * 풀던 판 — 화면을 벗어나도 앱이 살아 있는 동안은 들고 있는다.
+ * -------------------------------------------------
+ * 열 문제 중 여섯을 풀고 홈으로 나갔다 돌아오면 판이 처음부터 다시 시작됐다.
+ * 진도·오답·경험치는 나갈 때 넘기니 남지만(WorldBridge), 풀던 자리는 사라져 네 문제를 또 만난다.
+ *
+ * 저장소가 아니라 모듈 변수다 — 앱을 껐다 켜면 새 판으로 시작한다.
+ * 문항까지 통째로 저장하면 그 사이 바뀐 진도와 어긋난 문제가 되살아난다.
+ */
+let session: {
+	key: string;
+	questions: WorldType.Question[];
+	at: number;
+	correct: number;
+	misses: { question: WorldType.Question; picked: string }[];
+	marks: boolean[];
+} | null = null;
+
+/** 이어 풀 판인지 가리는 열쇠 — 출제 방식과 주제가 같아야 같은 판이다 */
+const sessionKey = (source: LifeType.QuizSource, topicKey: string) => `${source}:${source === 'category' ? topicKey : ''}`;
+
+/** 다른 화면(다시 풀기·결과)에서 판을 버릴 때 */
+const dropSession = () => {
+	session = null;
+};
 
 /**
  * 세계 상식 4지선다.
@@ -49,9 +81,23 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 	const source: LifeType.QuizSource =
 		fixedSource ?? (params.source === 'daily' || params.source === 'wrong' ? params.source : 'category');
 	const life = useLife();
+	const { streak } = useStreak();
+	const { button, guide } = useWorldGuide('world-quiz', [
+		'네 개 보기 중 하나를 고르면 바로 정답을 알려 줘요.',
+		'답을 고르면 카드 아래에 설명이 떠요 — 읽고 넘어가면 더 오래 남아요.',
+		'틀린 문제는 오답 노트에 담기고, 두 번 맞히면 졸업해요.',
+	]);
+
+	const key = sessionKey(source, topic.key);
+	/** 돌아왔을 때 이어 풀 판 — 첫 렌더에서만 본다 (풀다 보면 session 이 계속 바뀐다) */
+	const resumed = useRef(session?.key === key ? session : null).current;
 
 	const [round, setRound] = useState(0);
 	const questions = useMemo(() => {
+		// 풀던 판이 있으면 문항을 새로 뽑지 않는다 — 다시 뽑으면 이어 풀 자리가 다른 문제를 가리킨다
+		if (round === 0 && resumed) {
+			return resumed.questions;
+		}
 		// 오늘의 퀴즈·오답 노트는 주제가 섞여 있다 — 항목마다 제 주제로 내야 한다
 		if (source !== 'category') {
 			const ids = source === 'daily' ? (life.daily?.wordIds ?? []) : life.wrong.map((note) => note.wordId);
@@ -70,13 +116,29 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [topic.key, round, source]);
 
-	const [at, setAt] = useState(0);
+	const [at, setAt] = useState(resumed?.at ?? 0);
 	const [picked, setPicked] = useState<string | null>(null);
-	const [correct, setCorrect] = useState(0);
+	const [correct, setCorrect] = useState(resumed?.correct ?? 0);
+	/** 이번 판에서 틀린 문항 — 결과에서 "무엇을 어떻게 틀렸는지" 를 그대로 보여 준다 */
+	const [misses, setMisses] = useState<{ question: WorldType.Question; picked: string }[]>(resumed?.misses ?? []);
+	/** 문항별 정오답 — 오늘의 퀴즈 공유 글의 🟩🟥 줄이 된다 */
+	const [marks, setMarks] = useState<boolean[]>(resumed?.marks ?? []);
 	const question = questions[at];
 	const done = at >= questions.length;
 
 	const mode = topic.modes.find((item) => item.key === question?.mode);
+
+	/**
+	 * 판을 시작할 때의 경험치 — 끝난 뒤 지금 값과의 차이가 이번 판에서 번 경험치다.
+	 * 보상 계산을 화면에서 다시 하면 규칙(LifeRules)과 두 벌이 되어 언젠가 어긋난다.
+	 */
+	const startExp = useRef(life.exp);
+	useEffect(() => {
+		startExp.current = life.exp;
+		// 새 판을 시작할 때만 다시 잡는다 — life.exp 를 따라가면 판 도중에 기준이 밀린다
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [round]);
+	const gainedExp = Math.max(0, life.exp - startExp.current);
 
 	const enter = useRef(new Animated.Value(1)).current;
 	useEffect(() => {
@@ -105,6 +167,15 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 		}
 	}, [done, questions.length, source, topic.key]);
 
+	// 풀던 자리를 들고 있는다 — 끝난 판은 버려야 돌아왔을 때 결과 화면이 아니라 새 판이 열린다
+	useEffect(() => {
+		if (questions.length === 0 || done) {
+			dropSession();
+			return;
+		}
+		session = { key, questions, at, correct, misses, marks };
+	}, [key, questions, at, correct, misses, marks, done]);
+
 	// 도중에 나가도 푼 만큼은 남아야 한다 — 화면을 뜰 때 모아 둔 것을 넘긴다
 	useEffect(
 		() => () => {
@@ -119,23 +190,38 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 		}
 		const hit = option === question.answer;
 		setPicked(option);
-		// 진도·오답 노트·코인은 판이 끝날 때 한 번에 넘긴다 (WorldBridge)
+		setMarks((prev) => [...prev, hit]);
+		// 진도·오답 노트·경험치는 판이 끝날 때 한 번에 넘긴다 (WorldBridge)
 		collectWorldAnswer(question.entry.id, hit);
 		if (hit) {
 			setCorrect((prev) => prev + 1);
 			playCorrect();
 		} else {
+			setMisses((prev) => [...prev, { question, picked: option }]);
 			playWrong();
 		}
 	};
 
 	const retry = () => {
 		playPop();
+		dropSession();
 		resetWorldBuffer();
 		setAt(0);
 		setPicked(null);
 		setCorrect(0);
+		setMisses([]);
+		setMarks([]);
 		setRound((prev) => prev + 1);
+	};
+
+	/** 오늘의 퀴즈 결과를 워들처럼 이모지 줄로 공유한다 */
+	const share = async () => {
+		playPop();
+		try {
+			await Share.share({ message: dailyShareText(marks, DateUtils.getLocalDateString(), streak) });
+		} catch (e) {
+			console.warn('결과 공유 실패:', e);
+		}
 	};
 
 	const percent = questions.length ? Math.round((Math.min(at, questions.length) / questions.length) * 100) : 0;
@@ -148,8 +234,13 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 		<SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
 			<View style={styles.head}>
 				<View style={styles.headText}>
-					<Text style={styles.topicLabel}>{SOURCE_LABEL[source] ?? topic.label}</Text>
-					<Text style={styles.counter}>{done ? '완료' : `${at + 1} / ${questions.length}`}</Text>
+					<Text style={styles.topicLabel} numberOfLines={1}>
+						{SOURCE_LABEL[source] ?? topic.label}
+					</Text>
+					<View style={styles.headRight}>
+						<Text style={styles.counter}>{done ? '완료' : `${at + 1} / ${questions.length}`}</Text>
+						{button}
+					</View>
 				</View>
 				<View style={styles.track}>
 					<View style={[styles.fill, { width: `${percent}%`, backgroundColor: Colors[topic.color] }]} />
@@ -158,22 +249,65 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				{done ? (
-					<Animated.View style={[styles.card, styles.resultCard, cardStyle]}>
-						<View style={[styles.resultBadge, { backgroundColor: Colors[topic.tint] }]}>
-							<IconComponent type="materialcommunityicons" name="trophy-outline" size={34} color={Colors[topic.color]} />
+					<Animated.View style={[styles.stack, cardStyle]}>
+						<View style={[styles.card, styles.resultCard]}>
+							<View style={[styles.resultBadge, { backgroundColor: Colors[topic.tint] }]}>
+								<IconComponent type="materialcommunityicons" name="trophy-outline" size={34} color={Colors[topic.color]} />
+							</View>
+							<Text style={styles.resultScore}>{`${correct} / ${questions.length}`}</Text>
+							<Text style={styles.resultText}>
+								{correct === questions.length ? '다 맞혔어요!' : correct * 2 >= questions.length ? '절반은 넘겼어요' : '한 번 더 보고 오면 늘어요'}
+							</Text>
+							{gainedExp > 0 ? (
+								<View style={[styles.expChip, { backgroundColor: Colors[topic.tint] }]}>
+									<IconComponent type="materialcommunityicons" name="lightning-bolt" size={14} color={Colors[topic.color]} />
+									<Text style={[styles.expText, { color: Colors[topic.color] }]}>{`+${gainedExp.toLocaleString()}EXP`}</Text>
+								</View>
+							) : null}
 						</View>
-						<Text style={styles.resultScore}>{`${correct} / ${questions.length}`}</Text>
-						<Text style={styles.resultText}>
-							{correct === questions.length ? '다 맞혔다.' : correct * 2 >= questions.length ? '절반은 넘겼다.' : '한 번 더 보고 오면 는다.'}
-						</Text>
+
+						{/* 무엇을 틀렸는지 — 고른 답과 정답을 나란히 둬야 다시 볼 거리가 남는다 */}
+						{misses.length > 0 ? (
+							<View style={styles.card}>
+								<Text style={styles.missTitle}>{`틀린 문제 ${misses.length}개`}</Text>
+								{misses.map((miss) => (
+									<View key={miss.question.id} style={styles.missRow}>
+										<Text style={styles.missPrompt} numberOfLines={1}>
+											{miss.question.entry.name}
+										</Text>
+										<View style={styles.missAnswers}>
+											<Text style={styles.missPicked} numberOfLines={1}>
+												{miss.picked}
+											</Text>
+											<IconComponent type="materialicons" name="arrow-forward" size={13} color={Colors.textMuted} />
+											<Text style={styles.missAnswer} numberOfLines={1}>
+												{miss.question.answer}
+											</Text>
+										</View>
+									</View>
+								))}
+							</View>
+						) : null}
+
 						<View style={styles.resultActions}>
-							<PressableScale style={[styles.ghost]} onPress={() => router.replace({ pathname: `/${Paths.WORLD_STUDY}`, params: { topic: topic.key } } as never)} accessibilityRole="button">
+							<PressableScale
+								style={styles.ghost}
+								onPress={() => router.replace({ pathname: `/${Paths.WORLD_STUDY}`, params: { topic: topic.key } } as never)}
+								accessibilityRole="button">
 								<Text style={styles.ghostText}>카드로 복습</Text>
 							</PressableScale>
 							<PressableScale style={[styles.primary, { backgroundColor: Colors[topic.color] }]} onPress={retry} accessibilityRole="button">
 								<Text style={styles.primaryText}>다시 풀기</Text>
 							</PressableScale>
 						</View>
+
+						{/* 오늘의 퀴즈만 공유한다 — 날짜가 붙어야 워들처럼 읽힌다 */}
+						{source === 'daily' && marks.length > 0 ? (
+							<PressableScale style={styles.shareButton} onPress={share} accessibilityRole="button" accessibilityLabel="오늘의 퀴즈 결과 공유">
+								<IconComponent type="materialcommunityicons" name="share-variant" size={16} color={Colors.textSecondary} />
+								<Text style={styles.shareText}>결과 공유하기</Text>
+							</PressableScale>
+						) : null}
 					</Animated.View>
 				) : question ? (
 					<Animated.View style={cardStyle}>
@@ -183,7 +317,12 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 					<Text style={styles.hint}>낼 수 있는 문항이 없다.</Text>
 				)}
 			</ScrollView>
+			{/* 잘 맞힌 판에만 터뜨린다 — 매번 터지면 축하가 아니라 배경이 된다 */}
+			{done && questions.length > 0 && correct >= questions.length * CONFETTI_RATIO ? (
+				<Confetti count={90} origin={{ x: -10, y: 0 }} fadeOut fallSpeed={2600} />
+			) : null}
 			<BottomHomeButton />
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -193,13 +332,14 @@ const createStyles = (Colors: Palette) =>
 		safe: { flex: 1, backgroundColor: Colors.background },
 
 		head: { paddingHorizontal: Spacing.lg, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, gap: SpacingV.xs },
-		headText: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+		headText: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
+		headRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 		topicLabel: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		counter: { fontSize: Typography.footnote, color: Colors.textSecondary },
 		track: { height: scaleHeight(5), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
 		fill: { height: '100%', borderRadius: Radius.pill },
 
-		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xl },
+		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
 		stack: { gap: SpacingV.lg },
 
 		card: {
@@ -214,6 +354,35 @@ const createStyles = (Colors: Palette) =>
 		hint: { fontSize: Typography.bodySm, color: Colors.textSecondary, lineHeight: scaledSize(20), textAlign: 'center' },
 
 		resultCard: { alignItems: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xl },
+		expChip: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			gap: scaledSize(4),
+			marginTop: SpacingV.xs,
+			paddingHorizontal: Spacing.md,
+			paddingVertical: scaleHeight(5),
+			borderRadius: Radius.pill,
+		},
+		expText: { fontSize: Typography.footnote, fontWeight: FontWeight.bold },
+
+		missTitle: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
+		missRow: { gap: scaleHeight(3) },
+		missPrompt: { fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.text },
+		missAnswers: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+		missPicked: { flexShrink: 1, fontSize: Typography.footnote, color: Colors.error, textDecorationLine: 'line-through' },
+		missAnswer: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: FontWeight.semibold, color: Colors.success },
+
+		shareButton: {
+			flexDirection: 'row',
+			alignItems: 'center',
+			justifyContent: 'center',
+			gap: Spacing.xs,
+			height: scaledSize(44),
+			borderRadius: Radius.pill,
+			borderWidth: StyleSheet.hairlineWidth,
+			borderColor: Colors.border,
+		},
+		shareText: { fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.textSecondary },
 		resultBadge: { width: scaledSize(74), height: scaledSize(74), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
 		resultScore: { fontSize: Typography.display, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		resultText: { fontSize: Typography.body, color: Colors.textSecondary },

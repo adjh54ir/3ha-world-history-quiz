@@ -6,7 +6,7 @@ import type { LifeType } from '@/src/types/data/LifeType';
 /**
  * 세계 상식 화면 → 앱 상태 다리
  * -------------------------------------------------
- * 학습·퀴즈 화면은 문제를 내고 채점만 한다. 진도·오답 노트·코인·경험치·미션·뱃지는
+ * 학습·퀴즈 화면은 문제를 내고 채점만 한다. 진도·오답 노트·경험치·미션·뱃지는
  * 전부 redux(LifeSlice)가 맡는다. 다리를 놓지 않으면 **퀴즈를 풀어도 홈이 0인 채로 남는다**.
  *
  * 채점은 문제마다 일어나지만 상태는 판이 끝날 때 한 번만 건드린다.
@@ -19,7 +19,7 @@ import type { LifeType } from '@/src/types/data/LifeType';
 /** 아직 앱 상태로 넘기지 않은 이번 판의 정오답 */
 let buffer: LifeType.AnswerLog[] = [];
 
-/** 학습 카드를 한 장 넘겼다 — 처음 보는 항목만 코인·경험치가 붙는다 */
+/** 학습 카드를 한 장 넘겼다 — 처음 보는 항목만 경험치가 붙는다 */
 export const bridgeWorldStudied = (entryId: string): void => {
 	Store.dispatch(markLearned([entryId]));
 };
@@ -33,10 +33,10 @@ export const collectWorldAnswer = (entryId: string, isCorrect: boolean, fast = f
 };
 
 /**
- * 모아 둔 정오답을 앱 상태에 넘긴다 — 기록·오답 노트·코인·미션이 여기서 한 번에 반영된다.
+ * 모아 둔 정오답을 앱 상태에 넘긴다 — 기록·오답 노트·경험치·미션이 여기서 한 번에 반영된다.
  * 판이 끝날 때뿐 아니라 화면을 벗어날 때도 부른다 (중간에 나가도 푼 만큼은 남아야 한다).
  *
- * @returns 이번 판 보너스 (번개·최대 콤보·코인). 넘길 것이 없으면 null
+ * @returns 이번 판 보너스 (번개·최대 콤보). 넘길 것이 없으면 null
  */
 export const flushWorldQuiz = (source: LifeType.QuizSource = 'category', category?: string): LifeType.QuizBonus | null => {
 	if (buffer.length === 0) {
@@ -57,7 +57,7 @@ export const resetWorldBuffer = (): void => {
 	buffer = [];
 };
 
-/** 타워 한 층 클리어 — 최고 층과 코인을 넘긴다 (층을 score 로 실어야 3층마다 보물상자가 나온다) */
+/** 타워 한 층 클리어 — 최고 층과 퀴즈 기록을 넘긴다 */
 export const bridgeWorldTower = (level: number): void => {
 	const logs = buffer;
 	buffer = [];
@@ -65,13 +65,10 @@ export const bridgeWorldTower = (level: number): void => {
 	Store.dispatch(recordTower(level));
 };
 
-/** 타임 챌린지 종료 — 최고 점수와 코인을 넘긴다 */
-export const bridgeWorldTime = (score: number, correct: number): void => {
+/** 타임 챌린지 종료 — 최고 점수와 퀴즈 기록을 넘긴다 */
+export const bridgeWorldTime = (score: number): void => {
 	const logs = buffer;
 	buffer = [];
-	Store.dispatch(finishQuiz({ source: 'time', logs, reward: correct * 2, score }));
+	Store.dispatch(finishQuiz({ source: 'time', logs, score }));
 	Store.dispatch(recordTimeChallenge(score));
 };
-
-/** 오답 방패가 걸려 있는지 — 걸려 있으면 이번 판 오답은 노트에 남지 않는다 */
-export const isWorldWrongGuardActive = (): boolean => (Store.getState().life.wrongGuards ?? 0) > 0;

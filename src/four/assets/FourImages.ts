@@ -5,11 +5,11 @@
  * 같은 이름의 파일을 복사해 두면 29MB가 그대로 늘어나므로, 이름 → 실제 그림 매핑만 여기 둔다.
  * 새 화면을 더 이식할 때 필요한 이름이 생기면 여기에 한 줄만 추가한다.
  */
-const great = require('@/src/assets/illustrations/panda-result-great.webp');
-const retry = require('@/src/assets/illustrations/panda-result-retry.webp');
-const wrong = require('@/src/assets/illustrations/panda-wrong.webp');
-const avatar = require('@/src/assets/illustrations/panda-avatar.webp');
-const attendance = require('@/src/assets/illustrations/panda-attendance.webp');
+const great = require('@/src/assets/illustrations/lion-result-great.webp');
+const retry = require('@/src/assets/illustrations/lion-result-retry.webp');
+const wrong = require('@/src/assets/illustrations/lion-wrong.webp');
+const avatar = require('@/src/assets/illustrations/lion-avatar.webp');
+const attendance = require('@/src/assets/illustrations/lion-attendance.webp');
 
 /** 학습 카드 배경 — 생활 상황 스물두 장 */
 const study = [
@@ -39,12 +39,12 @@ const study = [
 
 /** 등급 마스코트 — 사자가 자라는 여섯 단계 */
 const stage = [
-	require('@/src/assets/illustrations/panda-stage-1.webp'),
-	require('@/src/assets/illustrations/panda-stage-2.webp'),
-	require('@/src/assets/illustrations/panda-stage-3.webp'),
-	require('@/src/assets/illustrations/panda-stage-4.webp'),
-	require('@/src/assets/illustrations/panda-stage-5.webp'),
-	require('@/src/assets/illustrations/panda-stage-6-golden.webp'),
+	require('@/src/assets/illustrations/lion-stage-1.webp'),
+	require('@/src/assets/illustrations/lion-stage-2.webp'),
+	require('@/src/assets/illustrations/lion-stage-3.webp'),
+	require('@/src/assets/illustrations/lion-stage-4.webp'),
+	require('@/src/assets/illustrations/lion-stage-5.webp'),
+	require('@/src/assets/illustrations/lion-stage-6-golden.webp'),
 ];
 
 /** 출석 보상 전용 청룡 — 알에서 부화해 황금 서예 수호신으로 성장한다 */
@@ -63,14 +63,15 @@ const FourImages = {
 	no_data: wrong,
 
 	screen_fox_quiz_complete: great,
-	screen_fox_quiz_correct: require('@/src/assets/illustrations/panda-quiz-correct.webp'),
-	screen_fox_quiz_wrong: require('@/src/assets/illustrations/panda-quiz-wrong.webp'),
-	screen_fox_quiz_timeout: require('@/src/assets/illustrations/panda-quiz-timeout.webp'),
-	screen_fox_study_complete: require('@/src/assets/illustrations/panda-study-complete.webp'),
+	screen_fox_quiz_retry: retry,
+	screen_fox_quiz_correct: require('@/src/assets/illustrations/lion-quiz-correct.webp'),
+	screen_fox_quiz_wrong: require('@/src/assets/illustrations/lion-quiz-wrong.webp'),
+	screen_fox_quiz_timeout: require('@/src/assets/illustrations/lion-quiz-timeout.webp'),
+	screen_fox_study_complete: require('@/src/assets/illustrations/lion-study-complete.webp'),
 	screen_fox_time_challenge: require('@/src/four/assets/time-challenge-hero.webp'),
-	screen_fox_time_challenge_complete: require('@/src/assets/illustrations/panda-time-challenge-complete.webp'),
+	screen_fox_time_challenge_complete: require('@/src/assets/illustrations/lion-time-challenge-complete.webp'),
 	screen_fox_wrong_clear: great,
-	screen_fox_wrong_review: require('@/src/assets/illustrations/panda-wrong-review-hero.webp'),
+	screen_fox_wrong_review: require('@/src/assets/illustrations/lion-wrong-review-hero.webp'),
 	screen_fox_review_start: wrong,
 	screen_fox_check_in: attendance,
 	screen_fox_quiz_start: avatar,

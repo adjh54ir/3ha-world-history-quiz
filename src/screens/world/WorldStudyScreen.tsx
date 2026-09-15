@@ -6,6 +6,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
+import { useWorldGuide } from './common/WorldGuide';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -33,6 +34,11 @@ const WorldStudyScreen = () => {
 	const topic = selectTopic((params.topic ?? 'capital') as WorldType.TopicKey);
 
 	const life = useLife();
+	const { button, guide } = useWorldGuide('world-study', [
+		'카드를 아래 버튼으로 넘기며 한 장씩 익혀요.',
+		'펼친 카드는 배운 것으로 쳐서 진도와 경험치가 올라가요.',
+		'쉬운 것부터 나오고, 배울수록 어려운 항목이 열려요.',
+	]);
 	/**
 	 * 난이도 순으로 줄 세운 학습 순서 — 화면이 살아 있는 동안 고정한다.
 	 * 이미 배운 수를 넘겨 여는 등급을 맞춘다 (처음 켠 사람은 쉬운 것부터 본다).
@@ -57,7 +63,7 @@ const WorldStudyScreen = () => {
 		return () => anim.stop();
 	}, [at, enter]);
 
-	// 카드를 펼친 항목은 배운 것으로 친다 — 진도·코인·경험치·미션이 여기서 오른다
+	// 카드를 펼친 항목은 배운 것으로 친다 — 진도·경험치·미션이 여기서 오른다
 	useEffect(() => {
 		if (entry) {
 			bridgeWorldStudied(entry.id);
@@ -88,8 +94,13 @@ const WorldStudyScreen = () => {
 		<SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
 			<View style={styles.head}>
 				<View style={styles.headText}>
-					<Text style={styles.topicLabel}>{topic.label}</Text>
-					<Text style={styles.counter}>{`${at + 1} / ${cards.length}`}</Text>
+					<Text style={styles.topicLabel} numberOfLines={1}>
+						{topic.label}
+					</Text>
+					<View style={styles.headRight}>
+						<Text style={styles.counter}>{`${at + 1} / ${cards.length}`}</Text>
+						{button}
+					</View>
 				</View>
 				<View style={styles.track}>
 					<View style={[styles.fill, { width: `${percent}%`, backgroundColor: Colors[topic.color] }]} />
@@ -152,6 +163,7 @@ const WorldStudyScreen = () => {
 				</PressableScale>
 			</View>
 			<BottomHomeButton />
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -164,13 +176,14 @@ const createStyles = (Colors: Palette) =>
 		safe: { flex: 1, backgroundColor: Colors.background },
 
 		head: { paddingHorizontal: Spacing.lg, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, gap: SpacingV.xs },
-		headText: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+		headText: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
+		headRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 		topicLabel: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		counter: { fontSize: Typography.footnote, color: Colors.textSecondary },
 		track: { height: scaleHeight(5), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
 		fill: { height: '100%', borderRadius: Radius.pill },
 
-		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xl },
+		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
 		card: {
 			borderRadius: Radius.xl,
 			overflow: 'hidden',

@@ -12,7 +12,7 @@ import type { ColorToken } from '@/src/const/ConstColors';
  */
 export namespace WorldType {
 	/** 주제 열쇠 — 항목 id 앞머리와 같다 (capital-001 …) */
-	export type TopicKey = 'capital' | 'landmark' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic';
+	export type TopicKey = 'capital' | 'landmark' | 'figure' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic';
 
 	/**
 	 * 난이도 — 한국 학습자에게 얼마나 익숙한지로 매긴다.
@@ -52,11 +52,13 @@ export namespace WorldType {
 		answer: string;
 		/**
 		 * 문제를 글자가 아니라 그림으로 보여 준다. `ask` 에서 꺼낸 값이 그림을 찾는 열쇠다.
-		 * 'flag'  — ConstFlagImages 의 selectFlag 로 국기를 건다
-		 * 'myth'  — ConstMythImages 의 selectMythImage 로 인물 그림을 건다
-		 * 'space' — ConstPlanetImages 의 selectPlanetImage 로 천체 그림을 건다
+		 * 'flag'   — ConstFlagImages 의 selectFlag 로 국기를 건다
+		 * 'myth'   — ConstMythImages 의 selectMythImage 로 인물 그림을 건다
+		 * 'space'  — ConstPlanetImages 의 selectPlanetImage 로 천체 그림을 건다
+		 * 'figure'   — ConstFigureImages 의 selectFigureImage 로 위키미디어 초상 주소를 만든다
+		 * 'landmark' — 같은 방식으로 위키미디어 랜드마크 사진 주소를 만든다
 		 */
-		askAs?: 'flag' | 'myth' | 'space';
+		askAs?: 'flag' | 'myth' | 'space' | 'figure' | 'landmark';
 	}
 
 	export interface Topic {

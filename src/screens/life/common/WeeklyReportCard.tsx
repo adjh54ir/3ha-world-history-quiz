@@ -16,7 +16,7 @@ import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 
 /** 한 줄에 세우는 지표 — 라벨·아이콘·값 뽑는 법을 한곳에서 정한다 */
 const METRICS: { key: string; label: string; icon: string; unit: string; pick: (week: WeekMetrics) => number }[] = [
-	{ key: 'learned', label: '새 단어', icon: 'cards-outline', unit: '개', pick: (week) => week.learned },
+	{ key: 'learned', label: '새 항목', icon: 'cards-outline', unit: '개', pick: (week) => week.learned },
 	{ key: 'solved', label: '푼 문제', icon: 'head-question-outline', unit: '문제', pick: (week) => week.solved },
 	{ key: 'accuracy', label: '정답률', icon: 'target', unit: '%', pick: accuracy },
 	{ key: 'attended', label: '출석', icon: 'calendar-check', unit: '일', pick: (week) => week.attended },

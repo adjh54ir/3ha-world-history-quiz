@@ -2,6 +2,9 @@ import React, { useMemo } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
+import { useWorldGuide } from './common/WorldGuide';
+import WeeklyReportCard from '@/src/screens/life/common/WeeklyReportCard';
+import AttendanceHeatmap from './common/AttendanceHeatmap';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
@@ -22,6 +25,11 @@ const WorldStatsScreen = () => {
 	const life = useLife();
 	const progress = useCategoryProgress();
 	const streak = useStreak();
+	const { button, guide } = useWorldGuide('world-stats', [
+		'지금까지 쌓인 학습·퀴즈·출석 기록을 한 화면에서 봐요.',
+		'이번 주 카드는 지난주와 견줘 얼마나 늘었는지 보여 줘요.',
+		'주제별 별은 진도와 정답률을 함께 봐서 최대 세 개까지 붙어요.',
+	]);
 
 	const summary = useMemo(() => {
 		const total = progress.reduce((sum, item) => sum + item.total, 0);
@@ -56,8 +64,11 @@ const WorldStatsScreen = () => {
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.header}>
-						<Text style={styles.title}>통계</Text>
-						<Text style={styles.subtitle}>{`전체 진도 ${summary.percent}%`}</Text>
+						<View style={styles.headerText}>
+							<Text style={styles.title}>통계</Text>
+							<Text style={styles.subtitle}>{`전체 진도 ${summary.percent}%`}</Text>
+						</View>
+						{button}
 					</View>
 
 					<View style={styles.track}>
@@ -76,6 +87,12 @@ const WorldStatsScreen = () => {
 							</View>
 						))}
 					</View>
+
+					{/* 이번 주 vs 지난주 — 누적 숫자만 보면 "요즘 하고 있나" 는 안 보인다 */}
+					<WeeklyReportCard />
+
+					{/* 출석은 "모두 몇 일" 보다 "띄엄띄엄인지 꾸준한지" 가 더 읽힌다 */}
+					<AttendanceHeatmap attendance={life.attendance} />
 
 					<View style={styles.card}>
 						<Text style={styles.cardTitle}>주제별 진도</Text>
@@ -111,6 +128,7 @@ const WorldStatsScreen = () => {
 					</View>
 				</Animated.View>
 			</ScrollView>
+			{guide}
 		</SafeAreaView>
 	);
 };
@@ -121,7 +139,8 @@ const createStyles = (Colors: Palette) =>
 		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
 		stack: { gap: SpacingV.lg },
 
-		header: { gap: SpacingV.xs },
+		header: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: Spacing.md },
+		headerText: { flex: 1, gap: SpacingV.xs },
 		title: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		subtitle: { fontSize: Typography.bodySm, color: Colors.textSecondary },
 		track: { height: scaleHeight(8), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },

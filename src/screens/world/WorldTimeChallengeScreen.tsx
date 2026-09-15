@@ -6,6 +6,8 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import BottomHomeButton from '@/src/four/screens/common/BottomHomeButton';
 import WorldQuestionCard from './common/WorldQuestionCard';
+import { useWorldGuide } from './common/WorldGuide';
+import WorldTopicPicker from './common/WorldTopicPicker';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -57,6 +59,13 @@ const WorldTimeChallengeScreen = () => {
 	const [combo, setCombo] = useState(0);
 	const [leftMs, setLeftMs] = useState(TIME_CHALLENGE_SEC * 1000);
 	const deadline = useRef(0);
+	/** 어느 주제로 도전할지 — 고르지 않으면 예전처럼 전체에서 섞어 낸다 */
+	const [pickedTopic, setPickedTopic] = useState<WorldType.TopicKey | undefined>(undefined);
+	const { button, guide } = useWorldGuide('world-time', [
+		'제한 시간 안에 최대한 많이 맞히는 판이에요.',
+		'연속으로 맞히면 보너스가 붙고, 목숨이 다하면 시간이 남아도 끝나요.',
+		'주제를 골라 도전하면 자신 있는 분야로만 기록을 겨룰 수 있어요.',
+	]);
 
 	const question = questions[at];
 	const mode = question ? selectTopic(question.topic).modes.find((item) => item.key === question.mode) : undefined;
@@ -72,13 +81,13 @@ const WorldTimeChallengeScreen = () => {
 	const finish = useCallback(() => {
 		setPhase('over');
 		playFinish();
-		bridgeWorldTime(tally.current.score, tally.current.correct);
+		bridgeWorldTime(tally.current.score);
 	}, []);
 
 	const start = () => {
 		playPop();
 		resetWorldBuffer();
-		setQuestions(challengeQuestions(undefined, BATCH));
+		setQuestions(challengeQuestions(undefined, BATCH, Math.random, pickedTopic));
 		setAt(0);
 		setPicked(null);
 		setLives(LIVES);
@@ -136,14 +145,14 @@ const WorldTimeChallengeScreen = () => {
 			}
 			// 준비한 문항을 다 쓰면 새로 만든다 (3분을 다 채우고도 남는 사람이 있다)
 			if (at + 1 >= questions.length) {
-				setQuestions(challengeQuestions(undefined, BATCH));
+				setQuestions(challengeQuestions(undefined, BATCH, Math.random, pickedTopic));
 				setAt(0);
 				return;
 			}
 			setAt((prev) => prev + 1);
 		}, NEXT_DELAY);
 		return () => clearTimeout(timer);
-	}, [picked, phase, lives, at, questions.length, finish]);
+	}, [picked, phase, lives, at, questions.length, finish, pickedTopic]);
 
 	const choose = (option: string) => {
 		if (picked !== null || !question) {
@@ -184,6 +193,7 @@ const WorldTimeChallengeScreen = () => {
 			<SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
 				<ScrollView contentContainerStyle={styles.centerContent} showsVerticalScrollIndicator={false}>
 					<View style={styles.hero}>
+						<View style={styles.heroTop}>{button}</View>
 						<View style={[styles.heroBadge, done && { backgroundColor: Colors.accentAmberSoft }]}>
 							<IconComponent
 								type="materialcommunityicons"
@@ -215,6 +225,8 @@ const WorldTimeChallengeScreen = () => {
 						</View>
 					</View>
 
+					{done ? null : <WorldTopicPicker value={pickedTopic} onChange={setPickedTopic} label="어느 주제로 도전할까요?" />}
+
 					{done ? null : <Text style={styles.note}>연속으로 맞히면 보너스가 붙어요. 세 개부터 +5, 다섯 개부터 +10.</Text>}
 
 					<View style={styles.actions}>
@@ -229,6 +241,7 @@ const WorldTimeChallengeScreen = () => {
 					</View>
 				</ScrollView>
 				<BottomHomeButton />
+				{guide}
 			</SafeAreaView>
 		);
 	}
@@ -279,9 +292,11 @@ const WorldTimeChallengeScreen = () => {
 const createStyles = (Colors: Palette) =>
 	StyleSheet.create({
 		safe: { flex: 1, backgroundColor: Colors.background },
-		centerContent: { ...Layout.column, flexGrow: 1, justifyContent: 'center', paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.xl, gap: SpacingV.lg },
+		centerContent: { ...Layout.column, flexGrow: 1, justifyContent: 'center', paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.xxl, gap: SpacingV.lg },
 
 		hero: { alignItems: 'center', gap: SpacingV.xs },
+		// 안내 버튼은 히어로 오른쪽 위 — 가운데 정렬된 배지·제목의 흐름을 건드리지 않는다
+		heroTop: { alignSelf: 'flex-end' },
 		heroBadge: {
 			width: scaledSize(76),
 			height: scaledSize(76),
