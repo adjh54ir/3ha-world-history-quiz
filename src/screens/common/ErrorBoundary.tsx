@@ -1,7 +1,10 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import { Image } from 'expo-image';
 import { reportFatal } from '@/src/utils/CrashReport';
+
+const ERROR_MASCOT = require('@/src/assets/illustrations/lion-error.webp');
 
 interface Props {
 	children: React.ReactNode;
@@ -41,6 +44,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 		}
 		return (
 			<View style={styles.screen}>
+				<Image source={ERROR_MASCOT} style={styles.mascot} contentFit="contain" accessible={false} />
 				<Text style={styles.title}>잠시 문제가 생겼어요</Text>
 				<Text style={styles.body}>기록은 그대로 저장돼 있어요. 아래를 눌러 다시 열어 보세요.</Text>
 				<Pressable style={styles.button} onPress={this.retry} accessibilityRole="button">
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 32,
 		backgroundColor: '#FFFFFF',
 	},
+	mascot: { width: 160, height: 160 },
 	title: { fontSize: 20, fontWeight: '800', color: '#111827', textAlign: 'center' },
 	body: { fontSize: 14, lineHeight: 20, color: '#4B5563', textAlign: 'center' },
 	button: {

@@ -12,7 +12,7 @@ import { selectTopic, WORLD_TOPICS } from './ConstWorldTopics';
  * 예전에는 그 자리에 한자 단어(ConstLifeWords)가 직접 꽂혀 있었다.
  * 도메인을 바꿀 때 상태 층을 헤집지 않도록 이 파일 하나만 갈아 끼우게 모아 둔다.
  *
- * 갈래(Category)는 주제(Topic) 그대로다 — 주제 일곱 개가 곧 학습 갈래 일곱 개다.
+ * 갈래(Category)는 주제(Topic) 그대로다 — 주제 하나가 곧 학습 갈래 하나다 (주제를 늘리면 갈래도 함께 는다).
  */
 export const DOMAIN_CATEGORIES: LifeType.Category[] = WORLD_TOPICS.map((topic) => ({
 	key: topic.key,

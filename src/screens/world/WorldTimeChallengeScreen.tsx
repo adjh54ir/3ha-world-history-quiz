@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -31,6 +32,8 @@ const NEXT_DELAY = 550;
 /** 남은 시간이 이 아래로 떨어지면 색이 바뀐다 */
 const WARN_SEC = 30;
 const DANGER_SEC = 10;
+const READY_MASCOT = require('@/src/assets/illustrations/lion-study.webp');
+const RESULT_MASCOT = require('@/src/assets/illustrations/lion-time-result.webp');
 
 /** 연속 정답 보너스 — 세 개부터 붙고 다섯 개부터 두 배 */
 const comboBonus = (combo: number): number => (combo >= 5 ? 10 : combo >= 3 ? 5 : 0);
@@ -194,14 +197,7 @@ const WorldTimeChallengeScreen = () => {
 				<ScrollView contentContainerStyle={styles.centerContent} showsVerticalScrollIndicator={false}>
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>{button}</View>
-						<View style={[styles.heroBadge, done && { backgroundColor: Colors.accentAmberSoft }]}>
-							<IconComponent
-								type="materialcommunityicons"
-								name={done ? 'trophy-outline' : 'timer-outline'}
-								size={34}
-								color={done ? Colors.accentAmberDark : Colors.textInverse}
-							/>
-						</View>
+						<Image source={done ? RESULT_MASCOT : READY_MASCOT} style={styles.heroMascot} contentFit="contain" accessible={false} />
 						<Text style={styles.heroTitle}>{done ? `${score}점` : '타임 챌린지'}</Text>
 						<Text style={styles.heroSub}>
 							{done
@@ -297,6 +293,7 @@ const createStyles = (Colors: Palette) =>
 		hero: { alignItems: 'center', gap: SpacingV.xs },
 		// 안내 버튼은 히어로 오른쪽 위 — 가운데 정렬된 배지·제목의 흐름을 건드리지 않는다
 		heroTop: { alignSelf: 'flex-end' },
+		heroMascot: { width: scaledSize(138), height: scaledSize(138) },
 		heroBadge: {
 			width: scaledSize(76),
 			height: scaledSize(76),

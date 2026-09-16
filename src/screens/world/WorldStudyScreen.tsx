@@ -12,7 +12,7 @@ import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
 import { selectTopic } from '@/src/const/data/world/ConstWorldTopics';
-import { selectEntryImage } from '@/src/const/data/world/ConstWorldImages';
+import { selectEntryImage, selectEntryImageFallback } from '@/src/const/data/world/ConstWorldImages';
 import { pickEntries } from '@/src/services/world/WorldRules';
 import { bridgeWorldStudied } from '@/src/services/world/WorldBridge';
 import { useLife } from '@/src/hooks/useLife';
@@ -21,11 +21,12 @@ import { Paths } from '@/src/navigation/conf/Paths';
 import { playFlip, playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight } from '@/src/utils';
 
+const STUDY_MASCOT = require('@/src/assets/illustrations/lion-study.webp');
+
 /**
  * 카드 학습 — 한 화면에 항목 하나.
  *
- * 순서는 난이도 순이다. 주제에 따라 절반 넘게 4등급인 곳이 있어(수도 242개 중 131개)
- * 그냥 늘어놓으면 첫 장부터 이름도 못 들어 본 섬이 나온다.
+ * 순서는 난이도 순이다. 그냥 늘어놓으면 첫 장부터 이름도 못 들어 본 섬이 나온다.
  */
 const WorldStudyScreen = () => {
 	const Colors = useColors();
@@ -51,8 +52,11 @@ const WorldStudyScreen = () => {
 	}, [topic.key]);
 
 	const [at, setAt] = useState(0);
+	const [brokenAt, setBrokenAt] = useState<string | null>(null);
 	const entry = cards[at];
 	const image = entry ? selectEntryImage(topic.key, entry) : undefined;
+	const fallback = selectEntryImageFallback(topic.key);
+	const shownImage = brokenAt === entry?.id ? fallback : image;
 
 	// 카드가 바뀔 때 살짝 떠오르게 — 같은 자리에서 글자만 갈리면 넘어간 줄 모른다
 	const enter = useRef(new Animated.Value(1)).current;
@@ -110,9 +114,15 @@ const WorldStudyScreen = () => {
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				{entry ? (
 					<Animated.View style={[styles.card, cardStyle]}>
-						{image ? (
+						{shownImage ? (
 							<View style={[styles.art, { backgroundColor: Colors[topic.tint] }]}>
-								<Image source={image} style={styles.image} contentFit="contain" transition={180} />
+								<Image
+									source={shownImage}
+									style={styles.image}
+									contentFit="contain"
+									transition={180}
+									onError={shownImage === image && entry ? () => setBrokenAt(entry.id) : undefined}
+								/>
 							</View>
 						) : (
 							<View style={[styles.art, styles.artEmpty, { backgroundColor: Colors[topic.tint] }]}>
@@ -136,7 +146,10 @@ const WorldStudyScreen = () => {
 						</View>
 					</Animated.View>
 				) : (
-					<Text style={styles.summary}>보여 줄 항목이 없다.</Text>
+					<View style={styles.empty}>
+						<Image source={STUDY_MASCOT} style={styles.emptyImage} contentFit="contain" accessible={false} />
+						<Text style={styles.summary}>보여 줄 항목이 없다.</Text>
+					</View>
 				)}
 			</ScrollView>
 
@@ -195,6 +208,8 @@ const createStyles = (Colors: Palette) =>
 		art: { height: scaleHeight(190), alignItems: 'center', justifyContent: 'center', padding: Spacing.lg },
 		artEmpty: { height: scaleHeight(120) },
 		image: { width: '100%', height: '100%' },
+		empty: { alignItems: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xxl },
+		emptyImage: { width: scaledSize(156), height: scaledSize(156) },
 
 		body: { padding: Spacing.lg, gap: SpacingV.sm },
 		levelChip: { alignSelf: 'flex-start', paddingHorizontal: Spacing.sm, paddingVertical: scaleHeight(3), borderRadius: Radius.pill },

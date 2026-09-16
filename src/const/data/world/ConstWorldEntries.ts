@@ -2,6 +2,7 @@ import type { WorldType } from '@/src/types/data/WorldType';
 import capital from './capital.json';
 import landmark from './landmark.json';
 import figure from './figure.json';
+import event from './event.json';
 import myth from './myth.json';
 import space from './space.json';
 import constellation from './constellation.json';
@@ -38,6 +39,11 @@ import olympic from './olympic.json';
  *                4. **눈으로 본다.** P18 이 초상이 아닌 경우가 꽤 있다 — 샤를마뉴는 동전, 베르길리우스는 무덤 공원,
  *                   한비자는 유리장 안의 책이 걸렸다. 정선은 그가 그린 그림이지 그를 그린 그림이 아니다.
  *                   얼굴이 안 보이거나 여럿이 함께 있으면 '초상 맞히기' 가 성립하지 않으므로 뺀다.
+ * - event    : 사건 32개. 그림이 없는 주제다 (사건 사진은 저작권이 남아 있는 것이 대부분이라 아예 안 쓴다).
+ *              나라는 **지금의 나라 이름**으로 적는다 — 그래야 국기가 자동으로 붙는다 (ConstCountryCodes).
+ *              여러 나라가 얽힌 사건(세계 대전·흑사병·십자군)은 `country` 를 아예 비워 둔다.
+ *              `century` 는 연도가 아니라 세기다. 보기에 연도 넷을 놓으면 아는 사람도 찍게 된다.
+ *              사실관계는 손으로 썼다 — 기계로 검증하지 않는다.
  * - myth     : 그림 58장이 먼저 들어와, 그림에만 있던 18인물을 데이터에 맞춰 넣어 90개가 됐다.
  * - 그 밖    : 손으로 썼다. 사실관계를 기계로 검증하지 않는다 — 고칠 때는 사람이 확인해야 한다.
  *
@@ -47,6 +53,7 @@ export const WORLD_ENTRIES: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
 	figure: figure as WorldType.Entry[],
+	event: event as WorldType.Entry[],
 	myth: myth as WorldType.Entry[],
 	space: space as WorldType.Entry[],
 	constellation: constellation as WorldType.Entry[],

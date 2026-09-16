@@ -3,6 +3,7 @@ import { selectFigureImage, selectLandmarkImage } from './ConstFigureImages';
 import { selectFlag } from './ConstFlagImages';
 import { selectMythImage } from './ConstMythImages';
 import { selectPlanetImage } from './ConstPlanetImages';
+import { selectConstellationImage } from './ConstConstellationImages';
 
 /**
  * 항목에 붙은 그림을 찾아 준다 — 화면이 쓰는 유일한 입구.
@@ -28,6 +29,17 @@ const SOURCES: Partial<Record<WorldType.TopicKey, { field: string; pick: (code: 
 	landmark: { field: 'image', pick: selectLandmarkImage },
 	myth: { field: 'image', pick: selectMythImage },
 	space: { field: 'image', pick: selectPlanetImage },
+	constellation: { field: 'image', pick: selectConstellationImage },
+};
+
+const TOPIC_IMAGES: Partial<Record<WorldType.TopicKey, number>> = {
+	worldcup: require('@/src/assets/world/worldcup-hero.webp'),
+	olympic: require('@/src/assets/world/olympic-hero.webp'),
+};
+
+const FALLBACK_IMAGES: Partial<Record<WorldType.TopicKey, number>> = {
+	figure: require('@/src/assets/world/figure-fallback.webp'),
+	landmark: require('@/src/assets/world/landmark-fallback.webp'),
 };
 
 /**
@@ -48,6 +60,8 @@ export const selectPromptImage = (askAs: NonNullable<WorldType.QuizMode['askAs']
 				? selectMythImage
 				: askAs === 'space'
 					? selectPlanetImage
+					: askAs === 'constellation'
+						? selectConstellationImage
 					: askAs === 'landmark'
 						? selectLandmarkImage
 						: selectFigureImage;
@@ -56,3 +70,12 @@ export const selectPromptImage = (askAs: NonNullable<WorldType.QuizMode['askAs']
 
 /** 그림을 가진 항목이 하나라도 있는 주제인지 — 목록 화면이 미리보기를 걸지 말지 고른다 */
 export const hasImages = (topic: WorldType.TopicKey): boolean => SOURCES[topic] !== undefined;
+
+/** 항목 사진이 없는 대회 주제 카드에 쓰는 대표 그림 */
+export const selectTopicImage = (topic: WorldType.TopicKey): number | undefined => TOPIC_IMAGES[topic];
+
+/** 위키미디어 사진을 못 받았을 때 보여 줄 로컬 대체 그림 */
+export const selectEntryImageFallback = (topic: WorldType.TopicKey): number | undefined => FALLBACK_IMAGES[topic];
+
+export const selectPromptImageFallback = (askAs: NonNullable<WorldType.QuizMode['askAs']>): number | undefined =>
+	askAs === 'figure' ? FALLBACK_IMAGES.figure : askAs === 'landmark' ? FALLBACK_IMAGES.landmark : undefined;

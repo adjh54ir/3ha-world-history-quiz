@@ -11,6 +11,9 @@ import type { WorldType } from '@/src/types/data/WorldType';
  *   'summary' — 한 줄 설명 (설명 보고 맞히기)
  *   그 밖     — Entry.fields 의 열쇠
  * 항목이 그 열쇠를 갖고 있지 않으면 그 문항은 만들지 않는다.
+ *
+ * `answerAs: 'flag'` 는 답이 나라 이름이라는 표시다 — 보기와 사전 값 옆에 국기가 함께 붙는다.
+ * 국기 맞히기 모드에는 붙이지 않는다 (답이 국기인데 보기마다 국기를 달면 고를 것이 없다).
  * 보기가 서로 달라야 하므로 한 모드에서 쓰는 값이 네 가지는 넘어야 한다.
  */
 export const WORLD_TOPICS: WorldType.Topic[] = [
@@ -25,7 +28,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		// 발문에 "나라" 라고 못 박지 않는다 — 데이터에 홍콩·괌·그린란드 같은 자치령·속령이 섞여 있다
 		modes: [
 			{ key: 'capital', label: '수도 맞히기', question: '이곳의 수도는?', ask: 'name', answer: 'capital' },
-			{ key: 'country', label: '나라 맞히기', question: '이 도시가 수도인 곳은?', ask: 'capital', answer: 'name' },
+			{ key: 'country', label: '나라 맞히기', question: '이 도시가 수도인 곳은?', ask: 'capital', answer: 'name', answerAs: 'flag' },
 			{ key: 'flag', label: '국기 맞히기', question: '이 국기는 어디의 것일까?', ask: 'code', answer: 'name', askAs: 'flag' },
 			{ key: 'continent', label: '대륙 맞히기', question: '이곳이 속한 대륙은?', ask: 'name', answer: 'continent' },
 		],
@@ -39,7 +42,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		tint: 'accentAmberSoft',
 		groupBy: 'continent',
 		modes: [
-			{ key: 'country', label: '나라 맞히기', question: '이 랜드마크가 있는 나라는?', ask: 'name', answer: 'country' },
+			{ key: 'country', label: '나라 맞히기', question: '이 랜드마크가 있는 나라는?', ask: 'name', answer: 'country', answerAs: 'flag' },
 			{ key: 'city', label: '어디에 있나', question: '이 랜드마크가 있는 곳은?', ask: 'name', answer: 'city' },
 			{ key: 'photo', label: '사진 맞히기', question: '사진 속 랜드마크는?', ask: 'image', answer: 'name', askAs: 'landmark' },
 			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 랜드마크는?', ask: 'summary', answer: 'name' },
@@ -55,12 +58,31 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		// 오답을 같은 시대에서 먼저 뽑는다 — 20세기 인물의 오답이 고대 철학자면 읽지 않고도 걸러진다
 		groupBy: 'era',
 		modes: [
-			{ key: 'country', label: '어느 나라 사람', question: '이 인물은 어느 나라 사람일까?', ask: 'name', answer: 'country' },
+			{ key: 'country', label: '어느 나라 사람', question: '이 인물은 어느 나라 사람일까?', ask: 'name', answer: 'country', answerAs: 'flag' },
 			{ key: 'role', label: '무엇을 한 사람', question: '이 인물이 한 일은?', ask: 'name', answer: 'role' },
 			{ key: 'era', label: '언제 살았나', question: '이 인물이 주로 활동한 때는?', ask: 'name', answer: 'era' },
 			// 초상은 앱에 담지 않고 위키미디어에서 받아 온다 (ConstFigureImages 참고)
 			{ key: 'portrait', label: '초상 맞히기', question: '초상 속 인물은?', ask: 'image', answer: 'name', askAs: 'figure' },
 			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 인물은?', ask: 'summary', answer: 'name' },
+		],
+	},
+	{
+		key: 'event',
+		label: '세계사 사건',
+		description: '세상을 바꾼 그날, 언제 어디서',
+		icon: 'script-text',
+		color: 'primaryDark',
+		tint: 'accentAmberSoft',
+		// 오답을 같은 갈래에서 먼저 뽑는다 — 혁명 문제의 오답이 조약이면 읽지 않고도 걸러진다
+		groupBy: 'kind',
+		modes: [
+			// 연도가 아니라 세기로 묻는다. 보기에 연도 넷을 나란히 놓으면 아는 사람도 찍게 된다
+			{ key: 'century', label: '언제 일어났나', question: '이 일이 일어난 때는?', ask: 'name', answer: 'century' },
+			// 여러 나라가 얽힌 사건(세계 대전·흑사병)은 나라를 비워 둔다 — 그 항목은 이 문항이 안 나온다
+			{ key: 'country', label: '어느 나라 일', question: '이 일과 가장 가까운 나라는?', ask: 'name', answer: 'country', answerAs: 'flag' },
+			// 이름에 갈래가 적힌 사건(백년 전쟁·명예혁명)은 문제 생성기가 알아서 뺀다 (답이 문제에 들어 있다)
+			{ key: 'kind', label: '무슨 일인가', question: '이 일은 무엇으로 분류될까?', ask: 'name', answer: 'kind' },
+			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 사건은?', ask: 'summary', answer: 'name' },
 		],
 	},
 	{
@@ -102,6 +124,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		tint: 'surfaceAlt',
 		groupBy: 'kind',
 		modes: [
+			{ key: 'image', label: '그림 맞히기', question: '그림 속 별자리는?', ask: 'image', answer: 'name', askAs: 'constellation' },
 			{ key: 'star', label: '대표 별', question: '이 별자리의 대표 별은?', ask: 'name', answer: 'star' },
 			// 별자리와 성운·은하를 함께 묻는다. 남반구 하늘 것은 계절 대신 '남반구 하늘' 이 답이다
 			{ key: 'season', label: '언제 보이나', question: '밤하늘에서 언제 잘 보일까?', ask: 'name', answer: 'season' },
@@ -116,9 +139,9 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		color: 'successDark',
 		tint: 'successSoft',
 		modes: [
-			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host' },
-			{ key: 'winner', label: '우승국', question: '이 대회의 우승국은?', ask: 'name', answer: 'winner' },
-			{ key: 'runnerUp', label: '준우승국', question: '이 대회의 준우승국은?', ask: 'name', answer: 'runnerUp' },
+			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host', answerAs: 'flag' },
+			{ key: 'winner', label: '우승국', question: '이 대회의 우승국은?', ask: 'name', answer: 'winner', answerAs: 'flag' },
+			{ key: 'runnerUp', label: '준우승국', question: '이 대회의 준우승국은?', ask: 'name', answer: 'runnerUp', answerAs: 'flag' },
 		],
 	},
 	{
@@ -130,8 +153,8 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		tint: 'errorSoft',
 		modes: [
 			{ key: 'city', label: '개최 도시', question: '이 대회가 열린 도시는?', ask: 'name', answer: 'city' },
-			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host' },
-			{ key: 'top', label: '종합 1위', question: '이 대회에서 금메달을 가장 많이 딴 나라는?', ask: 'name', answer: 'top' },
+			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host', answerAs: 'flag' },
+			{ key: 'top', label: '종합 1위', question: '이 대회에서 금메달을 가장 많이 딴 나라는?', ask: 'name', answer: 'top', answerAs: 'flag' },
 		],
 	},
 ];

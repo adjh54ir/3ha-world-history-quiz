@@ -37,7 +37,7 @@ adaptive
 
 ## Evidence on Hand
 
-- 실제 학습 데이터: `src/const/data/world/` (주제 8개 · 항목 683개, 주제마다 JSON 한 벌)
+- 실제 학습 데이터: `src/const/data/world/` (주제 9개 · 항목 960개, 주제마다 JSON 한 벌)
 - 데이터 검증: `node --test src/const/data/world/ConstWorldData.test.ts` (id 중복·빈 카드·문항이 안 나오는 모드·답이 드러난 설명을 잡는다)
 - 사자·수호신 에셋: `src/assets/illustrations/`, 국기·신화·행성 그림: `src/assets/flags`, `myth`, `planets`
 - 학습 진행과 보상 규칙: `src/store/slice/LifeSlice.ts`, `src/services/life/LifeRules.ts`

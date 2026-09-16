@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -18,6 +19,7 @@ import { scaledSize, scaleHeight } from '@/src/utils';
 
 /** 답을 고른 뒤 다음으로 넘어가기까지 */
 const NEXT_DELAY = 900;
+const ENCOURAGE_MASCOT = require('@/src/assets/illustrations/lion-encourage.webp');
 
 /**
  * 타워 챌린지 — 한 층씩 오른다.
@@ -140,9 +142,7 @@ const WorldTowerQuizScreen = () => {
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				{over ? (
 					<Animated.View style={[styles.resultCard, { opacity: enter }]}>
-						<View style={styles.resultBadge}>
-							<IconComponent type="materialcommunityicons" name="stairs-up" size={34} color={Colors.primaryDeep} />
-						</View>
+						<Image source={ENCOURAGE_MASCOT} style={styles.resultMascot} contentFit="contain" accessible={false} />
 						<Text style={styles.resultScore}>{`${Math.max(0, floor - 1)}층`}</Text>
 						<Text style={styles.resultText}>목숨을 다 썼어요. 여기까지가 이번 기록이에요.</Text>
 						<View style={styles.resultActions}>
@@ -194,6 +194,7 @@ const createStyles = (Colors: Palette) =>
 			borderColor: Colors.border,
 			...Shadow.card,
 		},
+		resultMascot: { width: scaledSize(132), height: scaledSize(132) },
 		resultBadge: {
 			width: scaledSize(74),
 			height: scaledSize(74),

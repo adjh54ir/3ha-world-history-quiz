@@ -6,6 +6,9 @@
  *
  * 원본은 수도 퀴즈 앱에서 가져온 REST Countries 국기 PNG 로, 무손실 WebP 로 바꿔 넣었다 (427KB -> 347KB).
  */
+import capital from './capital.json';
+import { buildCountryCodes, selectCountryCodes } from './ConstCountryCodes';
+
 export const FLAG_IMAGES: Record<string, number> = {
 	ad: require('@/src/assets/flags/ad.webp'),
 	ae: require('@/src/assets/flags/ae.webp'),
@@ -253,3 +256,15 @@ export const FLAG_IMAGES: Record<string, number> = {
 
 /** 코드로 국기 찾기 — 없으면 undefined (화면이 자리를 비워 둔다) */
 export const selectFlag = (code: string): number | undefined => FLAG_IMAGES[code.toLowerCase()];
+
+/** 나라 이름 → 코드 (ConstCountryCodes 참고) — 국기 파일이 이 코드로 붙어 있어 여기서 한 번만 짝짓는다 */
+const COUNTRY_CODES = buildCountryCodes(capital as { name: string; fields: Record<string, string> }[]);
+
+/**
+ * 나라 **이름**으로 국기 찾기 — 위인·랜드마크·대회처럼 코드 없이 이름만 든 자리에서 쓴다.
+ * '미국·캐나다·멕시코' 같은 공동 개최는 국기도 셋을 준다. 국기가 없는 이름(소련·잉글랜드)은 빈 목록이다.
+ */
+export const selectFlagsByName = (name: string): { code: string; source: number }[] =>
+	selectCountryCodes(name, COUNTRY_CODES)
+		.map((code) => ({ code, source: FLAG_IMAGES[code] }))
+		.filter((flag) => !!flag.source);

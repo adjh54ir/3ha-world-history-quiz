@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Easing, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
 import { router, useLocalSearchParams } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -34,6 +35,8 @@ const SOURCE_LABEL: Partial<Record<LifeType.QuizSource, string>> = { daily: '오
 const NEXT_DELAY = 1600;
 /** 이 비율 위로 맞히면 폭죽을 터뜨린다 */
 const CONFETTI_RATIO = 0.8;
+const RESULT_GREAT = require('@/src/assets/illustrations/lion-correct.webp');
+const RESULT_ENCOURAGE = require('@/src/assets/illustrations/lion-encourage.webp');
 
 /**
  * 풀던 판 — 화면을 벗어나도 앱이 살아 있는 동안은 들고 있는다.
@@ -251,9 +254,12 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 				{done ? (
 					<Animated.View style={[styles.stack, cardStyle]}>
 						<View style={[styles.card, styles.resultCard]}>
-							<View style={[styles.resultBadge, { backgroundColor: Colors[topic.tint] }]}>
-								<IconComponent type="materialcommunityicons" name="trophy-outline" size={34} color={Colors[topic.color]} />
-							</View>
+							<Image
+								source={correct >= questions.length * CONFETTI_RATIO ? RESULT_GREAT : RESULT_ENCOURAGE}
+								style={styles.resultMascot}
+								contentFit="contain"
+								accessible={false}
+							/>
 							<Text style={styles.resultScore}>{`${correct} / ${questions.length}`}</Text>
 							<Text style={styles.resultText}>
 								{correct === questions.length ? '다 맞혔어요!' : correct * 2 >= questions.length ? '절반은 넘겼어요' : '한 번 더 보고 오면 늘어요'}
@@ -354,6 +360,7 @@ const createStyles = (Colors: Palette) =>
 		hint: { fontSize: Typography.bodySm, color: Colors.textSecondary, lineHeight: scaledSize(20), textAlign: 'center' },
 
 		resultCard: { alignItems: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xl },
+		resultMascot: { width: scaledSize(132), height: scaledSize(132) },
 		expChip: {
 			flexDirection: 'row',
 			alignItems: 'center',

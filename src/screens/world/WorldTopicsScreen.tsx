@@ -13,7 +13,7 @@ import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { WORLD_TOPICS } from '@/src/const/data/world/ConstWorldTopics';
 import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
-import { selectEntryImage } from '@/src/const/data/world/ConstWorldImages';
+import { selectEntryImage, selectTopicImage } from '@/src/const/data/world/ConstWorldImages';
 import { Paths } from '@/src/navigation/conf/Paths';
 import { playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -50,6 +50,10 @@ const WorldTopicsScreen = () => {
 			WORLD_TOPICS.map((topic) => {
 				const pool = WORLD_ENTRIES[topic.key];
 				const previews: NonNullable<ReturnType<typeof selectEntryImage>>[] = [];
+				const topicImage = selectTopicImage(topic.key);
+				if (topicImage) {
+					previews.push(topicImage);
+				}
 				for (const entry of pool) {
 					if (previews.length >= PREVIEW_COUNT) {
 						break;
@@ -89,7 +93,7 @@ const WorldTopicsScreen = () => {
 									{previews.length > 0 ? (
 										<View style={styles.previewRow}>
 											{previews.map((image, at) => (
-												<Image key={at} source={image} style={styles.preview} contentFit="contain" transition={160} />
+												<Image key={at} source={image} style={[styles.preview, previews.length === 1 && styles.previewHero]} contentFit="contain" transition={160} />
 											))}
 										</View>
 									) : (
@@ -160,6 +164,7 @@ const createStyles = (Colors: Palette) =>
 		// 석 장을 겹치지 않고 나란히 — 칸이 좁아 간격은 4 로 못 박는다
 		previewRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: scaleWidth(6) },
 		preview: { width: scaledSize(32), height: scaledSize(32), borderRadius: Radius.sm },
+		previewHero: { width: scaledSize(58), height: scaledSize(58), borderRadius: Radius.md },
 		cardBody: { paddingHorizontal: Spacing.md, paddingTop: SpacingV.sm, gap: SpacingV.xs },
 		cardLabel: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		cardDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, lineHeight: scaledSize(17) },

@@ -12,11 +12,16 @@ import type { ColorToken } from '@/src/const/ConstColors';
  */
 export namespace WorldType {
 	/** 주제 열쇠 — 항목 id 앞머리와 같다 (capital-001 …) */
-	export type TopicKey = 'capital' | 'landmark' | 'figure' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic';
+	export type TopicKey = 'capital' | 'landmark' | 'figure' | 'event' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic';
 
 	/**
-	 * 난이도 — 한국 학습자에게 얼마나 익숙한지로 매긴다.
-	 * 1 초급(누구나 안다) · 2 중급 · 3 고급 · 4 특급(마니아)
+	 * 난이도 — 한국 학습자에게 얼마나 익숙한지로 매긴다. 문제가 어려운 정도가 아니라 **항목이 낯선 정도**다.
+	 * 1 초급 — 항목도 답도 누구나 안다 (프랑스·오리온자리·1988 서울 올림픽)
+	 * 2 중급 — 항목을 잘 알고 답도 들어 봤다 (헝가리·황소자리)
+	 * 3 고급 — 항목 이름은 익숙하다. 뉴스·스포츠·지리 시간에 듣는다 (잠비아·마차부자리)
+	 * 4 특급 — 이름부터 낯설거나, 나라가 아닌 자치령·속령이다 (토켈라우·에리다누스자리)
+	 *
+	 * 한 주제가 4등급으로 쏠리면 처음 켠 사람이 뒤쪽에서 벽을 만난다 (ConstWorldData.test.ts 가 본다).
 	 */
 	export type Level = 1 | 2 | 3 | 4;
 
@@ -55,10 +60,16 @@ export namespace WorldType {
 		 * 'flag'   — ConstFlagImages 의 selectFlag 로 국기를 건다
 		 * 'myth'   — ConstMythImages 의 selectMythImage 로 인물 그림을 건다
 		 * 'space'  — ConstPlanetImages 의 selectPlanetImage 로 천체 그림을 건다
+		 * 'constellation' — ConstConstellationImages 의 별자리 그림을 건다
 		 * 'figure'   — ConstFigureImages 의 selectFigureImage 로 위키미디어 초상 주소를 만든다
 		 * 'landmark' — 같은 방식으로 위키미디어 랜드마크 사진 주소를 만든다
 		 */
-		askAs?: 'flag' | 'myth' | 'space' | 'figure' | 'landmark';
+		askAs?: 'flag' | 'myth' | 'space' | 'constellation' | 'figure' | 'landmark';
+		/**
+		 * 답이 나라 이름이라는 표시 — 보기와 사전 값 옆에 국기를 함께 건다.
+		 * 국기 맞히기 모드(`askAs: 'flag'`)에는 절대 붙이지 않는다. 답이 국기인데 보기에 국기를 달면 답이 드러난다.
+		 */
+		answerAs?: 'flag';
 	}
 
 	export interface Topic {

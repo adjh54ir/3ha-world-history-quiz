@@ -15,10 +15,12 @@ import type { WorldType } from '../../../types/data/WorldType.ts';
 import { DarkColors, LightColors } from '../../ConstColors.ts';
 import { WORLD_TOPICS } from './ConstWorldTopics.ts';
 import { LANDMARK_CREDITS } from './ConstLandmarkCredits.ts';
+import { buildCountryCodes, selectCountryCodes } from './ConstCountryCodes.ts';
 import { buildQuestion, buildQuestions, pick } from '../../../services/world/WorldQuizFactory.ts';
 import capital from './capital.json' with { type: 'json' };
 import landmark from './landmark.json' with { type: 'json' };
 import figure from './figure.json' with { type: 'json' };
+import event from './event.json' with { type: 'json' };
 import myth from './myth.json' with { type: 'json' };
 import space from './space.json' with { type: 'json' };
 import constellation from './constellation.json' with { type: 'json' };
@@ -29,6 +31,7 @@ const ENTRIES: Record<string, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
 	figure: figure as WorldType.Entry[],
+	event: event as WorldType.Entry[],
 	myth: myth as WorldType.Entry[],
 	space: space as WorldType.Entry[],
 	constellation: constellation as WorldType.Entry[],
@@ -136,6 +139,7 @@ const IMAGE_SOURCES: Record<string, { field: string; dir: string; module: string
 	capital: { field: 'code', dir: 'flags', module: 'ConstFlagImages.ts' },
 	myth: { field: 'image', dir: 'myth', module: 'ConstMythImages.ts' },
 	space: { field: 'image', dir: 'planets', module: 'ConstPlanetImages.ts' },
+	constellation: { field: 'image', dir: 'constellations', module: 'ConstConstellationImages.ts' },
 };
 
 test('그림이 붙은 항목마다 파일과 require 가 다 있다', () => {
@@ -183,6 +187,97 @@ test('위키 그림을 쓰는 주제는 항목마다 쓸 만한 파일 이름을
 			assert.ok(!seen.has(file), `${key} 안에서 그림이 겹친다: ${file} (${entry.id})`);
 			seen.add(file);
 		});
+	});
+});
+
+/**
+ * 국기를 붙일 수 없는 나라 이름 — 여기 없는 이름이 새로 들어오면 국기가 조용히 빠진다.
+ * 소련·독립국가연합·체코슬로바키아는 국기 파일이 아예 없고, 잉글랜드는 영국(유니언잭)과 깃발이 달라 gb 를 걸 수 없다.
+ */
+const NO_FLAG = new Set(['소련', '독립국가연합', '체코슬로바키아', '잉글랜드']);
+
+test('나라를 답으로 쓰는 값마다 국기를 찾을 수 있다', () => {
+	// answerAs: 'flag' 는 보기·사전 값 옆에 국기를 걸겠다는 약속이다. 이름이 대응표에 없으면 그 자리만 국기가 빠져
+	// 보기 넷 가운데 하나만 맨 글자로 남는다 — 눈으로는 데이터를 다 훑기 전에는 못 잡는다.
+	const codes = buildCountryCodes(capital as WorldType.Entry[]);
+	WORLD_TOPICS.forEach((topic) => {
+		topic.modes
+			.filter((mode) => mode.answerAs === 'flag')
+			.forEach((mode) => {
+				ENTRIES[topic.key].forEach((entry) => {
+					const value = pick(entry, mode.answer);
+					if (!value || NO_FLAG.has(value)) {
+						return;
+					}
+					assert.ok(
+						selectCountryCodes(value, codes).length > 0,
+						`${entry.id} 의 ${mode.answer}("${value}") 에 걸 국기가 없다 — ConstCountryCodes 에 별칭을 넣거나 NO_FLAG 에 적어라`,
+					);
+				});
+			});
+	});
+});
+
+test('국기 맞히기 모드에는 보기 국기를 달지 않는다', () => {
+	// 답이 국기인데 보기마다 국기를 달면 고를 것이 없다.
+	WORLD_TOPICS.forEach((topic) => {
+		topic.modes.forEach((mode) => {
+			assert.ok(!(mode.askAs === 'flag' && mode.answerAs === 'flag'), `${topic.key}/${mode.key} 가 문제와 보기에 모두 국기를 건다`);
+		});
+	});
+});
+
+/**
+ * 곁가지가 겹쳐도 되는 자리 — 수도 주제 242개 가운데 84개는 곁가지를 출처의 인구·면적에서 기계로 뽑아 썼다.
+ * '인구는 약 4만명이다.' 같은 문장은 나라가 달라도 같아질 수밖에 없다.
+ * ponytail: 손으로 다시 쓰기 전까지는 이 문장들만 빼고 본다. 84개를 손으로 쓰면 이 예외를 지워라.
+ */
+const GENERATED_FACT = /^(인구는|면적은)/;
+
+test('같은 곁가지 문장이 두 항목에 붙어 있지 않다', () => {
+	// 학습 카드는 항목마다 곁가지 두 줄이 전부다. 같은 문장이 다른 항목에 또 나오면 베껴 쓴 것처럼 보인다.
+	WORLD_TOPICS.forEach((topic) => {
+		const seen = new Map<string, string>();
+		ENTRIES[topic.key].forEach((entry) => {
+			entry.facts.forEach((fact) => {
+				if (GENERATED_FACT.test(fact)) {
+					return;
+				}
+				const before = seen.get(fact);
+				assert.ok(before === undefined, `${topic.key} 안에서 곁가지가 겹친다: "${fact}" (${before} · ${entry.id})`);
+				seen.set(fact, entry.id);
+			});
+		});
+	});
+});
+
+test('인용은 큰따옴표로 적는다', () => {
+	// 위인 42곳이 큰따옴표를 쓰는데 사건 네 곳만 작은따옴표였다. 같은 앱 안에서 인용 표기가 둘이면 눈에 걸린다.
+	WORLD_TOPICS.forEach((topic) => {
+		ENTRIES[topic.key].forEach((entry) => {
+			[entry.summary, ...entry.facts].forEach((line) => {
+				assert.ok(!line.includes("'"), `${entry.id} 에 작은따옴표가 있다: ${line}`);
+			});
+		});
+	});
+});
+
+/** 한 주제에서 특급(4등급)이 차지해도 되는 몫 — 넘으면 뒤쪽 학습이 통째로 벽이 된다 */
+const MAX_HARD_SHARE = 0.4;
+
+test('난이도가 한쪽으로 쏠리지 않는다', () => {
+	// 학습 순서는 난이도 순이다. 절반이 특급이면(전에 수도가 131/242 였다) 뒤로 갈수록 이름도 못 들어 본 것만 남는다.
+	WORLD_TOPICS.forEach((topic) => {
+		const entries = ENTRIES[topic.key];
+		const count = (level: number) => entries.filter((entry) => entry.level === level).length;
+		[1, 2, 3, 4].forEach((level) => {
+			assert.ok(count(level) > 0, `${topic.key} 에 ${level}등급 항목이 하나도 없다`);
+		});
+		const share = count(4) / entries.length;
+		assert.ok(
+			share <= MAX_HARD_SHARE,
+			`${topic.key} 의 특급이 ${(share * 100).toFixed(0)}% 다 (${(MAX_HARD_SHARE * 100).toFixed(0)}% 이하여야 한다)`,
+		);
 	});
 });
 

@@ -33,6 +33,7 @@ const OPTION_COUNT = 4;
  * 낼 수 없는 경우
  * - 항목에 그 자리의 값이 없다 (위성에는 '태양에서 몇 번째' 가 없다)
  * - 문제와 정답이 같은 말이다 (싱가포르의 수도는 싱가포르)
+ * - 문제 안에 정답이 들어 있다 (피사의 사탑이 있는 곳은 피사, 프랑스 대혁명이 일어난 나라는 프랑스)
  * - 서로 다른 오답 보기를 셋 채우지 못한다
  *
  * @param entry 출제할 항목
@@ -51,6 +52,12 @@ export const buildQuestion = (
 	const prompt = pick(entry, mode.ask);
 	const answer = pick(entry, mode.answer);
 	if (!prompt || !answer || prompt === answer) {
+		return null;
+	}
+	// 문제 안에 답이 그대로 박혀 있으면 읽기만 해도 풀린다 — '피사의 사탑'이 있는 곳, '쿠웨이트시티'가 수도인 곳.
+	// 그림 문항은 예외다. 그때 prompt 는 화면에 글자로 나오지 않고 그림을 찾는 파일 이름일 뿐이다
+	// (초상 파일 이름에 인물 이름이 들어 있다고 답이 보이지는 않는다).
+	if (!mode.askAs && prompt.includes(answer)) {
 		return null;
 	}
 	// 문제 자리의 값이 둘 이상 있으면 정답도 둘이다 — 조지타운은 가이아나의 수도이면서 케이맨 제도의 수도다.

@@ -12,7 +12,7 @@ import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { WORLD_TOPICS } from '@/src/const/data/world/ConstWorldTopics';
 import { WORLD_ENTRIES, ALL_WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
-import { selectEntryImage } from '@/src/const/data/world/ConstWorldImages';
+import { selectEntryImage, selectEntryImageFallback } from '@/src/const/data/world/ConstWorldImages';
 import { setFavorite } from '@/src/store/slice/LifeSlice';
 import { useLife } from '@/src/hooks/useLife';
 import type { WorldType } from '@/src/types/data/WorldType';
@@ -30,6 +30,7 @@ const ALL = 'all';
  */
 /** 줄 썸네일(44dp)에 맞춰 받아 오는 초상 폭 — 위키미디어가 실제로 내주는 칸이다 (ConstFigureImages 참고) */
 const THUMB_WIDTH = 250;
+const EMPTY_MASCOT = require('@/src/assets/illustrations/lion-empty-search.webp');
 
 const WorldListScreen = () => {
 	const Colors = useColors();
@@ -143,10 +144,17 @@ const WorldListScreen = () => {
 				contentContainerStyle={styles.list}
 				showsVerticalScrollIndicator={false}
 				initialNumToRender={14}
-				ListEmptyComponent={<Text style={styles.empty}>찾는 항목이 없다.</Text>}
+				ListEmptyComponent={
+					<View style={styles.empty}>
+						<Image source={EMPTY_MASCOT} style={styles.emptyImage} contentFit="contain" accessible={false} />
+						<Text style={styles.emptyText}>찾는 항목이 없다.</Text>
+					</View>
+				}
 				renderItem={({ item }) => {
 					// 줄마다 붙는 썸네일은 작다 — 받아 오는 그림(위인 초상)도 그 크기로만 받는다
-					const image = selectEntryImage(item.id.split('-')[0] as WorldType.TopicKey, item, THUMB_WIDTH);
+					const itemTopic = item.id.split('-')[0] as WorldType.TopicKey;
+					const image = selectEntryImage(itemTopic, item, THUMB_WIDTH);
+					const fallback = selectEntryImageFallback(itemTopic);
 					const on = favorites.has(item.id);
 					return (
 						<PressableScale
@@ -160,7 +168,7 @@ const WorldListScreen = () => {
 							accessibilityLabel={`${item.name} 자세히 보기`}>
 							<View style={styles.thumb}>
 								{image ? (
-									<Image source={image} style={styles.thumbImage} contentFit="contain" transition={120} />
+									<Image source={image} placeholder={fallback} style={styles.thumbImage} contentFit="contain" placeholderContentFit="contain" transition={120} />
 								) : (
 									<Text style={styles.thumbText}>{item.name.slice(0, 2)}</Text>
 								)}
@@ -253,7 +261,9 @@ const createStyles = (Colors: Palette) =>
 		rowHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 		rowName: { flexShrink: 1, fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.textStrong },
 		rowSummary: { fontSize: Typography.footnote, color: Colors.textSecondary, lineHeight: scaledSize(18) },
-		empty: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', paddingVertical: SpacingV.xxl },
+		empty: { alignItems: 'center', paddingVertical: SpacingV.xxl, gap: SpacingV.sm },
+		emptyImage: { width: scaledSize(156), height: scaledSize(156) },
+		emptyText: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center' },
 	});
 
 export default WorldListScreen;

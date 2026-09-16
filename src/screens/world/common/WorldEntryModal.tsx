@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -7,8 +7,9 @@ import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { selectEntryImage } from '@/src/const/data/world/ConstWorldImages';
+import { selectEntryImage, selectEntryImageFallback } from '@/src/const/data/world/ConstWorldImages';
 import { selectTopic } from '@/src/const/data/world/ConstWorldTopics';
+import CountryFlags from './CountryFlags';
 import type { WorldType } from '@/src/types/data/WorldType';
 import { scaledSize, scaleHeight } from '@/src/utils';
 
@@ -36,13 +37,18 @@ interface Props {
 const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) => {
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
+	const [brokenFor, setBrokenFor] = useState<string | null>(null);
 	if (!entry) {
 		return null;
 	}
 	const topic = selectTopic(entry.id.split('-')[0] as WorldType.TopicKey);
 	const image = selectEntryImage(topic.key, entry, DETAIL_WIDTH);
+	const fallback = selectEntryImageFallback(topic.key);
+	const shownImage = brokenFor === entry.id ? fallback : image;
 	// 주제별 값 주머니 — 어떤 열쇠를 사람이 읽는 말로 부를지는 주제의 문제 유형이 알고 있다
 	const labels = new Map(topic.modes.map((mode) => [mode.answer, mode.label]));
+	// 나라 이름이 들어 있는 값에는 국기를 함께 건다 (ConstWorldTopics 의 answerAs)
+	const flagged = new Set(topic.modes.filter((mode) => mode.answerAs === 'flag').map((mode) => mode.answer));
 	const facts = Object.entries(entry.fields).filter(([key]) => labels.has(key) && key !== 'image' && key !== 'code');
 
 	return (
@@ -50,9 +56,15 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 			<View style={styles.sheet}>
 				<View style={styles.grabber} />
 				<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-					{image ? (
+					{shownImage ? (
 						<View style={[styles.art, { backgroundColor: Colors[topic.tint] }]}>
-							<Image source={image} style={styles.image} contentFit="contain" transition={180} />
+							<Image
+								source={shownImage}
+								style={styles.image}
+								contentFit="contain"
+								transition={180}
+								onError={shownImage === image ? () => setBrokenFor(entry.id) : undefined}
+							/>
 						</View>
 					) : null}
 
@@ -90,9 +102,12 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 							{facts.map(([key, value]) => (
 								<View key={key} style={styles.valueRow}>
 									<Text style={styles.valueLabel}>{labels.get(key)}</Text>
-									<Text style={styles.valueText} numberOfLines={2}>
-										{value}
-									</Text>
+									<View style={styles.valueBody}>
+										{flagged.has(key) ? <CountryFlags name={value} /> : null}
+										<Text style={styles.valueText} numberOfLines={2}>
+											{value}
+										</Text>
+									</View>
 								</View>
 							))}
 						</View>
@@ -150,9 +165,11 @@ const createStyles = (Colors: Palette) =>
 		summary: { fontSize: Typography.body, color: Colors.text, lineHeight: scaledSize(22) },
 
 		valueCard: { borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt, padding: Spacing.md, gap: SpacingV.xs },
-		valueRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md },
+		valueRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
 		valueLabel: { width: scaledSize(92), fontSize: Typography.footnote, color: Colors.textSecondary },
-		valueText: { flex: 1, fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.textStrong },
+		// 국기와 값을 한 덩어리로 — 이름표(92dp) 오른쪽 시작점이 국기가 있든 없든 같아야 표처럼 읽힌다
+		valueBody: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+		valueText: { flexShrink: 1, fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.textStrong },
 
 		factList: { gap: SpacingV.xs },
 		factRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
