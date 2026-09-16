@@ -31,19 +31,22 @@ import type { WorldType } from '../../types/data/WorldType.ts';
 import { WORLD_TOPICS } from '../../const/data/world/ConstWorldTopics.ts';
 import capital from '../../const/data/world/capital.json' with { type: 'json' };
 import landmark from '../../const/data/world/landmark.json' with { type: 'json' };
+import nature from '../../const/data/world/nature.json' with { type: 'json' };
 import figure from '../../const/data/world/figure.json' with { type: 'json' };
+import event from '../../const/data/world/event.json' with { type: 'json' };
 import myth from '../../const/data/world/myth.json' with { type: 'json' };
 import space from '../../const/data/world/space.json' with { type: 'json' };
 import constellation from '../../const/data/world/constellation.json' with { type: 'json' };
 import worldcup from '../../const/data/world/worldcup.json' with { type: 'json' };
 import olympic from '../../const/data/world/olympic.json' with { type: 'json' };
+import winter from '../../const/data/world/winter.json' with { type: 'json' };
 
 /**
  * 검증에 쓸 학습 항목 — 앱이 쓰는 것과 같은 순서로 이어 붙인다 (ConstWorldDomain 의 DOMAIN_ITEMS).
  * ConstWorldDomain 을 그대로 들여오지 못하는 이유는 그쪽이 확장자 없는 경로로 JSON 을 물고 있어
  * `node --test` 가 못 읽기 때문이다.
  */
-const ITEMS: WorldType.Entry[] = [capital, landmark, figure, myth, space, constellation, worldcup, olympic].flat() as WorldType.Entry[];
+const ITEMS: WorldType.Entry[] = [capital, landmark, nature, figure, event, myth, space, constellation, worldcup, olympic, winter].flat() as WorldType.Entry[];
 
 /** 항목이 어느 주제 것인지 — id 앞머리가 주제 열쇠다 */
 const topicOf = (item: WorldType.Entry): string => item.id.split('-')[0];
@@ -85,7 +88,7 @@ test('출석 수호신 — 먹인 먹이 1·7·14·21·28·35개에 단계가 �
 	assert.equal(attendancePetStatus(28).level, 4);
 	assert.equal(attendancePetStatus(34).level, 4);
 	assert.equal(attendancePetStatus(35).level, 5);
-	assert.equal(attendancePetStatus(35).stage?.label, '황금 만리룡');
+	assert.equal(attendancePetStatus(35).stage?.label, '황금 세계올빼미');
 	assert.equal(attendancePetStatus(100).next, null);
 });
 

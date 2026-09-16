@@ -16,12 +16,12 @@ export const PET_STAGE_IMAGES: number[] = [
 /** 단계(1부터) → 이미지. 범위를 벗어나면 마지막 그림 */
 export const selectPetImage = (level: number): number => PET_STAGE_IMAGES[Math.min(PET_STAGE_IMAGES.length, Math.max(1, level)) - 1];
 
-/** 출석 보상 청룡 — ATTENDANCE_PET_STAGES 와 같은 순서 */
+/** 출석 보상 나침반 올빼미 — ATTENDANCE_PET_STAGES 와 같은 순서 */
 export const ATTENDANCE_PET_IMAGES: number[] = [
-	require('@/src/assets/illustrations/azure-dragon-stage-1.webp'),
-	require('@/src/assets/illustrations/azure-dragon-stage-2.webp'),
-	require('@/src/assets/illustrations/azure-dragon-stage-3.webp'),
-	require('@/src/assets/illustrations/azure-dragon-stage-4.webp'),
-	require('@/src/assets/illustrations/azure-dragon-stage-5.webp'),
-	require('@/src/assets/illustrations/azure-dragon-stage-6-golden.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-1.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-2.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-3.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-4.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-5.webp'),
+	require('@/src/assets/illustrations/world-owl-stage-6-golden.webp'),
 ];

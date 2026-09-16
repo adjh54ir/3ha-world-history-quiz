@@ -12,7 +12,7 @@ import type { ColorToken } from '@/src/const/ConstColors';
  */
 export namespace WorldType {
 	/** 주제 열쇠 — 항목 id 앞머리와 같다 (capital-001 …) */
-	export type TopicKey = 'capital' | 'landmark' | 'figure' | 'event' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic';
+	export type TopicKey = 'capital' | 'landmark' | 'nature' | 'figure' | 'event' | 'myth' | 'space' | 'constellation' | 'worldcup' | 'olympic' | 'winter';
 
 	/**
 	 * 난이도 — 한국 학습자에게 얼마나 익숙한지로 매긴다. 문제가 어려운 정도가 아니라 **항목이 낯선 정도**다.

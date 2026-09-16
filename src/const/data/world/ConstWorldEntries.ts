@@ -1,6 +1,7 @@
 import type { WorldType } from '@/src/types/data/WorldType';
 import capital from './capital.json';
 import landmark from './landmark.json';
+import nature from './nature.json';
 import figure from './figure.json';
 import event from './event.json';
 import myth from './myth.json';
@@ -8,6 +9,7 @@ import space from './space.json';
 import constellation from './constellation.json';
 import worldcup from './worldcup.json';
 import olympic from './olympic.json';
+import winter from './winter.json';
 
 /**
  * 주제별 학습 항목 — 원본은 같은 폴더의 JSON 이다.
@@ -39,11 +41,22 @@ import olympic from './olympic.json';
  *                4. **눈으로 본다.** P18 이 초상이 아닌 경우가 꽤 있다 — 샤를마뉴는 동전, 베르길리우스는 무덤 공원,
  *                   한비자는 유리장 안의 책이 걸렸다. 정선은 그가 그린 그림이지 그를 그린 그림이 아니다.
  *                   얼굴이 안 보이거나 여럿이 함께 있으면 '초상 맞히기' 가 성립하지 않으므로 뺀다.
- * - event    : 사건 32개. 그림이 없는 주제다 (사건 사진은 저작권이 남아 있는 것이 대부분이라 아예 안 쓴다).
+ * - nature   : 지형 50개. 그림이 없다 — 강·산맥은 사진 한 장으로 가려낼 수 있는 대상이 아니다.
+ *              나라는 **그 안에 온전히 들어 있을 때만** 적는다 (50개 가운데 18개). 나일강(11개국)·알프스산맥처럼
+ *              여러 나라에 걸친 것은 비워 둔다. 비우면 '어느 나라' 문항만 안 나온다.
+ *              처음 20개는 등급마다 3~7개뿐이라 한 판(10문항)이 안 나왔다. 30개를 보태 11·13·14·12 로 맞췄다.
+ *              랜드마크에 이미 있는 것은 넣지 않는다 — 그랜드캐니언·울루루·앙헬 폭포·그레이트배리어리프는
+ *              사진으로 먼저 아는 곳이어서 그쪽에 두고, 여기서는 콜로라도강·아마존 열대우림처럼 지도로 아는 것을 넣었다.
+ * - event    : 사건 61개. 그림이 없는 주제다 (사건 사진은 저작권이 남아 있는 것이 대부분이라 아예 안 쓴다).
  *              나라는 **지금의 나라 이름**으로 적는다 — 그래야 국기가 자동으로 붙는다 (ConstCountryCodes).
  *              여러 나라가 얽힌 사건(세계 대전·흑사병·십자군)은 `country` 를 아예 비워 둔다.
  *              `century` 는 연도가 아니라 세기다. 보기에 연도 넷을 놓으면 아는 사람도 찍게 된다.
  *              사실관계는 손으로 썼다 — 기계로 검증하지 않는다.
+ * - winter   : 동계 올림픽 25회(1924~2026). 필드가 하계와 같아 그림 없이 그대로 붙였다.
+ *              `top`(종합 1위)은 금메달 수 1위다. 1948년은 노르웨이와 스웨덴이 같아 가릴 수 없고,
+ *              2014년은 도핑 재집계로 1위가 뒤집혀 논란이 남았고, 2026년은 집계를 손으로 확인하지 못했다 —
+ *              이 세 회차는 `top` 을 비워 뒀다. 비우면 '종합 1위' 문항만 안 나온다.
+ *              1984년 개최국 유고슬라비아와 1984년 1위 동독은 국기 파일이 없다 (테스트의 NO_FLAG 에 적어 뒀다).
  * - myth     : 그림 58장이 먼저 들어와, 그림에만 있던 18인물을 데이터에 맞춰 넣어 90개가 됐다.
  * - 그 밖    : 손으로 썼다. 사실관계를 기계로 검증하지 않는다 — 고칠 때는 사람이 확인해야 한다.
  *
@@ -52,6 +65,7 @@ import olympic from './olympic.json';
 export const WORLD_ENTRIES: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
+	nature: nature as WorldType.Entry[],
 	figure: figure as WorldType.Entry[],
 	event: event as WorldType.Entry[],
 	myth: myth as WorldType.Entry[],
@@ -59,6 +73,7 @@ export const WORLD_ENTRIES: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 	constellation: constellation as WorldType.Entry[],
 	worldcup: worldcup as WorldType.Entry[],
 	olympic: olympic as WorldType.Entry[],
+	winter: winter as WorldType.Entry[],
 };
 
 export const ALL_WORLD_ENTRIES: WorldType.Entry[] = Object.values(WORLD_ENTRIES).flat();

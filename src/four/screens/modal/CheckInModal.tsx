@@ -59,7 +59,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 	const { feeds, image: petImageRaw } = useAttendancePet();
 	const { streak } = useStreak();
 	/**
-	 * 출석 완료 연출에 함께 세우는 청룡.
+	 * 출석 완료 연출에 함께 세우는 나침반 올빼미.
 	 * 먹이를 한 번도 주지 않았으면 아직 알조차 없다 — 없는 알을 미리 보여 주지 않고 사자만 세운다.
 	 */
 	const petImage = petImageRaw;
@@ -251,7 +251,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 					{/*
 					 * 출석 완료 연출 — 팝업 한 장을 통째로 덮는다.
 					 * 스크롤 안에 두던 예전 방식은 달력까지 내려가야 보였고, 캐릭터 한 장만 떠서 심심했다.
-					 * 이제 사자와 청룡 펫이 함께 서고, 그 사이에 붉은 출석 도장(出席)이 내려앉는다.
+					 * 이제 사자와 올빼미 펫이 함께 서고, 그 사이에 붉은 출석 도장(出席)이 내려앉는다.
 					 */}
 					{showStamp && (
 						<View style={styles.stampOverlay} pointerEvents="none">
@@ -259,7 +259,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 								<View style={styles.stampDuoWrap}>
 									<View style={styles.stampDuo}>
 										<MascotImage source={mascot} size={scaleWidth(112)} motion="cheer" popIn shadow={false} />
-										{/* 청룡 펫 — 먹이를 한 번도 안 줬으면 아직 알이 없으므로 그리지 않는다 */}
+										{/* 올빼미 펫 — 먹이를 한 번도 안 줬으면 아직 알이 없으므로 그리지 않는다 */}
 										{!!petImage && (
 											<MascotImage
 												source={petImage}
@@ -268,7 +268,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 												popIn
 												shadow={false}
 												style={styles.stampPet}
-												accessibilityLabel="청룡 펫"
+												accessibilityLabel="나침반 올빼미 펫"
 											/>
 										)}
 									</View>
@@ -427,7 +427,7 @@ const makeStyles = () =>
 		stampStage: { alignItems: 'center', gap: SpacingV.xs, paddingHorizontal: Spacing.xl },
 		// 인장이 캐릭터 발밑으로 삐져나와야 해서 한 겹 더 감싼다 (여기 기준으로 절대배치한다)
 		stampDuoWrap: { alignItems: 'center' },
-		// 사자와 청룡이 발밑을 맞춰 나란히 선다 — 청룡을 살짝 겹쳐 한 무리로 보이게 한다
+		// 사자와 올빼미가 발밑을 맞춰 나란히 선다 — 올빼미를 살짝 겹쳐 한 무리로 보이게 한다
 		stampDuo: { flexDirection: 'row', alignItems: 'flex-end' },
 		stampPet: { marginLeft: -scaleWidth(16), marginBottom: scaleHeight(6) },
 		/** 붉은 인장 — 두 캐릭터 발밑에 비스듬히 찍힌다 */

@@ -23,6 +23,8 @@ Use case: identity-preserve. Create one production mobile game illustration usin
 | `lion-study-complete.webp` | Closing a finished history book and presenting a green check badge, calm satisfied smile. |
 | `lion-study-toast.webp` | Simple upper-body pose holding a small completed lesson card with a green check, readable at 58px. |
 | `lion-time-challenge-complete.webp` | Holding a gold stopwatch and small trophy, energetic time-challenge victory. |
+| `lion-time-challenge-hero.webp` | Sprinting toward the viewer with a gold stopwatch and navy history book, broken clock ring and blue speed streaks. |
+| `lion-tower-challenge-hero.webp` | Leaping upward across three perspective stone steps toward a gold compass crown, rolled map in one paw. |
 | `lion-wrong-review-hero.webp` | Sitting with a large open notebook and pencil, focused review pose, blank pages. |
 | `lion-wrong.webp` | Holding a small open notebook and pencil, mildly puzzled but motivated expression. |
 

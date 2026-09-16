@@ -35,14 +35,14 @@ export const EXP = {
 	mission: 10,
 } as const;
 
-/** 출석 수호신 — 출석으로 받은 먹이를 준 수만큼 자란다 */
+/** 출석 펫 — 출석으로 받은 먹이를 준 수만큼 자란다 */
 export const ATTENDANCE_PET_STAGES: LifeType.AttendancePetStage[] = [
-	{ minFeeds: 1, label: '잠든 신수알' },
-	{ minFeeds: 7, label: '깨어나는 용알' },
-	{ minFeeds: 14, label: '아기 청룡' },
-	{ minFeeds: 21, label: '자라는 청룡' },
-	{ minFeeds: 28, label: '만리 청룡' },
-	{ minFeeds: 35, label: '황금 만리룡' },
+	{ minFeeds: 1, label: '잠든 나침반알' },
+	{ minFeeds: 7, label: '깨어나는 나침반알' },
+	{ minFeeds: 14, label: '꼬마 탐험올빼미' },
+	{ minFeeds: 21, label: '지도날개 올빼미' },
+	{ minFeeds: 28, label: '세계수호 올빼미' },
+	{ minFeeds: 35, label: '황금 세계올빼미' },
 ];
 
 
@@ -225,8 +225,8 @@ export const BADGES: LifeType.Badge[] = [
 	{ id: 'wrong_50', label: '오답 정복자', description: '오답 50개를 졸업시켰어요', requirement: '오답 50개 졸업', rarity: 'epic', icon: 'notebook-check-outline' },
 
 	// ── 펫·수집 ───────────────────────────────────────────────
-	{ id: 'pet_fed_10', label: '청룡 돌보기', description: '청룡 펫에게 먹이를 10개 줬어요', requirement: '펫 먹이 10개 주기', rarity: 'common', icon: 'food-drumstick' },
-	{ id: 'pet_fed_35', label: '황금 만리룡', description: '청룡 펫을 마지막 단계까지 키웠어요', requirement: '펫 먹이 35개 주기', rarity: 'legendary', icon: 'shield-crown' },
+	{ id: 'pet_fed_10', label: '올빼미 돌보기', description: '나침반 올빼미에게 먹이를 10개 줬어요', requirement: '펫 먹이 10개 주기', rarity: 'common', icon: 'food-drumstick' },
+	{ id: 'pet_fed_35', label: '황금 세계올빼미', description: '나침반 올빼미를 마지막 단계까지 키웠어요', requirement: '펫 먹이 35개 주기', rarity: 'legendary', icon: 'shield-crown' },
 
 	// ── 통계 화면에서 옮겨 온 뱃지 ────────────────────────────
 	// 통계 탭이 따로 들고 있던 뱃지 표(콤보 · 누적 점수 · 학습/퀴즈 구간)를 여기로 합쳤다.

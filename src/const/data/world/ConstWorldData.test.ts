@@ -19,6 +19,7 @@ import { buildCountryCodes, selectCountryCodes } from './ConstCountryCodes.ts';
 import { buildQuestion, buildQuestions, pick } from '../../../services/world/WorldQuizFactory.ts';
 import capital from './capital.json' with { type: 'json' };
 import landmark from './landmark.json' with { type: 'json' };
+import nature from './nature.json' with { type: 'json' };
 import figure from './figure.json' with { type: 'json' };
 import event from './event.json' with { type: 'json' };
 import myth from './myth.json' with { type: 'json' };
@@ -26,10 +27,12 @@ import space from './space.json' with { type: 'json' };
 import constellation from './constellation.json' with { type: 'json' };
 import worldcup from './worldcup.json' with { type: 'json' };
 import olympic from './olympic.json' with { type: 'json' };
+import winter from './winter.json' with { type: 'json' };
 
 const ENTRIES: Record<string, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
+	nature: nature as WorldType.Entry[],
 	figure: figure as WorldType.Entry[],
 	event: event as WorldType.Entry[],
 	myth: myth as WorldType.Entry[],
@@ -37,6 +40,7 @@ const ENTRIES: Record<string, WorldType.Entry[]> = {
 	constellation: constellation as WorldType.Entry[],
 	worldcup: worldcup as WorldType.Entry[],
 	olympic: olympic as WorldType.Entry[],
+	winter: winter as WorldType.Entry[],
 };
 
 /** 시드 고정 난수 — 돌릴 때마다 같은 문항이 나와야 실패를 재현할 수 있다 */
@@ -192,9 +196,10 @@ test('위키 그림을 쓰는 주제는 항목마다 쓸 만한 파일 이름을
 
 /**
  * 국기를 붙일 수 없는 나라 이름 — 여기 없는 이름이 새로 들어오면 국기가 조용히 빠진다.
- * 소련·독립국가연합·체코슬로바키아는 국기 파일이 아예 없고, 잉글랜드는 영국(유니언잭)과 깃발이 달라 gb 를 걸 수 없다.
+ * 소련·독립국가연합·체코슬로바키아·유고슬라비아·동독은 국기 파일이 아예 없고,
+ * 잉글랜드는 영국(유니언잭)과 깃발이 달라 gb 를 걸 수 없다.
  */
-const NO_FLAG = new Set(['소련', '독립국가연합', '체코슬로바키아', '잉글랜드']);
+const NO_FLAG = new Set(['소련', '독립국가연합', '체코슬로바키아', '잉글랜드', '유고슬라비아', '동독']);
 
 test('나라를 답으로 쓰는 값마다 국기를 찾을 수 있다', () => {
 	// answerAs: 'flag' 는 보기·사전 값 옆에 국기를 걸겠다는 약속이다. 이름이 대응표에 없으면 그 자리만 국기가 빠져

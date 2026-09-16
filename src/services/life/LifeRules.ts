@@ -159,7 +159,7 @@ export interface AttendancePetStatus {
 	level: number;
 }
 
-/** 누적 출석일 → 출석 보상 청룡 단계 */
+/** 누적 먹이 수 → 출석 보상 나침반 올빼미 단계 */
 export const attendancePetStatus = (feeds: number): AttendancePetStatus => {
 	let level = -1;
 	for (let at = 0; at < ATTENDANCE_PET_STAGES.length; at++) {
@@ -337,7 +337,7 @@ export interface BadgeSnapshot {
 	levelTotal: number;
 	/** 지금까지 맞힌 문제 수 (누적) */
 	totalCorrect: number;
-	/** 청룡 펫에게 준 먹이 수 */
+	/** 나침반 올빼미에게 준 먹이 수 */
 	petFedCount: number;
 	/** 오답을 하나 이상 졸업시킨 뒤 노트를 완전히 비웠는지 */
 	wrongCleared: boolean;

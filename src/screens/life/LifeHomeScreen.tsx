@@ -49,8 +49,8 @@ const greeting = () => {
 /** 펫을 누를 때마다 돌아가며 나오는 말 */
 const PET_SPEECH = ['오늘도 한 가지, 같이 해요!', '세계는 넓고 볼 것은 많아요', '조금씩 매일이 제일 빨라요', '출석 도장 잊지 마세요!'] as const;
 
-/** 출석 수호신(청룡)이 하는 말 — 사자와 같은 말풍선을 쓰므로 문장으로 누가 말하는지 알린다 */
-const DRAGON_SPEECH = ['청룡이에요. 먹이 주면 무럭무럭 자라요!', '출석 도장을 찍으면 먹이가 하나 생겨요', '나의 활동에서 저를 먹일 수 있어요', '같이 세계 한 바퀴 돌아요!'] as const;
+/** 나침반 올빼미가 하는 말 — 사자와 같은 말풍선을 쓰므로 문장으로 누가 말하는지 알린다 */
+const OWL_SPEECH = ['나침반 올빼미예요. 먹이를 주면 날개가 자라요!', '출석 도장을 찍으면 먹이가 하나 생겨요', '나의 활동에서 저를 먹일 수 있어요', '같이 세계 한 바퀴 날아봐요!'] as const;
 
 /**
  * 히어로 무대 높이 — 글방 배경과 캐릭터 줄이 같은 값을 쓴다.
@@ -216,7 +216,7 @@ const LifeHomeScreen = () => {
 
 	/**
 	 * 캐릭터를 누르면 말풍선이 잠깐 떴다 사라진다 (뛰어오르는 연출은 PetAvatar 가 스스로 한다).
-	 * 사자와 청룡이 말풍선 하나를 같이 쓴다 — 청룡 옆에 따로 띄우면 말풍선이 사자 머리를 덮었다.
+	 * 사자와 올빼미가 말풍선 하나를 같이 쓴다 — 올빼미 옆에 따로 띄우면 말풍선이 사자 머리를 덮었다.
 	 */
 	const speak = useCallback(
 		(lines: readonly string[]) => {
@@ -239,18 +239,18 @@ const LifeHomeScreen = () => {
 	};
 
 	/**
-	 * 청룡 누르기.
+	 * 나침반 올빼미 누르기.
 	 * 먹이를 들고 있으면 한마디 하는 것보다 먹이러 가는 편이 낫다 — 출석으로 받은 먹이가
 	 * 가방에만 쌓여 성장으로 이어지지 않던 고리를 여기서 잇는다.
 	 * 다 자랐거나 먹이가 없으면 예전처럼 한마디 한다.
 	 */
-	const onPressDragon = useCallback(() => {
+	const onPressOwl = useCallback(() => {
 		if (attendancePet.feeds > 0 && attendancePet.next) {
 			playPop();
 			router.push(`/${tabPath(Paths.PROFILE)}` as never);
 			return;
 		}
-		speak(DRAGON_SPEECH);
+		speak(OWL_SPEECH);
 	}, [attendancePet.feeds, attendancePet.next, speak]);
 
 	const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -323,7 +323,7 @@ const LifeHomeScreen = () => {
 						<View style={styles.heroDuo}>
 							<PetAvatar size={scaleWidth(112)} plate={false} onPress={onPressPet} />
 							<View style={styles.heroPetSlot} pointerEvents="box-none">
-								<FloatingPet pet={attendancePet} onPress={onPressDragon} />
+								<FloatingPet pet={attendancePet} onPress={onPressOwl} />
 							</View>
 						</View>
 						<Text style={styles.petHint}>역사 사자를 누르면 한마디 해요</Text>
@@ -520,10 +520,10 @@ const LifeHomeScreen = () => {
 };
 
 /**
- * 히어로 오른쪽에 서는 출석 보상 청룡.
+ * 히어로 오른쪽에 서는 출석 보상 나침반 올빼미.
  * -------------------------------------------------
  * 첫 출석 전에는 보이지 않고, 획득 뒤에는 현재 성장 단계 이미지가 그 자리에 선다.
- * 말풍선은 스스로 띄우지 않는다 — 청룡 위에 띄우면 사자 머리를 덮었다.
+ * 말풍선은 스스로 띄우지 않는다 — 올빼미 위에 띄우면 사자 머리를 덮었다.
  * 누르면 히어로 한가운데의 말풍선 하나가 대신 말한다 (onPress).
  */
 const FloatingPet = ({ pet, onPress }: { pet: ReturnType<typeof useAttendancePet>; onPress: () => void }) => {
@@ -547,7 +547,7 @@ const FloatingPet = ({ pet, onPress }: { pet: ReturnType<typeof useAttendancePet
 						: `${pet.stage.label}, 먹이 ${pet.fed}개 준 출석 수호신`
 				}>
 				<MascotImage source={pet.image} size={scaleWidth(66)} motion="float" shadow={false} />
-				{/* 안 준 먹이 — 출석으로 받은 먹이가 가방에 잠들지 않게 청룡 위에 직접 붙인다 */}
+				{/* 안 준 먹이 — 출석으로 받은 먹이가 가방에 잠들지 않게 올빼미 위에 직접 붙인다 */}
 				{waiting > 0 && (
 					<View style={styles.feedBadge} pointerEvents="none">
 						<IconComponent type="materialCommunityIcons" name="food-drumstick" size={scaleWidth(10)} color={Colors.brandBlockText} />
@@ -776,7 +776,7 @@ const createStyles = (Colors: Palette) =>
 
 		/** 출석 수호신 — 캐릭터 오른쪽에 나란히 선다 (말풍선은 자리를 차지하지 않게 위로 띄운다) */
 		floatWrap: { alignItems: 'center' },
-		// 안 준 먹이 배지 — 청룡 오른쪽 위에 걸쳐 붙는다. 히어로가 진한 파랑 면이라 테를 같은 면 색으로 둘러 떼어 낸다
+		// 안 준 먹이 배지 — 올빼미 오른쪽 위에 걸쳐 붙는다. 히어로가 진한 파랑 면이라 테를 같은 면 색으로 둘러 떼어 낸다
 		feedBadge: {
 			position: 'absolute',
 			top: scaleWidth(-2),

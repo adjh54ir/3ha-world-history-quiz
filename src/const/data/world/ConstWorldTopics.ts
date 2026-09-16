@@ -49,6 +49,25 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		],
 	},
 	{
+		key: 'nature',
+		label: '세계 지형',
+		description: '지도에서 찾는 강과 산, 사막과 호수',
+		icon: 'terrain',
+		color: 'successDark',
+		tint: 'secondaryBg',
+		groupBy: 'continent',
+		// 랜드마크와 경계를 나눈다 — 랜드마크는 사진으로 아는 그곳, 지형은 지도에서 찾는 것.
+		// 후지산·할롱베이처럼 사진으로 먼저 아는 자연물은 랜드마크에 두고 여기 또 넣지 않는다.
+		modes: [
+			{ key: 'continent', label: '어느 대륙', question: '이곳이 있는 대륙은?', ask: 'name', answer: 'continent' },
+			// 여러 나라에 걸친 것(나일강·알프스산맥)은 나라를 비워 둔다 — 그 항목은 이 문항이 안 나온다
+			{ key: 'country', label: '어느 나라', question: '이곳이 있는 나라는?', ask: 'name', answer: 'country', answerAs: 'flag' },
+			{ key: 'name', label: '설명 보고 맞히기', question: '설명에 맞는 곳은?', ask: 'summary', answer: 'name' },
+		],
+		// `kind`(강·산맥·사막)는 문제로 내지 않는다. 이름에 갈래가 이미 들어 있어
+		// '나일강은 무엇일까' 가 되어 버린다 (문제 생성기가 전부 걷어낸다). 오답을 가르는 데만 쓴다.
+	},
+	{
 		key: 'figure',
 		label: '세계 위인',
 		description: '세상을 바꾼 사람들, 언제 어디서 무엇을',
@@ -142,6 +161,20 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host', answerAs: 'flag' },
 			{ key: 'winner', label: '우승국', question: '이 대회의 우승국은?', ask: 'name', answer: 'winner', answerAs: 'flag' },
 			{ key: 'runnerUp', label: '준우승국', question: '이 대회의 준우승국은?', ask: 'name', answer: 'runnerUp', answerAs: 'flag' },
+		],
+	},
+	{
+		key: 'winter',
+		label: '동계 올림픽',
+		description: '눈과 얼음 위의 개최지와 1위',
+		icon: 'snowflake',
+		color: 'primaryDark',
+		tint: 'primarySoft',
+		modes: [
+			{ key: 'city', label: '개최 도시', question: '이 대회가 열린 도시는?', ask: 'name', answer: 'city' },
+			{ key: 'host', label: '개최국', question: '이 대회를 연 나라는?', ask: 'name', answer: 'host', answerAs: 'flag' },
+			// 1948·2014·2026 은 종합 1위를 비워 뒀다 (ConstWorldEntries 참고) — 그 세 회차는 이 문항이 안 나온다
+			{ key: 'top', label: '종합 1위', question: '이 대회에서 금메달을 가장 많이 딴 나라는?', ask: 'name', answer: 'top', answerAs: 'flag' },
 		],
 	},
 	{

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -18,6 +19,8 @@ import type { WorldType } from '@/src/types/data/WorldType';
 import { Paths } from '@/src/navigation/conf/Paths';
 import { playPop } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight } from '@/src/utils';
+
+const TOWER_MASCOT = require('@/src/assets/illustrations/lion-tower-challenge-hero.webp');
 
 /** 난이도가 바뀌는 구간 — 세 층마다 한 단계 올라간다 */
 const BANDS = [
@@ -58,9 +61,7 @@ const WorldTowerScreen = () => {
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>{button}</View>
-						<View style={styles.heroBadge}>
-							<IconComponent type="materialcommunityicons" name="stairs-up" size={34} color={Colors.textInverse} />
-						</View>
+						<Image source={TOWER_MASCOT} style={styles.heroMascot} contentFit="contain" accessible={false} />
 						<Text style={styles.heroTitle}>타워 챌린지</Text>
 						<Text style={styles.heroSub}>{best > 0 ? `지금까지 ${best}층까지 올랐어요` : '한 층씩 올라가 어디까지 갈 수 있는지 겨뤄요'}</Text>
 					</View>
@@ -128,15 +129,7 @@ const createStyles = (Colors: Palette) =>
 		hero: { alignItems: 'center', gap: SpacingV.xs, paddingVertical: SpacingV.lg },
 		// 안내 버튼은 히어로 오른쪽 위 — 가운데 정렬된 배지·제목의 흐름을 건드리지 않는다
 		heroTop: { alignSelf: 'flex-end' },
-		heroBadge: {
-			width: scaledSize(76),
-			height: scaledSize(76),
-			borderRadius: Radius.pill,
-			alignItems: 'center',
-			justifyContent: 'center',
-			backgroundColor: Colors.primary,
-			marginBottom: SpacingV.xs,
-		},
+		heroMascot: { width: scaledSize(164), height: scaledSize(164) },
 		heroTitle: { fontSize: Typography.h1, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		heroSub: { fontSize: Typography.bodySm, color: Colors.textSecondary, textAlign: 'center' },
 

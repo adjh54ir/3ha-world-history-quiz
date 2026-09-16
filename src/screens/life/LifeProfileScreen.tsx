@@ -135,7 +135,7 @@ const LifeProfileScreen = () => {
 					</View>
 
 					{/*
-					 * 펫 — 청룡은 "먹이를 준 수" 로만 자란다. 출석은 그 먹이가 들어오는 경로 중 하나일 뿐이다.
+					 * 펫 — 나침반 올빼미는 "먹이를 준 수" 로만 자란다. 출석은 그 먹이가 들어오는 경로 중 하나일 뿐이다.
 					 * 그래서 카드 제목도 '출석' 이 아니라 '펫' 이고, 눈금도 날짜가 아니라 먹이로 센다.
 					 * 주간 출석 줄은 통계 탭과 겹쳐 여기서 내렸다.
 					 */}
@@ -168,12 +168,12 @@ const LifeProfileScreen = () => {
 								)}
 							</View>
 							<View style={styles.attendancePetBody}>
-								<Text style={styles.attendancePetEyebrow}>청룡 · 먹이로 자라요</Text>
+								<Text style={styles.attendancePetEyebrow}>나침반 올빼미 · 먹이로 자라요</Text>
 								<Text style={styles.attendancePetName}>{attendancePet.stage?.label ?? '아직 알이 없어요'}</Text>
 								<Text style={styles.attendancePetHint}>
 									{attendancePet.next
 										? `${attendancePet.next.label}까지 먹이 ${attendancePet.next.minFeeds - attendancePet.fed}개 남았어요`
-										: '먹이 35개를 다 준 최종 진화 황금 천자룡이에요'}
+										: '먹이 35개를 다 준 최종 진화 황금 세계올빼미예요'}
 								</Text>
 								<ProgressBar ratio={attendancePet.ratio} />
 								{/* 먹이를 줘야 단계가 오른다 — 버튼을 성장 칸 바로 아래에 붙여 원인과 결과가 한눈에 보이게 한다 */}
@@ -319,7 +319,7 @@ const LifeProfileScreen = () => {
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
 			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
 				'맨 위에서 출석과 학습 보상을 한눈에 봐요.',
-				'청룡 펫은 먹이를 줄 때마다 자라요. 먹이 주기 버튼을 눌러 보세요.',
+				'나침반 올빼미는 먹이를 줄 때마다 자라요. 먹이 주기 버튼을 눌러 보세요.',
 				'뱃지는 딴 것부터 진열되고, 전체 목록은 눌러서 펼쳐 봐요.',
 			]} />
 		</SafeAreaView>
@@ -431,7 +431,7 @@ const createStyles = (Colors: Palette) =>
 			backgroundColor: Colors.surfaceAlt,
 		},
 		attendancePetEmptyText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.textMuted },
-		// 청룡이 서는 자리 — 좌대를 발밑에 깔기 위해 한 겹 감싼다
+		// 올빼미가 서는 자리 — 좌대를 발밑에 깔기 위해 한 겹 감싼다
 		attendancePetStage: { alignItems: 'center', justifyContent: 'flex-end' },
 		attendancePetPerch: { position: 'absolute', left: 0, right: 0, bottom: scaleHeight(2), alignItems: 'center' },
 		feedButton: {
