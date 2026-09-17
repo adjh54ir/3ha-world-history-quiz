@@ -25,6 +25,8 @@ Use case: identity-preserve. Create one production mobile game illustration usin
 | `lion-time-challenge-complete.webp` | Holding a gold stopwatch and small trophy, energetic time-challenge victory. |
 | `lion-time-challenge-hero.webp` | Sprinting toward the viewer with a gold stopwatch and navy history book, broken clock ring and blue speed streaks. |
 | `lion-tower-challenge-hero.webp` | Leaping upward across three perspective stone steps toward a gold compass crown, rolled map in one paw. |
+| `lion-topics-hero.webp` | Inviting the learner forward with an unfurled antique world map and a gold compass, compact horizontal silhouette. |
+| `lion-stats-progress.webp` | Reviewing progress with a navy explorer journal and a small gold star medal, warm quietly proud expression. |
 | `lion-wrong-review-hero.webp` | Sitting with a large open notebook and pencil, focused review pose, blank pages. |
 | `lion-wrong.webp` | Holding a small open notebook and pencil, mildly puzzled but motivated expression. |
 

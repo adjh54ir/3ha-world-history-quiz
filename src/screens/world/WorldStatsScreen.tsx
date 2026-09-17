@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { useWorldGuide } from './common/WorldGuide';
@@ -11,6 +12,8 @@ import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { useCategoryProgress, useLife, useStreak } from '@/src/hooks/useLife';
 import { scaledSize, scaleHeight } from '@/src/utils';
+
+const STATS_HERO = require('@/src/assets/illustrations/lion-stats-progress.webp');
 
 /**
  * 통계 — 지금까지 쌓인 것을 한 화면에.
@@ -24,7 +27,7 @@ const WorldStatsScreen = () => {
 	const enterStyle = useScreenEnter();
 	const life = useLife();
 	const progress = useCategoryProgress();
-	const streak = useStreak();
+	const { streak } = useStreak();
 	const { button, guide } = useWorldGuide('world-stats', [
 		'지금까지 쌓인 학습·퀴즈·출석 기록을 한 화면에서 봐요.',
 		'이번 주 카드는 지난주와 견줘 얼마나 늘었는지 보여 줘요.',
@@ -59,6 +62,20 @@ const WorldStatsScreen = () => {
 		{ icon: 'stairs-up', label: '타워 최고', value: `${life.bestTower ?? 0}`, sub: '층' },
 	];
 
+	const progressHero = useMemo(() => {
+		if (summary.percent >= 100) {
+			return { title: '세계 지도를 완성했어요!', body: '모든 주제를 익힌 멋진 탐험 기록이에요.' };
+		}
+		if (streak >= 3) {
+			return { title: `${streak}일째 이어가는 중`, body: '꾸준한 탐험이 세계 지식으로 쌓이고 있어요.' };
+		}
+		if (summary.learned === 0 && summary.plays === 0) {
+			return { title: '첫 기록을 만들어 볼까요?', body: '학습이나 퀴즈를 시작하면 성장 기록이 여기에 쌓여요.' };
+		}
+		const milestone = [75, 50, 25].find((value) => summary.percent >= value && summary.percent < value + 5);
+		return milestone ? { title: `전체 진도 ${milestone}% 돌파`, body: '탐험 일지가 차근차근 채워지고 있어요.' } : null;
+	}, [streak, summary.learned, summary.percent, summary.plays]);
+
 	return (
 		<SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
@@ -74,6 +91,16 @@ const WorldStatsScreen = () => {
 					<View style={styles.track}>
 						<View style={[styles.fill, { width: `${summary.percent}%` }]} />
 					</View>
+
+					{progressHero ? (
+						<View style={styles.progressHero}>
+							<View style={styles.progressHeroCopy}>
+								<Text style={styles.progressHeroTitle}>{progressHero.title}</Text>
+								<Text style={styles.progressHeroBody}>{progressHero.body}</Text>
+							</View>
+							<Image source={STATS_HERO} style={styles.progressHeroImage} contentFit="contain" accessible={false} />
+						</View>
+					) : null}
 
 					<View style={styles.tiles}>
 						{tiles.map((tile) => (
@@ -145,6 +172,24 @@ const createStyles = (Colors: Palette) =>
 		subtitle: { fontSize: Typography.bodySm, color: Colors.textSecondary },
 		track: { height: scaleHeight(8), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
 		fill: { height: '100%', borderRadius: Radius.pill, backgroundColor: Colors.primary },
+		progressHero: {
+			minHeight: scaleHeight(104),
+			flexDirection: 'row',
+			alignItems: 'center',
+			gap: Spacing.sm,
+			paddingLeft: Spacing.lg,
+			paddingVertical: SpacingV.sm,
+			paddingRight: Spacing.sm,
+			borderTopWidth: scaledSize(2),
+			borderTopColor: Colors.warning,
+			borderRadius: Radius.xl,
+			backgroundColor: Colors.primaryBg,
+			overflow: 'hidden',
+		},
+		progressHeroCopy: { flex: 1, gap: SpacingV.xs },
+		progressHeroTitle: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textStrong },
+		progressHeroBody: { fontSize: Typography.footnote, lineHeight: scaledSize(17), color: Colors.textSecondary },
+		progressHeroImage: { width: scaledSize(96), height: scaledSize(96), flexShrink: 0 },
 
 		tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
 		tile: {

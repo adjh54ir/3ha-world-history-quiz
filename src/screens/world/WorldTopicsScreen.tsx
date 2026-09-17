@@ -22,6 +22,7 @@ import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 const PREVIEW_COUNT = 3;
 /** 미리보기 칸이 작다 — 받아 오는 그림(위인 초상)도 그 크기로만 받는다 */
 const PREVIEW_WIDTH = 160;
+const TOPICS_HERO = require('@/src/assets/illustrations/lion-topics-hero.webp');
 
 /**
  * 세계 상식 — 주제 고르기.
@@ -86,6 +87,14 @@ const WorldTopicsScreen = () => {
 						{button}
 					</View>
 
+					<View style={styles.heroBanner}>
+						<View style={styles.heroCopy}>
+							<Text style={styles.heroTitle}>어디부터 탐험할까요?</Text>
+							<Text style={styles.heroBody}>마음에 드는 주제를 골라 세계 지식을 펼쳐 보세요.</Text>
+						</View>
+						<Image source={TOPICS_HERO} style={styles.heroImage} contentFit="contain" accessible={false} />
+					</View>
+
 					<View style={styles.grid}>
 						{counts.map(({ topic, count, previews }) => (
 							<View key={topic.key} style={[styles.card, { backgroundColor: Colors.surface }]}>
@@ -148,6 +157,24 @@ const createStyles = (Colors: Palette) =>
 		headerText: { flex: 1, gap: SpacingV.xs },
 		title: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		subtitle: { fontSize: Typography.bodySm, color: Colors.textSecondary },
+		heroBanner: {
+			minHeight: scaleHeight(120),
+			flexDirection: 'row',
+			alignItems: 'center',
+			gap: Spacing.sm,
+			paddingLeft: Spacing.lg,
+			paddingVertical: SpacingV.sm,
+			paddingRight: Spacing.sm,
+			borderTopWidth: scaledSize(3),
+			borderTopColor: Colors.primary,
+			borderRadius: Radius.xl,
+			backgroundColor: Colors.primaryBg,
+			overflow: 'hidden',
+		},
+		heroCopy: { flex: 1, gap: SpacingV.xs },
+		heroTitle: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textStrong },
+		heroBody: { fontSize: Typography.bodySm, lineHeight: scaledSize(19), color: Colors.textSecondary },
+		heroImage: { width: scaledSize(128), height: scaledSize(104), flexShrink: 0 },
 
 		// 한 줄에 두 칸 — 더 좁히면 주제 이름이 두 줄로 접힌다
 		grid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.md },
