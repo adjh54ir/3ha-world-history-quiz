@@ -73,5 +73,19 @@ target 'WorldHistoryQuiz' do
       :mac_catalyst_enabled => false,
       :ccache_enabled => ccache_enabled?(podfile_properties),
     )
+
+    # Xcode 26 은 iOS 15.0 미만 배포 타겟을 경고로 띄운다.
+    # 일부 Pod(및 리소스 번들 타겟)이 9.0~13.4 로 고정돼 있어 앱 배포 타겟으로 맞춰준다.
+    min_target = podfile_properties['ios.deploymentTarget'] || '15.1'
+    (installer.generated_projects + [installer.pods_project]).compact.uniq.each do |project|
+      project.targets.each do |target|
+        target.build_configurations.each do |build_config|
+          current = build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+          if current.nil? || Gem::Version.new(current) < Gem::Version.new(min_target)
+            build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_target
+          end
+        end
+      end
+    end
   end
 end
