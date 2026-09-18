@@ -18,7 +18,7 @@ ENV['EX_DEV_CLIENT_NETWORK_INSPECTOR'] ||= podfile_properties['EX_DEV_CLIENT_NET
 ENV['RCT_USE_RN_DEP'] ||= '1' if podfile_properties['ios.buildReactNativeFromSource'] != 'true'
 ENV['RCT_USE_PREBUILT_RNCORE'] ||= '1' if podfile_properties['ios.buildReactNativeFromSource'] != 'true'
 ENV['RCT_HERMES_V1_ENABLED'] ||= '1' if podfile_properties['expo.useHermesV1'] == 'true'
-platform :ios, podfile_properties['ios.deploymentTarget'] || '15.1'
+platform :ios, podfile_properties['ios.deploymentTarget'] || '16.0'
 
 prepare_react_native_project!
 
@@ -74,9 +74,9 @@ target 'WorldHistoryQuiz' do
       :ccache_enabled => ccache_enabled?(podfile_properties),
     )
 
-    # Xcode 26 은 iOS 15.0 미만 배포 타겟을 경고로 띄운다.
+    # Xcode 26 은 iOS 15.0 미만 배포 타겟을 경고로 띄운다. (앱 배포 타겟은 16.0)
     # 일부 Pod(및 리소스 번들 타겟)이 9.0~13.4 로 고정돼 있어 앱 배포 타겟으로 맞춰준다.
-    min_target = podfile_properties['ios.deploymentTarget'] || '15.1'
+    min_target = podfile_properties['ios.deploymentTarget'] || '16.0'
     (installer.generated_projects + [installer.pods_project]).compact.uniq.each do |project|
       project.targets.each do |target|
         target.build_configurations.each do |build_config|
