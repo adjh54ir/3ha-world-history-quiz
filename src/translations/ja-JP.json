@@ -1,0 +1,1328 @@
+{
+	"main": {
+		"apps": {
+			"category": {
+				"all": "すべて",
+				"calculator": "電卓",
+				"quiz": "クイズ",
+				"utility": "ユーティリティ"
+			},
+			"comingSoon": "Coming Soon!",
+			"count": "{{n}}件のアプリ",
+			"download": "入手",
+			"empty": "検索結果がありません",
+			"linkError": "リンクを開く途中で問題が発生しました。",
+			"linkOpenFailed": "リンクを開けませんでした。",
+			"linkUnavailable": "ストアのリンクはまだ準備中です。",
+			"searchPlaceholder": "アプリを検索...",
+			"title": "📱 制作者の他のアプリ"
+		},
+		"badge": {
+			"alsoEarned": "同時獲得 +{{n}}",
+			"attend_100": {
+				"description": "のべ100日出席しました",
+				"label": "百の朝",
+				"requirement": "累計出席100日"
+			},
+			"attend_200": {
+				"description": "のべ200日出席しました",
+				"label": "二百の朝",
+				"requirement": "累計出席200日"
+			},
+			"attend_50": {
+				"description": "のべ50日出席しました",
+				"label": "五十の朝",
+				"requirement": "累計出席50日"
+			},
+			"autoGrant": "条件を満たすと自動で入ります",
+			"category_3": {
+				"description": "分野を3つ学習しきりました",
+				"label": "三分野制覇",
+				"requirement": "分野を3つすべて学習"
+			},
+			"category_all": {
+				"description": "すべてのテーマの項目を学習しました",
+				"label": "全分野制覇",
+				"requirement": "すべての分野を学習"
+			},
+			"category_master": {
+				"description": "カテゴリをひとつ学習しきりました",
+				"label": "一分野制覇",
+				"requirement": "ひとつのテーマの項目をすべて学習"
+			},
+			"combo_10": {
+				"description": "1回で10連続正解しました",
+				"label": "コンボマスター",
+				"requirement": "1回で10連続正解"
+			},
+			"combo_15": {
+				"description": "1回で15連続正解しました",
+				"label": "燃える集中",
+				"requirement": "1回で15連続正解"
+			},
+			"combo_20": {
+				"description": "1回で20連続正解しました",
+				"label": "コンボの達人",
+				"requirement": "1回で20連続正解"
+			},
+			"combo_30": {
+				"description": "1回で30連続正解しました",
+				"label": "無欠の30連打",
+				"requirement": "1回で30連続正解"
+			},
+			"combo_5": {
+				"description": "1回で5連続正解しました",
+				"label": "5連続正解",
+				"requirement": "1回で5連続正解"
+			},
+			"conditionLabel": "「{{name}}」バッジの条件を見る",
+			"correct_100": {
+				"description": "問題を通算100問正解しました",
+				"label": "百の正解",
+				"requirement": "累計正解100問"
+			},
+			"correct_2000": {
+				"description": "問題を通算2,000問正解しました",
+				"label": "二千の正解",
+				"requirement": "累計正解2,000問"
+			},
+			"correct_500": {
+				"description": "問題を通算500問正解しました",
+				"label": "五百の正解",
+				"requirement": "累計正解500問"
+			},
+			"daily_100": {
+				"description": "今日のクイズを100回終えました",
+				"label": "百日の問題",
+				"requirement": "今日のクイズを100回完了"
+			},
+			"daily_30": {
+				"description": "今日のクイズを30回終えました",
+				"label": "一か月の一日",
+				"requirement": "今日のクイズを30回完了"
+			},
+			"daily_7": {
+				"description": "今日のクイズを7回終えました",
+				"label": "こつこつ",
+				"requirement": "今日のクイズを7回完了"
+			},
+			"detailLabel": "「{{name}}」バッジの詳細を見る",
+			"earnedOn": "獲得した日",
+			"exp_20000": {
+				"description": "経験値を20,000集めました",
+				"label": "大探検家の道",
+				"requirement": "累計20,000EXP達成"
+			},
+			"exp_5000": {
+				"description": "経験値を5,000集めました",
+				"label": "経験の重み",
+				"requirement": "累計5,000EXP達成"
+			},
+			"fast_100": {
+				"description": "3秒以内の正解を100問出しました",
+				"label": "いなずまの腕",
+				"requirement": "3秒以内の正解100問"
+			},
+			"fast_30": {
+				"description": "3秒以内の正解を30問出しました",
+				"label": "電光石火",
+				"requirement": "3秒以内の正解30問"
+			},
+			"favorite_20": {
+				"description": "項目20件に星印をつけました",
+				"label": "星印コレクター",
+				"requirement": "事典でお気に入り20件"
+			},
+			"first_quiz": {
+				"description": "はじめてクイズを解きました",
+				"label": "挑戦者",
+				"requirement": "クイズを1回完了"
+			},
+			"first_study": {
+				"description": "はじめて項目を学習しました",
+				"label": "はじめの一歩",
+				"requirement": "項目を1件学習"
+			},
+			"learn_10": {
+				"description": "項目を10件学習しました",
+				"label": "十項目",
+				"requirement": "項目を10件学習"
+			},
+			"learn_100": {
+				"description": "項目を100件学習しました",
+				"label": "常識博士",
+				"requirement": "項目を100件学習"
+			},
+			"learn_200": {
+				"description": "項目を200件学習しました",
+				"label": "二百項目",
+				"requirement": "項目を200件学習"
+			},
+			"learn_30": {
+				"description": "項目を30件学習しました",
+				"label": "項目コレクター",
+				"requirement": "項目を30件学習"
+			},
+			"learn_300": {
+				"description": "項目を300件学習しました",
+				"label": "常識の達人",
+				"requirement": "項目を300件学習"
+			},
+			"learn_50": {
+				"description": "項目を50件学習しました",
+				"label": "五十項目",
+				"requirement": "項目を50件学習"
+			},
+			"learn_500": {
+				"description": "項目を500件学習しました",
+				"label": "五百項目",
+				"requirement": "項目を500件学習"
+			},
+			"level_1": {
+				"description": "ひとつの難易度の項目をすべて学習しました",
+				"label": "一級制覇",
+				"requirement": "ひとつの難易度の項目をすべて学習"
+			},
+			"level_all": {
+				"description": "初級から特級まですべて学習しました",
+				"label": "全級制覇",
+				"requirement": "すべての難易度の項目を学習"
+			},
+			"mission_7": {
+				"description": "今日のミッションを7回すべて達成しました",
+				"label": "ミッション完遂者",
+				"requirement": "今日のミッションを7日すべて達成"
+			},
+			"notYet": "まだ獲得していないバッジ",
+			"owned": "バッジ {{owned}} / {{total}}",
+			"perfect_quiz": {
+				"description": "クイズで満点をとりました",
+				"label": "完璧主義",
+				"requirement": "クイズ1回で満点"
+			},
+			"pet_fed_10": {
+				"description": "コンパスフクロウにエサを10回あげました",
+				"label": "フクロウのお世話",
+				"requirement": "ペットにエサを10回あげる"
+			},
+			"pet_fed_35": {
+				"description": "コンパスフクロウを最終段階まで育てました",
+				"label": "黄金の世界フクロウ",
+				"requirement": "ペットにエサを35回あげる"
+			},
+			"quiz_10": {
+				"description": "クイズを10回解きました",
+				"label": "十回",
+				"requirement": "クイズを10回完了"
+			},
+			"quiz_100": {
+				"description": "クイズを100回解きました",
+				"label": "百回の勝負",
+				"requirement": "クイズを100回完了"
+			},
+			"quiz_200": {
+				"description": "クイズを200回解きました",
+				"label": "百戦錬磨",
+				"requirement": "クイズを200回完了"
+			},
+			"quiz_50": {
+				"description": "クイズを50回解きました",
+				"label": "クイズ常連",
+				"requirement": "クイズを50回完了"
+			},
+			"quiz_500": {
+				"description": "クイズを500回解きました",
+				"label": "五百回の伝説",
+				"requirement": "クイズを500回完了"
+			},
+			"rarity": {
+				"common": "ノーマル",
+				"epic": "エピック",
+				"legendary": "レジェンド",
+				"rare": "レア"
+			},
+			"requirementLabel": "獲得条件",
+			"star_30": {
+				"description": "カテゴリの星を30個集めました",
+				"label": "星コレクター",
+				"requirement": "分野の星を30個集める"
+			},
+			"star_60": {
+				"description": "カテゴリの星を60個集めました",
+				"label": "星の庭",
+				"requirement": "分野の星を60個集める"
+			},
+			"streak_14": {
+				"description": "14日連続で出席しました",
+				"label": "2週間皆勤",
+				"requirement": "14日連続で出席"
+			},
+			"streak_3": {
+				"description": "3日連続で出席しました",
+				"label": "3日連続",
+				"requirement": "3日連続で出席"
+			},
+			"streak_30": {
+				"description": "30日連続で出席しました",
+				"label": "一か月皆勤",
+				"requirement": "30日連続で出席"
+			},
+			"streak_7": {
+				"description": "7日連続で出席しました",
+				"label": "一週間皆勤",
+				"requirement": "7日連続で出席"
+			},
+			"time_20": {
+				"description": "タイムチャレンジで20点を超えました",
+				"label": "いなずまの手",
+				"requirement": "タイムチャレンジで20点達成"
+			},
+			"time_40": {
+				"description": "タイムチャレンジで40点を超えました",
+				"label": "時間の支配者",
+				"requirement": "タイムチャレンジで40点達成"
+			},
+			"tower_10": {
+				"description": "タワーチャレンジ10階に到達しました",
+				"label": "塔の登山家",
+				"requirement": "タワーチャレンジ10階に到達"
+			},
+			"tower_20": {
+				"description": "タワーチャレンジ20階に到達しました",
+				"label": "塔の主",
+				"requirement": "タワーチャレンジ20階に到達"
+			},
+			"tower_5": {
+				"description": "タワーチャレンジ5階に到達しました",
+				"label": "はじめての登り",
+				"requirement": "タワーチャレンジ5階に到達"
+			},
+			"unlockConfirm": "受け取る",
+			"unlockTitle": "新しいバッジを獲得しました！",
+			"wrong_10": {
+				"description": "不正解を10問卒業させました",
+				"label": "復習の力",
+				"requirement": "不正解を10問卒業"
+			},
+			"wrong_50": {
+				"description": "不正解を50問卒業させました",
+				"label": "不正解の征服者",
+				"requirement": "不正解を50問卒業"
+			},
+			"wrong_clear": {
+				"description": "不正解をすべて卒業させてノートを空にしました",
+				"label": "まっさらな復習ノート",
+				"requirement": "復習ノートを一度すべて空にする"
+			}
+		},
+		"calendar": {
+			"dayLong": {
+				"fri": "金曜日",
+				"mon": "月曜日",
+				"sat": "土曜日",
+				"sun": "日曜日",
+				"thu": "木曜日",
+				"tue": "火曜日",
+				"wed": "水曜日"
+			},
+			"month": {
+				"1": "1月",
+				"10": "10月",
+				"11": "11月",
+				"12": "12月",
+				"2": "2月",
+				"3": "3月",
+				"4": "4月",
+				"5": "5月",
+				"6": "6月",
+				"7": "7月",
+				"8": "8月",
+				"9": "9月"
+			},
+			"today": "今日"
+		},
+		"checkin": {
+			"arrowHint": "左右の矢印を押して出席を確認してみてください！",
+			"claim": "出席して報酬を受け取る",
+			"claimWithFeeds": "出席して報酬を受け取る · エサ{{n}}個",
+			"cycle": "{{days}}日ごとに特別報酬",
+			"cycleNote": "7日 +3 · 14日 +4 · 21日 +5 · 28日 +6個をまとめてもらえます",
+			"cycleRest": "特別出席まであと{{days}}日",
+			"cycleStart": "今日からスタート！",
+			"doneBanner": "今日の出席完了！",
+			"doneToday": "今日も出席完了！",
+			"feedNote": "ペットはエサを食べて育ちます。エサやりは「アクティビティ」から",
+			"got": "ペットのエサ{{n}}個をもらいました",
+			"held": "手持ちのエサ {{n}}個",
+			"hero": "毎日ひらくとキャラクターが出席スタンプを押してペットのエサを用意してくれます！",
+			"petLabel": "コンパスフクロウのペット",
+			"rewardTitle": "今日の出席報酬",
+			"seeTomorrow": "また明日",
+			"specialNow": "{{days}}日目の特別出席 · エサ{{n}}個",
+			"specialTitle": "{{days}}日目の特別出席",
+			"streakNow": "{{days}}日連続出席中",
+			"title": "今日の出席",
+			"willGet": "出席するとペットのエサ{{n}}個",
+			"yearMonth": "{{year}}年{{month}}月"
+		},
+		"common": {
+			"appName": "世界常識クイズ",
+			"back": "戻る",
+			"cancel": "キャンセル",
+			"close": "閉じる",
+			"confirm": "確認",
+			"countUnit": "{{n}}件",
+			"dateLong": "{{year}}年{{month}}月{{day}}日",
+			"delete": "削除",
+			"done": "完了",
+			"error": "エラー",
+			"goBack": "戻る",
+			"leave": "やめる",
+			"meridiem": {
+				"am": "午前",
+				"pm": "午後"
+			},
+			"new": "NEW",
+			"next": "次へ",
+			"retry": "再試行",
+			"scrollTop": "いちばん上へ",
+			"tenThousand": "{{n}}万",
+			"thousand": "{{n}}千",
+			"timeFormat": "{{meridiem}} {{time}}"
+		},
+		"entry": {
+			"close": "閉じる",
+			"favLabel": "{{name}} をお気に入り"
+		},
+		"error": {
+			"body": "記録はそのまま保存されています。下を押して開き直してください。",
+			"retry": "再試行",
+			"title": "少し問題が起きました"
+		},
+		"exitQuiz": {
+			"body": "進行中の内容は保存されません。",
+			"title": "クイズを終了しますか？"
+		},
+		"grade": {
+			"atTop": "最終段階「{{stage}}」に到達しました",
+			"convertCards": "学習カード {{n}}枚",
+			"convertNote": "クイズ1回{{perQuiz}}問を全問正解した場合の目安です（正解{{corrects}}問 · 1問{{correctExp}}EXP · カード1枚{{cardExp}}EXP）",
+			"convertOr": "または",
+			"convertQuiz": "クイズ {{n}}回",
+			"exp": {
+				"attendance": {
+					"label": "出席チェック",
+					"note": "連続出席ボーナスが加わります"
+				},
+				"correct": {
+					"label": "クイズの正解1問",
+					"note": "タワー・タイムチャレンジも同じです"
+				},
+				"daily": {
+					"label": "今日のクイズを完了",
+					"note": "5問すべて解くと追加で"
+				},
+				"learnWord": {
+					"label": "項目を1つ学習完了",
+					"note": "はじめて覚えたときだけ数えます"
+				},
+				"mission": {
+					"label": "今日のミッションをすべて達成",
+					"note": ""
+				}
+			},
+			"got": "獲得",
+			"guide": {
+				"line1": "経験値を集めると歴史ライオンが次の段階に育ちます。",
+				"line2": "学習・クイズ・出席・チャレンジ、すべてが経験値になります。",
+				"line3": "経験値は減らないので、ランクが下がることはありません。"
+			},
+			"howFootnote": "経験値は貯まる一方なので、ランクが下がることはありません。",
+			"howSection": "経験値の集め方",
+			"levelChip": "Lv.{{level}} · 全{{total}}段階",
+			"now": "現在",
+			"peek": "プレビュー",
+			"peekLabel": "{{stage}}のプレビュー",
+			"preview": {
+				"hint": "クイズ{{quizzes}}回（正解{{corrects}}問）または学習カード{{cards}}枚で到達します",
+				"remain": "あと{{exp}}EXPで出会えます"
+			},
+			"stageFrom": "{{exp}}EXPから",
+			"stageSection": "成長段階 全{{total}}段階",
+			"stageStart": "最初の段階",
+			"subtitle": "経験値を集めて歴史ライオンを育てます",
+			"title": "ランク",
+			"toNext": "{{stage}}まであと{{exp}}EXP",
+			"total": "これまでに集めた経験値 {{exp}}EXP"
+		},
+		"guide": {
+			"eyebrow": "こう使ってみてください",
+			"gotIt": "わかりました",
+			"gotItFormal": "わかりました",
+			"next": "次へ",
+			"nextTip": "次の案内を見る",
+			"reopen": "この画面の使い方をもう一度見る",
+			"toNext": "次の案内へ"
+		},
+		"heatmap": {
+			"day": {
+				"fri": "金",
+				"mon": "月",
+				"sat": "土",
+				"sun": "日",
+				"thu": "木",
+				"tue": "火",
+				"wed": "水"
+			},
+			"from": "{{date}} から",
+			"recent": "直近{{weeks}}週 · {{days}}日",
+			"title": "出席の記録"
+		},
+		"home": {
+			"atTop": "最終段階に到達しました",
+			"attendance": "出席",
+			"attendanceDays": "{{days}}日出席",
+			"badgeCount": "{{owned}} / {{total}}",
+			"badges": "バッジ",
+			"checkInAction": "出席チェック  +{{exp}}EXP",
+			"checkInDone": "今日の出席は完了",
+			"checkInLabel": "出席チェック、経験値 {{exp}}",
+			"checkedIn": "出席完了！ +{{exp}}EXP · ペットのエサ {{feeds}}個",
+			"checkedInSpecial": "{{days}}日目の特別出席！エサを{{feeds}}個もらいました",
+			"checkedInStreak": "{{days}}日連続で出席中です",
+			"greet": {
+				"afternoon": "午後も一歩ずつ、ひとつずつ",
+				"evening": "一日の終わりに世界を一周",
+				"morning": "おはようございます！今日のクイズから始めましょう",
+				"night": "夜ふかし中、もう1問どうですか？"
+			},
+			"guardianFed": "{{stage}}、エサを{{n}}個あげた出席の守護神",
+			"guardianWaiting": "{{stage}}、まだあげていないエサ{{n}}個。押すとあげに行けます",
+			"guide": {
+				"line1": "ホームは一日を始める場所です。出席スタンプで経験値とペットのエサがもらえます。",
+				"line2": "ライオンを押すと一言しゃべり、学習するほど段階が上がります。",
+				"line3": "下のカードから学習・クイズ・チャレンジにすぐ入れます。"
+			},
+			"petHint": "歴史ライオンを押すと一言しゃべります",
+			"petTalk": {
+				"1": "いっしょに世界を一周しましょう！",
+				"2": "アクティビティで私にエサをあげられます",
+				"3": "コンパスフクロウです。エサをもらうと翼が育ちます！",
+				"4": "出席スタンプを押すとエサが1つ手に入ります"
+			},
+			"quizStart": {
+				"desc": "首都・国旗・神話・星座までテーマを選んで解きます",
+				"title": "クイズを始める"
+			},
+			"review": {
+				"empty": "復習ノートはきれいです。クイズを解くとここに集まります",
+				"title": "不正解の復習",
+				"waiting": "不正解が{{n}}問待っています。2回正解で卒業！"
+			},
+			"sectionChallenge": "挑戦する",
+			"sectionLearn": "学ぶ",
+			"sectionRecords": "記録を見る",
+			"seeTomorrow": "また明日！",
+			"streakChip": "{{days}}日連続出席",
+			"streakStart": "今日出席してストリークを始めましょう",
+			"studyMode": {
+				"desc": "カードで1枚ずつ、ショートでさっと — 好きな方で覚えます",
+				"title": "学習モード"
+			},
+			"time": {
+				"best": "最高 {{score}}点 · 今日、記録を超えますか？",
+				"desc": "{{sec}}秒でできるだけ多く正解しましょう",
+				"title": "タイムチャレンジ"
+			},
+			"tip": {
+				"1": "世界は広く、見るものはたくさん",
+				"2": "今日もひとつ、いっしょにやりましょう！",
+				"3": "少しずつ毎日がいちばん速い",
+				"4": "出席スタンプをお忘れなく！"
+			},
+			"toNext": "次の段階まで {{exp}}EXP",
+			"tower": {
+				"best": "最高 {{floor}}階 · もっと高く登りますか？",
+				"desc": "ライフ{{lives}}個で1階ずつ登ります",
+				"title": "タワーチャレンジ"
+			}
+		},
+		"level": {
+			"1": {
+				"desc": "だれもが毎日使う知識",
+				"label": "初級"
+			},
+			"2": {
+				"desc": "日常でよく出会う知識",
+				"label": "中級"
+			},
+			"3": {
+				"desc": "ニュースや仕事で使う知識",
+				"label": "上級"
+			},
+			"4": {
+				"desc": "専門的・格式のある知識",
+				"label": "特級"
+			}
+		},
+		"mission": {
+			"allDone": "今日の報酬まで受け取りました。また明日！",
+			"claim": "受け取る",
+			"claimLabel": "今日のミッションの経験値を受け取る",
+			"claimed": "完了",
+			"claimedToast": "今日のミッション報酬 +{{exp}}EXP を受け取りました",
+			"learn": "項目を5件学習",
+			"progress": "{{done}} / {{total}} 達成 · すべて達成で {{exp}}EXP",
+			"quiz": "クイズを1回解く",
+			"ready": "ミッション達成！報酬ボタンで +{{exp}}EXP を受け取りましょう",
+			"review": "不正解を2問復習",
+			"rewardLabel": "今日のミッション報酬",
+			"section": "今日のミッション"
+		},
+		"notify": {
+			"daily": {
+				"body": "出席チェックして、今日のクイズ5問で一日を埋めましょう",
+				"title": "今日の世界一周"
+			},
+			"review": {
+				"body": "復習ノートに{{n}}件残っています。2回正解で卒業です！",
+				"title": "不正解の復習をしましょう！"
+			},
+			"streak": {
+				"body": "🔥 {{days}}日連続学習中！今日はまだです — 今やれば記録が続きます。",
+				"first": "今日1問解くだけで連続学習が始まります。",
+				"title": "連続学習が途切れそうです"
+			},
+			"word": {
+				"body": "今日の5問、いま解いてみませんか？",
+				"title": "📚 今日の世界常識"
+			}
+		},
+		"oss": {
+			"caption": {
+				"figure": "ウィキメディアから取得する肖像です — すべてパブリックドメインのため表示義務はありません",
+				"landmark": "ウィキメディアから取得する写真です — 著作者表示がライセンス条件です",
+				"library": "アプリが実際に使っているオープンソースです（インストール版基準）",
+				"sound": "アプリが実際に再生する音源です"
+			},
+			"item": {
+				"bgm": "クイズ・チャレンジのBGM",
+				"figure": "世界の偉人の肖像122点",
+				"sfx": "出席スタンプ・正解・不正解などの効果音"
+			},
+			"license": {
+				"inHouse": "自社制作"
+			},
+			"section": {
+				"figure": "偉人の肖像",
+				"landmark": "ランドマークの写真",
+				"library": "ライブラリ",
+				"sound": "サウンド"
+			},
+			"source": "原文",
+			"thanks": "オープンソースコミュニティに感謝します 🙏",
+			"title": "オープンソースライセンス"
+		},
+		"pet": {
+			"avatarLabel": "{{stage}}段階のペット",
+			"defaultName": "歴史ライオン",
+			"fedLeft": "残りのエサ {{n}}個",
+			"fedToast": "エサをあげました",
+			"feedEmpty": "エサがありません。出席スタンプでもらいましょう",
+			"feedGrownUp": "最終段階まで育ちきりました",
+			"growth": {
+				"final": "最終進化を完了しました！",
+				"got": "{{name}}を獲得しました！",
+				"more": "エサをもっとあげると次の姿に育ちます",
+				"step": "{{level}}段階 / {{total}}段階"
+			},
+			"guardian": {
+				"eggAsleep": "眠るコンパスの卵",
+				"eggWaking": "目覚めるコンパスの卵",
+				"golden": "黄金の世界フクロウ",
+				"guardian": "世界守護フクロウ",
+				"mapwing": "地図つばさフクロウ",
+				"owlet": "ちび探検フクロウ"
+			},
+			"levelUp": {
+				"body": "経験値 {{exp}} に到達しました。このまま育てましょうか？",
+				"confirm": "いいね！",
+				"title": "{{name}}が育ちました！",
+				"titleGolden": "{{name}}の黄金進化！"
+			},
+			"noEgg": "まだ卵がありません",
+			"stage": {
+				"apprentice": "見習い探検家",
+				"explorer": "大探検家",
+				"golden": "黄金の大探検家",
+				"seeker": "世界の探究者",
+				"sprout": "探検の芽",
+				"traveler": "熟練の旅人"
+			}
+		},
+		"picker": {
+			"all": "すべて",
+			"title": "テーマを選ぶ"
+		},
+		"profile": {
+			"badgeCollapse": "たたむ",
+			"badgeEmpty": "まだバッジがありません。下の目標からひとつずつ埋めましょう！",
+			"badgeGoals": "次の目標",
+			"badgeSection": "バッジ",
+			"badgeSeeAll": "全{{total}}件を見る",
+			"feed": "エサをあげる",
+			"feedGiven": "エサ {{n}}個",
+			"feedGrownUp": "育ちきりました · これ以上エサは必要ありません",
+			"feedHeld": "あげました · 手持ち {{n}}個",
+			"feedNone": "エサがありません · 出席報酬でもらえます",
+			"feedOne": "エサ1個",
+			"feedStage": "エサ {{n}}",
+			"feedWithStock": "エサをあげる · {{n}}個所持",
+			"guardianCaption": "コンパスフクロウ · エサで育ちます",
+			"guardianFed": "{{stage}}、エサを{{n}}個あげました",
+			"guardianFinal": "エサ35個をすべてあげた最終進化・黄金の世界フクロウです",
+			"guardianNext": "{{stage}}まであとエサ{{n}}個",
+			"guardianNone": "まだエサをあげていないので卵がありません",
+			"guide": {
+				"line1": "いちばん上で出席と学習報酬をひと目で見られます。",
+				"line2": "コンパスフクロウはエサをあげるたびに育ちます。エサをあげるボタンを押してみてください。",
+				"line3": "獲得したバッジから並び、全リストは押して広げられます。"
+			},
+			"holdings": "手持ち",
+			"holdingsDesc": "学習しながら集めた報酬",
+			"petGrowHint": "あと{{exp}}EXPで{{stage}}に育ちます",
+			"petSection": "ペット",
+			"petTopHint": "最高段階の{{stage}}になりました",
+			"stat": {
+				"attendance": "出席",
+				"attendanceUnit": "日",
+				"badges": "バッジ",
+				"feeds": "ペットのエサ",
+				"feedsUnit": "個"
+			},
+			"subtitle": "学習記録と成長のようす",
+			"title": "アクティビティ"
+		},
+		"quiz": {
+			"done": "完了",
+			"guide": {
+				"line1": "4つの選択肢から選ぶと、すぐに正解がわかります。",
+				"line2": "答えを選ぶとカードの下に説明が出ます — 読んでから進むと長く残ります。",
+				"line3": "不正解は復習ノートに入り、2回正解すると卒業します。"
+			},
+			"imageFailed": "画像を読み込めませんでした",
+			"missCount": "不正解 {{n}}問",
+			"noQuestions": "出せる問題がありません。",
+			"result": {
+				"half": "半分は超えました",
+				"low": "もう一度見れば伸びます",
+				"perfect": "全問正解！"
+			},
+			"retry": "もう一度解く",
+			"reviewCards": "カードで復習",
+			"shareResult": "結果を共有する",
+			"shareTitle": "今日のクイズ結果を共有",
+			"source": {
+				"daily": "今日のクイズ",
+				"wrong": "不正解の復習"
+			}
+		},
+		"report": {
+			"down": "今週は少し休みましたね。今日1問から再開しましょう。",
+			"flat": "変化なし",
+			"range": "{{from}} 〜 {{to}} · 先週と比べて",
+			"share": "今週の記録を共有",
+			"shareFailed": "共有を開けませんでした。少し後にもう一度押してください",
+			"shareLabel": "週間レポートを共有する",
+			"stat": {
+				"attendance": "出席",
+				"attendanceUnit": "日",
+				"newItems": "新しい項目",
+				"newItemsUnit": "件",
+				"rate": "正答率",
+				"solved": "解いた問題",
+				"solvedUnit": "問"
+			},
+			"text": {
+				"attendance": "📅 出席 {{n}}日",
+				"head": "{{app}} · 週間レポート {{from}} 〜 {{to}}",
+				"newItems": "📘 新しい項目 {{n}}件",
+				"rate": "🎯 正答率 {{rate}}",
+				"solved": "❓ 解いた問題 {{n}}問"
+			},
+			"title": "週間レポート",
+			"up": "先週より伸びた項目があります。この流れのまま行きましょう！"
+		},
+		"reward": {
+			"character": "🌟 キャラクター",
+			"clearCondition": "🏆 クリア条件",
+			"costume": "👕 コスチューム",
+			"earned": "🎁 獲得報酬",
+			"special": "✨ 特別アイテム"
+		},
+		"setting": {
+			"alarm": {
+				"descOff": "出席と今日のクイズを忘れないようお知らせします",
+				"descOn": "毎日{{time}}にお知らせします",
+				"label": "毎日の学習通知",
+				"noPermission": "通知の権限がありません。設定で許可してください",
+				"section": "通知",
+				"timeChange": "時刻を変更",
+				"turnedOff": "通知をオフにしました",
+				"turnedOn": "毎日{{time}}にお知らせします"
+			},
+			"apps": {
+				"notReleased": "まだ公開準備中のアプリです",
+				"openStore": "{{title}} をストアで開く",
+				"seeAll": "すべて見る",
+				"seeAllLabel": "制作者の他のアプリをすべて見る",
+				"storeFailed": "ストアを開けませんでした"
+			},
+			"dataNotice": "世界の首都・ランドマーク・神話・天体・スポーツ {{items}}件を {{topics}}のテーマに分けて収録しています。",
+			"dev": {
+				"completeAll": "すべての項目を学習完了にする",
+				"completeQuiz": "今日のクイズを完了にする",
+				"doneAll": "{{n}}件を学習完了にしました",
+				"doneQuiz": "今日のクイズを満点完了にしました",
+				"section": "開発用 (DEV)",
+				"tapsLeft": "あと{{left}}回でメニューが開きます",
+				"unlocked": "開発用メニューを開きました"
+			},
+			"guide": {
+				"line1": "テーマ・書体・サウンド・通知を自分好みに変える場所です。",
+				"line2": "いちばん上でアプリを共有でき、いちばん下のアプリ情報から制作者の他のアプリも見られます。"
+			},
+			"info": {
+				"homepage": "制作者の公式サイト",
+				"oss": "オープンソースライセンス",
+				"otherApps": "制作者の他のアプリ",
+				"review": "ストアにレビューを書く",
+				"section": "アプリ情報",
+				"version": "バージョン"
+			},
+			"language": {
+				"changed": "アプリの言語を{{label}}に変えました",
+				"label": "アプリの言語",
+				"notice": "画面の文言だけが変わります。クイズ・学習カードの本文は韓国語のままです。",
+				"section": "言語"
+			},
+			"permission": {
+				"desc": {
+					"notifications": "毎日の学習通知を受け取るために必要です",
+					"tracking": "より関連性の高い広告を表示するために使われます"
+				},
+				"label": {
+					"notifications": "通知",
+					"tracking": "アプリのトラッキング"
+				},
+				"notice": "権限をオフにしてもその機能が使えなくなるだけで、ほかの学習機能はそのまま使えます。",
+				"section": "権限",
+				"status": {
+					"blocked": "ブロック中",
+					"denied": "未設定",
+					"granted": "許可済み",
+					"limited": "制限付き許可",
+					"unavailable": "非対応"
+				}
+			},
+			"report": {
+				"best": "· タイムチャレンジ最高 {{time}}点 · タワー最高 {{tower}}階",
+				"head": "📘 {{app}} 今週の記録",
+				"learned": "· 学んだ項目 {{done}} / {{total}}",
+				"pet": "· {{name}} Lv.{{level}} {{stage}}",
+				"quiz": "· クイズ {{plays}}回 · {{total}}問中 {{correct}}問正解{{rate}}",
+				"section": "学習レポート",
+				"shareWeek": "今週の記録を共有",
+				"streak": "· 連続出席 {{days}}日"
+			},
+			"reset": {
+				"action": "削除する",
+				"all": {
+					"desc": "記録に加えて経験値・ペット・バッジも",
+					"done": "すべてのデータを削除しました",
+					"label": "すべて初期化",
+					"summary": "学習・クイズ記録はもちろん、経験値・ペット・バッジまですべて消えます。元に戻せません。",
+					"title": "すべてのデータを削除しますか？"
+				},
+				"chip": "初期化",
+				"progress": {
+					"desc": "学習完了・復習ノート・クイズ記録",
+					"done": "学習・クイズ記録を削除しました",
+					"label": "学習記録の初期化",
+					"summary": "学習完了の表示・復習ノート・クイズ記録・今日のクイズが消えます。経験値・ペット・バッジは残ります。",
+					"title": "学習記録を削除しますか？"
+				},
+				"section": "データの初期化",
+				"undo": "元に戻す",
+				"undone": "初期化を元に戻しました"
+			},
+			"share": {
+				"button": "共有する",
+				"comingSoon": "公開予定です。",
+				"intro": "最近たのしく使っているアプリがあるので紹介します！ 😊",
+				"linkLead": "👇 下のリンクから入手できます",
+				"notReleased": "まだストアで公開されていません",
+				"subtitle": "家族や友だち、知り合いにもぜひ教えてあげてください！",
+				"title": "アプリは気に入りましたか？"
+			},
+			"sound": {
+				"bgm": {
+					"desc": "学習・クイズ・チャレンジの間、静かに流れます",
+					"label": "BGM",
+					"off": "BGMをオフにしました",
+					"on": "学習・クイズでBGMが流れます"
+				},
+				"section": "サウンド",
+				"sfx": {
+					"desc": "正解・不正解・出席チェックを音で知らせます",
+					"label": "効果音",
+					"off": "効果音をオフにしました",
+					"on": "効果音をオンにしました"
+				}
+			},
+			"subtitle": "テーマ・書体・通知を自分好みに",
+			"theme": {
+				"changed": "画面テーマを{{label}}に変えました",
+				"dark": {
+					"hint": "つねに暗い画面で表示します",
+					"label": "ダーク"
+				},
+				"light": {
+					"hint": "つねに明るい画面で表示します",
+					"label": "ライト"
+				},
+				"section": "画面テーマ"
+			},
+			"title": "設定"
+		},
+		"shorts": {
+			"guide": {
+				"line1": "上下にスワイプして、1画面に1項目ずつ見ていきます。",
+				"line2": "とどまった項目は学習済みになります — 軽く流しても進度が積み上がります。"
+			}
+		},
+		"stats": {
+			"byTopic": "テーマごとの進度",
+			"guide": {
+				"line1": "これまでの学習・クイズ・出席の記録を1画面で見られます。",
+				"line2": "今週のカードは先週と比べてどれだけ伸びたかを示します。",
+				"line3": "テーマの星は進度と正答率を合わせて見て、最大3つまでつきます。"
+			},
+			"note": {
+				"doneBody": "すべてのテーマを学んだ、みごとな探検の記録です。",
+				"doneTitle": "世界地図を完成させました！",
+				"emptyBody": "学習やクイズを始めると、成長の記録がここに積み上がります。",
+				"emptyTitle": "最初の記録をつくりましょうか？",
+				"milestoneBody": "探検日誌が着実に埋まっています。",
+				"milestoneTitle": "全体の進度 {{percent}}% 突破",
+				"streakBody": "こつこつの探検が世界の知識として積み上がっています。",
+				"streakTitle": "{{days}}日目を継続中"
+			},
+			"subtitle": "全体の進度 {{percent}}%",
+			"tile": {
+				"attendance": "出席",
+				"attendanceSub": "日 · 連続{{streak}}日",
+				"bestTime": "タイム最高",
+				"bestTimeUnit": "点",
+				"bestTower": "タワー最高",
+				"bestTowerUnit": "階",
+				"learned": "学んだ項目",
+				"plays": "解いたクイズ",
+				"playsUnit": "回",
+				"rate": "正答率",
+				"stars": "テーマの星",
+				"wrong": "復習ノート",
+				"wrongUnit": "件"
+			},
+			"title": "統計"
+		},
+		"study": {
+			"empty": "表示する項目がありません。",
+			"guide": {
+				"line1": "下のボタンでカードをめくり、1枚ずつ覚えます。",
+				"line2": "開いたカードは学習済みとして進度と経験値が上がります。",
+				"line3": "やさしいものから出て、学ぶほど難しい項目が開きます。"
+			},
+			"next": "次の項目",
+			"nextShort": "次へ",
+			"prev": "前の項目",
+			"toQuiz": "クイズで確認する"
+		},
+		"studyMode": {
+			"card": {
+				"desc": "テーマを選んで1枚ずつめくって覚えます",
+				"title": "カード学習"
+			},
+			"shorts": {
+				"desc": "1画面に1項目。上にスワイプしてざっと見ます",
+				"title": "ショート学習"
+			},
+			"subtitle": "同じ内容を2つの方法で見られます",
+			"title": "どうやって学習しますか？"
+		},
+		"tab": {
+			"home": "ホーム",
+			"profile": "アクティビティ",
+			"setting": "設定",
+			"stats": "統計",
+			"today": "今日",
+			"words": "事典"
+		},
+		"time": {
+			"again": "もう一度挑戦",
+			"bestLabel": "最高得点",
+			"bestSuffix": " · 最高 {{score}}点",
+			"combo": "🔥 {{n}}連続",
+			"comboNote": "連続で正解するとボーナス。3問から+5、5問から+10。",
+			"exit": "やめる",
+			"guide": {
+				"line1": "制限時間内にできるだけ多く正解する勝負です。",
+				"line2": "連続正解にはボーナスがつき、ライフが尽きると時間が残っていても終わります。",
+				"line3": "テーマを選べば、得意な分野だけで記録を競えます。"
+			},
+			"intro": "{{sec}}秒でできるだけ多く正解します",
+			"left": "{{sec}}秒",
+			"limitLabel": "制限時間（秒）",
+			"livesLabel": "ライフ",
+			"newRecord": " · 新記録！",
+			"pickTopic": "どのテーマで挑戦しますか？",
+			"resultBody": "{{correct}}問正解しました{{extra}}",
+			"score": "{{score}}点",
+			"start": "始める",
+			"title": "タイムチャレンジ"
+		},
+		"topic": {
+			"capital": {
+				"description": "国と首都、国旗、そして大陸",
+				"label": "世界の首都",
+				"mode": {
+					"capital": {
+						"label": "首都を当てる",
+						"question": "ここの首都は？"
+					},
+					"continent": {
+						"label": "大陸を当てる",
+						"question": "ここが属する大陸は？"
+					},
+					"country": {
+						"label": "国を当てる",
+						"question": "この都市を首都とするのはどこ？"
+					},
+					"flag": {
+						"label": "国旗を当てる",
+						"question": "この国旗はどこのもの？"
+					}
+				}
+			},
+			"constellation": {
+				"description": "夜空でさがす名前たち",
+				"label": "星座と天体",
+				"mode": {
+					"image": {
+						"label": "絵を当てる",
+						"question": "絵の星座は？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合う星座は？"
+					},
+					"season": {
+						"label": "いつ見える",
+						"question": "夜空でいつよく見える？"
+					},
+					"star": {
+						"label": "代表の星",
+						"question": "この星座の代表の星は？"
+					}
+				}
+			},
+			"event": {
+				"description": "世界を変えたその日、いつどこで",
+				"label": "世界史のできごと",
+				"mode": {
+					"century": {
+						"label": "いつ起きた",
+						"question": "このできごとが起きた時期は？"
+					},
+					"country": {
+						"label": "どの国のこと",
+						"question": "このできごとに最も近い国は？"
+					},
+					"kind": {
+						"label": "どんなできごと",
+						"question": "このできごとは何に分類される？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合うできごとは？"
+					}
+				}
+			},
+			"figure": {
+				"description": "世界を変えた人びと、いつどこで何を",
+				"label": "世界の偉人",
+				"mode": {
+					"country": {
+						"label": "どこの国の人",
+						"question": "この人物はどこの国の人？"
+					},
+					"era": {
+						"label": "いつ生きた",
+						"question": "この人物が主に活動した時期は？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合う人物は？"
+					},
+					"portrait": {
+						"label": "肖像を当てる",
+						"question": "肖像の人物は？"
+					},
+					"role": {
+						"label": "何をした人",
+						"question": "この人物がしたことは？"
+					}
+				}
+			},
+			"landmark": {
+				"description": "写真で見覚えのあるあの場所はどこに",
+				"label": "世界のランドマーク",
+				"mode": {
+					"city": {
+						"label": "どこにある",
+						"question": "このランドマークがある場所は？"
+					},
+					"country": {
+						"label": "国を当てる",
+						"question": "このランドマークがある国は？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合うランドマークは？"
+					},
+					"photo": {
+						"label": "写真を当てる",
+						"question": "写真のランドマークは？"
+					}
+				}
+			},
+			"myth": {
+				"description": "神と英雄、そして怪物",
+				"label": "ギリシャ・ローマ神話",
+				"mode": {
+					"domain": {
+						"label": "何をつかさどる",
+						"question": "この人物が担うものは？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合う人物は？"
+					},
+					"portrait": {
+						"label": "絵を当てる",
+						"question": "絵の人物は？"
+					},
+					"roman": {
+						"label": "ローマ名",
+						"question": "この神のローマ式の名は？"
+					}
+				}
+			},
+			"nature": {
+				"description": "地図でさがす川と山、砂漠と湖",
+				"label": "世界の地形",
+				"mode": {
+					"continent": {
+						"label": "どの大陸",
+						"question": "ここがある大陸は？"
+					},
+					"country": {
+						"label": "どの国",
+						"question": "ここがある国は？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合う場所は？"
+					}
+				}
+			},
+			"olympic": {
+				"description": "開催都市と総合1位",
+				"label": "夏季オリンピック",
+				"mode": {
+					"city": {
+						"label": "開催都市",
+						"question": "この大会が開かれた都市は？"
+					},
+					"host": {
+						"label": "開催国",
+						"question": "この大会を開いた国は？"
+					},
+					"top": {
+						"label": "総合1位",
+						"question": "この大会で金メダルを最も多く取った国は？"
+					}
+				}
+			},
+			"space": {
+				"description": "惑星と衛星、その外まで",
+				"label": "太陽系",
+				"mode": {
+					"image": {
+						"label": "絵を当てる",
+						"question": "絵の天体は？"
+					},
+					"kind": {
+						"label": "天体の種類",
+						"question": "この天体は何に分類される？"
+					},
+					"name": {
+						"label": "説明から当てる",
+						"question": "説明に合う天体は？"
+					},
+					"order": {
+						"label": "何番目の惑星",
+						"question": "太陽から何番目の惑星？"
+					}
+				}
+			},
+			"winter": {
+				"description": "雪と氷の上の開催地と1位",
+				"label": "冬季オリンピック",
+				"mode": {
+					"city": {
+						"label": "開催都市",
+						"question": "この大会が開かれた都市は？"
+					},
+					"host": {
+						"label": "開催国",
+						"question": "この大会を開いた国は？"
+					},
+					"top": {
+						"label": "総合1位",
+						"question": "この大会で金メダルを最も多く取った国は？"
+					}
+				}
+			},
+			"worldcup": {
+				"description": "開催国と優勝国の歴史",
+				"label": "ワールドカップ",
+				"mode": {
+					"host": {
+						"label": "開催国",
+						"question": "この大会を開いた国は？"
+					},
+					"runnerUp": {
+						"label": "準優勝国",
+						"question": "この大会の準優勝国は？"
+					},
+					"winner": {
+						"label": "優勝国",
+						"question": "この大会の優勝国は？"
+					}
+				}
+			}
+		},
+		"topics": {
+			"cardCount": "{{count}}項目 · {{modes}}種類",
+			"guide": {
+				"line1": "テーマを選ぶと、その中で学習とクイズをすぐ始められます。",
+				"line2": "カード下の左が学習、右がクイズです。",
+				"line3": "テーマごとに聞き方が何種類もあるので、同じテーマでも毎回ちがいます。"
+			},
+			"heroDesc": "気になるテーマを選んで、世界の知識を広げましょう。",
+			"heroTitle": "どこから探検しますか？",
+			"quiz": "クイズ",
+			"quizLabel": "{{topic}} クイズ",
+			"study": "学習",
+			"studyLabel": "{{topic}} のカード学習",
+			"subtitle": "{{topics}}テーマ · {{items}}項目",
+			"title": "世界の常識"
+		},
+		"tower": {
+			"again": "もう一度登る",
+			"bandFrom": "{{from}}階から",
+			"bandRange": "{{from}}〜{{to}}階",
+			"best": "これまで{{floor}}階まで登りました",
+			"bestLabel": "最高階",
+			"exit": "やめる",
+			"floor": "{{floor}}階",
+			"guide": {
+				"line1": "各階の問題を解いて1階ずつ登ります。",
+				"line2": "3階ごとに難しくなり、ライフが尽きたところが最高記録になります。",
+				"line3": "テーマを選べば、得意な分野だけで記録を競えます。"
+			},
+			"harder": "登るほど難しくなります",
+			"intro": "1階ずつ登って、どこまで行けるか competes",
+			"level": {
+				"1": {
+					"bossDescription": "鬼のそば団子をねらう森のこまったイノシシ",
+					"bossName": "食いしんぼうイノシシ ブーブー",
+					"bossTitle": "🐗 レベル1ボス",
+					"clearCondition": "初級の問題をすべてクリア",
+					"name": "初級の塔",
+					"rewardName": "初級の帽子"
+				},
+				"2": {
+					"bossDescription": "岩山の入口をふさぐ頑固な巨人。クイズでしか道をゆずらない",
+					"bossName": "岩の巨人 ガンコ",
+					"bossTitle": "🗿 レベル2ボス",
+					"clearCondition": "中級の問題をすべてクリア",
+					"name": "中級の塔",
+					"rewardName": "中級のマント"
+				},
+				"3": {
+					"bossDescription": "谷の霧の中から現れる神秘的で賢いキツネの妖怪",
+					"bossName": "千年の九尾狐 マホウ",
+					"bossTitle": "🦊 レベル3ボス",
+					"clearCondition": "上級の問題をすべてクリア",
+					"name": "上級の塔",
+					"rewardName": "伝説の守護者"
+				},
+				"4": {
+					"bossDescription": "大きな冠をかぶり金の棍棒を持つ、威厳あふれる鬼たちの王",
+					"bossName": "鬼の王 エンラ",
+					"bossTitle": "👹 レベル4 最終ボス",
+					"clearCondition": "特級の問題をすべてクリア",
+					"name": "最終の塔",
+					"rewardName": "黄金の鬼の棍棒"
+				}
+			},
+			"livesLabel": "ライフ",
+			"livesNote": "ライフは階をまたいでも続きます。使いきるとその階までが記録です。",
+			"outOfLives": "ライフを使いきりました。ここまでが今回の記録です。",
+			"perFloor": "1階あたりの問題",
+			"pickTopic": "どのテーマで登りますか？",
+			"progress": "{{at}} / {{total}} 問",
+			"start": "登りはじめる",
+			"title": "タワーチャレンジ"
+		},
+		"version": {
+			"current": "現在",
+			"latest": "最新",
+			"message": "今回のアップデートからご利用いただけます。\nアップデート後も学習を続けてください。",
+			"notice": "アップデートを終えるとアプリを続けて使えます。",
+			"title": "新しいバージョンが出ました",
+			"update": "今すぐ更新"
+		},
+		"words": {
+			"all": "すべて",
+			"clearSearch": "検索語を消す",
+			"count": "{{n}}項目",
+			"detailLabel": "{{name}} の詳細を見る",
+			"empty": "探している項目が見つかりません。",
+			"favAdded": "お気に入りに追加しました",
+			"favLabel": "{{name}} をお気に入り",
+			"favOnly": "お気に入りのみ表示",
+			"favRemoved": "お気に入りから外しました",
+			"guide": {
+				"line1": "テーマのチップと検索で項目を絞りこみます。",
+				"line2": "行を押すと詳しい説明が開き、星を押すとお気に入りに入ります。",
+				"line3": "星のチップを押すとお気に入りだけをまとめて見られます。"
+			},
+			"searchLabel": "項目を検索",
+			"searchPlaceholder": "名前・説明・首都で検索",
+			"title": "世界常識事典"
+		}
+	}
+}

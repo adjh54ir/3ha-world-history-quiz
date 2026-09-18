@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Easing, Keyboard, NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -37,20 +38,20 @@ import { selectPetImage } from '@/src/const/data/life/ConstPetImages';
 
 const ATTEND_MASCOT = require('@/src/assets/illustrations/lion-attendance.webp');
 
-/** 지금 시각대에 맞는 인사말 */
-const greeting = () => {
+/** 지금 시각대에 맞는 인사말 — 문장이 아니라 번역 키를 돌려준다 */
+const greetingKey = () => {
 	const hour = DateUtils.getLocalHour();
-	if (hour < 6) return '늦은 밤, 한 문제만 더 볼까요?' as const;
-	if (hour < 12) return '좋은 아침! 오늘의 퀴즈로 시작해요' as const;
-	if (hour < 18) return '오후에도 한 걸음, 한 가지씩' as const;
-	return '하루를 정리하며 세계 한 바퀴' as const;
+	if (hour < 6) return 'home.greet.night' as const;
+	if (hour < 12) return 'home.greet.morning' as const;
+	if (hour < 18) return 'home.greet.afternoon' as const;
+	return 'home.greet.evening' as const;
 };
 
-/** 펫을 누를 때마다 돌아가며 나오는 말 */
-const PET_SPEECH = ['오늘도 한 가지, 같이 해요!', '세계는 넓고 볼 것은 많아요', '조금씩 매일이 제일 빨라요', '출석 도장 잊지 마세요!'] as const;
+/** 펫을 누를 때마다 돌아가며 나오는 말 (번역 키) */
+const PET_SPEECH = ['home.tip.2', 'home.tip.1', 'home.tip.3', 'home.tip.4'] as const;
 
-/** 나침반 올빼미가 하는 말 — 사자와 같은 말풍선을 쓰므로 문장으로 누가 말하는지 알린다 */
-const OWL_SPEECH = ['나침반 올빼미예요. 먹이를 주면 날개가 자라요!', '출석 도장을 찍으면 먹이가 하나 생겨요', '나의 활동에서 저를 먹일 수 있어요', '같이 세계 한 바퀴 날아봐요!'] as const;
+/** 나침반 올빼미가 하는 말 — 사자와 같은 말풍선을 쓰므로 문장으로 누가 말하는지 알린다 (번역 키) */
+const OWL_SPEECH = ['home.petTalk.3', 'home.petTalk.4', 'home.petTalk.2', 'home.petTalk.1'] as const;
 
 /**
  * 히어로 무대 높이 — 글방 배경과 캐릭터 줄이 같은 값을 쓴다.
@@ -74,6 +75,7 @@ const LAUNCH_POPUP_DELAY = 900;
  * 카드 묶음 사이에는 안내 배너를 끼워 어디까지가 한 묶음인지 보이게 한다.
  */
 const LifeHomeScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const guide = useCharacterGuideOnce('life-home');
@@ -148,9 +150,14 @@ const LifeHomeScreen = () => {
 		run(Animated.spring(stamp, { toValue: 1, friction: 4, tension: 160, useNativeDriver: true }));
 		// 7일마다 오는 특별 출석은 먹이를 여러 개 준다 — 리듀서와 같은 규칙으로 미리 세어 알린다
 		const feeds = attendanceFeedReward(streak + 1);
-		showToast(`출석 완료! +${attendanceExp}EXP · 펫 먹이 ${feeds}개`, 'calendar-check', {
+		showToast(t('home.checkedIn', { exp: attendanceExp, feeds }), 'calendar-check', {
 			image: ATTEND_MASCOT,
-			subMessage: feeds > 1 ? `${streak + 1}일 특별 출석! 먹이를 ${feeds}개 받았어요` : streak + 1 > 1 ? `${streak + 1}일 연속 출석 중이에요` : '내일도 만나요!',
+			subMessage:
+				feeds > 1
+					? t('home.checkedInSpecial', { days: streak + 1, feeds })
+					: streak + 1 > 1
+						? t('home.checkedInStreak', { days: streak + 1 })
+						: t('home.seeTomorrow'),
 		});
 
 		// 팝업은 이미 열려 있다 — 그 안에서 도장이 찍히는 연출만 돌린다
@@ -291,7 +298,7 @@ const LifeHomeScreen = () => {
 							<View style={[styles.streakChip, streak > 0 && styles.streakChipActive]}>
 								<IconComponent type="materialCommunityIcons" name="fire" size={14} color={streak > 0 ? Colors.accentAmber : Colors.brandBlockMuted} />
 								<Text style={styles.streakText} numberOfLines={1}>
-									{streak > 0 ? `${streak}일 연속 출석` : '오늘 출석하고 스트릭 시작'}
+									{streak > 0 ? t('home.streakChip', { days: streak }) : t('home.streakStart')}
 								</Text>
 							</View>
 							<View style={styles.heroTopRight}>
@@ -313,7 +320,7 @@ const LifeHomeScreen = () => {
 										: null,
 								]}>
 								<Text style={styles.speechText} numberOfLines={2}>
-									{speech ?? greeting()}
+									{t(speech ?? greetingKey())}
 								</Text>
 							</Animated.View>
 							<View style={styles.speechTail} />
@@ -326,19 +333,21 @@ const LifeHomeScreen = () => {
 								<FloatingPet pet={attendancePet} onPress={onPressOwl} />
 							</View>
 						</View>
-						<Text style={styles.petHint}>역사 사자를 누르면 한마디 해요</Text>
+						<Text style={styles.petHint}>{t('home.petHint')}</Text>
 						<View style={styles.levelRow}>
 							<Text style={styles.petName} numberOfLines={1}>
 								{pet.petName}
 							</Text>
 							<PressableScale style={styles.levelChip} onPress={() => go(Paths.GRADE)} scaleTo={0.94} accessibilityRole="button">
-								<Text style={styles.levelText}>{`Lv.${pet.level} ${pet.stage.label}`}</Text>
+								<Text style={styles.levelText}>{`Lv.${pet.level} ${t(`pet.stage.${pet.stage.key}`)}`}</Text>
 								<IconComponent type="materialIcons" name="chevron-right" size={14} color={Colors.brandBlockText} />
 							</PressableScale>
 						</View>
 						<View style={styles.gaugeBox}>
 							<ProgressBar ratio={pet.ratio} color={Colors.brandBlockMuted} trackColor="rgba(255,255,255,0.18)" height={scaleHeight(8)} shine />
-							<Text style={styles.gaugeText}>{pet.next ? `다음 단계까지 ${(pet.next.minExp - pet.exp).toLocaleString()}EXP` : '마지막 단계에 도달했어요'}</Text>
+							<Text style={styles.gaugeText}>
+								{pet.next ? t('home.toNext', { exp: (pet.next.minExp - pet.exp).toLocaleString() }) : t('home.atTop')}
+							</Text>
 						</View>
 
 						<Animated.View style={[styles.checkWrap, { transform: [{ scale: stamp }] }]}>
@@ -346,10 +355,10 @@ const LifeHomeScreen = () => {
 								style={[styles.checkButton, checkedToday && styles.checkButtonDone]}
 								onPress={openCheckIn}
 								accessibilityRole="button"
-								accessibilityLabel={checkedToday ? '오늘 출석 완료' : `출석 체크, 경험치 ${attendanceExp}`}>
+								accessibilityLabel={checkedToday ? t('home.checkInDone') : t('home.checkInLabel', { exp: attendanceExp })}>
 								<IconComponent type="materialCommunityIcons" name="star-four-points-circle" size={scaleWidth(24)} color={Colors.brandBlockText} />
 								<Text style={[styles.checkText, checkedToday && styles.checkTextDone]}>
-									{checkedToday ? '오늘 출석 완료' : `출석 체크  +${attendanceExp}EXP`}
+									{checkedToday ? t('home.checkInDone') : t('home.checkInAction', { exp: attendanceExp })}
 								</Text>
 							</PressableScale>
 						</Animated.View>
@@ -366,7 +375,7 @@ const LifeHomeScreen = () => {
 										}}
 										scaleTo={0.9}
 										accessibilityRole="button"
-										accessibilityLabel={`${item.badge.label} 뱃지 자세히 보기`}>
+										accessibilityLabel={t('badge.detailLabel', { name: t(`badge.${item.badge.id}.label`) })}>
 										<BadgeMedal badge={item.badge} size={scaleWidth(38)} showStars />
 									</PressableScale>
 								))}
@@ -380,14 +389,14 @@ const LifeHomeScreen = () => {
 					/>
 
 					{/* ── 배우기 ─────────────────────────────────────────── */}
-					<Text style={styles.sectionTitle}>배우기</Text>
+					<Text style={styles.sectionTitle}>{t('home.sectionLearn')}</Text>
 					<View style={styles.cardGrid}>
 						<ActionCard
 							index={0}
 							style={styles.gridCard}
 							iconName="head-question"
-							label="퀴즈 시작하기"
-							description="수도·국기·신화·별자리까지 주제를 골라서 풀어요"
+							label={t('home.quizStart.title')}
+							description={t('home.quizStart.desc')}
 							color={Colors.primary}
 							tint={Colors.primarySoft}
 							onPress={() => go(Paths.WORLD)}
@@ -396,8 +405,8 @@ const LifeHomeScreen = () => {
 							index={1}
 							style={styles.gridCard}
 							iconName="cards"
-							label="학습 모드"
-							description="카드로 한 장씩, 숏폼으로 주르륵 — 골라서 익혀요"
+							label={t('home.studyMode.title')}
+							description={t('home.studyMode.desc')}
 							color={Colors.secondaryDark}
 							tint={Colors.secondarySoft}
 							onPress={() => {
@@ -410,21 +419,21 @@ const LifeHomeScreen = () => {
 					<ActionCard
 						index={2}
 						iconName="notebook-edit"
-						label="오답 복습"
-						description={life.wrong.length ? `틀린 문제 ${life.wrong.length}개가 기다려요. 두 번 맞히면 졸업!` : '오답 노트가 깨끗해요. 퀴즈를 풀면 여기에 모여요'}
+						label={t('home.review.title')}
+						description={life.wrong.length ? t('home.review.waiting', { n: life.wrong.length }) : t('home.review.empty')}
 						color={Colors.error}
 						tint={Colors.errorSoft}
 						onPress={() => go(Paths.WORLD_QUIZ, { source: 'wrong' })}
 					/>
 					{/* ── 도전 ───────────────────────────────────────────── */}
-					<Text style={styles.sectionTitle}>도전하기</Text>
+					<Text style={styles.sectionTitle}>{t('home.sectionChallenge')}</Text>
 					<View style={styles.cardGrid}>
 						<ActionCard
 							index={4}
 							style={styles.gridCard}
 							iconName="timer"
-							label="타임 챌린지"
-							description={life.bestTime ? `최고 ${life.bestTime}점 · 오늘 기록을 넘어 볼까요?` : `${TIME_CHALLENGE_SEC}초 안에 최대한 많이 맞혀 보세요`}
+							label={t('home.time.title')}
+							description={life.bestTime ? t('home.time.best', { score: life.bestTime }) : t('home.time.desc', { sec: TIME_CHALLENGE_SEC })}
 							color={Colors.accentOrange}
 							tint={Colors.warningSoft}
 							onPress={() => go(Paths.TIME_CHALLENGE_INIT)}
@@ -433,8 +442,8 @@ const LifeHomeScreen = () => {
 							index={5}
 							style={styles.gridCard}
 							iconName="office-building"
-							label="타워 챌린지"
-							description={life.bestTower ? `최고 ${life.bestTower}층 · 더 높이 올라가 볼까요?` : `목숨 ${TOWER_LIVES}개로 한 층씩 올라가요`}
+							label={t('home.tower.title')}
+							description={life.bestTower ? t('home.tower.best', { floor: life.bestTower }) : t('home.tower.desc', { lives: TOWER_LIVES })}
 							color={Colors.primaryDeep}
 							tint={Colors.primarySoft}
 							onPress={() => go(Paths.TOWER)}
@@ -445,15 +454,15 @@ const LifeHomeScreen = () => {
 					<TowerRewardSection unlockedRewards={towerRewards} />
 
 					{/* ── 기록 ───────────────────────────────────────────── */}
-					<Text style={styles.sectionTitle}>기록 보기</Text>
+					<Text style={styles.sectionTitle}>{t('home.sectionRecords')}</Text>
 					<View style={styles.quickRow}>
 						<PressableScale style={styles.quick} onPress={() => go(tabPath(Paths.PROFILE))}>
 							<View style={[styles.quickIcon, { backgroundColor: Colors.warningSoft }]}>
 								<IconComponent type="materialCommunityIcons" name="trophy-variant" size={20} color={Colors.warning} />
 							</View>
-							<Text style={styles.quickTitle}>뱃지</Text>
+							<Text style={styles.quickTitle}>{t('home.badges')}</Text>
 							<Text style={styles.quickSub} numberOfLines={1}>
-								{`${life.badges.length} / ${BADGES.length}개`}
+								{t('home.badgeCount', { owned: life.badges.length, total: BADGES.length })}
 							</Text>
 						</PressableScale>
 						<PressableScale
@@ -465,9 +474,9 @@ const LifeHomeScreen = () => {
 							<View style={[styles.quickIcon, { backgroundColor: Colors.primarySoft }]}>
 								<IconComponent type="materialCommunityIcons" name="calendar-check" size={20} color={Colors.primaryDark} />
 							</View>
-							<Text style={styles.quickTitle}>출석</Text>
+							<Text style={styles.quickTitle}>{t('home.attendance')}</Text>
 							<Text style={styles.quickSub} numberOfLines={1}>
-								{`${life.attendance.length}일 출석`}
+								{t('home.attendanceDays', { days: life.attendance.length })}
 							</Text>
 						</PressableScale>
 					</View>
@@ -510,11 +519,11 @@ const LifeHomeScreen = () => {
 				}}
 			/>
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
-			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'홈은 하루를 시작하는 자리예요. 출석 도장을 찍으면 경험치와 펫 먹이를 받아요.',
-				'사자를 누르면 한마디 하고, 학습할수록 단계가 올라가요.',
-				'아래 카드로 학습·퀴즈·챌린지에 바로 들어갈 수 있어요.',
-			]} />
+			<LifeCharacterGuide
+				visible={guide.visible}
+				onClose={guide.close}
+				lines={[t('home.guide.line1'), t('home.guide.line2'), t('home.guide.line3')]}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -527,6 +536,7 @@ const LifeHomeScreen = () => {
  * 누르면 히어로 한가운데의 말풍선 하나가 대신 말한다 (onPress).
  */
 const FloatingPet = ({ pet, onPress }: { pet: ReturnType<typeof useAttendancePet>; onPress: () => void }) => {
+	const { t } = useTranslation();
 	const styles = useThemedStyles(createStyles);
 	const Colors = useColors();
 	/** 아직 안 준 먹이 — 다 자란 뒤에는 줘도 소용없으므로 배지를 달지 않는다 */
@@ -543,8 +553,8 @@ const FloatingPet = ({ pet, onPress }: { pet: ReturnType<typeof useAttendancePet
 				accessibilityRole="button"
 				accessibilityLabel={
 					waiting > 0
-						? `${pet.stage.label}, 안 준 먹이 ${waiting}개. 누르면 먹이러 가요`
-						: `${pet.stage.label}, 먹이 ${pet.fed}개 준 출석 수호신`
+						? t('home.guardianWaiting', { stage: t(`pet.guardian.${pet.stage.key}`), n: waiting })
+						: t('home.guardianFed', { stage: t(`pet.guardian.${pet.stage.key}`), n: pet.fed })
 				}>
 				<MascotImage source={pet.image} size={scaleWidth(66)} motion="float" shadow={false} />
 				{/* 안 준 먹이 — 출석으로 받은 먹이가 가방에 잠들지 않게 올빼미 위에 직접 붙인다 */}
@@ -649,7 +659,7 @@ const createStyles = (Colors: Palette) =>
 			backgroundColor: Colors.primarySoft,
 		},
 		effectBadgeForever: { backgroundColor: Colors.secondarySoft },
-		effectBadgeText: { fontSize: scaledSize(10), fontWeight: FontWeight.heavy, color: Colors.primaryDark },
+		effectBadgeText: { fontSize: scaledSize(10), fontWeight: FontWeight.heavy, color: Colors.primaryDark, flexShrink: 1, textAlign: 'center', },
 		effectBadgeTextForever: { color: Colors.secondaryDark },
 
 		bagHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
@@ -742,11 +752,10 @@ const createStyles = (Colors: Palette) =>
 			justifyContent: 'center',
 			gap: Spacing.sm,
 			width: '100%',
-			height: scaleHeight(50),
+			minHeight: scaleHeight(50),
 			marginTop: SpacingV.sm,
 			borderRadius: Radius.lg,
-			backgroundColor: Colors.brandBlockText,
-		},
+			backgroundColor: Colors.brandBlockText, paddingVertical: SpacingV.sm, },
 		checkButtonDone: { backgroundColor: 'rgba(255,255,255,0.14)' },
 		// 다크에서는 primaryDeep 이 밝은 초록이라 밝은 버튼 위에서 사라진다 — 버튼과 대비되는 brandBlock 을 쓴다
 		checkText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.brandBlock },
@@ -793,7 +802,7 @@ const createStyles = (Colors: Palette) =>
 			borderColor: Colors.brandBlock,
 			backgroundColor: Colors.accentOrange,
 		},
-		feedBadgeText: { fontSize: scaledSize(10), fontWeight: FontWeight.heavy, color: Colors.brandBlockText, fontVariant: ['tabular-nums'] },
+		feedBadgeText: { fontSize: scaledSize(10), fontWeight: FontWeight.heavy, color: Colors.brandBlockText, fontVariant: ['tabular-nums'], flexShrink: 1, textAlign: 'center', },
 
 	});
 

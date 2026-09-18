@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -29,8 +30,8 @@ import { scaledSize, scaleHeight } from '@/src/utils';
 
 /** 한 판 문항 수 */
 const QUIZ_COUNT = 10;
-/** 머리글에 무엇을 보여 줄지 — 주제 퀴즈는 주제 이름을 그대로 쓴다 */
-const SOURCE_LABEL: Partial<Record<LifeType.QuizSource, string>> = { daily: '오늘의 퀴즈', wrong: '오답 복습' };
+/** 머리글에 무엇을 보여 줄지 (번역 키) — 주제 퀴즈는 주제 이름을 그대로 쓴다 */
+const SOURCE_KEY: Partial<Record<LifeType.QuizSource, string>> = { daily: 'quiz.source.daily', wrong: 'quiz.source.wrong' };
 /** 답을 고른 뒤 다음 문제로 넘어가기까지 — 해설을 읽을 시간은 준다 */
 const NEXT_DELAY = 1600;
 /** 이 비율 위로 맞히면 폭죽을 터뜨린다 */
@@ -76,6 +77,7 @@ interface Props {
 }
 
 const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const params = useLocalSearchParams<{ topic?: string; source?: string }>();
@@ -86,9 +88,9 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 	const life = useLife();
 	const { streak } = useStreak();
 	const { button, guide } = useWorldGuide('world-quiz', [
-		'네 개 보기 중 하나를 고르면 바로 정답을 알려 줘요.',
-		'답을 고르면 카드 아래에 설명이 떠요 — 읽고 넘어가면 더 오래 남아요.',
-		'틀린 문제는 오답 노트에 담기고, 두 번 맞히면 졸업해요.',
+		t('quiz.guide.line1'),
+		t('quiz.guide.line2'),
+		t('quiz.guide.line3'),
 	]);
 
 	const key = sessionKey(source, topic.key);
@@ -238,10 +240,10 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 			<View style={styles.head}>
 				<View style={styles.headText}>
 					<Text style={styles.topicLabel} numberOfLines={1}>
-						{SOURCE_LABEL[source] ?? topic.label}
+						{SOURCE_KEY[source] ? t(SOURCE_KEY[source]) : t(`topic.${topic.key}.label`)}
 					</Text>
 					<View style={styles.headRight}>
-						<Text style={styles.counter}>{done ? '완료' : `${at + 1} / ${questions.length}`}</Text>
+						<Text style={styles.counter}>{done ? t('quiz.done') : `${at + 1} / ${questions.length}`}</Text>
 						{button}
 					</View>
 				</View>
@@ -250,7 +252,10 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 				</View>
 			</View>
 
-			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				// 낼 문항이 없을 때만 남은 높이를 다 차지하게 해, 안내가 가운데에 선다
+				contentContainerStyle={[styles.content, !question && styles.contentEmpty]}
+				showsVerticalScrollIndicator={false}>
 				{done ? (
 					<Animated.View style={[styles.stack, cardStyle]}>
 						<View style={[styles.card, styles.resultCard]}>
@@ -262,7 +267,7 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 							/>
 							<Text style={styles.resultScore}>{`${correct} / ${questions.length}`}</Text>
 							<Text style={styles.resultText}>
-								{correct === questions.length ? '다 맞혔어요!' : correct * 2 >= questions.length ? '절반은 넘겼어요' : '한 번 더 보고 오면 늘어요'}
+								{t(correct === questions.length ? 'quiz.result.perfect' : correct * 2 >= questions.length ? 'quiz.result.half' : 'quiz.result.low')}
 							</Text>
 							{gainedExp > 0 ? (
 								<View style={[styles.expChip, { backgroundColor: Colors[topic.tint] }]}>
@@ -275,7 +280,7 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 						{/* 무엇을 틀렸는지 — 고른 답과 정답을 나란히 둬야 다시 볼 거리가 남는다 */}
 						{misses.length > 0 ? (
 							<View style={styles.card}>
-								<Text style={styles.missTitle}>{`틀린 문제 ${misses.length}개`}</Text>
+								<Text style={styles.missTitle}>{t('quiz.missCount', { n: misses.length })}</Text>
 								{misses.map((miss) => (
 									<View key={miss.question.id} style={styles.missRow}>
 										<Text style={styles.missPrompt} numberOfLines={1}>
@@ -300,18 +305,18 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 								style={styles.ghost}
 								onPress={() => router.replace({ pathname: `/${Paths.WORLD_STUDY}`, params: { topic: topic.key } } as never)}
 								accessibilityRole="button">
-								<Text style={styles.ghostText}>카드로 복습</Text>
+								<Text numberOfLines={2} style={styles.ghostText}>{t('quiz.reviewCards')}</Text>
 							</PressableScale>
 							<PressableScale style={[styles.primary, { backgroundColor: Colors[topic.color] }]} onPress={retry} accessibilityRole="button">
-								<Text style={styles.primaryText}>다시 풀기</Text>
+								<Text numberOfLines={2} style={styles.primaryText}>{t('quiz.retry')}</Text>
 							</PressableScale>
 						</View>
 
 						{/* 오늘의 퀴즈만 공유한다 — 날짜가 붙어야 워들처럼 읽힌다 */}
 						{source === 'daily' && marks.length > 0 ? (
-							<PressableScale style={styles.shareButton} onPress={share} accessibilityRole="button" accessibilityLabel="오늘의 퀴즈 결과 공유">
+							<PressableScale style={styles.shareButton} onPress={share} accessibilityRole="button" accessibilityLabel={t('quiz.shareTitle')}>
 								<IconComponent type="materialcommunityicons" name="share-variant" size={16} color={Colors.textSecondary} />
-								<Text style={styles.shareText}>결과 공유하기</Text>
+								<Text style={styles.shareText}>{t('quiz.shareResult')}</Text>
 							</PressableScale>
 						) : null}
 					</Animated.View>
@@ -320,7 +325,9 @@ const WorldQuizScreen = ({ source: fixedSource }: Props = {}) => {
 						<WorldQuestionCard question={question} askAs={mode?.askAs} picked={picked} onPick={choose} tint={Colors[topic.tint]} />
 					</Animated.View>
 				) : (
-					<Text style={styles.hint}>낼 수 있는 문항이 없다.</Text>
+					<View style={styles.emptyBox}>
+						<Text style={styles.hint}>{t('quiz.noQuestions')}</Text>
+					</View>
 				)}
 			</ScrollView>
 			{/* 잘 맞힌 판에만 터뜨린다 — 매번 터지면 축하가 아니라 배경이 된다 */}
@@ -346,6 +353,9 @@ const createStyles = (Colors: Palette) =>
 		fill: { height: '100%', borderRadius: Radius.pill },
 
 		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
+		contentEmpty: { flexGrow: 1 },
+		// 빈 화면 안내 — 위에 붙지 않고 빈 영역 정중앙에 선다
+		emptyBox: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 		stack: { gap: SpacingV.lg },
 
 		card: {
@@ -384,11 +394,10 @@ const createStyles = (Colors: Palette) =>
 			alignItems: 'center',
 			justifyContent: 'center',
 			gap: Spacing.xs,
-			height: scaledSize(44),
+			minHeight: scaledSize(44),
 			borderRadius: Radius.pill,
 			borderWidth: StyleSheet.hairlineWidth,
-			borderColor: Colors.border,
-		},
+			borderColor: Colors.border, paddingVertical: SpacingV.sm, },
 		shareText: { fontSize: Typography.bodySm, fontWeight: FontWeight.medium, color: Colors.textSecondary },
 		resultBadge: { width: scaledSize(74), height: scaledSize(74), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
 		resultScore: { fontSize: Typography.display, fontWeight: FontWeight.bold, color: Colors.textStrong },
@@ -396,15 +405,14 @@ const createStyles = (Colors: Palette) =>
 		resultActions: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.md, alignSelf: 'stretch' },
 		ghost: {
 			flex: 1,
-			height: scaledSize(46),
+			minHeight: scaledSize(46),
 			borderRadius: Radius.pill,
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: Colors.surfaceAlt,
-		},
-		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text },
-		primary: { flex: 1, height: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
-		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+			backgroundColor: Colors.surfaceAlt, paddingVertical: SpacingV.sm, },
+		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text, flexShrink: 1, textAlign: 'center', },
+		primary: { flex: 1, minHeight: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.sm, },
+		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldQuizScreen;

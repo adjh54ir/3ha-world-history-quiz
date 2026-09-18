@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -37,6 +38,7 @@ import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
  * - 설정 톱니 : 설정 탭이 따로 있다. 그 자리는 화면 사용법(물음표)에 넘겼다.
  */
 const LifeProfileScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const guide = useCharacterGuideOnce('life-profile');
@@ -52,10 +54,13 @@ const LifeProfileScreen = () => {
 	const [showAllBadges, setShowAllBadges] = React.useState(false);
 	/** 성장 현황을 보여 주는 보유 칸 세 개 */
 	const vault = [
-		{ label: '펫 먹이', value: `${life.petFeeds ?? 0}`, unit: '개', icon: 'food-drumstick' },
-		{ label: '출석', value: `${life.attendance.length}`, unit: '일', icon: 'calendar-check' },
-		{ label: '뱃지', value: `${life.badges.length}`, unit: `/${BADGES.length}`, icon: 'shield-star' },
+		{ key: 'feeds', label: t('profile.stat.feeds'), value: `${life.petFeeds ?? 0}`, unit: t('profile.stat.feedsUnit'), icon: 'food-drumstick' },
+		{ key: 'attendance', label: t('profile.stat.attendance'), value: `${life.attendance.length}`, unit: t('profile.stat.attendanceUnit'), icon: 'calendar-check' },
+		{ key: 'badges', label: t('profile.stat.badges'), value: `${life.badges.length}`, unit: `/${BADGES.length}`, icon: 'shield-star' },
 	];
+
+	/** 지금 언어로 옮긴 출석 수호신 단계 이름 — 알을 받기 전에는 빈 문자열이다 */
+	const guardianName = attendancePet.stage ? t(`pet.guardian.${attendancePet.stage.key}`) : '';
 
 	const earnedMap = new Map(life.badges.map((item) => [item.id, item.at]));
 	/** 딴 뱃지는 진열장으로, 못 딴 뱃지는 목표로 나눈다 — 스무 칸을 한 판에 늘어놓으면 어디를 볼지 모른다 */
@@ -72,8 +77,8 @@ const LifeProfileScreen = () => {
 		<SafeAreaView style={styles.safe} edges={['left', 'right']}>
 			{/* 톱니를 내리고 그 자리에 화면 사용법(물음표)을 둔다 — 설정은 설정 탭으로 들어간다 */}
 			<LifeHeader
-				title="나의 활동"
-				subtitle="학습 기록과 성장 현황"
+				title={t('profile.title')}
+				subtitle={t('profile.subtitle')}
 				right={
 					<View style={styles.headerRight}>
 						<LifeGuideButton onPress={guide.open} />
@@ -92,13 +97,13 @@ const LifeProfileScreen = () => {
 							style={styles.vaultGlow}
 						/>
 						<View style={styles.vaultHead}>
-							<Text style={styles.vaultTitle}>내 보유</Text>
-						<Text style={styles.vaultHint}>학습하며 모아 온 보상</Text>
+							<Text style={styles.vaultTitle}>{t('profile.holdings')}</Text>
+						<Text style={styles.vaultHint}>{t('profile.holdingsDesc')}</Text>
 						</View>
 
 						<View style={styles.vaultRow}>
 							{vault.map((slot) => (
-								<View key={slot.label} style={styles.vaultCell}>
+								<View key={slot.key} style={styles.vaultCell}>
 									<IconComponent type="materialCommunityIcons" name={slot.icon} size={18} color={Colors.brandBlockMuted} />
 									<Text style={styles.vaultValue}>
 										{slot.value}
@@ -119,15 +124,19 @@ const LifeProfileScreen = () => {
 					</View>
 					<Text style={styles.petName}>{pet.petName}</Text>
 						<Text style={styles.petStage}>
-							Lv.{pet.level} {pet.stage.label} · {pet.exp.toLocaleString()}EXP
+							Lv.{pet.level} {t(`pet.stage.${pet.stage.key}`)} · {pet.exp.toLocaleString()}EXP
 						</Text>
 						<View style={styles.petBar}>
 							<ProgressBar ratio={pet.ratio} />
 						</View>
-						<Text style={styles.petHint}>{pet.next ? `${(pet.next.minExp - pet.exp).toLocaleString()}EXP 더 모으면 ${pet.next.label}로 자라요` : `최고 단계인 ${pet.stage.label}이 됐어요`}</Text>
+						<Text style={styles.petHint}>
+							{pet.next
+								? t('profile.petGrowHint', { exp: (pet.next.minExp - pet.exp).toLocaleString(), stage: t(`pet.stage.${pet.next.key}`) })
+								: t('profile.petTopHint', { stage: t(`pet.stage.${pet.stage.key}`) })}
+						</Text>
 						<View style={styles.stageRow}>
 							{PET_STAGES.map((stage, at) => (
-								<View key={stage.label} style={[styles.stageDot, at < pet.level && styles.stageDotOn, at === pet.level - 1 && styles.stageDotNow]}>
+								<View key={stage.key} style={[styles.stageDot, at < pet.level && styles.stageDotOn, at === pet.level - 1 && styles.stageDotNow]}>
 									<Image source={PET_STAGE_IMAGES[at]} style={[styles.stageImage, at >= pet.level && styles.stageImageLocked]} contentFit="contain" />
 								</View>
 							))}
@@ -141,9 +150,9 @@ const LifeProfileScreen = () => {
 					 */}
 					<View style={styles.card}>
 						<View style={styles.cardHead}>
-							<Text style={styles.cardTitle}>펫</Text>
+							<Text style={styles.cardTitle}>{t('profile.petSection')}</Text>
 							<Text style={styles.cardMeta}>
-								<Text style={styles.cardMetaStrong}>{`먹이 ${attendancePet.fed}개`}</Text> {`줬어요 · 가진 먹이 ${attendancePet.feeds}개`}
+								<Text style={styles.cardMetaStrong}>{t('profile.feedGiven', { n: attendancePet.fed })}</Text> {t('profile.feedHeld', { n: attendancePet.feeds })}
 							</Text>
 						</View>
 						<View style={styles.attendancePetPanel}>
@@ -158,22 +167,25 @@ const LifeProfileScreen = () => {
 										size={scaleWidth(86)}
 										motion="float"
 										shadow={false}
-										accessibilityLabel={`${attendancePet.stage?.label}, 먹이 ${attendancePet.fed}개 줬어요`}
+										accessibilityLabel={t('profile.guardianFed', { stage: guardianName, n: attendancePet.fed })}
 									/>
 								) : (
-									<View style={styles.attendancePetEmpty} accessibilityLabel="아직 먹이를 주지 않아 알이 없어요">
+									<View style={styles.attendancePetEmpty} accessibilityLabel={t('profile.guardianNone')}>
 										<IconComponent type="materialCommunityIcons" name="egg-outline" size={scaleWidth(34)} color={Colors.textMuted} />
-										<Text style={styles.attendancePetEmptyText}>먹이 1개</Text>
+										<Text style={styles.attendancePetEmptyText}>{t('profile.feedOne')}</Text>
 									</View>
 								)}
 							</View>
 							<View style={styles.attendancePetBody}>
-								<Text style={styles.attendancePetEyebrow}>나침반 올빼미 · 먹이로 자라요</Text>
-								<Text style={styles.attendancePetName}>{attendancePet.stage?.label ?? '아직 알이 없어요'}</Text>
+								<Text style={styles.attendancePetEyebrow}>{t('profile.guardianCaption')}</Text>
+								<Text style={styles.attendancePetName}>{guardianName || t('pet.noEgg')}</Text>
 								<Text style={styles.attendancePetHint}>
 									{attendancePet.next
-										? `${attendancePet.next.label}까지 먹이 ${attendancePet.next.minFeeds - attendancePet.fed}개 남았어요`
-										: '먹이 35개를 다 준 최종 진화 황금 세계올빼미예요'}
+										? t('profile.guardianNext', {
+												stage: t(`pet.guardian.${attendancePet.next.key}`),
+												n: attendancePet.next.minFeeds - attendancePet.fed,
+											})
+										: t('profile.guardianFinal')}
 								</Text>
 								<ProgressBar ratio={attendancePet.ratio} />
 								{/* 먹이를 줘야 단계가 오른다 — 버튼을 성장 칸 바로 아래에 붙여 원인과 결과가 한눈에 보이게 한다 */}
@@ -182,19 +194,19 @@ const LifeProfileScreen = () => {
 									onPress={onFeed}
 									scaleTo={0.96}
 									accessibilityRole="button"
-									accessibilityLabel="먹이 주기">
+									accessibilityLabel={t('profile.feed')}>
 									<IconComponent
 										type="materialCommunityIcons"
 										name={grownUp ? 'party-popper' : 'food-drumstick'}
 										size={16}
 										color={canFeed ? Colors.textInverse : Colors.textMuted}
 									/>
-									<Text style={[styles.feedButtonText, !canFeed && styles.feedButtonTextOff]}>
+									<Text numberOfLines={2} style={[styles.feedButtonText, !canFeed && styles.feedButtonTextOff]}>
 										{grownUp
-											? '다 자랐어요 · 먹이를 더 줄 필요가 없어요'
+											? t('profile.feedGrownUp')
 											: canFeed
-												? `먹이 주기 · ${attendancePet.feeds}개 보유`
-										: '먹이가 없어요 · 출석 보상으로 받아요'}
+												? t('profile.feedWithStock', { n: attendancePet.feeds })
+												: t('profile.feedNone')}
 									</Text>
 								</PressableScale>
 							</View>
@@ -208,7 +220,7 @@ const LifeProfileScreen = () => {
 										<View style={[styles.attendanceStageImageWrap, earned && styles.attendanceStageEarned, current && styles.attendanceStageCurrent]}>
 											<Image source={ATTENDANCE_PET_IMAGES[at]} style={[styles.attendanceStageImage, !earned && styles.stageImageLocked]} contentFit="contain" />
 										</View>
-										<Text style={[styles.attendanceStageDay, earned && styles.attendanceStageDayEarned]}>{`먹이 ${stage.minFeeds}`}</Text>
+										<Text style={[styles.attendanceStageDay, earned && styles.attendanceStageDayEarned]}>{t('profile.feedStage', { n: stage.minFeeds })}</Text>
 									</View>
 								);
 							})}
@@ -222,7 +234,7 @@ const LifeProfileScreen = () => {
 					 */}
 					<View style={styles.card}>
 						<View style={styles.cardHead}>
-							<Text style={styles.cardTitle}>뱃지</Text>
+							<Text style={styles.cardTitle}>{t('profile.badgeSection')}</Text>
 							<Text style={styles.cardMeta}>
 								<Text style={styles.cardMetaStrong}>{life.badges.length}</Text> / {BADGES.length}
 							</Text>
@@ -230,7 +242,7 @@ const LifeProfileScreen = () => {
 						<ProgressBar ratio={BADGES.length ? life.badges.length / BADGES.length : 0} />
 
 						{earnedBadges.length === 0 ? (
-							<EmptyState variant="inline" icon="shield-star-outline" message="아직 딴 뱃지가 없어요. 아래 목표부터 하나씩 채워 봐요!" />
+							<EmptyState variant="inline" icon="shield-star-outline" message={t('profile.badgeEmpty')} />
 						) : (
 							<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.badgeShelf}>
 								{earnedBadges.map((badge) => (
@@ -240,10 +252,10 @@ const LifeProfileScreen = () => {
 										onPress={() => openBadge(badge)}
 										scaleTo={0.92}
 										accessibilityRole="button"
-										accessibilityLabel={`${badge.label} 뱃지 자세히 보기`}>
+										accessibilityLabel={t('badge.detailLabel', { name: t(`badge.${badge.id}.label`) })}>
 										<BadgeMedal badge={badge} size={scaleWidth(56)} showStars />
 										<Text style={styles.badgeTrophyLabel} numberOfLines={1}>
-											{badge.label}
+											{t(`badge.${badge.id}.label`)}
 										</Text>
 									</PressableScale>
 								))}
@@ -252,7 +264,7 @@ const LifeProfileScreen = () => {
 
 						{nextBadges.length > 0 && (
 							<View style={styles.badgeGoals}>
-								<Text style={styles.badgeGoalHead}>다음 목표</Text>
+								<Text style={styles.badgeGoalHead}>{t('profile.badgeGoals')}</Text>
 								{nextBadges.map((badge) => (
 									<PressableScale
 										key={badge.id}
@@ -260,14 +272,14 @@ const LifeProfileScreen = () => {
 										onPress={() => openBadge(badge)}
 										scaleTo={0.98}
 										accessibilityRole="button"
-										accessibilityLabel={`${badge.label} 뱃지 조건 보기`}>
+										accessibilityLabel={t('badge.conditionLabel', { name: t(`badge.${badge.id}.label`) })}>
 										<BadgeMedal badge={badge} size={scaleWidth(36)} earned={false} />
 										<View style={styles.badgeGoalBody}>
 											<Text style={styles.badgeGoalLabel} numberOfLines={1}>
-												{badge.label}
+												{t(`badge.${badge.id}.label`)}
 											</Text>
 											<Text style={styles.badgeGoalReq} numberOfLines={1}>
-												{badge.requirement}
+												{t(`badge.${badge.id}.requirement`)}
 											</Text>
 										</View>
 										<BadgeRarityChip rarity={badge.rarity} muted />
@@ -285,7 +297,7 @@ const LifeProfileScreen = () => {
 							scaleTo={0.98}
 							accessibilityRole="button"
 							accessibilityState={{ expanded: showAllBadges }}>
-							<Text style={styles.badgeMoreText}>{showAllBadges ? '접기' : `전체 ${BADGES.length}개 보기`}</Text>
+							<Text style={styles.badgeMoreText}>{showAllBadges ? t('profile.badgeCollapse') : t('profile.badgeSeeAll', { total: BADGES.length })}</Text>
 							<IconComponent type="materialIcons" name={showAllBadges ? 'expand-less' : 'expand-more'} size={20} color={Colors.primaryDark} />
 						</PressableScale>
 
@@ -300,10 +312,10 @@ const LifeProfileScreen = () => {
 											onPress={() => openBadge(badge)}
 											scaleTo={0.94}
 											accessibilityRole="button"
-											accessibilityLabel={`${badge.label} 뱃지 자세히 보기`}>
+											accessibilityLabel={t('badge.detailLabel', { name: t(`badge.${badge.id}.label`) })}>
 											<BadgeMedal badge={badge} size={scaleWidth(46)} earned={earned} />
 											<Text style={[styles.badgeLabel, !earned && styles.badgeLabelLocked]} numberOfLines={1}>
-												{badge.label}
+												{t(`badge.${badge.id}.label`)}
 											</Text>
 										</PressableScale>
 									);
@@ -317,11 +329,11 @@ const LifeProfileScreen = () => {
 			{/* 뱃지 상세 — 이름·설명·획득 조건·희귀도를 한 장에 */}
 			<BadgeDetailModal detail={badgeDetail} onClose={() => setBadgeDetail(null)} />
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
-			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'맨 위에서 출석과 학습 보상을 한눈에 봐요.',
-				'나침반 올빼미는 먹이를 줄 때마다 자라요. 먹이 주기 버튼을 눌러 보세요.',
-				'뱃지는 딴 것부터 진열되고, 전체 목록은 눌러서 펼쳐 봐요.',
-			]} />
+			<LifeCharacterGuide
+				visible={guide.visible}
+				onClose={guide.close}
+				lines={[t('profile.guide.line1'), t('profile.guide.line2'), t('profile.guide.line3')]}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -439,12 +451,11 @@ const createStyles = (Colors: Palette) =>
 			alignItems: 'center',
 			justifyContent: 'center',
 			gap: scaleWidth(6),
-			height: scaleHeight(38),
+			minHeight: scaleHeight(38),
 			marginTop: SpacingV.sm,
 			paddingHorizontal: Spacing.md,
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.primary,
-		},
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
 		feedButtonOff: { backgroundColor: Colors.surfaceAlt },
 		feedButtonText: { flexShrink: 1, fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.textInverse },
 		feedButtonTextOff: { color: Colors.textMuted },

@@ -99,7 +99,8 @@ const initialState: LifeState = {
 	graduatedCount: 0,
 	bestTime: 0,
 	bestTower: 0,
-	petName: '역사 사자',
+	/** 빈 값이면 화면이 지금 언어의 기본 이름(pet.defaultName)을 쓴다 — 저장된 이름이 옛 언어로 굳지 않게 */
+	petName: '',
 	reminder: { enabled: false, hour: 20, minute: 0 },
 	strokeAnim: true,
 	petFeeds: 0,

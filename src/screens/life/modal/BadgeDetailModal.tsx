@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -19,13 +21,13 @@ export interface BadgeDetail {
 	at?: string;
 }
 
-/** 2026-03-04T... → 2026년 3월 4일 */
-const toDateLabel = (iso: string) => {
+/** 2026-03-04T... → 언어에 맞춘 날짜 (common.dateLong) */
+const toDateLabel = (iso: string, t: TFunction) => {
 	const date = new Date(iso);
 	if (Number.isNaN(date.getTime())) {
 		return '';
 	}
-	return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+	return t('common.dateLong', { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() });
 };
 
 /**
@@ -33,6 +35,7 @@ const toDateLabel = (iso: string) => {
  * 목록에서는 메달 하나만 보이므로, 눌렀을 때 이 네 가지가 각자 자기 자리에서 읽히게 한다.
  */
 const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onClose: () => void }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const pop = useRef(new Animated.Value(0)).current;
@@ -62,7 +65,7 @@ const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onC
 				<LinearGradient colors={earned ? tier.gradient : [Colors.surfaceAlt, Colors.border]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.stage}>
 					<View style={styles.stageTopRow}>
 						<View style={[styles.rarityPill, !earned && styles.rarityPillLocked]}>
-							<Text style={[styles.rarityPillText, !earned && styles.lockedText]}>{tier.label}</Text>
+							<Text style={[styles.rarityPillText, !earned && styles.lockedText]}>{t(`badge.rarity.${badge.rarity}`)}</Text>
 							<View style={styles.pillStars}>
 								{Array.from({ length: 4 }).map((_, index) => (
 									<IconComponent
@@ -75,7 +78,7 @@ const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onC
 								))}
 							</View>
 						</View>
-						<PressableScale style={styles.close} onPress={onClose} scaleTo={0.9} accessibilityRole="button" accessibilityLabel="닫기">
+						<PressableScale style={styles.close} onPress={onClose} scaleTo={0.9} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 							<IconComponent type="materialCommunityIcons" name="close" size={16} color={earned ? '#FFFFFF' : Colors.textSecondary} />
 						</PressableScale>
 					</View>
@@ -83,10 +86,10 @@ const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onC
 					<BadgeMedal badge={badge} size={scaleWidth(96)} earned={earned} glow />
 
 					<Text style={[styles.name, !earned && styles.lockedText]} numberOfLines={2}>
-						{badge.label}
+						{t(`badge.${badge.id}.label`)}
 					</Text>
 					<Text style={[styles.desc, !earned && styles.lockedText]} numberOfLines={2}>
-						{badge.description}
+						{t(`badge.${badge.id}.description`)}
 					</Text>
 				</LinearGradient>
 
@@ -96,8 +99,8 @@ const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onC
 							<IconComponent type="materialCommunityIcons" name="flag-checkered" size={16} color={tier.color} />
 						</View>
 						<View style={styles.factText}>
-							<Text style={styles.factLabel}>획득 조건</Text>
-							<Text style={styles.factValue}>{badge.requirement}</Text>
+							<Text style={styles.factLabel}>{t('badge.requirementLabel')}</Text>
+							<Text style={styles.factValue}>{t(`badge.${badge.id}.requirement`)}</Text>
 						</View>
 					</View>
 
@@ -111,14 +114,14 @@ const BadgeDetailModal = ({ detail, onClose }: { detail: BadgeDetail | null; onC
 							/>
 						</View>
 						<View style={styles.factText}>
-							<Text style={styles.factLabel}>{earned ? '획득한 날' : '아직 못 딴 뱃지'}</Text>
-							<Text style={styles.factValue}>{earned ? toDateLabel(at as string) : '조건을 채우면 자동으로 들어와요'}</Text>
+							<Text style={styles.factLabel}>{t(earned ? 'badge.earnedOn' : 'badge.notYet')}</Text>
+							<Text style={styles.factValue}>{earned ? toDateLabel(at as string, t) : t('badge.autoGrant')}</Text>
 						</View>
 					</View>
 				</View>
 
 				<PressableScale style={styles.button} onPress={onClose} scaleTo={0.96} accessibilityRole="button">
-					<Text style={styles.buttonText}>닫기</Text>
+					<Text style={styles.buttonText}>{t('common.close')}</Text>
 				</PressableScale>
 			</Animated.View>
 		</AppModal>
@@ -148,7 +151,7 @@ const createStyles = (Colors: Palette) =>
 			backgroundColor: 'rgba(0,0,0,0.22)',
 		},
 		rarityPillLocked: { backgroundColor: Colors.surface },
-		rarityPillText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: '#FFFFFF' },
+		rarityPillText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: '#FFFFFF', flexShrink: 1, textAlign: 'center', },
 		pillStars: { flexDirection: 'row', gap: scaleWidth(1) },
 		close: {
 			width: scaleWidth(30),
@@ -175,11 +178,10 @@ const createStyles = (Colors: Palette) =>
 			marginHorizontal: Spacing.xl,
 			marginTop: SpacingV.lg,
 			marginBottom: SpacingV.xl,
-			height: scaleHeight(48),
+			minHeight: scaleHeight(48),
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.primary,
-		},
-		buttonText: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse },
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
+		buttonText: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default BadgeDetailModal;

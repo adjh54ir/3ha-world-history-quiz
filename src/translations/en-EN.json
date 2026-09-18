@@ -1,0 +1,1328 @@
+{
+	"main": {
+		"apps": {
+			"category": {
+				"all": "All",
+				"calculator": "Calculator",
+				"quiz": "Quiz",
+				"utility": "Utility"
+			},
+			"comingSoon": "Coming Soon!",
+			"count": "{{n}} apps",
+			"download": "Get",
+			"empty": "No results",
+			"linkError": "Something went wrong while opening the link.",
+			"linkOpenFailed": "Could not open the link.",
+			"linkUnavailable": "The store link is not ready yet.",
+			"searchPlaceholder": "Search apps...",
+			"title": "📱 More apps by us"
+		},
+		"badge": {
+			"alsoEarned": "+{{n}} more earned",
+			"attend_100": {
+				"description": "You checked in on 100 days",
+				"label": "A Hundred Mornings",
+				"requirement": "100 check-ins in total"
+			},
+			"attend_200": {
+				"description": "You checked in on 200 days",
+				"label": "Two Hundred Mornings",
+				"requirement": "200 check-ins in total"
+			},
+			"attend_50": {
+				"description": "You checked in on 50 days",
+				"label": "Fifty Mornings",
+				"requirement": "50 check-ins in total"
+			},
+			"autoGrant": "It arrives on its own once you meet the condition",
+			"category_3": {
+				"description": "You finished three whole topics",
+				"label": "Three Topics Down",
+				"requirement": "Finish 3 topics completely"
+			},
+			"category_all": {
+				"description": "You studied every entry in every topic",
+				"label": "Every Topic Down",
+				"requirement": "Finish every topic"
+			},
+			"category_master": {
+				"description": "You finished a whole category",
+				"label": "Topic Conqueror",
+				"requirement": "Learn every entry in one topic"
+			},
+			"combo_10": {
+				"description": "You hit 10 right answers in a row",
+				"label": "Combo Master",
+				"requirement": "10 correct in a row in one round"
+			},
+			"combo_15": {
+				"description": "You hit 15 right answers in a row",
+				"label": "On Fire",
+				"requirement": "15 correct in a row in one round"
+			},
+			"combo_20": {
+				"description": "You hit 20 right answers in a row",
+				"label": "Combo Virtuoso",
+				"requirement": "20 correct in a row in one round"
+			},
+			"combo_30": {
+				"description": "You hit 30 right answers in a row",
+				"label": "Flawless Thirty",
+				"requirement": "30 correct in a row in one round"
+			},
+			"combo_5": {
+				"description": "You hit 5 right answers in a row",
+				"label": "Five in a Row",
+				"requirement": "5 correct in a row in one round"
+			},
+			"conditionLabel": "See how to earn the {{name}} badge",
+			"correct_100": {
+				"description": "You answered 100 questions correctly",
+				"label": "A Hundred Right",
+				"requirement": "100 correct answers in total"
+			},
+			"correct_2000": {
+				"description": "You answered 2,000 questions correctly",
+				"label": "Two Thousand Right",
+				"requirement": "2,000 correct answers in total"
+			},
+			"correct_500": {
+				"description": "You answered 500 questions correctly",
+				"label": "Five Hundred Right",
+				"requirement": "500 correct answers in total"
+			},
+			"daily_100": {
+				"description": "You finished today's quiz 100 times",
+				"label": "A Hundred Daily Sets",
+				"requirement": "Finish today's quiz 100 times"
+			},
+			"daily_30": {
+				"description": "You finished today's quiz 30 times",
+				"label": "A Month of Days",
+				"requirement": "Finish today's quiz 30 times"
+			},
+			"daily_7": {
+				"description": "You finished today's quiz 7 times",
+				"label": "Steady Hand",
+				"requirement": "Finish today's quiz 7 times"
+			},
+			"detailLabel": "See details for the {{name}} badge",
+			"earnedOn": "Earned on",
+			"exp_20000": {
+				"description": "You gathered 20,000 EXP",
+				"label": "Path of the Grand Explorer",
+				"requirement": "Reach 20,000 EXP in total"
+			},
+			"exp_5000": {
+				"description": "You gathered 5,000 EXP",
+				"label": "Weight of Experience",
+				"requirement": "Reach 5,000 EXP in total"
+			},
+			"fast_100": {
+				"description": "You gave 100 answers within 3 seconds",
+				"label": "Hand of Lightning",
+				"requirement": "100 answers correct within 3 seconds"
+			},
+			"fast_30": {
+				"description": "You gave 30 answers within 3 seconds",
+				"label": "Quick as Light",
+				"requirement": "30 answers correct within 3 seconds"
+			},
+			"favorite_20": {
+				"description": "You starred 20 entries",
+				"label": "Star Marker",
+				"requirement": "Favourite 20 entries in the dictionary"
+			},
+			"first_quiz": {
+				"description": "You finished your first quiz",
+				"label": "Challenger",
+				"requirement": "Finish 1 quiz"
+			},
+			"first_study": {
+				"description": "You studied your first entry",
+				"label": "First Step",
+				"requirement": "Learn 1 entry"
+			},
+			"learn_10": {
+				"description": "You studied 10 entries",
+				"label": "Ten Entries",
+				"requirement": "Learn 10 entries"
+			},
+			"learn_100": {
+				"description": "You studied 100 entries",
+				"label": "Trivia Scholar",
+				"requirement": "Learn 100 entries"
+			},
+			"learn_200": {
+				"description": "You studied 200 entries",
+				"label": "Two Hundred Entries",
+				"requirement": "Learn 200 entries"
+			},
+			"learn_30": {
+				"description": "You studied 30 entries",
+				"label": "Entry Collector",
+				"requirement": "Learn 30 entries"
+			},
+			"learn_300": {
+				"description": "You studied 300 entries",
+				"label": "Trivia Master",
+				"requirement": "Learn 300 entries"
+			},
+			"learn_50": {
+				"description": "You studied 50 entries",
+				"label": "Fifty Entries",
+				"requirement": "Learn 50 entries"
+			},
+			"learn_500": {
+				"description": "You studied 500 entries",
+				"label": "Five Hundred Entries",
+				"requirement": "Learn 500 entries"
+			},
+			"level_1": {
+				"description": "You finished every entry at one difficulty",
+				"label": "One Level Cleared",
+				"requirement": "Finish every entry at one difficulty"
+			},
+			"level_all": {
+				"description": "You finished every difficulty from beginner to expert",
+				"label": "Every Level Cleared",
+				"requirement": "Finish every entry at every difficulty"
+			},
+			"mission_7": {
+				"description": "You cleared every daily mission 7 times",
+				"label": "Mission Finisher",
+				"requirement": "Clear all daily missions on 7 days"
+			},
+			"notYet": "Not earned yet",
+			"owned": "Badges {{owned}} / {{total}}",
+			"perfect_quiz": {
+				"description": "You aced a quiz",
+				"label": "Perfectionist",
+				"requirement": "Score full marks in one quiz"
+			},
+			"pet_fed_10": {
+				"description": "You fed the compass owl 10 times",
+				"label": "Owl Keeper",
+				"requirement": "Feed your pet 10 times"
+			},
+			"pet_fed_35": {
+				"description": "You raised the compass owl to its final form",
+				"label": "Golden World Owl",
+				"requirement": "Feed your pet 35 times"
+			},
+			"quiz_10": {
+				"description": "You played 10 quizzes",
+				"label": "Ten Rounds",
+				"requirement": "Finish 10 quizzes"
+			},
+			"quiz_100": {
+				"description": "You played 100 quizzes",
+				"label": "A Hundred Rounds",
+				"requirement": "Finish 100 quizzes"
+			},
+			"quiz_200": {
+				"description": "You played 200 quizzes",
+				"label": "Old Campaigner",
+				"requirement": "Finish 200 quizzes"
+			},
+			"quiz_50": {
+				"description": "You played 50 quizzes",
+				"label": "Quiz Regular",
+				"requirement": "Finish 50 quizzes"
+			},
+			"quiz_500": {
+				"description": "You played 500 quizzes",
+				"label": "Legend of Five Hundred",
+				"requirement": "Finish 500 quizzes"
+			},
+			"rarity": {
+				"common": "Common",
+				"epic": "Epic",
+				"legendary": "Legendary",
+				"rare": "Rare"
+			},
+			"requirementLabel": "How to earn it",
+			"star_30": {
+				"description": "You gathered 30 category stars",
+				"label": "Star Collector",
+				"requirement": "Collect 30 topic stars"
+			},
+			"star_60": {
+				"description": "You gathered 60 category stars",
+				"label": "Garden of Stars",
+				"requirement": "Collect 60 topic stars"
+			},
+			"streak_14": {
+				"description": "You checked in 14 days running",
+				"label": "Two Perfect Weeks",
+				"requirement": "Check in 14 days in a row"
+			},
+			"streak_3": {
+				"description": "You checked in 3 days running",
+				"label": "Three in a Row",
+				"requirement": "Check in 3 days in a row"
+			},
+			"streak_30": {
+				"description": "You checked in 30 days running",
+				"label": "Perfect Month",
+				"requirement": "Check in 30 days in a row"
+			},
+			"streak_7": {
+				"description": "You checked in 7 days running",
+				"label": "Perfect Week",
+				"requirement": "Check in 7 days in a row"
+			},
+			"time_20": {
+				"description": "You passed 20 points in the time challenge",
+				"label": "Lightning Hands",
+				"requirement": "Score 20 in the time challenge"
+			},
+			"time_40": {
+				"description": "You passed 40 points in the time challenge",
+				"label": "Master of Time",
+				"requirement": "Score 40 in the time challenge"
+			},
+			"tower_10": {
+				"description": "You reached floor 10 of the tower",
+				"label": "Tower Climber",
+				"requirement": "Reach floor 10 of the tower"
+			},
+			"tower_20": {
+				"description": "You reached floor 20 of the tower",
+				"label": "Lord of the Tower",
+				"requirement": "Reach floor 20 of the tower"
+			},
+			"tower_5": {
+				"description": "You reached floor 5 of the tower",
+				"label": "First Ascent",
+				"requirement": "Reach floor 5 of the tower"
+			},
+			"unlockConfirm": "Claim",
+			"unlockTitle": "You earned a new badge!",
+			"wrong_10": {
+				"description": "You cleared 10 missed questions",
+				"label": "Power of Review",
+				"requirement": "Clear 10 missed questions"
+			},
+			"wrong_50": {
+				"description": "You cleared 50 missed questions",
+				"label": "Review Conqueror",
+				"requirement": "Clear 50 missed questions"
+			},
+			"wrong_clear": {
+				"description": "You cleared every missed question at once",
+				"label": "Clean Review Note",
+				"requirement": "Empty the review note completely"
+			}
+		},
+		"calendar": {
+			"dayLong": {
+				"fri": "Friday",
+				"mon": "Monday",
+				"sat": "Saturday",
+				"sun": "Sunday",
+				"thu": "Thursday",
+				"tue": "Tuesday",
+				"wed": "Wednesday"
+			},
+			"month": {
+				"1": "January",
+				"10": "October",
+				"11": "November",
+				"12": "December",
+				"2": "February",
+				"3": "March",
+				"4": "April",
+				"5": "May",
+				"6": "June",
+				"7": "July",
+				"8": "August",
+				"9": "September"
+			},
+			"today": "Today"
+		},
+		"checkin": {
+			"arrowHint": "Use the arrows to look back over your check-ins!",
+			"claim": "Check in and claim",
+			"claimWithFeeds": "Check in and claim · {{n}} food",
+			"cycle": "Special reward every {{days}} days",
+			"cycleNote": "Day 7 +3 · 14 +4 · 21 +5 · 28 +6, all at once",
+			"cycleRest": "{{days}} days to the special check-in",
+			"cycleStart": "Starts today!",
+			"doneBanner": "Checked in today!",
+			"doneToday": "Checked in today too!",
+			"feedNote": "Your pet only grows when fed — feed it from the Activity tab",
+			"got": "You got {{n}} pet food",
+			"held": "{{n}} in stock",
+			"hero": "Drop in daily and your character stamps the calendar and hands you pet food!",
+			"petLabel": "Compass owl pet",
+			"rewardTitle": "Today's check-in reward",
+			"seeTomorrow": "See you tomorrow",
+			"specialNow": "Day {{days}} special · {{n}} food",
+			"specialTitle": "Day {{days}} special check-in",
+			"streakNow": "{{days}}-day streak",
+			"title": "Today's check-in",
+			"willGet": "Check in for {{n}} pet food",
+			"yearMonth": "{{month}}/{{year}}"
+		},
+		"common": {
+			"appName": "World Knowledge Quiz",
+			"back": "Back",
+			"cancel": "Cancel",
+			"close": "Close",
+			"confirm": "OK",
+			"countUnit": "{{n}}",
+			"dateLong": "{{month}}/{{day}}/{{year}}",
+			"delete": "Delete",
+			"done": "Done",
+			"error": "Error",
+			"goBack": "Go back",
+			"leave": "Leave",
+			"meridiem": {
+				"am": "AM",
+				"pm": "PM"
+			},
+			"new": "NEW",
+			"next": "Next",
+			"retry": "Try again",
+			"scrollTop": "Back to top",
+			"tenThousand": "{{n}}0k",
+			"thousand": "{{n}}k",
+			"timeFormat": "{{time}} {{meridiem}}"
+		},
+		"entry": {
+			"close": "Close",
+			"favLabel": "Favourite {{name}}"
+		},
+		"error": {
+			"body": "Your records are safe. Tap below to reopen.",
+			"retry": "Try again",
+			"title": "Something went wrong"
+		},
+		"exitQuiz": {
+			"body": "Your progress in this round will not be saved.",
+			"title": "Leave the quiz?"
+		},
+		"grade": {
+			"atTop": "You reached the final stage, {{stage}}",
+			"convertCards": "{{n}} study cards",
+			"convertNote": "Counted as a clean sweep of all {{perQuiz}} questions ({{corrects}} correct · {{correctExp}} EXP each · {{cardExp}} EXP per card)",
+			"convertOr": "or",
+			"convertQuiz": "{{n}} quizzes",
+			"exp": {
+				"attendance": {
+					"label": "Daily check-in",
+					"note": "Streak bonus stacks on top"
+				},
+				"correct": {
+					"label": "Each correct answer",
+					"note": "Tower and time challenges count the same"
+				},
+				"daily": {
+					"label": "Finish today's quiz",
+					"note": "Extra once all five are done"
+				},
+				"learnWord": {
+					"label": "Each item learned",
+					"note": "Only the first time counts"
+				},
+				"mission": {
+					"label": "Clear every daily mission",
+					"note": ""
+				}
+			},
+			"got": "Earned",
+			"guide": {
+				"line1": "Gather EXP and your history lion grows to its next stage.",
+				"line2": "Study, quizzes, check-ins and challenges all earn EXP.",
+				"line3": "EXP never goes down, so your grade never slips."
+			},
+			"howFootnote": "EXP only ever adds up, so your grade never drops.",
+			"howSection": "How to earn EXP",
+			"levelChip": "Lv.{{level}} · {{total}} stages in all",
+			"now": "Now",
+			"peek": "Preview",
+			"peekLabel": "Preview {{stage}}",
+			"preview": {
+				"hint": "{{quizzes}} quizzes ({{corrects}} correct) or {{cards}} study cards will get you there",
+				"remain": "{{exp}} more EXP to meet them"
+			},
+			"stageFrom": "From {{exp}} EXP",
+			"stageSection": "{{total}} growth stages",
+			"stageStart": "Where everyone starts",
+			"subtitle": "Gather EXP and raise your history lion",
+			"title": "Grade",
+			"toNext": "{{exp}} EXP to go until {{stage}}",
+			"total": "{{exp}} EXP gathered so far"
+		},
+		"guide": {
+			"eyebrow": "Try it like this",
+			"gotIt": "Got it",
+			"gotItFormal": "Got it",
+			"next": "Next",
+			"nextTip": "Next tip",
+			"reopen": "Show this screen's tips again",
+			"toNext": "Go to the next tip"
+		},
+		"heatmap": {
+			"day": {
+				"fri": "F",
+				"mon": "M",
+				"sat": "S",
+				"sun": "S",
+				"thu": "T",
+				"tue": "T",
+				"wed": "W"
+			},
+			"from": "From {{date}}",
+			"recent": "Last {{weeks}} weeks · {{days}} days",
+			"title": "Check-in history"
+		},
+		"home": {
+			"atTop": "You reached the final stage",
+			"attendance": "Check-ins",
+			"attendanceDays": "{{days}} days",
+			"badgeCount": "{{owned}} / {{total}}",
+			"badges": "Badges",
+			"checkInAction": "Check in  +{{exp}} EXP",
+			"checkInDone": "Checked in today",
+			"checkInLabel": "Check in for {{exp}} EXP",
+			"checkedIn": "Checked in! +{{exp}} EXP · {{feeds}} pet food",
+			"checkedInSpecial": "Day {{days}} special check-in! You got {{feeds}} food",
+			"checkedInStreak": "You are on a {{days}}-day streak",
+			"greet": {
+				"afternoon": "One step, one thing at a time",
+				"evening": "Wind down with a trip round the world",
+				"morning": "Good morning! Start with today's quiz",
+				"night": "Late night — one more question?"
+			},
+			"guardianFed": "{{stage}} · your check-in guardian, fed {{n}} times",
+			"guardianWaiting": "{{stage}} · {{n}} food not given yet. Tap to go feed",
+			"guide": {
+				"line1": "Home is where your day starts. Check in for EXP and pet food.",
+				"line2": "Tap the lion for a word — it grows a stage as you study.",
+				"line3": "The cards below take you straight into study, quizzes and challenges."
+			},
+			"petHint": "Tap the history lion for a word",
+			"petTalk": {
+				"1": "Let's fly round the world together!",
+				"2": "You can feed me from the Activity tab",
+				"3": "I am the compass owl. Feed me and my wings grow!",
+				"4": "Each check-in gives you one piece of food"
+			},
+			"quizStart": {
+				"desc": "Pick a topic — capitals, flags, myths, constellations",
+				"title": "Start a quiz"
+			},
+			"review": {
+				"empty": "Your review note is clean. Missed questions land here",
+				"title": "Review misses",
+				"waiting": "{{n}} missed questions waiting. Two right answers and they graduate!"
+			},
+			"sectionChallenge": "Challenge",
+			"sectionLearn": "Learn",
+			"sectionRecords": "Records",
+			"seeTomorrow": "See you tomorrow!",
+			"streakChip": "{{days}}-day streak",
+			"streakStart": "Check in today and start a streak",
+			"studyMode": {
+				"desc": "One card at a time or a quick scroll — your choice",
+				"title": "Study mode"
+			},
+			"time": {
+				"best": "Best {{score}} · beat it today?",
+				"desc": "Answer as many as you can in {{sec}} seconds",
+				"title": "Time challenge"
+			},
+			"tip": {
+				"1": "The world is wide and there is plenty to see",
+				"2": "One thing today — let's do it together!",
+				"3": "A little every day is the fastest way",
+				"4": "Do not forget to check in!"
+			},
+			"toNext": "{{exp}} EXP to the next stage",
+			"tower": {
+				"best": "Best floor {{floor}} · go higher?",
+				"desc": "Climb floor by floor with {{lives}} lives",
+				"title": "Tower challenge"
+			}
+		},
+		"level": {
+			"1": {
+				"desc": "Everyday knowledge anyone uses",
+				"label": "Beginner"
+			},
+			"2": {
+				"desc": "Things you meet often in daily life",
+				"label": "Intermediate"
+			},
+			"3": {
+				"desc": "What turns up in news and at work",
+				"label": "Advanced"
+			},
+			"4": {
+				"desc": "Specialist and formal knowledge",
+				"label": "Expert"
+			}
+		},
+		"mission": {
+			"allDone": "You have claimed today's reward. See you tomorrow!",
+			"claim": "Claim",
+			"claimLabel": "Claim the daily mission EXP",
+			"claimed": "Claimed",
+			"claimedToast": "Daily mission reward claimed: +{{exp}} EXP",
+			"learn": "Learn 5 entries",
+			"progress": "{{done}} of {{total}} done · {{exp}} EXP when all are cleared",
+			"quiz": "Play 1 quiz",
+			"ready": "All done! Tap the reward button for +{{exp}} EXP",
+			"review": "Review 2 missed questions",
+			"rewardLabel": "Daily mission reward",
+			"section": "Today's missions"
+		},
+		"notify": {
+			"daily": {
+				"body": "Check in and fill your day with today's five questions",
+				"title": "Today's trip round the world"
+			},
+			"review": {
+				"body": "{{n}} items left in your review note. Two right answers and they graduate!",
+				"title": "Time to review your misses!"
+			},
+			"streak": {
+				"body": "🔥 {{days}}-day streak! Nothing yet today — do it now and it carries on.",
+				"first": "Just one question today starts your streak.",
+				"title": "Your streak is about to break"
+			},
+			"word": {
+				"body": "Five questions for today — shall we?",
+				"title": "📚 Today's world knowledge"
+			}
+		},
+		"oss": {
+			"caption": {
+				"figure": "Portraits fetched from Wikimedia — all public domain, so no attribution is required",
+				"landmark": "Photos fetched from Wikimedia — attribution is a licence condition",
+				"library": "Open source the app actually ships (installed versions)",
+				"sound": "Audio the app actually plays"
+			},
+			"item": {
+				"bgm": "Quiz and challenge background music",
+				"figure": "122 portraits of world figures",
+				"sfx": "Sound effects for check-ins, right and wrong answers"
+			},
+			"license": {
+				"inHouse": "In-house"
+			},
+			"section": {
+				"figure": "Portraits",
+				"landmark": "Landmark photos",
+				"library": "Libraries",
+				"sound": "Sound"
+			},
+			"source": "Source",
+			"thanks": "Thanks to the open-source community 🙏",
+			"title": "Open-source licenses"
+		},
+		"pet": {
+			"avatarLabel": "Pet at the {{stage}} stage",
+			"defaultName": "History Lion",
+			"fedLeft": "{{n}} food left",
+			"fedToast": "Fed!",
+			"feedEmpty": "No food left. Check in to earn some",
+			"feedGrownUp": "It has grown all the way to the final stage",
+			"growth": {
+				"final": "Final evolution complete!",
+				"got": "You got {{name}}!",
+				"more": "Feed it more and it grows into its next form",
+				"step": "Stage {{level}} of {{total}}"
+			},
+			"guardian": {
+				"eggAsleep": "Sleeping Compass Egg",
+				"eggWaking": "Stirring Compass Egg",
+				"golden": "Golden World Owl",
+				"guardian": "World Guardian Owl",
+				"mapwing": "Mapwing Owl",
+				"owlet": "Little Explorer Owl"
+			},
+			"levelUp": {
+				"body": "You reached {{exp}} EXP. Shall we keep going?",
+				"confirm": "Nice!",
+				"title": "{{name}} has grown!",
+				"titleGolden": "{{name}} goes golden!"
+			},
+			"noEgg": "No egg yet",
+			"stage": {
+				"apprentice": "Apprentice Explorer",
+				"explorer": "Grand Explorer",
+				"golden": "Golden Grand Explorer",
+				"seeker": "World Seeker",
+				"sprout": "Sprouting Explorer",
+				"traveler": "Seasoned Traveller"
+			}
+		},
+		"picker": {
+			"all": "All",
+			"title": "Pick a topic"
+		},
+		"profile": {
+			"badgeCollapse": "Collapse",
+			"badgeEmpty": "No badges yet — start with the goals below!",
+			"badgeGoals": "Next goals",
+			"badgeSection": "Badges",
+			"badgeSeeAll": "See all {{total}}",
+			"feed": "Feed",
+			"feedGiven": "{{n}} fed",
+			"feedGrownUp": "Fully grown · no more food needed",
+			"feedHeld": "· {{n}} in stock",
+			"feedNone": "No food · earn it from check-ins",
+			"feedOne": "1 food",
+			"feedStage": "{{n}} food",
+			"feedWithStock": "Feed · {{n}} in stock",
+			"guardianCaption": "Compass owl · grows on food",
+			"guardianFed": "{{stage}} · fed {{n}} times",
+			"guardianFinal": "All 35 food given — the fully evolved Golden World Owl",
+			"guardianNext": "{{n}} more food until {{stage}}",
+			"guardianNone": "No egg yet — it arrives once you feed it",
+			"guide": {
+				"line1": "The top shows your check-ins and study rewards at a glance.",
+				"line2": "The compass owl grows each time you feed it. Try the Feed button.",
+				"line3": "Earned badges come first; tap to expand the full list."
+			},
+			"holdings": "What you hold",
+			"holdingsDesc": "Rewards gathered as you studied",
+			"petGrowHint": "{{exp}} more EXP and it grows into {{stage}}",
+			"petSection": "Pet",
+			"petTopHint": "It reached the top stage, {{stage}}",
+			"stat": {
+				"attendance": "Check-ins",
+				"attendanceUnit": "days",
+				"badges": "Badges",
+				"feeds": "Pet food",
+				"feedsUnit": ""
+			},
+			"subtitle": "Your study records and growth",
+			"title": "My activity"
+		},
+		"quiz": {
+			"done": "Done",
+			"guide": {
+				"line1": "Pick one of four options and you see the answer right away.",
+				"line2": "An explanation appears under the card — read it and it sticks longer.",
+				"line3": "Misses go to your review note and graduate after two right answers."
+			},
+			"imageFailed": "Could not load the image",
+			"missCount": "{{n}} missed",
+			"noQuestions": "No questions can be built here.",
+			"result": {
+				"half": "More than half the way",
+				"low": "One more look and it will stick",
+				"perfect": "A clean sweep!"
+			},
+			"retry": "Play again",
+			"reviewCards": "Review as cards",
+			"shareResult": "Share the result",
+			"shareTitle": "Share today's quiz result",
+			"source": {
+				"daily": "Today's quiz",
+				"wrong": "Review misses"
+			}
+		},
+		"report": {
+			"down": "A quieter week. Start again with one question today.",
+			"flat": "No change",
+			"range": "{{from}} – {{to}} · compared with last week",
+			"share": "Share this week",
+			"shareFailed": "Could not open sharing. Please try again in a moment",
+			"shareLabel": "Share the weekly report",
+			"stat": {
+				"attendance": "Check-ins",
+				"attendanceUnit": "days",
+				"newItems": "New entries",
+				"newItemsUnit": "",
+				"rate": "Accuracy",
+				"solved": "Questions",
+				"solvedUnit": ""
+			},
+			"text": {
+				"attendance": "📅 Check-ins: {{n}} days",
+				"head": "{{app}} · weekly report {{from}} – {{to}}",
+				"newItems": "📘 New entries: {{n}}",
+				"rate": "🎯 Accuracy: {{rate}}",
+				"solved": "❓ Questions solved: {{n}}"
+			},
+			"title": "Weekly report",
+			"up": "Some numbers beat last week. Keep this going!"
+		},
+		"reward": {
+			"character": "🌟 Character",
+			"clearCondition": "🏆 Clear condition",
+			"costume": "👕 Costume",
+			"earned": "🎁 Reward",
+			"special": "✨ Special item"
+		},
+		"setting": {
+			"alarm": {
+				"descOff": "A nudge so you do not miss your check-in and today's quiz",
+				"descOn": "We will remind you every day at {{time}}",
+				"label": "Daily study reminder",
+				"noPermission": "Notifications are not allowed. Please turn them on in Settings",
+				"section": "Reminders",
+				"timeChange": "Change",
+				"turnedOff": "Reminders off",
+				"turnedOn": "We will remind you every day at {{time}}"
+			},
+			"apps": {
+				"notReleased": "This app is still on the way",
+				"openStore": "Open {{title}} in the store",
+				"seeAll": "See all",
+				"seeAllLabel": "See all apps by us",
+				"storeFailed": "Could not open the store"
+			},
+			"dataNotice": "{{items}} entries on capitals, landmarks, myths, space and sport, sorted into {{topics}} topics.",
+			"dev": {
+				"completeAll": "Mark every item as learned",
+				"completeQuiz": "Mark today's quiz as finished",
+				"doneAll": "Marked {{n}} items as learned",
+				"doneQuiz": "Today's quiz marked as a perfect run",
+				"section": "Developer (DEV)",
+				"tapsLeft": "{{left}} more taps to unlock the developer menu",
+				"unlocked": "Developer menu unlocked"
+			},
+			"guide": {
+				"line1": "This is where you set the theme, type, sound and reminders your way.",
+				"line2": "Share the app from the top, and find more apps by us under About at the bottom."
+			},
+			"info": {
+				"homepage": "Our website",
+				"oss": "Open-source licenses",
+				"otherApps": "More apps by us",
+				"review": "Leave a store review",
+				"section": "About",
+				"version": "Version"
+			},
+			"language": {
+				"changed": "App language switched to {{label}}",
+				"label": "App language",
+				"notice": "Only the interface changes. Quiz questions and study cards stay in Korean.",
+				"section": "Language"
+			},
+			"permission": {
+				"desc": {
+					"notifications": "Needed to send you the daily study reminder",
+					"tracking": "Used to show you more relevant ads"
+				},
+				"label": {
+					"notifications": "Notifications",
+					"tracking": "App tracking"
+				},
+				"notice": "Turning a permission off only disables that feature — everything else keeps working.",
+				"section": "Permissions",
+				"status": {
+					"blocked": "Blocked",
+					"denied": "Not set",
+					"granted": "Allowed",
+					"limited": "Limited",
+					"unavailable": "Unavailable"
+				}
+			},
+			"report": {
+				"best": "· Time challenge best {{time}} pts · Tower best floor {{tower}}",
+				"head": "📘 {{app}} — this week",
+				"learned": "· Learned {{done}} of {{total}}",
+				"pet": "· {{name}} Lv.{{level}} {{stage}}",
+				"quiz": "· {{plays}} quizzes · {{correct}} of {{total}} correct{{rate}}",
+				"section": "Study report",
+				"shareWeek": "Share this week",
+				"streak": "· {{days}}-day streak"
+			},
+			"reset": {
+				"action": "Erase",
+				"all": {
+					"desc": "Records plus EXP, pet and badges",
+					"done": "All data erased",
+					"label": "Reset everything",
+					"summary": "Study and quiz records, EXP, your pet and every badge will be gone. This cannot be undone.",
+					"title": "Erase all your data?"
+				},
+				"chip": "Reset",
+				"progress": {
+					"desc": "Completed cards, review notes and quiz history",
+					"done": "Study and quiz records erased",
+					"label": "Reset study records",
+					"summary": "Completed marks, review notes, quiz history and today's quiz will be erased. EXP, your pet and badges stay.",
+					"title": "Erase your study records?"
+				},
+				"section": "Reset data",
+				"undo": "Undo",
+				"undone": "Reset undone"
+			},
+			"share": {
+				"button": "Share",
+				"comingSoon": "Coming soon.",
+				"intro": "Here is an app I have been enjoying lately — thought you might like it! 😊",
+				"linkLead": "👇 Grab it from the links below",
+				"notReleased": "It is not on the stores yet",
+				"subtitle": "Share it with family, friends and anyone who would enjoy it!",
+				"title": "Enjoying the app?"
+			},
+			"sound": {
+				"bgm": {
+					"desc": "Plays quietly during study, quizzes and challenges",
+					"label": "Background music",
+					"off": "Background music off",
+					"on": "Background music plays during study and quizzes"
+				},
+				"section": "Sound",
+				"sfx": {
+					"desc": "Plays a sound for right answers, wrong answers and check-ins",
+					"label": "Sound effects",
+					"off": "Sound effects off",
+					"on": "Sound effects on"
+				}
+			},
+			"subtitle": "Theme, type and reminders, your way",
+			"theme": {
+				"changed": "Appearance switched to {{label}}",
+				"dark": {
+					"hint": "Always shows the dark screen",
+					"label": "Dark"
+				},
+				"light": {
+					"hint": "Always shows the bright screen",
+					"label": "Light"
+				},
+				"section": "Appearance"
+			},
+			"title": "Settings"
+		},
+		"shorts": {
+			"guide": {
+				"line1": "Swipe up and down — one entry per screen.",
+				"line2": "Anything you linger on counts as learned — even a quick scroll builds progress."
+			}
+		},
+		"stats": {
+			"byTopic": "Progress by topic",
+			"guide": {
+				"line1": "See your study, quiz and check-in records on one screen.",
+				"line2": "This week's card shows how much you gained on last week.",
+				"line3": "Topic stars weigh progress and accuracy together — up to three."
+			},
+			"note": {
+				"doneBody": "Every topic learned — a fine record of exploration.",
+				"doneTitle": "You completed the world map!",
+				"emptyBody": "Start studying or take a quiz and your growth shows up here.",
+				"emptyTitle": "Shall we make a first record?",
+				"milestoneBody": "Your exploration log is filling in nicely.",
+				"milestoneTitle": "Past {{percent}}% overall",
+				"streakBody": "Steady exploring is piling up into real knowledge.",
+				"streakTitle": "Day {{days}} and counting"
+			},
+			"subtitle": "{{percent}}% overall",
+			"tile": {
+				"attendance": "Check-ins",
+				"attendanceSub": "days · {{streak}}-day streak",
+				"bestTime": "Time best",
+				"bestTimeUnit": "pts",
+				"bestTower": "Tower best",
+				"bestTowerUnit": "floor",
+				"learned": "Learned",
+				"plays": "Quizzes",
+				"playsUnit": "rounds",
+				"rate": "Accuracy",
+				"stars": "Topic stars",
+				"wrong": "Review note",
+				"wrongUnit": "items"
+			},
+			"title": "Stats"
+		},
+		"study": {
+			"empty": "Nothing to show here.",
+			"guide": {
+				"line1": "Use the buttons below to flip through one card at a time.",
+				"line2": "Every card you open counts as learned — progress and EXP go up.",
+				"line3": "Easy ones come first; harder entries open up as you go."
+			},
+			"next": "Next entry",
+			"nextShort": "Next",
+			"prev": "Previous entry",
+			"toQuiz": "Check with a quiz"
+		},
+		"studyMode": {
+			"card": {
+				"desc": "Pick a topic and flip through one card at a time",
+				"title": "Card study"
+			},
+			"shorts": {
+				"desc": "One entry per screen — swipe up and skim",
+				"title": "Shorts study"
+			},
+			"subtitle": "The same content, two ways to read it",
+			"title": "How shall we study?"
+		},
+		"tab": {
+			"home": "Home",
+			"profile": "Activity",
+			"setting": "Settings",
+			"stats": "Stats",
+			"today": "Today",
+			"words": "Dictionary"
+		},
+		"time": {
+			"again": "Try again",
+			"bestLabel": "Best score",
+			"bestSuffix": " · best {{score}}",
+			"combo": "🔥 {{n}} in a row",
+			"comboNote": "Answer in a row for a bonus: +5 from three, +10 from five.",
+			"exit": "Leave",
+			"guide": {
+				"line1": "A round about answering as many as you can before time runs out.",
+				"line2": "Streaks earn a bonus; run out of lives and it ends even with time left.",
+				"line3": "Pick a topic and you can compete only in what you are good at."
+			},
+			"intro": "Answer as many as you can in {{sec}} seconds",
+			"left": "{{sec}}s",
+			"limitLabel": "Time limit (s)",
+			"livesLabel": "Lives",
+			"newRecord": " · new record!",
+			"pickTopic": "Which topic shall we take on?",
+			"resultBody": "You got {{correct}} right{{extra}}",
+			"score": "{{score}} pts",
+			"start": "Start",
+			"title": "Time challenge"
+		},
+		"topic": {
+			"capital": {
+				"description": "Countries and capitals, flags and continents",
+				"label": "World Capitals",
+				"mode": {
+					"capital": {
+						"label": "Name the capital",
+						"question": "What is the capital here?"
+					},
+					"continent": {
+						"label": "Name the continent",
+						"question": "Which continent is this in?"
+					},
+					"country": {
+						"label": "Name the country",
+						"question": "Which place has this city as its capital?"
+					},
+					"flag": {
+						"label": "Name the flag",
+						"question": "Whose flag is this?"
+					}
+				}
+			},
+			"constellation": {
+				"description": "Names to find in the night sky",
+				"label": "Constellations",
+				"mode": {
+					"image": {
+						"label": "Name the picture",
+						"question": "Which constellation is in the picture?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Which constellation matches this description?"
+					},
+					"season": {
+						"label": "When to see it",
+						"question": "When is it easiest to spot?"
+					},
+					"star": {
+						"label": "Brightest star",
+						"question": "What is this constellation's leading star?"
+					}
+				}
+			},
+			"event": {
+				"description": "The days that changed the world — when and where",
+				"label": "World History Events",
+				"mode": {
+					"century": {
+						"label": "When it happened",
+						"question": "When did this happen?"
+					},
+					"country": {
+						"label": "Which country",
+						"question": "Which country is closest to this event?"
+					},
+					"kind": {
+						"label": "What kind of event",
+						"question": "How is this event classified?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Which event matches this description?"
+					}
+				}
+			},
+			"figure": {
+				"description": "People who changed the world — when, where and what",
+				"label": "Great Figures",
+				"mode": {
+					"country": {
+						"label": "Which country",
+						"question": "Which country was this person from?"
+					},
+					"era": {
+						"label": "When they lived",
+						"question": "When was this person mainly active?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Who matches this description?"
+					},
+					"portrait": {
+						"label": "Name the portrait",
+						"question": "Who is in the portrait?"
+					},
+					"role": {
+						"label": "What they did",
+						"question": "What did this person do?"
+					}
+				}
+			},
+			"landmark": {
+				"description": "Places you know from photos — but where are they?",
+				"label": "World Landmarks",
+				"mode": {
+					"city": {
+						"label": "Where is it",
+						"question": "Where is this landmark?"
+					},
+					"country": {
+						"label": "Name the country",
+						"question": "Which country is this landmark in?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Which landmark matches this description?"
+					},
+					"photo": {
+						"label": "Name the photo",
+						"question": "Which landmark is in the photo?"
+					}
+				}
+			},
+			"myth": {
+				"description": "Gods, heroes and monsters",
+				"label": "Greek & Roman Myths",
+				"mode": {
+					"domain": {
+						"label": "What they rule",
+						"question": "What is this figure in charge of?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Who matches this description?"
+					},
+					"portrait": {
+						"label": "Name the picture",
+						"question": "Who is in the picture?"
+					},
+					"roman": {
+						"label": "Roman name",
+						"question": "What is this god's Roman name?"
+					}
+				}
+			},
+			"nature": {
+				"description": "Rivers and mountains, deserts and lakes on the map",
+				"label": "World Landforms",
+				"mode": {
+					"continent": {
+						"label": "Which continent",
+						"question": "Which continent is it on?"
+					},
+					"country": {
+						"label": "Which country",
+						"question": "Which country is it in?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Which place matches this description?"
+					}
+				}
+			},
+			"olympic": {
+				"description": "Host cities and top nations",
+				"label": "Summer Olympics",
+				"mode": {
+					"city": {
+						"label": "Host city",
+						"question": "Which city held these Games?"
+					},
+					"host": {
+						"label": "Host country",
+						"question": "Which country hosted these Games?"
+					},
+					"top": {
+						"label": "Top nation",
+						"question": "Which country won the most golds at these Games?"
+					}
+				}
+			},
+			"space": {
+				"description": "Planets, moons and beyond",
+				"label": "The Solar System",
+				"mode": {
+					"image": {
+						"label": "Name the picture",
+						"question": "Which body is in the picture?"
+					},
+					"kind": {
+						"label": "Type of body",
+						"question": "How is this body classified?"
+					},
+					"name": {
+						"label": "Guess from the description",
+						"question": "Which body matches this description?"
+					},
+					"order": {
+						"label": "Which planet in order",
+						"question": "Which planet out from the Sun is it?"
+					}
+				}
+			},
+			"winter": {
+				"description": "Hosts and champions on snow and ice",
+				"label": "Winter Olympics",
+				"mode": {
+					"city": {
+						"label": "Host city",
+						"question": "Which city held these Games?"
+					},
+					"host": {
+						"label": "Host country",
+						"question": "Which country hosted these Games?"
+					},
+					"top": {
+						"label": "Top nation",
+						"question": "Which country won the most golds at these Games?"
+					}
+				}
+			},
+			"worldcup": {
+				"description": "A history of hosts and winners",
+				"label": "FIFA World Cup",
+				"mode": {
+					"host": {
+						"label": "Host country",
+						"question": "Which country hosted this tournament?"
+					},
+					"runnerUp": {
+						"label": "Runner-up",
+						"question": "Who finished second in this tournament?"
+					},
+					"winner": {
+						"label": "Winner",
+						"question": "Who won this tournament?"
+					}
+				}
+			}
+		},
+		"topics": {
+			"cardCount": "{{count}} entries · {{modes}} modes",
+			"guide": {
+				"line1": "Pick a topic and you can start studying or quizzing right away.",
+				"line2": "Bottom left of a card is study, bottom right is quiz.",
+				"line3": "Each topic asks in several ways, so it never plays out the same."
+			},
+			"heroDesc": "Pick a topic you like and open up the world.",
+			"heroTitle": "Where shall we start?",
+			"quiz": "Quiz",
+			"quizLabel": "{{topic}} quiz",
+			"study": "Study",
+			"studyLabel": "Study {{topic}} cards",
+			"subtitle": "{{topics}} topics · {{items}} entries",
+			"title": "World Knowledge"
+		},
+		"tower": {
+			"again": "Climb again",
+			"bandFrom": "From floor {{from}}",
+			"bandRange": "Floors {{from}}–{{to}}",
+			"best": "You have climbed to floor {{floor}} so far",
+			"bestLabel": "Best floor",
+			"exit": "Leave",
+			"floor": "Floor {{floor}}",
+			"guide": {
+				"line1": "Answer the questions on each floor and climb one at a time.",
+				"line2": "Every three floors gets harder; when lives run out, that spot is your best.",
+				"line3": "Pick a topic and you can compete only in what you are good at."
+			},
+			"harder": "It gets harder as you climb",
+			"intro": "Climb floor by floor and see how far you get",
+			"level": {
+				"1": {
+					"bossDescription": "A forest nuisance forever after the goblin's buckwheat jelly",
+					"bossName": "Grunt the Greedy Boar",
+					"bossTitle": "🐗 Level 1 boss",
+					"clearCondition": "Clear every beginner question",
+					"name": "Beginner Tower",
+					"rewardName": "Beginner Hat"
+				},
+				"2": {
+					"bossDescription": "A stubborn giant blocking the rocky pass — only a quiz will move him",
+					"bossName": "Stonewall the Stubborn Giant",
+					"bossTitle": "🗿 Level 2 boss",
+					"clearCondition": "Clear every intermediate question",
+					"name": "Intermediate Tower",
+					"rewardName": "Intermediate Cloak"
+				},
+				"3": {
+					"bossDescription": "A cunning fox spirit who appears out of the valley mist",
+					"bossName": "Charm, the Thousand-Year Fox",
+					"bossTitle": "🦊 Level 3 boss",
+					"clearCondition": "Clear every advanced question",
+					"name": "Advanced Tower",
+					"rewardName": "Legendary Guardian"
+				},
+				"4": {
+					"bossDescription": "A commanding lord of goblins, crowned and carrying a golden club",
+					"bossName": "Yeomra, the Goblin King",
+					"bossTitle": "👹 Level 4 final boss",
+					"clearCondition": "Clear every expert question",
+					"name": "Final Tower",
+					"rewardName": "Golden Goblin Club"
+				}
+			},
+			"livesLabel": "Lives",
+			"livesNote": "Lives carry over between floors. When they run out, that floor is your record.",
+			"outOfLives": "Out of lives. This is your record for this run.",
+			"perFloor": "Questions per floor",
+			"pickTopic": "Which topic shall we climb with?",
+			"progress": "{{at}} / {{total}} questions",
+			"start": "Start climbing",
+			"title": "Tower challenge"
+		},
+		"version": {
+			"current": "Current",
+			"latest": "Latest",
+			"message": "This update is required to keep going.\nPlease update and continue learning.",
+			"notice": "You can keep using the app once the update is finished.",
+			"title": "A new version is out",
+			"update": "Update now"
+		},
+		"words": {
+			"all": "All",
+			"clearSearch": "Clear search",
+			"count": "{{n}} entries",
+			"detailLabel": "See details for {{name}}",
+			"empty": "Nothing matched your search.",
+			"favAdded": "Added to favourites",
+			"favLabel": "Favourite {{name}}",
+			"favOnly": "Favourites only",
+			"favRemoved": "Removed from favourites",
+			"guide": {
+				"line1": "Narrow things down with the topic chips and search.",
+				"line2": "Tap a row for the full description; tap the star to save it.",
+				"line3": "Tap the star chip to see only your favourites."
+			},
+			"searchLabel": "Search entries",
+			"searchPlaceholder": "Search name, description or capital",
+			"title": "World Knowledge Dictionary"
+		}
+	}
+}

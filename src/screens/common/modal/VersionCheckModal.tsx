@@ -7,6 +7,7 @@ import { useAnimationRunner } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { MODAL_MAX_WIDTH, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, BackHandler, Easing, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import VersionCheck from 'react-native-version-check';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,6 +40,7 @@ export const needsForceUpdate = (current: string, latest: string): boolean => {
  * - 닫기 버튼도, 바깥 탭도, 안드로이드 뒤로가기도 없다. 업데이트를 눌러야만 다음으로 넘어간다.
  */
 const VersionCheckModal = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	// 언마운트 시 진행 중인 연출을 모두 정지한다 (메모리·프레임 콜백 정리)
@@ -140,27 +142,27 @@ const VersionCheckModal = () => {
 						<IconComponent type="MaterialCommunityIcons" name="rocket-launch-outline" size={28} color={Colors.primaryDeep} />
 					</View>
 
-					<Text style={styles.title}>새로운 버전이 나왔어요</Text>
-					<Text style={styles.message}>{'이번 업데이트부터 이용할 수 있어요.\n업데이트 후 계속 학습해 주세요.'}</Text>
+					<Text style={styles.title}>{t('version.title')}</Text>
+					<Text style={styles.message}>{t('version.message')}</Text>
 
 					<View style={styles.versionRow}>
 						<View style={styles.versionChip}>
-							<Text style={styles.versionChipLabel}>현재</Text>
+							<Text style={styles.versionChipLabel}>{t('version.current')}</Text>
 							<Text style={styles.versionChipText}>v{versionInfo.current}</Text>
 						</View>
 						<IconComponent type="MaterialCommunityIcons" name="arrow-right" size={16} color={Colors.textMuted} />
 						<View style={[styles.versionChip, styles.versionChipLatest]}>
-							<Text style={[styles.versionChipLabel, styles.versionChipLabelLatest]}>최신</Text>
+							<Text style={[styles.versionChipLabel, styles.versionChipLabelLatest]}>{t('version.latest')}</Text>
 							<Text style={[styles.versionChipText, styles.versionChipTextLatest]}>v{versionInfo.latest}</Text>
 						</View>
 					</View>
 
 					<PressableScale style={styles.updateButton} accessibilityRole="button" onPress={handleUpdate}>
 						<IconComponent type="materialIcons" name="system-update" size={18} color={Colors.textInverse} />
-						<Text style={styles.buttonText}>지금 업데이트</Text>
+						<Text numberOfLines={2} style={styles.buttonText}>{t('version.update')}</Text>
 					</PressableScale>
 
-					<Text style={styles.notice}>업데이트를 마쳐야 앱을 계속 사용할 수 있습니다.</Text>
+					<Text style={styles.notice}>{t('version.notice')}</Text>
 			</Animated.View>
 		</AppModal>
 	);
@@ -225,7 +227,7 @@ const createStyles = (Colors: Palette) => StyleSheet.create({
 	// textMuted 는 비활성·placeholder 용이라 라이트에서 2.3:1 로 읽히지 않는다 — 보이는 라벨은 textSecondary
 	versionChipLabel: { fontSize: Typography.caption, color: Colors.textSecondary, fontWeight: FontWeight.semibold },
 	versionChipLabelLatest: { color: Colors.primaryDark },
-	versionChipText: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: FontWeight.bold },
+	versionChipText: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 	versionChipTextLatest: { color: Colors.primaryDeep },
 	updateButton: {
 		flexDirection: 'row',
@@ -234,14 +236,12 @@ const createStyles = (Colors: Palette) => StyleSheet.create({
 		gap: Spacing.sm,
 		backgroundColor: Colors.primarySurface,
 		borderRadius: Radius.lg,
-		height: scaleHeight(52),
-		width: '100%',
-	},
+		minHeight: scaleHeight(52),
+		width: '100%', paddingVertical: SpacingV.sm, },
 	buttonText: {
 		color: Colors.textInverse,
 		fontSize: Typography.callout,
-		fontWeight: FontWeight.bold,
-	},
+		fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 	notice: {
 		marginTop: SpacingV.md,
 		fontSize: Typography.caption,

@@ -101,7 +101,7 @@ export const buildQuestion = (
 		mode: mode.key,
 		entry,
 		prompt,
-		question: mode.question,
+		questionKey: `topic.${topic.key}.mode.${mode.key}.question`,
 		answer,
 		options: shuffle(options, random),
 	};

@@ -1,5 +1,6 @@
 // CommonConfirmModal.tsx
 import React, { FC, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -45,6 +46,7 @@ const CmmDelConfirmModal: FC<Props> = ({
 	confirmVariant = 'delete',
 	hideCancel = false,
 }) => {
+	const { t } = useTranslation();
 	const _onRequestClose = onRequestClose ?? onCancel;
 	const styles = useThemedStyles(createStyles);
 
@@ -91,7 +93,7 @@ const CmmDelConfirmModal: FC<Props> = ({
 						{!hideCancel && (
 							<PressableScale style={[styles.modalButton, styles.modalCancel]} accessibilityRole="button" onPress={onCancel}>
 								<Text style={styles.modalCancelText} numberOfLines={1}>
-									{cancelText ?? '취소'}
+									{cancelText ?? t('common.cancel')}
 								</Text>
 							</PressableScale>
 						)}
@@ -103,7 +105,7 @@ const CmmDelConfirmModal: FC<Props> = ({
 							<Text
 								style={[styles.modalConfirmText, confirmVariant === 'delete' && styles.modalConfirmTextDelete]}
 								numberOfLines={1}>
-								{confirmText ?? '삭제'}
+								{confirmText ?? t('common.delete')}
 							</Text>
 						</PressableScale>
 					</View>
@@ -144,11 +146,10 @@ const createStyles = (Colors: Palette) =>
 		},
 		modalButton: {
 			flex: 1,
-			height: scaleHeight(48),
+			minHeight: scaleHeight(48),
 			borderRadius: Radius.md,
 			alignItems: 'center',
-			justifyContent: 'center',
-		},
+			justifyContent: 'center', paddingVertical: SpacingV.sm, },
 		modalCancel: {
 			backgroundColor: Colors.surfaceAlt,
 		},

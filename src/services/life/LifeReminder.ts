@@ -1,3 +1,4 @@
+import { translate } from '@/src/translations';
 import {
 	CancelDailyNotification,
 	CancelReviewReminder,
@@ -34,7 +35,7 @@ export const applyReminder = async (reminder: Reminder): Promise<boolean> => {
 		if (!granted) {
 			return false;
 		}
-		await TriggerDailyNotification('오늘의 세계 한 바퀴', '출석 체크하고 오늘의 퀴즈 5문제로 하루를 채워요', reminder.hour, reminder.minute);
+		await TriggerDailyNotification(translate('notify.daily.title'), translate('notify.daily.body'), reminder.hour, reminder.minute);
 		return true;
 	} catch (e) {
 		console.warn('알림 예약 실패:', e);
@@ -73,7 +74,7 @@ export const applyActivityReminders = async (
 			await ScheduleStreakReminder(streak, STREAK_HOUR);
 		}
 		if (wrongCount > 0) {
-			await ScheduleReviewReminder(`오답 노트에 ${wrongCount}개가 남아 있어요. 두 번 맞히면 졸업이에요!`, REVIEW_HOUR, 0);
+			await ScheduleReviewReminder(translate('notify.review.body', { n: wrongCount }), REVIEW_HOUR, 0);
 		} else {
 			await CancelReviewReminder();
 		}

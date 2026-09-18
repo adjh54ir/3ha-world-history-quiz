@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from 'react';
+import { translate } from '@/src/translations';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '@/src/store/RootReducer';
 import { buildBadgeSnapshot, feedAttendancePet, type LifeState } from '@/src/store/slice/LifeSlice';
@@ -82,7 +83,9 @@ export const useCategoryProgress = (): CategoryProgress[] => {
 /** 펫 단계 */
 export const usePet = () => {
 	const exp = useSelector((state: RootState) => state.life.exp);
-	const petName = useSelector((state: RootState) => state.life.petName);
+	const saved = useSelector((state: RootState) => state.life.petName);
+	// 이름을 손으로 고치지 않았으면(빈 값) 지금 언어의 기본 이름을 쓴다
+	const petName = saved || translate('pet.defaultName');
 	return useMemo(() => ({ ...petStatus(exp), exp, petName }), [exp, petName]);
 };
 
@@ -98,11 +101,11 @@ export const useFeedAttendancePet = () => {
 
 	const feed = useCallback(() => {
 		if (grownUp) {
-			showToast('마지막 단계까지 다 자랐어요', 'party-popper');
+			showToast(translate('pet.feedGrownUp'), 'party-popper');
 			return;
 		}
 		if (pet.feeds <= 0) {
-			showToast('먹이가 없어요. 출석 도장을 찍어 받아 보세요', 'food-drumstick-off');
+			showToast(translate('pet.feedEmpty'), 'food-drumstick-off');
 			return;
 		}
 		const grew = !!pet.next && pet.fed + 1 >= pet.next.minFeeds;
@@ -110,7 +113,7 @@ export const useFeedAttendancePet = () => {
 		dispatch(feedAttendancePet());
 		// 단계가 오르는 순간은 PetGrowthModal 이 검은 화면으로 크게 축하한다 — 토스트까지 겹치면 두 번 알린다
 		if (!grew) {
-			showToast('먹이를 줬어요', 'food-drumstick', { subMessage: `남은 먹이 ${pet.feeds - 1}개` });
+			showToast(translate('pet.fedToast'), 'food-drumstick', { subMessage: translate('pet.fedLeft', { n: pet.feeds - 1 }) });
 		}
 	}, [dispatch, grownUp, pet.fed, pet.feeds, pet.next]);
 

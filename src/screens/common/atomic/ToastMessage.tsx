@@ -169,7 +169,7 @@ const createStyles = (Colors: Palette) => StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	actionText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.textInverse },
+	actionText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 });
 
 export default ToastMessage;

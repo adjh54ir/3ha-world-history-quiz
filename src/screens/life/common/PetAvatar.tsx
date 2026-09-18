@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, Pressable } from 'react-native';
 import { usePet } from '@/src/hooks/useLife';
 import { selectPetImage } from '@/src/const/data/life/ConstPetImages';
@@ -26,6 +27,7 @@ const LAST_STAGE = 6;
  * 경험치 단계는 usePet 이 정하므로 화면은 크기만 넘긴다.
  */
 const PetAvatar = ({ size = scaleWidth(120), plate = true, animated = true, onPress }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const { stage, level } = usePet();
 	/** 도약(0~1) — MascotImage 가 대기 동작 위에 더해 준다. 스프링이 0 아래를 지나는 구간이 착지 스쿼시가 된다 */
@@ -61,7 +63,7 @@ const PetAvatar = ({ size = scaleWidth(120), plate = true, animated = true, onPr
 			motion={animated ? 'float' : 'none'}
 			lift={hop}
 			plateColor={plate ? (level === LAST_STAGE ? Colors.accentAmberSoft : Colors.primarySoft) : undefined}
-			accessibilityLabel={onPress ? undefined : `${stage.label} 단계 펫`}
+			accessibilityLabel={onPress ? undefined : t('pet.avatarLabel', { stage: t(`pet.stage.${stage.key}`) })}
 		/>
 	);
 
@@ -70,7 +72,7 @@ const PetAvatar = ({ size = scaleWidth(120), plate = true, animated = true, onPr
 	}
 
 	return (
-		<Pressable onPress={onPressPet} accessibilityRole="button" accessibilityLabel={`${stage.label} 단계 펫`}>
+		<Pressable onPress={onPressPet} accessibilityRole="button" accessibilityLabel={t('pet.avatarLabel', { stage: t(`pet.stage.${stage.key}`) })}>
 			{mascot}
 		</Pressable>
 	);

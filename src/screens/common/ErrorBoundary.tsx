@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from '@/src/translations';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { Image } from 'expo-image';
@@ -45,10 +46,10 @@ class ErrorBoundary extends React.Component<Props, State> {
 		return (
 			<View style={styles.screen}>
 				<Image source={ERROR_MASCOT} style={styles.mascot} contentFit="contain" accessible={false} />
-				<Text style={styles.title}>잠시 문제가 생겼어요</Text>
-				<Text style={styles.body}>기록은 그대로 저장돼 있어요. 아래를 눌러 다시 열어 보세요.</Text>
+				<Text style={styles.title}>{translate('error.title')}</Text>
+				<Text style={styles.body}>{translate('error.body')}</Text>
 				<Pressable style={styles.button} onPress={this.retry} accessibilityRole="button">
-					<Text style={styles.buttonText}>다시 시도</Text>
+					<Text style={styles.buttonText}>{translate('error.retry')}</Text>
 				</Pressable>
 			</View>
 		);
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
 		borderRadius: 999,
 		backgroundColor: '#1249C9',
 	},
-	buttonText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF' },
+	buttonText: { fontSize: 15, fontWeight: '700', color: '#FFFFFF', flexShrink: 1, textAlign: 'center', },
 });
 
 export default ErrorBoundary;

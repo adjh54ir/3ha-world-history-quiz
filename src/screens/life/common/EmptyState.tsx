@@ -74,7 +74,8 @@ const EmptyState = ({ variant = 'page', image, icon = 'inbox-outline', title, me
 const createStyles = (Colors: Palette) =>
 	StyleSheet.create({
 		// 목록이 통째로 빈 자리 — 가운데로 모으고 위아래 여백을 넉넉히 준다
-		page: { alignItems: 'center', paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxxl, gap: SpacingV.sm },
+		// 빈 영역을 다 쓰고 정중앙에 선다 — 위에 붙여 두면 아래가 텅 빈 채로 남는다
+		page: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxxl, gap: SpacingV.sm },
 		image: { marginBottom: SpacingV.sm },
 		iconBox: {
 			width: scaleWidth(72),
@@ -90,14 +91,13 @@ const createStyles = (Colors: Palette) =>
 		button: {
 			marginTop: SpacingV.md,
 			paddingHorizontal: Spacing.xxl,
-			height: scaleHeight(46),
+			minHeight: scaleHeight(46),
 			borderRadius: Radius.lg,
 			backgroundColor: Colors.primarySurface,
 			alignItems: 'center',
 			justifyContent: 'center',
-			...Shadow.card,
-		},
-		buttonText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+			...Shadow.card, paddingVertical: SpacingV.sm, },
+		buttonText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 
 		// 카드 안 한 묶음만 빈 자리 — 아이콘 하나와 한 줄로 조용히
 		inline: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: SpacingV.sm },

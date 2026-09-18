@@ -6,6 +6,7 @@
  * - 캐릭터는 지금 앱이 쓰는 펫(성장 단계 사자)을 그대로 세운다.
  */
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -28,6 +29,7 @@ const TYPING_INTERVAL = 28;
  * useCharacterGuideOnce 의 open 을 연결해 쓴다.
  */
 export const LifeGuideButton = ({ onPress, color, size = 20 }: { onPress: () => void; color?: string; size?: number }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	return (
 		<TouchableOpacity
@@ -35,7 +37,7 @@ export const LifeGuideButton = ({ onPress, color, size = 20 }: { onPress: () => 
 			hitSlop={{ top: scaleHeight(10), bottom: scaleHeight(10), left: scaleWidth(10), right: scaleWidth(10) }}
 			activeOpacity={0.7}
 			accessibilityRole="button"
-			accessibilityLabel="이 화면 사용법 다시 보기">
+			accessibilityLabel={t('guide.reopen')}>
 			<IconComponent type="materialIcons" name="help-outline" size={size} color={color ?? Colors.textMuted} />
 		</TouchableOpacity>
 	);
@@ -61,7 +63,10 @@ interface Props {
  * - 탭하면 다음 문장, 마지막에서 닫힌다. 타이핑 중에 탭하면 문장을 한 번에 다 보여준다.
  * - 1회만 노출하려면 useCharacterGuideOnce 와 함께 쓴다.
  */
-const LifeCharacterGuide = ({ visible, lines, onClose, title = '이렇게 써보세요', accent, confirmLabel = '알겠어요', characterImage }: Props) => {
+const LifeCharacterGuide = ({ visible, lines, onClose, title, accent, confirmLabel, characterImage }: Props) => {
+	const { t } = useTranslation();
+	const head = title ?? t('guide.eyebrow');
+	const confirm = confirmLabel ?? t('guide.gotIt');
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const tone = accent ?? Colors.primary;
@@ -140,14 +145,14 @@ const LifeCharacterGuide = ({ visible, lines, onClose, title = '이렇게 써보
 	// 배경 탭은 '닫기'가 아니라 '다음 문장'이다 — AppModal 의 배경 닫기를 끄고 여기서 직접 받는다
 	return (
 		<AppModal visible onClose={onClose} align="bottom" dismissOnBackdrop={false} backdropStyle={styles.backdrop}>
-			<TouchableOpacity style={styles.tapArea} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel="안내 다음으로">
+			<TouchableOpacity style={styles.tapArea} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel={t('guide.toNext')}>
 				<Animated.View style={[styles.wrap, { opacity: enter, transform: [{ translateY }] }]}>
 					{/* 말풍선 */}
 					<View style={[styles.bubble, { borderColor: `${tone}55` }]}>
 						<View style={styles.bubbleHead}>
 							<IconComponent type="materialIcons" name="tips-and-updates" size={15} color={tone} />
 							<Text style={[styles.bubbleTitle, { color: tone }]} numberOfLines={1}>
-								{title}
+								{head}
 							</Text>
 							{lines.length > 1 && (
 								<Text style={styles.stepText}>
@@ -164,8 +169,8 @@ const LifeCharacterGuide = ({ visible, lines, onClose, title = '이렇게 써보
 							activeOpacity={0.9}
 							onPress={next}
 							accessibilityRole="button"
-							accessibilityLabel={isLast ? confirmLabel : '다음 안내 보기'}>
-							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : tone }]}>{isLast ? confirmLabel : '다음'}</Text>
+							accessibilityLabel={isLast ? confirm : t('guide.nextTip')}>
+							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : tone }]}>{isLast ? confirm : t('guide.next')}</Text>
 							<IconComponent type="materialIcons" name={isLast ? 'check' : 'arrow-forward'} size={15} color={isLast ? Colors.textInverse : tone} />
 						</TouchableOpacity>
 						{/* 말풍선 꼬리 — 아래 사자를 향한다 */}
@@ -226,7 +231,7 @@ const createStyles = (Colors: Palette) =>
 			paddingHorizontal: Spacing.lg,
 			borderRadius: Radius.pill,
 		},
-		ctaText: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold },
+		ctaText: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 		// 삼각 꼬리 — 배경색 삼각형 위에 테두리색 삼각형을 겹쳐 테두리 선을 잇는다
 		tail: {
 			position: 'absolute',

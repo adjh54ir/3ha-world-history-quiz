@@ -16,8 +16,6 @@ import { selectTopic, WORLD_TOPICS } from './ConstWorldTopics';
  */
 export const DOMAIN_CATEGORIES: LifeType.Category[] = WORLD_TOPICS.map((topic) => ({
 	key: topic.key,
-	label: topic.label,
-	description: topic.description,
 	icon: topic.icon,
 	color: topic.color,
 	tint: topic.tint,

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Dimensions, StyleSheet } from 'react-native';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -18,6 +19,7 @@ interface Props {
  * 스크롤을 조금만 내려도 뜨면 성가시므로, 언제 보일지는 부모가 정한다.
  */
 const ScrollTopButton = ({ visible, onPress }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const run = useAnimationRunner();
@@ -38,7 +40,7 @@ const ScrollTopButton = ({ visible, onPress }: Props) => {
 					transform: [{ scale: anim.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] }) }],
 				},
 			]}>
-			<PressableScale style={styles.button} onPress={onPress} scaleTo={0.92} accessibilityRole="button" accessibilityLabel="맨 위로">
+			<PressableScale style={styles.button} onPress={onPress} scaleTo={0.92} accessibilityRole="button" accessibilityLabel={t('common.scrollTop')}>
 				<IconComponent type="materialIcons" name="keyboard-arrow-up" size={26} color={Colors.textInverse} />
 			</PressableScale>
 		</Animated.View>
@@ -59,8 +61,7 @@ const createStyles = (Colors: Palette) =>
 			alignItems: 'center',
 			justifyContent: 'center',
 			backgroundColor: Colors.primarySurface,
-			...Shadow.floating,
-		},
+			...Shadow.floating, },
 	});
 
 export default ScrollTopButton;

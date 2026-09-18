@@ -1,0 +1,1328 @@
+{
+	"main": {
+		"apps": {
+			"category": {
+				"all": "전체",
+				"calculator": "계산기",
+				"quiz": "퀴즈",
+				"utility": "유틸리티"
+			},
+			"comingSoon": "Coming Soon!",
+			"count": "{{n}}개 앱",
+			"download": "다운로드",
+			"empty": "검색 결과가 없습니다",
+			"linkError": "링크를 여는 중 문제가 발생했습니다.",
+			"linkOpenFailed": "링크를 열 수 없습니다.",
+			"linkUnavailable": "아직 스토어 링크가 준비되지 않았습니다.",
+			"searchPlaceholder": "앱 검색...",
+			"title": "📱 제작자의 다른 앱"
+		},
+		"badge": {
+			"alsoEarned": "함께 획득 +{{n}}",
+			"attend_100": {
+				"description": "모두 100일 출석했어요",
+				"label": "백 번의 아침",
+				"requirement": "누적 출석 100일"
+			},
+			"attend_200": {
+				"description": "모두 200일 출석했어요",
+				"label": "이백 번의 아침",
+				"requirement": "누적 출석 200일"
+			},
+			"attend_50": {
+				"description": "모두 50일 출석했어요",
+				"label": "오십 번의 아침",
+				"requirement": "누적 출석 50일"
+			},
+			"autoGrant": "조건을 채우면 자동으로 들어와요",
+			"category_3": {
+				"description": "분야 세 개를 모두 학습했어요",
+				"label": "세 분야 정복",
+				"requirement": "분야 3개 전부 학습"
+			},
+			"category_all": {
+				"description": "모든 주제의 항목을 학습했어요",
+				"label": "전 분야 정복",
+				"requirement": "모든 분야 전부 학습"
+			},
+			"category_master": {
+				"description": "카테고리 하나를 모두 학습했어요",
+				"label": "한 분야 정복",
+				"requirement": "한 주제의 항목을 모두 학습"
+			},
+			"combo_10": {
+				"description": "한 판에서 10연속 정답을 냈어요",
+				"label": "콤보 마스터",
+				"requirement": "한 판에서 10연속 정답"
+			},
+			"combo_15": {
+				"description": "한 판에서 15연속 정답을 냈어요",
+				"label": "불붙은 집중",
+				"requirement": "한 판에서 15연속 정답"
+			},
+			"combo_20": {
+				"description": "한 판에서 20연속 정답을 냈어요",
+				"label": "콤보 대가",
+				"requirement": "한 판에서 20연속 정답"
+			},
+			"combo_30": {
+				"description": "한 판에서 30연속 정답을 냈어요",
+				"label": "무결점 30연타",
+				"requirement": "한 판에서 30연속 정답"
+			},
+			"combo_5": {
+				"description": "한 판에서 5연속 정답을 냈어요",
+				"label": "연속 5정답",
+				"requirement": "한 판에서 5연속 정답"
+			},
+			"conditionLabel": "{{name}} 뱃지 조건 보기",
+			"correct_100": {
+				"description": "문제를 모두 100개 맞혔어요",
+				"label": "백 개의 정답",
+				"requirement": "누적 정답 100개"
+			},
+			"correct_2000": {
+				"description": "문제를 모두 2,000개 맞혔어요",
+				"label": "이천 개의 정답",
+				"requirement": "누적 정답 2,000개"
+			},
+			"correct_500": {
+				"description": "문제를 모두 500개 맞혔어요",
+				"label": "오백 개의 정답",
+				"requirement": "누적 정답 500개"
+			},
+			"daily_100": {
+				"description": "오늘의 퀴즈를 100번 끝냈어요",
+				"label": "백 일의 문제",
+				"requirement": "오늘의 퀴즈 100회 완료"
+			},
+			"daily_30": {
+				"description": "오늘의 퀴즈를 30번 끝냈어요",
+				"label": "한 달의 하루",
+				"requirement": "오늘의 퀴즈 30회 완료"
+			},
+			"daily_7": {
+				"description": "오늘의 퀴즈를 7번 끝냈어요",
+				"label": "꾸준함",
+				"requirement": "오늘의 퀴즈 7회 완료"
+			},
+			"detailLabel": "{{name}} 뱃지 자세히 보기",
+			"earnedOn": "획득한 날",
+			"exp_20000": {
+				"description": "경험치를 20,000 모았어요",
+				"label": "대탐험가의 길",
+				"requirement": "누적 20,000EXP 달성"
+			},
+			"exp_5000": {
+				"description": "경험치를 5,000 모았어요",
+				"label": "경험의 무게",
+				"requirement": "누적 5,000EXP 달성"
+			},
+			"fast_100": {
+				"description": "3초 안에 번개 정답을 100개 냈어요",
+				"label": "번개의 손",
+				"requirement": "3초 안에 맞힌 정답 100개"
+			},
+			"fast_30": {
+				"description": "3초 안에 번개 정답을 30개 냈어요",
+				"label": "전광석화",
+				"requirement": "3초 안에 맞힌 정답 30개"
+			},
+			"favorite_20": {
+				"description": "항목 20개에 별표를 달았어요",
+				"label": "별표 수집가",
+				"requirement": "사전에서 즐겨찾기 20개"
+			},
+			"first_quiz": {
+				"description": "퀴즈를 처음 풀었어요",
+				"label": "도전자",
+				"requirement": "퀴즈 1판 완료"
+			},
+			"first_study": {
+				"description": "항목을 처음 학습했어요",
+				"label": "첫 걸음",
+				"requirement": "항목 1개 학습 완료"
+			},
+			"learn_10": {
+				"description": "항목 10개를 학습했어요",
+				"label": "열 항목",
+				"requirement": "항목 10개 학습 완료"
+			},
+			"learn_100": {
+				"description": "항목 100개를 학습했어요",
+				"label": "상식 박사",
+				"requirement": "항목 100개 학습 완료"
+			},
+			"learn_200": {
+				"description": "항목 200개를 학습했어요",
+				"label": "이백 항목",
+				"requirement": "항목 200개 학습 완료"
+			},
+			"learn_30": {
+				"description": "항목 30개를 학습했어요",
+				"label": "항목 수집가",
+				"requirement": "항목 30개 학습 완료"
+			},
+			"learn_300": {
+				"description": "항목 300개를 학습했어요",
+				"label": "상식 달인",
+				"requirement": "항목 300개 학습 완료"
+			},
+			"learn_50": {
+				"description": "항목 50개를 학습했어요",
+				"label": "오십 항목",
+				"requirement": "항목 50개 학습 완료"
+			},
+			"learn_500": {
+				"description": "항목 500개를 학습했어요",
+				"label": "오백 항목",
+				"requirement": "항목 500개 학습 완료"
+			},
+			"level_1": {
+				"description": "한 난이도의 항목을 모두 학습했어요",
+				"label": "한 급수 정복",
+				"requirement": "한 난이도의 항목 전부 학습"
+			},
+			"level_all": {
+				"description": "초급부터 특급까지 모두 학습했어요",
+				"label": "전 급수 정복",
+				"requirement": "모든 난이도의 항목 전부 학습"
+			},
+			"mission_7": {
+				"description": "오늘의 미션을 7번 모두 끝냈어요",
+				"label": "미션 완수자",
+				"requirement": "오늘의 미션 7일 모두 완료"
+			},
+			"notYet": "아직 못 딴 뱃지",
+			"owned": "뱃지 {{owned}} / {{total}}",
+			"perfect_quiz": {
+				"description": "퀴즈에서 만점을 받았어요",
+				"label": "완벽주의",
+				"requirement": "퀴즈 한 판 만점"
+			},
+			"pet_fed_10": {
+				"description": "나침반 올빼미에게 먹이를 10개 줬어요",
+				"label": "올빼미 돌보기",
+				"requirement": "펫 먹이 10개 주기"
+			},
+			"pet_fed_35": {
+				"description": "나침반 올빼미를 마지막 단계까지 키웠어요",
+				"label": "황금 세계올빼미",
+				"requirement": "펫 먹이 35개 주기"
+			},
+			"quiz_10": {
+				"description": "퀴즈를 10판 풀었어요",
+				"label": "열 판",
+				"requirement": "퀴즈 10판 완료"
+			},
+			"quiz_100": {
+				"description": "퀴즈를 100판 풀었어요",
+				"label": "백 판의 승부",
+				"requirement": "퀴즈 100판 완료"
+			},
+			"quiz_200": {
+				"description": "퀴즈를 200판 풀었어요",
+				"label": "백전노장",
+				"requirement": "퀴즈 200판 완료"
+			},
+			"quiz_50": {
+				"description": "퀴즈를 50판 풀었어요",
+				"label": "퀴즈 단골",
+				"requirement": "퀴즈 50판 완료"
+			},
+			"quiz_500": {
+				"description": "퀴즈를 500판 풀었어요",
+				"label": "오백 판의 전설",
+				"requirement": "퀴즈 500판 완료"
+			},
+			"rarity": {
+				"common": "일반",
+				"epic": "영웅",
+				"legendary": "전설",
+				"rare": "희귀"
+			},
+			"requirementLabel": "획득 조건",
+			"star_30": {
+				"description": "카테고리 별을 30개 모았어요",
+				"label": "별 수집가",
+				"requirement": "분야 별 30개 모으기"
+			},
+			"star_60": {
+				"description": "카테고리 별을 60개 모았어요",
+				"label": "별의 정원",
+				"requirement": "분야 별 60개 모으기"
+			},
+			"streak_14": {
+				"description": "14일 연속 출석했어요",
+				"label": "2주 개근",
+				"requirement": "14일 연속 출석"
+			},
+			"streak_3": {
+				"description": "3일 연속 출석했어요",
+				"label": "3일 연속",
+				"requirement": "3일 연속 출석"
+			},
+			"streak_30": {
+				"description": "30일 연속 출석했어요",
+				"label": "한 달 개근",
+				"requirement": "30일 연속 출석"
+			},
+			"streak_7": {
+				"description": "7일 연속 출석했어요",
+				"label": "일주일 개근",
+				"requirement": "7일 연속 출석"
+			},
+			"time_20": {
+				"description": "타임 챌린지에서 20점을 넘었어요",
+				"label": "번개손",
+				"requirement": "타임 챌린지 20점 달성"
+			},
+			"time_40": {
+				"description": "타임 챌린지에서 40점을 넘었어요",
+				"label": "시간의 지배자",
+				"requirement": "타임 챌린지 40점 달성"
+			},
+			"tower_10": {
+				"description": "타워 챌린지 10층에 올랐어요",
+				"label": "탑 등반가",
+				"requirement": "타워 챌린지 10층 도달"
+			},
+			"tower_20": {
+				"description": "타워 챌린지 20층에 올랐어요",
+				"label": "탑의 주인",
+				"requirement": "타워 챌린지 20층 도달"
+			},
+			"tower_5": {
+				"description": "타워 챌린지 5층에 올랐어요",
+				"label": "첫 오름",
+				"requirement": "타워 챌린지 5층 도달"
+			},
+			"unlockConfirm": "받기",
+			"unlockTitle": "새로운 뱃지를 획득했어요!",
+			"wrong_10": {
+				"description": "오답 10개를 졸업시켰어요",
+				"label": "복습의 힘",
+				"requirement": "오답 10개 졸업"
+			},
+			"wrong_50": {
+				"description": "오답 50개를 졸업시켰어요",
+				"label": "오답 정복자",
+				"requirement": "오답 50개 졸업"
+			},
+			"wrong_clear": {
+				"description": "오답을 모두 졸업시켜 노트를 비웠어요",
+				"label": "깨끗한 오답 노트",
+				"requirement": "오답 노트를 한 번 완전히 비우기"
+			}
+		},
+		"calendar": {
+			"dayLong": {
+				"fri": "금요일",
+				"mon": "월요일",
+				"sat": "토요일",
+				"sun": "일요일",
+				"thu": "목요일",
+				"tue": "화요일",
+				"wed": "수요일"
+			},
+			"month": {
+				"1": "1월",
+				"10": "10월",
+				"11": "11월",
+				"12": "12월",
+				"2": "2월",
+				"3": "3월",
+				"4": "4월",
+				"5": "5월",
+				"6": "6월",
+				"7": "7월",
+				"8": "8월",
+				"9": "9월"
+			},
+			"today": "오늘"
+		},
+		"checkin": {
+			"arrowHint": "좌우 화살표 버튼을 눌러서 출석을 확인해보세요!",
+			"claim": "출석하고 보상받기",
+			"claimWithFeeds": "출석하고 보상받기 · 먹이 {{n}}개",
+			"cycle": "{{days}}일마다 특별 보상",
+			"cycleNote": "7일 +3 · 14일 +4 · 21일 +5 · 28일 +6개를 한 번에 받아요",
+			"cycleRest": "특별 출석까지 {{days}}일",
+			"cycleStart": "오늘부터 시작!",
+			"doneBanner": "오늘 출석 완료!",
+			"doneToday": "오늘도 출석 완료!",
+			"feedNote": "펫은 먹이를 먹어야 자라요. 먹이 주기는 '나의 활동'에서 해요",
+			"got": "펫 먹이 {{n}}개를 받았어요",
+			"held": "가진 먹이 {{n}}개",
+			"hero": "매일 접속하면 캐릭터가 출석 스탬프를 찍고 펫 먹이를 챙겨 줘요!",
+			"petLabel": "나침반 올빼미 펫",
+			"rewardTitle": "오늘의 출석 보상",
+			"seeTomorrow": "내일도 만나요",
+			"specialNow": "{{days}}일 특별 출석 · 먹이 {{n}}개",
+			"specialTitle": "{{days}}일 특별 출석",
+			"streakNow": "{{days}}일 연속 출석 중",
+			"title": "오늘의 출석",
+			"willGet": "출석하면 펫 먹이 {{n}}개",
+			"yearMonth": "{{year}}년 {{month}}월"
+		},
+		"common": {
+			"appName": "세계 상식 퀴즈",
+			"back": "뒤로",
+			"cancel": "취소",
+			"close": "닫기",
+			"confirm": "확인",
+			"countUnit": "{{n}}개",
+			"dateLong": "{{year}}년 {{month}}월 {{day}}일",
+			"delete": "삭제",
+			"done": "완료",
+			"error": "오류",
+			"goBack": "뒤로 가기",
+			"leave": "나가기",
+			"meridiem": {
+				"am": "오전",
+				"pm": "오후"
+			},
+			"new": "NEW",
+			"next": "다음",
+			"retry": "다시 시도",
+			"scrollTop": "맨 위로",
+			"tenThousand": "{{n}}만",
+			"thousand": "{{n}}천",
+			"timeFormat": "{{meridiem}} {{time}}"
+		},
+		"entry": {
+			"close": "닫기",
+			"favLabel": "{{name}} 즐겨찾기"
+		},
+		"error": {
+			"body": "기록은 그대로 저장돼 있어요. 아래를 눌러 다시 열어 보세요.",
+			"retry": "다시 시도",
+			"title": "잠시 문제가 생겼어요"
+		},
+		"exitQuiz": {
+			"body": "진행 중인 내용은 저장되지 않습니다.",
+			"title": "퀴즈를 종료할까요?"
+		},
+		"grade": {
+			"atTop": "마지막 단계 {{stage}}에 도달했어요",
+			"convertCards": "학습 카드 {{n}}개",
+			"convertNote": "퀴즈 한 판 {{perQuiz}}문제를 모두 맞힌 기준이에요 (정답 {{corrects}}개 · 정답 하나 {{correctExp}}EXP · 카드 하나 {{cardExp}}EXP)",
+			"convertOr": "또는",
+			"convertQuiz": "퀴즈 {{n}}판",
+			"exp": {
+				"attendance": {
+					"label": "출석 체크",
+					"note": "연속 출석 보너스가 더해져요"
+				},
+				"correct": {
+					"label": "퀴즈 정답 하나",
+					"note": "타워·타임 챌린지도 같아요"
+				},
+				"daily": {
+					"label": "오늘의 퀴즈 완료",
+					"note": "5문제를 다 풀면 추가로"
+				},
+				"learnWord": {
+					"label": "단어 하나 학습 완료",
+					"note": "처음 익힌 단어만 세요"
+				},
+				"mission": {
+					"label": "오늘의 미션 모두 완료",
+					"note": ""
+				}
+			},
+			"got": "획득",
+			"guide": {
+				"line1": "경험치를 모으면 역사 사자가 다음 단계로 자라요.",
+				"line2": "학습·퀴즈·출석·챌린지 모두 경험치가 돼요.",
+				"line3": "경험치는 줄지 않으니 등급이 내려갈 일은 없어요."
+			},
+			"howFootnote": "경험치는 쌓이기만 해서 등급은 내려가지 않아요.",
+			"howSection": "경험치 얻는 법",
+			"levelChip": "Lv.{{level}} · 전체 {{total}}단계",
+			"now": "지금",
+			"peek": "미리보기",
+			"peekLabel": "{{stage}} 미리보기",
+			"preview": {
+				"hint": "퀴즈 {{quizzes}}판(정답 {{corrects}}개) 또는 학습 카드 {{cards}}개면 도착해요",
+				"remain": "{{exp}}EXP 더 모으면 만나요"
+			},
+			"stageFrom": "{{exp}}EXP 부터",
+			"stageSection": "성장 단계 {{total}}단계",
+			"stageStart": "처음 시작하는 단계",
+			"subtitle": "경험치를 모아 역사 사자를 키워요",
+			"title": "등급",
+			"toNext": "{{stage}}까지 {{exp}}EXP 남았어요",
+			"total": "지금까지 모은 경험치 {{exp}}EXP"
+		},
+		"guide": {
+			"eyebrow": "이렇게 써보세요",
+			"gotIt": "알겠어요",
+			"gotItFormal": "알겠습니다",
+			"next": "다음",
+			"nextTip": "다음 안내 보기",
+			"reopen": "이 화면 사용법 다시 보기",
+			"toNext": "안내 다음으로"
+		},
+		"heatmap": {
+			"day": {
+				"fri": "금",
+				"mon": "월",
+				"sat": "토",
+				"sun": "일",
+				"thu": "목",
+				"tue": "화",
+				"wed": "수"
+			},
+			"from": "{{date}} 부터",
+			"recent": "최근 {{weeks}}주 · {{days}}일",
+			"title": "출석 기록"
+		},
+		"home": {
+			"atTop": "마지막 단계에 도달했어요",
+			"attendance": "출석",
+			"attendanceDays": "{{days}}일 출석",
+			"badgeCount": "{{owned}} / {{total}}개",
+			"badges": "뱃지",
+			"checkInAction": "출석 체크  +{{exp}}EXP",
+			"checkInDone": "오늘 출석 완료",
+			"checkInLabel": "출석 체크, 경험치 {{exp}}",
+			"checkedIn": "출석 완료! +{{exp}}EXP · 펫 먹이 {{feeds}}개",
+			"checkedInSpecial": "{{days}}일 특별 출석! 먹이를 {{feeds}}개 받았어요",
+			"checkedInStreak": "{{days}}일 연속 출석 중이에요",
+			"greet": {
+				"afternoon": "오후에도 한 걸음, 한 가지씩",
+				"evening": "하루를 정리하며 세계 한 바퀴",
+				"morning": "좋은 아침! 오늘의 퀴즈로 시작해요",
+				"night": "늦은 밤, 한 문제만 더 볼까요?"
+			},
+			"guardianFed": "{{stage}}, 먹이 {{n}}개 준 출석 수호신",
+			"guardianWaiting": "{{stage}}, 안 준 먹이 {{n}}개. 누르면 먹이러 가요",
+			"guide": {
+				"line1": "홈은 하루를 시작하는 자리예요. 출석 도장을 찍으면 경험치와 펫 먹이를 받아요.",
+				"line2": "사자를 누르면 한마디 하고, 학습할수록 단계가 올라가요.",
+				"line3": "아래 카드로 학습·퀴즈·챌린지에 바로 들어갈 수 있어요."
+			},
+			"petHint": "역사 사자를 누르면 한마디 해요",
+			"petTalk": {
+				"1": "같이 세계 한 바퀴 날아봐요!",
+				"2": "나의 활동에서 저를 먹일 수 있어요",
+				"3": "나침반 올빼미예요. 먹이를 주면 날개가 자라요!",
+				"4": "출석 도장을 찍으면 먹이가 하나 생겨요"
+			},
+			"quizStart": {
+				"desc": "수도·국기·신화·별자리까지 주제를 골라서 풀어요",
+				"title": "퀴즈 시작하기"
+			},
+			"review": {
+				"empty": "오답 노트가 깨끗해요. 퀴즈를 풀면 여기에 모여요",
+				"title": "오답 복습",
+				"waiting": "틀린 문제 {{n}}개가 기다려요. 두 번 맞히면 졸업!"
+			},
+			"sectionChallenge": "도전하기",
+			"sectionLearn": "배우기",
+			"sectionRecords": "기록 보기",
+			"seeTomorrow": "내일도 만나요!",
+			"streakChip": "{{days}}일 연속 출석",
+			"streakStart": "오늘 출석하고 스트릭 시작",
+			"studyMode": {
+				"desc": "카드로 한 장씩, 숏폼으로 주르륵 — 골라서 익혀요",
+				"title": "학습 모드"
+			},
+			"time": {
+				"best": "최고 {{score}}점 · 오늘 기록을 넘어 볼까요?",
+				"desc": "{{sec}}초 안에 최대한 많이 맞혀 보세요",
+				"title": "타임 챌린지"
+			},
+			"tip": {
+				"1": "세계는 넓고 볼 것은 많아요",
+				"2": "오늘도 한 가지, 같이 해요!",
+				"3": "조금씩 매일이 제일 빨라요",
+				"4": "출석 도장 잊지 마세요!"
+			},
+			"toNext": "다음 단계까지 {{exp}}EXP",
+			"tower": {
+				"best": "최고 {{floor}}층 · 더 높이 올라가 볼까요?",
+				"desc": "목숨 {{lives}}개로 한 층씩 올라가요",
+				"title": "타워 챌린지"
+			}
+		},
+		"level": {
+			"1": {
+				"desc": "누구나 날마다 쓰는 말",
+				"label": "초급"
+			},
+			"2": {
+				"desc": "일상에서 흔히 만나는 말",
+				"label": "중급"
+			},
+			"3": {
+				"desc": "뉴스와 업무에서 쓰는 말",
+				"label": "고급"
+			},
+			"4": {
+				"desc": "전문·격식을 갖춘 말",
+				"label": "특급"
+			}
+		},
+		"mission": {
+			"allDone": "오늘 보상까지 다 받았어요. 내일 또 만나요!",
+			"claim": "받기",
+			"claimLabel": "오늘의 미션 경험치 받기",
+			"claimed": "완료",
+			"claimedToast": "오늘의 미션 보상 +{{exp}}EXP 받았어요",
+			"learn": "항목 5개 학습",
+			"progress": "{{done}} / {{total}} 완료 · 다 채우면 {{exp}}EXP",
+			"quiz": "퀴즈 1판 풀기",
+			"ready": "미션 완료! 보상 버튼을 눌러 +{{exp}}EXP를 받으세요",
+			"review": "오답 2개 복습",
+			"rewardLabel": "오늘의 미션 보상",
+			"section": "오늘의 미션"
+		},
+		"notify": {
+			"daily": {
+				"body": "출석 체크하고 오늘의 퀴즈 5문제로 하루를 채워요",
+				"title": "오늘의 세계 한 바퀴"
+			},
+			"review": {
+				"body": "오답 노트에 {{n}}개가 남아 있어요. 두 번 맞히면 졸업이에요!",
+				"title": "오답 복습을 해보세요!"
+			},
+			"streak": {
+				"body": "🔥 {{days}}일 연속 학습 중! 오늘 아직 안 했어요 — 지금 하면 기록이 이어져요.",
+				"first": "오늘 한 문제만 풀어도 연속 학습이 시작돼요.",
+				"title": "연속 학습이 끊길 수 있어요"
+			},
+			"word": {
+				"body": "오늘의 문제 다섯 개, 지금 풀어 볼까요?",
+				"title": "📚 오늘의 세계 상식"
+			}
+		},
+		"oss": {
+			"caption": {
+				"figure": "위키미디어에서 받아 오는 초상입니다 — 모두 퍼블릭 도메인이라 표시 의무는 없습니다",
+				"landmark": "위키미디어에서 받아 오는 사진입니다 — 저작자 표시가 라이선스 조건입니다",
+				"library": "앱이 실제로 사용하는 오픈소스입니다 (설치본 기준)",
+				"sound": "앱이 실제로 재생하는 음원입니다"
+			},
+			"item": {
+				"bgm": "퀴즈 · 챌린지 배경음",
+				"figure": "세계 위인 초상 122장",
+				"sfx": "출석 도장 · 정답 · 오답 등 효과음"
+			},
+			"license": {
+				"inHouse": "자체 제작"
+			},
+			"section": {
+				"figure": "위인 초상",
+				"landmark": "랜드마크 사진",
+				"library": "라이브러리",
+				"sound": "사운드"
+			},
+			"source": "원문",
+			"thanks": "오픈소스 커뮤니티에 감사드립니다 🙏",
+			"title": "오픈소스 라이선스"
+		},
+		"pet": {
+			"avatarLabel": "{{stage}} 단계 펫",
+			"defaultName": "역사 사자",
+			"fedLeft": "남은 먹이 {{n}}개",
+			"fedToast": "먹이를 줬어요",
+			"feedEmpty": "먹이가 없어요. 출석 도장을 찍어 받아 보세요",
+			"feedGrownUp": "마지막 단계까지 다 자랐어요",
+			"growth": {
+				"final": "최종 진화를 완료했어요!",
+				"got": "{{name}}{{particle}} 획득했습니다!",
+				"more": "먹이를 더 주면 다음 모습으로 자라요",
+				"step": "{{level}}단계 / {{total}}단계"
+			},
+			"guardian": {
+				"eggAsleep": "잠든 나침반알",
+				"eggWaking": "깨어나는 나침반알",
+				"golden": "황금 세계올빼미",
+				"guardian": "세계수호 올빼미",
+				"mapwing": "지도날개 올빼미",
+				"owlet": "꼬마 탐험올빼미"
+			},
+			"levelUp": {
+				"body": "경험치 {{exp}}에 도달했어요. 계속 키워 볼까요?",
+				"confirm": "좋아요!",
+				"title": "{{name}}이(가) 자랐어요!",
+				"titleGolden": "{{name}}의 황금 진화!"
+			},
+			"noEgg": "아직 알이 없어요",
+			"stage": {
+				"apprentice": "견습 탐험가",
+				"explorer": "대탐험가",
+				"golden": "황금 대탐험가",
+				"seeker": "세계 탐구가",
+				"sprout": "탐험 새싹",
+				"traveler": "노련한 여행가"
+			}
+		},
+		"picker": {
+			"all": "전체",
+			"title": "주제 고르기"
+		},
+		"profile": {
+			"badgeCollapse": "접기",
+			"badgeEmpty": "아직 딴 뱃지가 없어요. 아래 목표부터 하나씩 채워 봐요!",
+			"badgeGoals": "다음 목표",
+			"badgeSection": "뱃지",
+			"badgeSeeAll": "전체 {{total}}개 보기",
+			"feed": "먹이 주기",
+			"feedGiven": "먹이 {{n}}개",
+			"feedGrownUp": "다 자랐어요 · 먹이를 더 줄 필요가 없어요",
+			"feedHeld": "줬어요 · 가진 먹이 {{n}}개",
+			"feedNone": "먹이가 없어요 · 출석 보상으로 받아요",
+			"feedOne": "먹이 1개",
+			"feedStage": "먹이 {{n}}",
+			"feedWithStock": "먹이 주기 · {{n}}개 보유",
+			"guardianCaption": "나침반 올빼미 · 먹이로 자라요",
+			"guardianFed": "{{stage}}, 먹이 {{n}}개 줬어요",
+			"guardianFinal": "먹이 35개를 다 준 최종 진화 황금 세계올빼미예요",
+			"guardianNext": "{{stage}}까지 먹이 {{n}}개 남았어요",
+			"guardianNone": "아직 먹이를 주지 않아 알이 없어요",
+			"guide": {
+				"line1": "맨 위에서 출석과 학습 보상을 한눈에 봐요.",
+				"line2": "나침반 올빼미는 먹이를 줄 때마다 자라요. 먹이 주기 버튼을 눌러 보세요.",
+				"line3": "뱃지는 딴 것부터 진열되고, 전체 목록은 눌러서 펼쳐 봐요."
+			},
+			"holdings": "내 보유",
+			"holdingsDesc": "학습하며 모아 온 보상",
+			"petGrowHint": "{{exp}}EXP 더 모으면 {{stage}}로 자라요",
+			"petSection": "펫",
+			"petTopHint": "최고 단계인 {{stage}}이 됐어요",
+			"stat": {
+				"attendance": "출석",
+				"attendanceUnit": "일",
+				"badges": "뱃지",
+				"feeds": "펫 먹이",
+				"feedsUnit": "개"
+			},
+			"subtitle": "학습 기록과 성장 현황",
+			"title": "나의 활동"
+		},
+		"quiz": {
+			"done": "완료",
+			"guide": {
+				"line1": "네 개 보기 중 하나를 고르면 바로 정답을 알려 줘요.",
+				"line2": "답을 고르면 카드 아래에 설명이 떠요 — 읽고 넘어가면 더 오래 남아요.",
+				"line3": "틀린 문제는 오답 노트에 담기고, 두 번 맞히면 졸업해요."
+			},
+			"imageFailed": "그림을 불러오지 못했어요",
+			"missCount": "틀린 문제 {{n}}개",
+			"noQuestions": "낼 수 있는 문항이 없어요.",
+			"result": {
+				"half": "절반은 넘겼어요",
+				"low": "한 번 더 보고 오면 늘어요",
+				"perfect": "다 맞혔어요!"
+			},
+			"retry": "다시 풀기",
+			"reviewCards": "카드로 복습",
+			"shareResult": "결과 공유하기",
+			"shareTitle": "오늘의 퀴즈 결과 공유",
+			"source": {
+				"daily": "오늘의 퀴즈",
+				"wrong": "오답 복습"
+			}
+		},
+		"report": {
+			"down": "이번 주는 잠시 쉬어 갔네요. 오늘 한 문제부터 다시 시작해요.",
+			"flat": "그대로",
+			"range": "{{from}} ~ {{to}} · 지난주와 견줘요",
+			"share": "이번 주 기록 공유하기",
+			"shareFailed": "공유를 열지 못했어요. 잠시 뒤에 다시 눌러 주세요",
+			"shareLabel": "주간 리포트 공유하기",
+			"stat": {
+				"attendance": "출석",
+				"attendanceUnit": "일",
+				"newItems": "새 항목",
+				"newItemsUnit": "개",
+				"rate": "정답률",
+				"solved": "푼 문제",
+				"solvedUnit": "문제"
+			},
+			"text": {
+				"attendance": "📅 출석 {{n}}일",
+				"head": "{{app}} · 주간 리포트 {{from}} ~ {{to}}",
+				"newItems": "📘 새 항목 {{n}}개",
+				"rate": "🎯 정답률 {{rate}}",
+				"solved": "❓ 푼 문제 {{n}}문제"
+			},
+			"title": "주간 리포트",
+			"up": "지난주보다 나아진 항목이 있어요. 이 흐름 그대로 가요!"
+		},
+		"reward": {
+			"character": "🌟 캐릭터",
+			"clearCondition": "🏆 클리어 조건",
+			"costume": "👕 코스튬",
+			"earned": "🎁 획득 보상",
+			"special": "✨ 특별 아이템"
+		},
+		"setting": {
+			"alarm": {
+				"descOff": "출석과 오늘의 퀴즈를 잊지 않게 알려 드려요",
+				"descOn": "매일 {{time}}에 알려 드려요",
+				"label": "매일 학습 알림",
+				"noPermission": "알림 권한이 없어요. 설정에서 허용해 주세요",
+				"section": "알림",
+				"timeChange": "시간 변경",
+				"turnedOff": "알림을 껐어요",
+				"turnedOn": "매일 {{time}}에 알려 드릴게요"
+			},
+			"apps": {
+				"notReleased": "아직 출시 준비 중인 앱이에요",
+				"openStore": "{{title}} 스토어로 이동",
+				"seeAll": "전체 보기",
+				"seeAllLabel": "개발자의 다른 앱 전체 보기",
+				"storeFailed": "스토어를 열 수 없어요"
+			},
+			"dataNotice": "세계의 수도·랜드마크·신화·천체·스포츠 {{items}}개를 {{topics}}개 주제로 나눠 담고 있습니다.",
+			"dev": {
+				"completeAll": "모든 항목 학습 완료로 설정",
+				"completeQuiz": "오늘의 퀴즈 완료로 설정",
+				"doneAll": "항목 {{n}}개를 학습 완료로 두었어요",
+				"doneQuiz": "오늘의 퀴즈를 만점 완료로 두었어요",
+				"section": "개발용 (DEV)",
+				"tapsLeft": "{{left}}번 더 누르면 개발용 메뉴가 열려요",
+				"unlocked": "개발용 메뉴를 열었어요"
+			},
+			"guide": {
+				"line1": "테마·글씨체·소리·알림을 내 방식대로 바꾸는 곳이에요.",
+				"line2": "맨 위에서 앱을 공유하고, 맨 아래 앱 정보에서 개발자의 다른 앱도 볼 수 있어요."
+			},
+			"info": {
+				"homepage": "제작자 공식 홈페이지",
+				"oss": "오픈소스 라이선스",
+				"otherApps": "개발자의 다른 앱",
+				"review": "스토어 리뷰 남기기",
+				"section": "앱 정보",
+				"version": "버전"
+			},
+			"language": {
+				"changed": "앱 언어를 {{label}}(으)로 바꿨어요",
+				"label": "앱 언어",
+				"notice": "화면 문구만 바뀝니다. 퀴즈·학습 카드의 본문은 한국어로 나옵니다.",
+				"section": "언어"
+			},
+			"permission": {
+				"desc": {
+					"notifications": "매일 학습 알림을 받으려면 필요합니다",
+					"tracking": "더 관련성 높은 광고를 보여주는 데 사용됩니다"
+				},
+				"label": {
+					"notifications": "알림",
+					"tracking": "앱 추적"
+				},
+				"notice": "권한을 끄면 해당 기능만 동작하지 않고, 나머지 학습 기능은 그대로 사용할 수 있습니다.",
+				"section": "권한",
+				"status": {
+					"blocked": "차단됨",
+					"denied": "미설정",
+					"granted": "허용됨",
+					"limited": "제한 허용",
+					"unavailable": "지원 안 함"
+				}
+			},
+			"report": {
+				"best": "· 타임 챌린지 최고 {{time}}점 · 타워 챌린지 최고 {{tower}}층",
+				"head": "📘 {{app}} 이번 주 기록",
+				"learned": "· 배운 항목 {{done}} / {{total}}개",
+				"pet": "· {{name}} Lv.{{level}} {{stage}}",
+				"quiz": "· 퀴즈 {{plays}}판 · {{total}}문제 중 {{correct}}개 정답{{rate}}",
+				"section": "학습 리포트",
+				"shareWeek": "이번 주 성과 공유",
+				"streak": "· 연속 출석 {{days}}일"
+			},
+			"reset": {
+				"action": "지우기",
+				"all": {
+					"desc": "기록과 경험치·펫·뱃지까지 전부",
+					"done": "모든 데이터를 지웠어요",
+					"label": "전체 초기화",
+					"summary": "학습·퀴즈 기록은 물론 경험치, 펫, 뱃지까지 모두 사라집니다. 되돌릴 수 없어요.",
+					"title": "모든 데이터를 지울까요?"
+				},
+				"chip": "초기화",
+				"progress": {
+					"desc": "학습 완료·오답 노트·퀴즈 기록",
+					"done": "학습·퀴즈 기록을 지웠어요",
+					"label": "학습 기록 초기화",
+					"summary": "학습 완료 표시, 오답 노트, 퀴즈 기록, 오늘의 퀴즈가 지워집니다. 경험치·펫·뱃지는 그대로 남아요.",
+					"title": "학습 기록을 지울까요?"
+				},
+				"section": "데이터 초기화",
+				"undo": "되돌리기",
+				"undone": "초기화를 되돌렸어요"
+			},
+			"share": {
+				"button": "공유하기",
+				"comingSoon": "출시 예정입니다.",
+				"intro": "요즘 제가 재미있게 쓰고 있는 앱이 있어서 추천드려요! 😊",
+				"linkLead": "👇 아래 링크에서 받아보세요",
+				"notReleased": "아직 스토어에 출시되지 않았어요",
+				"subtitle": "가족이나 친구, 지인에게 유용한 앱을 함께 나눠보세요!",
+				"title": "앱이 마음에 드셨나요?"
+			},
+			"sound": {
+				"bgm": {
+					"desc": "학습·퀴즈·챌린지를 하는 동안 잔잔하게 깔립니다",
+					"label": "배경음",
+					"off": "배경음을 껐어요",
+					"on": "학습·퀴즈에서 배경음이 나와요"
+				},
+				"section": "소리",
+				"sfx": {
+					"desc": "정답·오답·출석 체크를 소리로 알려 줍니다",
+					"label": "효과음",
+					"off": "효과음을 껐어요",
+					"on": "효과음을 켰어요"
+				}
+			},
+			"subtitle": "테마 · 글씨체 · 알림을 내 방식대로",
+			"theme": {
+				"changed": "화면 테마를 {{label}}(으)로 바꿨어요",
+				"dark": {
+					"hint": "항상 어두운 화면으로 보여 줍니다",
+					"label": "다크"
+				},
+				"light": {
+					"hint": "항상 밝은 화면으로 보여 줍니다",
+					"label": "라이트"
+				},
+				"section": "화면 테마"
+			},
+			"title": "설정"
+		},
+		"shorts": {
+			"guide": {
+				"line1": "위아래로 넘기며 한 화면에 한 항목씩 훑어요.",
+				"line2": "머문 항목은 배운 것으로 쳐요 — 가볍게 넘겨도 진도가 쌓여요."
+			}
+		},
+		"stats": {
+			"byTopic": "주제별 진도",
+			"guide": {
+				"line1": "지금까지 쌓인 학습·퀴즈·출석 기록을 한 화면에서 봐요.",
+				"line2": "이번 주 카드는 지난주와 견줘 얼마나 늘었는지 보여 줘요.",
+				"line3": "주제별 별은 진도와 정답률을 함께 봐서 최대 세 개까지 붙어요."
+			},
+			"note": {
+				"doneBody": "모든 주제를 익힌 멋진 탐험 기록이에요.",
+				"doneTitle": "세계 지도를 완성했어요!",
+				"emptyBody": "학습이나 퀴즈를 시작하면 성장 기록이 여기에 쌓여요.",
+				"emptyTitle": "첫 기록을 만들어 볼까요?",
+				"milestoneBody": "탐험 일지가 차근차근 채워지고 있어요.",
+				"milestoneTitle": "전체 진도 {{percent}}% 돌파",
+				"streakBody": "꾸준한 탐험이 세계 지식으로 쌓이고 있어요.",
+				"streakTitle": "{{days}}일째 이어가는 중"
+			},
+			"subtitle": "전체 진도 {{percent}}%",
+			"tile": {
+				"attendance": "출석",
+				"attendanceSub": "일 · 연속 {{streak}}일",
+				"bestTime": "타임 최고",
+				"bestTimeUnit": "점",
+				"bestTower": "타워 최고",
+				"bestTowerUnit": "층",
+				"learned": "배운 항목",
+				"plays": "푼 퀴즈",
+				"playsUnit": "판",
+				"rate": "정답률",
+				"stars": "주제 별",
+				"wrong": "오답 노트",
+				"wrongUnit": "개"
+			},
+			"title": "통계"
+		},
+		"study": {
+			"empty": "보여 줄 항목이 없어요.",
+			"guide": {
+				"line1": "카드를 아래 버튼으로 넘기며 한 장씩 익혀요.",
+				"line2": "펼친 카드는 배운 것으로 쳐서 진도와 경험치가 올라가요.",
+				"line3": "쉬운 것부터 나오고, 배울수록 어려운 항목이 열려요."
+			},
+			"next": "다음 항목",
+			"nextShort": "다음",
+			"prev": "이전 항목",
+			"toQuiz": "퀴즈로 확인하기"
+		},
+		"studyMode": {
+			"card": {
+				"desc": "주제를 고르고 한 장씩 넘기며 익혀요",
+				"title": "카드 학습"
+			},
+			"shorts": {
+				"desc": "한 화면에 한 항목. 위로 넘기며 쭉 훑어요",
+				"title": "숏폼 학습"
+			},
+			"subtitle": "같은 내용을 두 가지 방식으로 볼 수 있어요",
+			"title": "어떻게 학습할까요?"
+		},
+		"tab": {
+			"home": "홈",
+			"profile": "나의 활동",
+			"setting": "설정",
+			"stats": "통계",
+			"today": "오늘",
+			"words": "사전"
+		},
+		"time": {
+			"again": "다시 도전",
+			"bestLabel": "최고 점수",
+			"bestSuffix": " · 최고 {{score}}점",
+			"combo": "🔥 {{n}}연속",
+			"comboNote": "연속으로 맞히면 보너스가 붙어요. 세 개부터 +5, 다섯 개부터 +10.",
+			"exit": "나가기",
+			"guide": {
+				"line1": "제한 시간 안에 최대한 많이 맞히는 판이에요.",
+				"line2": "연속으로 맞히면 보너스가 붙고, 목숨이 다하면 시간이 남아도 끝나요.",
+				"line3": "주제를 골라 도전하면 자신 있는 분야로만 기록을 겨룰 수 있어요."
+			},
+			"intro": "{{sec}}초 안에 최대한 많이 맞혀요",
+			"left": "{{sec}}초",
+			"limitLabel": "제한 시간(초)",
+			"livesLabel": "목숨",
+			"newRecord": " · 새 기록!",
+			"pickTopic": "어느 주제로 도전할까요?",
+			"resultBody": "{{correct}}문제를 맞혔어요{{extra}}",
+			"score": "{{score}}점",
+			"start": "시작하기",
+			"title": "타임 챌린지"
+		},
+		"topic": {
+			"capital": {
+				"description": "나라와 수도, 국기, 그리고 대륙",
+				"label": "세계 수도",
+				"mode": {
+					"capital": {
+						"label": "수도 맞히기",
+						"question": "이곳의 수도는?"
+					},
+					"continent": {
+						"label": "대륙 맞히기",
+						"question": "이곳이 속한 대륙은?"
+					},
+					"country": {
+						"label": "나라 맞히기",
+						"question": "이 도시가 수도인 곳은?"
+					},
+					"flag": {
+						"label": "국기 맞히기",
+						"question": "이 국기는 어디의 것일까?"
+					}
+				}
+			},
+			"constellation": {
+				"description": "밤하늘에서 찾아보는 이름들",
+				"label": "별자리와 천체",
+				"mode": {
+					"image": {
+						"label": "그림 맞히기",
+						"question": "그림 속 별자리는?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 별자리는?"
+					},
+					"season": {
+						"label": "언제 보이나",
+						"question": "밤하늘에서 언제 잘 보일까?"
+					},
+					"star": {
+						"label": "대표 별",
+						"question": "이 별자리의 대표 별은?"
+					}
+				}
+			},
+			"event": {
+				"description": "세상을 바꾼 그날, 언제 어디서",
+				"label": "세계사 사건",
+				"mode": {
+					"century": {
+						"label": "언제 일어났나",
+						"question": "이 일이 일어난 때는?"
+					},
+					"country": {
+						"label": "어느 나라 일",
+						"question": "이 일과 가장 가까운 나라는?"
+					},
+					"kind": {
+						"label": "무슨 일인가",
+						"question": "이 일은 무엇으로 분류될까?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 사건은?"
+					}
+				}
+			},
+			"figure": {
+				"description": "세상을 바꾼 사람들, 언제 어디서 무엇을",
+				"label": "세계 위인",
+				"mode": {
+					"country": {
+						"label": "어느 나라 사람",
+						"question": "이 인물은 어느 나라 사람일까?"
+					},
+					"era": {
+						"label": "언제 살았나",
+						"question": "이 인물이 주로 활동한 때는?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 인물은?"
+					},
+					"portrait": {
+						"label": "초상 맞히기",
+						"question": "초상 속 인물은?"
+					},
+					"role": {
+						"label": "무엇을 한 사람",
+						"question": "이 인물이 한 일은?"
+					}
+				}
+			},
+			"landmark": {
+				"description": "사진으로 익숙한 그곳은 어디에",
+				"label": "세계 랜드마크",
+				"mode": {
+					"city": {
+						"label": "어디에 있나",
+						"question": "이 랜드마크가 있는 곳은?"
+					},
+					"country": {
+						"label": "나라 맞히기",
+						"question": "이 랜드마크가 있는 나라는?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 랜드마크는?"
+					},
+					"photo": {
+						"label": "사진 맞히기",
+						"question": "사진 속 랜드마크는?"
+					}
+				}
+			},
+			"myth": {
+				"description": "신과 영웅, 그리고 괴물",
+				"label": "그리스 로마 신화",
+				"mode": {
+					"domain": {
+						"label": "무엇을 맡았나",
+						"question": "이 인물이 맡은 자리는?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 인물은?"
+					},
+					"portrait": {
+						"label": "그림 맞히기",
+						"question": "그림 속 인물은?"
+					},
+					"roman": {
+						"label": "로마 이름",
+						"question": "이 신의 로마식 이름은?"
+					}
+				}
+			},
+			"nature": {
+				"description": "지도에서 찾는 강과 산, 사막과 호수",
+				"label": "세계 지형",
+				"mode": {
+					"continent": {
+						"label": "어느 대륙",
+						"question": "이곳이 있는 대륙은?"
+					},
+					"country": {
+						"label": "어느 나라",
+						"question": "이곳이 있는 나라는?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 곳은?"
+					}
+				}
+			},
+			"olympic": {
+				"description": "개최 도시와 종합 1위",
+				"label": "하계 올림픽",
+				"mode": {
+					"city": {
+						"label": "개최 도시",
+						"question": "이 대회가 열린 도시는?"
+					},
+					"host": {
+						"label": "개최국",
+						"question": "이 대회를 연 나라는?"
+					},
+					"top": {
+						"label": "종합 1위",
+						"question": "이 대회에서 금메달을 가장 많이 딴 나라는?"
+					}
+				}
+			},
+			"space": {
+				"description": "행성과 위성, 그 바깥까지",
+				"label": "태양계",
+				"mode": {
+					"image": {
+						"label": "그림 맞히기",
+						"question": "그림 속 천체는?"
+					},
+					"kind": {
+						"label": "천체 갈래",
+						"question": "이 천체는 무엇으로 분류될까?"
+					},
+					"name": {
+						"label": "설명 보고 맞히기",
+						"question": "설명에 맞는 천체는?"
+					},
+					"order": {
+						"label": "몇 번째 행성",
+						"question": "태양에서 몇 번째 행성일까?"
+					}
+				}
+			},
+			"winter": {
+				"description": "눈과 얼음 위의 개최지와 1위",
+				"label": "동계 올림픽",
+				"mode": {
+					"city": {
+						"label": "개최 도시",
+						"question": "이 대회가 열린 도시는?"
+					},
+					"host": {
+						"label": "개최국",
+						"question": "이 대회를 연 나라는?"
+					},
+					"top": {
+						"label": "종합 1위",
+						"question": "이 대회에서 금메달을 가장 많이 딴 나라는?"
+					}
+				}
+			},
+			"worldcup": {
+				"description": "개최국과 우승국의 역사",
+				"label": "월드컵",
+				"mode": {
+					"host": {
+						"label": "개최국",
+						"question": "이 대회를 연 나라는?"
+					},
+					"runnerUp": {
+						"label": "준우승국",
+						"question": "이 대회의 준우승국은?"
+					},
+					"winner": {
+						"label": "우승국",
+						"question": "이 대회의 우승국은?"
+					}
+				}
+			}
+		},
+		"topics": {
+			"cardCount": "{{count}}개 · {{modes}}가지 유형",
+			"guide": {
+				"line1": "주제를 고르면 그 안에서 학습과 퀴즈를 바로 시작할 수 있어요.",
+				"line2": "카드 아래 왼쪽은 학습, 오른쪽은 퀴즈예요.",
+				"line3": "주제마다 묻는 방식이 여러 가지라 같은 주제도 매번 다르게 나와요."
+			},
+			"heroDesc": "마음에 드는 주제를 골라 세계 지식을 펼쳐 보세요.",
+			"heroTitle": "어디부터 탐험할까요?",
+			"quiz": "퀴즈",
+			"quizLabel": "{{topic}} 퀴즈",
+			"study": "학습",
+			"studyLabel": "{{topic}} 카드 학습",
+			"subtitle": "{{topics}}개 주제 · {{items}}개 항목",
+			"title": "세계 상식"
+		},
+		"tower": {
+			"again": "다시 오르기",
+			"bandFrom": "{{from}}층부터",
+			"bandRange": "{{from}}~{{to}}층",
+			"best": "지금까지 {{floor}}층까지 올랐어요",
+			"bestLabel": "최고 층",
+			"exit": "나가기",
+			"floor": "{{floor}}층",
+			"guide": {
+				"line1": "층마다 문제를 풀고 한 층씩 올라가요.",
+				"line2": "세 층마다 어려워지고, 목숨이 다하면 그 자리가 최고 기록이 돼요.",
+				"line3": "주제를 골라 오르면 자신 있는 분야로만 기록을 겨룰 수 있어요."
+			},
+			"harder": "올라갈수록 어려워져요",
+			"intro": "한 층씩 올라가 어디까지 갈 수 있는지 겨뤄요",
+			"level": {
+				"1": {
+					"bossDescription": "도깨비의 메밀묵을 훔쳐 먹으려는 숲속의 골칫덩이 멧돼지",
+					"bossName": "먹보 멧돼지 꿀꿀이",
+					"bossTitle": "🐗 레벨 1 보스",
+					"clearCondition": "초급 문제 전체 클리어",
+					"name": "초급 탑",
+					"rewardName": "초급 모자"
+				},
+				"2": {
+					"bossDescription": "바위산의 입구를 가로막고 있는 고집불통 거인. 오직 퀴즈로만 길을 비켜줌",
+					"bossName": "바위 거인 옹고집",
+					"bossTitle": "🗿 레벨 2 보스",
+					"clearCondition": "중급 문제 전체 클리어",
+					"name": "중급 탑",
+					"rewardName": "중급 망토"
+				},
+				"3": {
+					"bossDescription": "골짜기의 안개 속에서 나타나는 신비롭고 영악한 여우 요괴",
+					"bossName": "천년 묵은 구미호 매혹",
+					"bossTitle": "🦊 레벨 3 보스",
+					"clearCondition": "고급 문제 전체 클리어",
+					"name": "고급 탑",
+					"rewardName": "전설의 한자 수호자"
+				},
+				"4": {
+					"bossDescription": "거대한 어사화를 쓰고 황금 방망이를 든, 위엄 넘치는 도깨비들의 군주",
+					"bossName": "도깨비 왕 염라",
+					"bossTitle": "👹 레벨 4 최종 보스",
+					"clearCondition": "특급 문제 전체 클리어",
+					"name": "최종 탑",
+					"rewardName": "황금 도깨비 방망이"
+				}
+			},
+			"livesLabel": "목숨",
+			"livesNote": "목숨은 층을 넘어가도 이어져요. 다 쓰면 그 층까지가 기록이에요.",
+			"outOfLives": "목숨을 다 썼어요. 여기까지가 이번 기록이에요.",
+			"perFloor": "한 층 문제",
+			"pickTopic": "어느 주제로 오를까요?",
+			"progress": "{{at}} / {{total}} 문제",
+			"start": "오르기 시작",
+			"title": "타워 챌린지"
+		},
+		"version": {
+			"current": "현재",
+			"latest": "최신",
+			"message": "이번 업데이트부터 이용할 수 있어요.\n업데이트 후 계속 학습해 주세요.",
+			"notice": "업데이트를 마쳐야 앱을 계속 사용할 수 있습니다.",
+			"title": "새로운 버전이 나왔어요",
+			"update": "지금 업데이트"
+		},
+		"words": {
+			"all": "전체",
+			"clearSearch": "검색어 지우기",
+			"count": "{{n}}개",
+			"detailLabel": "{{name}} 자세히 보기",
+			"empty": "찾는 항목이 없어요.",
+			"favAdded": "즐겨찾기에 담았어요",
+			"favLabel": "{{name}} 즐겨찾기",
+			"favOnly": "즐겨찾기만 보기",
+			"favRemoved": "즐겨찾기에서 뺐어요",
+			"guide": {
+				"line1": "주제 칩과 검색으로 찾는 항목을 좁혀요.",
+				"line2": "줄을 누르면 자세한 설명이 열리고, 별을 누르면 즐겨찾기에 담겨요.",
+				"line3": "별 칩을 누르면 즐겨찾기만 모아 볼 수 있어요."
+			},
+			"searchLabel": "항목 검색",
+			"searchPlaceholder": "이름·설명·수도로 찾기",
+			"title": "세계 상식 사전"
+		}
+	}
+}

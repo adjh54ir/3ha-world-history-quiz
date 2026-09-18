@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Share, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -14,12 +15,15 @@ import { accuracy, buildWeeklyReport, weeklyShareText, WeekMetrics, WeeklyReport
 import { loadActivityLog } from '@/src/four/utils/DailyActivityUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 
-/** 한 줄에 세우는 지표 — 라벨·아이콘·값 뽑는 법을 한곳에서 정한다 */
-const METRICS: { key: string; label: string; icon: string; unit: string; pick: (week: WeekMetrics) => number }[] = [
-	{ key: 'learned', label: '새 항목', icon: 'cards-outline', unit: '개', pick: (week) => week.learned },
-	{ key: 'solved', label: '푼 문제', icon: 'head-question-outline', unit: '문제', pick: (week) => week.solved },
-	{ key: 'accuracy', label: '정답률', icon: 'target', unit: '%', pick: accuracy },
-	{ key: 'attended', label: '출석', icon: 'calendar-check', unit: '일', pick: (week) => week.attended },
+/**
+ * 한 줄에 세우는 지표 — 아이콘과 값 뽑는 법만 여기서 정한다.
+ * 이름·단위는 번역 파일(report.stat.*)에 있다. 정답률만 단위가 '%' 로 언어와 무관하다.
+ */
+const METRICS: { key: string; icon: string; unitKey?: string; unit?: string; pick: (week: WeekMetrics) => number }[] = [
+	{ key: 'newItems', icon: 'cards-outline', unitKey: 'report.stat.newItemsUnit', pick: (week) => week.learned },
+	{ key: 'solved', icon: 'head-question-outline', unitKey: 'report.stat.solvedUnit', pick: (week) => week.solved },
+	{ key: 'rate', icon: 'target', unit: '%', pick: accuracy },
+	{ key: 'attendance', icon: 'calendar-check', unitKey: 'report.stat.attendanceUnit', pick: (week) => week.attended },
 ];
 
 /** 'YYYY-MM-DD' → '9/4' — 카드 머리말에 기간을 짧게 적는다 */
@@ -33,12 +37,13 @@ const shortDate = (key: string): string => {
  * 정답률만 %p 로 읽어야 해서 단위를 밖에서 받는다.
  */
 const DeltaChip = ({ delta, unit }: { delta: number; unit: string }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	if (delta === 0) {
 		return (
 			<View style={[styles.deltaChip, styles.deltaFlat]}>
-				<Text style={[styles.deltaText, styles.deltaFlatText]}>그대로</Text>
+				<Text style={[styles.deltaText, styles.deltaFlatText]}>{t('report.flat')}</Text>
 			</View>
 		);
 	}
@@ -65,6 +70,7 @@ const DeltaChip = ({ delta, unit }: { delta: number; unit: string }) => {
  * 집계 규칙은 WeeklyReport 가 정하고 여기서는 그리기만 한다.
  */
 const WeeklyReportCard = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const { records, attendance } = useLife();
@@ -98,11 +104,11 @@ const WeeklyReportCard = () => {
 		}
 		playPop();
 		try {
-			await Share.share({ message: weeklyShareText(report) });
+			await Share.share({ message: weeklyShareText(report, t) });
 		} catch {
-			showToast('공유를 열지 못했어요. 잠시 뒤에 다시 눌러 주세요', 'share-off-outline');
+			showToast(t('report.shareFailed'), 'share-off-outline');
 		}
-	}, [report]);
+	}, [report, t]);
 
 	if (!report) {
 		return null;
@@ -118,8 +124,8 @@ const WeeklyReportCard = () => {
 					<IconComponent type="materialCommunityIcons" name="chart-timeline-variant-shimmer" size={18} color={Colors.primaryDark} />
 				</View>
 				<View style={styles.headText}>
-					<Text style={styles.title}>주간 리포트</Text>
-					<Text style={styles.period}>{`${shortDate(report.from)} ~ ${shortDate(report.to)} · 지난주와 견줘요`}</Text>
+					<Text style={styles.title}>{t('report.title')}</Text>
+					<Text style={styles.period}>{t('report.range', { from: shortDate(report.from), to: shortDate(report.to) })}</Text>
 				</View>
 			</View>
 
@@ -127,28 +133,29 @@ const WeeklyReportCard = () => {
 				{METRICS.map((metric) => {
 					const now = metric.pick(thisWeek);
 					const before = metric.pick(lastWeek);
+					const unit = metric.unit ?? t(metric.unitKey!);
 					return (
 						<View key={metric.key} style={styles.row}>
 							<IconComponent type="materialCommunityIcons" name={metric.icon} size={15} color={Colors.textSecondary} />
-							<Text style={styles.rowLabel}>{metric.label}</Text>
+							<Text style={styles.rowLabel}>{t(`report.stat.${metric.key}`)}</Text>
 							<Text style={styles.rowValue}>
 								{now}
-								<Text style={styles.rowUnit}>{metric.unit}</Text>
+								<Text style={styles.rowUnit}>{unit}</Text>
 							</Text>
-							<DeltaChip delta={now - before} unit={metric.unit} />
+							<DeltaChip delta={now - before} unit={unit} />
 						</View>
 					);
 				})}
 			</View>
 
 			<Text style={styles.footnote}>
-				{gained > 0 ? '지난주보다 나아진 항목이 있어요. 이 흐름 그대로 가요!' : '이번 주는 잠시 쉬어 갔네요. 오늘 한 문제부터 다시 시작해요.'}
+				{t(gained > 0 ? 'report.up' : 'report.down')}
 			</Text>
 
 			{/* 공유 — 오늘의 퀴즈와 같은 방식(글)으로 보낸다. 취소는 실패가 아니므로 아무 말도 하지 않는다 */}
-			<PressableScale style={styles.share} onPress={onShare} scaleTo={0.97} accessibilityRole="button" accessibilityLabel="주간 리포트 공유하기">
+			<PressableScale style={styles.share} onPress={onShare} scaleTo={0.97} accessibilityRole="button" accessibilityLabel={t('report.shareLabel')}>
 				<IconComponent type="materialCommunityIcons" name="share-variant" size={14} color={Colors.primaryDark} />
-				<Text style={styles.shareText}>이번 주 기록 공유하기</Text>
+				<Text style={styles.shareText}>{t('report.share')}</Text>
 			</PressableScale>
 		</Animated.View>
 	);

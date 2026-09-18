@@ -1,5 +1,6 @@
 import FourImages from '@/src/four/assets/FourImages';
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/four/screens/common/atomic/AppModal';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Animated, Easing } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -19,17 +20,22 @@ import { registerThemedStyles } from '@/src/four/const/ThemeRegistry';
 import { getHanjaTextStyle } from '@/src/four/const/ConstHanjaFont';
 
 /**
- * 달력 한글 로케일 — 기본값이 영어라 요일이 Sun·Mon 으로 나왔다.
- * 이 앱에서 달력을 쓰는 곳은 이 모달뿐이라 여기서 한 번만 등록한다.
+ * 달력 로케일 — 기본값이 영어라 요일이 Sun·Mon 으로 나왔다.
+ * 이 앱에서 달력을 쓰는 곳은 이 모달뿐이라 여기서 등록한다.
+ * 이름을 상수로 굳히지 않고 함수로 두는 까닭: 설정에서 언어를 바꾸면 달·요일 이름도 따라 바뀌어야 한다.
  */
-LocaleConfig.locales.ko = {
-	monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-	dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	today: '오늘',
+const applyCalendarLocale = (t: (key: string) => string) => {
+	const months = Array.from({ length: 12 }, (_, at) => t(`calendar.month.${at + 1}`));
+	const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+	LocaleConfig.locales.app = {
+		monthNames: months,
+		monthNamesShort: months,
+		dayNames: days.map((key) => t(`calendar.dayLong.${key}`)),
+		dayNamesShort: days.map((key) => t(`heatmap.day.${key}`)),
+		today: t('calendar.today'),
+	};
+	LocaleConfig.defaultLocale = 'app';
 };
-LocaleConfig.defaultLocale = 'ko';
 
 const CHECK_IN_MASCOT = FourImages.screen_fox_check_in;
 const FEED_IMAGE = require('@/src/assets/illustrations/attendance-pet-feed.webp');
@@ -55,6 +61,9 @@ interface CheckInModalProps {
  * 먹이를 주는 일은 여기서 하지 않는다 — 수호신이 있는 '나의 활동'에서 준다.
  */
 const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, checkedInDates, mascot, showStamp, stampStyle, onClaim, onClose }) => {
+	const { t, i18n } = useTranslation();
+	// 달력은 자기 로케일 표를 들고 있다 — 언어가 바뀌면 다시 깔아 준다
+	React.useMemo(() => applyCalendarLocale(t), [i18n.language, t]);
 	const insets = useSafeAreaInsets();
 	const { feeds, image: petImageRaw } = useAttendancePet();
 	const { streak } = useStreak();
@@ -115,11 +124,11 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 			{/* AppModal 이 시스템 바 아래까지 덮으므로 높은 카드가 가리지 않게 여백을 준다 */}
 			<View style={[styles.modalOverlay, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
 				<Animated.View style={[styles.modalContent, { opacity: opacityAnim, transform: [{ scale: scaleAnim }] }]}>
-					<TouchableOpacity hitSlop={HitSlop} style={styles.modalCloseIcon} onPress={onClose} accessibilityRole="button" accessibilityLabel="닫기">
+					<TouchableOpacity hitSlop={HitSlop} style={styles.modalCloseIcon} onPress={onClose} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 					</TouchableOpacity>
 
-					<Text style={styles.modalTitle}>오늘의 출석</Text>
+					<Text style={styles.modalTitle}>{t('checkin.title')}</Text>
 
 					{/* flexShrink 가 없으면 maxHeight 안에서 스크롤되지 않고 달력 아래가 잘린다 */}
 					<ScrollView style={styles.scroll} contentContainerStyle={styles.scrollBody} showsVerticalScrollIndicator={false}>
@@ -132,7 +141,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 									size={scaledSize(12)}
 									color={Colors.textInverse}
 								/>
-								<Text style={styles.rewardBadgeText}>{isSpecial ? `${streak}일 특별 출석` : '오늘의 출석 보상'}</Text>
+								<Text style={styles.rewardBadgeText}>{isSpecial ? t('checkin.specialTitle', { days: streak }) : t('checkin.rewardTitle')}</Text>
 							</View>
 
 							<Animated.View style={[styles.rewardFeedBox, feedStyle]}>
@@ -142,20 +151,20 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 								</View>
 							</Animated.View>
 
-							<Text style={styles.rewardTitle}>{isCheckedIn ? `펫 먹이 ${todayFeeds}개를 받았어요` : `출석하면 펫 먹이 ${todayFeeds}개`}</Text>
-							<Text style={styles.rewardHint}>펫은 먹이를 먹어야 자라요. 먹이 주기는 '나의 활동'에서 해요</Text>
+							<Text style={styles.rewardTitle}>{isCheckedIn ? t('checkin.got', { n: todayFeeds }) : t('checkin.willGet', { n: todayFeeds })}</Text>
+							<Text style={styles.rewardHint}>{t('checkin.feedNote')}</Text>
 
 							<View style={styles.bagRow}>
 								<IconComponent type="materialCommunityIcons" name="sack" size={scaledSize(14)} color={Colors.warningDark} />
-								<Text style={styles.bagText}>{`가진 먹이 ${feeds}개`}</Text>
+								<Text style={styles.bagText}>{t('checkin.held', { n: feeds })}</Text>
 							</View>
 						</View>
 
 						{/* ── 특별 출석 트랙 : 7일마다 먹이를 더 준다 ───────── */}
 						<View style={styles.trackCard}>
 							<View style={styles.trackHead}>
-								<Text style={styles.trackTitle}>{`${ATTENDANCE_FEED_CYCLE}일마다 특별 보상`}</Text>
-								<Text style={styles.trackHint}>{restDays === ATTENDANCE_FEED_CYCLE && cycleAt === 0 ? '오늘부터 시작!' : `특별 출석까지 ${restDays}일`}</Text>
+								<Text style={styles.trackTitle}>{t('checkin.cycle', { days: ATTENDANCE_FEED_CYCLE })}</Text>
+								<Text style={styles.trackHint}>{restDays === ATTENDANCE_FEED_CYCLE && cycleAt === 0 ? t('checkin.cycleStart') : t('checkin.cycleRest', { days: restDays })}</Text>
 							</View>
 							<View style={styles.trackRow}>
 								{Array.from({ length: ATTENDANCE_FEED_CYCLE }).map((_, at) => {
@@ -177,13 +186,13 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 									);
 								})}
 							</View>
-							<Text style={styles.trackNote}>7일 +3 · 14일 +4 · 21일 +5 · 28일 +6개를 한 번에 받아요</Text>
+							<Text style={styles.trackNote}>{t('checkin.cycleNote')}</Text>
 						</View>
 
 						{/* ── 안내 캐릭터 ──────────────────────────────── */}
 						<View style={styles.guideRow}>
 							<MascotImage source={CHECK_IN_MASCOT} size={scaleWidth(60)} style={styles.guideImage} shadow={false} />
-							<Text style={styles.guideText}>매일 접속하면 캐릭터가 출석 스탬프를 찍고 펫 먹이를 챙겨 줘요!</Text>
+							<Text style={styles.guideText}>{t('checkin.hero')}</Text>
 						</View>
 
 						<View style={styles.calendarWrapper}>
@@ -212,20 +221,20 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 								renderHeader={(date) => {
 									const { year, month: localMonth } = DateUtils.getLocalDateParts(date);
 									const month = localMonth.toString().padStart(2, '0');
-									return <Text style={styles.calendarHeaderText}>{`${year}년 ${month}월`} 출석</Text>;
+									return <Text style={styles.calendarHeaderText}>{t('checkin.yearMonth', { year, month })}</Text>;
 								}}
 								style={styles.calendarContainer}
 							/>
 							<View style={styles.swipeHintRow}>
 								<IconComponent type="materialIcons" name="swipe" size={scaledSize(13)} color={Colors.textMuted} />
-								<Text style={styles.swipeHintText}>좌우 화살표 버튼을 눌러서 출석을 확인해보세요!</Text>
+								<Text style={styles.swipeHintText}>{t('checkin.arrowHint')}</Text>
 							</View>
 						</View>
 
 						{isCheckedIn && (
 							<View style={styles.checkInCompleteRow}>
 								<IconComponent type="materialCommunityIcons" name="party-popper" size={scaledSize(16)} color={Colors.primary} />
-								<Text style={styles.checkInCompleteText}>오늘도 출석 완료!</Text>
+								<Text style={styles.checkInCompleteText}>{t('checkin.doneToday')}</Text>
 							</View>
 						)}
 					</ScrollView>
@@ -236,15 +245,15 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 						onPress={isCheckedIn ? onClose : onClaim}
 						scaleTo={0.97}
 						accessibilityRole="button"
-						accessibilityLabel={isCheckedIn ? '닫기' : '출석하고 보상받기'}>
+						accessibilityLabel={t(isCheckedIn ? 'common.close' : 'checkin.claim')}>
 						<IconComponent
 							type="materialCommunityIcons"
 							name={isCheckedIn ? 'check-decagram' : 'gift-open'}
 							size={scaledSize(18)}
 							color={isCheckedIn ? Colors.textSecondary : Colors.textInverse}
 						/>
-						<Text style={[styles.claimButtonText, isCheckedIn && styles.claimButtonTextDone]}>
-							{isCheckedIn ? '확인' : `출석하고 보상받기 · 먹이 ${todayFeeds}개`}
+						<Text numberOfLines={2} style={[styles.claimButtonText, isCheckedIn && styles.claimButtonTextDone]}>
+							{isCheckedIn ? t('common.confirm') : t('checkin.claimWithFeeds', { n: todayFeeds })}
 						</Text>
 					</PressableScale>
 
@@ -268,7 +277,7 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 												popIn
 												shadow={false}
 												style={styles.stampPet}
-												accessibilityLabel="나침반 올빼미 펫"
+												accessibilityLabel={t('checkin.petLabel')}
 											/>
 										)}
 									</View>
@@ -279,9 +288,13 @@ const CheckInModal: React.FC<CheckInModalProps> = ({ visible, isCheckedIn, check
 										</Text>
 									</View>
 								</View>
-								<Text style={styles.stampText}>오늘 출석 완료!</Text>
+								<Text style={styles.stampText}>{t('checkin.doneBanner')}</Text>
 								<Text style={styles.stampSub}>
-									{isSpecial ? `${streak}일 특별 출석 · 먹이 ${todayFeeds}개` : streak > 1 ? `${streak}일 연속 출석 중` : '내일도 만나요'}
+									{isSpecial
+										? t('checkin.specialNow', { days: streak, n: todayFeeds })
+										: streak > 1
+											? t('checkin.streakNow', { days: streak })
+											: t('checkin.seeTomorrow')}
 								</Text>
 							</Animated.View>
 						</View>
@@ -351,7 +364,7 @@ const makeStyles = () =>
 			borderRadius: Radius.pill,
 			backgroundColor: Colors.warningDark,
 		},
-		rewardBadgeText: { fontSize: Typography.micro, fontWeight: FontWeight.heavy, color: Colors.textInverse },
+		rewardBadgeText: { fontSize: Typography.micro, fontWeight: FontWeight.heavy, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 		rewardFeedBox: { marginTop: SpacingV.sm, alignItems: 'center', justifyContent: 'center' },
 		rewardFeedImage: { width: scaleWidth(88), height: scaleWidth(88) },
 		rewardCountChip: {
@@ -509,12 +522,11 @@ const makeStyles = () =>
 			justifyContent: 'center',
 			gap: Spacing.xs,
 			marginTop: SpacingV.md,
-			height: scaleHeight(52),
+			minHeight: scaleHeight(52),
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.primary,
-		},
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
 		claimButtonDone: { backgroundColor: Colors.surfaceAlt },
-		claimButtonText: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse },
+		claimButtonText: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 		claimButtonTextDone: { color: Colors.textSecondary },
 		checkInCompleteRow: {
 			flexDirection: 'row',

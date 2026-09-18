@@ -34,4 +34,3 @@ export const challengeQuestions = (
 export const towerLevelOf = (floor: number): number => Math.min(4, Math.ceil(floor / 3));
 
 /** 층 난이도 이름 — 층 배지와 안내에 함께 쓴다 */
-export const TOWER_LEVEL_LABEL: Record<number, string> = { 1: '초급', 2: '중급', 3: '고급', 4: '특급' };

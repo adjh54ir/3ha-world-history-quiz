@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import DateUtils from '@/src/utils/DateUtils';
 
 import { CommonType } from '@/src/types/CommonType';
 
@@ -7,11 +8,24 @@ export const COMMON_APPS_DATA: {
 } = {
 	Apps: [
 		{
+			id: 27,
+			icon: require('@/src/assets/appicons/main_noisemeter.webp'),
+			title: '소음 측정기',
+			desc: '소음 측정기는 층간소음·생활 소음을 데시벨로 재고 녹음해, 최고소음도와 1·5분 등가소음도를 주간·야간 기준과 견주어 제출용 측정 결과 보고서 한 장으로 만들어 주는 소음 기록 앱입니다.',
+			category: 'utility',
+			releasedAt: '2026-09-15',
+			android: "",
+			// 안드로이드 미출시 — Play 스토어 페이지가 아직 없어 링크를 비워 둔다
+			ios: 'https://apps.apple.com/us/app/id6810932339',
+		},
+		{
 			id: 26,
 			icon: require('@/src/assets/appicons/main_qrmaker.webp'),
 			title: 'QRMaker',
 			desc: 'QRMaker는 QR코드와 바코드를 간편하게 만들고 스캔해, 이미지·PDF로 저장하고 이력·메모로 관리할 수 있는 QR·바코드 생성기 앱입니다.',
 			category: 'utility',
+			// 아이콘을 넣은 날 기준 추정값 — 실제 스토어 출시일로 고쳐 주세요
+			releasedAt: '2026-09-04',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.qrbar',
 			ios: 'https://apps.apple.com/app/ko/id6807281540',
 		},
@@ -19,11 +33,11 @@ export const COMMON_APPS_DATA: {
 			id: 25,
 			icon: require('@/src/assets/appicons/main_spitogenie.webp'),
 			title: '스피또 지니',
-			desc:
-				'스피또 지니는 동행복권 발행내역을 바탕으로 남은 당첨금과 잔여 매수로 회차별 기대값·환급률을 계산해, 지금 사기 좋은 스피또 회차를 알려 주는 즉석복권 분석 앱입니다.',
-			category: 'utility',
+			desc: '스피또 지니는 동행복권 발행내역을 바탕으로 남은 당첨금과 잔여 매수로 회차별 기대값·환급률을 계산해, 지금 사기 좋은 스피또 회차를 알려 주는 즉석복권 분석 앱입니다.',
+			releasedAt: '2026-09-04',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.spitogenie',
 			ios: 'https://apps.apple.com/us/app/id6807646866',
+			category: 'utility',
 		},
 		{
 			id: 24,
@@ -262,3 +276,22 @@ export const COMMON_APPS_DATA: {
  */
 export const appStoreUrl = (app: CommonType.AppItem): string | null =>
 	(Platform.OS === 'android' ? app.android : app.ios) || null;
+
+/** NEW 배지가 붙는 기간 */
+const NEW_APP_DAYS = 60;
+
+/**
+ * 갓 나온 앱인지.
+ * -------------------------------------------------
+ * 예전에는 "id 가 가장 큰 두 개" 를 NEW 로 봤다. 그러면 새 앱을 한참 안 올린 동안에도
+ * 같은 앱에 NEW 가 영영 붙어 있어, 배지가 아무 뜻도 없는 장식이 된다.
+ * 출시일이 적힌 앱만, 그것도 최근 것만 배지를 단다(안 적힌 앱은 붙지 않는다).
+ */
+export const isNewApp = (app: CommonType.AppItem, now = DateUtils.nowTime()): boolean => {
+	if (!app.releasedAt) return false;
+	const released = Date.parse(`${app.releasedAt}T00:00:00Z`);
+	if (Number.isNaN(released)) return false;
+	// 날짜 단위로 센다 — 시각까지 보면 딱 60일째 되는 날 오전에 배지가 사라져 하루가 잘린다
+	const days = Math.floor((now - released) / 86400000);
+	return days >= 0 && days <= NEW_APP_DAYS;
+};

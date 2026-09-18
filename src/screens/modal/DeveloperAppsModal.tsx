@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Animated, Easing, Keyboard, Linking, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Image } from 'expo-image';
 import { scaleHeight, scaleWidth } from '@/src/utils';
 import AppModal from '../common/atomic/AppModal';
 import IconComponent from '../common/atomic/IconComponent';
-import { COMMON_APPS_DATA } from '@/src/const/common/CommonAppsData';
+import { COMMON_APPS_DATA, isNewApp } from '@/src/const/common/CommonAppsData';
+import { localizedApp } from '@/src/const/common/CommonAppsI18n';
 import { CommonType } from '@/src/types/CommonType';
 import { Palette } from '@/src/const/ConstColors';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -12,18 +14,8 @@ import { useColors, useTheme, useThemedStyles } from '@/src/hooks/useTheme';
 
 type CategoryFilter = 'all' | CommonType.AppCategory;
 
-const CATEGORY_TABS: { key: CategoryFilter; label: string }[] = [
-	{ key: 'all', label: '전체' },
-	{ key: 'quiz', label: '퀴즈' },
-	{ key: 'calculator', label: '계산기' },
-	{ key: 'utility', label: '유틸리티' },
-];
-
-const CATEGORY_LABEL: Record<CommonType.AppCategory, string> = {
-	quiz: '퀴즈',
-	calculator: '계산기',
-	utility: '유틸리티',
-};
+/** 탭 순서만 여기서 정하고, 보이는 글자는 화면에서 t('apps.category.…') 로 붙인다 */
+const CATEGORY_TABS: CategoryFilter[] = ['all', 'quiz', 'calculator', 'utility'];
 
 /** 카테고리 배지 색 — 팔레트 토큰만 사용해 라이트/다크 모두에서 대비가 유지된다 */
 const categoryColors = (Colors: Palette): Record<CommonType.AppCategory, { bg: string; text: string }> => ({
@@ -38,6 +30,7 @@ interface Props {
 }
 
 const DeveloperAppsModal = ({ visible, onClose }: Props) => {
+	const { t, i18n } = useTranslation();
 	const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
 	const [searchQuery, setSearchQuery] = useState('');
 	const Colors = useColors();
@@ -54,14 +47,20 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 		return () => anim.stop();
 	}, [enter]);
 
+	/** 지금 언어로 이름·설명을 갈아 끼운 목록 — 검색도 화면에 보이는 글자로 건다 */
+	const localizedApps = useMemo(
+		() => COMMON_APPS_DATA.Apps.map((app) => ({ ...app, ...localizedApp(app, i18n.language) })),
+		[i18n.language],
+	);
+
 	const filteredApps = useMemo(() => {
-		return COMMON_APPS_DATA.Apps.filter((app) => {
+		return localizedApps.filter((app) => {
 			const categoryMatch = selectedCategory === 'all' || app.category === selectedCategory;
 			const q = searchQuery.trim().toLowerCase();
 			const textMatch = !q || app.title.toLowerCase().includes(q) || app.desc.toLowerCase().includes(q);
 			return categoryMatch && textMatch;
 		});
-	}, [selectedCategory, searchQuery]);
+	}, [localizedApps, selectedCategory, searchQuery]);
 
 	const getDownloadUrl = (app: CommonType.AppItem) => {
 		const primary = Platform.OS === 'android' ? app.android : app.ios;
@@ -69,31 +68,21 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 		return primary || fallback || null;
 	};
 
-	const newAppIds = useMemo(
-		() =>
-			new Set(
-				[...COMMON_APPS_DATA.Apps]
-					.sort((a, b) => b.id - a.id)
-					.slice(0, 2)
-					.map((app) => app.id),
-			),
-		[],
-	);
 	const onDownloadApp = async (app: CommonType.AppItem) => {
 		const url = getDownloadUrl(app);
 		if (!url) {
-			Alert.alert('Coming Soon!', '아직 스토어 링크가 준비되지 않았습니다.');
+			Alert.alert(t('apps.comingSoon'), t('apps.linkUnavailable'));
 			return;
 		}
 		try {
 			const supported = await Linking.canOpenURL(url);
 			if (!supported) {
-				Alert.alert('오류', '링크를 열 수 없습니다.');
+				Alert.alert(t('common.error'), t('apps.linkOpenFailed'));
 				return;
 			}
 			Linking.openURL(url);
 		} catch {
-			Alert.alert('오류', '링크를 여는 중 문제가 발생했습니다.');
+			Alert.alert(t('common.error'), t('apps.linkError'));
 		}
 	};
 
@@ -122,9 +111,9 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 					<View style={styles.header}>
 						<View style={styles.headerTop}>
 							<Text style={styles.titleText} numberOfLines={1} ellipsizeMode="tail">
-								📱 제작자의 다른 앱
+								{t('apps.title')}
 							</Text>
-							<TouchableOpacity style={styles.closeButton} onPress={handleClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} accessibilityRole="button" accessibilityLabel="닫기">
+							<TouchableOpacity style={styles.closeButton} onPress={handleClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 								<IconComponent type="materialIcons" name="close" size={18} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -135,7 +124,7 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 							<TextInput
 								keyboardAppearance={isDark ? 'dark' : 'light'}
 								style={styles.searchInput}
-								placeholder="앱 검색..."
+								placeholder={t('apps.searchPlaceholder')}
 								placeholderTextColor={Colors.textMuted}
 								value={searchQuery}
 								onChangeText={setSearchQuery}
@@ -149,19 +138,19 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 							contentContainerStyle={styles.tabsContainer}
 							keyboardShouldPersistTaps="handled"
 							keyboardDismissMode="on-drag">
-							{CATEGORY_TABS.map((tab) => (
+							{CATEGORY_TABS.map((key) => (
 								<TouchableOpacity
-									key={tab.key}
-									style={[styles.tabButton, selectedCategory === tab.key && styles.tabButtonActive]}
+									key={key}
+									style={[styles.tabButton, selectedCategory === key && styles.tabButtonActive]}
 									activeOpacity={0.8}
 									onPress={() => {
 										Keyboard.dismiss();
-										setSelectedCategory(tab.key);
+										setSelectedCategory(key);
 									}}>
 									<Text
-										style={[styles.tabButtonText, selectedCategory === tab.key && styles.tabButtonTextActive]}
+										style={[styles.tabButtonText, selectedCategory === key && styles.tabButtonTextActive]}
 										numberOfLines={1}>
-										{tab.label}
+										{t(`apps.category.${key}`)}
 									</Text>
 								</TouchableOpacity>
 							))}
@@ -171,7 +160,7 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 					<View style={styles.divider} />
 
 					{/* 카운트 */}
-					<Text style={styles.countLabel}>{filteredApps.length}개 앱</Text>
+					<Text style={styles.countLabel}>{t('apps.count', { n: filteredApps.length })}</Text>
 
 					{/* 리스트 */}
 					<ScrollView
@@ -182,7 +171,7 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 						onScrollBeginDrag={Keyboard.dismiss}>
 						{filteredApps.length === 0 ? (
 							<View style={styles.emptyState}>
-								<Text style={styles.emptyText}>검색 결과가 없습니다</Text>
+								<Text style={styles.emptyText}>{t('apps.empty')}</Text>
 							</View>
 						) : (
 							filteredApps.map((app) => {
@@ -192,9 +181,9 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 										<View style={styles.imageWrapper}>
 											<Image source={app.icon} style={styles.image} contentFit="cover" />
 
-											{newAppIds.has(app.id) && (
+											{isNewApp(app) && (
 												<View style={styles.newBadge}>
-													<Text style={styles.newBadgeText}>NEW</Text>
+													<Text style={styles.newBadgeText}>{t('common.new')}</Text>
 												</View>
 											)}
 										</View>
@@ -208,12 +197,12 @@ const DeveloperAppsModal = ({ visible, onClose }: Props) => {
 											<View style={styles.appFooter}>
 												<View style={[styles.categoryBadge, { backgroundColor: catColor.bg }]}>
 													<Text style={[styles.categoryBadgeText, { color: catColor.text }]} numberOfLines={1}>
-														{CATEGORY_LABEL[app.category]}
+														{t(`apps.category.${app.category}`)}
 													</Text>
 												</View>
 												<TouchableOpacity style={styles.downloadButton} activeOpacity={0.8} onPress={() => onDownloadApp(app)}>
 													<IconComponent type="Feather" name="download" size={12} color={Colors.primaryDeep} />
-													<Text style={styles.downloadText}>다운로드</Text>
+													<Text style={styles.downloadText}>{t('apps.download')}</Text>
 												</TouchableOpacity>
 											</View>
 										</View>
@@ -265,8 +254,7 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.lg,
 			backgroundColor: Colors.surfaceAlt,
 			alignItems: 'center',
-			justifyContent: 'center',
-		},
+			justifyContent: 'center', },
 		searchBox: {
 			flexDirection: 'row',
 			alignItems: 'center',
@@ -374,8 +362,7 @@ const createStyles = (Colors: Palette) =>
 		},
 		categoryBadgeText: {
 			fontSize: Typography.caption,
-			fontWeight: FontWeight.semibold,
-		},
+			fontWeight: FontWeight.semibold, flexShrink: 1, textAlign: 'center', },
 		downloadButton: {
 			flexDirection: 'row',
 			alignItems: 'center',
@@ -425,6 +412,5 @@ const createStyles = (Colors: Palette) =>
 			color: '#FFFFFF',
 			fontSize: Typography.caption,
 			fontWeight: FontWeight.heavy,
-			letterSpacing: 0.5,
-		},
+			letterSpacing: 0.5, flexShrink: 1, textAlign: 'center', },
 	});

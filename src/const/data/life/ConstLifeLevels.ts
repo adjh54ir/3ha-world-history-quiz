@@ -8,10 +8,8 @@ import type { LifeType } from '@/src/types/data/LifeType';
  * 초급에서 특급으로 갈수록 색이 진해져, 칩만 봐도 어느 정도 말인지 짐작된다.
  */
 export interface LifeLevel {
+	/** 번역 키의 뿌리이기도 하다 — 이름·설명은 level.<level>.label / .desc 에 있다 */
 	level: LifeType.Level;
-	label: string;
-	/** 한 줄 설명 — 등급 안내에 쓴다 */
-	description: string;
 	/**
 	 * 난이도 아이콘 (MaterialCommunityIcons) — 새싹에서 왕관까지 자라는 사다리다.
 	 * 네 등급이 모두 같은 그림(신호 막대)이던 때는 색만으로 구분해야 해서, 색약이거나 작은 칩에서는 등급이 읽히지 않았다.
@@ -22,10 +20,10 @@ export interface LifeLevel {
 }
 
 export const LIFE_LEVELS: LifeLevel[] = [
-	{ level: 1, label: '초급', description: '누구나 날마다 쓰는 말', icon: 'sprout', color: 'success', tint: 'successSoft' },
-	{ level: 2, label: '중급', description: '일상에서 흔히 만나는 말', icon: 'leaf', color: 'primaryDeep', tint: 'primarySoft' },
-	{ level: 3, label: '고급', description: '뉴스와 업무에서 쓰는 말', icon: 'tree', color: 'accentOrange', tint: 'warningSoft' },
-	{ level: 4, label: '특급', description: '전문·격식을 갖춘 말', icon: 'crown', color: 'errorDark', tint: 'errorSoft' },
+	{ level: 1, icon: 'sprout', color: 'success', tint: 'successSoft' },
+	{ level: 2, icon: 'leaf', color: 'primaryDeep', tint: 'primarySoft' },
+	{ level: 3, icon: 'tree', color: 'accentOrange', tint: 'warningSoft' },
+	{ level: 4, icon: 'crown', color: 'errorDark', tint: 'errorSoft' },
 ];
 
 export const selectLevel = (level: LifeType.Level): LifeLevel => LIFE_LEVELS[level - 1] ?? LIFE_LEVELS[0];

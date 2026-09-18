@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -20,6 +21,7 @@ import { useLife } from '@/src/hooks/useLife';
 import type { WorldType } from '@/src/types/data/WorldType';
 import { playCorrect, playCountdown, playFinish, playPop, playWrong } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight } from '@/src/utils';
+import DateUtils from '@/src/utils/DateUtils';
 
 /** 목숨 — 다 쓰면 시간이 남아도 끝난다 */
 const LIVES = 5;
@@ -48,6 +50,7 @@ const comboBonus = (combo: number): number => (combo >= 5 ? 10 : combo >= 3 ? 5 
  * 시작하자마자 뒤로 가기가 시작 화면으로 돌아와 다시 시작 버튼을 누르게 된다.
  */
 const WorldTimeChallengeScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const life = useLife();
@@ -65,9 +68,9 @@ const WorldTimeChallengeScreen = () => {
 	/** 어느 주제로 도전할지 — 고르지 않으면 예전처럼 전체에서 섞어 낸다 */
 	const [pickedTopic, setPickedTopic] = useState<WorldType.TopicKey | undefined>(undefined);
 	const { button, guide } = useWorldGuide('world-time', [
-		'제한 시간 안에 최대한 많이 맞히는 판이에요.',
-		'연속으로 맞히면 보너스가 붙고, 목숨이 다하면 시간이 남아도 끝나요.',
-		'주제를 골라 도전하면 자신 있는 분야로만 기록을 겨룰 수 있어요.',
+		t('time.guide.line1'),
+		t('time.guide.line2'),
+		t('time.guide.line3'),
 	]);
 
 	const question = questions[at];
@@ -99,7 +102,7 @@ const WorldTimeChallengeScreen = () => {
 		setCombo(0);
 		tally.current = { score: 0, correct: 0 };
 		setLeftMs(TIME_CHALLENGE_SEC * 1000);
-		deadline.current = Date.now() + TIME_CHALLENGE_SEC * 1000;
+		deadline.current = DateUtils.nowTime() + TIME_CHALLENGE_SEC * 1000;
 		setPhase('play');
 	};
 
@@ -113,7 +116,7 @@ const WorldTimeChallengeScreen = () => {
 			return;
 		}
 		const timer = setInterval(() => {
-			const rest = deadline.current - Date.now();
+			const rest = deadline.current - DateUtils.nowTime();
 			if (rest <= 0) {
 				clearInterval(timer);
 				setLeftMs(0);
@@ -198,41 +201,44 @@ const WorldTimeChallengeScreen = () => {
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>{button}</View>
 						<Image source={done ? RESULT_MASCOT : READY_MASCOT} style={styles.heroMascot} contentFit="contain" accessible={false} />
-						<Text style={styles.heroTitle}>{done ? `${score}점` : '타임 챌린지'}</Text>
+						<Text style={styles.heroTitle}>{done ? t('time.score', { score }) : t('time.title')}</Text>
 						<Text style={styles.heroSub}>
 							{done
-								? `${correct}문제를 맞혔어요${life.bestTime > score ? ` · 최고 ${life.bestTime}점` : ' · 새 기록!'}`
-								: `${TIME_CHALLENGE_SEC}초 안에 최대한 많이 맞혀요`}
+								? t('time.resultBody', {
+										correct,
+										extra: life.bestTime > score ? t('time.bestSuffix', { score: life.bestTime }) : t('time.newRecord'),
+									})
+								: t('time.intro', { sec: TIME_CHALLENGE_SEC })}
 						</Text>
 					</View>
 
 					<View style={styles.ruleRow}>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{TIME_CHALLENGE_SEC}</Text>
-							<Text style={styles.ruleLabel}>제한 시간(초)</Text>
+							<Text style={styles.ruleLabel}>{t('time.limitLabel')}</Text>
 						</View>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{LIVES}</Text>
-							<Text style={styles.ruleLabel}>목숨</Text>
+							<Text style={styles.ruleLabel}>{t('time.livesLabel')}</Text>
 						</View>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{life.bestTime ?? 0}</Text>
-							<Text style={styles.ruleLabel}>최고 점수</Text>
+							<Text style={styles.ruleLabel}>{t('time.bestLabel')}</Text>
 						</View>
 					</View>
 
-					{done ? null : <WorldTopicPicker value={pickedTopic} onChange={setPickedTopic} label="어느 주제로 도전할까요?" />}
+					{done ? null : <WorldTopicPicker value={pickedTopic} onChange={setPickedTopic} label={t('time.pickTopic')} />}
 
-					{done ? null : <Text style={styles.note}>연속으로 맞히면 보너스가 붙어요. 세 개부터 +5, 다섯 개부터 +10.</Text>}
+					{done ? null : <Text style={styles.note}>{t('time.comboNote')}</Text>}
 
 					<View style={styles.actions}>
 						{done ? (
 							<PressableScale style={styles.ghost} onPress={() => router.back()} accessibilityRole="button">
-								<Text style={styles.ghostText}>나가기</Text>
+								<Text numberOfLines={2} style={styles.ghostText}>{t('time.exit')}</Text>
 							</PressableScale>
 						) : null}
 						<PressableScale style={styles.primary} onPress={start} accessibilityRole="button">
-							<Text style={styles.primaryText}>{done ? '다시 도전' : '시작하기'}</Text>
+							<Text numberOfLines={2} style={styles.primaryText}>{t(done ? 'time.again' : 'time.start')}</Text>
 						</PressableScale>
 					</View>
 				</ScrollView>
@@ -246,7 +252,7 @@ const WorldTimeChallengeScreen = () => {
 		<SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
 			<View style={styles.head}>
 				<View style={styles.headRow}>
-					<Text style={[styles.time, { color: timeColor }]}>{`${leftSec.toFixed(1)}초`}</Text>
+					<Text style={[styles.time, { color: timeColor }]}>{t('time.left', { sec: leftSec.toFixed(1) })}</Text>
 					<View style={styles.lives}>
 						{Array.from({ length: LIVES }, (_, no) => (
 							<IconComponent
@@ -263,12 +269,15 @@ const WorldTimeChallengeScreen = () => {
 					<View style={[styles.fill, { width: `${ratio * 100}%`, backgroundColor: timeColor }]} />
 				</View>
 				<View style={styles.headRow}>
-					<Text style={styles.score}>{`${score}점`}</Text>
-					{combo >= 3 ? <Text style={styles.combo}>{`🔥 ${combo}연속`}</Text> : null}
+					<Text style={styles.score}>{t('time.score', { score })}</Text>
+					{combo >= 3 ? <Text style={styles.combo}>{t('time.combo', { n: combo })}</Text> : null}
 				</View>
 			</View>
 
-			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				// 낼 문항이 없을 때만 남은 높이를 다 차지하게 해, 안내가 가운데에 선다
+				contentContainerStyle={[styles.content, !question && styles.contentEmpty]}
+				showsVerticalScrollIndicator={false}>
 				{question && topic ? (
 					<Animated.View
 						style={{
@@ -278,7 +287,9 @@ const WorldTimeChallengeScreen = () => {
 						<WorldQuestionCard question={question} askAs={mode?.askAs} picked={picked} onPick={choose} tint={Colors[topic.tint]} />
 					</Animated.View>
 				) : (
-					<Text style={styles.note}>낼 수 있는 문항이 없다.</Text>
+					<View style={styles.emptyBox}>
+						<Text style={styles.note}>{t('quiz.noQuestions')}</Text>
+					</View>
 				)}
 			</ScrollView>
 		</SafeAreaView>
@@ -304,10 +315,10 @@ const createStyles = (Colors: Palette) =>
 		note: { fontSize: Typography.footnote, color: Colors.textSecondary, textAlign: 'center', lineHeight: scaledSize(18) },
 
 		actions: { flexDirection: 'row', gap: Spacing.sm },
-		ghost: { flex: 1, height: scaledSize(50), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt },
-		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text },
-		primary: { flex: 1, height: scaledSize(50), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.primary },
-		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+		ghost: { flex: 1, minHeight: scaledSize(50), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt, paddingVertical: SpacingV.sm, },
+		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text, flexShrink: 1, textAlign: 'center', },
+		primary: { flex: 1, minHeight: scaledSize(50), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
+		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 
 		head: { paddingHorizontal: Spacing.lg, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, gap: SpacingV.xs, ...Shadow.card, backgroundColor: Colors.background },
 		headRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
@@ -319,6 +330,9 @@ const createStyles = (Colors: Palette) =>
 		combo: { fontSize: Typography.footnote, fontWeight: FontWeight.semibold, color: Colors.accentAmberDark },
 
 		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
+		contentEmpty: { flexGrow: 1 },
+		// 빈 화면 안내 — 위에 붙지 않고 빈 영역 정중앙에 선다
+		emptyBox: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 	});
 
 export default WorldTimeChallengeScreen;

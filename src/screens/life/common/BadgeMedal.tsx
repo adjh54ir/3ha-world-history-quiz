@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -29,6 +30,7 @@ interface Props {
  * 못 딴 뱃지는 같은 자리·같은 크기로 회색만 남겨 "몇 개가 남았는지" 가 빈칸으로 보인다.
  */
 const BadgeMedal = ({ badge, size, earned = true, showStars = false, glow = false }: Props) => {
+	const { t } = useTranslation();
 	const styles = useThemedStyles(createStyles);
 	const tier = badgeRarity(badge.rarity);
 	const breathe = useRef(new Animated.Value(0)).current;
@@ -98,11 +100,12 @@ const BadgeMedal = ({ badge, size, earned = true, showStars = false, glow = fals
 
 /** 희귀도 이름 칩 — 목록·상세에서 등급을 글자로도 읽히게 한다 */
 export const BadgeRarityChip = ({ rarity, muted = false }: { rarity?: LifeType.BadgeRarity; muted?: boolean }) => {
+	const { t } = useTranslation();
 	const styles = useThemedStyles(createStyles);
 	const tier = badgeRarity(rarity);
 	return (
 		<View style={[styles.rarityChip, { backgroundColor: muted ? undefined : tier.soft }, muted && styles.rarityChipMuted]}>
-			<Text style={[styles.rarityText, { color: muted ? styles.lockedInk.color : tier.color }]}>{tier.label}</Text>
+			<Text style={[styles.rarityText, { color: muted ? styles.lockedInk.color : tier.color }]}>{t(`badge.rarity.${rarity ?? 'common'}`)}</Text>
 		</View>
 	);
 };
@@ -118,7 +121,7 @@ const createStyles = (Colors: Palette) =>
 		starRow: { flexDirection: 'row', gap: scaleWidth(1) },
 		rarityChip: { paddingHorizontal: scaleWidth(8), paddingVertical: scaleWidth(2), borderRadius: Radius.pill },
 		rarityChipMuted: { backgroundColor: Colors.surfaceAlt },
-		rarityText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy },
+		rarityText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, flexShrink: 1, textAlign: 'center', },
 		// 잠긴 뱃지의 잉크 — StyleSheet 에 담아 두면 컴포넌트에서 팔레트를 따로 안 받아도 된다
 		lockedInk: { color: Colors.textMuted },
 	});

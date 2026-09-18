@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Keyboard, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -24,11 +25,11 @@ import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
  * 학습과 활동에서 받는 경험치를 한곳에 정리한다.
  */
 const EXP_SOURCES = [
-	{ icon: 'check-circle-outline', label: '퀴즈 정답 하나', amount: EXP.correct, note: '타워·타임 챌린지도 같아요' },
-	{ icon: 'cards-outline', label: '단어 하나 학습 완료', amount: EXP.learnWord, note: '처음 익힌 단어만 세요' },
-	{ icon: 'calendar-check', label: '출석 체크', amount: EXP.attendance, note: '연속 출석 보너스가 더해져요' },
-	{ icon: 'calendar-star', label: '오늘의 퀴즈 완료', amount: EXP.daily, note: '5문제를 다 풀면 추가로' },
-	{ icon: 'clipboard-check-outline', label: '오늘의 미션 모두 완료', amount: EXP.mission, note: '' },
+	{ key: 'correct', icon: 'check-circle-outline', amount: EXP.correct },
+	{ key: 'learnWord', icon: 'cards-outline', amount: EXP.learnWord },
+	{ key: 'attendance', icon: 'calendar-check', amount: EXP.attendance },
+	{ key: 'daily', icon: 'calendar-star', amount: EXP.daily },
+	{ key: 'mission', icon: 'clipboard-check-outline', amount: EXP.mission },
 ] as const;
 
 /**
@@ -36,6 +37,7 @@ const EXP_SOURCES = [
  * 경험치는 쓰지 않고 쌓이기만 하므로 등급은 절대 내려가지 않는다.
  */
 const LifeGradeScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const guide = useCharacterGuideOnce('life-grade');
@@ -53,7 +55,7 @@ const LifeGradeScreen = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['left', 'right']}>
-			<LifeHeader title="등급" subtitle="경험치를 모아 역사 사자를 키워요" showBack onPressGuide={guide.open} />
+			<LifeHeader title={t('grade.title')} subtitle={t('grade.subtitle')} showBack onPressGuide={guide.open} />
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" onScrollBeginDrag={Keyboard.dismiss}>
 				<Animated.View style={[styles.stack, enterStyle]}>
 					{/* 지금 등급 */}
@@ -61,14 +63,16 @@ const LifeGradeScreen = () => {
 						<View style={styles.heroPetStage}>
 							<PetAvatar size={scaleWidth(104)} />
 						</View>
-						<Text style={styles.heroStage}>{pet.stage.label}</Text>
+						<Text style={styles.heroStage}>{t(`pet.stage.${pet.stage.key}`)}</Text>
 						<View style={styles.heroChip}>
-							<Text style={styles.heroChipText}>{`Lv.${pet.level} · 전체 ${PET_STAGES.length}단계`}</Text>
+							<Text style={styles.heroChipText}>{t('grade.levelChip', { level: pet.level, total: PET_STAGES.length })}</Text>
 						</View>
 						<View style={styles.heroGauge}>
 							<ProgressBar ratio={pet.ratio} color={Colors.brandBlockMuted} trackColor="rgba(255,255,255,0.18)" height={scaleHeight(8)} />
 							<Text style={styles.heroExp}>
-								{pet.next ? `${pet.next.label}까지 ${(pet.next.minExp - exp).toLocaleString()}EXP 남았어요` : `마지막 단계 ${topStage.label}에 도달했어요`}
+								{pet.next
+									? t('grade.toNext', { stage: t(`pet.stage.${pet.next.key}`), exp: (pet.next.minExp - exp).toLocaleString() })
+									: t('grade.atTop', { stage: t(`pet.stage.${topStage.key}`) })}
 							</Text>
 							{/* EXP 숫자만 보면 얼마나 더 해야 하는지 감이 없다 — 실제로 하는 행동으로 환산해 준다 */}
 							{!!pet.next && (
@@ -76,12 +80,12 @@ const LifeGradeScreen = () => {
 									<View style={styles.heroConvertRow}>
 										<View style={styles.heroConvert}>
 											<IconComponent type="materialCommunityIcons" name="head-question" size={13} color={Colors.brandBlockText} />
-											<Text style={styles.heroConvertText}>{`퀴즈 ${remain.quizzes}판`}</Text>
+											<Text style={styles.heroConvertText}>{t('grade.convertQuiz', { n: remain.quizzes })}</Text>
 										</View>
-										<Text style={styles.heroConvertOr}>또는</Text>
+										<Text style={styles.heroConvertOr}>{t('grade.convertOr')}</Text>
 										<View style={styles.heroConvert}>
 											<IconComponent type="materialCommunityIcons" name="cards" size={13} color={Colors.brandBlockText} />
-											<Text style={styles.heroConvertText}>{`학습 카드 ${remain.words}개`}</Text>
+											<Text style={styles.heroConvertText}>{t('grade.convertCards', { n: remain.words })}</Text>
 										</View>
 									</View>
 									{/*
@@ -89,16 +93,16 @@ const LifeGradeScreen = () => {
 									 * 정답 하나 10EXP · 한 판 10문제 · 카드 하나 5EXP 를 그대로 적어 숫자를 검산할 수 있게 한다.
 									 */}
 									<Text style={styles.heroConvertNote} numberOfLines={2}>
-										{`퀴즈 한 판 ${QUIZ_COUNT}문제를 모두 맞힌 기준이에요 (정답 ${remain.corrects}개 · 정답 하나 ${EXP.correct}EXP · 카드 하나 ${EXP.learnWord}EXP)`}
+										{t('grade.convertNote', { perQuiz: QUIZ_COUNT, corrects: remain.corrects, correctExp: EXP.correct, cardExp: EXP.learnWord })}
 									</Text>
 								</>
 							)}
 						</View>
-						<Text style={styles.heroTotal}>{`지금까지 모은 경험치 ${exp.toLocaleString()}EXP`}</Text>
+						<Text style={styles.heroTotal}>{t('grade.total', { exp: exp.toLocaleString() })}</Text>
 					</View>
 
 					{/* 단계 목록 */}
-					<Text style={styles.sectionTitle}>{`성장 단계 ${PET_STAGES.length}단계`}</Text>
+					<Text style={styles.sectionTitle}>{t('grade.stageSection', { total: PET_STAGES.length })}</Text>
 					<View style={styles.stageCard}>
 						{PET_STAGES.map((stage, at) => {
 							const level = at + 1;
@@ -118,14 +122,14 @@ const LifeGradeScreen = () => {
 									/>
 									<View style={styles.stageText}>
 										<View style={styles.stageTitleRow}>
-											<Text style={[styles.stageLabel, !reached && styles.stageLabelLocked]}>{stage.label}</Text>
+											<Text style={[styles.stageLabel, !reached && styles.stageLabelLocked]}>{t(`pet.stage.${stage.key}`)}</Text>
 											{current && (
 												<View style={styles.nowChip}>
-													<Text style={styles.nowText}>지금</Text>
+													<Text style={styles.nowText}>{t('grade.now')}</Text>
 												</View>
 											)}
 										</View>
-										<Text style={styles.stageNeed}>{stage.minExp === 0 ? '처음 시작하는 단계' : `${stage.minExp.toLocaleString()}EXP 부터`}</Text>
+										<Text style={styles.stageNeed}>{stage.minExp === 0 ? t('grade.stageStart') : t('grade.stageFrom', { exp: stage.minExp.toLocaleString() })}</Text>
 									</View>
 									<View style={styles.stageEndBox}>
 										<IconComponent
@@ -135,25 +139,25 @@ const LifeGradeScreen = () => {
 											color={reached ? Colors.success : Colors.textMuted}
 										/>
 										{/* 잠긴 단계만 눌러서 볼 수 있다는 걸 알려 준다 */}
-										<Text style={styles.stagePeek}>{reached ? '획득' : '미리보기'}</Text>
+										<Text style={styles.stagePeek}>{t(reached ? 'grade.got' : 'grade.peek')}</Text>
 									</View>
 								</>
 							);
 							if (reached) {
 								return (
-									<View key={stage.label} style={[styles.stageRow, at > 0 && styles.stageRowDivided]}>
+									<View key={stage.key} style={[styles.stageRow, at > 0 && styles.stageRowDivided]}>
 										{body}
 									</View>
 								);
 							}
 							return (
 								<PressableScale
-									key={stage.label}
+									key={stage.key}
 									style={[styles.stageRow, at > 0 && styles.stageRowDivided]}
 									onPress={() => setPreviewAt(at)}
 									scaleTo={0.98}
 									accessibilityRole="button"
-									accessibilityLabel={`${stage.label} 미리보기`}>
+									accessibilityLabel={t('grade.peekLabel', { stage: t(`pet.stage.${stage.key}`) })}>
 									{body}
 								</PressableScale>
 							);
@@ -161,21 +165,24 @@ const LifeGradeScreen = () => {
 					</View>
 
 					{/* 경험치 얻는 법 */}
-					<Text style={styles.sectionTitle}>경험치 얻는 법</Text>
+					<Text style={styles.sectionTitle}>{t('grade.howSection')}</Text>
 					<View style={styles.howCard}>
-						{EXP_SOURCES.map((item, at) => (
-							<View key={item.label} style={[styles.howRow, at > 0 && styles.stageRowDivided]}>
+						{EXP_SOURCES.map((item, at) => {
+							const note = t(`grade.exp.${item.key}.note`);
+							return (
+							<View key={item.key} style={[styles.howRow, at > 0 && styles.stageRowDivided]}>
 								<View style={styles.howIcon}>
 									<IconComponent type="materialCommunityIcons" name={item.icon} size={18} color={Colors.primaryDark} />
 								</View>
 								<View style={styles.howText}>
-									<Text style={styles.howLabel}>{item.label}</Text>
-									{!!item.note && <Text style={styles.howNote}>{item.note}</Text>}
+									<Text style={styles.howLabel}>{t(`grade.exp.${item.key}.label`)}</Text>
+									{!!note && <Text style={styles.howNote}>{note}</Text>}
 								</View>
 								<Text style={styles.howAmount}>{`+${item.amount}EXP`}</Text>
 							</View>
-						))}
-						<Text style={styles.howFootnote}>경험치는 쌓이기만 해서 등급은 내려가지 않아요.</Text>
+							);
+						})}
+						<Text style={styles.howFootnote}>{t('grade.howFootnote')}</Text>
 					</View>
 				</Animated.View>
 			</ScrollView>
@@ -183,11 +190,11 @@ const LifeGradeScreen = () => {
 			<StagePreview at={previewAt} exp={exp} onClose={closePreview} />
 
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
-			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'경험치를 모으면 역사 사자가 다음 단계로 자라요.',
-				'학습·퀴즈·출석·챌린지 모두 경험치가 돼요.',
-				'경험치는 줄지 않으니 등급이 내려갈 일은 없어요.',
-			]} />
+			<LifeCharacterGuide
+				visible={guide.visible}
+				onClose={guide.close}
+				lines={[t('grade.guide.line1'), t('grade.guide.line2'), t('grade.guide.line3')]}
+			/>
 		</SafeAreaView>
 	);
 };
@@ -199,6 +206,7 @@ const LifeGradeScreen = () => {
  * 이미 딴 단계는 화면 위에 지금 모습으로 서 있으므로 미리 볼 것이 없다.
  */
 const StagePreview = ({ at, exp, onClose }: { at: number | null; exp: number; onClose: () => void }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const stage = at === null ? null : PET_STAGES[at];
@@ -217,14 +225,14 @@ const StagePreview = ({ at, exp, onClose }: { at: number | null; exp: number; on
 				<View style={styles.previewLevelChip}>
 					<Text style={styles.previewLevelText}>{`Lv.${at + 1}`}</Text>
 				</View>
-				<Text style={styles.previewLabel}>{stage.label}</Text>
+				<Text style={styles.previewLabel}>{t(`pet.stage.${stage.key}`)}</Text>
 				<View style={[styles.previewStatus, styles.previewStatusLocked]}>
 					<IconComponent type="materialCommunityIcons" name="lock-outline" size={15} color={Colors.textSecondary} />
-					<Text style={[styles.previewStatusText, styles.previewStatusTextLocked]}>{`${remain.toLocaleString()}EXP 더 모으면 만나요`}</Text>
+					<Text style={[styles.previewStatusText, styles.previewStatusTextLocked]}>{t('grade.preview.remain', { exp: remain.toLocaleString() })}</Text>
 				</View>
-				<Text style={styles.previewHint}>{`퀴즈 ${need.quizzes}판(정답 ${need.corrects}개) 또는 학습 카드 ${need.words}개면 도착해요`}</Text>
+				<Text style={styles.previewHint}>{t('grade.preview.hint', { quizzes: need.quizzes, corrects: need.corrects, cards: need.words })}</Text>
 				<PressableScale style={styles.previewClose} onPress={onClose} scaleTo={0.96} accessibilityRole="button">
-					<Text style={styles.previewCloseText}>닫기</Text>
+					<Text style={styles.previewCloseText}>{t('common.close')}</Text>
 				</PressableScale>
 			</View>
 		</AppModal>
@@ -242,7 +250,7 @@ const createStyles = (Colors: Palette) =>
 		heroPetStage: { alignItems: 'center', justifyContent: 'flex-end' },
 		heroStage: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.brandBlockText },
 		heroChip: { paddingHorizontal: Spacing.md, height: scaleHeight(24), justifyContent: 'center', borderRadius: Radius.pill, backgroundColor: 'rgba(255,255,255,0.16)' },
-		heroChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.brandBlockText },
+		heroChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.brandBlockText, flexShrink: 1, textAlign: 'center', },
 		heroGauge: { width: '100%', gap: scaleHeight(6), marginTop: SpacingV.xs },
 		heroExp: { fontSize: Typography.bodySm, color: Colors.brandBlockMuted, textAlign: 'center' },
 		heroTotal: { fontSize: Typography.caption, color: Colors.brandBlockMuted },
@@ -304,12 +312,11 @@ const createStyles = (Colors: Palette) =>
 		previewClose: {
 			marginTop: SpacingV.xs,
 			width: '100%',
-			height: scaleHeight(46),
+			minHeight: scaleHeight(46),
 			alignItems: 'center',
 			justifyContent: 'center',
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.primary,
-		},
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
 		previewCloseText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
 
 		howCard: { backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.md, ...Shadow.card },

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Dimensions, Easing, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { useDispatch } from 'react-redux';
@@ -21,7 +22,11 @@ const RAY_COUNT = 9;
 
 const HANGUL_BASE = 0xac00;
 
-/** 받침이 있으면 '을', 없으면 '를' */
+/**
+ * 받침이 있으면 '을', 없으면 '를'.
+ * 한국어 문구(pet.growth.got)에만 들어가는 자리표시자다 — 영어·일본어 문구는 이 값을 쓰지 않으므로
+ * 그대로 넘겨도 어디에도 나타나지 않는다.
+ */
 const objectParticle = (text: string): string => {
 	const code = text.charCodeAt(text.length - 1) - HANGUL_BASE;
 	return code >= 0 && code < 11172 && code % 28 !== 0 ? '을' : '를';
@@ -34,6 +39,7 @@ const objectParticle = (text: string): string => {
  * 검은 배경 위에 빛줄기·후광·컨페티만 남겨, 이 순간에는 수호신 말고 볼 것이 없게 만든다.
  */
 const PetGrowthModal = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const dispatch = useDispatch();
@@ -41,6 +47,8 @@ const PetGrowthModal = () => {
 	const level = pendingPetGrowth ?? null;
 	const stage = level !== null ? ATTENDANCE_PET_STAGES[level] : null;
 	const image = level !== null ? ATTENDANCE_PET_IMAGES[level] : null;
+	/** 지금 언어로 옮긴 단계 이름 — 문구와 접미 조사가 모두 이 값을 본다 */
+	const stageName = stage ? t(`pet.guardian.${stage.key}`) : '';
 	const visible = level !== null && !!stage && !!image;
 
 	/** 등장(작게 → 제 크기) · 빛줄기 회전 · 후광 호흡 */
@@ -147,17 +155,17 @@ const PetGrowthModal = () => {
 
 				<Animated.View style={[styles.copyBox, copyStyle]}>
 					<View style={styles.stageChip}>
-						<Text style={styles.stageChipText}>{`${level + 1}단계 / ${ATTENDANCE_PET_STAGES.length}단계`}</Text>
+						<Text style={styles.stageChipText}>{t('pet.growth.step', { level: level + 1, total: ATTENDANCE_PET_STAGES.length })}</Text>
 					</View>
-					<Text style={styles.name}>{stage.label}</Text>
-					<Text style={styles.gotIt}>{`${stage.label}${objectParticle(stage.label)} 획득했습니다!`}</Text>
+					<Text style={styles.name}>{stageName}</Text>
+					<Text style={styles.gotIt}>{t('pet.growth.got', { name: stageName, particle: objectParticle(stageName) })}</Text>
 					<Text style={styles.hint}>
-						{level === ATTENDANCE_PET_STAGES.length - 1 ? '최종 진화를 완료했어요!' : '먹이를 더 주면 다음 모습으로 자라요'}
+						{t(level === ATTENDANCE_PET_STAGES.length - 1 ? 'pet.growth.final' : 'pet.growth.more')}
 					</Text>
 				</Animated.View>
 
 				<PressableScale style={styles.button} onPress={onClose} scaleTo={0.96} accessibilityRole="button">
-					<Text style={styles.buttonText}>확인</Text>
+					<Text style={styles.buttonText}>{t('common.confirm')}</Text>
 				</PressableScale>
 			</View>
 		</AppModal>
@@ -187,7 +195,7 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.pill,
 			backgroundColor: 'rgba(255,255,255,0.14)',
 		},
-		stageChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: '#FFFFFF' },
+		stageChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: '#FFFFFF', flexShrink: 1, textAlign: 'center', },
 		name: { marginTop: SpacingV.xs, fontSize: Typography.h1, fontWeight: FontWeight.heavy, color: '#FFFFFF', textAlign: 'center' },
 		gotIt: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.accentAmber, textAlign: 'center' },
 		hint: { marginTop: scaleHeight(2), fontSize: Typography.caption, color: 'rgba(255,255,255,0.6)', textAlign: 'center' },
@@ -196,13 +204,12 @@ const createStyles = (Colors: Palette) =>
 			marginTop: SpacingV.lg,
 			width: '100%',
 			maxWidth: scaleWidth(300),
-			height: scaleHeight(50),
+			minHeight: scaleHeight(50),
 			alignItems: 'center',
 			justifyContent: 'center',
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.accentAmber,
-		},
-		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.heavy, color: '#1A1206' },
+			backgroundColor: Colors.accentAmber, paddingVertical: SpacingV.sm, },
+		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.heavy, color: '#1A1206', flexShrink: 1, textAlign: 'center', },
 	});
 
 export default PetGrowthModal;

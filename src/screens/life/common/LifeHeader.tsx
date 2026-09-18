@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -29,6 +30,7 @@ interface Props {
  * - 탭/스택 화면 모두 같은 높이·여백을 쓰도록 한 곳에서 관리한다.
  */
 const LifeHeader = ({ title, subtitle, showBack = false, rightIcon, rightLabel, onPressRight, right, onPressGuide }: Props) => {
+	const { t } = useTranslation();
 	const navigation = useNavigation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
@@ -37,7 +39,7 @@ const LifeHeader = ({ title, subtitle, showBack = false, rightIcon, rightLabel, 
 		<View style={styles.wrapper}>
 			<View style={styles.row}>
 				{showBack && (
-					<TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel="뒤로 가기">
+					<TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('common.goBack')}>
 						<IconComponent type="materialIcons" name="arrow-back" size={22} color={Colors.text} />
 					</TouchableOpacity>
 				)}
@@ -84,8 +86,7 @@ const createStyles = (Colors: Palette) => StyleSheet.create({
 		height: scaleWidth(32),
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginLeft: -scaleWidth(6),
-	},
+		marginLeft: -scaleWidth(6), },
 	titleBox: { flex: 1 },
 	title: {
 		fontSize: Typography.h2,

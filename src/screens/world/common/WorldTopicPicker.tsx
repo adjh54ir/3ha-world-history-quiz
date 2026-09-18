@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
@@ -24,7 +25,9 @@ interface Props {
  * 타워·타임 챌린지는 원래 전체에서 섞어 냈다. 그러면 자신 있는 주제로 기록을 겨루고 싶은 사람이
  * 할 수 있는 것이 없다. '전체' 를 맨 앞에 두고 기본값으로 둬서 예전과 같은 판이 그대로 남게 한다.
  */
-const WorldTopicPicker = ({ value, onChange, label = '주제 고르기' }: Props) => {
+const WorldTopicPicker = ({ value, onChange, label }: Props) => {
+	const { t } = useTranslation();
+	const title = label ?? t('picker.title');
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 
@@ -35,14 +38,14 @@ const WorldTopicPicker = ({ value, onChange, label = '주제 고르기' }: Props
 
 	return (
 		<View style={styles.wrap}>
-			<Text style={styles.label}>{label}</Text>
+			<Text style={styles.label}>{title}</Text>
 			<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
 				<PressableScale
 					style={[styles.chip, !value && { backgroundColor: Colors.primary, borderColor: Colors.primary }]}
 					onPress={() => pick(undefined)}
 					accessibilityRole="button"
 					accessibilityState={{ selected: !value }}>
-					<Text style={[styles.chipText, !value && { color: Colors.textInverse }]}>전체</Text>
+					<Text style={[styles.chipText, !value && { color: Colors.textInverse }]}>{t('picker.all')}</Text>
 				</PressableScale>
 				{WORLD_TOPICS.map((topic) => {
 					const on = topic.key === value;
@@ -59,7 +62,7 @@ const WorldTopicPicker = ({ value, onChange, label = '주제 고르기' }: Props
 								size={13}
 								color={on ? Colors.textInverse : Colors[topic.color]}
 							/>
-							<Text style={[styles.chipText, on && { color: Colors.textInverse }]}>{topic.label}</Text>
+							<Text style={[styles.chipText, on && { color: Colors.textInverse }]}>{t(`topic.${topic.key}.label`)}</Text>
 						</PressableScale>
 					);
 				})}
@@ -85,7 +88,7 @@ const createStyles = (Colors: Palette) =>
 			borderColor: Colors.border,
 			backgroundColor: Colors.surface,
 		},
-		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, color: Colors.text },
+		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, color: Colors.text, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldTopicPicker;

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -10,7 +11,7 @@ import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { TOWER_FLOOR_SIZE, TOWER_LIVES } from '@/src/services/life/LifeRules';
-import { challengeQuestions, TOWER_LEVEL_LABEL, towerLevelOf } from '@/src/services/world/WorldChallenge';
+import { challengeQuestions, towerLevelOf } from '@/src/services/world/WorldChallenge';
 import { selectTopic } from '@/src/const/data/world/ConstWorldTopics';
 import { bridgeWorldTower, collectWorldAnswer, resetWorldBuffer } from '@/src/services/world/WorldBridge';
 import type { WorldType } from '@/src/types/data/WorldType';
@@ -30,6 +31,7 @@ const ENCOURAGE_MASCOT = require('@/src/assets/illustrations/lion-encourage.webp
  * 층을 넘길 때마다 기록을 넘긴다 — 도중에 앱을 닫아도 오른 만큼은 남는다.
  */
 const WorldTowerQuizScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const params = useLocalSearchParams<{ topic?: string }>();
@@ -121,8 +123,8 @@ const WorldTowerQuizScreen = () => {
 			<View style={styles.head}>
 				<View style={styles.headRow}>
 					<View style={styles.floorBox}>
-						<Text style={styles.floorText}>{`${floor}층`}</Text>
-						<Text style={styles.levelText}>{TOWER_LEVEL_LABEL[level]}</Text>
+						<Text style={styles.floorText}>{t('tower.floor', { floor })}</Text>
+						<Text style={styles.levelText}>{t(`level.${level}.label`)}</Text>
 					</View>
 					<View style={styles.lives}>
 						{Array.from({ length: TOWER_LIVES }, (_, no) => (
@@ -136,21 +138,24 @@ const WorldTowerQuizScreen = () => {
 						))}
 					</View>
 				</View>
-				<Text style={styles.counter}>{over ? '' : `${Math.min(at + 1, questions.length)} / ${questions.length} 문제`}</Text>
+				<Text style={styles.counter}>{over ? '' : t('tower.progress', { at: Math.min(at + 1, questions.length), total: questions.length })}</Text>
 			</View>
 
-			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				// 낼 문항이 없을 때만 남은 높이를 다 차지하게 해, 안내가 가운데에 선다
+				contentContainerStyle={[styles.content, !question && styles.contentEmpty]}
+				showsVerticalScrollIndicator={false}>
 				{over ? (
 					<Animated.View style={[styles.resultCard, { opacity: enter }]}>
 						<Image source={ENCOURAGE_MASCOT} style={styles.resultMascot} contentFit="contain" accessible={false} />
-						<Text style={styles.resultScore}>{`${Math.max(0, floor - 1)}층`}</Text>
-						<Text style={styles.resultText}>목숨을 다 썼어요. 여기까지가 이번 기록이에요.</Text>
+						<Text style={styles.resultScore}>{t('tower.floor', { floor: Math.max(0, floor - 1) })}</Text>
+						<Text style={styles.resultText}>{t('tower.outOfLives')}</Text>
 						<View style={styles.resultActions}>
 							<PressableScale style={styles.ghost} onPress={() => router.back()} accessibilityRole="button">
-								<Text style={styles.ghostText}>나가기</Text>
+								<Text style={styles.ghostText}>{t('tower.exit')}</Text>
 							</PressableScale>
 							<PressableScale style={styles.primary} onPress={retry} accessibilityRole="button">
-								<Text style={styles.primaryText}>다시 오르기</Text>
+								<Text style={styles.primaryText}>{t('tower.again')}</Text>
 							</PressableScale>
 						</View>
 					</Animated.View>
@@ -163,7 +168,9 @@ const WorldTowerQuizScreen = () => {
 						<WorldQuestionCard question={question} askAs={mode?.askAs} picked={picked} onPick={choose} tint={Colors[topic.tint]} />
 					</Animated.View>
 				) : (
-					<Text style={styles.resultText}>낼 수 있는 문항이 없다.</Text>
+					<View style={styles.emptyBox}>
+						<Text style={styles.resultText}>{t('quiz.noQuestions')}</Text>
+					</View>
 				)}
 			</ScrollView>
 		</SafeAreaView>
@@ -182,6 +189,9 @@ const createStyles = (Colors: Palette) =>
 		counter: { fontSize: Typography.footnote, color: Colors.textSecondary },
 
 		content: { ...Layout.column, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xxl },
+		contentEmpty: { flexGrow: 1 },
+		// 빈 화면 안내 — 위에 붙지 않고 빈 영역 정중앙에 선다
+		emptyBox: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 
 		resultCard: {
 			alignItems: 'center',
@@ -206,10 +216,10 @@ const createStyles = (Colors: Palette) =>
 		resultScore: { fontSize: Typography.display, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		resultText: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center' },
 		resultActions: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.md, alignSelf: 'stretch' },
-		ghost: { flex: 1, height: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt },
-		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text },
-		primary: { flex: 1, height: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.primary },
-		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+		ghost: { flex: 1, minHeight: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt, paddingVertical: SpacingV.sm, },
+		ghostText: { fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.text, flexShrink: 1, textAlign: 'center', },
+		primary: { flex: 1, minHeight: scaledSize(46), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
+		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldTowerQuizScreen;

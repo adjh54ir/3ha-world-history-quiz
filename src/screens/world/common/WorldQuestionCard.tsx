@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -30,6 +31,7 @@ interface Props {
  * 정답 표시 색이나 그림 자리 크기가 조금씩 어긋나 같은 앱으로 보이지 않는다.
  */
 const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const image = askAs ? selectPromptImage(askAs, question.prompt) : undefined;
@@ -58,7 +60,7 @@ const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => 
 	return (
 		<View style={styles.stack}>
 			<View style={styles.card}>
-				<Text style={styles.question}>{question.question}</Text>
+				<Text style={styles.question}>{t(question.questionKey)}</Text>
 				{!image ? (
 					<Text style={styles.prompt}>{question.prompt}</Text>
 				) : (
@@ -68,7 +70,7 @@ const WorldQuestionCard = ({ question, askAs, picked, onPick, tint }: Props) => 
 						) : broken ? (
 							<View style={styles.artBroken}>
 								<IconComponent type="materialcommunityicons" name="image-off-outline" size={30} color={Colors.textMuted} />
-								<Text style={styles.artBrokenText}>그림을 불러오지 못했어요</Text>
+								<Text style={styles.artBrokenText}>{t('quiz.imageFailed')}</Text>
 							</View>
 						) : (
 							<Image source={image} style={styles.image} contentFit="contain" transition={160} onError={() => setBrokenAt(question.id)} />

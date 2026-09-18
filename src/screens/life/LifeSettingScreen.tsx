@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {Keyboard, Animated, Easing, FlatList, Linking, Platform, ScrollView, Share, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -11,7 +12,8 @@ import PressableScale from '@/src/screens/common/atomic/PressableScale';
 import { showToast } from '@/src/screens/common/atomic/GlobalToast';
 import CmmDelConfirmModal from '@/src/screens/modal/CmmDelConfirmModal';
 import DeveloperAppsModal from '@/src/screens/modal/DeveloperAppsModal';
-import { OpenSourceModal, TermsOfServiceModal } from '@/src/screens/modal/SettingModal';
+import LanguagePickerSheet from '@/src/screens/modal/LanguagePickerSheet';
+import { OpenSourceModal } from '@/src/screens/modal/SettingModal';
 import LifeHeader from './common/LifeHeader';
 import LifeCharacterGuide, { useCharacterGuideOnce } from './common/LifeCharacterGuide';
 import { ColorToken, Palette } from '@/src/const/ConstColors';
@@ -24,7 +26,7 @@ import { devCompleteQuiz, LifeState, markLearned, resetAll, resetProgress, resto
 import { applyReminder } from '@/src/services/life/LifeReminder';
 import { clearPortedProgress, restorePortedProgress, type PortedSnapshot } from '@/src/services/life/PortedStorage';
 import { DOMAIN_CATEGORIES, DOMAIN_ITEMS } from '@/src/const/data/world/ConstWorldDomain';
-import { COMMON_APPS_DATA } from '@/src/const/common/CommonAppsData';
+import { COMMON_APPS_DATA, isNewApp } from '@/src/const/common/CommonAppsData';
 import { CommonType } from '@/src/types/CommonType';
 import DateUtils from '@/src/utils/DateUtils';
 import { APP_DESCRIPTION, APP_NAME, APP_STORE_URL, GOOGLE_PLAY_STORE_URL } from '@env';
@@ -33,22 +35,15 @@ import {
 	getAppPermissionStatuses,
 	isPermissionActionable,
 	requestAppPermission,
-	toPermissionLabel,
+	toPermissionStatusKey,
 } from '@/src/utils/PermissionUtils';
 import { isBgmEnabled, isSfxEnabled, playComplete, playPop, setBgmEnabled, setSfxEnabled } from '@/src/utils/SoundUtils';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { setLanguage } from '@/src/translations';
+import { LANGUAGE_LABELS, toLanguage } from '@/src/translations/language';
 
-/**
- * 최근에 낸 앱 두 개 — 가로 목록의 카드에 NEW 배지를 붙인다.
- * id 가 클수록 최신이라 정렬 기준을 따로 두지 않는다(개발자의 다른 앱 팝업과 같은 규칙).
- * 목록이 앱 실행 중에 바뀌지 않으므로 모듈에서 한 번만 만든다.
- */
-const NEW_APP_IDS = new Set(
-	[...COMMON_APPS_DATA.Apps]
-		.sort((a, b) => b.id - a.id)
-		.slice(0, 2)
-		.map((app) => app.id),
-);
+/** 제작자 공식 홈페이지 — 앱 정보에서 바로 연다 */
+const DEVELOPER_HOMEPAGE = 'https://ecodelab.im/main';
 
 /** 지금 플랫폼의 스토어 주소 — 아직 한쪽만 나온 앱은 반대쪽 주소라도 열어 준다 */
 const storeUrlOf = (app: CommonType.AppItem): string | null =>
@@ -57,65 +52,38 @@ const storeUrlOf = (app: CommonType.AppItem): string | null =>
 /** 초기화 종류 — 지우는 범위가 달라 확인 문구도 다르다 */
 type ResetTarget = 'progress' | 'all';
 
-/** 색은 토큰 이름으로 둔다 — 팔레트는 화면에서 테마에 맞춰 꺼내 쓴다 */
-const RESET_META: Record<
-	ResetTarget,
-	{
-		label: string;
-		desc: string;
-		icon: string;
-		color: ColorToken;
-		tint: ColorToken;
-		title: string;
-		summary: string;
-		done: string;
-	}
-> = {
-	progress: {
-		label: '학습 기록 초기화',
-		desc: '학습 완료·오답 노트·퀴즈 기록',
-		icon: 'book-remove-outline',
-		color: 'accentOrange',
-		tint: 'warningSoft',
-		title: '학습 기록을 지울까요?',
-		summary: '학습 완료 표시, 오답 노트, 퀴즈 기록, 오늘의 퀴즈가 지워집니다. 경험치·펫·뱃지는 그대로 남아요.',
-		done: '학습·퀴즈 기록을 지웠어요',
-	},
-	all: {
-		label: '전체 초기화',
-		desc: '기록과 경험치·펫·뱃지까지 전부',
-		icon: 'delete-outline',
-		color: 'errorDark',
-		tint: 'errorSoft',
-		title: '모든 데이터를 지울까요?',
-		summary: '학습·퀴즈 기록은 물론 경험치, 펫, 뱃지까지 모두 사라집니다. 되돌릴 수 없어요.',
-		done: '모든 데이터를 지웠어요',
-	},
+/**
+ * 색은 토큰 이름으로 둔다 — 팔레트는 화면에서 테마에 맞춰 꺼내 쓴다.
+ * 문구는 여기 두지 않는다. 모듈 상수는 앱이 읽히는 순간 한 번 만들어져, 언어를 바꿔도 다시 만들어지지 않는다
+ * (그 자리만 옛 언어로 남는다). 키만 들고 화면에서 t() 로 붙인다.
+ */
+const RESET_META: Record<ResetTarget, { icon: string; color: ColorToken; tint: ColorToken }> = {
+	progress: { icon: 'book-remove-outline', color: 'accentOrange', tint: 'warningSoft' },
+	all: { icon: 'delete-outline', color: 'errorDark', tint: 'errorSoft' },
 };
 
 const RESET_ORDER: ResetTarget[] = ['progress', 'all'];
 
-/** 화면 테마 — 기기 설정과 무관하게 라이트/다크 중 하나로 고정한다 */
-const THEME_OPTIONS: { key: ThemeMode; label: string; icon: string; hint: string }[] = [
-	{ key: 'light', label: '라이트', icon: 'white-balance-sunny', hint: '항상 밝은 화면으로 보여 줍니다' },
-	{ key: 'dark', label: '다크', icon: 'weather-night', hint: '항상 어두운 화면으로 보여 줍니다' },
+/** 화면 테마 — 기기 설정과 무관하게 라이트/다크 중 하나로 고정한다 (보이는 글자는 화면에서 t() 로 붙인다) */
+const THEME_OPTIONS: { key: ThemeMode; icon: string }[] = [
+	{ key: 'light', icon: 'white-balance-sunny' },
+	{ key: 'dark', icon: 'weather-night' },
 ];
 
-/** 권한 행 아이콘 / 설명 — 무슨 기능이 막히는지 알려 준다 */
+/** 권한 행 아이콘 — 이름·설명은 번역 파일(setting.permission.*)에 있다 */
 const PERMISSION_ICON: Record<string, string> = { notifications: 'bell-outline', tracking: 'target-account' };
-const PERMISSION_DESC: Record<string, string> = {
-	notifications: '매일 학습 알림을 받으려면 필요합니다',
-	tracking: '더 관련성 높은 광고를 보여주는 데 사용됩니다',
-};
-/** 권한 이름 */
-const PERMISSION_LABEL: Record<string, string> = {
-	notifications: '알림',
-	tracking: '앱 추적',
-};
 
-/** 오전/오후 12시간 표기 */
-const toTimeLabel = ({ hour, minute }: { hour: number; minute: number }, meridiem: { am: string; pm: string }): string =>
-	`${hour < 12 ? meridiem.am : meridiem.pm} ${hour % 12 === 0 ? 12 : hour % 12}:${String(minute).padStart(2, '0')}`;
+/**
+ * 12시간 표기.
+ * 오전/오후를 앞에 두는 한국어·일본어와 뒤에 두는 영어가 달라, 자리까지 번역 파일에서 정한다
+ * (common.timeFormat).
+ */
+type Translate = ReturnType<typeof useTranslation>['t'];
+const toTimeLabel = ({ hour, minute }: { hour: number; minute: number }, t: Translate): string =>
+	t('common.timeFormat', {
+		meridiem: hour < 12 ? t('common.meridiem.am') : t('common.meridiem.pm'),
+		time: `${hour % 12 === 0 ? 12 : hour % 12}:${String(minute).padStart(2, '0')}`,
+	});
 
 /**
  * 설정 행.
@@ -164,8 +132,7 @@ const Row = ({
  * 설정 — 앱 공유, 테마, 글씨체, 소리, 알림, 리포트, 초기화, 권한, 앱 정보.
  */
 const LifeSettingScreen = () => {
-	// 오전/오후 표기는 언어마다 다르다 — toTimeLabel 에 넘겨 준다
-	const meridiem = { am: '오전', pm: '오후' };
+	const { t, i18n } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const guide = useCharacterGuideOnce('life-setting');
@@ -181,7 +148,7 @@ const LifeSettingScreen = () => {
 	const [bgm, setBgm] = useState(isBgmEnabled);
 	const [resetTarget, setResetTarget] = useState<ResetTarget | null>(null);
 	const [appsVisible, setAppsVisible] = useState(false);
-	const [termsVisible, setTermsVisible] = useState(false);
+	const [languageVisible, setLanguageVisible] = useState(false);
 	const [openSourceVisible, setOpenSourceVisible] = useState(false);
 	/** 릴리즈 빌드에서도 개발용 섹션을 볼 수 있게 — 버전 행 7번 탭으로 해제. 앱 재시작 시 다시 숨김 */
 	const [devUnlocked, setDevUnlocked] = useState(__DEV__);
@@ -192,9 +159,9 @@ const LifeSettingScreen = () => {
 		const left = 7 - versionTaps.current;
 		if (left <= 0) {
 			setDevUnlocked(true);
-			showToast('개발용 메뉴를 열었어요', 'code-tags');
+			showToast(t('setting.dev.unlocked'), 'code-tags');
 		} else if (left <= 3) {
-			showToast(`${left}번 더 누르면 개발용 메뉴가 열려요`, 'gesture-tap');
+			showToast(t('setting.dev.tapsLeft', { left }), 'gesture-tap');
 		}
 	};
 	const [permissions, setPermissions] = useState<AppPermissionStatus[]>([]);
@@ -259,6 +226,19 @@ const LifeSettingScreen = () => {
 		loadPermissions();
 	};
 
+	/** 지금 언어 — i18next 가 들고 있는 값을 그대로 본다 (설정에서만 바뀐다) */
+	const language = toLanguage(i18n.language);
+
+	/** 언어 바꾸기 — 저장까지 끝난 뒤 새 언어로 알린다 */
+	const onPickLanguage = async (next: typeof language) => {
+		if (next === language) {
+			return;
+		}
+		playPop();
+		await setLanguage(next);
+		showToast(t('setting.language.changed', { label: LANGUAGE_LABELS[next] }), 'translate');
+	};
+
 	/** 효과음 on/off — 켤 때는 어떤 소리인지 한 번 들려 준다 */
 	const onToggleSfx = (value: boolean) => {
 		setSfxEnabled(value);
@@ -267,21 +247,21 @@ const LifeSettingScreen = () => {
 			// playPop 은 소음이라 무음 처리된 지 오래다 — 미리듣기가 조용해서 켠 티가 안 났다
 			playComplete();
 		}
-		showToast(value ? '효과음을 켰어요' : '효과음을 껐어요', value ? 'volume-high' : 'volume-off');
+		showToast(t(value ? 'setting.sound.sfx.on' : 'setting.sound.sfx.off'), value ? 'volume-high' : 'volume-off');
 	};
 
 	/** 배경음 on/off — 끄면 재생 중인 배경음도 즉시 멈춘다 (setBgmEnabled 안에서 정리) */
 	const onToggleBgm = (value: boolean) => {
 		setBgmEnabled(value);
 		setBgm(value);
-		showToast(value ? '학습·퀴즈에서 배경음이 나와요' : '배경음을 껐어요', value ? 'music-note' : 'music-note-off');
+		showToast(t(value ? 'setting.sound.bgm.on' : 'setting.sound.bgm.off'), value ? 'music-note' : 'music-note-off');
 	};
 
 	/** 알림 저장 + 예약 — 권한이 없으면 스위치를 되돌린다 */
 	const applyAlarm = async (next: LifeState['reminder'], message?: string) => {
 		const ok = await applyReminder(next);
 		if (!ok) {
-			showToast('알림 권한이 없어요. 설정에서 허용해 주세요', 'bell-off-outline');
+			showToast(t('setting.alarm.noPermission'), 'bell-off-outline');
 			return;
 		}
 		dispatch(setReminder(next));
@@ -294,7 +274,10 @@ const LifeSettingScreen = () => {
 		if (!enabled) {
 			setShowPicker(false);
 		}
-		applyAlarm({ ...life.reminder, enabled }, enabled ? `매일 ${toTimeLabel(life.reminder, meridiem)}에 알려 드릴게요` : '알림을 껐어요');
+		applyAlarm(
+			{ ...life.reminder, enabled },
+			enabled ? t('setting.alarm.turnedOn', { time: toTimeLabel(life.reminder, t) }) : t('setting.alarm.turnedOff'),
+		);
 	};
 
 	const onChangeTime = (event: DateTimePickerEvent, date?: Date) => {
@@ -306,7 +289,7 @@ const LifeSettingScreen = () => {
 			}
 			const next = { enabled: true, hour: date.getHours(), minute: date.getMinutes() };
 			setTime({ hour: next.hour, minute: next.minute });
-			applyAlarm(next, `매일 ${toTimeLabel(next, meridiem)}에 알려 드릴게요`);
+			applyAlarm(next, t('setting.alarm.turnedOn', { time: toTimeLabel(next, t) }));
 			return;
 		}
 		if (date) {
@@ -317,7 +300,7 @@ const LifeSettingScreen = () => {
 	/** iOS 전용 — '완료'를 눌렀을 때 한 번만 저장·예약한다 */
 	const onDonePicker = () => {
 		setShowPicker(false);
-		applyAlarm({ enabled: true, ...time }, `매일 ${toTimeLabel(time, meridiem)}에 알려 드릴게요`);
+		applyAlarm({ enabled: true, ...time }, t('setting.alarm.turnedOn', { time: toTimeLabel(time, t) }));
 	};
 
 	/**
@@ -333,7 +316,11 @@ const LifeSettingScreen = () => {
 		undoPorted.current = clearPortedProgress(resetTarget === 'all' ? 'all' : 'progress');
 		dispatch(resetTarget === 'all' ? resetAll() : resetProgress());
 		// 초기화 토스트는 되돌릴 시간을 주기 위해 더 오래 띄운다
-		showToast(RESET_META[resetTarget].done, 'delete-sweep-outline', { duration: 6000, actionLabel: '되돌리기', onAction: onUndoReset });
+		showToast(t(`setting.reset.${resetTarget}.done`), 'delete-sweep-outline', {
+			duration: 6000,
+			actionLabel: t('setting.reset.undo'),
+			onAction: onUndoReset,
+		});
 		setResetTarget(null);
 	};
 
@@ -348,7 +335,7 @@ const LifeSettingScreen = () => {
 		// 이식 화면 기록도 같이 되돌린다 (지우기가 끝난 뒤 이어서 쓴다 — 화면은 redux 만 보고 그리므로 기다리지 않는다)
 		undoPorted.current?.then(restorePortedProgress);
 		undoPorted.current = null;
-		showToast('초기화를 되돌렸어요', 'backup-restore');
+		showToast(t('setting.reset.undone'), 'backup-restore');
 	};
 
 	/** 앱 자체를 공유한다 — 스토어 링크를 문구와 함께 보낸다 */
@@ -356,19 +343,20 @@ const LifeSettingScreen = () => {
 		const androidUrl = GOOGLE_PLAY_STORE_URL.trim();
 		const iosUrl = APP_STORE_URL.trim();
 		if (!androidUrl && !iosUrl) {
-			showToast('아직 스토어에 출시되지 않았어요', 'store-alert-outline');
+			showToast(t('setting.share.notReleased'), 'store-alert-outline');
 			return;
 		}
+		const soon = t('setting.share.comingSoon');
 		const message = [
-			'요즘 제가 재미있게 쓰고 있는 앱이 있어서 추천드려요! 😊',
+			t('setting.share.intro'),
 			'',
-			APP_NAME || '세계 상식 퀴즈',
+			APP_NAME || t('common.appName'),
 			APP_DESCRIPTION,
 			'',
-			'👇 아래 링크에서 받아보세요',
-			`• Android: ${androidUrl || '출시 예정입니다.'}`,
+			t('setting.share.linkLead'),
+			`• Android: ${androidUrl || soon}`,
 			'',
-			`• iOS: ${iosUrl || '출시 예정입니다.'}`,
+			`• iOS: ${iosUrl || soon}`,
 		]
 			.filter((line, at) => at !== 3 || !!APP_DESCRIPTION)
 			.join('\n');
@@ -387,13 +375,18 @@ const LifeSettingScreen = () => {
 		const total = week.reduce((sum, item) => sum + item.total, 0);
 		const correct = week.reduce((sum, item) => sum + item.correct, 0);
 		const message = [
-			`📘 ${APP_NAME || '세계 상식 퀴즈'} 이번 주 기록`,
+			t('setting.report.head', { app: APP_NAME || t('common.appName') }),
 			'',
-			`· 연속 출석 ${streak}일`,
-			`· 배운 항목 ${life.learned.length} / ${DOMAIN_ITEMS.length}개`,
-			`· 퀴즈 ${week.length}판 · ${total}문제 중 ${correct}개 정답${total ? ` (${Math.round((correct / total) * 100)}%)` : ''}`,
-			`· 타임 챌린지 최고 ${life.bestTime}점 · 타워 챌린지 최고 ${life.bestTower}층`,
-			`· ${pet.petName} Lv.${pet.level} ${pet.stage.label}`,
+			t('setting.report.streak', { days: streak }),
+			t('setting.report.learned', { done: life.learned.length, total: DOMAIN_ITEMS.length }),
+			t('setting.report.quiz', {
+				plays: week.length,
+				total,
+				correct,
+				rate: total ? ` (${Math.round((correct / total) * 100)}%)` : '',
+			}),
+			t('setting.report.best', { time: life.bestTime, tower: life.bestTower }),
+			t('setting.report.pet', { name: pet.petName, level: pet.level, stage: t(`pet.stage.${pet.stage.key}`) }),
 		].join('\n');
 		try {
 			await Share.share({ message });
@@ -405,36 +398,35 @@ const LifeSettingScreen = () => {
 	/** [DEV] 모든 단어를 학습 완료로 — 진도·뱃지 화면을 100% 상태로 바로 확인할 때 쓴다 */
 	const onCompleteAllStudy = () => {
 		dispatch(markLearned(DOMAIN_ITEMS.map((item) => item.id)));
-		showToast(`항목 ${DOMAIN_ITEMS.length}개를 학습 완료로 두었어요`, 'school');
+		showToast(t('setting.dev.doneAll', { n: DOMAIN_ITEMS.length }), 'school');
 	};
 
 	/** [DEV] 오늘의 퀴즈를 만점으로 끝낸 상태로 — 기록·미션·보상 화면을 바로 확인할 때 쓴다 */
 	const onCompleteQuiz = () => {
 		dispatch(devCompleteQuiz());
-		showToast('오늘의 퀴즈를 만점 완료로 두었어요', 'clipboard-check-outline');
+		showToast(t('setting.dev.doneQuiz'), 'clipboard-check-outline');
 	};
 
 	/** 가로 목록의 앱 카드 — 지금 플랫폼 스토어로 보낸다 (아직 안 나온 앱은 안내만) */
 	const onOpenApp = async (app: CommonType.AppItem) => {
 		const url = storeUrlOf(app);
 		if (!url) {
-			showToast('아직 출시 준비 중인 앱이에요', 'clock-outline');
+			showToast(t('setting.apps.notReleased'), 'clock-outline');
 			return;
 		}
 		playPop();
 		try {
 			await Linking.openURL(url);
 		} catch {
-			showToast('스토어를 열 수 없어요', 'alert-circle-outline');
+			showToast(t('setting.apps.storeFailed'), 'alert-circle-outline');
 		}
 	};
 
 	const storeUrl = Platform.OS === 'ios' ? APP_STORE_URL : GOOGLE_PLAY_STORE_URL;
-	const confirm = resetTarget ? RESET_META[resetTarget] : null;
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['left', 'right']}>
-			<LifeHeader title="설정" subtitle="테마 · 글씨체 · 알림을 내 방식대로" onPressGuide={guide.open} />
+			<LifeHeader title={t('setting.title')} subtitle={t('setting.subtitle')} onPressGuide={guide.open} />
 
 			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" onScrollBeginDrag={Keyboard.dismiss}>
 				<Animated.View style={enterStyle}>
@@ -444,18 +436,18 @@ const LifeSettingScreen = () => {
 							<View style={styles.shareTitleIcon}>
 								<IconComponent type="materialCommunityIcons" name="cellphone-check" size={16} color={Colors.primaryDeep} />
 							</View>
-							<Text style={styles.shareTitle}>앱이 마음에 드셨나요?</Text>
+							<Text style={styles.shareTitle}>{t('setting.share.title')}</Text>
 						</View>
-						<Text style={styles.shareSubtitle}>가족이나 친구, 지인에게 유용한 앱을 함께 나눠보세요!</Text>
+						<Text style={styles.shareSubtitle}>{t('setting.share.subtitle')}</Text>
 						<Image source={require('@/src/assets/mainIcon.webp')} style={styles.shareAppIcon} contentFit="contain" accessible={false} />
 						<PressableScale style={styles.shareButton} accessibilityRole="button" onPress={onShareApp}>
 							<IconComponent type="materialCommunityIcons" name="share-variant" size={18} color={Colors.textInverse} />
-							<Text style={styles.shareButtonText}>공유하기</Text>
+							<Text numberOfLines={2} style={styles.shareButtonText}>{t('setting.share.button')}</Text>
 						</PressableScale>
 					</View>
 
 					{/* 화면 테마 — 라이트 / 다크 */}
-					<Text style={styles.sectionTitle}>화면 테마</Text>
+					<Text style={styles.sectionTitle}>{t('setting.theme.section')}</Text>
 					<View style={styles.themeCard}>
 						<View style={styles.segTrack} onLayout={(e) => setSegWidth(e.nativeEvent.layout.width)}>
 							{segSlot > 0 && (
@@ -488,27 +480,47 @@ const LifeSettingScreen = () => {
 										onPress={() => {
 											playPop();
 											setThemeMode(item.key);
-											showToast(`화면 테마를 ${item.label}(으)로 바꿨어요`, item.icon);
+											showToast(t('setting.theme.changed', { label: t(`setting.theme.${item.key}.label`) }), item.icon);
 										}}>
 										<IconComponent type="materialCommunityIcons" name={item.icon} size={16} color={active ? Colors.primaryDeep : Colors.textMuted} />
-										<Text style={[styles.segLabel, active && styles.segLabelActive]}>{item.label}</Text>
+										<Text style={[styles.segLabel, active && styles.segLabelActive]}>{t(`setting.theme.${item.key}.label`)}</Text>
 									</TouchableOpacity>
 								);
 							})}
 						</View>
-						<Text style={styles.themeHint}>{THEME_OPTIONS[themeIndex].hint}</Text>
+						<Text style={styles.themeHint}>{t(`setting.theme.${THEME_OPTIONS[themeIndex].key}.hint`)}</Text>
+					</View>
+
+					{/*
+					 * 언어 — 화면 문구만 바뀐다. 퀴즈·학습 카드 본문은 한국어 데이터라 그대로다.
+					 * 기기 언어를 자동으로 따라가지 않는 까닭도 그것이다 (src/translations/language.ts 참고).
+					 */}
+					<Text style={styles.sectionTitle}>{t('setting.language.section')}</Text>
+					<View style={styles.card}>
+						{/* 지금 언어 한 줄만 두고, 누르면 아래에서 시트가 올라온다 */}
+						<Row
+							icon="translate"
+							label={t('setting.language.label')}
+							value={LANGUAGE_LABELS[language]}
+							onPress={() => {
+								playPop();
+								setLanguageVisible(true);
+							}}
+							styles={styles}
+							Colors={Colors}
+						/>
 					</View>
 
 					{/* 소리 — 효과음과 배경음을 따로 끈다 */}
-					<Text style={styles.sectionTitle}>소리</Text>
+					<Text style={styles.sectionTitle}>{t('setting.sound.section')}</Text>
 					<View style={styles.card}>
 						<View style={styles.row}>
 							<View style={styles.rowIcon}>
 								<IconComponent type="materialCommunityIcons" name={sfx ? 'volume-high' : 'volume-off'} size={18} color={Colors.primaryDark} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel}>효과음</Text>
-								<Text style={styles.rowDesc}>정답·오답·출석 체크를 소리로 알려 줍니다</Text>
+								<Text style={styles.rowLabel}>{t('setting.sound.sfx.label')}</Text>
+								<Text style={styles.rowDesc}>{t('setting.sound.sfx.desc')}</Text>
 							</View>
 							<Switch
 								style={styles.switch}
@@ -524,8 +536,8 @@ const LifeSettingScreen = () => {
 								<IconComponent type="materialCommunityIcons" name={bgm ? 'music-note' : 'music-note-off'} size={18} color={Colors.primaryDark} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel}>배경음</Text>
-								<Text style={styles.rowDesc}>학습·퀴즈·챌린지를 하는 동안 잔잔하게 깔립니다</Text>
+								<Text style={styles.rowLabel}>{t('setting.sound.bgm.label')}</Text>
+								<Text style={styles.rowDesc}>{t('setting.sound.bgm.desc')}</Text>
 							</View>
 							<Switch
 								style={styles.switch}
@@ -538,16 +550,16 @@ const LifeSettingScreen = () => {
 					</View>
 
 					{/* 알림 — 매일 같은 시각에 출석·오늘의 퀴즈를 알려 준다 */}
-					<Text style={styles.sectionTitle}>알림</Text>
+					<Text style={styles.sectionTitle}>{t('setting.alarm.section')}</Text>
 					<View style={styles.alarmCard}>
 						<View style={styles.row}>
 							<View style={styles.rowIcon}>
 								<IconComponent type="materialCommunityIcons" name="bell-ring-outline" size={18} color={Colors.primaryDark} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel}>매일 학습 알림</Text>
+								<Text style={styles.rowLabel}>{t('setting.alarm.label')}</Text>
 								<Text style={styles.rowDesc}>
-									{life.reminder.enabled ? `매일 ${toTimeLabel(life.reminder, meridiem)}에 알려 드려요` : '출석과 오늘의 퀴즈를 잊지 않게 알려 드려요'}
+									{life.reminder.enabled ? t('setting.alarm.descOn', { time: toTimeLabel(life.reminder, t) }) : t('setting.alarm.descOff')}
 								</Text>
 							</View>
 							<Switch
@@ -573,8 +585,8 @@ const LifeSettingScreen = () => {
 										setShowPicker((prev) => !prev);
 									}}>
 									<IconComponent type="materialCommunityIcons" name="clock-outline" size={16} color={Colors.primaryDeep} />
-									<Text style={styles.timeText}>{toTimeLabel(shownTime, meridiem)}</Text>
-									<Text style={styles.timeHint}>시간 변경</Text>
+									<Text style={styles.timeText}>{toTimeLabel(shownTime, t)}</Text>
+									<Text style={styles.timeHint}>{t('setting.alarm.timeChange')}</Text>
 								</TouchableOpacity>
 
 								{showPicker && (
@@ -590,7 +602,7 @@ const LifeSettingScreen = () => {
 										/>
 										{Platform.OS === 'ios' && (
 											<TouchableOpacity style={styles.doneButton} activeOpacity={0.85} onPress={onDonePicker}>
-												<Text style={styles.doneText}>완료</Text>
+												<Text style={styles.doneText}>{t('common.done')}</Text>
 											</TouchableOpacity>
 										)}
 									</View>
@@ -600,13 +612,13 @@ const LifeSettingScreen = () => {
 					</View>
 
 					{/* 학습 리포트 — 이번 주 기록을 텍스트로 보낸다 */}
-					<Text style={styles.sectionTitle}>학습 리포트</Text>
+					<Text style={styles.sectionTitle}>{t('setting.report.section')}</Text>
 					<View style={styles.card}>
-						<Row icon="chart-box-outline" label="이번 주 성과 공유" onPress={onShareReport} styles={styles} Colors={Colors} />
+						<Row icon="chart-box-outline" label={t('setting.report.shareWeek')} onPress={onShareReport} styles={styles} Colors={Colors} />
 					</View>
 
 					{/* 데이터 초기화 — 지운 직후 토스트에서 되돌릴 수 있다 */}
-					<Text style={styles.sectionTitle}>데이터 초기화</Text>
+					<Text style={styles.sectionTitle}>{t('setting.reset.section')}</Text>
 					<View style={styles.resetList}>
 						{RESET_ORDER.map((target) => {
 							const meta = RESET_META[target];
@@ -621,12 +633,12 @@ const LifeSettingScreen = () => {
 										<IconComponent type="materialCommunityIcons" name={meta.icon} size={18} color={Colors[meta.color]} />
 									</View>
 									<View style={styles.resetBody}>
-										<Text style={[styles.resetLabel, { color: Colors[meta.color] }]}>{meta.label}</Text>
+										<Text style={[styles.resetLabel, { color: Colors[meta.color] }]}>{t(`setting.reset.${target}.label`)}</Text>
 										{/* 지우는 범위는 줄바꿈으로 다 보여 준다 — 한 줄로 잘리면 무엇이 지워지는지 알 수 없다 */}
-										<Text style={styles.resetDesc}>{meta.desc}</Text>
+										<Text style={styles.resetDesc}>{t(`setting.reset.${target}.desc`)}</Text>
 									</View>
 									<View style={[styles.resetChip, { backgroundColor: Colors[meta.tint] }]}>
-										<Text style={[styles.resetChipText, { color: Colors[meta.color] }]}>초기화</Text>
+										<Text style={[styles.resetChipText, { color: Colors[meta.color] }]}>{t('setting.reset.chip')}</Text>
 									</View>
 								</TouchableOpacity>
 							);
@@ -636,7 +648,7 @@ const LifeSettingScreen = () => {
 					{/* 권한 — 미설정이면 눌러서 바로 요청하거나 시스템 설정으로 이동한다 */}
 					{permissions.length > 0 && (
 						<>
-							<Text style={styles.sectionTitle}>권한</Text>
+							<Text style={styles.sectionTitle}>{t('setting.permission.section')}</Text>
 							<View style={styles.card}>
 								{permissions.map((item, index) => {
 									const actionable = isPermissionActionable(item.status);
@@ -655,15 +667,15 @@ const LifeSettingScreen = () => {
 												</View>
 												<View style={styles.rowBody}>
 													<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">
-														{PERMISSION_LABEL[item.key]}
+														{t(`setting.permission.label.${item.key}`)}
 													</Text>
 													<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">
-														{PERMISSION_DESC[item.key]}
+														{t(`setting.permission.desc.${item.key}`)}
 													</Text>
 												</View>
 												<View style={[styles.statusChip, actionable ? styles.statusChipOff : styles.statusChipOn]}>
 													<Text style={[styles.statusChipText, actionable ? styles.statusChipTextOff : styles.statusChipTextOn]}>
-														{toPermissionLabel(item.status)}
+														{t(`setting.permission.status.${toPermissionStatusKey(item.status)}`)}
 													</Text>
 												</View>
 												{actionable && <IconComponent type="materialIcons" name="chevron-right" size={20} color={Colors.textMuted} />}
@@ -672,35 +684,35 @@ const LifeSettingScreen = () => {
 									);
 								})}
 							</View>
-							<Text style={styles.permissionNotice}>권한을 끄면 해당 기능만 동작하지 않고, 나머지 학습 기능은 그대로 사용할 수 있습니다.</Text>
+							<Text style={styles.permissionNotice}>{t('setting.permission.notice')}</Text>
 						</>
 					)}
 
 					{/* 앱 정보 */}
-					<Text style={styles.sectionTitle}>앱 정보</Text>
+					<Text style={styles.sectionTitle}>{t('setting.info.section')}</Text>
 					<View style={styles.card}>
 						{/* 안드로이드는 build.gradle(versionName/versionCode), iOS는 Xcode(MARKETING_VERSION/CURRENT_PROJECT_VERSION) 값을 그대로 읽는다 */}
-						<Row icon="information-outline" label="버전" value={`${DeviceInfo.getVersion()} (${DeviceInfo.getBuildNumber()})`} onPress={onTapVersion} right={null} styles={styles} Colors={Colors} />
+						<Row icon="information-outline" label={t('setting.info.version')} value={`${DeviceInfo.getVersion()} (${DeviceInfo.getBuildNumber()})`} onPress={onTapVersion} right={null} styles={styles} Colors={Colors} />
 						<View style={styles.divider} />
-						<Row icon="star-outline" label="스토어 리뷰 남기기" onPress={() => storeUrl && Linking.openURL(storeUrl)} styles={styles} Colors={Colors} />
+						<Row icon="star-outline" label={t('setting.info.review')} onPress={() => storeUrl && Linking.openURL(storeUrl)} styles={styles} Colors={Colors} />
 						<View style={styles.divider} />
-						<Row icon="apps" label="개발자의 다른 앱" onPress={() => setAppsVisible(true)} styles={styles} Colors={Colors} />
+						<Row icon="web" label={t('setting.info.homepage')} onPress={() => Linking.openURL(DEVELOPER_HOMEPAGE)} styles={styles} Colors={Colors} />
 						<View style={styles.divider} />
-						<Row icon="file-document-outline" label="이용약관 / 개인정보처리방침" onPress={() => setTermsVisible(true)} styles={styles} Colors={Colors} />
+						<Row icon="apps" label={t('setting.info.otherApps')} onPress={() => setAppsVisible(true)} styles={styles} Colors={Colors} />
 						<View style={styles.divider} />
-						<Row icon="code-tags" label="오픈소스 라이선스" onPress={() => setOpenSourceVisible(true)} styles={styles} Colors={Colors} />
+						<Row icon="code-tags" label={t('setting.info.oss')} onPress={() => setOpenSourceVisible(true)} styles={styles} Colors={Colors} />
 					</View>
 
 					{/* 개발자의 다른 앱 — 가로로 넘겨 보고, 카드를 누르면 스토어로 바로 간다 */}
 					<View style={styles.appsHeader}>
-						<Text style={styles.appsTitle}>개발자의 다른 앱</Text>
+						<Text style={styles.appsTitle}>{t('setting.info.otherApps')}</Text>
 						<TouchableOpacity
 							style={styles.appsMore}
 							onPress={() => setAppsVisible(true)}
 							hitSlop={8}
 							accessibilityRole="button"
-							accessibilityLabel="개발자의 다른 앱 전체 보기">
-							<Text style={styles.appsMoreText}>전체 보기</Text>
+							accessibilityLabel={t('setting.apps.seeAllLabel')}>
+							<Text style={styles.appsMoreText}>{t('setting.apps.seeAll')}</Text>
 							<IconComponent type="materialIcons" name="chevron-right" size={16} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -716,13 +728,13 @@ const LifeSettingScreen = () => {
 								style={styles.appCard}
 								onPress={() => onOpenApp(item)}
 								accessibilityRole="button"
-								accessibilityLabel={`${item.title} 스토어로 이동`}>
+								accessibilityLabel={t('setting.apps.openStore', { title: item.title })}>
 								<View style={styles.appIconWrap}>
 									<Image source={item.icon} style={styles.appIcon} contentFit="contain" />
 								</View>
-								{NEW_APP_IDS.has(item.id) && (
+								{isNewApp(item) && (
 									<View style={styles.appNewBadge}>
-										<Text style={styles.appNewBadgeText}>NEW</Text>
+										<Text style={styles.appNewBadgeText}>{t('common.new')}</Text>
 									</View>
 								)}
 								<Text style={styles.appName} numberOfLines={1}>
@@ -738,37 +750,42 @@ const LifeSettingScreen = () => {
 					{/* 개발용 — 진도 100% 화면을 손으로 채우지 않고 바로 보기 위한 단축키. 개발 빌드 또는 버전 7번 탭 후 보인다 */}
 					{devUnlocked && (
 						<>
-							<Text style={styles.sectionTitle}>개발용 (DEV)</Text>
+							<Text style={styles.sectionTitle}>{t('setting.dev.section')}</Text>
 							<View style={styles.card}>
-								<Row icon="school" label="모든 항목 학습 완료로 설정" onPress={onCompleteAllStudy} styles={styles} Colors={Colors} />
+								<Row icon="school" label={t('setting.dev.completeAll')} onPress={onCompleteAllStudy} styles={styles} Colors={Colors} />
 								<View style={styles.divider} />
-								<Row icon="clipboard-check-outline" label="오늘의 퀴즈 완료로 설정" onPress={onCompleteQuiz} styles={styles} Colors={Colors} />
+								<Row icon="clipboard-check-outline" label={t('setting.dev.completeQuiz')} onPress={onCompleteQuiz} styles={styles} Colors={Colors} />
 							</View>
 						</>
 					)}
 
 					<Text style={styles.dataNotice}>
-						{`세계의 수도·랜드마크·신화·천체·스포츠 ${DOMAIN_ITEMS.length.toLocaleString()}개를 ${DOMAIN_CATEGORIES.length}개 주제로 나눠 담고 있습니다.`}
+						{t('setting.dataNotice', { items: DOMAIN_ITEMS.length.toLocaleString(), topics: DOMAIN_CATEGORIES.length })}
 					</Text>
 				</Animated.View>
 			</ScrollView>
 
 			<CmmDelConfirmModal
-				visible={!!confirm}
-				title={confirm ? confirm.title : undefined}
-				summary={confirm ? confirm.summary : undefined}
-				confirmText="지우기"
+				visible={!!resetTarget}
+				title={resetTarget ? t(`setting.reset.${resetTarget}.title`) : undefined}
+				summary={resetTarget ? t(`setting.reset.${resetTarget}.summary`) : undefined}
+				confirmText={t('setting.reset.action')}
 				onCancel={() => setResetTarget(null)}
 				onConfirm={onReset}
 			/>
+			<LanguagePickerSheet
+				visible={languageVisible}
+				current={language}
+				onPick={(next) => {
+					setLanguageVisible(false);
+					onPickLanguage(next);
+				}}
+				onClose={() => setLanguageVisible(false)}
+			/>
 			<DeveloperAppsModal visible={appsVisible} onClose={() => setAppsVisible(false)} />
-			<TermsOfServiceModal visible={termsVisible} onClose={() => setTermsVisible(false)} />
 			<OpenSourceModal visible={openSourceVisible} onClose={() => setOpenSourceVisible(false)} />
 			{/* 화면 사용법 — 처음 들어오면 한 번, 이후에는 헤더의 물음표로 다시 본다 */}
-			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[
-				'테마·글씨체·소리·알림을 내 방식대로 바꾸는 곳이에요.',
-				'맨 위에서 앱을 공유하고, 맨 아래 앱 정보에서 개발자의 다른 앱도 볼 수 있어요.',
-			]} />
+			<LifeCharacterGuide visible={guide.visible} onClose={guide.close} lines={[t('setting.guide.line1'), t('setting.guide.line2')]} />
 		</SafeAreaView>
 	);
 };
@@ -810,11 +827,10 @@ const createStyles = (Colors: Palette, HanjaFont: HanjaFontStyle) =>
 			justifyContent: 'center',
 			gap: Spacing.sm,
 			marginTop: SpacingV.lg,
-			height: scaleHeight(48),
+			minHeight: scaleHeight(48),
 			borderRadius: Radius.lg,
-			backgroundColor: Colors.primarySurface,
-		},
-		shareButtonText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+			backgroundColor: Colors.primarySurface, paddingVertical: SpacingV.sm, },
+		shareButtonText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 
 		// 설정만 예외 — 다른 화면의 섹션 제목(18pt)이 아니라 목록 그룹 라벨이라 작고 흐리게 둔다 (iOS 설정 앱과 같은 결)
 		sectionTitle: { marginTop: SpacingV.xl, marginBottom: SpacingV.sm, fontSize: Typography.bodySm, fontWeight: FontWeight.bold, color: Colors.textMuted },
@@ -857,7 +873,7 @@ const createStyles = (Colors: Palette, HanjaFont: HanjaFontStyle) =>
 		timeText: { flex: 1, fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.primaryDeep },
 		timeHint: { fontSize: Typography.caption, color: Colors.primaryDark },
 		pickerBox: { marginTop: SpacingV.sm, alignItems: 'center' },
-		doneButton: { alignSelf: 'stretch', height: scaleHeight(44), borderRadius: Radius.lg, backgroundColor: Colors.primarySurface, alignItems: 'center', justifyContent: 'center' },
+		doneButton: { alignSelf: 'stretch', minHeight: scaleHeight(44), borderRadius: Radius.lg, backgroundColor: Colors.primarySurface, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.sm, },
 		doneText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
 
 		resetList: { gap: SpacingV.sm },
@@ -877,12 +893,12 @@ const createStyles = (Colors: Palette, HanjaFont: HanjaFontStyle) =>
 		resetLabel: { fontSize: Typography.body, fontWeight: FontWeight.bold },
 		resetDesc: { marginTop: scaleHeight(3), fontSize: Typography.caption, color: Colors.textMuted, lineHeight: scaledSize(17) },
 		resetChip: { paddingHorizontal: Spacing.md, height: scaleHeight(30), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
-		resetChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold },
+		resetChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 
 		statusChip: { paddingHorizontal: Spacing.md, height: scaleHeight(26), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
 		statusChipOn: { backgroundColor: Colors.primarySoft },
 		statusChipOff: { backgroundColor: Colors.errorSoft },
-		statusChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold },
+		statusChipText: { fontSize: Typography.caption, fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 		statusChipTextOn: { color: Colors.primaryDeep },
 		statusChipTextOff: { color: Colors.errorDark },
 		permissionNotice: { marginTop: SpacingV.sm, paddingHorizontal: Spacing.xs, fontSize: Typography.caption, color: Colors.textMuted, lineHeight: scaledSize(17) },
@@ -904,7 +920,7 @@ const createStyles = (Colors: Palette, HanjaFont: HanjaFontStyle) =>
 		appIcon: { width: '100%', height: '100%' },
 		// 배지는 아이콘 밖(카드 모서리)에 둔다 — 아이콘 상자는 overflow:hidden 이라 안에 두면 잘린다
 		appNewBadge: { position: 'absolute', top: scaleHeight(6), right: scaleWidth(6), paddingHorizontal: Spacing.xs, paddingVertical: scaleHeight(2), borderRadius: Radius.pill, backgroundColor: Colors.error },
-		appNewBadgeText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: Colors.textInverse, letterSpacing: 0.3 },
+		appNewBadgeText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: Colors.textInverse, letterSpacing: 0.3, flexShrink: 1, textAlign: 'center', },
 		appName: { marginTop: SpacingV.sm, fontSize: Typography.bodySm, fontWeight: FontWeight.semibold, color: Colors.text, textAlign: 'center' },
 		appDesc: { marginTop: scaleHeight(2), fontSize: Typography.caption, color: Colors.textMuted, textAlign: 'center', lineHeight: scaledSize(15) },
 	});

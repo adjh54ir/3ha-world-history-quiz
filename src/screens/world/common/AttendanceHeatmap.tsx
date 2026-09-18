@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { Palette } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
@@ -9,8 +10,8 @@ import { scaledSize, scaleHeight } from '@/src/utils';
 /** 몇 주치를 보여 줄지 — 열두 주를 넘기면 칸이 손톱만 해진다 */
 const WEEKS = 12;
 const DAY_MS = 24 * 60 * 60 * 1000;
-/** 일요일부터 — 달력과 같은 순서로 읽히게 한다 */
-const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+/** 일요일부터 — 달력과 같은 순서로 읽히게 한다 (번역 키) */
+const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
 
 interface Props {
 	/** 출석한 날 ('YYYY-MM-DD') */
@@ -24,6 +25,7 @@ interface Props {
  * 칸 하나가 하루, 한 열이 한 주다. 오늘이 맨 오른쪽 아래에 오도록 주를 끊는다.
  */
 const AttendanceHeatmap = ({ attendance }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 
@@ -51,16 +53,16 @@ const AttendanceHeatmap = ({ attendance }: Props) => {
 	return (
 		<View style={styles.card}>
 			<View style={styles.head}>
-				<Text style={styles.title}>출석 기록</Text>
-				<Text style={styles.sub}>{`최근 ${WEEKS}주 · ${recent}일`}</Text>
+				<Text style={styles.title}>{t('heatmap.title')}</Text>
+				<Text style={styles.sub}>{t('heatmap.recent', { weeks: WEEKS, days: recent })}</Text>
 			</View>
 
 			<View style={styles.body}>
 				<View style={styles.dayLabels}>
-					{DAY_LABELS.map((label, at) => (
+					{DAY_KEYS.map((key, at) => (
 						// 월·수·금만 적는다 — 일곱 줄을 다 적으면 글자가 칸보다 커진다
-						<Text key={label} style={styles.dayLabel}>
-							{at % 2 === 1 ? label : ''}
+						<Text key={key} style={styles.dayLabel}>
+							{at % 2 === 1 ? t(`heatmap.day.${key}`) : ''}
 						</Text>
 					))}
 				</View>
@@ -82,7 +84,7 @@ const AttendanceHeatmap = ({ attendance }: Props) => {
 				</View>
 			</View>
 
-			<Text style={styles.footnote}>{`${from} 부터`}</Text>
+			<Text style={styles.footnote}>{t('heatmap.from', { date: from })}</Text>
 		</View>
 	);
 };

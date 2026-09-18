@@ -10,6 +10,8 @@ export declare namespace CommonType {
 		title: string;
 		desc: string;
 		category: AppCategory;
+		/** 스토어 출시일(YYYY-MM-DD). 적힌 앱만 일정 기간 NEW 배지가 붙는다 — isNewApp 참고 */
+		releasedAt?: string;
 		android?: string;
 		ios?: string;
 	};

@@ -48,8 +48,7 @@ const createStyles = (Colors: Palette) => StyleSheet.create({
 		borderRadius: Radius.pill,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: Colors.surfaceAlt,
-	},
+		backgroundColor: Colors.surfaceAlt, },
 });
 
 export default ModalIconButton;

@@ -40,19 +40,24 @@ export const getAppPermissionStatuses = async (): Promise<AppPermissionStatus[]>
 	];
 };
 
-/** 권한 상태 → 화면에 띄우는 문구 */
-export const toPermissionLabel = (status: PermissionStatus) => {
+/**
+ * 권한 상태 → 번역 키 조각.
+ * 문구 자체를 돌려주지 않는다 — 이 파일은 화면 밖(훅이 없는 자리)에서도 불리고,
+ * 여기서 한국어를 굳혀 두면 언어를 바꿔도 이 줄만 한국어로 남는다.
+ * 화면에서 `t(`setting.permission.status.${toPermissionStatusKey(status)}`)` 로 붙인다.
+ */
+export const toPermissionStatusKey = (status: PermissionStatus) => {
 	switch (status) {
 		case RESULTS.GRANTED:
-			return '허용됨' as const;
+			return 'granted' as const;
 		case RESULTS.LIMITED:
-			return '제한 허용' as const;
+			return 'limited' as const;
 		case RESULTS.BLOCKED:
-			return '차단됨' as const;
+			return 'blocked' as const;
 		case RESULTS.UNAVAILABLE:
-			return '지원 안 함' as const;
+			return 'unavailable' as const;
 		default:
-			return '미설정' as const;
+			return 'denied' as const;
 	}
 };
 

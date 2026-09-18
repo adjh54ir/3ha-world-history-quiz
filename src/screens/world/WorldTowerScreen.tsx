@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -13,7 +14,6 @@ import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
 import { useScreenEnter } from '@/src/hooks/useAnimationRunner';
 import { FontWeight, Layout, Radius, Shadow, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { TOWER_FLOOR_SIZE, TOWER_LIVES } from '@/src/services/life/LifeRules';
-import { TOWER_LEVEL_LABEL } from '@/src/services/world/WorldChallenge';
 import { useLife } from '@/src/hooks/useLife';
 import type { WorldType } from '@/src/types/data/WorldType';
 import { Paths } from '@/src/navigation/conf/Paths';
@@ -37,6 +37,7 @@ const BANDS = [
  * 층마다 목록을 만들지 않는 이유도 그것이다 — 끝이 없으니 목록이 아니라 "어디까지 갔나" 를 보여 준다.
  */
 const WorldTowerScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const enterStyle = useScreenEnter();
@@ -45,9 +46,9 @@ const WorldTowerScreen = () => {
 	/** 어느 주제로 오를지 — 고르지 않으면 예전처럼 전체에서 섞어 낸다 */
 	const [topic, setTopic] = useState<WorldType.TopicKey | undefined>(undefined);
 	const { button, guide } = useWorldGuide('world-tower', [
-		'층마다 문제를 풀고 한 층씩 올라가요.',
-		'세 층마다 어려워지고, 목숨이 다하면 그 자리가 최고 기록이 돼요.',
-		'주제를 골라 오르면 자신 있는 분야로만 기록을 겨룰 수 있어요.',
+		t('tower.guide.line1'),
+		t('tower.guide.line2'),
+		t('tower.guide.line3'),
 	]);
 
 	const start = () => {
@@ -62,29 +63,29 @@ const WorldTowerScreen = () => {
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>{button}</View>
 						<Image source={TOWER_MASCOT} style={styles.heroMascot} contentFit="contain" accessible={false} />
-						<Text style={styles.heroTitle}>타워 챌린지</Text>
-						<Text style={styles.heroSub}>{best > 0 ? `지금까지 ${best}층까지 올랐어요` : '한 층씩 올라가 어디까지 갈 수 있는지 겨뤄요'}</Text>
+						<Text style={styles.heroTitle}>{t('tower.title')}</Text>
+						<Text style={styles.heroSub}>{best > 0 ? t('tower.best', { floor: best }) : t('tower.intro')}</Text>
 					</View>
 
-					<WorldTopicPicker value={topic} onChange={setTopic} label="어느 주제로 오를까요?" />
+					<WorldTopicPicker value={topic} onChange={setTopic} label={t('tower.pickTopic')} />
 
 					<View style={styles.ruleRow}>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{TOWER_FLOOR_SIZE}</Text>
-							<Text style={styles.ruleLabel}>한 층 문제</Text>
+							<Text style={styles.ruleLabel}>{t('tower.perFloor')}</Text>
 						</View>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{TOWER_LIVES}</Text>
-							<Text style={styles.ruleLabel}>목숨</Text>
+							<Text style={styles.ruleLabel}>{t('tower.livesLabel')}</Text>
 						</View>
 						<View style={styles.rule}>
 							<Text style={styles.ruleValue}>{best}</Text>
-							<Text style={styles.ruleLabel}>최고 층</Text>
+							<Text style={styles.ruleLabel}>{t('tower.bestLabel')}</Text>
 						</View>
 					</View>
 
 					<View style={styles.card}>
-						<Text style={styles.cardTitle}>올라갈수록 어려워져요</Text>
+						<Text style={styles.cardTitle}>{t('tower.harder')}</Text>
 						{BANDS.map((band) => {
 							const reached = best >= band.from;
 							return (
@@ -97,21 +98,21 @@ const WorldTowerScreen = () => {
 											color={reached ? Colors.primaryDeep : Colors.textMuted}
 										/>
 									</View>
-									<Text style={styles.bandFloor}>{band.to ? `${band.from}~${band.to}층` : `${band.from}층부터`}</Text>
+									<Text style={styles.bandFloor}>{band.to ? t('tower.bandRange', { from: band.from, to: band.to }) : t('tower.bandFrom', { from: band.from })}</Text>
 									<Text style={[styles.bandLevel, reached && { color: Colors.primaryDeep, fontWeight: FontWeight.bold }]}>
-										{TOWER_LEVEL_LABEL[band.level]}
+										{t(`level.${band.level}.label`)}
 									</Text>
 								</View>
 							);
 						})}
-						<Text style={styles.note}>목숨은 층을 넘어가도 이어져요. 다 쓰면 그 층까지가 기록이에요.</Text>
+						<Text style={styles.note}>{t('tower.livesNote')}</Text>
 					</View>
 				</Animated.View>
 			</ScrollView>
 
 			<View style={styles.footer}>
 				<PressableScale style={styles.primary} onPress={start} accessibilityRole="button">
-					<Text style={styles.primaryText}>{best > 0 ? '다시 오르기' : '오르기 시작'}</Text>
+					<Text numberOfLines={2} style={styles.primaryText}>{t(best > 0 ? 'tower.again' : 'tower.start')}</Text>
 				</PressableScale>
 			</View>
 			<BottomHomeButton />
@@ -170,13 +171,12 @@ const createStyles = (Colors: Palette) =>
 
 		footer: { paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.sm },
 		primary: {
-			height: scaledSize(50),
+			minHeight: scaledSize(50),
 			borderRadius: Radius.pill,
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: Colors.primary,
-		},
-		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
+		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldTowerScreen;

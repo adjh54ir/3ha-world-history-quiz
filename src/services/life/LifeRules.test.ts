@@ -72,7 +72,7 @@ test('펫 단계 — 경험치 구간과 진행률', () => {
 	assert.equal(petStatus(10000).next?.minExp, 20000);
 	assert.equal(petStatus(19999).level, 5);
 	assert.equal(petStatus(20000).level, 6);
-	assert.equal(petStatus(20000).stage.label, '황금 대탐험가');
+	assert.equal(petStatus(20000).stage.key, 'golden');
 	assert.equal(petStatus(20000).ratio, 1);
 	assert.equal(petStatus(20000).next, null);
 	assert.equal(petStatus(99999).next, null);
@@ -88,7 +88,7 @@ test('출석 수호신 — 먹인 먹이 1·7·14·21·28·35개에 단계가 �
 	assert.equal(attendancePetStatus(28).level, 4);
 	assert.equal(attendancePetStatus(34).level, 4);
 	assert.equal(attendancePetStatus(35).level, 5);
-	assert.equal(attendancePetStatus(35).stage?.label, '황금 세계올빼미');
+	assert.equal(attendancePetStatus(35).stage?.key, 'golden');
 	assert.equal(attendancePetStatus(100).next, null);
 });
 

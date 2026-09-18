@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -29,6 +30,7 @@ const STUDY_MASCOT = require('@/src/assets/illustrations/lion-study.webp');
  * 순서는 난이도 순이다. 그냥 늘어놓으면 첫 장부터 이름도 못 들어 본 섬이 나온다.
  */
 const WorldStudyScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const params = useLocalSearchParams<{ topic?: string }>();
@@ -36,9 +38,9 @@ const WorldStudyScreen = () => {
 
 	const life = useLife();
 	const { button, guide } = useWorldGuide('world-study', [
-		'카드를 아래 버튼으로 넘기며 한 장씩 익혀요.',
-		'펼친 카드는 배운 것으로 쳐서 진도와 경험치가 올라가요.',
-		'쉬운 것부터 나오고, 배울수록 어려운 항목이 열려요.',
+		t('study.guide.line1'),
+		t('study.guide.line2'),
+		t('study.guide.line3'),
 	]);
 	/**
 	 * 난이도 순으로 줄 세운 학습 순서 — 화면이 살아 있는 동안 고정한다.
@@ -99,7 +101,7 @@ const WorldStudyScreen = () => {
 			<View style={styles.head}>
 				<View style={styles.headText}>
 					<Text style={styles.topicLabel} numberOfLines={1}>
-						{topic.label}
+						{t(`topic.${topic.key}.label`)}
 					</Text>
 					<View style={styles.headRight}>
 						<Text style={styles.counter}>{`${at + 1} / ${cards.length}`}</Text>
@@ -111,7 +113,10 @@ const WorldStudyScreen = () => {
 				</View>
 			</View>
 
-			<ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				// 빈 화면일 때만 남은 높이를 다 차지하게 해, 안내가 가운데에 선다
+				contentContainerStyle={[styles.content, cards.length === 0 && styles.contentEmpty]}
+				showsVerticalScrollIndicator={false}>
 				{entry ? (
 					<Animated.View style={[styles.card, cardStyle]}>
 						{shownImage ? (
@@ -131,7 +136,7 @@ const WorldStudyScreen = () => {
 						)}
 						<View style={styles.body}>
 							<View style={[styles.levelChip, { backgroundColor: Colors[topic.tint] }]}>
-								<Text style={[styles.levelText, { color: Colors[topic.color] }]}>{LEVEL_LABEL[entry.level]}</Text>
+								<Text style={[styles.levelText, { color: Colors[topic.color] }]}>{t(`level.${entry.level}.label`)}</Text>
 							</View>
 							<Text style={styles.name}>{entry.name}</Text>
 							<Text style={styles.summary}>{entry.summary}</Text>
@@ -148,22 +153,22 @@ const WorldStudyScreen = () => {
 				) : (
 					<View style={styles.empty}>
 						<Image source={STUDY_MASCOT} style={styles.emptyImage} contentFit="contain" accessible={false} />
-						<Text style={styles.summary}>보여 줄 항목이 없다.</Text>
+						<Text style={styles.summary}>{t('study.empty')}</Text>
 					</View>
 				)}
 			</ScrollView>
 
 			<View style={styles.footer}>
-				<PressableScale style={[styles.navButton, at === 0 && styles.navDisabled]} onPress={() => move(-1)} disabled={at === 0} accessibilityRole="button" accessibilityLabel="이전 항목">
+				<PressableScale style={[styles.navButton, at === 0 && styles.navDisabled]} onPress={() => move(-1)} disabled={at === 0} accessibilityRole="button" accessibilityLabel={t('study.prev')}>
 					<IconComponent type="materialcommunityicons" name="chevron-left" size={22} color={at === 0 ? Colors.textMuted : Colors.text} />
 				</PressableScale>
 				{at + 1 >= cards.length ? (
 					<PressableScale style={[styles.primary, { backgroundColor: Colors[topic.color] }]} onPress={goQuiz} accessibilityRole="button">
-						<Text style={styles.primaryText}>퀴즈로 확인하기</Text>
+						<Text numberOfLines={2} style={styles.primaryText}>{t('study.toQuiz')}</Text>
 					</PressableScale>
 				) : (
 					<PressableScale style={[styles.primary, { backgroundColor: Colors[topic.color] }]} onPress={() => move(1)} accessibilityRole="button">
-						<Text style={styles.primaryText}>다음</Text>
+						<Text style={styles.primaryText}>{t('study.nextShort')}</Text>
 					</PressableScale>
 				)}
 				<PressableScale
@@ -171,7 +176,7 @@ const WorldStudyScreen = () => {
 					onPress={() => move(1)}
 					disabled={at + 1 >= cards.length}
 					accessibilityRole="button"
-					accessibilityLabel="다음 항목">
+					accessibilityLabel={t('study.next')}>
 					<IconComponent type="materialcommunityicons" name="chevron-right" size={22} color={at + 1 >= cards.length ? Colors.textMuted : Colors.text} />
 				</PressableScale>
 			</View>
@@ -182,7 +187,6 @@ const WorldStudyScreen = () => {
 };
 
 /** 난이도 — 숫자만 보여 주면 무엇이 쉬운 쪽인지 알 수 없다 */
-const LEVEL_LABEL: Record<number, string> = { 1: '초급', 2: '중급', 3: '고급', 4: '특급' };
 
 const createStyles = (Colors: Palette) =>
 	StyleSheet.create({
@@ -208,7 +212,9 @@ const createStyles = (Colors: Palette) =>
 		art: { height: scaleHeight(190), alignItems: 'center', justifyContent: 'center', padding: Spacing.lg },
 		artEmpty: { height: scaleHeight(120) },
 		image: { width: '100%', height: '100%' },
-		empty: { alignItems: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xxl },
+		contentEmpty: { flexGrow: 1 },
+		// 빈 화면 안내 — 빈 영역 정중앙에 선다
+		empty: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xxl },
 		emptyImage: { width: scaledSize(156), height: scaledSize(156) },
 
 		body: { padding: Spacing.lg, gap: SpacingV.sm },
@@ -229,11 +235,10 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.pill,
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: Colors.surfaceAlt,
-		},
+			backgroundColor: Colors.surfaceAlt, },
 		navDisabled: { opacity: 0.45 },
-		primary: { flex: 1, height: scaledSize(44), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center' },
-		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse },
+		primary: { flex: 1, minHeight: scaledSize(44), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.sm, },
+		primaryText: { fontSize: Typography.callout, fontWeight: FontWeight.bold, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldStudyScreen;

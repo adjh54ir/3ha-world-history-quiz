@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions, FlatList, StyleSheet, Text, View, type ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -30,14 +31,15 @@ const PAGE = Dimensions.get('window').height;
  * 화면에 머문 항목은 배운 것으로 친다 — 진도·경험치·미션이 카드 학습과 똑같이 오른다.
  */
 const WorldShortsScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const params = useLocalSearchParams<{ topic?: string }>();
 	const life = useLife();
 	const [at, setAt] = useState(0);
 	const { button, guide } = useWorldGuide('world-shorts', [
-		'위아래로 넘기며 한 화면에 한 항목씩 훑어요.',
-		'머문 항목은 배운 것으로 쳐요 — 가볍게 넘겨도 진도가 쌓여요.',
+		t('shorts.guide.line1'),
+		t('shorts.guide.line2'),
 	], '#FFFFFF');
 
 	const cards = useMemo(() => {
@@ -72,7 +74,7 @@ const WorldShortsScreen = () => {
 					</View>
 					<View style={styles.body}>
 						<View style={[styles.chip, { backgroundColor: Colors[topic.tint] }]}>
-							<Text style={[styles.chipText, { color: Colors[topic.color] }]}>{topic.label}</Text>
+							<Text style={[styles.chipText, { color: Colors[topic.color] }]}>{t(`topic.${topic.key}.label`)}</Text>
 						</View>
 						<Text style={styles.name}>{item.name}</Text>
 						<Text style={styles.summary}>{item.summary}</Text>
@@ -86,7 +88,7 @@ const WorldShortsScreen = () => {
 				</View>
 			);
 		},
-		[Colors, styles],
+		[Colors, styles, t],
 	);
 
 	return (
@@ -125,7 +127,7 @@ const createStyles = (Colors: Palette) =>
 
 		body: { gap: SpacingV.sm },
 		chip: { alignSelf: 'flex-start', paddingHorizontal: Spacing.sm, paddingVertical: scaleHeight(3), borderRadius: Radius.pill },
-		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold },
+		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, flexShrink: 1, textAlign: 'center', },
 		name: { fontSize: Typography.h1, fontWeight: FontWeight.bold, color: Colors.textStrong },
 		summary: { fontSize: Typography.body, color: Colors.text, lineHeight: scaledSize(24) },
 		factRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
@@ -151,8 +153,7 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.pill,
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: Colors.overlay,
-		},
+			backgroundColor: Colors.overlay, },
 	});
 
 export default WorldShortsScreen;

@@ -1,4 +1,5 @@
 import notifee, { AlarmType, AndroidImportance, AndroidVisibility, AuthorizationStatus, RepeatFrequency, TriggerType } from "@notifee/react-native";
+import { translate } from '@/src/translations';
 import DateUtils from "@/src/utils/DateUtils";
 import { createSerialQueue } from "@/src/utils/SerialQueue";
 
@@ -217,15 +218,12 @@ const ScheduleStreakReminder = (streak: number, hour = 20, minute = 0) => serial
             vibration: false,
         });
 
-        const body =
-            streak > 0
-                ? `🔥 ${streak}일 연속 학습 중! 오늘 아직 안 했어요 — 지금 하면 기록이 이어져요.`
-                : '오늘 한 문제만 풀어도 연속 학습이 시작돼요.';
+        const body = streak > 0 ? translate('notify.streak.body', { days: streak }) : translate('notify.streak.first');
 
         await notifee.createTriggerNotification(
             {
                 id: STREAK_REMINDER_ID,
-                title: '연속 학습이 끊길 수 있어요',
+                title: translate('notify.streak.title'),
                 body,
                 android: {
                     channelId,
@@ -282,8 +280,8 @@ const ScheduleDailyWordReminder = (hour = 8, minute = 0) => serialize(async () =
         await notifee.createTriggerNotification(
             {
                 id: DAILY_WORD_REMINDER_ID,
-                title: '📚 오늘의 세계 상식',
-                body: '오늘의 문제 다섯 개, 지금 풀어 볼까요?',
+                title: translate('notify.word.title'),
+                body: translate('notify.word.body'),
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,
@@ -348,7 +346,7 @@ const ScheduleReviewReminder = (body: string, hour: number, minute: number) => s
         await notifee.createTriggerNotification(
             {
                 id: REVIEW_REMINDER_ID,
-                title: '오답 복습을 해보세요!',
+                title: translate('notify.review.title'),
                 body,
                 android: {
                     channelId,

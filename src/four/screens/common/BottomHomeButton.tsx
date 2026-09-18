@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/four/screens/common/atomic/AppModal';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@/src/four/navigation/compat';
@@ -15,8 +16,8 @@ const BottomHomeButton = ({
 	borderColor = Colors.border,
 	textColor = Colors.text,
 	iconColor = Colors.textDeep,
-	confirmTitle = '퀴즈를 종료할까요?',
-	confirmMessage = '진행 중인 내용은 저장되지 않습니다.',
+	confirmTitle,
+	confirmMessage,
 }: {
 	paddingBottom?: number;
 	backgroundColor?: string;
@@ -26,6 +27,9 @@ const BottomHomeButton = ({
 	confirmTitle?: string;
 	confirmMessage?: string;
 }) => {
+	const { t } = useTranslation();
+	const title = confirmTitle ?? t('exitQuiz.title');
+	const message = confirmMessage ?? t('exitQuiz.body');
 	const navigation = useNavigation<any>();
 	const [showConfirm, setShowConfirm] = useState(false);
 
@@ -81,14 +85,14 @@ const BottomHomeButton = ({
 						<View style={modalStyles.iconCircle}>
 							<IconComponent type="materialIcons" name="logout" size={scaledSize(26)} color={Colors.error} />
 						</View>
-						<Text style={modalStyles.title}>{confirmTitle}</Text>
-						<Text style={modalStyles.message}>{confirmMessage}</Text>
+						<Text style={modalStyles.title}>{title}</Text>
+						<Text style={modalStyles.message}>{message}</Text>
 						<View style={modalStyles.buttonRow}>
 							<TouchableOpacity style={modalStyles.cancelBtn} onPress={() => setShowConfirm(false)} activeOpacity={0.85}>
-								<Text style={modalStyles.cancelText}>취소</Text>
+								<Text style={modalStyles.cancelText}>{t('common.cancel')}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={modalStyles.confirmBtn} onPress={goHome} activeOpacity={0.85}>
-								<Text style={modalStyles.confirmText}>나가기</Text>
+								<Text style={modalStyles.confirmText}>{t('common.leave')}</Text>
 							</TouchableOpacity>
 						</View>
 					</View>

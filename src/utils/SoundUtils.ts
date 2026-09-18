@@ -5,6 +5,7 @@
  * - 네이티브 모듈이 없거나 재생이 실패해도 앱은 죽지 않고 무음으로 넘어간다.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DateUtils from '@/src/utils/DateUtils';
 
 /** 정적 require — 번들에 포함되어야 하므로 동적 경로를 쓰지 않는다 */
 const SFX_SOURCES = {
@@ -155,7 +156,7 @@ export const playSfx = (key: SfxKey) => {
 	if (!sfxEnabled) {
 		return;
 	}
-	const now = Date.now();
+	const now = DateUtils.nowTime();
 	if (now - (lastPlayedAt.get(key) ?? 0) < RETRIGGER_GUARD_MS) {
 		return;
 	}

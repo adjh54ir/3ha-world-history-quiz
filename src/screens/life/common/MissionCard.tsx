@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import PressableScale from '@/src/screens/common/atomic/PressableScale';
+import { showToast } from '@/src/screens/common/atomic/GlobalToast';
 import ProgressBar from './ProgressBar';
 import { Palette, onSurface } from '@/src/const/ConstColors';
 import { useColors, useThemedStyles } from '@/src/hooks/useTheme';
@@ -23,6 +25,7 @@ interface Props {
 
 /** 미션 한 줄 — 끝나면 체크가 튀어 오르고 글자에 줄이 그어진다 */
 const MissionRow = ({ mission, value, done, onPress }: { mission: LifeType.Mission; value: number; done: boolean; onPress: () => void }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const run = useAnimationRunner();
@@ -40,7 +43,7 @@ const MissionRow = ({ mission, value, done, onPress }: { mission: LifeType.Missi
 	}, [check, done, run]);
 
 	return (
-		<PressableScale style={styles.row} onPress={onPress} disabled={done} scaleTo={0.98} accessibilityRole="button" accessibilityLabel={mission.label}>
+		<PressableScale style={styles.row} onPress={onPress} disabled={done} scaleTo={0.98} accessibilityRole="button" accessibilityLabel={t(`mission.${mission.key}`)}>
 			<View style={[styles.rowIcon, done && styles.rowIconDone]}>
 				{done ? (
 					<Animated.View style={{ transform: [{ scale: check }] }}>
@@ -52,7 +55,7 @@ const MissionRow = ({ mission, value, done, onPress }: { mission: LifeType.Missi
 			</View>
 			<View style={styles.rowText}>
 				<Text style={[styles.rowLabel, done && styles.rowLabelDone]} numberOfLines={1}>
-					{mission.label}
+					{t(`mission.${mission.key}`)}
 				</Text>
 				<ProgressBar ratio={Math.min(1, value / mission.goal)} color={done ? Colors.success : Colors.primary} height={scaleHeight(5)} />
 			</View>
@@ -66,6 +69,7 @@ const MissionRow = ({ mission, value, done, onPress }: { mission: LifeType.Missi
  * 눌러야 보상이 나오므로 "여기를 누르라"는 신호가 계속 있어야 한다.
  */
 const MissionReward = ({ ready, claimed, onClaim }: { ready: boolean; claimed: boolean; onClaim: () => void }) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const glow = useRef(new Animated.Value(0)).current;
@@ -107,7 +111,7 @@ const MissionReward = ({ ready, claimed, onClaim }: { ready: boolean; claimed: b
 			disabled={!ready}
 			scaleTo={0.92}
 			accessibilityRole="button"
-			accessibilityLabel={ready ? '오늘의 미션 경험치 받기' : '오늘의 미션 보상'}>
+			accessibilityLabel={t(ready ? 'mission.claimLabel' : 'mission.rewardLabel')}>
 			{ready && (
 				<Animated.View
 					pointerEvents="none"
@@ -143,7 +147,7 @@ const MissionReward = ({ ready, claimed, onClaim }: { ready: boolean; claimed: b
 					color={claimed ? onSurface(Colors.success) : ready ? Colors.textInverse : Colors.accentAmber}
 				/>
 				<Text style={[styles.rewardText, claimed && styles.rewardTextDone, ready && styles.rewardTextReady]}>
-					{claimed ? '완료' : ready ? '받기' : `+${EXP.mission}EXP`}
+					{claimed ? t('mission.claimed') : ready ? t('mission.claim') : `+${EXP.mission}EXP`}
 				</Text>
 			</View>
 		</PressableScale>
@@ -155,6 +159,7 @@ const MissionReward = ({ ready, claimed, onClaim }: { ready: boolean; claimed: b
  * 날짜가 바뀌면 슬라이스의 ensureDaily 가 미션도 같이 새로 만들어 준다.
  */
 const MissionCard = ({ onPressMission }: Props) => {
+	const { t } = useTranslation();
 	const styles = useThemedStyles(createStyles);
 	const dispatch = useDispatch();
 	const { missions } = useLife();
@@ -170,19 +175,20 @@ const MissionCard = ({ onPressMission }: Props) => {
 	const onClaim = useCallback(() => {
 		playPop();
 		dispatch(claimMissions());
+		showToast(t('mission.claimedToast', { exp: EXP.mission }), 'gift-outline');
 	}, [dispatch]);
 
 	return (
 		<Animated.View style={[styles.card, ready && styles.cardReady, claimed && styles.cardDone, enterStyle]}>
 			<View style={styles.head}>
 				<View style={styles.headText}>
-					<Text style={styles.title}>오늘의 미션</Text>
+					<Text style={styles.title}>{t('mission.section')}</Text>
 					<Text style={[styles.subtitle, ready && styles.subtitleReady]} numberOfLines={2}>
 						{claimed
-							? '오늘 보상까지 다 받았어요. 내일 또 만나요!'
+							? t('mission.allDone')
 							: ready
-								? `미션 완료! 보상 버튼을 눌러 +${EXP.mission}EXP를 받으세요`
-								: `${doneCount} / ${MISSIONS.length} 완료 · 다 채우면 ${EXP.mission}EXP`}
+								? t('mission.ready', { exp: EXP.mission })
+								: t('mission.progress', { done: doneCount, total: MISSIONS.length, exp: EXP.mission })}
 					</Text>
 				</View>
 				<MissionReward ready={ready} claimed={claimed} onClaim={onClaim} />

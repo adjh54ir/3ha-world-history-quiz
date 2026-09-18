@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,6 +23,7 @@ const STATS_HERO = require('@/src/assets/illustrations/lion-stats-progress.webp'
  * **같은 기록이 화면마다 다른 숫자로** 보였다.
  */
 const WorldStatsScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const enterStyle = useScreenEnter();
@@ -29,9 +31,9 @@ const WorldStatsScreen = () => {
 	const progress = useCategoryProgress();
 	const { streak } = useStreak();
 	const { button, guide } = useWorldGuide('world-stats', [
-		'지금까지 쌓인 학습·퀴즈·출석 기록을 한 화면에서 봐요.',
-		'이번 주 카드는 지난주와 견줘 얼마나 늘었는지 보여 줘요.',
-		'주제별 별은 진도와 정답률을 함께 봐서 최대 세 개까지 붙어요.',
+		t('stats.guide.line1'),
+		t('stats.guide.line2'),
+		t('stats.guide.line3'),
 	]);
 
 	const summary = useMemo(() => {
@@ -52,29 +54,31 @@ const WorldStatsScreen = () => {
 	}, [progress, life.records]);
 
 	const tiles = [
-		{ icon: 'book-check-outline', label: '배운 항목', value: `${summary.learned}`, sub: `/ ${summary.total}` },
-		{ icon: 'help-circle-outline', label: '푼 퀴즈', value: `${summary.plays}`, sub: '판' },
-		{ icon: 'target', label: '정답률', value: `${summary.rate}`, sub: '%' },
-		{ icon: 'notebook-edit-outline', label: '오답 노트', value: `${life.wrong.length}`, sub: '개' },
-		{ icon: 'calendar-check', label: '출석', value: `${life.attendance.length}`, sub: `일 · 연속 ${streak}일` },
-		{ icon: 'star-outline', label: '주제 별', value: `${summary.stars}`, sub: `/ ${summary.starTotal}` },
-		{ icon: 'timer-outline', label: '타임 최고', value: `${life.bestTime ?? 0}`, sub: '점' },
-		{ icon: 'stairs-up', label: '타워 최고', value: `${life.bestTower ?? 0}`, sub: '층' },
+		{ key: 'learned', icon: 'book-check-outline', label: t('stats.tile.learned'), value: `${summary.learned}`, sub: `/ ${summary.total}` },
+		{ key: 'plays', icon: 'help-circle-outline', label: t('stats.tile.plays'), value: `${summary.plays}`, sub: t('stats.tile.playsUnit') },
+		{ key: 'rate', icon: 'target', label: t('stats.tile.rate'), value: `${summary.rate}`, sub: '%' },
+		{ key: 'wrong', icon: 'notebook-edit-outline', label: t('stats.tile.wrong'), value: `${life.wrong.length}`, sub: t('stats.tile.wrongUnit') },
+		{ key: 'attendance', icon: 'calendar-check', label: t('stats.tile.attendance'), value: `${life.attendance.length}`, sub: t('stats.tile.attendanceSub', { streak }) },
+		{ key: 'stars', icon: 'star-outline', label: t('stats.tile.stars'), value: `${summary.stars}`, sub: `/ ${summary.starTotal}` },
+		{ key: 'bestTime', icon: 'timer-outline', label: t('stats.tile.bestTime'), value: `${life.bestTime ?? 0}`, sub: t('stats.tile.bestTimeUnit') },
+		{ key: 'bestTower', icon: 'stairs-up', label: t('stats.tile.bestTower'), value: `${life.bestTower ?? 0}`, sub: t('stats.tile.bestTowerUnit') },
 	];
 
 	const progressHero = useMemo(() => {
 		if (summary.percent >= 100) {
-			return { title: '세계 지도를 완성했어요!', body: '모든 주제를 익힌 멋진 탐험 기록이에요.' };
+			return { title: t('stats.note.doneTitle'), body: t('stats.note.doneBody') };
 		}
 		if (streak >= 3) {
-			return { title: `${streak}일째 이어가는 중`, body: '꾸준한 탐험이 세계 지식으로 쌓이고 있어요.' };
+			return { title: t('stats.note.streakTitle', { days: streak }), body: t('stats.note.streakBody') };
 		}
 		if (summary.learned === 0 && summary.plays === 0) {
-			return { title: '첫 기록을 만들어 볼까요?', body: '학습이나 퀴즈를 시작하면 성장 기록이 여기에 쌓여요.' };
+			return { title: t('stats.note.emptyTitle'), body: t('stats.note.emptyBody') };
 		}
 		const milestone = [75, 50, 25].find((value) => summary.percent >= value && summary.percent < value + 5);
-		return milestone ? { title: `전체 진도 ${milestone}% 돌파`, body: '탐험 일지가 차근차근 채워지고 있어요.' } : null;
-	}, [streak, summary.learned, summary.percent, summary.plays]);
+		return milestone
+			? { title: t('stats.note.milestoneTitle', { percent: milestone }), body: t('stats.note.milestoneBody') }
+			: null;
+	}, [streak, summary.learned, summary.percent, summary.plays, t]);
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
@@ -82,8 +86,8 @@ const WorldStatsScreen = () => {
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.header}>
 						<View style={styles.headerText}>
-							<Text style={styles.title}>통계</Text>
-							<Text style={styles.subtitle}>{`전체 진도 ${summary.percent}%`}</Text>
+							<Text style={styles.title}>{t('stats.title')}</Text>
+							<Text style={styles.subtitle}>{t('stats.subtitle', { percent: summary.percent })}</Text>
 						</View>
 						{button}
 					</View>
@@ -104,7 +108,7 @@ const WorldStatsScreen = () => {
 
 					<View style={styles.tiles}>
 						{tiles.map((tile) => (
-							<View key={tile.label} style={styles.tile}>
+							<View key={tile.key} style={styles.tile}>
 								<IconComponent type="materialcommunityicons" name={tile.icon} size={19} color={Colors.primary} />
 								<View style={styles.tileValueRow}>
 									<Text style={styles.tileValue}>{tile.value}</Text>
@@ -122,7 +126,7 @@ const WorldStatsScreen = () => {
 					<AttendanceHeatmap attendance={life.attendance} />
 
 					<View style={styles.card}>
-						<Text style={styles.cardTitle}>주제별 진도</Text>
+						<Text style={styles.cardTitle}>{t('stats.byTopic')}</Text>
 						{progress.map((item) => (
 							<View key={item.category.key} style={styles.row}>
 								<View style={[styles.rowIcon, { backgroundColor: Colors[item.category.tint] }]}>
@@ -131,7 +135,7 @@ const WorldStatsScreen = () => {
 								<View style={styles.rowBody}>
 									<View style={styles.rowHead}>
 										<Text style={styles.rowLabel} numberOfLines={1}>
-											{item.category.label}
+											{t(`topic.${item.category.key}.label`)}
 										</Text>
 										<Text style={styles.rowCount}>{`${item.learned} / ${item.total}`}</Text>
 									</View>

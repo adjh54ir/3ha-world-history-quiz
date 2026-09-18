@@ -34,9 +34,17 @@ import { Paths } from '@/src/navigation/conf/Paths';
 import { checkDeviceNetConListener } from '@/src/utils/NetworkUtils';
 import { loadSoundSettings, prepareAudioSession } from '@/src/utils/SoundUtils';
 import { requestAppTrackingPermission } from '@/src/utils/PermissionUtils';
+// 다국어 — 모듈을 읽는 순간 i18next 가 초기화된다 (기본 한국어)
+import i18n, { readLanguage } from '@/src/translations';
 import AdGuardService from '@/src/services/ads/AdGuardService';
 import AppOpenAdService from '@/src/services/ads/AppOpenAdService';
 import { REACT_NATIVE_APP_MODE } from '@env';
+
+/**
+ * AdMob 초기화가 끝났음을 알리는 약속.
+ * 스플래시가 걷힌 뒤 오프닝 광고를 띄우는데, 초기화 전에 요청하면 첫 광고가 그대로 실패한다.
+ */
+let adMobReady: Promise<void> = Promise.resolve();
 
 silenceConsoleInProduction();
 installGlobalErrorHandler();
@@ -48,7 +56,7 @@ SplashScreen.setOptions({ fade: true, duration: 400 });
 /**
  * AdMob 초기화 (네이티브 모듈 미링크 시에도 앱이 죽지 않도록 가드)
  */
-const initAdMob = () => {
+const initAdMob = (): Promise<void> => {
 	try {
 		const ads = require('react-native-google-mobile-ads');
 		const mobileAds = ads.default;
@@ -59,17 +67,30 @@ const initAdMob = () => {
 		//    실패해도 광고 초기화는 계속한다 — 동의를 못 받으면 비개인화 광고로 떨어질 뿐이다.
 		AdsConsent?.gatherConsent?.().catch((e: unknown) => console.warn('광고 동의 확인 실패:', e));
 
-		// 2) 콘텐츠 등급 — 한자 학습 앱이라 전체 이용가(G) 광고만 받는다
+		// 2) 콘텐츠 등급 — 전체 이용가(G) 광고만 받는다
 		mobileAds()
 			.setRequestConfiguration({ maxAdContentRating: MaxAdContentRating?.G ?? 'G' })
 			.catch((e: unknown) => console.warn('광고 설정 적용 실패:', e));
 
-		mobileAds()
+		/*
+		 * 3) 초기화 — 끝난 뒤에 소리를 끈다.
+		 * 앱을 켜자마자 상단 배너에 동영상 광고가 붙으면 아무것도 누르지 않았는데 소리부터 난다.
+		 * 조용히 열어 보는 학습 앱이라 그 소리가 곧 "이 앱 뭐야" 가 된다. 그림은 그대로 나가고 소리만 죽는다.
+		 * 안드로이드는 initialize() 전에 setAppMuted 를 부르면 네이티브에서 IllegalStateException 으로
+		 * 앱이 죽는다 — 반드시 초기화가 끝난 뒤에 건다. 첫 광고(오프닝)는 이 프로미스 뒤에 요청하므로
+		 * 첫 광고부터 무음이 적용된다.
+		 */
+		return mobileAds()
 			.initialize()
-			.then((s: unknown) => console.log('✅ AdMob 초기화 완료:', s))
+			.then((state: unknown) => {
+				mobileAds().setAppMuted(true);
+				mobileAds().setAppVolume(0);
+				console.log('✅ AdMob 초기화 완료:', state);
+			})
 			.catch((e: unknown) => console.warn('❌ AdMob 초기화 실패:', e));
 	} catch (e) {
 		console.warn('AdMob 모듈 로드 실패(미설치?):', e);
+		return Promise.resolve();
 	}
 };
 
@@ -138,7 +159,8 @@ export default function RootLayout() {
 		// 응답이 끝난 뒤 요청한다 (Android/이미 응답한 사용자는 즉시 resolve 되어 지연 없음).
 		requestAppTrackingPermission()
 			.catch((error) => console.warn('ATT 권한 요청 실패:', error))
-			.finally(() => AppOpenAdService.showAppOpenAd());
+			// 초기화(무음 설정 포함)가 끝난 뒤에 첫 광고를 띄운다
+			.finally(() => adMobReady.finally(() => AppOpenAdService.showAppOpenAd()));
 	}, []);
 	useDailyNotificationDeepLink();
 	useFlushOnBackground();
@@ -150,8 +172,11 @@ export default function RootLayout() {
 				console.log('Now env mode : [', REACT_NATIVE_APP_MODE, ']');
 				// AdMob 은 앱이 뜨자마자 초기화한다 — 배너는 루트에 곧바로 마운트되므로
 				// SDK 준비 전에 요청이 나가면 첫 광고가 실패하고 그대로 비어 버린다.
-				initAdMob();
+				// 오프닝 광고는 이 약속이 끝난 뒤에 요청한다(hideSplash 가 기다린다).
+				adMobReady = initAdMob();
 				checkDeviceNetConListener();
+				// 저장해 둔 언어를 화면이 그려지기 전에 걸어 둔다 — 첫 화면이 한국어로 한 번 그려졌다 바뀌지 않게
+				await i18n.changeLanguage(await readLanguage());
 				const savedTheme = await readThemeMode();
 				setThemeMode(savedTheme);
 				// 이식 화면(src/four)은 모듈이 읽히는 순간 팔레트를 복사해 StyleSheet 를 굽는다.

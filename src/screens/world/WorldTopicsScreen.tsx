@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,14 +33,15 @@ const TOPICS_HERO = require('@/src/assets/illustrations/lion-topics-hero.webp');
  * 누르는 자리를 아래 두 버튼으로만 못 박았다.
  */
 const WorldTopicsScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const enterStyle = useScreenEnter();
 
 	const { button, guide } = useWorldGuide('world-topics', [
-		'주제를 고르면 그 안에서 학습과 퀴즈를 바로 시작할 수 있어요.',
-		'카드 아래 왼쪽은 학습, 오른쪽은 퀴즈예요.',
-		'주제마다 묻는 방식이 여러 가지라 같은 주제도 매번 다르게 나와요.',
+		t('topics.guide.line1'),
+		t('topics.guide.line2'),
+		t('topics.guide.line3'),
 	]);
 
 	/**
@@ -81,16 +83,16 @@ const WorldTopicsScreen = () => {
 				<Animated.View style={[styles.stack, enterStyle]}>
 					<View style={styles.header}>
 						<View style={styles.headerText}>
-							<Text style={styles.title}>세계 상식</Text>
-							<Text style={styles.subtitle}>{`${WORLD_TOPICS.length}개 주제 · ${total.toLocaleString()}개 항목`}</Text>
+							<Text style={styles.title}>{t('topics.title')}</Text>
+							<Text style={styles.subtitle}>{t('topics.subtitle', { topics: WORLD_TOPICS.length, items: total.toLocaleString() })}</Text>
 						</View>
 						{button}
 					</View>
 
 					<View style={styles.heroBanner}>
 						<View style={styles.heroCopy}>
-							<Text style={styles.heroTitle}>어디부터 탐험할까요?</Text>
-							<Text style={styles.heroBody}>마음에 드는 주제를 골라 세계 지식을 펼쳐 보세요.</Text>
+							<Text style={styles.heroTitle}>{t('topics.heroTitle')}</Text>
+							<Text style={styles.heroBody}>{t('topics.heroDesc')}</Text>
 						</View>
 						<Image source={TOPICS_HERO} style={styles.heroImage} contentFit="contain" accessible={false} />
 					</View>
@@ -111,29 +113,29 @@ const WorldTopicsScreen = () => {
 								</View>
 								<View style={styles.cardBody}>
 									<Text style={styles.cardLabel} numberOfLines={1}>
-										{topic.label}
+										{t(`topic.${topic.key}.label`)}
 									</Text>
 									<Text style={styles.cardDesc} numberOfLines={2}>
-										{topic.description}
+										{t(`topic.${topic.key}.description`)}
 									</Text>
-									<Text style={[styles.cardCount, { color: Colors[topic.color] }]}>{`${count}개 · ${topic.modes.length}가지 유형`}</Text>
+									<Text style={[styles.cardCount, { color: Colors[topic.color] }]}>{t('topics.cardCount', { count, modes: topic.modes.length })}</Text>
 								</View>
 								<View style={styles.cardActions}>
 									<PressableScale
 										style={[styles.action, { backgroundColor: Colors[topic.tint] }]}
 										onPress={() => go(Paths.WORLD_STUDY, topic.key)}
 										accessibilityRole="button"
-										accessibilityLabel={`${topic.label} 카드 학습`}>
+										accessibilityLabel={t('topics.studyLabel', { topic: t(`topic.${topic.key}.label`) })}>
 										<IconComponent type="materialcommunityicons" name="cards-outline" size={15} color={Colors[topic.color]} />
-										<Text style={[styles.actionText, { color: Colors[topic.color] }]}>학습</Text>
+										<Text style={[styles.actionText, { color: Colors[topic.color] }]}>{t('topics.study')}</Text>
 									</PressableScale>
 									<PressableScale
 										style={[styles.action, styles.actionFilled, { backgroundColor: Colors[topic.color] }]}
 										onPress={() => go(Paths.WORLD_QUIZ, topic.key)}
 										accessibilityRole="button"
-										accessibilityLabel={`${topic.label} 퀴즈`}>
+										accessibilityLabel={t('topics.quizLabel', { topic: t(`topic.${topic.key}.label`) })}>
 										<IconComponent type="materialcommunityicons" name="help-circle-outline" size={15} color={Colors.textInverse} />
-										<Text style={[styles.actionText, { color: Colors.textInverse }]}>퀴즈</Text>
+										<Text style={[styles.actionText, { color: Colors.textInverse }]}>{t('topics.quiz')}</Text>
 									</PressableScale>
 								</View>
 							</View>
@@ -208,7 +210,7 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.pill,
 		},
 		actionFilled: {},
-		actionText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold },
+		actionText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default WorldTopicsScreen;

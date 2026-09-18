@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
@@ -17,6 +18,7 @@ import { setFavorite } from '@/src/store/slice/LifeSlice';
 import { useLife } from '@/src/hooks/useLife';
 import type { WorldType } from '@/src/types/data/WorldType';
 import { playPop } from '@/src/utils/SoundUtils';
+import { showToast } from '@/src/screens/common/atomic/GlobalToast';
 import { scaledSize, scaleHeight } from '@/src/utils';
 
 /** 주제를 고르지 않은 상태 */
@@ -33,6 +35,7 @@ const THUMB_WIDTH = 250;
 const EMPTY_MASCOT = require('@/src/assets/illustrations/lion-empty-search.webp');
 
 const WorldListScreen = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const dispatch = useDispatch();
@@ -44,9 +47,9 @@ const WorldListScreen = () => {
 	/** 열려 있는 항목 상세 (null 이면 닫힘) */
 	const [detail, setDetail] = useState<WorldType.Entry | null>(null);
 	const { button, guide } = useWorldGuide('world-list', [
-		'주제 칩과 검색으로 찾는 항목을 좁혀요.',
-		'줄을 누르면 자세한 설명이 열리고, 별을 누르면 즐겨찾기에 담겨요.',
-		'별 칩을 누르면 즐겨찾기만 모아 볼 수 있어요.',
+		t('words.guide.line1'),
+		t('words.guide.line2'),
+		t('words.guide.line3'),
 	]);
 
 	const learned = useMemo(() => new Set(life.learned), [life.learned]);
@@ -71,17 +74,19 @@ const WorldListScreen = () => {
 	}, [topicKey, keyword, favOnly, favorites]);
 
 	const toggleFavorite = (id: string) => {
+		const on = !favorites.has(id);
 		playPop();
-		dispatch(setFavorite({ id, on: !favorites.has(id) }));
+		dispatch(setFavorite({ id, on }));
+		showToast(t(on ? 'words.favAdded' : 'words.favRemoved'), on ? 'star' : 'star-off');
 	};
 
-	const chips = [{ key: ALL, label: '전체' }, ...WORLD_TOPICS.map((topic) => ({ key: topic.key, label: topic.label }))];
+	const chips = [{ key: ALL, label: t('words.all') }, ...WORLD_TOPICS.map((topic) => ({ key: topic.key, label: t(`topic.${topic.key}.label`) }))];
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['top', 'left', 'right']}>
 			<View style={styles.head}>
 				<View style={styles.titleRow}>
-					<Text style={styles.title}>세계 상식 사전</Text>
+					<Text style={styles.title}>{t('words.title')}</Text>
 					{button}
 				</View>
 				<View style={styles.search}>
@@ -90,13 +95,13 @@ const WorldListScreen = () => {
 						style={styles.input}
 						value={keyword}
 						onChangeText={setKeyword}
-						placeholder="이름·설명·수도로 찾기"
+						placeholder={t('words.searchPlaceholder')}
 						placeholderTextColor={Colors.textMuted}
 						returnKeyType="search"
-						accessibilityLabel="항목 검색"
+						accessibilityLabel={t('words.searchLabel')}
 					/>
 					{keyword ? (
-						<PressableScale onPress={() => setKeyword('')} accessibilityRole="button" accessibilityLabel="검색어 지우기">
+						<PressableScale onPress={() => setKeyword('')} accessibilityRole="button" accessibilityLabel={t('words.clearSearch')}>
 							<IconComponent type="materialicons" name="close" size={18} color={Colors.textMuted} />
 						</PressableScale>
 					) : null}
@@ -110,7 +115,7 @@ const WorldListScreen = () => {
 						}}
 						accessibilityRole="button"
 						accessibilityState={{ selected: favOnly }}
-						accessibilityLabel="즐겨찾기만 보기">
+						accessibilityLabel={t('words.favOnly')}>
 						<IconComponent
 							type="materialcommunityicons"
 							name={favOnly ? 'star' : 'star-outline'}
@@ -124,6 +129,9 @@ const WorldListScreen = () => {
 						data={chips}
 						keyExtractor={(item) => item.key}
 						showsHorizontalScrollIndicator={false}
+						// 검색어를 치다 칩을 눌러도 한 번에 먹히고(handled), 칩을 훑으면 키보드가 내려간다(on-drag)
+						keyboardShouldPersistTaps="handled"
+						keyboardDismissMode="on-drag"
 						contentContainerStyle={styles.chipRow}
 						renderItem={({ item }) => (
 							<PressableScale
@@ -135,19 +143,23 @@ const WorldListScreen = () => {
 						)}
 					/>
 				</View>
-				<Text style={styles.count}>{`${rows.length.toLocaleString()}개`}</Text>
+				<Text style={styles.count}>{t('words.count', { n: rows.length.toLocaleString() })}</Text>
 			</View>
 
 			<FlatList
 				data={rows}
 				keyExtractor={(item) => item.id}
-				contentContainerStyle={styles.list}
+				// 빈 목록일 때만 남은 높이를 다 차지하게 해, 빈 화면 안내가 가운데에 선다
+				contentContainerStyle={[styles.list, rows.length === 0 && styles.listEmpty]}
 				showsVerticalScrollIndicator={false}
+				// 목록을 훑으면 키보드가 내려가고(on-drag), 줄·별 터치는 키보드를 닫으면서 그대로 먹힌다(handled)
+				keyboardShouldPersistTaps="handled"
+				keyboardDismissMode="on-drag"
 				initialNumToRender={14}
 				ListEmptyComponent={
 					<View style={styles.empty}>
 						<Image source={EMPTY_MASCOT} style={styles.emptyImage} contentFit="contain" accessible={false} />
-						<Text style={styles.emptyText}>찾는 항목이 없다.</Text>
+						<Text style={styles.emptyText}>{t('words.empty')}</Text>
 					</View>
 				}
 				renderItem={({ item }) => {
@@ -165,7 +177,7 @@ const WorldListScreen = () => {
 								setDetail(item);
 							}}
 							accessibilityRole="button"
-							accessibilityLabel={`${item.name} 자세히 보기`}>
+							accessibilityLabel={t('words.detailLabel', { name: item.name })}>
 							<View style={styles.thumb}>
 								{image ? (
 									<Image source={image} placeholder={fallback} style={styles.thumbImage} contentFit="contain" placeholderContentFit="contain" transition={120} />
@@ -184,7 +196,7 @@ const WorldListScreen = () => {
 									{item.summary}
 								</Text>
 							</View>
-							<PressableScale onPress={() => toggleFavorite(item.id)} accessibilityRole="button" accessibilityLabel={`${item.name} 즐겨찾기`}>
+							<PressableScale onPress={() => toggleFavorite(item.id)} accessibilityRole="button" accessibilityLabel={t('words.favLabel', { name: item.name })}>
 								<IconComponent type="materialcommunityicons" name={on ? 'star' : 'star-outline'} size={20} color={on ? Colors.warning : Colors.textMuted} />
 							</PressableScale>
 						</PressableScale>
@@ -231,7 +243,7 @@ const createStyles = (Colors: Palette) =>
 			borderColor: Colors.border,
 			backgroundColor: Colors.surface,
 		},
-		chipText: { fontSize: Typography.footnote, fontWeight: FontWeight.medium, color: Colors.text },
+		chipText: { fontSize: Typography.footnote, fontWeight: FontWeight.medium, color: Colors.text, flexShrink: 1, textAlign: 'center', },
 		count: { fontSize: Typography.caption, color: Colors.textSecondary },
 
 		list: { paddingHorizontal: Spacing.lg, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xxl, gap: SpacingV.xs },
@@ -261,7 +273,9 @@ const createStyles = (Colors: Palette) =>
 		rowHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 		rowName: { flexShrink: 1, fontSize: Typography.callout, fontWeight: FontWeight.semibold, color: Colors.textStrong },
 		rowSummary: { fontSize: Typography.footnote, color: Colors.textSecondary, lineHeight: scaledSize(18) },
-		empty: { alignItems: 'center', paddingVertical: SpacingV.xxl, gap: SpacingV.sm },
+		listEmpty: { flexGrow: 1 },
+		// 빈 화면 안내 — 위에 붙지 않고 빈 영역 정중앙에 선다
+		empty: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.xxl, gap: SpacingV.sm },
 		emptyImage: { width: scaledSize(156), height: scaledSize(156) },
 		emptyText: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center' },
 	});

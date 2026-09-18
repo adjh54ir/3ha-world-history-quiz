@@ -45,15 +45,31 @@ test('정답률 — 푼 문제가 없으면 0 이고 나눗셈이 터지지 않�
 	assert.equal(accuracy({ learned: 0, solved: 8, correct: 6, attended: 0 }), 75);
 });
 
+/** 한국어 문구를 그대로 흉내 낸 가짜 번역기 — 여기서 보는 것은 화살표 규칙이다 */
+const fakeT = (key: string, values: Record<string, unknown> = {}): string => {
+	const text: Record<string, string> = {
+		'common.appName': '세계 상식 퀴즈',
+		'report.text.head': `${values.app} · 주간 리포트 ${values.from} ~ ${values.to}`,
+		'report.text.newItems': `📘 새 항목 ${values.n}개`,
+		'report.text.solved': `❓ 푼 문제 ${values.n}문제`,
+		'report.text.rate': `🎯 정답률 ${values.rate}`,
+		'report.text.attendance': `📅 출석 ${values.n}일`,
+	};
+	return text[key] ?? key;
+};
+
 test('주간 공유 글 — 늘고 줄고 그대로가 화살표로 갈린다', () => {
-	const text = weeklyShareText({
-		from: '2026-09-04',
-		to: '2026-09-10',
-		thisWeek: { learned: 12, solved: 40, correct: 30, attended: 5 },
-		lastWeek: { learned: 8, solved: 40, correct: 36, attended: 7 },
-	});
+	const text = weeklyShareText(
+		{
+			from: '2026-09-04',
+			to: '2026-09-10',
+			thisWeek: { learned: 12, solved: 40, correct: 30, attended: 5 },
+			lastWeek: { learned: 8, solved: 40, correct: 36, attended: 7 },
+		},
+		fakeT,
+	);
 	const lines = text.split('\n');
-	assert.equal(lines[0], '생활 한자 · 주간 리포트 2026-09-04 ~ 2026-09-10');
+	assert.equal(lines[0], '세계 상식 퀴즈 · 주간 리포트 2026-09-04 ~ 2026-09-10');
 	// 늘었으면 ▲, 그대로면 –, 줄었으면 ▼ (▼ 뒤 숫자는 절댓값이라 음수 부호가 겹치지 않는다)
 	assert.equal(lines[1], '📘 새 항목 12개 ▲4');
 	assert.equal(lines[2], '❓ 푼 문제 40문제 –');

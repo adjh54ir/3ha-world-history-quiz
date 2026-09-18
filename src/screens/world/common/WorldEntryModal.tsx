@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -16,9 +17,6 @@ import { scaledSize, scaleHeight } from '@/src/utils';
 /** 모달의 큰 그림 자리에 맞춰 받아 오는 폭 — 줄 썸네일보다 크게 잡는다 */
 const DETAIL_WIDTH = 640;
 
-/** 난이도 표시 — 사전에서도 학습 카드와 같은 말을 쓴다 */
-const LEVEL_LABEL: Record<WorldType.Level, string> = { 1: '초급', 2: '중급', 3: '고급', 4: '특급' };
-
 interface Props {
 	/** 열려 있는 항목. null 이면 닫힌 상태 */
 	entry: WorldType.Entry | null;
@@ -35,6 +33,7 @@ interface Props {
  * 학습 카드와 같은 내용을 보여 주지만 여기는 "찾아보는" 자리라 순서·진도와 무관하게 연다.
  */
 const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const [brokenFor, setBrokenFor] = useState<string | null>(null);
@@ -46,7 +45,7 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 	const fallback = selectEntryImageFallback(topic.key);
 	const shownImage = brokenFor === entry.id ? fallback : image;
 	// 주제별 값 주머니 — 어떤 열쇠를 사람이 읽는 말로 부를지는 주제의 문제 유형이 알고 있다
-	const labels = new Map(topic.modes.map((mode) => [mode.answer, mode.label]));
+	const labels = new Map(topic.modes.map((mode) => [mode.answer, t(`topic.${topic.key}.mode.${mode.key}.label`)]));
 	// 나라 이름이 들어 있는 값에는 국기를 함께 건다 (ConstWorldTopics 의 answerAs)
 	const flagged = new Set(topic.modes.filter((mode) => mode.answerAs === 'flag').map((mode) => mode.answer));
 	const facts = Object.entries(entry.fields).filter(([key]) => labels.has(key) && key !== 'image' && key !== 'code');
@@ -73,10 +72,10 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 							<View style={styles.chips}>
 								<View style={[styles.chip, { backgroundColor: Colors[topic.tint] }]}>
 									<IconComponent type="materialcommunityicons" name={topic.icon} size={12} color={Colors[topic.color]} />
-									<Text style={[styles.chipText, { color: Colors[topic.color] }]}>{topic.label}</Text>
+									<Text style={[styles.chipText, { color: Colors[topic.color] }]}>{t(`topic.${topic.key}.label`)}</Text>
 								</View>
 								<View style={[styles.chip, { backgroundColor: Colors.surfaceAlt }]}>
-									<Text style={[styles.chipText, { color: Colors.textSecondary }]}>{LEVEL_LABEL[entry.level]}</Text>
+									<Text style={[styles.chipText, { color: Colors.textSecondary }]}>{t(`level.${entry.level}.label`)}</Text>
 								</View>
 							</View>
 							<Text style={styles.name}>{entry.name}</Text>
@@ -85,7 +84,7 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 							onPress={() => onToggleFavorite(entry.id)}
 							scaleTo={0.9}
 							accessibilityRole="button"
-							accessibilityLabel={`${entry.name} 즐겨찾기`}>
+							accessibilityLabel={t('entry.favLabel', { name: entry.name })}>
 							<IconComponent
 								type="materialcommunityicons"
 								name={favorite ? 'star' : 'star-outline'}
@@ -124,7 +123,7 @@ const WorldEntryModal = ({ entry, favorite, onToggleFavorite, onClose }: Props) 
 				</ScrollView>
 
 				<PressableScale style={styles.close} onPress={onClose} accessibilityRole="button">
-					<Text style={styles.closeText}>닫기</Text>
+					<Text style={styles.closeText}>{t('entry.close')}</Text>
 				</PressableScale>
 			</View>
 		</AppModal>
@@ -159,7 +158,7 @@ const createStyles = (Colors: Palette) =>
 		headText: { flex: 1, gap: SpacingV.xs },
 		chips: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.xs },
 		chip: { flexDirection: 'row', alignItems: 'center', gap: scaledSize(4), paddingHorizontal: Spacing.sm, paddingVertical: scaleHeight(3), borderRadius: Radius.pill },
-		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold },
+		chipText: { fontSize: Typography.caption, fontWeight: FontWeight.semibold, flexShrink: 1, textAlign: 'center', },
 		name: { fontSize: Typography.h2, fontWeight: FontWeight.bold, color: Colors.textStrong },
 
 		summary: { fontSize: Typography.body, color: Colors.text, lineHeight: scaledSize(22) },

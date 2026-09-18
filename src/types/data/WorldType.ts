@@ -48,11 +48,8 @@ export namespace WorldType {
 	 * `ask`·`answer` 는 값이 있는 자리를 가리킨다 — 'name' 이거나 `fields` 의 열쇠.
 	 */
 	export interface QuizMode {
+		/** 번역 키의 한 조각이기도 하다 — 이름·발문은 topic.<주제>.mode.<key>.label / .question 에 있다 */
 		key: string;
-		/** 모드 선택 화면에 뜨는 이름 */
-		label: string;
-		/** 발문 — 문제 화면 위에 뜬다 */
-		question: string;
 		ask: string;
 		answer: string;
 		/**
@@ -73,9 +70,8 @@ export namespace WorldType {
 	}
 
 	export interface Topic {
+		/** 번역 키의 뿌리이기도 하다 — 이름·소개는 topic.<key>.label / .description 에 있다 */
 		key: TopicKey;
-		label: string;
-		description: string;
 		/** MaterialCommunityIcons 이름 */
 		icon: string;
 		/** 카드 배경·아이콘 색 (팔레트 토큰) */
@@ -97,8 +93,8 @@ export namespace WorldType {
 		entry: Entry;
 		/** 발문 아래 크게 보여 줄 값 */
 		prompt: string;
-		/** 발문 */
-		question: string;
+		/** 발문의 번역 키 — 화면에서 t() 로 문장을 만든다 (문장을 담으면 언어를 바꿔도 안 바뀐다) */
+		questionKey: string;
 		answer: string;
 		/** 보기 4개 (정답 포함, 섞인 상태) */
 		options: string[];

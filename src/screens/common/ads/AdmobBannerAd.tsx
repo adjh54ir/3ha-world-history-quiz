@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
 import { logAdEvent } from '@/src/services/ads/AdAnalytics';
@@ -21,8 +21,13 @@ const AD_UNIT_ID: AdUnitIdType = FORCE_TEST_ADS
 	? TestIds.BANNER
 	: Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }) || TestIds.BANNER;
 
-/** 배너 크기별 실제 높이 — 로드 전에도 같은 자리를 잡아 두려고 미리 계산해 둔다 */
-const BANNER_HEIGHT = (width: number) => (width >= 600 ? 60 : width >= 480 ? 100 : 50);
+/**
+ * 로드 전에도 자리를 잡아 두려고 예약하는 높이.
+ * ANCHORED_ADAPTIVE_BANNER 는 기기 너비에 맞춰 높이를 스스로 고른다(보통 50~90dp).
+ * 실제 높이를 미리 알 수는 없으므로 앵커 배너의 최소 높이(50dp)만 잡아 둔다 —
+ * 더 크게 잡으면 광고 아래에 빈 띠가 남고, 아예 안 잡으면 로드 순간 화면이 밀린다.
+ */
+const RESERVED_HEIGHT = 50;
 
 /**
  * 배너는 props 를 받지 않는다.
@@ -33,22 +38,11 @@ const BANNER_HEIGHT = (width: number) => (width >= 600 ? 60 : width >= 480 ? 100
  * 예전처럼 실패 상태를 붙들고 있으면 앱을 다시 켜기 전까지 배너가 영영 비어 있게 된다.
  */
 const AdmobBannerAd: React.FC = () => {
-	const screenWidth = Dimensions.get('window').width;
 	// 클릭 어뷰징 차단 여부 — 배너 클릭 하루 5회 이상 시 24시간 숨김 (배너 전용 카운터)
 	const adBlocked = useAdGuardBlocked('banner');
 
 	// useForeground(→ banner.load()) 는 앱이 다시 앞으로 올 때마다 광고를 강제로 다시 불러온다.
 	// 갱신은 AdMob 콘솔의 자동 새로고침 설정에만 맡긴다.
-
-	const getBannerSize = () => {
-		if (screenWidth >= 600) {
-			return BannerAdSize.FULL_BANNER;
-		}
-		if (screenWidth >= 480) {
-			return BannerAdSize.LARGE_BANNER;
-		}
-		return BannerAdSize.BANNER;
-	};
 
 	const handleAdOpened = () => {
 		// 클릭 집계 — 배너 전용 카운터, 하루 5회 이상이면 24시간 배너만 숨김
@@ -63,7 +57,7 @@ const AdmobBannerAd: React.FC = () => {
 		<View style={styles.container}>
 			<BannerAd
 				unitId={AD_UNIT_ID}
-				size={getBannerSize()}
+				size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
 				onAdOpened={handleAdOpened}
 				onAdLoaded={() => { if (__DEV__) console.log('✅ 배너 광고 로드 완료'); }}
 				onAdFailedToLoad={(e: unknown) => { if (__DEV__) console.warn('❌ 배너 광고 로드 실패:', e); }}
@@ -74,10 +68,12 @@ const AdmobBannerAd: React.FC = () => {
 
 const styles = StyleSheet.create({
 	container: {
+		// 앵커 배너는 화면 너비를 가득 쓰는 것을 전제로 높이를 고른다 — 폭을 좁히면 광고가 잘린다
+		width: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		// 로드 전에도 자리를 잡아 레이아웃이 튀지 않게 — getBannerSize 와 같은 기준으로 예약
-		minHeight: scaleHeight(BANNER_HEIGHT(Dimensions.get('window').width)),
+		// 로드 전에도 자리를 잡아 레이아웃이 튀지 않게 예약해 둔다
+		minHeight: scaleHeight(RESERVED_HEIGHT),
 		backgroundColor: 'transparent',
 	},
 });

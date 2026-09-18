@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -64,6 +65,7 @@ const ModeRow = ({
  * 카드 학습과 숏폼 학습은 같은 항목을 다르게 보여 주는 두 갈래라, 화면을 나누지 않고 한 시트에서 고른다.
  */
 const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const insets = useSafeAreaInsets();
@@ -75,18 +77,18 @@ const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) =
 				<View style={styles.handle} />
 				<View style={styles.headRow}>
 					<View style={styles.headText}>
-						<Text style={styles.title}>어떻게 학습할까요?</Text>
-						<Text style={styles.subtitle}>같은 내용을 두 가지 방식으로 볼 수 있어요</Text>
+						<Text style={styles.title}>{t('studyMode.title')}</Text>
+						<Text style={styles.subtitle}>{t('studyMode.subtitle')}</Text>
 					</View>
-					<ModalIconButton name="close" color={Colors.textSecondary} onPress={onClose} accessibilityLabel="닫기" />
+					<ModalIconButton name="close" color={Colors.textSecondary} onPress={onClose} accessibilityLabel={t('common.close')} />
 				</View>
 
 				<View style={styles.list}>
 					<ModeRow
 						index={0}
 						icon="cards"
-						label="카드 학습"
-						description="주제를 고르고 한 장씩 넘기며 익혀요"
+						label={t('studyMode.card.title')}
+						description={t('studyMode.card.desc')}
 						color={Colors.primaryDark}
 						tint={Colors.primarySoft}
 						onPress={onPickCard}
@@ -94,8 +96,8 @@ const StudyModeModal = ({ visible, onClose, onPickCard, onPickShorts }: Props) =
 					<ModeRow
 						index={1}
 						icon="gesture-swipe-vertical"
-						label="숏폼 학습"
-						description="한 화면에 한 항목. 위로 넘기며 쭉 훑어요"
+						label={t('studyMode.shorts.title')}
+						description={t('studyMode.shorts.desc')}
 						color={Colors.secondaryDark}
 						tint={Colors.secondarySoft}
 						onPress={onPickShorts}

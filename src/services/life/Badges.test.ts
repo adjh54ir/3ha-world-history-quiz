@@ -7,7 +7,7 @@
  */
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { test } from 'node:test';
 import { BADGES, BADGE_RARITY } from '../../const/data/life/ConstLifeRewards.ts';
 import { LIFE_LEVELS } from '../../const/data/life/ConstLifeLevels.ts';
@@ -95,12 +95,26 @@ test('희귀도는 등급 표에 있는 값만 쓴다', () => {
 	}
 });
 
-test('이름·설명·조건 문구가 비어 있지 않다', () => {
+test('아이콘이 비어 있지 않다', () => {
 	for (const badge of BADGES) {
-		assert.ok(badge.label.trim(), `${badge.id} 의 이름이 비었다`);
-		assert.ok(badge.description.trim(), `${badge.id} 의 설명이 비었다`);
-		assert.ok(badge.requirement.trim(), `${badge.id} 의 획득 조건이 비었다`);
 		assert.ok(badge.icon.trim(), `${badge.id} 의 아이콘이 비었다`);
+	}
+});
+
+/**
+ * 뱃지 이름·설명·조건은 상수가 아니라 번역 파일에 있다 (badge.<id>.*).
+ * 뱃지를 하나 더할 때 세 언어에 문구를 넣는 것을 잊으면 화면에 키 문자열이 그대로 뜨므로,
+ * 목록과 번역 파일을 여기서 맞춰 본다.
+ */
+test('뱃지마다 세 언어의 이름·설명·조건이 다 있다', () => {
+	const dir = join(import.meta.dirname, '..', '..', 'translations');
+	for (const file of ['ko-KR.json', 'en-EN.json', 'ja-JP.json']) {
+		const texts = JSON.parse(readFileSync(join(dir, file), 'utf8')).main.badge as Record<string, Record<string, string>>;
+		for (const badge of BADGES) {
+			for (const field of ['label', 'description', 'requirement'] as const) {
+				assert.ok(texts[badge.id]?.[field]?.trim(), `${file} 에 badge.${badge.id}.${field} 가 없다`);
+			}
+		}
 	}
 });
 

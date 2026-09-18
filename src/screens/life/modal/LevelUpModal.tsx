@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, Dimensions, Easing, StyleSheet, Text, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { usePathname } from 'expo-router';
@@ -21,6 +22,7 @@ import { MODAL_MAX_WIDTH, scaleHeight, scaleWidth } from '@/src/utils';
  * 새 단계 그림이 튀어 오르고, 뒤에서 빛살이 천천히 돈다.
  */
 const LevelUpModal = () => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const dispatch = useDispatch();
@@ -78,7 +80,7 @@ const LevelUpModal = () => {
 				<View style={styles.levelChip}>
 					<Text style={styles.levelChipText}>{`${level === PET_STAGES.length ? 'GOLDEN' : 'LEVEL UP'} · Lv.${level}`}</Text>
 				</View>
-				<Text style={styles.title}>{level === PET_STAGES.length ? `${petName}의 황금 진화!` : `${petName}이(가) 자랐어요!`}</Text>
+				<Text style={styles.title}>{t(level === PET_STAGES.length ? 'pet.levelUp.titleGolden' : 'pet.levelUp.title', { name: petName })}</Text>
 
 				<View style={styles.stage}>
 					{/* 빛살 — 네 갈래 막대가 천천히 돈다 */}
@@ -100,11 +102,11 @@ const LevelUpModal = () => {
 					</Animated.View>
 				</View>
 
-				<Text style={styles.stageLabel}>{stage.label}</Text>
-				<Text style={styles.subtitle}>{`경험치 ${stage.minExp}에 도달했어요. 계속 키워 볼까요?`}</Text>
+				<Text style={styles.stageLabel}>{t(`pet.stage.${stage.key}`)}</Text>
+				<Text style={styles.subtitle}>{t('pet.levelUp.body', { exp: stage.minExp })}</Text>
 
 				<PressableScale style={styles.button} onPress={onClose} accessibilityRole="button">
-					<Text style={styles.buttonText}>좋아요!</Text>
+					<Text style={styles.buttonText}>{t('pet.levelUp.confirm')}</Text>
 				</PressableScale>
 			</Animated.View>
 		</AppModal>
@@ -126,7 +128,7 @@ const createStyles = (Colors: Palette) =>
 			...Shadow.floating,
 		},
 		levelChip: { paddingHorizontal: Spacing.md, height: scaleHeight(26), borderRadius: Radius.pill, justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.18)' },
-		levelChipText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: Colors.brandBlockText, letterSpacing: 1 },
+		levelChipText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: Colors.brandBlockText, letterSpacing: 1, flexShrink: 1, textAlign: 'center', },
 		title: { fontSize: Typography.h3, fontWeight: FontWeight.heavy, color: Colors.brandBlockText, textAlign: 'center' },
 		stage: { width: scaleWidth(180), height: scaleWidth(180), marginVertical: SpacingV.sm, alignItems: 'center', justifyContent: 'center', overflow: 'hidden', borderRadius: Radius.pill },
 		rays: { position: 'absolute', width: scaleWidth(180), height: scaleWidth(180), alignItems: 'center', justifyContent: 'center' },
@@ -136,14 +138,13 @@ const createStyles = (Colors: Palette) =>
 		subtitle: { fontSize: Typography.bodySm, color: Colors.brandBlockMuted, textAlign: 'center' },
 		button: {
 			width: '100%',
-			height: scaleHeight(48),
+			minHeight: scaleHeight(48),
 			marginTop: SpacingV.md,
 			borderRadius: Radius.lg,
 			alignItems: 'center',
 			justifyContent: 'center',
-			backgroundColor: Colors.brandBlockText,
-		},
-		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.brandBlock },
+			backgroundColor: Colors.brandBlockText, paddingVertical: SpacingV.sm, },
+		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.brandBlock, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default LevelUpModal;

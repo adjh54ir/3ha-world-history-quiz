@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { Animated, Dimensions, Easing, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from 'expo-image';
@@ -34,6 +35,7 @@ interface Props {
  * 같은 순간에 여러 개를 따면 나머지는 아래 목록으로 이어 붙인다.
  */
 const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
+	const { t } = useTranslation();
 	const Colors = useColors();
 	const styles = useThemedStyles(createStyles);
 	const [hero, ...rest] = badges;
@@ -113,7 +115,7 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 						<IconComponent type="materialCommunityIcons" name="shimmer" size={13} color="#FFFFFF" />
 						<Text style={styles.eyebrowText}>NEW BADGE</Text>
 					</View>
-					<Text style={styles.stageTitle}>새로운 뱃지를 획득했어요!</Text>
+					<Text style={styles.stageTitle}>{t('badge.unlockTitle')}</Text>
 
 					<View style={styles.medalStage}>
 						<Animated.View
@@ -150,7 +152,7 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 
 					{/* 희귀도 — 등급 이름과 별 개수를 한 줄로. 이름보다 먼저 읽혀 "얼마나 귀한 것인지" 가 잡힌다 */}
 					<View style={styles.rarityChip}>
-						<Text style={styles.rarityText}>{tier.label}</Text>
+						<Text style={styles.rarityText}>{t(`badge.rarity.${hero.rarity}`)}</Text>
 						<View style={styles.rarityStars}>
 							{Array.from({ length: 4 }).map((_, at) => (
 								<IconComponent
@@ -165,30 +167,30 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 					</View>
 
 					<Text style={styles.heroName} numberOfLines={2}>
-						{hero.label}
+						{t(`badge.${hero.id}.label`)}
 					</Text>
 					<Text style={styles.heroDesc} numberOfLines={2}>
-						{hero.description}
+						{t(`badge.${hero.id}.description`)}
 					</Text>
 
 					{/* 획득 조건 — 설명과 나눠 둔다. 무슨 뱃지인지와 무엇을 해서 받았는지는 다른 이야기다 */}
 					<View style={styles.conditionRow}>
 						<IconComponent type="materialCommunityIcons" name="flag-checkered" size={12} color="#FFFFFF" />
 						<Text style={styles.conditionText} numberOfLines={2}>
-							{hero.requirement}
+							{t(`badge.${hero.id}.requirement`)}
 						</Text>
 					</View>
 
 					<View style={styles.progressChip}>
 						<IconComponent type="materialCommunityIcons" name="trophy-variant" size={12} color="#FFFFFF" />
-						<Text style={styles.progressText}>{`뱃지 ${owned} / ${BADGES.length}`}</Text>
+						<Text style={styles.progressText}>{t('badge.owned', { owned, total: BADGES.length })}</Text>
 					</View>
 				</LinearGradient>
 
 				{/* ── 같이 딴 나머지 ── */}
 				{rest.length > 0 && (
 					<View style={styles.restBox}>
-						<Text style={styles.restTitle}>{`함께 획득 +${rest.length}`}</Text>
+						<Text style={styles.restTitle}>{t('badge.alsoEarned', { n: rest.length })}</Text>
 						<ScrollView style={styles.restScroll} contentContainerStyle={styles.restBody} showsVerticalScrollIndicator={false}>
 							{rest.map((badge) => {
 								const restTier = badgeRarity(badge.rarity);
@@ -199,13 +201,13 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 										</View>
 										<View style={styles.restText}>
 											<Text style={styles.restName} numberOfLines={1}>
-												{badge.label}
+												{t(`badge.${badge.id}.label`)}
 											</Text>
 											<Text style={styles.restDesc} numberOfLines={1}>
-												{badge.requirement}
+												{t(`badge.${badge.id}.requirement`)}
 											</Text>
 										</View>
-										<Text style={[styles.restRarity, { color: restTier.color }]}>{restTier.label}</Text>
+										<Text style={[styles.restRarity, { color: restTier.color }]}>{t(`badge.rarity.${badge.rarity}`)}</Text>
 									</View>
 								);
 							})}
@@ -214,7 +216,7 @@ const BadgeUnlockModal = ({ badges, owned, onClose }: Props) => {
 				)}
 
 				<PressableScale style={styles.button} onPress={handleClose} scaleTo={0.96} accessibilityRole="button">
-					<Text style={styles.buttonText}>받기</Text>
+					<Text style={styles.buttonText}>{t('badge.unlockConfirm')}</Text>
 					<IconComponent type="materialCommunityIcons" name="chevron-right" size={18} color={Colors.textInverse} />
 				</PressableScale>
 			</Animated.View>
@@ -275,7 +277,7 @@ const createStyles = (Colors: Palette) =>
 			borderRadius: Radius.pill,
 			backgroundColor: 'rgba(0,0,0,0.22)',
 		},
-		rarityText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: '#FFFFFF', letterSpacing: scaleWidth(0.5) },
+		rarityText: { fontSize: Typography.caption, fontWeight: FontWeight.heavy, color: '#FFFFFF', letterSpacing: scaleWidth(0.5), flexShrink: 1, textAlign: 'center', },
 		rarityStars: { flexDirection: 'row', gap: scaleWidth(1) },
 		conditionRow: {
 			flexDirection: 'row',
@@ -328,11 +330,10 @@ const createStyles = (Colors: Palette) =>
 			marginHorizontal: Spacing.xl,
 			marginTop: SpacingV.lg,
 			marginBottom: SpacingV.xl,
-			height: scaleHeight(50),
+			minHeight: scaleHeight(50),
 			borderRadius: Radius.pill,
-			backgroundColor: Colors.primary,
-		},
-		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.heavy, color: Colors.textInverse },
+			backgroundColor: Colors.primary, paddingVertical: SpacingV.sm, },
+		buttonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.heavy, color: Colors.textInverse, flexShrink: 1, textAlign: 'center', },
 	});
 
 export default BadgeUnlockModal;

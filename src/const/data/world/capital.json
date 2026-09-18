@@ -160,7 +160,7 @@
 	{"id":"capital-tgo","name":"토고","level":3,"summary":"아프리카에 있으며 수도는 로메다.","facts":["해안선은 짧고 국토가 남북으로 길게 뻗었다.","인산염을 캐서 내다 파는 것이 주요 산업이다."],"fields":{"capital":"로메","continent":"아프리카","code":"tg"}},
 	{"id":"capital-tun","name":"튀니지","level":2,"summary":"북아프리카의 나라. 수도는 튀니스다.","facts":["고대 카르타고가 있던 땅이다.","사하라 사막과 지중해가 한 나라 안에 있다."],"fields":{"capital":"튀니스","continent":"아프리카","code":"tn"}},
 	{"id":"capital-guy","name":"가이아나","level":3,"summary":"남아메리카 북동쪽의 나라. 수도는 조지타운이다.","facts":["남아메리카에서 드물게 영어를 공용어로 쓴다.","카이에투르 폭포가 열대우림 속에 있다."],"fields":{"capital":"조지타운","continent":"아메리카","code":"gy"}},
-	{"id":"capital-glp","name":"과들루프","level":4,"summary":"아메리카에 있으며 수도는 바스테르다.","facts":["나비 날개처럼 생긴 두 섬이 좁은 물길로 붙어 있다.","카리브해에 있는 프랑스 해외주다."],"fields":{"capital":"바스테르","continent":"아메리카","code":"gp"}},
+	{"id":"capital-glp","name":"과들루프","level":4,"summary":"카리브해 소앤틸리스 제도의 섬. 수도는 바스테르다.","facts":["나비 날개처럼 생긴 두 섬이 좁은 물길로 붙어 있다.","카리브해에 있는 프랑스 해외주다."],"fields":{"capital":"바스테르","continent":"아메리카","code":"gp"}},
 	{"id":"capital-gtm","name":"과테말라","level":2,"summary":"중앙아메리카의 나라. 수도는 과테말라시티다.","facts":["티칼은 열대우림 속 마야 유적이다.","화산이 많아 지진이 잦다."],"fields":{"capital":"과테말라시티","continent":"아메리카","code":"gt"}},
 	{"id":"capital-grd","name":"그레나다","level":4,"summary":"아메리카에 있으며 수도는 세인트조지스다.","facts":["육두구를 많이 내 향신료의 섬이라 불린다.","국기에 그 육두구 열매가 그려져 있다."],"fields":{"capital":"세인트조지스","continent":"아메리카","code":"gd"}},
 	{"id":"capital-grl","name":"그린란드","level":3,"summary":"아메리카에 있으며 수도는 누크다.","facts":["세계에서 가장 큰 섬이자 덴마크 자치령이다.","땅의 80퍼센트가 넘는 부분이 얼음으로 덮여 있다."],"fields":{"capital":"누크","continent":"아메리카","code":"gl"}},

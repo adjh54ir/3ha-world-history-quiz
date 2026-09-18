@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/four/screens/common/atomic/AppModal';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -57,16 +58,19 @@ export const CharacterGuideButton: React.FC<{ onPress: () => void; color?: strin
 	onPress,
 	color = Colors.textMuted,
 	size = scaledSize(22),
-}) => (
-	<TouchableOpacity
-		onPress={onPress}
-		hitSlop={{ top: scaleHeight(10), bottom: scaleHeight(10), left: scaleWidth(10), right: scaleWidth(10) }}
-		activeOpacity={0.7}
-		accessibilityRole="button"
-		accessibilityLabel="이 화면 사용법 다시 보기">
-		<IconComponent type="materialicons" name="help-outline" size={size} color={color} />
-	</TouchableOpacity>
-);
+}) => {
+	const { t } = useTranslation();
+	return (
+		<TouchableOpacity
+			onPress={onPress}
+			hitSlop={{ top: scaleHeight(10), bottom: scaleHeight(10), left: scaleWidth(10), right: scaleWidth(10) }}
+			activeOpacity={0.7}
+			accessibilityRole="button"
+			accessibilityLabel={t('guide.reopen')}>
+			<IconComponent type="materialicons" name="help-outline" size={size} color={color} />
+		</TouchableOpacity>
+	);
+};
 
 /** 저장해 둔 '본 적 있음' 기록 초기화 (데이터 초기화에서 사용) */
 export const resetCharacterGuideSeen = async () => {
@@ -102,10 +106,13 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 	visible,
 	lines,
 	onClose,
-	title = '이렇게 써보세요',
+	title,
 	accent = Colors.primary,
-	confirmLabel = '알겠습니다',
+	confirmLabel,
 }) => {
+	const { t } = useTranslation();
+	const head = title ?? t('guide.eyebrow');
+	const confirm = confirmLabel ?? t('guide.gotItFormal');
 	// 스택 화면은 포커스를 잃어도 마운트된 채 남는다.
 	// 그때 안내 모달이 살아 있으면 다른 화면 위에서 터치를 통째로 먹는다 — 포커스 없으면 렌더하지 않는다.
 	const focused = useIsFocused();
@@ -213,14 +220,14 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 				activeOpacity={1}
 				onPress={next}
 				accessibilityRole="button"
-				accessibilityLabel="안내 다음으로">
+				accessibilityLabel={t('guide.toNext')}>
 				<Animated.View style={[styles.wrap, { opacity: enter, transform: [{ translateY }] }]}>
 					{/* 말풍선 */}
 					<View style={[styles.bubble, { borderColor: `${accent}55` }]}>
 						<View style={styles.bubbleHead}>
 							<IconComponent type="materialicons" name="tips-and-updates" size={scaledSize(15)} color={accent} />
 							<Text style={[styles.bubbleTitle, { color: accent }]} numberOfLines={1}>
-								{title}
+								{head}
 							</Text>
 							{lines.length > 1 && (
 								<Text style={styles.stepText}>
@@ -237,9 +244,9 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 							activeOpacity={0.9}
 							onPress={next}
 							accessibilityRole="button"
-							accessibilityLabel={isLast ? confirmLabel : '다음 안내 보기'}>
+							accessibilityLabel={isLast ? confirm : t('guide.nextTip')}>
 							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : accent }]}>
-								{isLast ? confirmLabel : '다음'}
+								{isLast ? confirm : t('guide.next')}
 							</Text>
 							<IconComponent
 								type="materialicons"
@@ -302,7 +309,7 @@ const makeStyles = () => StyleSheet.create({
 		paddingHorizontal: Spacing.lg,
 		borderRadius: Radius.pill,
 	},
-	ctaText: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold },
+	ctaText: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 	// 삼각 꼬리 — 배경색 삼각형 위에 테두리색 삼각형을 1px 겹쳐 테두리 선을 잇는다
 	tail: {
 		position: 'absolute',

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/four/screens/common/atomic/AppModal';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Pressable, Animated, Easing } from 'react-native';
 import FastImage from '@/src/four/components/FastImage';
@@ -12,10 +13,11 @@ interface Props {
 	unlockedRewards: number[];
 }
 
-const getRewardTypeLabel = (type?: string) => {
-	if (type === 'costume') {return '👕 코스튬';}
-	if (type === 'item') {return '✨ 특별 아이템';}
-	return '🌟 캐릭터';
+/** 보상 갈래 → 번역 키 */
+const rewardTypeKey = (type?: string): string => {
+	if (type === 'costume') {return 'reward.costume';}
+	if (type === 'item') {return 'reward.special';}
+	return 'reward.character';
 };
 
 // ✅ 컴포넌트 외부로 분리 (useRef/useEffect 정상 동작)
@@ -151,6 +153,7 @@ const ClearBadge = ({ color, name }: { color: string; name: string }) => {
 };
 
 const TowerRewardSection = ({ unlockedRewards }: Props) => {
+	const { t } = useTranslation();
 	const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
 
 	const towerRewards = TOWER_LEVELS.filter((t) => unlockedRewards.includes(t.level));
@@ -178,7 +181,7 @@ const TowerRewardSection = ({ unlockedRewards }: Props) => {
 								</View>
 							</View>
 							<Text style={styles.towerRewardName} numberOfLines={2}>
-								{tower.reward.name}
+								{t(`tower.level.${tower.level}.rewardName`)}
 							</Text>
 						</TouchableOpacity>
 					))}
@@ -198,30 +201,30 @@ const TowerRewardSection = ({ unlockedRewards }: Props) => {
 								<View style={[styles.popupHeader, { backgroundColor: withAlpha(selectedTower.color, 0.12) }]}>
 									<FastImage source={selectedTower.bossImage} style={styles.bossImage} resizeMode="contain" />
 									<View style={styles.popupHeaderInfo}>
-										<Text style={styles.bossTitle}>{selectedTower.bossTitle}</Text>
-										<Text style={styles.bossName}>{selectedTower.bossName}</Text>
-										<Text style={styles.bossDesc}>{selectedTower.bossDescription}</Text>
+										<Text style={styles.bossTitle}>{t(`tower.level.${selectedTower.level}.bossTitle`)}</Text>
+										<Text style={styles.bossName}>{t(`tower.level.${selectedTower.level}.bossName`)}</Text>
+										<Text style={styles.bossDesc}>{t(`tower.level.${selectedTower.level}.bossDescription`)}</Text>
 									</View>
 								</View>
 
-								<ClearBadge color={selectedTower.color} name={selectedTower.name} />
+								<ClearBadge color={selectedTower.color} name={t(`tower.level.${selectedTower.level}.name`)} />
 
 								<View style={styles.popupBody}>
-									<Text style={styles.sectionTitle}>🏆 클리어 조건</Text>
+									<Text style={styles.sectionTitle}>{t('reward.clearCondition')}</Text>
 									<Text style={styles.infoText}>
-										<Text style={styles.highlight}>{selectedTower.clearCondition}</Text>
+										<Text style={styles.highlight}>{t(`tower.level.${selectedTower.level}.clearCondition`)}</Text>
 									</Text>
 
 									<View style={styles.divider} />
 
-									<Text style={styles.sectionTitle}>🎁 획득 보상</Text>
+									<Text style={styles.sectionTitle}>{t('reward.earned')}</Text>
 									<View style={styles.rewardRow}>
 										<View style={[styles.rewardThumbWrap, { borderColor: selectedTower.color }]}>
 											<FastImage source={selectedTower.reward.image} style={styles.rewardThumb} resizeMode="contain" />
 										</View>
 										<View style={styles.rewardInfo}>
-											<Text style={styles.rewardType}>{getRewardTypeLabel(selectedTower.reward.type)}</Text>
-											<Text style={styles.rewardName}>{selectedTower.reward.name}</Text>
+											<Text style={styles.rewardType}>{t(rewardTypeKey(selectedTower.reward.type))}</Text>
+											<Text style={styles.rewardName}>{t(`tower.level.${selectedTower.level}.rewardName`)}</Text>
 										</View>
 									</View>
 								</View>
@@ -229,7 +232,7 @@ const TowerRewardSection = ({ unlockedRewards }: Props) => {
 								<TouchableOpacity
 									style={[styles.closeBtn, { backgroundColor: selectedTower.color }]}
 									onPress={() => setSelectedLevel(null)}>
-									<Text style={styles.closeBtnText}>확인</Text>
+									<Text style={styles.closeBtnText}>{t('common.confirm')}</Text>
 								</TouchableOpacity>
 							</>
 						)}
@@ -279,8 +282,7 @@ const makeStyles = () => StyleSheet.create({
 	towerRewardBadgeText: {
 		fontSize: Typography.micro,
 		color: Colors.textInverse,
-		fontWeight: FontWeight.bold,
-	},
+		fontWeight: FontWeight.bold, flexShrink: 1, textAlign: 'center', },
 	towerRewardName: {
 		fontSize: Typography.caption,
 		color: Colors.text,

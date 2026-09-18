@@ -44,7 +44,8 @@ const GlobalBannerAd = () => {
 };
 
 const createStyles = (Colors: Palette) => StyleSheet.create({
-	wrapper: { backgroundColor: Colors.background, paddingBottom: SpacingV.xs },
+	// 배너 아래 여백 — 광고와 화면 내용이 맞붙으면 어디까지가 광고인지 읽히지 않는다
+	wrapper: { backgroundColor: Colors.background, paddingBottom: SpacingV.md },
 	// 배너가 빠진 자리 — 상태바 여백만 남기고 아래 여백은 걷는다
 	adFree: { paddingBottom: 0 },
 });

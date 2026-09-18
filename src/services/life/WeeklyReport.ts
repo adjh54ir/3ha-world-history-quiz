@@ -105,15 +105,23 @@ export default { buildWeeklyReport, accuracy, WEEK_DAYS };
  *
  * ponytail: 텍스트 공유. 카드 이미지가 필요해지면 react-native-view-shot 을 넣고 captureRef 로 바꾼다.
  */
-export const weeklyShareText = (report: WeeklyReport): string => {
+/**
+ * 문구를 만드는 함수를 밖에서 받는다.
+ * 이 파일은 `node --test` 로 도는 규칙 검증 대상이라 i18next 를 물면 테스트가 통째로 죽는다
+ * (네이티브 저장소까지 따라 들어온다). 화면이 자기 t 를 넘겨 주고, 테스트는 가짜를 넘긴다.
+ */
+export type ShareTranslate = (key: string, values?: Record<string, unknown>) => string;
+
+export const weeklyShareText = (report: WeeklyReport, t: ShareTranslate): string => {
 	const { thisWeek, lastWeek } = report;
 	const arrow = (delta: number): string => (delta > 0 ? `▲${delta}` : delta < 0 ? `▼${Math.abs(delta)}` : '–');
-	const line = (label: string, now: number, before: number, unit: string): string => `${label} ${now}${unit} ${arrow(now - before)}`;
+	const line = (key: string, now: number, before: number, extra: Record<string, unknown> = {}): string =>
+		`${t(key, { n: now, ...extra })} ${arrow(now - before)}`;
 	return [
-		`생활 한자 · 주간 리포트 ${report.from} ~ ${report.to}`,
-		line('📘 새 항목', thisWeek.learned, lastWeek.learned, '개'),
-		line('❓ 푼 문제', thisWeek.solved, lastWeek.solved, '문제'),
-		line('🎯 정답률', accuracy(thisWeek), accuracy(lastWeek), '%'),
-		line('📅 출석', thisWeek.attended, lastWeek.attended, '일'),
+		t('report.text.head', { app: t('common.appName'), from: report.from, to: report.to }),
+		line('report.text.newItems', thisWeek.learned, lastWeek.learned),
+		line('report.text.solved', thisWeek.solved, lastWeek.solved),
+		line('report.text.rate', accuracy(thisWeek), accuracy(lastWeek), { rate: `${accuracy(thisWeek)}%` }),
+		line('report.text.attendance', thisWeek.attended, lastWeek.attended),
 	].join('\n');
 };

@@ -15,9 +15,8 @@ export namespace LifeType {
 	export type CategoryKey = string;
 
 	export interface Category {
+		/** 번역 키의 뿌리이기도 하다 — 이름·소개는 topic.<key>.label / .description 에 있다 */
 		key: CategoryKey;
-		label: string;
-		description: string;
 		/** MaterialCommunityIcons 이름 */
 		icon: string;
 		/** 카드 배경·아이콘 색 (팔레트 토큰) */
@@ -86,8 +85,8 @@ export namespace LifeType {
 	export type MissionKey = 'quiz' | 'learn' | 'review';
 
 	export interface Mission {
+		/** 번역 키이기도 하다 — 보이는 이름은 mission.<key> 에 있다 */
 		key: MissionKey;
-		label: string;
 		goal: number;
 		/** MaterialCommunityIcons 이름 */
 		icon: string;
@@ -141,30 +140,31 @@ export namespace LifeType {
 		correct: number;
 	}
 
+	/** 펫 단계 이름의 번역 키 조각 — 리터럴로 두어야 t(`pet.stage.${key}`) 가 오타를 잡는다 */
+	export type PetStageKey = 'sprout' | 'apprentice' | 'seeker' | 'traveler' | 'explorer' | 'golden';
+
 	export interface PetStage {
 		/** 이 경험치부터 이 단계 */
 		minExp: number;
-		label: string;
+		key: PetStageKey;
 		emoji: string;
 	}
+
+	/** 출석 수호신 단계 이름의 번역 키 조각 */
+	export type GuardianStageKey = 'eggAsleep' | 'eggWaking' | 'owlet' | 'mapwing' | 'guardian' | 'golden';
 
 	export interface AttendancePetStage {
 		/** 이 누적 먹이 수부터 이 단계 — 출석으로 받은 먹이를 직접 줘야 오른다 */
 		minFeeds: number;
-		label: string;
+		key: GuardianStageKey;
 	}
 
 	/** 뱃지 희귀도 — 따기 어려운 순서대로 네 단계 */
 	export type BadgeRarity = 'common' | 'rare' | 'epic' | 'legendary';
 
 	export interface Badge {
+		/** 번역 키의 뿌리이기도 하다 — 이름·설명·조건은 badge.<id>.* 에 있다 */
 		id: string;
-		/** 뱃지 이름 */
-		label: string;
-		/** 뱃지 설명 — 무슨 뱃지인지 한 줄 */
-		description: string;
-		/** 획득 조건 — 무엇을 해야 받는지 한 줄 (설명과 따로 둔다) */
-		requirement: string;
 		/** 희귀도 — 색·별 개수·연출 세기를 여기서 정한다 */
 		rarity: BadgeRarity;
 		/** MaterialCommunityIcons 이름 */
