@@ -39,6 +39,11 @@ export namespace WorldType {
 		facts: string[];
 		/** 주제별 값 주머니 — 열쇠 목록은 ConstWorldTopics 의 modes 가 쓰는 것과 같다 */
 		fields: Record<string, string>;
+		/**
+		 * 시간이 지나면 틀릴 수 있는 문장(최고층 건물·진행 중인 수도 이전·줄어드는 호수 등)을 마지막으로 확인한 달 'YYYY-MM'.
+		 * 1년이 지나면 ConstWorldData.test.ts 가 깨진다 — 출처를 다시 보고 문장을 고친 뒤 이 값을 올린다.
+		 */
+		asOf?: string;
 	}
 
 	/**

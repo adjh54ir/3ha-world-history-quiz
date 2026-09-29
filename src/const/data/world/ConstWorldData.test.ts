@@ -267,6 +267,25 @@ test('인용은 큰따옴표로 적는다', () => {
 	});
 });
 
+/** asOf 를 다시 확인해야 하는 주기(개월) */
+const AS_OF_MAX_MONTHS = 12;
+
+test('시간이 지나면 틀릴 수 있는 문장을 1년 안에 다시 확인했다', () => {
+	// 적도기니 수도 이전, 데날리 이름 되돌림, "메시의 마지막 월드컵" 이 모두 한때 맞던 문장이었다.
+	const now = new Date();
+	const stale: string[] = [];
+	WORLD_TOPICS.forEach((topic) => {
+		ENTRIES[topic.key].forEach((entry) => {
+			if (entry.asOf === undefined) return;
+			const m = entry.asOf.match(/^(\d{4})-(\d{2})$/);
+			assert.ok(m, `${entry.id} 의 asOf 는 'YYYY-MM' 이어야 한다: ${entry.asOf}`);
+			const months = (now.getFullYear() - Number(m[1])) * 12 + (now.getMonth() + 1 - Number(m[2]));
+			if (months >= AS_OF_MAX_MONTHS) stale.push(`${entry.id}(${entry.name}, ${entry.asOf})`);
+		});
+	});
+	assert.deepEqual(stale, [], `출처를 다시 보고 문장을 고친 뒤 asOf 를 올릴 것: ${stale.join(', ')}`);
+});
+
 /** 한 주제에서 특급(4등급)이 차지해도 되는 몫 — 넘으면 뒤쪽 학습이 통째로 벽이 된다 */
 const MAX_HARD_SHARE = 0.4;
 
