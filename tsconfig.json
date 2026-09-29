@@ -2,9 +2,11 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "types": ["node"],
-    // node --test 로 돌리는 규칙 테스트가 확장자까지 적어야 해서 (noEmit 이라 번들에는 영향 없음)
+    // node --test 로 돌리는 세계 데이터 검증이 확장자까지 적어야 해서 (noEmit 이라 번들에는 영향 없음)
     "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
     "paths": {
       "@/*": ["./*", "./src/*", "./app/*", "./assets/*"],
       "@env": ["./src/const/EnvCompat"]

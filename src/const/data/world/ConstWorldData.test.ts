@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { test } from 'node:test';
 import type { WorldType } from '../../../types/data/WorldType.ts';
-import { DarkColors, LightColors } from '../../ConstColors.ts';
+import { DARK_OVERRIDES, LIGHT_COLORS } from '../../ConstColors.ts';
 import { WORLD_TOPICS } from './ConstWorldTopics.ts';
 import { LANDMARK_CREDITS } from './ConstLandmarkCredits.ts';
 import { buildCountryCodes, selectCountryCodes } from './ConstCountryCodes.ts';
@@ -334,16 +334,12 @@ const contrast = (a: string, b: string): number => {
 /** 아이콘·굵은 글자가 읽히는 최소 대비 (WCAG 비텍스트 기준) */
 const MIN_CONTRAST = 3;
 
-test('주제 색이 틴트 위에서 읽힌다', () => {
-	// 주제 카드는 tint 를 면으로 깔고 color 로 아이콘·글자를 얹는다.
-	// 밝은 앰버·초록을 그대로 쓰면 대비가 2:1 로 떨어져 아이콘이 배경에 묻힌다 (그래서 *Dark 토큰을 따로 뒀다).
-	([['라이트', LightColors], ['다크', DarkColors]] as const).forEach(([theme, palette]) => {
+test('주제 색이 라이트·다크 표면 위에서 읽힌다', () => {
+	// 주제 색은 칩 글자·아이콘으로 표면(흰 카드 / 다크 카드) 위에 얹힌다. 테마마다 색을 바꾸지 않으므로 두 표면 모두에서 읽혀야 한다.
+	([['라이트', LIGHT_COLORS.surface], ['다크', DARK_OVERRIDES.surface]] as const).forEach(([theme, surface]) => {
 		WORLD_TOPICS.forEach((topic) => {
-			const ratio = contrast(palette[topic.color], palette[topic.tint]);
-			assert.ok(
-				ratio >= MIN_CONTRAST,
-				`${theme}에서 ${topic.key} 의 ${topic.color}/${topic.tint} 대비가 ${ratio.toFixed(2)} 뿐이다 (${MIN_CONTRAST} 이상 필요)`,
-			);
+			const ratio = contrast(topic.color, surface);
+			assert.ok(ratio >= MIN_CONTRAST, `${theme}에서 ${topic.key} 의 ${topic.color} 대비가 ${ratio.toFixed(2)} 뿐이다 (${MIN_CONTRAST} 이상 필요)`);
 		});
 	});
 });

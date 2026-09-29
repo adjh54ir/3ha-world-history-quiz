@@ -1,127 +1,99 @@
-import React, { ReactNode, useRef } from 'react';
-import { Keyboard, KeyboardAvoidingView, Modal, Platform, Pressable, StyleSheet, View, ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColors } from '@/src/hooks/useTheme';
-import { Spacing } from '@/src/const/ConstDesign';
-
-type Align = 'center' | 'bottom';
-
-interface Props {
-	visible: boolean;
-	onClose?: () => void;
-	children: ReactNode;
-	/** 카드를 화면 가운데 둘지, 바닥에 붙일지 (바텀시트) */
-	align?: Align;
-	/** 배경을 눌렀을 때 닫을지 — 강제 팝업(업데이트 등)은 false */
-	dismissOnBackdrop?: boolean;
-	/** 안드로이드 하드웨어 뒤로가기로 닫을지 — 강제 팝업은 false */
-	dismissOnHardwareBack?: boolean;
-	/** 내부에 TextInput 이 있으면 키보드만큼 밀어 올린다 */
-	avoidKeyboard?: boolean;
-	backdropStyle?: ViewStyle;
-	testID?: string;
-}
+import React, { useEffect, useRef, useState } from 'react';
+import { Modal, type ModalProps } from 'react-native';
 
 /**
- * 앱 공통 모달 껍데기
- * -------------------------------------------------
- * 화면마다 제각각이던 Modal 설정을 한곳으로 모은다. 개별 화면에서 빠뜨리면
- * 눈에 잘 안 띄는 버그가 생기던 것들을 여기서 항상 켜 준다.
- *
- * 1) 이전 내용이 깜박 보이는 문제
- *    Modal 은 visible=false 여도 자식을 그대로 들고 있다. 다음에 열면 이전 값이
- *    한 프레임 보였다가 새 값으로 바뀐다. 닫혀 있을 때 아예 null 을 돌려주고,
- *    열릴 때마다 key 를 새로 줘서 자식을 처음부터 다시 그리게 한다.
- *
- * 2) 배경이 화면을 다 덮지 못하는 문제
- *    statusBarTranslucent / navigationBarTranslucent 를 켜지 않으면 안드로이드에서
- *    상태바·내비게이션바 자리가 비어 첫 표시 때 흰 띠가 보인다. presentationStyle 은
- *    iOS 에서 카드형으로 축소되는 것을 막는다.
- *
- * 3) 키보드 가림
- *    avoidKeyboard 를 켜면 입력창이 키보드에 가리지 않게 밀어 올리고,
- *    배경을 누르면 키보드부터 닫는다.
+ * 현재 화면에 떠 있는 AppModal 수.
+ * 안드로이드는 RN Modal 을 별도 네이티브 윈도우로 띄우기 때문에, 앞 모달이 닫히는 도중에
+ * 뒤 모달을 올리면 두 윈도우가 겹치면서 "이전 모달이 잠깐 보였다 사라지는" 깜빡임이 생긴다.
  */
-const AppModal = ({
-	visible,
-	onClose,
-	children,
-	align = 'center',
-	dismissOnBackdrop = true,
-	dismissOnHardwareBack = true,
-	avoidKeyboard = false,
-	backdropStyle,
-	testID,
-}: Props) => {
-	const Colors = useColors();
-	const insets = useSafeAreaInsets();
-	// 열릴 때마다 1 씩 올려 자식 트리를 새로 만든다 (이전 상태가 남아 깜박이지 않게).
-	// effect 로 올리면 한 번 더 그리고 되돌리는 깜빡임이 생겨 렌더 중에 센다.
-	const openCount = useRef(0);
-	const wasVisible = useRef(false);
-	if (visible && !wasVisible.current) {
-		openCount.current += 1;
-	}
-	wasVisible.current = visible;
+let presentedCount = 0;
+/** 겹침 대기 중인 모달들에게 앞 모달이 닫혔음을 알리는 구독자 목록 */
+const waiters = new Set<() => void>();
 
-	// 닫혀 있으면 자식을 아예 만들지 않는다 — 이전 화면이 한 프레임 비치는 원인
-	if (!visible) {
-		return null;
-	}
+const acquire = () => {
+	presentedCount += 1;
+};
 
-	const onBackdrop = () => {
-		Keyboard.dismiss();
-		if (dismissOnBackdrop) {
-			onClose?.();
+const release = () => {
+	presentedCount = Math.max(0, presentedCount - 1);
+	if (presentedCount === 0) waiters.forEach((notify) => notify());
+};
+
+/** 네이티브 dismiss 애니메이션이 끝날 때까지의 여유 (RN Modal fade 기준) */
+const DISMISS_MS = 220;
+/** 앞 모달이 닫히지 않는 '의도적 겹침'까지 막지 않기 위한 대기 상한 */
+const STACK_FALLBACK_MS = 400;
+
+/**
+ * 모달 공통 래퍼.
+ * - 숨겨진 모달을 네이티브 트리에 남기지 않아 연속 전환 시 이전 모달이 번쩍이는 현상을 막습니다.
+ * - 다른 모달이 아직 떠 있으면 그 모달이 완전히 닫힌 뒤에 올립니다(겹침 방지).
+ * - 하단 여백은 각 시트가 자체 insets.bottom 으로 처리하므로 래퍼에서 패딩을 주지 않습니다.
+ */
+const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullScreen', animationType = 'fade', children, ...props }: ModalProps) => {
+	const [ready, setReady] = useState(false);
+	/** 이 인스턴스가 presentedCount 를 점유 중인지 */
+	const heldRef = useRef(false);
+
+	// 앞 모달이 닫힐 때까지 기다렸다가 올린다
+	useEffect(() => {
+		if (!visible) {
+			setReady(false);
+			return;
 		}
-	};
+		if (presentedCount === 0) {
+			setReady(true);
+			return;
+		}
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		const notify = () => {
+			if (timer) clearTimeout(timer);
+			timer = setTimeout(() => setReady(true), DISMISS_MS);
+		};
+		waiters.add(notify);
+		// 앞 모달 위에 의도적으로 겹쳐 띄우는 경우(시트 안의 확인 팝업 등)까지 막지 않도록
+		// 일정 시간이 지나면 기다리지 않고 올린다.
+		const fallback = setTimeout(() => setReady(true), STACK_FALLBACK_MS);
+		return () => {
+			waiters.delete(notify);
+			clearTimeout(fallback);
+			if (timer) clearTimeout(timer);
+		};
+	}, [visible]);
 
-	const backdrop = (
-		<View
-			style={[
-				styles.backdrop,
-				align === 'bottom' ? styles.bottom : styles.center,
-				{ backgroundColor: Colors.overlay, paddingTop: insets.top, paddingBottom: insets.bottom },
-				backdropStyle,
-			]}>
-			{/* 배경 탭 — 카드보다 아래 깔아 두고 카드 터치는 그대로 통과시킨다 */}
-			<Pressable style={StyleSheet.absoluteFill} onPress={onBackdrop} accessible={false} />
-			{children}
-		</View>
+	// 실제로 떠 있는 동안만 카운트를 점유하고, 언마운트 시 반드시 반납한다
+	useEffect(() => {
+		const shouldHold = !!visible && ready;
+		if (shouldHold === heldRef.current) return;
+		heldRef.current = shouldHold;
+		if (shouldHold) acquire();
+		else release();
+	}, [visible, ready]);
+
+	useEffect(
+		() => () => {
+			if (heldRef.current) {
+				heldRef.current = false;
+				release();
+			}
+		},
+		[],
 	);
 
+	if (!visible || !ready) return null;
 	return (
 		<Modal
-			key={openCount.current}
+			{...props}
 			visible
-			transparent
-			animationType="fade"
+			transparent={transparent}
+			presentationStyle={presentationStyle}
+			animationType={animationType}
 			statusBarTranslucent
 			navigationBarTranslucent
-			presentationStyle="overFullScreen"
-			testID={testID}
-			onRequestClose={() => {
-				if (dismissOnHardwareBack) {
-					onClose?.();
-				}
-			}}>
-			{avoidKeyboard ? (
-				<KeyboardAvoidingView style={styles.fill} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-					{backdrop}
-				</KeyboardAvoidingView>
-			) : (
-				backdrop
-			)}
+			hardwareAccelerated>
+			{children}
 		</Modal>
 	);
 };
-
-const styles = StyleSheet.create({
-	fill: { flex: 1 },
-	// absoluteFill 로 두면 안드로이드 첫 표시에서 높이가 0 으로 잡히는 순간이 없다
-	backdrop: { ...StyleSheet.absoluteFillObject, paddingHorizontal: Spacing.xxl },
-	center: { justifyContent: 'center', alignItems: 'center' },
-	bottom: { justifyContent: 'flex-end', paddingHorizontal: 0 },
-});
 
 export default AppModal;

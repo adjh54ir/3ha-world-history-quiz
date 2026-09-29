@@ -258,3 +258,9 @@ EBU R128(`loudnorm=I=-18:TP=-3:LRA=11`)로 라우드니스를 맞춘 뒤 64kbps 
 `sound_attendance.mp3`은 사내 프로젝트 `3ha-korea-quiz`의 출석체크 효과음(원본 `finish.wav`
 = Kenney Interface Sounds `confirmation_004.ogg`, CC0)을 이관한 것. 원본은 1411kbps WAV
 스테레오(610KB)라 `ffmpeg -b:a 96k -ac 1`로 재인코딩(42KB).
+
+## 한국어 퀴즈 화면 이식분 (2026-09-29)
+
+`3ha-korea-quiz` 화면을 옮기며 그 앱의 효과음·배경음을 파일 이름 그대로 가져왔다 (`src/utils/SoundUtils.ts`, `src/utils/BgmUtils.ts` 가 require 한다).
+`correct.wav` `wrong.mp3` `timeout.wav` `complete.wav` `finish.wav` `combo.wav` `tick.wav` `whoosh.wav` `pop.wav` `flip.wav` `match.wav` `bgm-quiz.mp3` `bgm-time.mp3`.
+효과음 원본은 Kenney Interface Sounds (kenney.nl, CC0). 배경음(`bgm-*.mp3`) 출처는 원본 저장소에도 적혀 있지 않다 — 출시 전에 라이선스를 확인할 것.

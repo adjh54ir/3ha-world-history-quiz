@@ -83,7 +83,7 @@
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
         <data android:scheme="tugboatxv2" />
-        <data android:scheme="koreaquiz" />
+        <data android:scheme="worldhistoryquiz" />
       </intent-filter>
     </activity>
   </application>

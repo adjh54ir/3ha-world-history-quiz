@@ -7,7 +7,7 @@ import type { WorldType } from '@/src/types/data/WorldType';
  *   topic.<주제키>.label / .description
  *   topic.<주제키>.mode.<모드키>.label / .question
  * 모듈 상수는 앱이 읽히는 순간 한 번 만들어져 언어를 바꿔도 다시 만들어지지 않으므로,
- * 여기에는 키와 그림·색만 둔다.
+ * 여기에는 키와 그림·색만 둔다. 색은 라이트·다크 표면 모두에서 읽히는 hex 다 (ConstWorldData.test.ts 가 본다).
  * -------------------------------------------------
  * 이 파일에는 JSON 을 들이지 않는다 (데이터는 ConstWorldEntries 가 모은다).
  * `node --test` 로 도는 데이터 검증이 JSON import 문법 없이 이 목록만 읽어 갈 수 있어야 하기 때문이다.
@@ -26,8 +26,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'capital',
 		icon: 'earth',
-		color: 'primary',
-		tint: 'primaryBg',
+		color: '#3182F7',
 		groupBy: 'continent',
 		// 발문에 "나라" 라고 못 박지 않는다 — 데이터에 홍콩·괌·그린란드 같은 자치령·속령이 섞여 있다
 		modes: [
@@ -40,8 +39,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'landmark',
 		icon: 'castle',
-		color: 'accentAmberDark',
-		tint: 'accentAmberSoft',
+		color: '#D97706',
 		groupBy: 'continent',
 		modes: [
 			{ key: 'country', ask: 'name', answer: 'country', answerAs: 'flag' },
@@ -53,8 +51,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'nature',
 		icon: 'terrain',
-		color: 'successDark',
-		tint: 'secondaryBg',
+		color: '#16A34A',
 		groupBy: 'continent',
 		// 랜드마크와 경계를 나눈다 — 랜드마크는 사진으로 아는 그곳, 지형은 지도에서 찾는 것.
 		// 후지산·할롱베이처럼 사진으로 먼저 아는 자연물은 랜드마크에 두고 여기 또 넣지 않는다.
@@ -70,8 +67,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'figure',
 		icon: 'account-star',
-		color: 'primaryDeep',
-		tint: 'secondarySoft',
+		color: '#0D9488',
 		// 오답을 같은 시대에서 먼저 뽑는다 — 20세기 인물의 오답이 고대 철학자면 읽지 않고도 걸러진다
 		groupBy: 'era',
 		modes: [
@@ -86,8 +82,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'event',
 		icon: 'script-text',
-		color: 'primaryDark',
-		tint: 'accentAmberSoft',
+		color: '#B45309',
 		// 오답을 같은 갈래에서 먼저 뽑는다 — 혁명 문제의 오답이 조약이면 읽지 않고도 걸러진다
 		groupBy: 'kind',
 		modes: [
@@ -103,8 +98,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'myth',
 		icon: 'lightning-bolt',
-		color: 'secondaryDark',
-		tint: 'secondaryBg',
+		color: '#EA580C',
 		groupBy: 'kind',
 		modes: [
 			{ key: 'roman', ask: 'name', answer: 'roman' },
@@ -116,8 +110,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'space',
 		icon: 'orbit',
-		color: 'primaryDeep',
-		tint: 'primarySoft',
+		color: '#0284C7',
 		groupBy: 'kind',
 		modes: [
 			{ key: 'order', ask: 'name', answer: 'order' },
@@ -129,8 +122,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'constellation',
 		icon: 'star-four-points',
-		color: 'textStrong',
-		tint: 'surfaceAlt',
+		color: '#64748B',
 		groupBy: 'kind',
 		modes: [
 			{ key: 'image', ask: 'image', answer: 'name', askAs: 'constellation' },
@@ -143,8 +135,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'worldcup',
 		icon: 'soccer',
-		color: 'successDark',
-		tint: 'successSoft',
+		color: '#15803D',
 		modes: [
 			{ key: 'host', ask: 'name', answer: 'host', answerAs: 'flag' },
 			{ key: 'winner', ask: 'name', answer: 'winner', answerAs: 'flag' },
@@ -154,8 +145,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'winter',
 		icon: 'snowflake',
-		color: 'primaryDark',
-		tint: 'primarySoft',
+		color: '#0891B2',
 		modes: [
 			{ key: 'city', ask: 'name', answer: 'city' },
 			{ key: 'host', ask: 'name', answer: 'host', answerAs: 'flag' },
@@ -166,8 +156,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 	{
 		key: 'olympic',
 		icon: 'medal',
-		color: 'errorDark',
-		tint: 'errorSoft',
+		color: '#DC2626',
 		modes: [
 			{ key: 'city', ask: 'name', answer: 'city' },
 			{ key: 'host', ask: 'name', answer: 'host', answerAs: 'flag' },

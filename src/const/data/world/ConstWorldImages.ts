@@ -33,7 +33,10 @@ const SOURCES: Partial<Record<WorldType.TopicKey, { field: string; pick: (code: 
 };
 
 const TOPIC_IMAGES: Partial<Record<WorldType.TopicKey, number>> = {
+	nature: require('@/src/assets/world/nature-hero.webp'),
+	event: require('@/src/assets/world/event-hero.webp'),
 	worldcup: require('@/src/assets/world/worldcup-hero.webp'),
+	winter: require('@/src/assets/world/winter-hero.webp'),
 	olympic: require('@/src/assets/world/olympic-hero.webp'),
 };
 
@@ -71,7 +74,7 @@ export const selectPromptImage = (askAs: NonNullable<WorldType.QuizMode['askAs']
 /** 그림을 가진 항목이 하나라도 있는 주제인지 — 목록 화면이 미리보기를 걸지 말지 고른다 */
 export const hasImages = (topic: WorldType.TopicKey): boolean => SOURCES[topic] !== undefined;
 
-/** 항목 사진이 없는 대회 주제 카드에 쓰는 대표 그림 */
+/** 항목 사진이 없는 주제 카드에 쓰는 대표 그림 */
 export const selectTopicImage = (topic: WorldType.TopicKey): number | undefined => TOPIC_IMAGES[topic];
 
 /** 위키미디어 사진을 못 받았을 때 보여 줄 로컬 대체 그림 */
@@ -79,3 +82,49 @@ export const selectEntryImageFallback = (topic: WorldType.TopicKey): number | un
 
 export const selectPromptImageFallback = (askAs: NonNullable<WorldType.QuizMode['askAs']>): number | undefined =>
 	askAs === 'figure' ? FALLBACK_IMAGES.figure : askAs === 'landmark' ? FALLBACK_IMAGES.landmark : undefined;
+
+/**
+ * 그림 참조 문자열 — 'flag:np', 'figure:Homer_British_Museum.jpg'.
+ * 학습 카드·문항·오답노트가 그림을 들고 다닐 때 쓴다. require 번호나 주소는 저장했다 되살리면
+ * 번들이 바뀌거나 폭이 달라 어긋나므로, 저장하는 것은 이 문자열뿐이고 그릴 때 resolveImageRef 로 푼다.
+ */
+type ImageKind = NonNullable<WorldType.QuizMode['askAs']>;
+
+const TOPIC_IMAGE_KIND: Partial<Record<WorldType.TopicKey, ImageKind>> = {
+	capital: 'flag',
+	figure: 'figure',
+	landmark: 'landmark',
+	myth: 'myth',
+	space: 'space',
+	constellation: 'constellation',
+};
+
+export const makeImageRef = (kind: ImageKind, code: string): string => `${kind}:${code}`;
+
+/** 항목 자체의 그림 참조 (학습 카드용) — 그림이 없는 주제면 undefined */
+export const selectEntryImageRef = (topic: WorldType.TopicKey, entry: WorldType.Entry): string | undefined => {
+	const kind = TOPIC_IMAGE_KIND[topic];
+	const source = SOURCES[topic];
+	const code = source && entry.fields[source.field];
+	return kind && code ? makeImageRef(kind, code) : undefined;
+};
+
+/**
+ * 참조 → 실제 그림과 대체 그림.
+ * @param width 주소로 받아 오는 그림(위인·랜드마크)의 폭 — 작은 썸네일이면 낮춰 데이터를 아낀다
+ */
+export const resolveImageRef = (ref: string | undefined, width?: number): { source?: EntryImage; fallback?: number } => {
+	if (!ref) return {};
+	const at = ref.indexOf(':');
+	if (at < 0) return {};
+	const kind = ref.slice(0, at) as ImageKind;
+	const code = ref.slice(at + 1);
+	const source =
+		kind === 'figure' || kind === 'landmark'
+			? selectFigureImage(code, width)
+			: selectPromptImage(kind, code);
+	return { source, fallback: selectPromptImageFallback(kind) };
+};
+
+/** 국기처럼 가로로 긴 그림인지 — 화면이 틀 비율을 고른다 (초상·사진·신화·천체는 정사각 틀) */
+export const isWideImageRef = (ref: string | undefined): boolean => !!ref && ref.startsWith('flag:');

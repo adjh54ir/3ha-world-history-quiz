@@ -6,41 +6,31 @@
  * - 하드코딩된 숫자 대신 의미 단위(토큰)를 사용해 화면 간 통일성을 확보합니다.
  * - 색상은 src/const/ConstColors.ts(Colors) 를 함께 사용합니다.
  */
-import type { ViewStyle } from 'react-native';
-import { CONTENT_MAX_WIDTH, isTablet, MODAL_MAX_WIDTH, scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
-import { HANJA_FONT_NAME } from '@/src/utils/FontUtils';
+import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
+import Colors, { isDark } from '@/src/const/ConstColors';
+import { themed } from '@/src/utils/ThemedStyles';
 
 /**
- * 한자 전용 서체 (명조 계열)
+ * 타이포그래피 스케일 (반응형) — 2pt 등간격 위계
  * -------------------------------------------------
- * 획이 많은 글자는 산세리프에서 뭉쳐 보인다. OS 기본 명조는 자형이 기기·플랫폼마다 달라
- * 같은 글자가 다르게 보이므로, 한국 자형(K)으로 만든 Source Han Serif 서브셋을 번들에 담아 쓴다.
- * - 앱이 다루는 한자 6,301자 + 훈음 한글을 모두 담고 있다 (누락 글자 없음)
- * - 실제 로드는 app/_layout.tsx 의 loadHanjaFont() 가 스플래시 동안 처리한다
- *
- * 사용자가 설정에서 글씨체를 바꿀 수 있으므로(useHanjaFont), 화면 스타일은 이 상수 대신
- * `createStyles(Colors, HanjaFont)` 의 두 번째 인자를 펼쳐 쓴다. 여기 값은 기본값(번들 서체)일 뿐이다.
- */
-export const HanjaFontFamily = HANJA_FONT_NAME;
-
-/** 한자 글자에 그대로 얹는 스타일 — `style={[styles.char, HanjaTextStyle]}` */
-export const HanjaTextStyle = { fontFamily: HanjaFontFamily } as const;
-
-/**
- * 타이포그래피 스케일 (반응형)
- * 시맨틱한 역할명으로 폰트 크기를 통일합니다.
+ * 인접한 1pt 차이(11/12, 13/14, 15/16)는 화면에서 구분되지 않으면서
+ * 통일감만 해쳤기 때문에 같은 값으로 병합했습니다.
+ * 역할명은 그대로 두어 호출부 수정 없이 위계만 수렴시킵니다.
+ * 실제 단계: 10 / 12 / 14 / 16 / 18 / 20 / 24 / 28 / 34
  */
 export const Typography = {
-	/** 11pt — 캡션, 보조 라벨 */
-	caption: scaledSize(11),
+	/** 10pt — 마이크로 라벨(배지 안 글자, 아주 작은 단위 표기) */
+	micro: scaledSize(10),
+	/** 12pt — 캡션, 보조 라벨 (footnote 와 동일 단계) */
+	caption: scaledSize(12),
 	/** 12pt — 각주, 탭 라벨 */
 	footnote: scaledSize(12),
-	/** 13pt — 작은 본문 */
-	bodySm: scaledSize(13),
+	/** 14pt — 작은 본문 (body 와 동일 단계) */
+	bodySm: scaledSize(14),
 	/** 14pt — 기본 본문 */
 	body: scaledSize(14),
-	/** 15pt — 강조 본문 */
-	callout: scaledSize(15),
+	/** 16pt — 강조 본문 (subtitle 과 동일 단계) */
+	callout: scaledSize(16),
 	/** 16pt — 소제목 */
 	subtitle: scaledSize(16),
 	/** 18pt — 카드 제목, 헤더 */
@@ -53,25 +43,14 @@ export const Typography = {
 	h1: scaledSize(28),
 	/** 34pt — 디스플레이(점수/타이머 등) */
 	display: scaledSize(34),
-	/** 48pt — 화면에서 가장 큰 숫자(최고 기록·합격 확률·출석 도장) */
-	hero: scaledSize(48),
-} as const;
-
-/**
- * 한자 글자 전용 크기 스케일
- * -------------------------------------------------
- * 한자는 본문 텍스트가 아니라 "보여주는 대상"이라 타이포 스케일과 별도로 관리한다.
- * 화면마다 72/76/84/118 처럼 제각각이던 값을 역할 4단계로 묶는다.
- */
-export const HanjaGlyph = {
-	/** 리스트·칩 안의 작은 한자 */
-	sm: scaledSize(28),
-	/** 카드 안 중간 한자 (해설 모달 등) */
-	md: scaledSize(44),
-	/** 상세·문제 등 주인공 한자 */
-	lg: scaledSize(80),
-	/** 학습 카드 앞면 — 화면에서 가장 큰 한자 */
-	xl: scaledSize(116),
+	/** 40pt — 대형 마크(OX 표시·GO 문구) */
+	mark: scaledSize(40),
+	/** 44pt — 히어로 점수(전체 점수·등급 점수) */
+	displayLg: scaledSize(44),
+	/** 52pt — 결과 화면 최종 점수 */
+	displayXl: scaledSize(52),
+	/** 84pt — 퀴즈 시작 카운트다운 숫자(전용) */
+	countdown: scaledSize(84),
 } as const;
 
 /**
@@ -105,12 +84,15 @@ export const Spacing = {
 	xxl: scaleWidth(24),
 	/** 32 */
 	xxxl: scaleWidth(32),
+	/** 40 — 빈 상태 등 넓은 좌우 여백 */
+	xxxxl: scaleWidth(40),
 } as const;
 
 /**
  * 세로 스페이싱 (세로 기준 반응형) — 섹션 간 상하 간격
  */
 export const SpacingV = {
+	xxs: scaleHeight(2),
 	xs: scaleHeight(4),
 	sm: scaleHeight(8),
 	md: scaleHeight(12),
@@ -118,92 +100,126 @@ export const SpacingV = {
 	xl: scaleHeight(20),
 	xxl: scaleHeight(24),
 	xxxl: scaleHeight(32),
+	/** 40 — 빈 상태 등 넓은 상하 여백 */
+	xxxxl: scaleHeight(40),
+} as const;
+
+/**
+ * 테두리 두께 표준
+ * -------------------------------------------------
+ * 선 두께는 화면 크기에 비례시키지 않습니다(스케일하면 서브픽셀이 되어 흐려짐).
+ * 화면마다 1.5 / 2 / 2.5 를 직접 적던 것을 이 토큰으로 수렴시킵니다.
+ */
+export const Border = {
+	/** 1 — 카드·구분선 헤어라인 */
+	hairline: 1,
+	/** 1.5 — 선택 상태 강조 테두리 */
+	thin: 1.5,
+	/** 2 — 강한 강조(획득 뱃지·정답 보기) */
+	thick: 2,
+	/** 2.5 — 최상위 강조(1위 아바타 링) */
+	heavy: 2.5,
+} as const;
+
+/**
+ * 자간(letterSpacing) 표준 — 대문자 코드·라벨 강조용
+ */
+export const Tracking = {
+	/** 0.3 — 소형 라벨 */
+	tight: 0.3,
+	/** 0.5 — 일반 라벨 */
+	normal: 0.5,
+	/** 0.8 — 강조 라벨 */
+	wide: 0.8,
+	/** 2 — 코드/카운트다운처럼 글자를 벌려 읽히게 */
+	wider: 2,
 } as const;
 
 /**
  * 라운드(보더 반경) 표준
  */
 export const Radius = {
-	sm: scaleWidth(6),
-	md: scaleWidth(10),
-	lg: scaleWidth(14),
+	/** 8 — 칩·태그 등 작은 면 */
+	sm: scaleWidth(8),
+	/** 12 — 리스트 행·작은 카드 */
+	md: scaleWidth(12),
+	/** 16 — 기본 카드 */
+	lg: scaleWidth(16),
+	/** 20 — 큰 카드·모달 시트 */
 	xl: scaleWidth(20),
+	/** 24 — 히어로 카드 */
+	xxl: scaleWidth(24),
+	/** 완전 둥근 알약 */
 	pill: scaleWidth(999),
-} as const;
-
-/**
- * 태블릿 레이아웃
- * -------------------------------------------------
- * 아이패드는 폭이 폰의 두 배가 넘는다. 카드를 그 폭 그대로 늘리면 제목 하나에 한 줄이 다 날아가고
- * 좌우 끝이 너무 멀어 눈이 왕복해야 한다. 본문은 가운데 한 칼럼으로 묶고, 남는 폭은 여백으로 흘린다.
- *
- * 폰에서는 maxWidth 가 화면보다 넓어 아무 영향이 없다 — 화면마다 분기를 두지 않아도 된다.
- * 쓰는 곳: ScrollView/FlatList 의 contentContainerStyle, 상단 헤더, 하단 고정 버튼 바.
- * (세 곳이 같은 폭을 써야 헤더 제목과 본문 카드의 왼쪽 선이 맞는다)
- */
-export const Layout = {
-	/** 화면 본문 한 칼럼 */
-	column: { width: '100%', maxWidth: CONTENT_MAX_WIDTH, alignSelf: 'center' } as ViewStyle,
-	/** 모달 카드 — 본문보다 좁게 (대화상자) */
-	modalCard: { width: '100%', maxWidth: MODAL_MAX_WIDTH, alignSelf: 'center' } as ViewStyle,
-	/**
-	 * 바텀시트·전체화면 패널 — 대화상자보다 넉넉하게.
-	 * 태블릿은 폭이 묶여 좌우에 틈이 생긴다. 위만 둥근 채로 두면 바닥에 붙지도 않은 각진 상자가 되므로
-	 * 네 모서리를 모두 둥글려 떠 있는 카드로 보이게 한다 (시트 쪽 borderTop* 은 같은 값이라 덮어써도 무해).
-	 */
-	modalSheet: {
-		width: '100%',
-		maxWidth: CONTENT_MAX_WIDTH,
-		alignSelf: 'center',
-		...(isTablet ? { borderRadius: Radius.xl } : null),
-	} as ViewStyle,
-	/** 목록 열 수 — 태블릿은 두 칸씩 놓아 한 화면에 두 배로 보여 준다 */
-	columns: isTablet ? 2 : 1,
-	/** 태블릿인지 — 열 수·아이콘 크기처럼 값 자체가 달라져야 하는 곳에서만 쓴다 */
-	isTablet,
 } as const;
 
 /**
  * 공통 그림자 프리셋 (iOS/Android 동시 대응)
  * -------------------------------------------------
- * elevation 은 쓰지 않는다 — 안드로이드에서 z-order 를 바꿔 겹친 요소가 뒤로 밀리고,
- * 배경이 투명한 뷰에 회색 사각형이 남는다. 그림자는 shadow* 속성만 쓴다.
- *
- * 라이트 값(#0F172A 6%)을 다크에서 그대로 쓰면 **화면 배경색과 그림자 색이 같아** 그림자가 사라진다.
- * 다크에서 카드(surface #1B263B)와 배경(#0F172A)의 밝기 차는 1.3:1 뿐이라, 그림자가 없으면
- * 카드 경계가 통째로 안 보인다. 그래서 테마마다 값을 갈아 끼운다.
- *
- * 화면들이 `...Shadow.card` 로 StyleSheet 를 구울 때 값을 복사해 가므로
- * **객체를 교체하지 않고 그대로 덮어쓴다** (연결은 `src/hooks/useTheme.tsx`).
+ * 정돈형 원칙: 평면에 놓인 카드는 그림자를 쓰지 않고 헤어라인 보더로 경계를 만듭니다.
+ * 그림자는 '실제로 떠 있는' 요소(모달 시트, 하단 고정 바, FAB)에만 사용합니다.
  */
-interface ShadowPreset {
-	shadowColor: string;
-	shadowOffset: { width: number; height: number };
-	shadowOpacity: number;
-	shadowRadius: number;
-}
+export const Shadow = {
+	/** @deprecated 카드는 헤어라인 보더(CardSurface)로 통일. 그림자 없음. */
+	card: {
+		shadowColor: 'transparent',
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0,
+		shadowRadius: 0,
+	},
+	/** 떠 있는 요소 전용 — 모달 시트 / 하단 고정 바 / FAB. 다크 배경에선 0.12 가 안 보여 농도를 올린다(themed 팩토리에서 스프레드되므로 테마마다 다시 읽힌다) */
+	get floating() {
+		return {
+			shadowColor: isDark() ? Colors.nightDeep : Colors.ink,
+			shadowOffset: { width: 0, height: 4 },
+			shadowOpacity: isDark() ? 0.5 : 0.12,
+			shadowRadius: 14,
+		};
+	},
+} as const;
 
-const LIGHT_SHADOW: Record<'card' | 'floating', ShadowPreset> = {
-	card: { shadowColor: '#0F172A', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 8 },
-	floating: { shadowColor: '#0F172A', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.12, shadowRadius: 14 },
-};
+/**
+ * 공용 카드 표면 (surface + 헤어라인 보더 + 옅은 그림자)
+ * -------------------------------------------------
+ * 화면마다 개별 선언하던 `const card = {...}` 를 이 토큰 하나로 수렴시킵니다.
+ * borderRadius 는 용도에 따라 다르므로 사용처에서 Radius 토큰으로 지정합니다.
+ *   예) card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg }
+ */
+export const CardSurface = themed(() => ({
+	backgroundColor: Colors.surface,
+	borderWidth: 1,
+	borderColor: Colors.border,
+	...Shadow.card,
+} as const));
 
-const DARK_SHADOW: Record<'card' | 'floating', ShadowPreset> = {
-	card: { shadowColor: '#000000', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.45, shadowRadius: 10 },
-	floating: { shadowColor: '#000000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.6, shadowRadius: 18 },
-};
+/**
+ * 화면 공통 레이아웃 기준
+ * - screenH: 모든 화면 컨테이너의 좌우 여백 기준값(통일)
+ * - sectionGap: 섹션(카드 묶음) 사이 세로 간격
+ * - itemGap: 리스트 아이템 사이 세로 간격
+ */
+export const Layout = {
+	/** 화면 좌우 여백 — 헤더·본문·리스트가 같은 좌측선을 쓰도록 통일 */
+	screenH: Spacing.xl,
+	/** 스크롤 컨테이너 상단 여백 */
+	screenTop: SpacingV.md,
+	/** 스크롤 컨테이너 하단 여백 (마지막 카드가 탭바/홈 인디케이터에 붙지 않게) */
+	screenBottom: scaleHeight(40),
+	/** 섹션(카드 묶음) 사이 세로 간격 */
+	sectionGap: scaleHeight(28),
+	/** 리스트 아이템 사이 세로 간격 */
+	itemGap: SpacingV.sm,
+	/** 최소 터치 영역 (iOS HIG 44pt) */
+	touch: scaleWidth(44),
+	/** 작은 아이콘 버튼의 터치 여유 — 실제 손가락 크기 기준이라 화면 크기에 비례시키지 않는다 */
+	hitSlop: { top: 8, bottom: 8, left: 8, right: 8 },
+	/** 진행바 두께 */
+	barH: scaleHeight(6),
+	/** 다이얼로그(가운데 팝업) 최대 폭 — 태블릿에서 카드가 화면 끝까지 늘어나지 않게 한다.
+	 *  폰에서는 화면 폭보다 큰 값이라 적용되지 않는다(모바일 영향 없음). */
+	dialogMaxWidth: scaleWidth(360),
+	/** 바텀시트 최대 폭 — 본문 컬럼과 같은 폭으로 맞춘다(폰은 화면 폭 그대로라 무효) */
+	sheetMaxWidth: contentWidth,
+} as const;
 
-export const Shadow: Record<'card' | 'floating', ShadowPreset> = {
-	card: { ...LIGHT_SHADOW.card, shadowOffset: { ...LIGHT_SHADOW.card.shadowOffset } },
-	floating: { ...LIGHT_SHADOW.floating, shadowOffset: { ...LIGHT_SHADOW.floating.shadowOffset } },
-};
-
-/** 그림자 프리셋을 해당 테마 값으로 덮어쓴다 */
-export const applyShadowTheme = (scheme: 'light' | 'dark'): void => {
-	const next = scheme === 'dark' ? DARK_SHADOW : LIGHT_SHADOW;
-	(['card', 'floating'] as const).forEach((key) => {
-		Object.assign(Shadow[key], next[key], { shadowOffset: { ...next[key].shadowOffset } });
-	});
-};
-
-export default { Typography, HanjaGlyph, FontWeight, Spacing, SpacingV, Layout, Radius, Shadow };
+export default { Typography, FontWeight, Spacing, SpacingV, Radius, Border, Tracking, Shadow, CardSurface, Layout };

@@ -1,5 +1,4 @@
 import { Platform } from 'react-native';
-import DateUtils from '@/src/utils/DateUtils';
 
 import { CommonType } from '@/src/types/CommonType';
 
@@ -271,27 +270,8 @@ export const COMMON_APPS_DATA: {
 
 /**
  * 지금 기기에서 열 수 있는 스토어 주소. 없으면 null.
- * 반대 플랫폼 링크로 대체하지 않는다 — 한쪽에만 출시된 앱에서 안드로이드 사용자를
+ * 반대 플랫폼 링크로 대체하지 않는다 — 한쪽에만 출시된 앱(HanPick)에서 안드로이드 사용자를
  * 앱스토어 페이지로 보내면 설치가 아예 불가능한 화면만 보게 된다.
  */
 export const appStoreUrl = (app: CommonType.AppItem): string | null =>
 	(Platform.OS === 'android' ? app.android : app.ios) || null;
-
-/** NEW 배지가 붙는 기간 */
-const NEW_APP_DAYS = 60;
-
-/**
- * 갓 나온 앱인지.
- * -------------------------------------------------
- * 예전에는 "id 가 가장 큰 두 개" 를 NEW 로 봤다. 그러면 새 앱을 한참 안 올린 동안에도
- * 같은 앱에 NEW 가 영영 붙어 있어, 배지가 아무 뜻도 없는 장식이 된다.
- * 출시일이 적힌 앱만, 그것도 최근 것만 배지를 단다(안 적힌 앱은 붙지 않는다).
- */
-export const isNewApp = (app: CommonType.AppItem, now = DateUtils.nowTime()): boolean => {
-	if (!app.releasedAt) return false;
-	const released = Date.parse(`${app.releasedAt}T00:00:00Z`);
-	if (Number.isNaN(released)) return false;
-	// 날짜 단위로 센다 — 시각까지 보면 딱 60일째 되는 날 오전에 배지가 사라져 하루가 잘린다
-	const days = Math.floor((now - released) / 86400000);
-	return days >= 0 && days <= NEW_APP_DAYS;
-};

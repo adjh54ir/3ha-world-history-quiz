@@ -31,8 +31,8 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>koreaquiz</string>
-				<string>com.tha.koreaquiz</string>
+				<string>worldhistoryquiz</string>
+				<string>com.tha.worldhistoryquiz</string>
 			</array>
 		</dict>
 	</array>

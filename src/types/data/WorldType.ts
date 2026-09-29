@@ -1,5 +1,3 @@
-import type { ColorToken } from '@/src/const/ConstColors';
-
 /**
  * 세계사·세계 상식 학습 데이터 타입
  * -------------------------------------------------
@@ -74,9 +72,8 @@ export namespace WorldType {
 		key: TopicKey;
 		/** MaterialCommunityIcons 이름 */
 		icon: string;
-		/** 카드 배경·아이콘 색 (팔레트 토큰) */
-		color: ColorToken;
-		tint: ColorToken;
+		/** 주제 강조색 (hex) — 칩·아이콘·헤더에 쓴다. 라이트·다크 표면 모두에서 3:1 이상이어야 한다 */
+		color: string;
 		/**
 		 * 오답 보기를 먼저 뽑을 무리를 가르는 `fields` 열쇠 (없으면 주제 전체에서 뽑는다).
 		 * 신 문제의 오답이 괴물 설명이면 읽지 않고도 답이 보인다.

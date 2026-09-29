@@ -1,116 +1,115 @@
-// gesture-handler 초기화는 반드시 최상단 첫 import (Android에서 Modal/팝업 내부 터치가 죽는 것 방지)
+// gesture-handler 초기화는 반드시 최상단 첫 import (Android 모달/팝업 터치 먹통 방지)
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-// fontSize 를 지정하지 않은 Text 가 안드로이드에서 작게 그려지는 문제 — 화면이 그려지기 전에 기본값을 깔아 둔다
-import { applyTextDefaults } from '@/src/utils/TextDefaults';
-// 운영 빌드에서는 콘솔을 완전히 막는다 — 다른 초기화보다 먼저 걸어야 초기 로그까지 잡힌다
-import { silenceConsoleInProduction } from '@/src/utils/LogUtils';
-// 콘솔을 막는 대신 오류는 Crashlytics 로 올린다 — 두 줄이 한 벌이다
-import { installGlobalErrorHandler } from '@/src/utils/CrashReport';
-import { Stack, router } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useCallback, useEffect, useState } from 'react';
-import { AppState, LogBox } from 'react-native';
+import { useEffect, useState } from 'react';
+import { AppState, LogBox, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
+import { I18nextProvider } from 'react-i18next';
 
 import { persistor, Store } from '@/src/store/Store';
-import ThemeProvider, { DEFAULT_THEME_MODE, ThemeMode, readThemeMode, useTheme } from '@/src/hooks/useTheme';
-import { applyTheme as applyFourTheme } from '@/src/four/const/ConstColors';
-import { rebuildThemedStyles } from '@/src/four/const/ThemeRegistry';
-import { applyShadowTheme } from '@/src/const/ConstDesign';
-import HanjaFontProvider, { DEFAULT_HANJA_FONT_KEY, readHanjaFontKey } from '@/src/hooks/useHanjaFont';
+import { ToastProvider } from '@/src/context/ToastContext';
+import i18n, { syncSystemLanguage } from '@/src/translations';
 import VersionCheckModal from '@/src/screens/common/modal/VersionCheckModal';
-import GlobalBannerAd from '@/src/screens/common/ads/GlobalBannerAd';
-import GlobalToast from '@/src/screens/common/atomic/GlobalToast';
-import AnimatedSplash from '@/src/screens/common/AnimatedSplash';
-import ErrorBoundary from '@/src/screens/common/ErrorBoundary';
-import LifeWatcher from '@/src/screens/life/common/LifeWatcher';
-import LevelUpModal from '@/src/screens/life/modal/LevelUpModal';
-import PetGrowthModal from '@/src/screens/life/modal/PetGrowthModal';
-import { Paths } from '@/src/navigation/conf/Paths';
-import { checkDeviceNetConListener } from '@/src/utils/NetworkUtils';
-import { loadSoundSettings, prepareAudioSession } from '@/src/utils/SoundUtils';
-import { requestAppTrackingPermission } from '@/src/utils/PermissionUtils';
-// 다국어 — 모듈을 읽는 순간 i18next 가 초기화된다 (기본 한국어)
-import i18n, { readLanguage } from '@/src/translations';
-import AdGuardService from '@/src/services/ads/AdGuardService';
-import AppOpenAdService from '@/src/services/ads/AppOpenAdService';
+import { ConfirmModalHost } from '@/src/screens/common/modal/ConfirmModal';
+import AppLayout from '@/src/screens/common/layout/AppLayout';
+import { ensureAudioMode, loadSoundSetting } from '@/src/utils/SoundUtils';
+import { loadBgmSetting } from '@/src/utils/BgmUtils';
 import { REACT_NATIVE_APP_MODE } from '@env';
+import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import '@/src/config/GlobalComponentDefaults';
+import { ReconcileNotificationSchedules } from '@/src/utils/NotifactionHelper';
+import { StatusBar } from 'expo-status-bar';
+import Colors, { isDark } from '@/src/const/ConstColors';
+import { ThemeProvider, DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 /**
- * AdMob 초기화가 끝났음을 알리는 약속.
- * 스플래시가 걷힌 뒤 오프닝 광고를 띄우는데, 초기화 전에 요청하면 첫 광고가 그대로 실패한다.
+ * 네비게이터 기본 테마 — 지정하지 않으면 라이트(흰색)라 다크 모드에서
+ * 화면 전환·오버스크롤 때 흰 배경이 비친다.
  */
-let adMobReady: Promise<void> = Promise.resolve();
+const navigationTheme = () => {
+	const base = isDark() ? DarkTheme : DefaultTheme;
+	return {
+		...base,
+		colors: {
+			...base.colors,
+			background: Colors.background,
+			card: Colors.surface,
+			text: Colors.text,
+			border: Colors.border,
+			primary: Colors.primary,
+		},
+	};
+};
 
-silenceConsoleInProduction();
-installGlobalErrorHandler();
-applyTextDefaults();
-SplashScreen.preventAutoHideAsync();
-// 스플래시가 뚝 끊기지 않고 홈으로 녹아들도록 (fade 는 iOS 전용, 안드로이드는 기본 전환을 그대로 쓴다)
-SplashScreen.setOptions({ fade: true, duration: 400 });
+
 
 /**
  * AdMob 초기화 (네이티브 모듈 미링크 시에도 앱이 죽지 않도록 가드)
+ * - 앱 열기(오프닝) 광고는 로드가 가장 느리다 → 초기화가 끝나는 즉시 제일 먼저 요청한다.
+ * - ATT 응답을 기다리지 않는다. 기다리면 첫 화면까지 몇 초가 더 걸린다.
+ *   (동의 전에는 SDK가 비개인화 광고로 요청한다 — 추적은 하지 않는다)
  */
-const initAdMob = (): Promise<void> => {
+const initAdMob = () => {
 	try {
-		const ads = require('react-native-google-mobile-ads');
-		const mobileAds = ads.default;
-		const { AdsConsent, MaxAdContentRating } = ads;
-
-		// 1) 동의 — EEA·영국 사용자에게는 UMP 양식을 띄워야 개인화 광고를 요청할 수 있다.
-		//    그 밖의 지역에서는 양식 없이 곧바로 통과한다(gatherConsent 가 알아서 판단).
-		//    실패해도 광고 초기화는 계속한다 — 동의를 못 받으면 비개인화 광고로 떨어질 뿐이다.
-		AdsConsent?.gatherConsent?.().catch((e: unknown) => console.warn('광고 동의 확인 실패:', e));
-
-		// 2) 콘텐츠 등급 — 전체 이용가(G) 광고만 받는다
+		const mobileAds = require('react-native-google-mobile-ads').default;
 		mobileAds()
-			.setRequestConfiguration({ maxAdContentRating: MaxAdContentRating?.G ?? 'G' })
-			.catch((e: unknown) => console.warn('광고 설정 적용 실패:', e));
-
-		/*
-		 * 3) 초기화 — 끝난 뒤에 소리를 끈다.
-		 * 앱을 켜자마자 상단 배너에 동영상 광고가 붙으면 아무것도 누르지 않았는데 소리부터 난다.
-		 * 조용히 열어 보는 학습 앱이라 그 소리가 곧 "이 앱 뭐야" 가 된다. 그림은 그대로 나가고 소리만 죽는다.
-		 * 안드로이드는 initialize() 전에 setAppMuted 를 부르면 네이티브에서 IllegalStateException 으로
-		 * 앱이 죽는다 — 반드시 초기화가 끝난 뒤에 건다. 첫 광고(오프닝)는 이 프로미스 뒤에 요청하므로
-		 * 첫 광고부터 무음이 적용된다.
-		 */
-		return mobileAds()
 			.initialize()
-			.then((state: unknown) => {
-				mobileAds().setAppMuted(true);
-				mobileAds().setAppVolume(0);
-				console.log('✅ AdMob 초기화 완료:', state);
+			.then((s: unknown) => {
+				console.log('✅ AdMob 초기화 완료:', s);
+				require('@/src/services/AppOpenAdService').initAppOpenAd();
 			})
 			.catch((e: unknown) => console.warn('❌ AdMob 초기화 실패:', e));
 	} catch (e) {
 		console.warn('AdMob 모듈 로드 실패(미설치?):', e);
-		return Promise.resolve();
+	}
+};
+
+// 앱 열기 광고를 최대한 빨리 띄우려면 React 마운트를 기다릴 수 없다 → 번들 평가 시점에 시작
+initAdMob();
+
+// 네이티브 스플래시(expo-splash-screen, app.json)를 초기화가 끝날 때까지 붙잡아 두고 페이드로 걷는다.
+// 한국어 퀴즈는 react-native-bootsplash 를 썼지만, 이 앱의 네이티브 프로젝트는 expo-splash-screen 으로 이미 짜여 있어 그대로 쓴다.
+SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.setOptions({ fade: true, duration: 400 });
+
+/**
+ * iOS 앱 추적 투명성(ATT) 권한 요청
+ * - Apple 정책상 앱이 active 상태여야 하므로 마운트 후 약간의 지연을 두고 1회 요청
+ * - 네이티브 모듈 미링크 시에도 앱이 죽지 않도록 가드
+ */
+const requestTrackingPermission = async () => {
+	if (Platform.OS !== 'ios') return;
+	try {
+		const permission = PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY;
+		const current = await check(permission);
+		if (current === RESULTS.DENIED) await request(permission);
+	} catch (e) {
+		console.warn('ATT 권한 요청 실패:', e);
 	}
 };
 
 /**
- * 알림을 눌러 앱에 들어오면 홈으로 보낸다 (출석·오늘의 퀴즈가 홈에 있다).
- * - 알림은 매일 학습 리마인더 한 종류라 목적지가 하나뿐이다.
- * - 네이티브 모듈이 없더라도 앱이 죽지 않도록 require + try/catch 로 감싼다.
+ * notifee 포그라운드 알림 클릭 시 해당 화면으로 이동
  */
-const useDailyNotificationDeepLink = () => {
+const useNotifeeDeepLink = () => {
 	useEffect(() => {
 		let unsubscribe: (() => void) | undefined;
 		try {
 			const notifee = require('@notifee/react-native').default;
 			const { EventType } = require('@notifee/react-native');
-			const goHome = () => router.push('/main/home' as never);
-			unsubscribe = notifee.onForegroundEvent(({ type }: { type: number }) => {
-				if (type === EventType.PRESS) goHome();
+			unsubscribe = notifee.onForegroundEvent(({ type, detail }: any) => {
+				if (type === EventType.PRESS) {
+					const screenPath = detail.notification?.data?.moveToScreen;
+					if (screenPath) router.push(`/${screenPath}` as never);
+				}
 			});
-			notifee.getInitialNotification().then((initial: unknown) => {
-				if (initial) goHome();
+			notifee.getInitialNotification().then((initial: any) => {
+				const screenPath = initial?.notification?.data?.moveToScreen;
+				if (screenPath) router.push(`/${screenPath}` as never);
 			});
 		} catch (e) {
 			console.warn('notifee 모듈 로드 실패(미설치?):', e);
@@ -119,85 +118,64 @@ const useDailyNotificationDeepLink = () => {
 	}, []);
 };
 
-/**
- * 앱이 뒤로 물러날 때 저장을 한 번 밀어 준다.
- * 저장을 1초로 묶어 두었으므로(Store.ts throttle), 마지막 1초치가 아직 안 써졌을 수 있다.
- * 홈 버튼을 누른 순간 밀어 두면 그대로 강제 종료돼도 잃는 게 없다.
- */
-const useFlushOnBackground = () => {
-	useEffect(() => {
-		const subscription = AppState.addEventListener('change', (state) => {
-			if (state !== 'active') {
-				persistor.flush();
-			}
-		});
-		return () => subscription.remove();
-	}, []);
-};
-
-/** 상태 바 글자색은 테마를 따라간다 (다크에서 검은 글자면 아이콘이 안 보인다) */
-const ThemedStatusBar = () => {
-	const { isDark } = useTheme();
-	return <StatusBar style={isDark ? 'light' : 'dark'} translucent backgroundColor="transparent" />;
-};
-
 export default function RootLayout() {
 	const [ready, setReady] = useState(false);
-	// 스플래시가 떠 있는 동안 테마를 먼저 읽어 둔다 — 다크 사용자에게 첫 화면이 흰색으로 번쩍이지 않도록
-	const [themeMode, setThemeMode] = useState<ThemeMode>(DEFAULT_THEME_MODE);
-	// 한자 글씨체도 같은 이유로 먼저 읽어 둔다 — 화면이 그려진 뒤 바뀌면 한자가 한 번 튄다
-	const [hanjaFontKey, setHanjaFontKey] = useState<string>(DEFAULT_HANJA_FONT_KEY);
-	// 네이티브 스플래시(OS 가 아이콘 크기를 고정) 뒤에 큰 로고를 직접 그려 준다
-	const [splashVisible, setSplashVisible] = useState(true);
-	// 스플래시 그림이 실제로 화면에 올라온 뒤에야 앱 내용을 붙인다 — 홈 화면이 스플래시보다 먼저 한 번 비치던 문제
-	const [contentVisible, setContentVisible] = useState(false);
-	const revealContent = useCallback(() => setContentVisible(true), []);
-	const hideSplash = useCallback(() => {
-		setSplashVisible(false);
-		// 스플래시가 끝난 뒤에 앱 오프닝 광고를 띄운다 (스플래시 위에 겹치면 로고가 잘려 보인다)
-		// iOS ATT 팝업이 떠 있는 동안에는 전면 광고를 present 할 수 없어 첫 실행이 늘 실패했다.
-		// 응답이 끝난 뒤 요청한다 (Android/이미 응답한 사용자는 즉시 resolve 되어 지연 없음).
-		requestAppTrackingPermission()
-			.catch((error) => console.warn('ATT 권한 요청 실패:', error))
-			// 초기화(무음 설정 포함)가 끝난 뒤에 첫 광고를 띄운다
-			.finally(() => adMobReady.finally(() => AppOpenAdService.showAppOpenAd()));
+	useNotifeeDeepLink();
+
+	// 인앱 결제(광고 제거) — 저장 플래그 로드 + 스토어 연결/구매 리스너 (광고 초기화보다 먼저)
+	useEffect(() => {
+		try {
+			const { initPurchase } = require('@/src/services/PurchaseService');
+			initPurchase().catch(() => {});
+		} catch (e) {
+			console.warn('PurchaseService 로드 실패:', e);
+		}
 	}, []);
-	useDailyNotificationDeepLink();
-	useFlushOnBackground();
+
+	// ATT와 시스템 언어는 앱이 active인 시점에 동기화합니다.
+	useEffect(() => {
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		const runWhenActive = (state: string = AppState.currentState) => {
+			if (state !== 'active') return;
+			syncSystemLanguage().catch(() => {});
+			ReconcileNotificationSchedules().catch(() => {});
+			// 광고·통화 등이 오디오 세션을 바꿔 놓을 수 있어 active 될 때마다 mix 모드를 다시 지정
+			ensureAudioMode().catch(() => {});
+			if (Platform.OS === 'ios' && !timer) {
+				// 광고 초기화는 여기서 하지 않는다(모듈 로드 시점에 이미 시작됨)
+				timer = setTimeout(() => {
+					requestTrackingPermission().catch(() => {});
+				}, 700);
+			}
+		};
+		runWhenActive();
+		const subscription = AppState.addEventListener('change', runWhenActive);
+		return () => {
+			subscription.remove();
+			if (timer) clearTimeout(timer);
+		};
+	}, []);
+
+	// 사운드 설정 로드 + 효과음 플레이어 프리로드 — 플랫폼 무관하게 시작 시 1회
+	// (이전에는 iOS ATT 분기 안에 있어 안드로이드에서는 첫 효과음이 무음이었다)
+	useEffect(() => {
+		loadSoundSetting();
+		loadBgmSetting();
+	}, []);
 
 	useEffect(() => {
 		(async () => {
 			try {
 				LogBox.ignoreAllLogs();
 				console.log('Now env mode : [', REACT_NATIVE_APP_MODE, ']');
-				// AdMob 은 앱이 뜨자마자 초기화한다 — 배너는 루트에 곧바로 마운트되므로
-				// SDK 준비 전에 요청이 나가면 첫 광고가 실패하고 그대로 비어 버린다.
-				// 오프닝 광고는 이 약속이 끝난 뒤에 요청한다(hideSplash 가 기다린다).
-				adMobReady = initAdMob();
-				checkDeviceNetConListener();
-				// 저장해 둔 언어를 화면이 그려지기 전에 걸어 둔다 — 첫 화면이 한국어로 한 번 그려졌다 바뀌지 않게
-				await i18n.changeLanguage(await readLanguage());
-				const savedTheme = await readThemeMode();
-				setThemeMode(savedTheme);
-				// 이식 화면(src/four)은 모듈이 읽히는 순간 팔레트를 복사해 StyleSheet 를 굽는다.
-				// Expo Router 가 라우트를 먼저 읽어 갔을 수 있으므로, 팔레트를 채운 뒤 한 번 다시 만든다.
-				// (이걸 빼면 다크 사용자가 이식 화면에 처음 들어갈 때만 라이트로 보인다)
-				applyFourTheme(savedTheme);
-				// 그림자도 같은 시점에 맞춘다 — 다크 그림자는 색이 배경과 달라야 카드 경계가 보인다
-				applyShadowTheme(savedTheme);
-				rebuildThemedStyles();
-				setHanjaFontKey(await readHanjaFontKey());
-				// 저장된 효과음·배경음 on/off 를 먼저 읽어 둔다 (기본 ON)
-				await loadSoundSettings();
-				// 오디오 세션을 미리 mixWithOthers 로 잡는다 — 사용자가 듣던 음악·영상이 앱 진입만으로 끊기지 않게 한다
-				prepareAudioSession();
-				AdGuardService.init(); // 광고 클릭 차단 상태 복원
+				// 광고 제거 플래그를 먼저 읽는다 — 안 기다리면 구매자에게도 배너가 한 번 마운트·요청된다
+				await require('@/src/services/PurchaseService').loadAdsRemoved();
 			} catch (e) {
 				console.warn('앱 초기화 중 오류:', e);
 			} finally {
-				// 네이티브 스플래시는 AnimatedSplash 가 한 프레임 그린 뒤 스스로 걷는다
-				// (여기서 먼저 걷으면 JS 가 그려지기 전의 흰 화면이 한 번 번쩍인다)
 				setReady(true);
+				// 네이티브 스플래시 페이드 아웃
+				SplashScreen.hideAsync().catch(() => {});
 			}
 		})();
 	}, []);
@@ -206,53 +184,23 @@ export default function RootLayout() {
 
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			{/* 렌더 중 터진 오류를 잡아 흰 화면 대신 다시 시도 버튼을 보여 준다 */}
-			<ErrorBoundary>
-				{/* 스플래시가 이미 화면을 덮은 뒤에 앱 내용을 붙인다 (AnimatedSplash 의 onReveal) */}
-				{contentVisible && (
-					<Provider store={Store}>
-						<PersistGate loading={null} persistor={persistor}>
-							<ThemeProvider initialMode={themeMode}>
-								<HanjaFontProvider initialKey={hanjaFontKey}>
-									<SafeAreaProvider initialMetrics={initialWindowMetrics}>
-										<ThemedStatusBar />
-										{/* 배너 광고는 여기 한 곳에서만 관리한다 (화면별 배치·재요청 없음) */}
-										<GlobalBannerAd />
-										{/* iOS 좌측 스와이프(뒤로가기) 전역 차단 — 헤더 뒤로가기 버튼으로만 이동 */}
-										<Stack screenOptions={{ headerShown: false, gestureEnabled: false, fullScreenGestureEnabled: false }}>
-											<Stack.Screen name="index" />
-											<Stack.Screen name={Paths.MAIN_TAB} />
-											<Stack.Screen name={Paths.GRADE} />
-											<Stack.Screen name={Paths.SHORTS} />
-											<Stack.Screen name={Paths.QUIZ} />
-											<Stack.Screen name={Paths.WRONG} />
-											<Stack.Screen name={Paths.TIME_CHALLENGE} />
-											<Stack.Screen name={Paths.TIME_CHALLENGE_INIT} />
-											<Stack.Screen name={Paths.TOWER} />
-											<Stack.Screen name={Paths.TOWER_QUIZ} />
-											<Stack.Screen name={Paths.WORLD} />
-											<Stack.Screen name={Paths.WORLD_STUDY} />
-											<Stack.Screen name={Paths.WORLD_QUIZ} />
-										</Stack>
-										{/* 저장 동작 피드백 — 화면 어디서든 showToast() 로 띄운다 */}
-										<GlobalToast />
-										{/* 새 뱃지 알림 · 매일 알림 재예약 — 화면과 무관하게 상태를 지켜본다 */}
-										<LifeWatcher />
-										{/* 레벨업 — 펫 단계가 오르면 탭 화면에서 한 번 축하한다 (상자보다 먼저) */}
-										<LevelUpModal />
-										{/* 수호신 성장 — 먹이를 줘 단계가 오르면 검은 화면으로 덮고 새 모습을 보여 준다 */}
-										<PetGrowthModal />
-										{/* 필수 : 버전 관리 및 체크를 수행 */}
-										<VersionCheckModal />
-									</SafeAreaProvider>
-								</HanjaFontProvider>
+			<Provider store={Store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<I18nextProvider i18n={i18n}>
+						<SafeAreaProvider initialMetrics={initialWindowMetrics}>
+							<ThemeProvider value={navigationTheme()}>
+								<ToastProvider>
+									{/* 다크 모드면 상태바 아이콘을 밝게 — 어두운 배경에서 시간·배터리가 묻히지 않도록 */}
+									<StatusBar style={isDark() ? 'light' : 'dark'} translucent backgroundColor="transparent" />
+									<AppLayout />
+									<VersionCheckModal />
+									<ConfirmModalHost />
+								</ToastProvider>
 							</ThemeProvider>
-						</PersistGate>
-					</Provider>
-				)}
-				{/* 커스텀 스플래시 — 화면을 가득 채우는 로고. 그림이 올라오면 네이티브 스플래시를 걷고, 애니메이션이 끝나면 스스로 사라진다 */}
-				{splashVisible && <AnimatedSplash onReveal={revealContent} onFinish={hideSplash} />}
-			</ErrorBoundary>
+						</SafeAreaProvider>
+					</I18nextProvider>
+				</PersistGate>
+			</Provider>
 		</GestureHandlerRootView>
 	);
-}
+};

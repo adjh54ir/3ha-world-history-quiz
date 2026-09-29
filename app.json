@@ -90,7 +90,9 @@
           "iosAppId": "ca-app-pub-1996095472780376~9825668482"
         }
       ],
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "expo-localization",
+      "expo-sharing"
     ],
     "extra": {
       "router": {},

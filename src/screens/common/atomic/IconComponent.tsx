@@ -1,5 +1,6 @@
 // IconComponent.tsx
 import { scaledSize } from '@/src/utils';
+import Colors from '@/src/const/ConstColors';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -61,7 +62,8 @@ interface IconProps {
  * @param param0 
  * @returns 
  */
-const IconComponent: React.FC<IconProps> = ({ type, name, size = 24, color = 'black', style }) => {
+// 호출부가 이미 scaledSize(...)로 넘기므로 여기서 또 스케일하면 이중 적용된다(기본값만 스케일)
+const IconComponent: React.FC<IconProps> = ({ type, name, size = scaledSize(24), color = Colors.text, style }) => {
 	const normalizedType = type.toLowerCase(); // 소문자 변환
 
 	const iconMap: Record<IconType, any> = {
@@ -89,7 +91,7 @@ const IconComponent: React.FC<IconProps> = ({ type, name, size = 24, color = 'bl
 		return null;
 	}
 
-	return <Icon name={name} size={scaledSize(size)} color={color} style={style} />;
+	return <Icon name={name} size={size} color={color} style={style} />;
 };
 
 export default IconComponent;
