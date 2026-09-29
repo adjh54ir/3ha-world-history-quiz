@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-na
 import { Image as ExpoImage, type ImageSource } from 'expo-image';
 import Colors from '@/src/const/ConstColors';
 import { Layout, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { isTablet, scaleArt, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleArt, scaleHeight } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 interface Props {

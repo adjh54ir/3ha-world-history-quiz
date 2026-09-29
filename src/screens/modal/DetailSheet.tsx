@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -69,6 +70,7 @@ interface Props {
  * - X는 우측 최상단, 따옴표 아이콘·태그·제목은 정중앙 배치
  */
 const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, onClose, onBookmarkChange, primaryAction }) => {
+	const { t } = useTranslation();
 	const [bookmarked, setBookmarked] = useState(false);
 	// 팝업 내부 자체 토스트 (팝업 뒤에 가려지는 문제 해결)
 	const [localToast, setLocalToast] = useState<{ msg: string; icon: string } | null>(null);
@@ -102,8 +104,8 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 	// 도메인(수도·위인 등) 태그 왼쪽에 표시할 상수 지정 아이콘
 	const domainMeta = item.domain && LearnHubService.isValidCategory(item.domain) ? LearnHubService.getDomain(item.domain).meta : null;
 	// 라벨: 요약/설명, 하단 태그 섹션 명칭 — 한국어 퀴즈는 도메인마다 달랐고(동의 속담·유의어…) 세계 상식은 한 가지다
-	const descLabel = '요약';
-	const tagLabel = '연관 키워드';
+	const descLabel = t('modal.detail.descLabel');
+	const tagLabel = t('modal.detail.tagLabel');
 	const tagIcon = 'tag';
 	const isChon = false;
 	const isIdiom = false;
@@ -121,7 +123,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 		setBookmarked(now);
 		onBookmarkChange?.(item.uid, now);
 		playPop();
-		showLocalToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showLocalToast(t(now ? 'common.bookmarkSaved' : 'common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 
 	return (
@@ -152,7 +154,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 								</View>
 							)}
 						</View>
-						<TouchableOpacity style={styles.headerSide} onPress={onClose} hitSlop={10} activeOpacity={0.7}>
+						<TouchableOpacity style={styles.headerSide} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.detail.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -167,7 +169,9 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 							style={[styles.favBtn, bookmarked ? { backgroundColor: withAlpha(accent, '14'), borderColor: withAlpha(accent, '40') } : { borderColor: Colors.border }]}
 							onPress={toggleBookmark}
 							hitSlop={8}
-							activeOpacity={0.8}>
+							activeOpacity={0.8}
+							accessibilityRole="button"
+							accessibilityLabel={t(bookmarked ? 'common.bookmarkRemove' : 'common.bookmarkAdd')}>
 							<IconComponent type="materialIcons" name={bookmarked ? 'star' : 'star-border'} size={scaledSize(20)} color={bookmarked ? Colors.bookmark : Colors.textMuted} />
 						</TouchableOpacity>
 					)}
@@ -202,7 +206,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 							<View style={[styles.box, styles.infoBox, isChon && styles.chonInfoBox]}>
 								<View style={styles.infoHead}>
 									<IconComponent type="materialIcons" name="badge" size={scaledSize(15)} color={accent} />
-									<Text style={[styles.label, { color: accent, marginBottom: 0, }]} numberOfLines={1} ellipsizeMode="tail">{isChon ? '기본정보' : '정보'}</Text>
+									<Text style={[styles.label, { color: accent, marginBottom: 0, }]} numberOfLines={1} ellipsizeMode="tail">{t(isChon ? 'modal.detail.infoChon' : 'modal.detail.info')}</Text>
 								</View>
 								{item.infoRows.map((r, i) => (
 									<View key={i} style={[styles.infoRow, i > 0 && styles.infoRowBorder]}>
@@ -247,13 +251,13 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 						{/* 촌수는 상단 설명 + 기본정보로 충분 — 해설(호칭 재노출) 제거 */}
 						{!!item.explanation && !isChon && item.explanation.trim() !== (item.meaning ?? '').trim() && item.explanation.trim() !== (item.description ?? '').trim() && item.explanation.trim() !== titleText.trim() && (
 							<View style={[styles.box, styles.explainBox]}>
-								<Text style={[styles.label, { color: Colors.success }]}>해설</Text>
+								<Text style={[styles.label, { color: Colors.success }]}>{t('modal.detail.explanation')}</Text>
 								<Text lineBreakStrategyIOS="hangul-word" style={styles.desc}>{item.explanation}</Text>
 							</View>
 						)}
 						{!!item.examples && item.examples.length > 0 && (
 							<View style={styles.box}>
-								<Text style={[styles.label, { color: accent }]}>더 알아보기</Text>
+								<Text style={[styles.label, { color: accent }]}>{t('modal.detail.more')}</Text>
 								{item.examples.map((ex, i) => (
 									<View key={i} style={styles.exampleBox}>
 										<Text lineBreakStrategyIOS="hangul-word" style={styles.example}>{ex}</Text>
@@ -269,9 +273,9 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 									<Text style={[styles.label, { color: accent, marginBottom: 0 }]} numberOfLines={1} ellipsizeMode="tail">{tagLabel}</Text>
 								</View>
 								<View style={styles.chipWrap}>
-									{tags.map((t, i) => (
-										<TouchableOpacity key={i} style={[styles.chip, { backgroundColor: withAlpha(accent, '12'), borderColor: withAlpha(accent, '30') }]} activeOpacity={0.7} onPress={() => { onClose(); router.push({ pathname: '/search', params: { q: t } } as never); }}>
-											<Text style={[styles.chipText, { color: accent }]} numberOfLines={1} ellipsizeMode="tail">{t}</Text>
+									{tags.map((tag, i) => (
+										<TouchableOpacity key={i} style={[styles.chip, { backgroundColor: withAlpha(accent, '12'), borderColor: withAlpha(accent, '30') }]} activeOpacity={0.7} onPress={() => { onClose(); router.push({ pathname: '/search', params: { q: tag } } as never); }}>
+											<Text style={[styles.chipText, { color: accent }]} numberOfLines={1} ellipsizeMode="tail">{tag}</Text>
 										</TouchableOpacity>
 									))}
 								</View>
@@ -292,7 +296,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 							style={[styles.cta, primaryAction ? styles.ctaSecondary : { backgroundColor: accent }]}
 							activeOpacity={0.9}
 							onPress={onClose}>
-							<Text style={[styles.ctaText, primaryAction ? styles.ctaSecondaryText : { color: readableOn(accent) }]}>닫기</Text>
+							<Text style={[styles.ctaText, primaryAction ? styles.ctaSecondaryText : { color: readableOn(accent) }]}>{t('common.close')}</Text>
 						</TouchableOpacity>
 						{primaryAction && (
 							<TouchableOpacity style={[styles.cta, styles.ctaPrimary, { backgroundColor: accent }]} activeOpacity={0.9} onPress={primaryAction.onPress}>

@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
@@ -19,6 +20,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * 주간 XP 리그 — 듀오링고식 승급/강등 리더보드
  */
 const League = () => {
+	const { t } = useTranslation();
 	const [board, setBoard] = useState<LeagueBoard | null>(null);
 
 	useFocusEffect(
@@ -35,7 +37,7 @@ const League = () => {
 	if (!board) {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<CommonHeader title="주간 리그" onBack={() => router.back()} />
+				<CommonHeader title={t('special.league.title')} onBack={() => router.back()} />
 				<ListSkeleton />
 			</SafeAreaView>
 		);
@@ -45,15 +47,15 @@ const League = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<CommonHeader title="주간 리그" onBack={() => router.back()} />
+			<CommonHeader title={t('special.league.title')} onBack={() => router.back()} />
 
 			<ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 			<FadeInUp>
 				{/* 리그 배지 */}
 				<View style={styles.badge}>
 					<ExpoImage source={FEATURE_ILLUSTRATIONS.league} style={styles.badgeIllustration} contentFit="contain" accessible={false} />
-					<Text style={styles.badgeName} numberOfLines={1} ellipsizeMode="tail">{board.league.name} 리그</Text>
-					<Text style={styles.badgeSub}>{board.daysLeft}일 후 정산 · 내 순위 {board.myRank}위</Text>
+					<Text style={styles.badgeName} numberOfLines={1} ellipsizeMode="tail">{t('special.league.leagueName', { name: board.league.name })}</Text>
+					<Text style={styles.badgeSub}>{t('special.league.badgeSub', { days: board.daysLeft, rank: board.myRank })}</Text>
 					<View style={[styles.myXpPill, { backgroundColor: withAlpha(board.league.color, '14') }]}>
 						<IconComponent type="materialIcons" name="bolt" size={scaledSize(15)} color={board.league.color} />
 						<Text style={[styles.myXpText, { color: Colors.textStrong }]}>{board.myXp} XP</Text>
@@ -64,13 +66,13 @@ const League = () => {
 					{board.promoteCount > 0 && (
 						<View style={styles.legendItem}>
 							<View style={[styles.legendDot, { backgroundColor: Colors.success }]} />
-							<Text style={styles.legendText}>상위 {board.promoteCount}명 승급</Text>
+							<Text style={styles.legendText}>{t('special.league.promote', { count: board.promoteCount })}</Text>
 						</View>
 					)}
 					{board.demoteCount > 0 && (
 						<View style={styles.legendItem}>
 							<View style={[styles.legendDot, { backgroundColor: Colors.error }]} />
-							<Text style={styles.legendText}>하위 {board.demoteCount}명 강등</Text>
+							<Text style={styles.legendText}>{t('special.league.demote', { count: board.demoteCount })}</Text>
 						</View>
 					)}
 				</View>
@@ -87,11 +89,11 @@ const League = () => {
 									<View style={[styles.avatar, { backgroundColor: e.isMe ? board.league.color : Colors.surfaceAlt }]}>
 										<Text style={[styles.avatarText, { color: e.isMe ? readableOn(board.league.color) : Colors.textSecondary }]}>{e.name.charAt(0)}</Text>
 									</View>
-									<Text style={[styles.name, e.isMe && { fontWeight: '900', color: Colors.textStrong }]} numberOfLines={1} ellipsizeMode="tail">{e.isMe ? '나' : e.name}</Text>
+									<Text style={[styles.name, e.isMe && { fontWeight: '900', color: Colors.textStrong }]} numberOfLines={1} ellipsizeMode="tail">{e.isMe ? t('special.league.me') : e.name}</Text>
 									<Text style={styles.xp}>{e.xp} XP</Text>
 								</View>
-								{board.promoteCount > 0 && e.rank === board.promoteCount && <View style={[styles.zoneLine, { borderColor: Colors.success }]}><Text style={[styles.zoneText, { color: Colors.success }]}>승급 라인</Text></View>}
-								{board.demoteCount > 0 && e.rank === total - board.demoteCount && <View style={[styles.zoneLine, { borderColor: Colors.error }]}><Text style={[styles.zoneText, { color: Colors.error }]}>강등 라인</Text></View>}
+								{board.promoteCount > 0 && e.rank === board.promoteCount && <View style={[styles.zoneLine, { borderColor: Colors.success }]}><Text style={[styles.zoneText, { color: Colors.success }]}>{t('special.league.promoteLine')}</Text></View>}
+								{board.demoteCount > 0 && e.rank === total - board.demoteCount && <View style={[styles.zoneLine, { borderColor: Colors.error }]}><Text style={[styles.zoneText, { color: Colors.error }]}>{t('special.league.demoteLine')}</Text></View>}
 							</View>
 						);
 					})}
@@ -99,9 +101,9 @@ const League = () => {
 
 				<TouchableOpacity style={styles.cta} activeOpacity={0.9} onPress={() => router.push('/challenge' as never)}>
 					<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.textInverse} />
-					<Text style={styles.ctaText}>퀴즈 풀고 XP 올리기</Text>
+					<Text style={styles.ctaText}>{t('special.league.cta')}</Text>
 				</TouchableOpacity>
-				<Text style={styles.note}>정답 1개당 10 XP · 매주 일요일 정산돼요</Text>
+				<Text style={styles.note}>{t('special.league.note')}</Text>
 			</FadeInUp>
 			</ScrollView>
 		</SafeAreaView>

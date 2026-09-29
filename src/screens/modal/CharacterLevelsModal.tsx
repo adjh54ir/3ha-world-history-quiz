@@ -2,12 +2,13 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleArt, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { getCharacterImages, getOverallCharacterLevelsByCount, hasCharacter } from '@/src/const/ConstCharacters';
@@ -39,6 +40,7 @@ interface Item {
 }
 
 const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 'overall' }) => {
+	const { t } = useTranslation();
 	const [tab, setTab] = useState(initialTab);
 	const [previewKey, setPreviewKey] = useState<string | null>(null);
 	const [score, setScore] = useState(0);
@@ -61,8 +63,8 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 	// 서비스가 매번 새 배열을 만들어 아래 useMemo/useCallback 이 무효화되지 않게 고정한다
 	const domains = useMemo(() => LearnHubService.getDomainList(), []);
 	const tabs = useMemo(
-		() => [{ key: 'overall', title: '전체' }, ...domains.filter((d) => hasCharacter(d.key) && getDomainLevels(d.key).length > 0).map((d) => ({ key: d.key, title: d.title }))],
-		[domains],
+		() => [{ key: 'overall', title: t('common.all') }, ...domains.filter((d) => hasCharacter(d.key) && getDomainLevels(d.key).length > 0).map((d) => ({ key: d.key, title: d.title }))],
+		[domains, t],
 	);
 
 	const itemsFor = useCallback(
@@ -76,7 +78,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 					img: c.img,
 					title: c.title,
 					unlocked: solvedTotal >= c.requiredCount,
-					req: c.requiredCount === 0 ? '시작' : `${c.requiredCount.toLocaleString()}문제`,
+					req: c.requiredCount === 0 ? t('modal.characterLevels.reqStart') : t('modal.characterLevels.reqQuestions', { value: c.requiredCount.toLocaleString() }),
 				}));
 			}
 			const s = domainStats[scope] ?? { solved: 0, correct: 0 };
@@ -90,10 +92,12 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 				img: imgs[i] ?? imgs[imgs.length - 1] ?? null,
 				title: def.label,
 				unlocked: value >= def.threshold,
-				req: def.threshold === 0 ? '시작' : metric === 'solved' ? `${def.threshold.toLocaleString()}문제` : `${def.threshold.toLocaleString()}점`,
+				req: def.threshold === 0
+					? t('modal.characterLevels.reqStart')
+					: t(metric === 'solved' ? 'modal.characterLevels.reqQuestions' : 'modal.characterLevels.reqPoints', { value: def.threshold.toLocaleString() }),
 			}));
 		},
-		[domains, domainStats],
+		[domains, domainStats, t],
 	);
 
 	const items = useMemo(() => itemsFor(tab), [itemsFor, tab]);
@@ -122,31 +126,31 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 		<BottomSheet visible={visible} onClose={onClose}>
 				<View>
 					<View style={styles.titleRow}>
-						<Text style={styles.title}>레벨별 캐릭터</Text>
-						<TouchableOpacity onPress={onClose} hitSlop={10} activeOpacity={0.7}>
+						<Text style={styles.title}>{t('modal.characterLevels.title')}</Text>
+						<TouchableOpacity onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.characterLevels.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
-					<Text style={styles.sub}>학습을 진행하면 단계별로 캐릭터가 성장해요</Text>
+					<Text style={styles.sub}>{t('modal.characterLevels.sub')}</Text>
 
 					{/* 주제 탭 */}
 					<ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabBar} contentContainerStyle={styles.tabRow}>
-						{tabs.map((t) => {
-							const on = tab === t.key;
+						{tabs.map((tb) => {
+							const on = tab === tb.key;
 							return (
-								<TouchableOpacity key={t.key} style={[styles.tabBtn, on && styles.tabBtnOn]} activeOpacity={0.85} onPress={() => selectTab(t.key)}>
-									{t.key === 'overall' ? (
+								<TouchableOpacity key={tb.key} style={[styles.tabBtn, on && styles.tabBtnOn]} activeOpacity={0.85} onPress={() => selectTab(tb.key)}>
+									{tb.key === 'overall' ? (
 										<IconComponent type="materialIcons" name="apps" size={scaledSize(15)} color={on ? Colors.primary : Colors.textMuted} />
 									) : (
 										<DomainIcon
-											mainIcon={LearnHubService.getDomain(t.key).meta.mainIcon}
-											icon={LearnHubService.getDomain(t.key).meta.icon}
-											iconType={LearnHubService.getDomain(t.key).meta.iconType}
+											mainIcon={LearnHubService.getDomain(tb.key).meta.mainIcon}
+											icon={LearnHubService.getDomain(tb.key).meta.icon}
+											iconType={LearnHubService.getDomain(tb.key).meta.iconType}
 											size={scaledSize(15)}
-											color={on ? Colors.primary : LearnHubService.getDomain(t.key).meta.color}
+											color={on ? Colors.primary : LearnHubService.getDomain(tb.key).meta.color}
 										/>
 									)}
-									<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1}>{t.title}</Text>
+									<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1}>{tb.title}</Text>
 								</TouchableOpacity>
 							);
 						})}
@@ -163,7 +167,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 							</Animated.View>
 						)}
 						<Text style={styles.previewTitle} numberOfLines={1}>{preview?.title ?? '-'}</Text>
-						<Text style={styles.previewReq}>{preview ? (preview.unlocked ? `획득 · ${preview.req}` : `잠김 · ${preview.req}`) : ''}</Text>
+						<Text style={styles.previewReq}>{preview ? t(preview.unlocked ? 'modal.characterLevels.unlocked' : 'modal.characterLevels.locked', { req: preview.req }) : ''}</Text>
 					</View>
 
 					{/* 단계 그리드 */}

@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateUtils from '@/src/utils/DateUtils';
 import DailyWordService from '@/src/services/DailyWordService';
 import AttendanceService from '@/src/services/AttendanceService';
+import i18n from '@/src/translations';
 
 /**
  * 알림 권한 요청
@@ -79,13 +80,13 @@ const ScheduleStreakReminder = async (streak: number, hour = 20, minute = 0) => 
 
         const body =
             streak > 0
-				? `${streak}일 연속 출석 중! 오늘도 출석하고 기록을 이어가세요.`
-                : '오늘 출석하고 세계 상식 하나 배워볼까요?';
+				? i18n.t('svc.notification.streakBodyOn', { streak })
+                : i18n.t('svc.notification.streakBodyOff');
 
         await notifee.createTriggerNotification(
             {
                 id: STREAK_REMINDER_ID,
-                title: '출석 잊지 마세요!',
+                title: i18n.t('svc.notification.streakTitle'),
                 body,
                 android: {
                     channelId,
@@ -144,8 +145,8 @@ const ScheduleDailyWordReminder = async (hour = 8, minute = 0) => {
         await notifee.createTriggerNotification(
             {
                 id: DAILY_WORD_REMINDER_ID,
-				title: '오늘의 상식',
-                body: '오늘의 세계 상식 하나, 지금 확인해볼까요?',
+				title: i18n.t('svc.notification.dailyWordTitle'),
+                body: i18n.t('svc.notification.dailyWordBody'),
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,
@@ -190,8 +191,8 @@ const ScheduleTodayQuizReminder = async (hour = 9, minute = 0) => {
         await notifee.createTriggerNotification(
             {
                 id: TODAY_QUIZ_REMINDER_ID,
-                title: '오늘의 퀴즈',
-                body: '오늘의 세계 상식 퀴즈 5문제를 풀어볼까요?',
+                title: i18n.t('svc.notification.todayQuizTitle'),
+                body: i18n.t('svc.notification.todayQuizBody'),
                 data: { moveToScreen: 'quiz/today' },
                 android: {
                     channelId,
@@ -277,8 +278,8 @@ const ScheduleWrongReviewReminder = async (count: number, hour = 9) => {
         await notifee.createTriggerNotification(
             {
                 id: WRONG_REVIEW_REMINDER_ID,
-                title: '오답 복습 시간이에요',
-                body: `어제 틀린 ${count}문제, 지금 다시 풀어볼까요?`,
+                title: i18n.t('svc.notification.wrongReviewTitle'),
+                body: i18n.t('svc.notification.wrongReviewBody', { n: count }),
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,

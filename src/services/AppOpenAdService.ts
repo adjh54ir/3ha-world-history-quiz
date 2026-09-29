@@ -13,7 +13,6 @@ import { AppState, AppStateStatus, Platform } from 'react-native';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
 import { GOOGLE_ADMOV_ANDROID_OPEN_APP, GOOGLE_ADMOV_IOS_OPEN_APP } from '@env';
 
-import { isAdsRemoved, loadAdsRemoved } from '@/src/services/PurchaseService';
 import { shouldShowAppOpenAd } from '@/src/services/AppOpenAdGate';
 import { resolveAdUnitId } from '@/src/screens/common/ads/adUnitId';
 import { logAdEvent } from '@/src/screens/common/ads/adLogEvent';
@@ -48,7 +47,6 @@ const isFresh = (): boolean => !!ad && ad.loaded && Date.now() - loadedAt < EXPI
  */
 export const preloadAppOpenAd = (): void => {
 	if (loading || showing || isFresh()) return;
-	if (isAdsRemoved()) return;
 
 	loading = true;
 	// 이전 인스턴스의 리스너를 남기면 이벤트가 중복으로 들어온다
@@ -96,8 +94,6 @@ export const preloadAppOpenAd = (): void => {
  */
 const showAppOpenAd = async (): Promise<void> => {
 	if (showing || !isFresh()) return;
-	// 구매자 미노출 — 앱 시작 직후엔 캐시가 아직 비어 있을 수 있어 플래그를 확실히 읽는다
-	if (await loadAdsRemoved()) return;
 
 	showing = true;
 	lastShowAt = Date.now();
@@ -118,7 +114,6 @@ const showAppOpenAd = async (): Promise<void> => {
  * 조건 판단(스토리지 I/O)이 로드를 막지 않도록 프리로드와 병렬로 돌린다.
  */
 const requestShowIfDue = async (): Promise<void> => {
-	if (isAdsRemoved()) return;
 	if (!(await shouldShowAppOpenAd())) return;
 	if (isFresh()) {
 		void showAppOpenAd();

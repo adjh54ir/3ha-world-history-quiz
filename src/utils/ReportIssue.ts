@@ -7,6 +7,7 @@
 import { Linking } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
+import i18n from '@/src/translations';
 
 const CONTACT_MAIL = 'adjh54ir@gmail.com';
 
@@ -26,19 +27,19 @@ export interface QuizIssueTarget {
 /** 메일 본문 — 사용자는 '무엇이 잘못됐는지'만 쓰면 되게 나머지를 채워 둔다 */
 export const buildIssueBody = (t: QuizIssueTarget): string =>
 	[
-		'아래 문항에서 잘못된 부분을 발견했습니다.',
+		i18n.t('svc.report.intro'),
 		'',
-		'■ 어떤 점이 잘못됐나요? (여기에 적어주세요)',
+		i18n.t('svc.report.ask'),
 		'',
 		'',
 		'────────────────',
-		'※ 아래는 확인용 정보입니다. 지우지 말아주세요.',
-		`문항: ${t.prompt}`,
-		t.answer ? `정답: ${t.answer}` : '',
-		t.explanation ? `해설: ${t.explanation}` : '',
-		t.uid ? `식별자: ${t.uid}` : '',
-		t.domain ? `주제: ${t.domain}` : '',
-		`앱 버전: ${DeviceInfo.getVersion()} (${DeviceInfo.getBuildNumber()})`,
+		i18n.t('svc.report.keepInfo'),
+		i18n.t('svc.report.prompt', { value: t.prompt }),
+		t.answer ? i18n.t('svc.report.answer', { value: t.answer }) : '',
+		t.explanation ? i18n.t('svc.report.explanation', { value: t.explanation }) : '',
+		t.uid ? i18n.t('svc.report.uid', { value: t.uid }) : '',
+		t.domain ? i18n.t('svc.report.domain', { value: t.domain }) : '',
+		i18n.t('svc.report.version', { version: DeviceInfo.getVersion(), build: DeviceInfo.getBuildNumber() }),
 	]
 		.filter(Boolean)
 		.join('\n');
@@ -56,15 +57,15 @@ const openMail = async (subject: string, body?: string): Promise<void> => {
 		if (!(await Linking.canOpenURL(url))) throw new Error('no mail app');
 		await Linking.openURL(url);
 	} catch {
-		await showAlert('메일 앱을 열 수 없어요', `${CONTACT_MAIL} 으로 보내주시면 확인하겠습니다.`, 'mail-outline');
+		await showAlert(i18n.t('svc.report.noMailTitle'), i18n.t('svc.report.noMailMessage', { mail: CONTACT_MAIL }), 'mail-outline');
 	}
 };
 
 /** 메일 앱으로 오류 제보 열기 (메일 앱이 없으면 안내) */
 export const reportQuizIssue = async (t: QuizIssueTarget): Promise<void> =>
-	openMail('[세계 상식 퀴즈] 문항 오류 제보', buildIssueBody(t));
+	openMail(i18n.t('svc.report.issueSubject'), buildIssueBody(t));
 
 /** 설정 화면의 일반 문의 */
-export const openContactMail = async (): Promise<void> => openMail('세계 상식 퀴즈 문의');
+export const openContactMail = async (): Promise<void> => openMail(i18n.t('svc.report.contactSubject'));
 
 export default { reportQuizIssue, buildIssueBody, openContactMail };

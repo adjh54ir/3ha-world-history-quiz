@@ -1,21 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
-import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
-import useAdsRemoved from '@/src/hooks/useAdsRemoved';
 import { scaleHeight } from '@/src/utils';
-import { resolveAdUnitId } from './adUnitId';
 import { themed } from '@/src/utils/ThemedStyles';
 
 type AdUnitIdType = string;
 
-const AD_UNIT_ID: AdUnitIdType = resolveAdUnitId(
-	Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }),
-	TestIds.BANNER,
-	'banner',
-);
+// 배너는 운영 빌드에서도 테스트(DEV) 유닛으로 고정한다.
+// 운영 광고로 되돌리려면: resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.BANNER, 'banner')
+const AD_UNIT_ID: AdUnitIdType = TestIds.BANNER;
 
 interface AdmobBannerAdProps {
 	paramMarginTop?: number;
@@ -30,7 +25,6 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 }) => {
 	const bannerRef = useRef<BannerAd | null>(null);
 	const retryTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-	const adsRemoved = useAdsRemoved();
 
 	useEffect(() => () => clearTimeout(retryTimer.current), []);
 
@@ -68,9 +62,6 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 			console.error('🔥 Failed to log ad click:', error);
 		}
 	};
-
-	// ✅ 광고 제거 구매자는 배너 미노출
-	if (adsRemoved) return null;
 
 	return (
 		<View

@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LearnType } from '@/src/types/data/LearnType';
 import DateUtils from '@/src/utils/DateUtils';
 import { CancelWrongReviewReminder } from '@/src/utils/NotifactionHelper';
+import i18n from '@/src/translations';
 
 /**
  * 통합 학습/퀴즈 진행 데이터 영구 저장 서비스 (AsyncStorage)
@@ -183,7 +184,7 @@ const readStats = async (): Promise<LearnStats> => {
 	return { ...emptyStats(), ...raw, byDomain: raw.byDomain ?? {}, byMode: raw.byMode ?? {}, dailyLog: raw.dailyLog ?? {} };
 };
 
-const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
 const DAILY_LOG_CAP = 120;
 
 const addDays = (dateStr: string, n: number): string => DateUtils.addLocalDays(dateStr, n);
@@ -412,7 +413,7 @@ const LearnProgressService = {
 			const date = addDays(today, -i);
 			const log = stats.dailyLog[date] ?? { solved: 0, correct: 0 };
 			const dow = DateUtils.getLocalDayOfWeek(date);
-			days.push({ date, label: DAY_LABELS[dow], solved: log.solved, correct: log.correct });
+			days.push({ date, label: i18n.t(`svc.weekday.${DAY_KEYS[dow]}`), solved: log.solved, correct: log.correct });
 			solved += log.solved;
 			correct += log.correct;
 			if (log.solved > 0) activeDays += 1;

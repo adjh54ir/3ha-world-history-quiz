@@ -3,6 +3,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
@@ -25,6 +26,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * - ?pack=geo 로 진입하면 목록을 건너뛰고 해당 팩 소개부터 보여준다.
  */
 const ExamPacks = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams<{ pack?: string }>();
 	const [selected, setSelected] = useState<ExamPack | null>(() => getExamPack(params.pack) ?? null);
 	const [started, setStarted] = useState(false);
@@ -76,7 +78,7 @@ const ExamPacks = () => {
 		if (retry && selected) {
 			const wrong = new Set(record?.wrongUids ?? []);
 			if (!buildPool(selected).some((q) => wrong.has(q.uid))) {
-				showAlert('다시 풀 오답이 없어요', '오답 기록이 최신 문제와 맞지 않아요. 전체 회차로 다시 풀어 주세요.', 'info-outline');
+				showAlert(t('special.exam.noRetryTitle'), t('special.exam.noRetryMsg'), 'info-outline');
 				return;
 			}
 		}
@@ -88,9 +90,9 @@ const ExamPacks = () => {
 		return (
 			<LearnQuizPlayer
 				key={retryMode ? 'retry' : 'full'}
-				title={retryMode ? `${selected.title} 오답` : selected.title}
+				title={retryMode ? t('special.exam.retryTitle', { title: selected.title }) : selected.title}
 				accent={selected.color}
-				modeLabel={`${selected.title} 결과`}
+				modeLabel={t('special.exam.resultLabel', { title: selected.title })}
 				mode="exam"
 				homeHref="/special/exam"
 				generate={() => buildQuestions(selected)}
@@ -110,39 +112,39 @@ const ExamPacks = () => {
 							<IconComponent type="materialIcons" name={selected.icon} size={scaledSize(42)} color={selected.color} />
 						</View>
 						<Text style={styles.introTitle} maxFontSizeMultiplier={1.3} numberOfLines={1} ellipsizeMode="tail">{selected.subtitle}</Text>
-						<Text style={styles.introDesc}>이 팩의 주제에서 {selected.count}문제를 뽑아 한 회차로 풀어요.</Text>
+						<Text style={styles.introDesc}>{t('special.exam.introDesc', { count: selected.count })}</Text>
 
 						{hasRecord && (
 							<View style={[styles.recordCard, { borderColor: withAlpha(selected.color, '33') }]}>
 								<View style={styles.recordItem}>
-									<Text style={styles.recordLabel}>최고 점수</Text>
+									<Text style={styles.recordLabel}>{t('special.exam.bestScore')}</Text>
 									<Text style={[styles.recordValue, { color: selected.color }]}>{record.best}/{record.total}</Text>
 								</View>
 								<View style={styles.recordDivider} />
 								<View style={styles.recordItem}>
-									<Text style={styles.recordLabel}>응시</Text>
-									<Text style={styles.recordValue}>{record.plays}회</Text>
+									<Text style={styles.recordLabel}>{t('special.exam.plays')}</Text>
+									<Text style={styles.recordValue}>{t('special.exam.playsValue', { count: record.plays })}</Text>
 								</View>
 								<View style={styles.recordDivider} />
 								<View style={styles.recordItem}>
-									<Text style={styles.recordLabel}>직전 오답</Text>
-									<Text style={styles.recordValue}>{retryCount}개</Text>
+									<Text style={styles.recordLabel}>{t('special.exam.lastWrong')}</Text>
+									<Text style={styles.recordValue}>{t('common.count', { count: retryCount })}</Text>
 								</View>
 							</View>
 						)}
 
 						<View style={styles.metaCard}>
 							<View style={styles.metaRow}>
-								<Text style={styles.metaLabel}>출제 범위</Text>
+								<Text style={styles.metaLabel}>{t('special.exam.covers')}</Text>
 								<Text style={styles.metaValue} numberOfLines={2} ellipsizeMode="tail">{selected.covers}</Text>
 							</View>
 							<View style={[styles.metaRow, styles.metaBorder]}>
-								<Text style={styles.metaLabel}>문항 수</Text>
-								<Text style={styles.metaValue}>{selected.count}문제</Text>
+								<Text style={styles.metaLabel}>{t('special.exam.questionCount')}</Text>
+								<Text style={styles.metaValue}>{t('common.questions', { count: selected.count })}</Text>
 							</View>
 							<View style={[styles.metaRow, styles.metaBorder]}>
-								<Text style={styles.metaLabel}>난이도</Text>
-								<Text style={styles.metaValue} numberOfLines={2} ellipsizeMode="tail">{selected.level ?? '전체'}</Text>
+								<Text style={styles.metaLabel}>{t('special.exam.level')}</Text>
+								<Text style={styles.metaValue} numberOfLines={2} ellipsizeMode="tail">{selected.level ?? t('common.all')}</Text>
 							</View>
 						</View>
 
@@ -160,14 +162,14 @@ const ExamPacks = () => {
 				{/* 시작 CTA — 스크롤과 무관하게 엄지 닿는 하단에 고정 */}
 				<View style={styles.introFooter}>
 					<TouchableOpacity style={[styles.startBtn, { backgroundColor: selected.color }]} activeOpacity={0.9} onPress={() => start(false)}>
-						<Text style={[styles.startText, { color: readableOn(selected.color) }]} numberOfLines={1} ellipsizeMode="tail">{selected.count}문제 시작하기</Text>
+						<Text style={[styles.startText, { color: readableOn(selected.color) }]} numberOfLines={1} ellipsizeMode="tail">{t('special.exam.startCount', { count: selected.count })}</Text>
 						<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(18)} color={readableOn(selected.color)} />
 					</TouchableOpacity>
 
 					{retryCount > 0 && (
 						<TouchableOpacity style={[styles.retryBtn, { borderColor: selected.color }]} activeOpacity={0.85} onPress={() => start(true)}>
 							<IconComponent type="materialIcons" name="replay" size={scaledSize(18)} color={selected.color} />
-							<Text style={[styles.retryText, { color: selected.color }]} numberOfLines={1} ellipsizeMode="tail">지난 회차 오답 {retryCount}개만 다시 풀기</Text>
+							<Text style={[styles.retryText, { color: selected.color }]} numberOfLines={1} ellipsizeMode="tail">{t('special.exam.retryWrong', { count: retryCount })}</Text>
 						</TouchableOpacity>
 					)}
 				</View>
@@ -177,10 +179,10 @@ const ExamPacks = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={['bottom']}>
-			<CommonHeader title="테마 코스" onBack={() => router.back()} />
+			<CommonHeader title={t('special.exam.title')} onBack={() => router.back()} />
 			<ScrollView contentContainerStyle={styles.listWrap} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
-					<SectionHead title="테마별 코스" sub="한 회차를 풀면 점수와 통계에 그대로 반영돼요." />
+					<SectionHead title={t('special.exam.sectionTitle')} sub={t('special.exam.sectionSub')} />
 					{EXAM_PACKS.map((p) => {
 						const rec = records[p.key];
 						return (
@@ -194,14 +196,14 @@ const ExamPacks = () => {
 									{!!rec && (
 										<View style={styles.packStatRow}>
 											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(13)} color={p.color} />
-											<Text style={[styles.packStatText, { color: p.color }]}>최고 {rec.best}/{rec.total}</Text>
+											<Text style={[styles.packStatText, { color: p.color }]}>{t('special.exam.bestShort', { best: rec.best, total: rec.total })}</Text>
 											<Text style={styles.packStatDot}>·</Text>
-											<Text style={styles.packStatText}>{rec.plays}회 응시</Text>
+											<Text style={styles.packStatText}>{t('special.exam.playsShort', { count: rec.plays })}</Text>
 										</View>
 									)}
 								</View>
 								<View style={[styles.countPill, { backgroundColor: withAlpha(p.color, '14') }]}>
-									<Text style={[styles.countText, { color: p.color }]}>{p.count}문제</Text>
+									<Text style={[styles.countText, { color: p.color }]}>{t('common.questions', { count: p.count })}</Text>
 								</View>
 							</TouchableOpacity>
 						);
@@ -217,7 +219,7 @@ export default ExamPacks;
 const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	listWrap: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
-	packCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
+	packCard: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
 	packIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center' },
 	packBody: { flex: 1 },
 	packTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
@@ -232,12 +234,12 @@ const styles = themed(() => StyleSheet.create({
 	introIcon: { width: scaleWidth(92), height: scaleWidth(92), borderRadius: Radius.xxl, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.xl },
 	introTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
 	introDesc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.sm, lineHeight: scaleHeight(21) },
-	recordCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderWidth: 1, marginTop: Layout.sectionGap, paddingVertical: SpacingV.md },
+	recordCard: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', borderWidth: 1, marginTop: Layout.sectionGap, paddingVertical: SpacingV.md },
 	recordItem: { flex: 1, alignItems: 'center', gap: SpacingV.xxs },
 	recordDivider: { width: StyleSheet.hairlineWidth, alignSelf: 'stretch', backgroundColor: Colors.border },
 	recordLabel: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '700' },
 	recordValue: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
-	metaCard: { ...CardSurface, marginTop: Layout.sectionGap, paddingHorizontal: Spacing.md },
+	metaCard: { ...CardSurface, borderRadius: Radius.lg, marginTop: Layout.sectionGap, paddingHorizontal: Spacing.md },
 	metaRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, paddingVertical: SpacingV.md },
 	metaBorder: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: Colors.border },
 	metaLabel: { width: scaleWidth(72), fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },

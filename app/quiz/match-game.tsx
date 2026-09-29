@@ -3,11 +3,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, contentWidth, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { LearnType } from '@/src/types/data/LearnType';
 import ConfettiCannon from 'react-native-confetti-cannon';
@@ -70,6 +71,7 @@ const buildTiles = (mode: MatchMode): Tile[] => {
  * - 이름과 설명을 뒤집어 짝을 맞춰요. 적은 시도·짧은 시간이 목표!
  */
 const MatchGame = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const mode: MatchMode = stringParam(params.mode, 'meaning') === 'flag' ? 'flag' : 'meaning';
 	const [tiles, setTiles] = useState<Tile[]>(() => buildTiles(mode));
@@ -88,8 +90,8 @@ const MatchGame = () => {
 
 	useEffect(() => {
 		if (done) return;
-		const t = setInterval(() => setSeconds((s) => s + 1), 1000);
-		return () => clearInterval(t);
+		const id = setInterval(() => setSeconds((s) => s + 1), 1000);
+		return () => clearInterval(id);
 	}, [done]);
 
 	const restart = () => {
@@ -145,21 +147,21 @@ const MatchGame = () => {
 
 			<View style={styles.header}>
 				<CommonHeader
-					title={mode === 'flag' ? '국기 짝 맞추기' : '짝 맞추기'}
+					title={mode === 'flag' ? t('quiz.match.titleFlag') : t('quiz.match.title')}
 					backIcon="close"
 					border={false}
 					style={styles.headerRow}
 					onBack={() => router.back()}
 					right={
-						<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel="다시 섞기" onPress={restart}>
+						<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('quiz.match.shuffle')} onPress={restart}>
 							<IconComponent type="materialIcons" name="refresh" size={scaledSize(20)} color={Colors.text} />
 						</TouchableOpacity>
 					}
 				/>
 				<View style={styles.statRow}>
 					<Text style={styles.statText}>⏱ {mm}:{ss}</Text>
-					<Text style={styles.statText}>시도 {moves}</Text>
-					<Text style={styles.statText}>맞춤 {matched.size}/{totalPairs}</Text>
+					<Text style={styles.statText}>{t('quiz.match.moves', { count: moves })}</Text>
+					<Text style={styles.statText}>{t('quiz.match.matched', { value: matched.size, total: totalPairs })}</Text>
 				</View>
 			</View>
 
@@ -168,21 +170,21 @@ const MatchGame = () => {
 				{done ? (
 					<View style={styles.resultCard}>
 						<ExpoImage source={FEATURE_ILLUSTRATIONS.matchGame} style={styles.resultIllustration} contentFit="contain" accessible={false} />
-						<Text style={styles.resultTitle}>완성!</Text>
-						<Text style={styles.resultSub}>{moves}번 시도 · {mm}:{ss}</Text>
+						<Text style={styles.resultTitle}>{t('quiz.match.done')}</Text>
+						<Text style={styles.resultSub}>{t('quiz.match.resultSub', { count: moves, time: `${mm}:${ss}` })}</Text>
 						<View style={styles.resultBtns}>
 							<TouchableOpacity style={styles.outlineBtn} activeOpacity={0.85} onPress={restart}>
 								<IconComponent type="materialIcons" name="replay" size={scaledSize(20)} color={Colors.text} />
-								<Text style={styles.outlineBtnText}>다시</Text>
+								<Text style={styles.outlineBtnText}>{t('quiz.match.again')}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[styles.filledBtn, { backgroundColor: Colors.primary }]} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
 								<IconComponent type="materialIcons" name="home" size={scaledSize(20)} color={Colors.textInverse} />
-								<Text style={styles.filledBtnText}>홈으로</Text>
+								<Text style={styles.filledBtnText}>{t('quiz.common.home')}</Text>
 							</TouchableOpacity>
 						</View>
 					</View>
 				) : (
-					<Text style={styles.guide}>{mode === 'flag' ? '국기와 나라 이름을 짝지어 보세요' : '이름과 설명을 짝지어 보세요'}</Text>
+					<Text style={styles.guide}>{mode === 'flag' ? t('quiz.match.guideFlag') : t('quiz.match.guide')}</Text>
 				)}
 
 				<View style={styles.grid}>

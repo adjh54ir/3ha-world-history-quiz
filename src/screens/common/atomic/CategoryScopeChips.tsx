@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { readableOn } from '@/src/const/ConstColors';
@@ -37,11 +38,12 @@ const CategoryScopeChips: React.FC<CategoryScopeChipsProps> = ({
 	value,
 	onChange,
 	includeAll = true,
-	allLabel = '전체',
+	allLabel,
 	showCount = true,
 	style,
 	showIcon = true,
 }) => {
+	const { t } = useTranslation();
 	const domains = LearnHubService.getDomainList();
 
 	return (
@@ -51,14 +53,14 @@ const CategoryScopeChips: React.FC<CategoryScopeChipsProps> = ({
 					<TouchableOpacity
 						accessibilityRole="button"
 						accessibilityState={{ selected: value === ALL_SCOPE }}
-						accessibilityLabel="전체 주제"
+						accessibilityLabel={t('atomic.categoryScope.allA11y')}
 						style={[styles.chip, value === ALL_SCOPE && { backgroundColor: Colors.primary, borderColor: Colors.primary }]}
 						activeOpacity={0.85}
 						onPress={() => onChange(ALL_SCOPE)}>
 						{showIcon && (
 							<IconComponent type="materialIcons" name="apps" size={scaledSize(15)} color={value === ALL_SCOPE ? Colors.textInverse : Colors.textSecondary} />
 						)}
-						<Text style={[styles.chipText, value === ALL_SCOPE && { color: Colors.textInverse }]} numberOfLines={1} ellipsizeMode="tail">{allLabel}</Text>
+						<Text style={[styles.chipText, value === ALL_SCOPE && { color: Colors.textInverse }]} numberOfLines={1} ellipsizeMode="tail">{allLabel ?? t('common.all')}</Text>
 					</TouchableOpacity>
 				)}
 				{domains.map((d) => {
@@ -68,7 +70,7 @@ const CategoryScopeChips: React.FC<CategoryScopeChipsProps> = ({
 							key={d.key}
 							accessibilityRole="button"
 							accessibilityState={{ selected: active }}
-							accessibilityLabel={`${d.title}, ${d.total.toLocaleString()}개`}
+							accessibilityLabel={t('atomic.categoryScope.chipA11y', { title: d.title, value: d.total.toLocaleString() })}
 							style={[styles.chip, active && { backgroundColor: d.color, borderColor: d.color }]}
 							activeOpacity={0.85}
 							onPress={() => onChange(d.key)}>

@@ -1,10 +1,10 @@
 
-import { SpacingV, Radius, Typography, Shadow } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Shadow } from '@/src/const/ConstDesign';
 import { GOOGLE_ADMOV_ANDROID_REWARD, GOOGLE_ADMOV_IOS_REWARD } from '@env';
 import React, { useEffect, useRef } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { RewardedAd, TestIds, RewardedAdEventType, AdEventType } from 'react-native-google-mobile-ads';
-import { isAdsRemoved } from '@/src/services/PurchaseService';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -20,16 +20,11 @@ const AdmobRewardAd: React.FC<{
 	onFailed: () => void; // 로드 실패
 	onClosed: () => void; // 광고 닫힘 (보상 없이 닫은 경우 포함)
 }> = ({ onRewarded, onFailed, onClosed }) => {
+	const { t } = useTranslation();
 	const adRef = useRef<RewardedAd | null>(null);
 	const rewardedRef = useRef(false); // 보상 중복 방지
 
 	useEffect(() => {
-		// ✅ 광고 제거 구매자는 광고 시청 없이 즉시 보상 지급
-		if (isAdsRemoved()) {
-			rewardedRef.current = true;
-			onRewarded();
-			return;
-		}
 		const ad = RewardedAd.createForAdRequest(AD_UNIT_ID, {
 			requestNonPersonalizedAdsOnly: true,
 		});
@@ -67,15 +62,12 @@ const AdmobRewardAd: React.FC<{
 		};
 	}, []);
 
-	// ✅ 광고 제거 구매자는 로딩 오버레이도 표시하지 않음
-	if (isAdsRemoved()) return null;
-
 	return (
 		<View style={styles.adOverlay}>
 			<View style={styles.container}>
 				<ActivityIndicator size="large" color={Colors.success} />
-				<Text style={styles.loadingTxt}>광고를 준비 중이에요…</Text>
-				<Text style={styles.subTxt}>시청 완료 시 도전 기회 +1회</Text>
+				<Text style={styles.loadingTxt}>{t('ads.preparing')}</Text>
+				<Text style={styles.subTxt}>{t('ads.rewardSub')}</Text>
 			</View>
 		</View>
 	);
@@ -94,7 +86,8 @@ const styles = themed(() => StyleSheet.create({
 		zIndex: 999,
 	},
 	container: {
-		padding: SpacingV.xxl,
+		paddingHorizontal: Spacing.xxl,
+		paddingVertical: SpacingV.xxl,
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.lg,
 		alignItems: 'center',

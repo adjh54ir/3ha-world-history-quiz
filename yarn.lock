@@ -9637,24 +9637,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-iap@npm:^16.0.1":
-  version: 16.7.1
-  resolution: "react-native-iap@npm:16.7.1"
-  peerDependencies:
-    "@amazon-devices/keplerscript-appstore-iap-lib": ~2.13.0
-    "@amazon-devices/package-manager-lib": ~1.0.1767254401
-    react: "*"
-    react-native: "*"
-    react-native-nitro-modules: ">=0.36.5"
-  peerDependenciesMeta:
-    "@amazon-devices/keplerscript-appstore-iap-lib":
-      optional: true
-    "@amazon-devices/package-manager-lib":
-      optional: true
-  checksum: 10c0/f5c89f17fe727037e60a565fe5031e9b0da350a390fe076c2451c5be9bfcb206da394911d2e34deb6209af69dad700db32b04e7431c69b493a2337ea4b661f11
-  languageName: node
-  linkType: hard
-
 "react-native-is-edge-to-edge@npm:1.2.1":
   version: 1.2.1
   resolution: "react-native-is-edge-to-edge@npm:1.2.1"
@@ -9687,16 +9669,6 @@ __metadata:
     react: ">=16.2.0"
     react-native: ">=0.50.4"
   checksum: 10c0/b90b75401340cd79c42e07e6e8961551e8b98acfbc53bc0b651174aea2a86b92430be767da7c813e54b08e7bbd8af6c09dbeb4f9369d925984979cc28b6ba8fb
-  languageName: node
-  linkType: hard
-
-"react-native-nitro-modules@npm:^0.36.1":
-  version: 0.36.5
-  resolution: "react-native-nitro-modules@npm:0.36.5"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 10c0/c7b2133f924967b68c0f0f678b5a5dce1a784a7e22f57ebf203ef5803a5c9c745b6d4dda8c9bcedd13f7c5ca53a8707784e98572a2ca8a864fe0b905163a34b5
   languageName: node
   linkType: hard
 
@@ -11377,9 +11349,7 @@ __metadata:
     react-native-device-info: "npm:^14.0.4"
     react-native-gesture-handler: "npm:^2.24.0"
     react-native-google-mobile-ads: "npm:16.4.0"
-    react-native-iap: "npm:^16.0.1"
     react-native-markdown-display: "npm:^7.0.2"
-    react-native-nitro-modules: "npm:^0.36.1"
     react-native-permissions: "npm:^5.3.0"
     react-native-reanimated: "npm:4.2.1"
     react-native-safe-area-context: "npm:~5.6.2"

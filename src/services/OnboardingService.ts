@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DateUtils from '@/src/utils/DateUtils';
+import i18n from '@/src/translations';
 
 /**
  * 첫 실행 온보딩 — 관심 주제와 하루 목표를 먼저 물어 홈을 개인화한다.
@@ -18,11 +19,19 @@ const STARTED_AT_KEY = 'ONBOARDING_STARTED_AT';
 /** 이 기간 동안은 홈 하위 섹션을 접어 첫인상을 단순하게 유지한다 */
 export const NEWCOMER_DAYS = 3;
 
-export const INTEREST_OPTIONS: { key: Interest; label: string; desc: string; icon: string }[] = [
-	{ key: 'vocab', label: '세계 지리 · 역사', desc: '수도 · 랜드마크 · 위인 · 세계사 · 신화 · 우주', icon: 'public' },
-	{ key: 'knowledge', label: '스포츠 상식', desc: '월드컵 · 하계 올림픽 · 동계 올림픽', icon: 'emoji-events' },
-	{ key: 'both', label: '둘 다 볼래요', desc: '지리·역사와 스포츠를 골고루 익혀요', icon: 'auto-awesome' },
-];
+/** label·desc 는 getter — 읽는(렌더) 시점에 번역한다 */
+const interestOption = (key: Interest, icon: string): { key: Interest; label: string; desc: string; icon: string } => ({
+	key,
+	icon,
+	get label() {
+		return i18n.t(`svc.onboarding.${key}Label`);
+	},
+	get desc() {
+		return i18n.t(`svc.onboarding.${key}Desc`);
+	},
+});
+
+export const INTEREST_OPTIONS = [interestOption('vocab', 'public'), interestOption('knowledge', 'emoji-events'), interestOption('both', 'auto-awesome')];
 
 const OnboardingService = {
 	/** 온보딩을 이미 마쳤는가 */

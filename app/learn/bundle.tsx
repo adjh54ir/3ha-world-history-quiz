@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
@@ -23,6 +24,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * - 랜덤: 전 주제 믹스 숏폼 (/shorts)
  */
 const StudyBundle = () => {
+	const { t } = useTranslation();
 	const mainDomains = LearnHubService.getDomainList();
 	const subDomains = LearnHubService.getSubQuizDomainList();
 	// 주제 탭 — 퀴즈 선택 화면과 같은 형태. 메인 주제 / 서브 퀴즈는 섞이지 않는다
@@ -67,26 +69,26 @@ const StudyBundle = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<CommonHeader title="학습 선택" onBack={() => router.back()} />
+			<CommonHeader title={t('learn.bundle.title')} onBack={() => router.back()} />
 
 			<View style={styles.tabRow}>
 				{([
-					{ key: 'main', label: '메인 주제', icon: 'category', count: mainDomains.length },
-					{ key: 'sub', label: '서브 퀴즈', icon: 'extension', count: subDomains.length },
-				] as const).map((t) => {
-					const on = topicTab === t.key;
+					{ key: 'main', label: t('quiz.common.tabMain'), icon: 'category', count: mainDomains.length },
+					{ key: 'sub', label: t('quiz.common.tabSub'), icon: 'extension', count: subDomains.length },
+				] as const).map((tab) => {
+					const on = topicTab === tab.key;
 					return (
 						<TouchableOpacity
-							key={t.key}
+							key={tab.key}
 							style={[styles.tabBtn, on && styles.tabBtnOn]}
 							activeOpacity={0.85}
 							accessibilityRole="tab"
 							accessibilityState={{ selected: on }}
-							onPress={() => changeTopicTab(t.key)}>
-							<IconComponent type="materialIcons" name={t.icon} size={scaledSize(16)} color={on ? Colors.textInverse : Colors.textMuted} />
-							<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1} ellipsizeMode="tail">{t.label}</Text>
+							onPress={() => changeTopicTab(tab.key)}>
+							<IconComponent type="materialIcons" name={tab.icon} size={scaledSize(16)} color={on ? Colors.textInverse : Colors.textMuted} />
+							<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1} ellipsizeMode="tail">{tab.label}</Text>
 							<View style={[styles.tabCount, on && styles.tabCountOn]}>
-								<Text style={[styles.tabCountText, on && styles.tabCountTextOn]}>{t.count}</Text>
+								<Text style={[styles.tabCountText, on && styles.tabCountTextOn]}>{tab.count}</Text>
 							</View>
 						</TouchableOpacity>
 					);
@@ -109,8 +111,8 @@ const StudyBundle = () => {
 								<IconComponent type="materialIcons" name="shuffle" size={scaledSize(20)} color={Colors.primary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowTitle}>랜덤 학습</Text>
-								<Text style={styles.rowSub} numberOfLines={1}>이 탭의 모든 주제를 섞어서 학습해요</Text>
+								<Text style={styles.rowTitle}>{t('learn.bundle.randomTitle')}</Text>
+								<Text style={styles.rowSub} numberOfLines={1}>{t('learn.bundle.randomDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -118,7 +120,7 @@ const StudyBundle = () => {
 				</FadeInUp>
 
 				<SectionHead
-					title="주제 선택"
+					title={t('quiz.common.selectTopics')}
 					style={styles.sectionHead}
 					right={
 						<View style={styles.actionBtns}>
@@ -126,15 +128,16 @@ const StudyBundle = () => {
 								<Text style={styles.countText}>{selected.length}/{domains.length}</Text>
 							</View>
 							<TouchableOpacity onPress={allSelected ? clearAll : selectAll} activeOpacity={0.7} hitSlop={8}>
-								<Text style={styles.actionText}>{allSelected ? '전체 해제' : '전체 선택'}</Text>
+								<Text style={styles.actionText}>{allSelected ? t('quiz.common.clearAll') : t('quiz.common.selectAll')}</Text>
 							</TouchableOpacity>
 						</View>
 					}
 				/>
-				{domains.map((d) => {
+				{domains.map((d, i) => {
 					const on = selected.includes(d.key);
 					return (
-						<TouchableOpacity key={d.key} style={[styles.row, on && { borderColor: d.color, backgroundColor: withAlpha(d.color, '0F') }]} activeOpacity={0.85} onPress={() => toggle(d.key)}>
+						<FadeInUp key={d.key} delay={40 + i * 45} duration={340} distance={12}>
+						<TouchableOpacity style={[styles.row, on && { borderColor: d.color, backgroundColor: withAlpha(d.color, '0F') }]} activeOpacity={0.85} onPress={() => toggle(d.key)}>
 							<View style={[styles.rowIcon, { backgroundColor: d.mainIcon ? Colors.surfaceAlt : withAlpha(d.color, '14') }]}>
 								<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 30 : 22)} color={d.color} />
 							</View>
@@ -144,12 +147,13 @@ const StudyBundle = () => {
 							</View>
 							<IconComponent type="materialIcons" name={on ? 'check-circle' : 'radio-button-unchecked'} size={scaledSize(24)} color={on ? d.color : Colors.textMuted} />
 						</TouchableOpacity>
+						</FadeInUp>
 					);
 				})}
 			</ScrollView>
 
 			<BottomButton
-				label={selected.length > 0 ? `${selected.length}개 주제로 학습` : '주제를 선택하세요'}
+				label={selected.length > 0 ? t('learn.bundle.startWith', { count: selected.length }) : t('learn.bundle.pickTopic')}
 				icon="play-arrow"
 				disabled={selected.length === 0}
 				onPress={startBundle}
@@ -159,20 +163,20 @@ const StudyBundle = () => {
 			<BottomSheet visible={showMode} onClose={() => setShowMode(false)}>
 					<View>
 						<View style={styles.modalTitleRow}>
-							<Text style={styles.modalTitle}>학습 방법 선택</Text>
+							<Text style={styles.modalTitle}>{t('learn.mode.title')}</Text>
 							<TouchableOpacity onPress={() => setShowMode(false)} hitSlop={10} activeOpacity={0.7}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
-						<Text style={styles.modalSub}>{randomMode ? '전체 주제에서 랜덤으로 학습해요. 방법을 골라주세요.' : `선택한 ${selected.length}개 주제를 어떻게 학습할까요?`}</Text>
+						<Text style={styles.modalSub}>{randomMode ? t('learn.bundle.modeSubRandom') : t('learn.bundle.modeSubSelected', { count: selected.length })}</Text>
 
 						<TouchableOpacity style={styles.modeCard} activeOpacity={0.9} onPress={startShorts}>
 							<View style={[styles.modeIcon, { backgroundColor: Colors.primaryBg }]}>
 								<IconComponent type="materialIcons" name="play-circle" size={scaledSize(26)} color={Colors.primary} />
 							</View>
 							<View style={styles.modeBody}>
-								<Text style={styles.modeTitle}>숏폼 학습</Text>
-								<Text style={styles.modeDesc}>위로 넘기며 빠르게 훑어보기</Text>
+								<Text style={styles.modeTitle}>{t('learn.bundle.shortsTitle')}</Text>
+								<Text style={styles.modeDesc}>{t('learn.bundle.shortsDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -182,8 +186,8 @@ const StudyBundle = () => {
 								<IconComponent type="materialIcons" name="style" size={scaledSize(26)} color={Colors.primary} />
 							</View>
 							<View style={styles.modeBody}>
-								<Text style={styles.modeTitle}>카드 학습</Text>
-								<Text style={styles.modeDesc}>좌우로 넘기며 한 장씩 꼼꼼히</Text>
+								<Text style={styles.modeTitle}>{t('learn.bundle.cardsTitle')}</Text>
+								<Text style={styles.modeDesc}>{t('learn.bundle.cardsDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>

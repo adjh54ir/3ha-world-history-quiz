@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { getHomeCharacterImage } from '@/src/const/ConstCharacters';
@@ -19,17 +20,17 @@ interface Props {
 }
 
 const GOAL_OPTIONS = [5, 10, 20] as const;
-const GOAL_DESC: Record<number, string> = { 5: '가볍게 · 하루 2분', 10: '꾸준히 · 하루 5분', 20: '집중해서 · 하루 10분' };
+const GOAL_DESC_KEY = { 5: 'modal.onboarding.goalDesc5', 10: 'modal.onboarding.goalDesc10', 20: 'modal.onboarding.goalDesc20' } as const;
 
 /**
  * 첫 실행 온보딩 — 환영 → 관심 주제 → 하루 목표 → 알림 4스텝.
  * 건너뛰어도 기본값(둘 다 · 10문제)으로 완료 처리해 다시 뜨지 않게 한다.
  * 알림 권한은 마지막에 묻는다. 첫 화면에서 바로 물으면 대부분 거절하고, 거절하면 복습 알림이 통째로 막힌다.
  */
-/** 인사 문구 — 한 글자씩 타이핑해 캐릭터가 말하는 느낌을 준다 */
-const GREET_LINE = '세계 상식 퀴즈에 오신 걸 환영해요.\n세계 수도 · 랜드마크부터 위인 · 신화 · 우주까지, 제가 매일 조금씩 함께 익혀드릴게요.';
-
 const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
+	const { t } = useTranslation();
+	/** 인사 문구 — 한 글자씩 타이핑해 캐릭터가 말하는 느낌을 준다 (3줄 이내) */
+	const greetLine = t('modal.onboarding.greetLine');
 	const [step, setStep] = useState(0);
 	// 인사 스텝 연출 — 타이핑 + 캐릭터 상하 흔들림 (공통 CharacterGuide 와 같은 톤)
 	const reducedMotion = useReducedMotion();
@@ -40,18 +41,18 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 		if (!greeting) return;
 		// '동작 줄이기'면 타자 효과 없이 전체 문장을 바로 보여준다
 		if (reducedMotion) {
-			setTyped(GREET_LINE);
+			setTyped(greetLine);
 			return;
 		}
 		setTyped('');
 		let i = 0;
 		const timer = setInterval(() => {
 			i += 1;
-			setTyped(GREET_LINE.slice(0, i));
-			if (i >= GREET_LINE.length) clearInterval(timer);
+			setTyped(greetLine.slice(0, i));
+			if (i >= greetLine.length) clearInterval(timer);
 		}, 28);
 		return () => clearInterval(timer);
-	}, [greeting, reducedMotion]);
+	}, [greeting, reducedMotion, greetLine]);
 	useEffect(() => {
 		if (!greeting || reducedMotion) return;
 		const loop = Animated.loop(
@@ -103,11 +104,11 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 							<View style={styles.greetBubble}>
 								<View style={styles.greetBubbleHead}>
 									<IconComponent type="materialIcons" name="tips-and-updates" size={scaledSize(15)} color={Colors.primary} />
-									<Text style={styles.greetBubbleTitle}>안녕하세요!</Text>
+									<Text style={styles.greetBubbleTitle}>{t('modal.onboarding.greetTitle')}</Text>
 								</View>
 								<Text style={styles.greetBubbleText}>
 									{typed}
-									{typed.length < GREET_LINE.length && <Text style={styles.greetCaret}>▌</Text>}
+									{typed.length < greetLine.length && <Text style={styles.greetCaret}>▌</Text>}
 								</Text>
 								<View style={styles.greetTail} />
 								<View style={styles.greetTailBorder} />
@@ -116,15 +117,15 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 								<ExpoImage source={getHomeCharacterImage(null)} style={styles.greetChar} contentFit="contain" />
 							</Animated.View>
 							<TouchableOpacity style={styles.primaryBtn} activeOpacity={0.9} onPress={() => setStep(1)}>
-								<Text style={styles.primaryText}>시작하기</Text>
+								<Text style={styles.primaryText}>{t('common.start')}</Text>
 							</TouchableOpacity>
 						</>
 					)}
 
 					{step === 1 && (
 						<>
-							<Text style={styles.title}>어떤 걸 익히고 싶나요?</Text>
-							<Text style={styles.desc}>고른 주제를 홈 위쪽에 먼저 보여드려요.</Text>
+							<Text style={styles.title}>{t('modal.onboarding.interestTitle')}</Text>
+							<Text style={styles.desc}>{t('modal.onboarding.interestDesc')}</Text>
 							<View style={styles.optionList}>
 								{INTEREST_OPTIONS.map((o) => {
 									const on = interest === o.key;
@@ -143,15 +144,15 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 								})}
 							</View>
 							<TouchableOpacity style={styles.primaryBtn} activeOpacity={0.9} onPress={() => setStep(2)}>
-								<Text style={styles.primaryText}>다음</Text>
+								<Text style={styles.primaryText}>{t('common.next')}</Text>
 							</TouchableOpacity>
 						</>
 					)}
 
 					{step === 2 && (
 						<>
-							<Text style={styles.title}>하루에 몇 문제 풀까요?</Text>
-							<Text style={styles.desc}>홈의 오늘 목표로 쓰여요. 나중에 바꿀 수 있어요.</Text>
+							<Text style={styles.title}>{t('modal.onboarding.goalTitle')}</Text>
+							<Text style={styles.desc}>{t('modal.onboarding.goalDesc')}</Text>
 							<View style={styles.optionList}>
 								{GOAL_OPTIONS.map((n) => {
 									const on = goal === n;
@@ -161,8 +162,8 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 												<Text style={[styles.goalNum, on && styles.goalNumOn]}>{n}</Text>
 											</View>
 											<View style={styles.optionBody}>
-												<Text style={[styles.optionLabel, on && styles.optionLabelOn]} numberOfLines={1}>하루 {n}문제</Text>
-												<Text style={styles.optionDesc} numberOfLines={1}>{GOAL_DESC[n]}</Text>
+												<Text style={[styles.optionLabel, on && styles.optionLabelOn]} numberOfLines={1}>{t('modal.onboarding.goalLabel', { count: n })}</Text>
+												<Text style={styles.optionDesc} numberOfLines={1}>{t(GOAL_DESC_KEY[n])}</Text>
 											</View>
 											{on && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(20)} color={Colors.primary} />}
 										</TouchableOpacity>
@@ -170,7 +171,7 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 								})}
 							</View>
 							<TouchableOpacity style={styles.primaryBtn} activeOpacity={0.9} onPress={() => setStep(3)}>
-								<Text style={styles.primaryText}>다음</Text>
+								<Text style={styles.primaryText}>{t('common.next')}</Text>
 							</TouchableOpacity>
 						</>
 					)}
@@ -180,20 +181,20 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 							<View style={styles.iconWrap}>
 								<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(28)} color={Colors.primary} />
 							</View>
-							<Text style={styles.title}>복습할 때 알려드릴까요?</Text>
-							<Text style={styles.desc}>오늘의 표현과 복습 시점에 딱 한 번만 알려드려요.{'\n'}광고 알림은 보내지 않아요.</Text>
+							<Text style={styles.title}>{t('modal.onboarding.notiTitle')}</Text>
+							<Text style={styles.desc}>{t('modal.onboarding.notiDesc')}</Text>
 							<TouchableOpacity style={[styles.primaryBtn, busy && styles.btnDisabled]} activeOpacity={0.9} disabled={busy} onPress={allowNotification}>
-								<Text style={styles.primaryText}>알림 받기</Text>
+								<Text style={styles.primaryText}>{t('modal.onboarding.notiAllow')}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={styles.skipBtn} activeOpacity={0.8} disabled={busy} onPress={() => finish(interest, goal)}>
-								<Text style={styles.skipText}>나중에 할게요</Text>
+								<Text style={styles.skipText}>{t('modal.onboarding.later')}</Text>
 							</TouchableOpacity>
 						</>
 					)}
 
 					{step < 3 && (
 						<TouchableOpacity style={styles.skipBtn} activeOpacity={0.8} onPress={() => finish('both', 10)}>
-							<Text style={styles.skipText}>건너뛰기</Text>
+							<Text style={styles.skipText}>{t('modal.onboarding.skip')}</Text>
 						</TouchableOpacity>
 					)}
 				</SheetIn>
@@ -217,13 +218,13 @@ const styles = themed(() => StyleSheet.create({
 	greetBubbleHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	greetBubbleTitle: { flex: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	// 타이핑 중 글자 수가 늘어나며 말풍선 높이가 튀지 않게 최소 높이를 잡아둔다
-	greetBubbleText: { fontSize: Typography.body, lineHeight: scaleHeight(22), color: Colors.textStrong, fontWeight: '600', minHeight: scaleHeight(110) },
+	greetBubbleText: { fontSize: Typography.body, lineHeight: scaleHeight(22), color: Colors.textStrong, fontWeight: '600', minHeight: scaleHeight(66) },
 	greetCaret: { color: Colors.primary },
 	greetTail: { position: 'absolute', left: scaleWidth(36), bottom: -scaleHeight(11), width: 0, height: 0, borderLeftWidth: scaleWidth(10), borderRightWidth: scaleWidth(10), borderTopWidth: scaleHeight(12), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.surfaceAlt, zIndex: 2 },
 	greetTailBorder: { position: 'absolute', left: scaleWidth(35), bottom: -scaleHeight(13), width: 0, height: 0, borderLeftWidth: scaleWidth(11), borderRightWidth: scaleWidth(11), borderTopWidth: scaleHeight(13), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.primarySoft, zIndex: 1 },
 	greetChar: { alignSelf: 'flex-start', width: scaleArt(104), height: scaleArt(104), marginTop: SpacingV.md, marginLeft: Spacing.sm, borderRadius: Radius.xl },
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.xs, lineHeight: scaleHeight(20) },
-	optionList: { alignSelf: 'stretch', gap: Spacing.xs, marginTop: SpacingV.lg },
+	optionList: { alignSelf: 'stretch', gap: SpacingV.xs, marginTop: SpacingV.lg },
 	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	optionOn: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	optionIcon: { width: scaleWidth(36), height: scaleWidth(36), borderRadius: Radius.md, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt },

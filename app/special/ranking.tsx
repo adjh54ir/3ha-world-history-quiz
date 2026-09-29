@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Animated, Easing } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
@@ -26,13 +27,15 @@ import { themed } from '@/src/utils/ThemedStyles';
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 const LOTTIE_EMPTY = require('@/src/assets/lottie/empty.json');
 
-const TABS: { key: RankBoard; label: string; icon: string; unit: string; desc: string; colors: [string, string, string] }[] = themed(() => ([
-	{ key: 'total', label: '전체', icon: 'emoji-events', unit: '점', desc: '나의 퀴즈 점수로 겨루는 명예의 전당', colors: [...BRAND_GRADIENT] as [string, string, string] },
-	{ key: 'time', label: '타임챌린지', icon: 'bolt', unit: '점', desc: '180초 순간 집중력 대결', colors: [...HEAT_GRADIENT] as [string, string, string] },
+// 문구는 렌더 시점에 t() 로 푼다 (labelKey/descKey)
+const TABS = themed(() => ([
+	{ key: 'total' as RankBoard, labelKey: 'common.all' as const, icon: 'emoji-events', descKey: 'special.ranking.descTotal' as const, colors: [...BRAND_GRADIENT] as [string, string, string] },
+	{ key: 'time' as RankBoard, labelKey: 'special.ranking.tabTime' as const, icon: 'bolt', descKey: 'special.ranking.descTime' as const, colors: [...HEAT_GRADIENT] as [string, string, string] },
 	// 주간 랭킹은 '내 활동' 탭(연속 학습 아래)으로 이동했습니다.
 ]));
 
 const Ranking = () => {
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const insets = useSafeAreaInsets();
 	// board 파라미터로 진입하면 해당 보드만 보여준다 (타임챌린지 전체보기 → 탭 없이 타임챌린지만)
@@ -56,16 +59,16 @@ const Ranking = () => {
 	const celebrateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 	useEffect(() => () => { if (celebrateTimer.current) clearTimeout(celebrateTimer.current); }, []);
 
-	const meta = useMemo(() => TABS.find((t) => t.key === tab) ?? TABS[0], [tab]);
+	const meta = useMemo(() => TABS.find((b) => b.key === tab) ?? TABS[0], [tab]);
 	// 히어로 그라디언트가 상단 인셋까지 이어지도록 상태바 색을 맞춘다
 	useTopBarAccent(meta.colors[0]);
 
 	// 응답이 늦게 도착한 옛 요청이 최신 목록을 덮어쓰지 않도록 요청 순번을 센다
 	const loadSeq = useRef(0);
-	const load = useCallback(async (t: RankBoard) => {
+	const load = useCallback(async (board: RankBoard) => {
 		const seq = ++loadSeq.current;
 		setLoading(true);
-		const [b, m] = await Promise.all([RankingService.board(t), RankingService.myRank(t)]);
+		const [b, m] = await Promise.all([RankingService.board(board), RankingService.myRank(board)]);
 		if (seq !== loadSeq.current) return;
 		setRows(b);
 		setMine(m);
@@ -114,10 +117,10 @@ const Ranking = () => {
 			setNickname(nickInput.trim());
 			setEditNick(false);
 			playPop();
-			showToast('닉네임을 변경했어요', 'casino');
+			showToast(t('special.ranking.nickChanged'), 'casino');
 			load(tab);
 		} else {
-			showToast('닉네임 변경에 실패했어요', 'error-outline');
+			showToast(t('special.ranking.nickChangeFailed'), 'error-outline');
 		}
 	};
 
@@ -131,21 +134,21 @@ const Ranking = () => {
 			setCelebrate(true);
 			if (celebrateTimer.current) clearTimeout(celebrateTimer.current);
 			celebrateTimer.current = setTimeout(() => setCelebrate(false), 2600);
-			showToast('랭킹에 참여했어요!', 'emoji-events');
+			showToast(t('special.ranking.joined'), 'emoji-events');
 			load(tab);
 		} else {
-			showToast('닉네임 저장에 실패했어요', 'error-outline');
+			showToast(t('special.ranking.nickSaveFailed'), 'error-outline');
 		}
 	};
 
-	const changeTab = (t: RankBoard) => {
-		if (t === tab) return;
+	const changeTab = (next: RankBoard) => {
+		if (next === tab) return;
 		playPop();
-		setTab(t);
-		load(t);
+		setTab(next);
+		load(next);
 	};
 
-	const unit = meta.unit;
+	const unit = t('special.ranking.unit');
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
@@ -157,7 +160,7 @@ const Ranking = () => {
 						<IconComponent type="materialIcons" name="arrow-back-ios-new" size={scaledSize(18)} color={Colors.textInverse} />
 					</TouchableOpacity>
 					{/* 특정 보드로 진입하면 탭이 숨으므로 제목으로 맥락을 유지한다 */}
-					<Text style={styles.heroTitle} numberOfLines={1}>{lockedBoard ? `${meta.label} 랭킹` : '랭킹'}</Text>
+					<Text style={styles.heroTitle} numberOfLines={1}>{lockedBoard ? t('special.ranking.boardTitle', { label: t(meta.labelKey) }) : t('special.ranking.title')}</Text>
 					{nickname ? (
 						<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={openEditNick} hitSlop={8}>
 							<IconComponent type="materialIcons" name="edit" size={scaledSize(19)} color={Colors.textInverse} />
@@ -175,23 +178,23 @@ const Ranking = () => {
 				<ExpoImage source={FEATURE_ILLUSTRATIONS.ranking} style={styles.heroIllustration} contentFit="contain" accessible={false} />
 				<View style={styles.heroBadge}>
 					<IconComponent type="materialIcons" name={meta.icon} size={scaledSize(14)} color={Colors.textInverse} />
-					<Text style={styles.heroBadgeText} numberOfLines={1} ellipsizeMode="tail">{meta.desc}</Text>
+					<Text style={styles.heroBadgeText} numberOfLines={1} ellipsizeMode="tail">{t(meta.descKey)}</Text>
 				</View>
 				<View style={styles.heroStats}>
 					<View style={styles.heroStat}>
 						{/* 보드는 상위 100명까지만 내려온다 — 전체 참가자 수가 아니므로 라벨을 맞춘다 */}
 						<Text style={styles.heroStatNum}>{rows.length.toLocaleString()}</Text>
-						<Text style={styles.heroStatLabel}>표시 인원</Text>
+						<Text style={styles.heroStatLabel}>{t('special.ranking.shownCount')}</Text>
 					</View>
 					<View style={styles.heroStatDivider} />
 					<View style={styles.heroStat}>
-						<Text style={styles.heroStatNum}>{mine ? `${mine.rank}위` : '-'}</Text>
-						<Text style={styles.heroStatLabel}>내 순위</Text>
+						<Text style={styles.heroStatNum}>{mine ? t('special.ranking.rankValue', { rank: mine.rank }) : '-'}</Text>
+						<Text style={styles.heroStatLabel}>{t('special.ranking.myRank')}</Text>
 					</View>
 					<View style={styles.heroStatDivider} />
 					<View style={styles.heroStat}>
 						<Text style={styles.heroStatNum}>{mine ? mine.score.toLocaleString() : '-'}</Text>
-						<Text style={styles.heroStatLabel}>내 점수</Text>
+						<Text style={styles.heroStatLabel}>{t('special.ranking.myScore')}</Text>
 					</View>
 				</View>
 			</View>
@@ -199,12 +202,12 @@ const Ranking = () => {
 			{/* 탭 — 특정 보드로 진입했을 땐 숨김 */}
 			{!lockedBoard && (
 			<View style={styles.tabBar}>
-				{TABS.map((t) => {
-					const on = tab === t.key;
+				{TABS.map((b) => {
+					const on = tab === b.key;
 					return (
-						<TouchableOpacity key={t.key} style={[styles.tabBtn, on && { backgroundColor: t.colors[0], borderColor: t.colors[0] }]} activeOpacity={0.85} onPress={() => changeTab(t.key)}>
-							<IconComponent type="materialIcons" name={t.icon} size={scaledSize(15)} color={on ? readableOn(t.colors[0]) : Colors.textMuted} />
-							<Text style={[styles.tabText, on && { color: readableOn(t.colors[0]) }]} numberOfLines={1} ellipsizeMode="tail">{t.label}</Text>
+						<TouchableOpacity key={b.key} style={[styles.tabBtn, on && { backgroundColor: b.colors[0], borderColor: b.colors[0] }]} activeOpacity={0.85} onPress={() => changeTab(b.key)}>
+							<IconComponent type="materialIcons" name={b.icon} size={scaledSize(15)} color={on ? readableOn(b.colors[0]) : Colors.textMuted} />
+							<Text style={[styles.tabText, on && { color: readableOn(b.colors[0]) }]} numberOfLines={1} ellipsizeMode="tail">{t(b.labelKey)}</Text>
 						</TouchableOpacity>
 					);
 				})}
@@ -214,13 +217,13 @@ const Ranking = () => {
 			{!configured ? (
 				<View style={styles.center}>
 					<LottieBox source={LOTTIE_EMPTY} autoPlay loop style={styles.emptyLottie} />
-					<Text style={styles.emptyText}>랭킹이 아직 준비 중이에요.</Text>
+					<Text style={styles.emptyText}>{t('special.ranking.notReady')}</Text>
 				</View>
 			) : !nickname ? (
 				<View style={[styles.center, { paddingBottom: insets.bottom + SpacingV.xl }]}>
 					<LottieBox source={LOTTIE_CONFETTI} autoPlay loop={false} style={styles.joinLottie} />
-					<Text style={styles.nickTitle}>랭킹 참여하기</Text>
-					<Text style={styles.nickSub}>주사위를 굴려 마음에 드는 닉네임을 뽑아보세요.</Text>
+					<Text style={styles.nickTitle}>{t('special.ranking.joinTitle')}</Text>
+					<Text style={styles.nickSub}>{t('special.ranking.joinSub')}</Text>
 
 					{/* 랜덤 닉네임 카드 + 주사위 */}
 					<View style={styles.nickCard}>
@@ -231,35 +234,35 @@ const Ranking = () => {
 							</Animated.View>
 						</TouchableOpacity>
 					</View>
-					<Text style={styles.nickHint}>비속어 방지를 위해 닉네임은 랜덤으로만 만들어져요.</Text>
+					<Text style={styles.nickHint}>{t('special.ranking.nickHint')}</Text>
 
 					<TouchableOpacity style={styles.nickBtn} activeOpacity={0.9} onPress={saveNickname}>
 						<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.textInverse} />
-						<Text style={styles.nickBtnText}>이 닉네임으로 참여</Text>
+						<Text style={styles.nickBtnText}>{t('special.ranking.joinBtn')}</Text>
 					</TouchableOpacity>
 				</View>
 			) : loading ? (
 				<View style={styles.list}>
 					{[0, 1, 2, 3, 4, 5].map((i) => (
-						<Skeleton key={i} width={'100%'} height={scaleHeight(60)} radius={Radius.lg} style={{ marginBottom: SpacingV.sm }} />
+						<Skeleton key={i} width={'100%'} height={scaleHeight(60)} radius={Radius.lg} style={{ marginBottom: Layout.itemGap }} />
 					))}
 				</View>
 			) : rows.length === 0 ? (
 				<View style={styles.center}>
 					<LottieBox source={LOTTIE_EMPTY} autoPlay loop style={styles.emptyLottie} />
-					<Text style={styles.emptyText}>아직 기록이 없어요.{'\n'}첫 주자가 되어보세요!</Text>
+					<Text style={styles.emptyText}>{t('special.ranking.empty')}</Text>
 				</View>
 			) : (
 				<FlatList
 					data={rows}
 					keyExtractor={(r, i) => `${r.rank}-${r.nickname}-${i}`}
-					contentContainerStyle={[styles.list, { paddingBottom: insets.bottom + scaleHeight(96) }]}
+					contentContainerStyle={[styles.list, { paddingBottom: (mine ? 0 : insets.bottom) + Layout.screenBottom }]}
 					showsVerticalScrollIndicator={false}
 					ListHeaderComponent={
 						<FadeInUp>
 							{/* TOP 3 시상대 — 2 · 1 · 3 순서로 고정 배치 (챌린지 탭과 공용 컴포넌트) */}
 							<RankPodium rows={rows} unit={unit} />
-							<Text style={styles.listHead}>전체 순위</Text>
+							<Text style={styles.listHead}>{t('special.ranking.listHead')}</Text>
 						</FadeInUp>
 					}
 					renderItem={({ item, index }) => (
@@ -278,8 +281,8 @@ const Ranking = () => {
 						<IconComponent type="materialIcons" name="person" size={scaledSize(16)} color={Colors.textInverse} />
 					</View>
 					<View style={styles.myBody}>
-						<Text style={styles.myLabel}>내 순위</Text>
-						<Text style={styles.myRank}>{mine.rank}위</Text>
+						<Text style={styles.myLabel}>{t('special.ranking.myRank')}</Text>
+						<Text style={styles.myRank}>{t('special.ranking.rankValue', { rank: mine.rank })}</Text>
 					</View>
 					<Text style={styles.myScore}>{mine.score.toLocaleString()}{unit}</Text>
 				</View>
@@ -291,12 +294,12 @@ const Ranking = () => {
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setEditNick(false)} />
 					<View style={styles.modalSheet}>
 						<View style={styles.modalTitleRow}>
-							<Text style={styles.modalTitle}>닉네임 변경</Text>
+							<Text style={styles.modalTitle}>{t('special.ranking.editTitle')}</Text>
 							<TouchableOpacity onPress={() => setEditNick(false)} hitSlop={10} activeOpacity={0.7}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
-						<Text style={styles.modalSub}>주사위를 굴려 새 닉네임을 뽑아보세요.</Text>
+						<Text style={styles.modalSub}>{t('special.ranking.editSub')}</Text>
 						<View style={styles.nickCard}>
 							<Text style={styles.nickValue} numberOfLines={1}>{nickInput}</Text>
 							<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} onPress={rollNickname}>
@@ -305,10 +308,10 @@ const Ranking = () => {
 							</Animated.View>
 							</TouchableOpacity>
 						</View>
-						<Text style={styles.nickHint} numberOfLines={1} ellipsizeMode="tail">현재 닉네임: {nickname}</Text>
+						<Text style={styles.nickHint} numberOfLines={1} ellipsizeMode="tail">{t('special.ranking.currentNick', { name: nickname })}</Text>
 						<TouchableOpacity style={[styles.nickBtn, saving && { opacity: 0.6 }]} activeOpacity={0.9} disabled={saving} onPress={applyNickChange}>
 							<IconComponent type="materialIcons" name="check" size={scaledSize(18)} color={Colors.textInverse} />
-							<Text style={styles.nickBtnText} numberOfLines={1} ellipsizeMode="tail">{saving ? '변경 중…' : '이 닉네임으로 변경'}</Text>
+							<Text style={styles.nickBtnText} numberOfLines={1} ellipsizeMode="tail">{saving ? t('special.ranking.changing') : t('special.ranking.changeBtn')}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -349,7 +352,8 @@ const styles = themed(() => StyleSheet.create({
 	heroStatLabel: { color: Colors.onBrandTextSoft, fontSize: Typography.footnote, fontWeight: '700', marginTop: SpacingV.xxs },
 	heroStatDivider: { width: 1, height: scaleHeight(26), backgroundColor: Colors.onBrandSurfaceStrong },
 	// 탭
-	tabBar: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Layout.screenH, paddingVertical: SpacingV.md },
+	// 아래 여백은 목록(list)의 screenTop 이 맡는다 — 둘 다 주면 탭→목록 간격만 두 배가 됐다
+	tabBar: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md },
 	tabBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.md, borderRadius: Radius.pill, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border },
 	tabText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted, textAlign: 'center' },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },

@@ -3,9 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Image as ExpoImage } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
-import AppModal from '@/src/screens/common/atomic/AppModal';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
@@ -34,6 +34,7 @@ const MAIN_ICON = require('@/src/assets/mainIcon.webp');
  * - 주제 선택 시 히어로가 해당 주제 캐릭터/점수로 전환, 레벨별 캐릭터 팝업 제공
  */
 const ScoreDetail = () => {
+	const { t } = useTranslation();
 	const insets = useSafeAreaInsets();
 	const domains = LearnHubService.getDomainList();
 	const [stats, setStats] = useState<LearnStats | null>(null);
@@ -112,7 +113,7 @@ const ScoreDetail = () => {
 	const heroScore = selectedRow ? selectedRow.score : totalScore;
 	const heroSolved = selectedRow ? selectedRow.solved : totalSolved;
 	const heroRate = selectedRow ? selectedRow.rate : accuracy;
-	const heroTitle = selectedRow ? selectedRow.title : '전체 달성률';
+	const heroTitle = selectedRow ? selectedRow.title : t('special.scoreDetail.overallTitle');
 	const totalQuestionCount = domains.reduce((a, d) => a + d.total, 0);
 	const heroTotal = selectedRow ? selectedRow.total : totalQuestionCount;
 	// 전체 달성률 — '푼 문제 / 전체 문제' 퍼센트. 등급은 이 %로 산정하고 표기는 실제 문제 개수로 노출.
@@ -146,7 +147,7 @@ const ScoreDetail = () => {
 				scrollEventThrottle={16}
 				onScroll={(e) => setShowTopBtn(e.nativeEvent.contentOffset.y > scaleHeight(320))}>
 				{/* 헤더를 뺀 대신 화면 제목은 스크롤 첫 줄에 크게 */}
-				<Text style={styles.screenTitle}>점수 상세</Text>
+				<Text style={styles.screenTitle}>{t('special.scoreDetail.title')}</Text>
 				<FadeInUp>
 				{/* 점수 히어로 */}
 				<View style={styles.banner}>
@@ -181,14 +182,14 @@ const ScoreDetail = () => {
 									</View>
 									<View style={styles.nextGradeTag}>
 										<IconComponent type="materialIcons" name="arrow-upward" size={scaledSize(11)} color={Colors.primary} />
-										<Text style={styles.nextGradeTagText}>다음 등급까지 {Math.max(0, heroLevel.nextThreshold - heroLevel.value).toLocaleString()}{heroLevel.metric === 'solved' ? '문제' : '점'}</Text>
+										<Text style={styles.nextGradeTagText}>{t(heroLevel.metric === 'solved' ? 'special.scoreDetail.nextGradeSolved' : 'special.scoreDetail.nextGradeScore', { value: Math.max(0, heroLevel.nextThreshold - heroLevel.value).toLocaleString() })}</Text>
 									</View>
 								</View>
 							) : (
 								<View style={styles.nextGradeWrap}>
 									<View style={styles.nextGradeTag}>
 										<IconComponent type="materialIcons" name="workspace-premium" size={scaledSize(11)} color={Colors.primary} />
-										<Text style={styles.nextGradeTagText}>최고 등급 달성</Text>
+										<Text style={styles.nextGradeTagText}>{t('special.scoreDetail.maxGrade')}</Text>
 									</View>
 								</View>
 							)}
@@ -206,14 +207,14 @@ const ScoreDetail = () => {
 									</View>
 									<View style={styles.nextGradeTag}>
 										<IconComponent type="materialIcons" name="arrow-upward" size={scaledSize(11)} color={Colors.primary} />
-										<Text style={styles.nextGradeTagText}>다음 등급까지 {Math.max(0, overallLevel.nextCount - overallLevel.value).toLocaleString()}문제</Text>
+										<Text style={styles.nextGradeTagText}>{t('special.scoreDetail.nextGradeSolved', { value: Math.max(0, overallLevel.nextCount - overallLevel.value).toLocaleString() })}</Text>
 									</View>
 								</View>
 							) : (
 								<View style={styles.nextGradeWrap}>
 									<View style={styles.nextGradeTag}>
 										<IconComponent type="materialIcons" name="workspace-premium" size={scaledSize(11)} color={Colors.primary} />
-										<Text style={styles.nextGradeTagText}>최고 등급 달성</Text>
+										<Text style={styles.nextGradeTagText}>{t('special.scoreDetail.maxGrade')}</Text>
 									</View>
 								</View>
 							)}
@@ -223,7 +224,7 @@ const ScoreDetail = () => {
 					{/* 점수: 주제는 누적 점수, 전체는 총 문제 대비 달성률(%) */}
 					<View style={styles.scoreRow}>
 						<Text style={styles.scoreNum}>{isOverall ? overallPct : heroScore.toLocaleString()}</Text>
-						<Text style={styles.scoreUnit}>{isOverall ? '%' : '점'}</Text>
+						<Text style={styles.scoreUnit}>{isOverall ? '%' : t('special.scoreDetail.unitPoint')}</Text>
 					</View>
 
 					<View style={styles.labelRow}>
@@ -240,12 +241,12 @@ const ScoreDetail = () => {
 					<View style={styles.scoreBox}>
 						<View style={styles.scoreBoxItem}>
 							<FitText style={styles.scoreBoxNum}>{heroSolved.toLocaleString()}/{heroTotal.toLocaleString()}</FitText>
-							<FitText style={styles.scoreBoxLabel}>총 문제</FitText>
+							<FitText style={styles.scoreBoxLabel}>{t('special.scoreDetail.totalQuestions')}</FitText>
 						</View>
 						<View style={styles.scoreBoxDivider} />
 						<View style={styles.scoreBoxItem}>
 							<FitText style={[styles.scoreBoxNum, { color: accuracyColor(heroRate) }]}>{heroRate}%</FitText>
-							<FitText style={styles.scoreBoxLabel}>정답률</FitText>
+							<FitText style={styles.scoreBoxLabel}>{t('special.scoreDetail.accuracy')}</FitText>
 						</View>
 					</View>
 
@@ -254,30 +255,30 @@ const ScoreDetail = () => {
 						{(isOverall || hasCharacter(charKey)) && (
 							<TouchableOpacity style={styles.charViewBtn} activeOpacity={0.85} onPress={openCharModal}>
 								<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(13)} color={Colors.primary} />
-								<Text style={styles.charViewText}>레벨별 캐릭터 보기</Text>
+								<Text style={styles.charViewText}>{t('special.scoreDetail.charView')}</Text>
 							</TouchableOpacity>
 						)}
 						{selectedRow && (
 							<TouchableOpacity style={styles.resetBtn} activeOpacity={0.8} onPress={() => setSelectedKey(null)}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(12)} color={Colors.textSecondary} />
-								<Text style={styles.resetText}>전체 보기</Text>
+								<Text style={styles.resetText}>{t('special.scoreDetail.showAll')}</Text>
 							</TouchableOpacity>
 						)}
 					</View>
 				</View>
 
 					<View style={styles.sectionHeadRow}>
-						<SectionHead title="주제별 점수" sub="주제를 누르면 위 요약이 해당 주제로 바뀌어요" style={styles.sectionHeadInline} />
+						<SectionHead title={t('special.scoreDetail.sectionTitle')} sub={t('special.scoreDetail.sectionSub')} style={styles.sectionHeadInline} />
 						<View style={styles.sortRow}>
 							{([
-								{ key: 'name', label: '이름순' },
-								{ key: 'score', label: '점수순' },
-								{ key: 'rate', label: '정답률순' },
+								{ key: 'name', labelKey: 'special.scoreDetail.sortName' },
+								{ key: 'score', labelKey: 'special.scoreDetail.sortScore' },
+								{ key: 'rate', labelKey: 'special.scoreDetail.sortRate' },
 							] as const).map((o) => {
 								const on = sortBy === o.key;
 								return (
 									<TouchableOpacity key={o.key} style={[styles.sortChip, on && styles.sortChipOn]} activeOpacity={0.85} onPress={() => setSortBy(o.key)}>
-										<Text style={[styles.sortText, on && styles.sortTextOn]}>{o.label}</Text>
+										<Text style={[styles.sortText, on && styles.sortTextOn]}>{t(o.labelKey)}</Text>
 									</TouchableOpacity>
 								);
 							})}
@@ -292,15 +293,15 @@ const ScoreDetail = () => {
 						</View>
 						<View style={styles.rowBody}>
 							<View style={styles.rowTop}>
-								<Text style={styles.rowTitle}>전체</Text>
-								<Text style={styles.rowScore}>{totalScore.toLocaleString()}점</Text>
+								<Text style={styles.rowTitle}>{t('common.all')}</Text>
+								<Text style={styles.rowScore}>{t('special.scoreDetail.scoreValue', { value: totalScore.toLocaleString() })}</Text>
 							</View>
 							<AnimatedProgress ratio={overallPct / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
 							<View style={styles.rowMetaRow}>
-								<Tag label={`정답 ${totalCorrect.toLocaleString()}개`} variant="plain" />
-								<Tag label={`정답률 ${accuracy}%`} color={accuracyColor(accuracy)} />
-								<Tag label={`푼 ${totalSolved.toLocaleString()}문제`} variant="plain" />
-								<Tag label={`총 ${totalQuestionCount.toLocaleString()}문제`} variant="plain" />
+								<Tag label={t('special.scoreDetail.tagCorrect', { value: totalCorrect.toLocaleString() })} variant="plain" />
+								<Tag label={t('special.scoreDetail.tagRate', { value: accuracy })} color={accuracyColor(accuracy)} />
+								<Tag label={t('special.scoreDetail.tagSolved', { value: totalSolved.toLocaleString() })} variant="plain" />
+								<Tag label={t('special.scoreDetail.tagTotal', { value: totalQuestionCount.toLocaleString() })} variant="plain" />
 							</View>
 						</View>
 					</TouchableOpacity>
@@ -327,32 +328,32 @@ const ScoreDetail = () => {
 							<View style={styles.rowBody}>
 								<View style={styles.rowTop}>
 									<Text style={styles.rowTitle} numberOfLines={1} ellipsizeMode="tail">{r.title}</Text>
-									<Text style={styles.rowScore}>{r.score.toLocaleString()}점</Text>
+									<Text style={styles.rowScore}>{t('special.scoreDetail.scoreValue', { value: r.score.toLocaleString() })}</Text>
 								</View>
 								<View style={styles.barTrack}>
 									{/* 총 문제 대비 내가 푼 문제 진행률 */}
 									<View style={[styles.barFill, { width: `${r.total > 0 ? Math.min(100, Math.round((r.solved / r.total) * 100)) : 0}%` }]} />
 								</View>
 								<View style={styles.rowMetaRow}>
-										<Tag label={`총 ${r.solved.toLocaleString()}/${r.total.toLocaleString()}문제`} variant="plain" />
-										{r.solved > 0 && <Tag label={`정답률 ${r.rate}%`} color={accuracyColor(r.rate)} />}
+										<Tag label={t('special.scoreDetail.tagProgress', { solved: r.solved.toLocaleString(), total: r.total.toLocaleString() })} variant="plain" />
+										{r.solved > 0 && <Tag label={t('special.scoreDetail.tagRate', { value: r.rate })} color={accuracyColor(r.rate)} />}
 									</View>
 									{/* 등급 정의가 없는 주제는 남은 학습량을 대신 보여준다 */}
 									{!r.levelInfo && (
 										<View style={styles.rowNextRow}>
-											<Tag label="학습 진행" variant="outline" />
+											<Tag label={t('special.scoreDetail.studyProgress')} variant="outline" />
 											<View style={styles.rowNextTrack}>
 												<View style={[styles.rowNextFill, { width: `${r.total > 0 ? Math.min(100, Math.round((r.solved / r.total) * 100)) : 0}%` }]} />
 											</View>
-											<Text style={styles.rowNextRemain}>{Math.max(0, r.total - r.solved).toLocaleString()}개 남음</Text>
+											<Text style={styles.rowNextRemain}>{t('special.scoreDetail.remain', { value: Math.max(0, r.total - r.solved).toLocaleString() })}</Text>
 										</View>
 									)}
 									{/* 다음 등급 미니 게이지 (레벨 정의가 있는 주제) */}
 									{r.levelInfo && r.levelInfo.nextThreshold != null && (
 										<View style={styles.rowNextRow}>
-											<Tag label="다음" icon="arrow-upward" variant="outline" />
+											<Tag label={t('special.scoreDetail.next')} icon="arrow-upward" variant="outline" />
 												{/* 호칭은 태그로 감싸지 않는다 — 태그가 겹쳐 읽기 어려워짐 */}
-												<Text style={styles.rowNextLabel} numberOfLines={1} ellipsizeMode="tail">{r.levelInfo.nextDef?.label ?? '등급'}</Text>
+												<Text style={styles.rowNextLabel} numberOfLines={1} ellipsizeMode="tail">{r.levelInfo.nextDef?.label ?? t('special.scoreDetail.gradeFallback')}</Text>
 											<View style={styles.rowNextTrack}>
 												<View
 													style={[
@@ -361,7 +362,7 @@ const ScoreDetail = () => {
 													]}
 												/>
 											</View>
-											<Text style={styles.rowNextRemain}>{Math.max(0, r.levelInfo.nextThreshold - r.levelInfo.value).toLocaleString()}{r.levelInfo.metric === 'solved' ? '문제' : '점'}</Text>
+											<Text style={styles.rowNextRemain}>{t(r.levelInfo.metric === 'solved' ? 'special.scoreDetail.questionsValue' : 'special.scoreDetail.scoreValue', { value: Math.max(0, r.levelInfo.nextThreshold - r.levelInfo.value).toLocaleString() })}</Text>
 										</View>
 									)}
 							</View>
@@ -376,13 +377,14 @@ const ScoreDetail = () => {
 				pointerEvents={showTopBtn ? 'auto' : 'none'}
 				style={[
 					styles.topFab,
+					{ bottom: insets.bottom + scaleHeight(78) },
 					{ opacity: fabAnim, transform: [{ scale: fabAnim.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] }) }, { translateY: fabAnim.interpolate({ inputRange: [0, 1], outputRange: [scaleHeight(12), 0] }) }] },
 				]}>
 				<TouchableOpacity
 					style={styles.topFabBtn}
 					activeOpacity={0.85}
 					accessibilityRole="button"
-					accessibilityLabel="맨 위로 이동"
+					accessibilityLabel={t('special.scoreDetail.toTop')}
 					onPress={() => scrollRef.current?.scrollTo({ y: 0, animated: true })}>
 					<IconComponent type="materialIcons" name="arrow-upward" size={scaledSize(22)} color={Colors.textInverse} />
 				</TouchableOpacity>
@@ -392,7 +394,7 @@ const ScoreDetail = () => {
 			<CharacterLevelsModal visible={showCharModal} onClose={() => setShowCharModal(false)} initialTab={selectedKey ?? 'overall'} />
 
 			<BottomButton
-				label="홈으로"
+				label={t('special.home')}
 				icon="home"
 				onPress={() => router.replace('/(tabs)/home' as never)}
 			/>
@@ -401,12 +403,8 @@ const ScoreDetail = () => {
 			<CharacterGuide
 				visible={guide.visible}
 				onClose={guide.close}
-				lines={[
-					'여기서 주제별로 내 점수와 정답률을 한눈에 볼 수 있어요.',
-					'주제를 누르면 위 요약이 그 주제로 바뀌고, 등급도 함께 보여줘요.',
-					'문제를 더 풀면 등급이 올라가고 캐릭터도 성장해요!',
-				]}
-				title="점수 상세, 이렇게 봐요"
+				lines={[t('special.scoreDetail.guide1'), t('special.scoreDetail.guide2'), t('special.scoreDetail.guide3')]}
+				title={t('special.scoreDetail.guideTitle')}
 			/>
 		</SafeAreaView>
 	);
@@ -418,11 +416,12 @@ const styles = themed(() => StyleSheet.create({
 	sectionHeadInline: { flex: 1, marginBottom: 0 },
 	safe: { flex: 1, backgroundColor: Colors.background },
 	screenTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, marginBottom: SpacingV.md },
-	// 하단 '홈으로' 바에 내용이 가리지 않게 여유를 둔다
-	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom + scaleHeight(56) },
+	// 하단 '홈으로' 바는 스크롤 아래에 흐름대로 붙으므로(겹치지 않음) 기본 하단 여백만 둔다
+	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 
 	// 상단 이동 FAB
-	topFab: { position: 'absolute', right: Layout.screenH, bottom: scaleHeight(96) },
+	// bottom 은 렌더 시 insets.bottom + 하단 바 높이(≈62) + 여백(16)으로 준다
+	topFab: { position: 'absolute', right: Layout.screenH },
 	topFabBtn: {
 		width: scaleWidth(48),
 		height: scaleWidth(48),

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Image as ExpoImage } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CommonHeader from '@/src/screens/common/CommonHeader';
@@ -8,18 +9,19 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import Colors from '@/src/const/ConstColors';
 import { CardSurface, Radius, Spacing, SpacingV, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt} from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { getDomainIllustration } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 
 export default function SubQuizHub() {
+	const { t } = useTranslation();
 	const domains = LearnHubService.getSubQuizDomainList();
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<CommonHeader title="서브 퀴즈" onBack={() => router.back()} />
+			<CommonHeader title={t('quiz.common.tabSub')} onBack={() => router.back()} />
 
 			<ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				<ExpoImage source={require('@/src/assets/selection/quiz-sub-hero.webp')} style={styles.heroBanner} contentFit="cover" accessible={false} />
@@ -28,12 +30,12 @@ export default function SubQuizHub() {
 						<IconComponent type="materialIcons" name="extension" size={scaledSize(24)} color={Colors.primary} />
 					</View>
 					<View style={styles.introBody}>
-						<Text style={styles.introTitle}>월드컵과 올림픽의 역사를 가볍게 도전해요</Text>
-						<Text style={styles.introText}>주제마다 무작위 10문제가 출제돼요. 메인 점수와 통계에는 합산되지 않아요.</Text>
+						<Text style={styles.introTitle}>{t('quiz.sub.introTitle')}</Text>
+						<Text style={styles.introText}>{t('quiz.sub.introText')}</Text>
 					</View>
 				</View>
 
-				<SectionHead title="퀴즈 선택" style={styles.sectionHeadWide} />
+				<SectionHead title={t('quiz.sub.section')} style={styles.sectionHeadWide} />
 				{domains.map((domain, i) => {
 					const illustration = getDomainIllustration(domain.key);
 					return (
@@ -55,7 +57,7 @@ export default function SubQuizHub() {
 									<View style={styles.titleRow}>
 										<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{domain.title}</Text>
 										<View style={styles.countPill}>
-											<Text style={styles.countText}>{domain.total.toLocaleString()}문제</Text>
+											<Text style={styles.countText}>{t('common.questions', { count: domain.total })}</Text>
 										</View>
 									</View>
 									<Text style={styles.cardSubtitle} numberOfLines={2} ellipsizeMode="tail">{domain.subtitle}</Text>

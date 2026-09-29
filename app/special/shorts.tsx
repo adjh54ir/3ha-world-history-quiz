@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, Share, LayoutChangeEvent, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
@@ -24,12 +25,8 @@ import EntryImage from '@/src/screens/common/atomic/EntryImage';
 
 type ShortsTab = 'all' | 'learning' | 'done';
 
-/** 숏폼 조작법 안내 — 캐릭터가 최초 1회만 설명 */
-const COACH_LINES = [
-	'위아래로 넘기면 다음 카드가 나와요.',
-	'카드를 탭하면 설명과 알아두면 좋은 이야기를 볼 수 있어요.',
-	'다 익혔으면 학습 완료를 눌러주세요!',
-];
+/** 숏폼 조작법 안내 — 캐릭터가 최초 1회만 설명 (문구는 special.shorts.guide1~3) */
+const COACH_KEYS = ['special.shorts.guide1', 'special.shorts.guide2', 'special.shorts.guide3'] as const;
 
 
 /**
@@ -38,6 +35,7 @@ const COACH_LINES = [
  * - category 파라미터가 있으면 해당 주제 카드만, 없으면 전 주제 믹스.
  */
 const Shorts = () => {
+	const { t } = useTranslation();
 	const insets = useSafeAreaInsets();
 	const { height: windowHeight } = useWindowDimensions();
 	const compactHeight = windowHeight < 720;
@@ -146,11 +144,11 @@ const Shorts = () => {
 		const hasNextBelow = currentIndex + 1 < cards.length;
 		if (hasNextBelow && h > 0) {
 			listRef.current?.scrollToOffset({ offset: (currentIndex + 1) * h, animated: true });
-			showToast('학습 완료! 다음으로 넘어가요');
+			showToast(t('special.shorts.toastNext'));
 			return;
 		}
 		const remaining = baseCards.filter((c) => !nextStudied.has(c.uid));
-		showToast(remaining.length === 0 ? '모든 카드를 학습했어요!' : '학습 완료!', remaining.length === 0 ? 'celebration' : 'check-circle');
+		showToast(remaining.length === 0 ? t('special.shorts.toastAllDone') : t('special.shorts.toastDone'), remaining.length === 0 ? 'celebration' : 'check-circle');
 	};
 
 	// 복습하기 — 다시 학습중으로
@@ -162,7 +160,7 @@ const Shorts = () => {
 			next.delete(card.uid);
 			return next;
 		});
-		showToast('다시 학습 목록으로 옮겼어요', 'refresh');
+		showToast(t('special.shorts.toastReview'), 'refresh');
 	};
 
 	const toggle = async (card: LearnType.StudyCard) => {
@@ -181,11 +179,11 @@ const Shorts = () => {
 			return next;
 		});
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', 'bookmark');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), 'bookmark');
 	};
 
 	const share = (card: LearnType.StudyCard) =>
-		Share.share({ message: `[${LearnHubService.getDomainTitle(card.domain)}] ${card.title}\n→ ${card.meaning}\n\n세계 상식 퀴즈로 함께 배워요.` }).catch(() => {});
+		Share.share({ message: t('special.shorts.shareMessage', { domain: LearnHubService.getDomainTitle(card.domain), title: card.title, meaning: card.meaning }) }).catch(() => {});
 
 	const renderItem = ({ item, index }: { item: LearnType.StudyCard; index: number }) => {
 		const color = LearnHubService.getDomain(item.domain).meta.color;
@@ -203,7 +201,7 @@ const Shorts = () => {
 						</View>
 						<View style={styles.swipeHintTop}>
 							<IconComponent type="materialIcons" name="swipe-vertical" size={scaledSize(15)} color={Colors.darkTextSecondary} />
-							<Text style={styles.swipeHintTopText}>위·아래로 스와이프</Text>
+							<Text style={styles.swipeHintTopText}>{t('special.shorts.swipeHint')}</Text>
 						</View>
 					</View>
 
@@ -229,7 +227,7 @@ const Shorts = () => {
 					{/* 설명이 긴 카드는 화면 밖으로 잘리므로 본문만 따로 스크롤시킨다 */}
 					<ScrollView
 						style={styles.fadeFill}
-						contentContainerStyle={[styles.center, { paddingBottom: contentLift }]}
+						contentContainerStyle={[styles.center, styles.centerRailGap, { paddingBottom: contentLift }]}
 						showsVerticalScrollIndicator={false}
 						nestedScrollEnabled
 						bounces={false}
@@ -250,12 +248,12 @@ const Shorts = () => {
 						{isDone ? (
 							<TouchableOpacity style={styles.reviewBtn} activeOpacity={0.85} onPress={() => review(item)}>
 								<IconComponent type="materialIcons" name="refresh" size={scaledSize(22)} color={Colors.darkText} />
-								<Text style={styles.reviewBtnText}>복습하기</Text>
+								<Text style={styles.reviewBtnText}>{t('special.shorts.review')}</Text>
 							</TouchableOpacity>
 						) : (
 							<TouchableOpacity style={styles.completeBtn} activeOpacity={0.85} onPress={() => completeAndNext(item, index)}>
 								<IconComponent type="materialIcons" name="check-circle" size={scaledSize(22)} color={Colors.ink} />
-								<Text style={styles.completeBtnText}>학습 완료</Text>
+								<Text style={styles.completeBtnText}>{t('special.shorts.complete')}</Text>
 							</TouchableOpacity>
 						)}
 						<Text style={styles.pageIdx}>{index + 1} / {cards.length}</Text>
@@ -263,14 +261,15 @@ const Shorts = () => {
 				</View>
 
 				{/* 우측 액션 레일 */}
-				<View style={[styles.rail, { bottom: insets.bottom + scaleHeight(80) }]}>
+				{/* 하단 '학습 완료' 버튼 위로 SpacingV.lg 만큼 띄운다 */}
+				<View style={[styles.rail, { bottom: insets.bottom + scaleHeight(96) }]}>
 					<TouchableOpacity style={styles.railBtn} activeOpacity={0.8} onPress={() => toggle(item)}>
 						<IconComponent type="materialIcons" name={isMarked ? 'star' : 'star-border'} size={scaledSize(30)} color={isMarked ? Colors.bookmark : Colors.darkText} />
-						<Text style={styles.railLabel}>즐겨찾기</Text>
+						<Text style={styles.railLabel}>{t('special.shorts.bookmark')}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={styles.railBtn} activeOpacity={0.8} onPress={() => share(item)}>
 						<IconComponent type="materialIcons" name="ios-share" size={scaledSize(28)} color={Colors.darkText} />
-						<Text style={styles.railLabel}>공유</Text>
+						<Text style={styles.railLabel}>{t('special.shorts.share')}</Text>
 					</TouchableOpacity>
 				</View>
 			</View>
@@ -278,9 +277,9 @@ const Shorts = () => {
 	};
 
 	const TABS: { key: ShortsTab; label: string; count: number }[] = [
-		{ key: 'all', label: '전체', count: baseCards.length },
-		{ key: 'learning', label: '학습중', count: learningCount },
-		{ key: 'done', label: '완료', count: doneCount },
+		{ key: 'all', label: t('common.all'), count: baseCards.length },
+		{ key: 'learning', label: t('special.shorts.tabLearning'), count: learningCount },
+		{ key: 'done', label: t('common.done'), count: doneCount },
 	];
 
 	return (
@@ -306,7 +305,7 @@ const Shorts = () => {
 					<View style={styles.emptyWrap}>
 						<IconComponent type="materialIcons" name={tab === 'done' ? 'inventory-2' : 'menu-book'} size={scaledSize(48)} color={Colors.darkTextSecondary} />
 						<Text style={styles.emptyText}>
-							{tab === 'done' ? '아직 학습 완료한 카드가 없어요.' : tab === 'learning' ? '학습중인 카드가 없어요.' : '표시할 카드가 없어요.'}
+							{tab === 'done' ? t('special.shorts.emptyDone') : tab === 'learning' ? t('special.shorts.emptyLearning') : t('special.shorts.emptyAll')}
 						</Text>
 					</View>
 				)
@@ -314,18 +313,18 @@ const Shorts = () => {
 
 			{/* 상단 탭 (전체/학습중/완료) */}
 			<View style={[styles.tabBar, { top: insets.top + scaleHeight(8) }]}>
-				{TABS.map((t) => {
-					const on = tab === t.key;
+				{TABS.map((item) => {
+					const on = tab === item.key;
 					return (
 						<TouchableOpacity
-							key={t.key}
+							key={item.key}
 							accessibilityRole="tab"
 							accessibilityState={{ selected: on }}
 							style={[styles.tabBtn, on && styles.tabBtnOn]}
 							activeOpacity={0.85}
-							onPress={() => changeTab(t.key)}>
+							onPress={() => changeTab(item.key)}>
 							<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1} ellipsizeMode="tail">
-								{t.label}({t.count})
+								{t('special.shorts.tabLabel', { label: item.label, count: item.count })}
 							</Text>
 						</TouchableOpacity>
 					);
@@ -340,12 +339,12 @@ const Shorts = () => {
 							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={accent} />
 						</View>
 						<Text style={styles.learnStatusText}>
-							학습 완료 <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
+							{t('special.shorts.complete')} <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
 							<Text style={styles.learnStatusMuted}> / {baseCards.length}</Text>
 						</Text>
 					</View>
 					<View style={[styles.learnStatusPctChip, { backgroundColor: withAlpha(accent, '33') }]}>
-						<Text style={[styles.learnStatusPct, { color: accent }]}>{donePct}% 달성</Text>
+						<Text style={[styles.learnStatusPct, { color: accent }]}>{t('special.shorts.pct', { value: donePct })}</Text>
 					</View>
 				</View>
 			)}
@@ -356,17 +355,17 @@ const Shorts = () => {
 			<CharacterGuide
 				visible={coach.visible && cards.length > 0}
 				onClose={coach.close}
-				lines={COACH_LINES}
-				title="숏폼 학습, 이렇게 써요"
+				lines={COACH_KEYS.map((k) => t(k))}
+				title={t('special.shorts.guideTitle')}
 				accent={accent}
 			/>
 
-				{/* 닫기 */}
+			{/* 조작법 다시 보기 */}
 			<View style={[styles.helpBtn, { top: insets.top + scaleHeight(8) }]}>
 				<CharacterGuideButton onPress={coach.open} color={Colors.darkText} size={scaledSize(22)} />
 			</View>
 
-			<TouchableOpacity accessibilityRole="button" accessibilityLabel="숏폼 학습 종료" style={[styles.close, { top: insets.top + scaleHeight(8) }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={8}>
+			<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('special.shorts.exitA11y')} style={[styles.close, { top: insets.top + scaleHeight(8) }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={8}>
 				<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.darkText} />
 			</TouchableOpacity>
 		</View>
@@ -395,6 +394,8 @@ const styles = themed(() => StyleSheet.create({
 	// 화면 높이에 따라 메타 태그부터 본문까지의 이동량을 동적으로 적용한다.
 	fadeFill: { flex: 1 },
 	center: { flexGrow: 1, justifyContent: 'center' },
+	// 우측 액션 레일(즐겨찾기·공유) 아래로 긴 설명이 지나가지 않게 오른쪽을 비운다
+	centerRailGap: { paddingRight: scaleWidth(56) },
 	image: { marginBottom: SpacingV.lg, borderRadius: Radius.md },
 	title: { color: Colors.darkText, fontSize: Typography.h1, fontWeight: '900', lineHeight: scaleHeight(40) },
 	titleCompact: { fontSize: Typography.h1, lineHeight: scaleHeight(35) },

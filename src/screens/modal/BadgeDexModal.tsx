@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Tag from '@/src/screens/common/atomic/Tag';
@@ -12,11 +13,8 @@ import { AchievementRarity, RARITY_META, RARITY_ORDER } from '@/src/const/ConstA
 import DateUtils from '@/src/utils/DateUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
-/** 희귀도 필터 (전체 → 일반 → 희귀 → 영웅 → 전설) */
-const DEX_FILTERS: { key: 'all' | AchievementRarity; label: string }[] = [
-	{ key: 'all', label: '전체' },
-	...RARITY_ORDER.map((r) => ({ key: r, label: RARITY_META[r].label })),
-];
+/** 희귀도 필터 (전체 → 일반 → 희귀 → 영웅 → 전설) — '전체' 라벨은 렌더 시점에 번역한다 */
+const DEX_FILTERS: ('all' | AchievementRarity)[] = ['all', ...RARITY_ORDER];
 
 interface Props {
 	visible: boolean;
@@ -33,6 +31,7 @@ interface Props {
  * 뱃지 도감 — 미획득 포함 전체 뱃지를 희귀도 그룹 + 필터로 보여준다.
  */
 const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClose, onSelect }) => {
+	const { t } = useTranslation();
 	const [filter, setFilter] = useState<'all' | AchievementRarity>('all');
 	// 40개가 넘어 스크롤이 길다 — 이름·설명 검색과 '미획득만' 보기를 함께 제공
 	const [query, setQuery] = useState('');
@@ -73,8 +72,8 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 	return (
 		<BottomSheet visible={visible} onClose={onClose}>
 			<View style={styles.titleRow}>
-				<Text style={styles.title}>뱃지 도감</Text>
-				<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="뱃지 도감 닫기">
+				<Text style={styles.title}>{t('modal.badgeDex.title')}</Text>
+				<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.closeA11y')}>
 					<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 				</TouchableOpacity>
 			</View>
@@ -91,10 +90,10 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 						<Text style={styles.heroPctUnit}>%</Text>
 					</View>
 					<View style={styles.heroCopy}>
-						<Text style={styles.heroLabel}>뱃지 수집률</Text>
+						<Text style={styles.heroLabel}>{t('modal.badgeDex.rateLabel')}</Text>
 						<Text style={styles.heroCount}>
 							{unlockedCount}
-							<Text style={styles.heroCountTotal}> / {badges.length}개 획득</Text>
+							<Text style={styles.heroCountTotal}>{t('modal.badgeDex.countTotal', { total: badges.length })}</Text>
 						</Text>
 					</View>
 				</View>
@@ -104,7 +103,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 				<View style={styles.heroFootRow}>
 					<IconComponent type="materialIcons" name={pct >= 100 ? 'celebration' : 'auto-awesome'} size={scaledSize(13)} color={Colors.goldSoft} />
 					<Text style={styles.heroFoot}>
-						{pct >= 100 ? '모든 뱃지를 모았어요! 진정한 수집가!' : `${badges.length - unlockedCount}개만 더 모으면 도감 완성이에요`}
+						{pct >= 100 ? t('modal.badgeDex.complete') : t('modal.badgeDex.remaining', { count: badges.length - unlockedCount })}
 					</Text>
 				</View>
 			</View>
@@ -118,13 +117,13 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 						style={styles.searchInput}
 						value={query}
 						onChangeText={setQuery}
-						placeholder="뱃지 이름·조건 검색"
+						placeholder={t('modal.badgeDex.searchPlaceholder')}
 						placeholderTextColor={Colors.textMuted}
 						returnKeyType="search"
 						onSubmitEditing={() => Keyboard.dismiss()}
 					/>
 					{query.length > 0 && (
-						<TouchableOpacity onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8} accessibilityRole="button" accessibilityLabel="검색어 지우기">
+						<TouchableOpacity onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.clearSearch')}>
 							<IconComponent type="materialIcons" name="cancel" size={scaledSize(16)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					)}
@@ -137,26 +136,27 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 					accessibilityState={{ selected: onlyLocked }}
 					onPress={() => setOnlyLocked((v) => !v)}>
 					<IconComponent type="materialIcons" name={onlyLocked ? 'lock' : 'lock-open'} size={scaledSize(15)} color={onlyLocked ? Colors.textInverse : Colors.textSecondary} />
-					<Text style={[styles.lockedChipText, onlyLocked && styles.lockedChipTextOn]}>미획득만</Text>
+					<Text style={[styles.lockedChipText, onlyLocked && styles.lockedChipTextOn]}>{t('modal.badgeDex.onlyLocked')}</Text>
 				</TouchableOpacity>
 			</View>
 
 			{/* 희귀도 필터 — 뱃지가 많아 스크롤만 길어지지 않도록 */}
 			<ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterBar} contentContainerStyle={styles.filterRow}>
-				{DEX_FILTERS.map((f) => {
-					const on = filter === f.key;
-					const count = f.key === 'all' ? searched.length : searched.filter((b) => b.def.rarity === f.key).length;
-					const tint = f.key === 'all' ? Colors.primary : RARITY_META[f.key].color;
+				{DEX_FILTERS.map((key) => {
+					const on = filter === key;
+					const count = key === 'all' ? searched.length : searched.filter((b) => b.def.rarity === key).length;
+					const tint = key === 'all' ? Colors.primary : RARITY_META[key].color;
+					const label = key === 'all' ? t('common.all') : RARITY_META[key].label;
 					return (
 						<TouchableOpacity
-							key={f.key}
+							key={key}
 							style={[styles.filterChip, on && { backgroundColor: tint, borderColor: tint }]}
 							hitSlop={Layout.hitSlop}
 							activeOpacity={0.85}
 							accessibilityRole="button"
 							accessibilityState={{ selected: on }}
-							onPress={() => setFilter(f.key)}>
-							<Text style={[styles.filterText, on ? { color: readableOn(tint) } : { color: tint }]}>{f.label} {count}</Text>
+							onPress={() => setFilter(key)}>
+							<Text style={[styles.filterText, on ? { color: readableOn(tint) } : { color: tint }]}>{label} {count}</Text>
 						</TouchableOpacity>
 					);
 				})}
@@ -164,7 +164,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 
 			<ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
 				{groups.length === 0 && (
-					<Text style={styles.emptyText}>{onlyLocked ? '조건에 맞는 미획득 뱃지가 없어요' : '검색 결과가 없어요'}</Text>
+					<Text style={styles.emptyText}>{t(onlyLocked ? 'modal.badgeDex.emptyLocked' : 'modal.badgeDex.emptySearch')}</Text>
 				)}
 				{groups.map((g) => (
 					<View key={g.rarity} style={styles.group}>
@@ -198,7 +198,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 									]}
 									activeOpacity={0.85}
 									accessibilityRole="button"
-									accessibilityLabel={`${b.def.title} 뱃지 상세`}
+									accessibilityLabel={t('modal.badgeDex.rowA11y', { title: b.def.title })}
 									onPress={() => onSelect(b)}>
 									<View
 										style={[
@@ -228,7 +228,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 											!!b.unlockedAt && (
 												<View style={styles.rowDateRow}>
 													<IconComponent type="materialIcons" name="event-available" size={scaledSize(12)} color={Colors.textMuted} />
-													<Text style={styles.rowDate}>{DateUtils.formatTimestamp(b.unlockedAt, 'type3')} 획득</Text>
+													<Text style={styles.rowDate}>{t('modal.badgeDetail.unlockedAt', { date: DateUtils.formatTimestamp(b.unlockedAt, 'type3') })}</Text>
 												</View>
 											)
 										) : (
@@ -277,7 +277,8 @@ const styles = themed(() => StyleSheet.create({
 	filterRow: { alignItems: 'center', paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xs, gap: Spacing.sm },
 	filterChip: { minHeight: scaleHeight(36), justifyContent: 'center', paddingHorizontal: Spacing.md, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	filterText: { fontSize: Typography.footnote, fontWeight: '800' },
-	searchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.xxl, marginBottom: SpacingV.sm },
+	// 히어로→검색→필터→목록 간격을 같은 리듬(≈16)으로 — 필터 줄 marginTop(md) + 내부 paddingVertical(xs)
+	searchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.lg },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	searchInput: { flex: 1, fontSize: Typography.body, fontWeight: '600', color: Colors.textStrong, paddingVertical: 0 },
 	lockedChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },

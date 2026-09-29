@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Share, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
@@ -25,14 +26,21 @@ const formatCode = (code: string): string => `${code.slice(0, 4)}-${code.slice(4
 /**
  * 학습 진도 백업·복원 팝업
  * - 백업하면 8자리 복원 코드가 나오고, 새 기기에서 그 코드를 넣으면 진도를 되살린다.
- * - 광고 제거(결제)는 백업 대상이 아니라 스토어 구매 복원으로 되살린다.
+ * - 랭킹 닉네임(서버 계정)은 백업 대상이 아니다 — 새 기기에서 다시 정한다.
  */
 const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
+	const { t } = useTranslation();
 	const [tab, setTab] = useState<Tab>('backup');
 	const [busy, setBusy] = useState(false);
 	const [code, setCode] = useState<string | null>(null);
 	const [updatedAt, setUpdatedAt] = useState<string | null>(null);
 	const [input, setInput] = useState('');
+	/**
+	 * 이 시트는 그 자체가 RN Modal 이라, 앱 루트의 확인·안내 팝업(ConfirmModalHost)을 위에 띄우면
+	 * iOS 에서 표시되지 않고 await 가 멈춘다. 그래서 확인·안내는 전부 시트 안에서 처리한다.
+	 */
+	const [notice, setNotice] = useState<{ icon: string; text: string; tone: 'ok' | 'error' } | null>(null);
+	const [askRestore, setAskRestore] = useState(false);
 
 	const loadInfo = useCallback(async () => {
 		const cached = await BackupService.getCachedCode();
@@ -53,13 +61,6 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 		loadInfo();
 	}, [visible, loadInfo]);
 
-	/**
-	 * 이 시트는 그 자체가 RN Modal 이라, 앱 루트의 확인·안내 팝업(ConfirmModalHost)을 위에 띄우면
-	 * iOS 에서 표시되지 않고 await 가 멈춘다. 그래서 확인·안내는 전부 시트 안에서 처리한다.
-	 */
-	const [notice, setNotice] = useState<{ icon: string; text: string; tone: 'ok' | 'error' } | null>(null);
-	const [askRestore, setAskRestore] = useState(false);
-
 	const runBackup = async () => {
 		if (busy) return;
 		setNotice(null);
@@ -67,12 +68,12 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 		const result = await BackupService.backup();
 		setBusy(false);
 		if (!result) {
-			setNotice({ icon: 'cloud-off', text: '백업에 실패했어요. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.', tone: 'error' });
+			setNotice({ icon: 'cloud-off', text: t('modal.backup.backupFailed'), tone: 'error' });
 			return;
 		}
 		setCode(result);
 		setUpdatedAt(DateUtils.toISOString());
-		setNotice({ icon: 'cloud-done', text: '백업 완료! 기기를 바꿀 때 이 복원 코드가 필요해요.', tone: 'ok' });
+		setNotice({ icon: 'cloud-done', text: t('modal.backup.backupDone'), tone: 'ok' });
 	};
 
 	const runRestore = async () => {
@@ -90,22 +91,22 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 		setBusy(false);
 
 		if (result === 'not-found') {
-			setNotice({ icon: 'search-off', text: '코드를 찾을 수 없어요. 복원 코드를 다시 확인해 주세요.', tone: 'error' });
+			setNotice({ icon: 'search-off', text: t('modal.backup.notFound'), tone: 'error' });
 			return;
 		}
 		if (result === 'failed') {
-			setNotice({ icon: 'cloud-off', text: '복원에 실패했어요. 네트워크 상태를 확인한 뒤 다시 시도해 주세요.', tone: 'error' });
+			setNotice({ icon: 'cloud-off', text: t('modal.backup.restoreFailed'), tone: 'error' });
 			return;
 		}
 		// 성공 안내는 시트가 닫힌 뒤 루트 팝업으로 — 곧바로 앱을 다시 띄우기 때문에 겹칠 일이 없다
 		onClose();
-		await showAlert('복원 완료', '앱을 다시 시작해 반영할게요.', 'check-circle');
+		await showAlert(t('modal.backup.restoreDoneTitle'), t('modal.backup.restoreDoneMsg'), 'check-circle');
 		reload();
 	};
 
 	const shareCode = () => {
 		if (!code) return;
-		Share.share({ message: `세계 상식 퀴즈 복원 코드: ${formatCode(code)}` }).catch(() => { });
+		Share.share({ message: t('modal.backup.shareMessage', { code: formatCode(code) }) }).catch(() => { });
 	};
 
 	const updatedLabel = updatedAt ? new Date(updatedAt).toLocaleString('ko-KR') : null;
@@ -119,11 +120,11 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 					<View style={styles.iconWrap}>
 						<IconComponent type="materialIcons" name="cloud-sync" size={scaledSize(28)} color={Colors.primary} />
 					</View>
-					<Text style={styles.title}>학습 기록 백업</Text>
-					<Text style={styles.subtitle}>기기를 바꿔도 학습 기록을 그대로 옮길 수 있어요</Text>
+					<Text style={styles.title}>{t('modal.backup.title')}</Text>
+					<Text style={styles.subtitle}>{t('modal.backup.subtitle')}</Text>
 
 					<View style={styles.tabRow}>
-						{([['backup', '백업하기'], ['restore', '복원하기']] as [Tab, string][]).map(([key, label]) => (
+						{([['backup', t('modal.backup.tabBackup')], ['restore', t('modal.backup.tabRestore')]] as [Tab, string][]).map(([key, label]) => (
 							<TouchableOpacity
 								key={key}
 								style={[styles.tab, tab === key && styles.tabOn]}
@@ -143,21 +144,21 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 						<>
 							{code ? (
 								<TouchableOpacity style={styles.codeBox} activeOpacity={0.85} onPress={shareCode}>
-									<Text style={styles.codeLabel}>내 복원 코드</Text>
+									<Text style={styles.codeLabel}>{t('modal.backup.codeLabel')}</Text>
 									<Text style={styles.codeText}>{formatCode(code)}</Text>
-									{!!updatedLabel && <Text style={styles.codeDesc}>{updatedLabel} 저장됨</Text>}
+									{!!updatedLabel && <Text style={styles.codeDesc}>{t('modal.backup.savedAt', { date: updatedLabel })}</Text>}
 									<View style={styles.shareHint}>
 										<IconComponent type="materialIcons" name="ios-share" size={scaledSize(14)} color={Colors.primary} />
-										<Text style={styles.shareHintText}>눌러서 코드 보내기</Text>
+										<Text style={styles.shareHintText}>{t('modal.backup.shareHint')}</Text>
 									</View>
 								</TouchableOpacity>
 							) : (
 								<View style={styles.emptyBox}>
-									<Text style={styles.emptyText}>아직 백업이 없어요.{'\n'}백업하면 복원 코드가 발급됩니다.</Text>
+									<Text style={styles.emptyText}>{t('modal.backup.empty')}</Text>
 								</View>
 							)}
 							<TouchableOpacity style={[styles.primaryBtn, busy && styles.btnDisabled]} activeOpacity={0.9} disabled={busy} onPress={runBackup}>
-								{busy ? <ActivityIndicator color={Colors.textInverse} /> : <Text style={styles.primaryText}>{code ? '지금 백업 갱신' : '백업하기'}</Text>}
+								{busy ? <ActivityIndicator color={Colors.textInverse} /> : <Text style={styles.primaryText}>{code ? t('modal.backup.refresh') : t('modal.backup.tabBackup')}</Text>}
 							</TouchableOpacity>
 						</>
 					) : (
@@ -167,7 +168,7 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 								style={styles.input}
 								value={input}
 								onChangeText={setInput}
-								placeholder="복원 코드 8자리"
+								placeholder={t('modal.backup.placeholder')}
 								placeholderTextColor={Colors.textMuted}
 								autoCapitalize="characters"
 								autoCorrect={false}
@@ -179,20 +180,20 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 								activeOpacity={0.9}
 								disabled={!restoreReady || busy}
 								onPress={runRestore}>
-								{busy ? <ActivityIndicator color={Colors.textInverse} /> : <Text style={styles.primaryText}>복원하기</Text>}
+								{busy ? <ActivityIndicator color={Colors.textInverse} /> : <Text style={styles.primaryText}>{t('modal.backup.tabRestore')}</Text>}
 							</TouchableOpacity>
 						</>
 					)}
 
 					{askRestore && (
 						<View style={styles.confirmBox}>
-							<Text style={styles.confirmText}>이 기기의 학습 기록을 백업 데이터로 덮어써요. 복원할까요?</Text>
+							<Text style={styles.confirmText}>{t('modal.backup.confirmRestore')}</Text>
 							<View style={styles.confirmRow}>
 								<TouchableOpacity style={styles.confirmCancel} activeOpacity={0.85} onPress={() => setAskRestore(false)}>
-									<Text style={styles.confirmCancelText}>취소</Text>
+									<Text style={styles.confirmCancelText}>{t('common.cancel')}</Text>
 								</TouchableOpacity>
 								<TouchableOpacity style={styles.confirmOk} activeOpacity={0.9} onPress={confirmRestore}>
-									<Text style={styles.confirmOkText}>복원</Text>
+									<Text style={styles.confirmOkText}>{t('modal.backup.restore')}</Text>
 								</TouchableOpacity>
 							</View>
 						</View>
@@ -207,11 +208,11 @@ const BackupRestoreModal: React.FC<Props> = ({ visible, onClose }) => {
 
 					<View style={styles.noticeRow}>
 						<IconComponent type="materialIcons" name="info-outline" size={scaledSize(14)} color={Colors.textMuted} />
-						<Text style={styles.noticeText}>광고 제거와 랭킹 닉네임은 백업에 포함되지 않아요. 광고 제거는 스토어 구매 복원, 닉네임은 새로 설정해 주세요.</Text>
+						<Text style={styles.noticeText}>{t('modal.backup.notice')}</Text>
 					</View>
 
 					<TouchableOpacity style={styles.closeBtn} activeOpacity={0.85} disabled={busy} onPress={onClose}>
-						<Text style={styles.closeText}>닫기</Text>
+						<Text style={styles.closeText}>{t('common.close')}</Text>
 					</TouchableOpacity>
 				</SheetIn>
 			</KeyboardAvoidingView>

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { useScrollToTop } from '@react-navigation/native';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -28,11 +28,14 @@ import { Image as ExpoImage } from 'expo-image';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 const ALL = 'all';
 const RECENT_KEY = 'SEARCH_RECENT_QUERIES';
 /** 마지막으로 쓰던 주제·카테고리·난이도 필터 */
 const RECENT_CAP = 8;
+/** 목록 한 번에 붙이는 개수 — 끝까지 내리면 다음 묶음을 이어 붙인다 */
+const PAGE_SIZE = 50;
 
 /**
  * 검색 탭 (통합 검색 + 상세 필터)
@@ -42,6 +45,7 @@ const RECENT_CAP = 8;
  */
 const SearchTab = () => {
 	const { showToast } = useToast();
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	// scope/domain(둘러보기 진입) → category 순으로 초기 주제 필터 결정
 	const initial = stringParam(params.scope ?? params.domain ?? params.category, ALL);
@@ -84,12 +88,12 @@ const SearchTab = () => {
 	}, []);
 	/** 최근 검색어 전체 삭제 — 되돌릴 수 없으므로 확인을 받는다 */
 	const clearRecent = useCallback(async () => {
-		const ok = await showConfirm({ title: '최근 검색어 삭제', message: '저장된 최근 검색어를 모두 지울까요?', confirmText: '삭제', cancelText: '취소', destructive: true, icon: 'delete-sweep' });
+		const ok = await showConfirm({ title: t('search.recent.confirmTitle'), message: t('search.recent.confirmMessage'), confirmText: t('common.delete'), cancelText: t('common.cancel'), destructive: true, icon: 'delete-sweep' });
 		if (!ok) return;
 		setRecent([]);
 		AsyncStorage.removeItem(RECENT_KEY).catch(() => {});
-		showToast('최근 검색어를 지웠어요', 'delete-sweep');
-	}, [showToast]);
+		showToast(t('search.recent.cleared'), 'delete-sweep');
+	}, [showToast, t]);
 	const removeRecent = useCallback((term: string) => {
 		setRecent((prev) => {
 			const next = prev.filter((v) => v !== term);
@@ -159,7 +163,7 @@ const SearchTab = () => {
 		});
 		reloadBookmarks();
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 
 	// 입력 디바운스(200ms)
@@ -200,9 +204,19 @@ const SearchTab = () => {
 		return base;
 	}, [debounced, scope, cat, lvl, ready]);
 
+	// 무한 스크롤 — 결과가 바뀌면 첫 묶음부터 다시
+	const [pageCount, setPageCount] = useState(1);
+	useEffect(() => setPageCount(1), [data]);
+	const visible = useMemo(() => data.slice(0, pageCount * PAGE_SIZE), [data, pageCount]);
+	const hasMore = visible.length < data.length;
+	const loadMore = useCallback(() => {
+		if (hasMore) setPageCount((n) => n + 1);
+	}, [hasMore]);
+
 	// 검색 사용법 안내 — 처음 들어온 사용자에게만 1회
 	const guide = useCharacterGuideOnce('search');
-	const scopeLabel = scope === ALL ? '전 주제' : LearnHubService.getDomainTitle(scope);
+	const scopeLabel = scope === ALL ? t('search.allScopes') : LearnHubService.getDomainTitle(scope);
+	const allLabel = t('common.all');
 	// 검색어·주제·상세 필터 중 하나라도 걸리면 초기화 노출
 	const canReset = query.length > 0 || scope !== ALL || cat !== ALL || lvl !== ALL;
 	const resetFilters = () => {
@@ -223,7 +237,7 @@ const SearchTab = () => {
 		const showSub = !!c.subTitle && !subDup && c.subTitle !== meta.title;
 		return (
 			// 첫 화면에 보이는 카드만 스태거(320ms 상한) — 스크롤 중 지연 체감 방지
-			<FadeInUp delay={Math.min(index * 40, 320)} duration={340} distance={12} style={isTablet ? styles.gridCell : undefined}>
+			<FadeInUp delay={Math.min((index % PAGE_SIZE) * 40, 320)} duration={340} distance={12} style={isTablet ? styles.gridCell : undefined}>
 			<LearnItemCard
 				domain={c.domain}
 				categoryLabel={c.categoryLabel}
@@ -237,6 +251,7 @@ const SearchTab = () => {
 				onToggleBookmark={() => toggleBookmark(c)}
 				onPress={() => { Keyboard.dismiss(); setDetail(c); }}
 				highlight={isSearching ? debounced.trim() : undefined}
+				imageRef={c.imageRef}
 			/>
 			</FadeInUp>
 		);
@@ -254,7 +269,7 @@ const SearchTab = () => {
 						style={styles.input}
 						value={query}
 						onChangeText={setQuery}
-						placeholder={`${scopeLabel}에서 검색`}
+						placeholder={t('search.placeholder', { scope: scopeLabel })}
 						placeholderTextColor={Colors.textMuted}
 						returnKeyType="search"
 						onSubmitEditing={() => {
@@ -263,7 +278,7 @@ const SearchTab = () => {
 						}}
 					/>
 					{query.length > 0 && (
-						<TouchableOpacity activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="검색어 지우기" onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8}>
+						<TouchableOpacity activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.clearQuery')} onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8}>
 							<IconComponent type="materialIcons" name="cancel" size={scaledSize(18)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					)}
@@ -276,9 +291,9 @@ const SearchTab = () => {
 			{!isSearching && recent.length > 0 && (
 				<View style={styles.recentWrap}>
 					<View style={styles.recentHead}>
-						<Text style={styles.recentTitle}>최근 검색어</Text>
-						<TouchableOpacity hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="최근 검색어 전체 삭제" onPress={clearRecent}>
-							<Text style={styles.recentClear}>전체 삭제</Text>
+						<Text style={styles.recentTitle}>{t('search.recent.title')}</Text>
+						<TouchableOpacity hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.recent.clearAllA11y')} onPress={clearRecent}>
+							<Text style={styles.recentClear}>{t('search.recent.clearAll')}</Text>
 						</TouchableOpacity>
 					</View>
 					<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.recentRow} keyboardShouldPersistTaps="handled">
@@ -287,7 +302,7 @@ const SearchTab = () => {
 								<TouchableOpacity activeOpacity={0.8} onPress={() => { setQuery(term); pushRecent(term); Keyboard.dismiss(); }}>
 									<Text style={styles.recentChipText} numberOfLines={1}>{term}</Text>
 								</TouchableOpacity>
-								<TouchableOpacity hitSlop={6} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={`${term} 검색어 삭제`} onPress={() => removeRecent(term)}>
+								<TouchableOpacity hitSlop={6} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.recent.removeA11y', { term })} onPress={() => removeRecent(term)}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(13)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							</View>
@@ -298,8 +313,8 @@ const SearchTab = () => {
 
 			{/* 필터 (주제 · 카테고리 · 난이도) — 모두 모달로 고른다 */}
 			<View style={styles.dropRow}>
-					<TouchableOpacity accessibilityRole="button" accessibilityLabel={`주제 선택, 현재 ${scopeLabel}`} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('scope')}>
-						<Text style={styles.dropLabel}>주제</Text>
+					<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.filter.a11y', { label: t('search.filter.scope'), value: scopeLabel })} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('scope')}>
+						<Text style={styles.dropLabel}>{t('search.filter.scope')}</Text>
 						<View style={styles.dropValueRow}>
 							{scope !== ALL && (
 								<DomainIcon
@@ -310,26 +325,26 @@ const SearchTab = () => {
 									color={scopeAccent}
 								/>
 							)}
-							<Text style={[styles.dropValue, scope !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{scope === ALL ? '전체' : scopeLabel}</Text>
+							<Text style={[styles.dropValue, scope !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{scope === ALL ? allLabel : scopeLabel}</Text>
 							<IconComponent type="materialIcons" name="expand-more" size={scaledSize(18)} color={Colors.textMuted} />
 						</View>
 					</TouchableOpacity>
 					{showDetailFilter && categories.length > 0 && (
-						<TouchableOpacity accessibilityRole="button" accessibilityLabel={`카테고리 선택, 현재 ${cat === ALL ? '전체' : cat}`} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('cat')}>
-							<Text style={styles.dropLabel}>카테고리</Text>
+						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.filter.a11y', { label: t('search.filter.category'), value: cat === ALL ? allLabel : cat })} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('cat')}>
+							<Text style={styles.dropLabel}>{t('search.filter.category')}</Text>
 							<View style={styles.dropValueRow}>
 								{cat !== ALL && <IconComponent type="materialIcons" name={categoryIcon(cat)} size={scaledSize(14)} color={scopeAccent} />}
-								<Text style={[styles.dropValue, cat !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{cat === ALL ? '전체' : cat}</Text>
+								<Text style={[styles.dropValue, cat !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{cat === ALL ? allLabel : cat}</Text>
 								<IconComponent type="materialIcons" name="expand-more" size={scaledSize(18)} color={Colors.textMuted} />
 							</View>
 						</TouchableOpacity>
 					)}
 					{showDetailFilter && levels.length > 1 && (
-						<TouchableOpacity accessibilityRole="button" accessibilityLabel={`난이도 선택, 현재 ${lvl === ALL ? '전체' : lvl}`} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('lvl')}>
-							<Text style={styles.dropLabel}>난이도</Text>
+						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.filter.a11y', { label: t('search.filter.level'), value: lvl === ALL ? allLabel : lvl })} style={styles.dropBtn} activeOpacity={0.85} onPress={() => openPicker('lvl')}>
+							<Text style={styles.dropLabel}>{t('search.filter.level')}</Text>
 							<View style={styles.dropValueRow}>
 								{lvl !== ALL && <IconComponent type="materialIcons" name={difficultyIcon(lvl)} size={scaledSize(14)} color={scopeAccent} />}
-								<Text style={[styles.dropValue, lvl !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{lvl === ALL ? '전체' : lvl}</Text>
+								<Text style={[styles.dropValue, lvl !== ALL && { color: scopeAccent }]} numberOfLines={1} ellipsizeMode="tail">{lvl === ALL ? allLabel : lvl}</Text>
 								<IconComponent type="materialIcons" name="expand-more" size={scaledSize(18)} color={Colors.textMuted} />
 							</View>
 						</TouchableOpacity>
@@ -337,19 +352,19 @@ const SearchTab = () => {
 			</View>
 
 			<View style={styles.countBar}>
-				<Text style={styles.countScope} numberOfLines={1} ellipsizeMode="tail">{isSearching ? `'${query}' 검색 결과` : scopeLabel}</Text>
+				<Text style={styles.countScope} numberOfLines={1} ellipsizeMode="tail">{isSearching ? t('search.resultsFor', { query }) : scopeLabel}</Text>
 				<View style={styles.countRight}>
 					{/* 검색어·주제·필터 중 하나라도 걸려 있으면 초기화 버튼 노출 */}
 					{canReset && (
-						<TouchableOpacity accessibilityRole="button" accessibilityLabel="검색 조건 초기화" style={styles.resetBtn} activeOpacity={0.8} onPress={resetFilters}>
+						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.resetA11y')} style={styles.resetBtn} activeOpacity={0.8} onPress={resetFilters}>
 							<IconComponent type="materialIcons" name="refresh" size={scaledSize(14)} color={Colors.textSecondary} />
-							<Text style={styles.resetText}>초기화</Text>
+							<Text style={styles.resetText}>{t('common.reset')}</Text>
 						</TouchableOpacity>
 					)}
 					<View style={styles.countBadge}>
 						<IconComponent type="materialIcons" name="format-list-bulleted" size={scaledSize(13)} color={scopeAccent} />
 						<Text style={[styles.countNum, { color: scopeAccent }]}>{data.length.toLocaleString()}</Text>
-						<Text style={styles.countUnit}>개</Text>
+						<Text style={styles.countUnit}>{t('search.countUnit')}</Text>
 					</View>
 				</View>
 			</View>
@@ -357,8 +372,11 @@ const SearchTab = () => {
 			{/* 태블릿에서만 2단 — 검색 결과 카드는 블록형이라 열을 나눠도 본문이 눌리지 않는다 */}
 			<FlatList
 				ref={listRef}
-				data={data}
+				data={visible}
 				extraData={bmUids}
+				onEndReached={loadMore}
+				onEndReachedThreshold={0.6}
+				ListFooterComponent={hasMore ? <ActivityIndicator style={styles.footerLoader} color={scopeAccent} /> : null}
 				keyExtractor={(c) => c.uid}
 				renderItem={renderItem}
 				numColumns={isTablet ? 2 : 1}
@@ -386,7 +404,7 @@ const SearchTab = () => {
 							<EmptyState
 								illustration="noResults"
 								icon="sentiment-dissatisfied"
-								text={isSearching ? `'${query}' 검색 결과가 없어요.` : '조건에 맞는 항목이 없어요.'}
+								text={isSearching ? t('search.emptySearch', { query }) : t('search.emptyFilter')}
 							/>
 						)
 					}
@@ -423,13 +441,13 @@ const SearchTab = () => {
 
 			<FilterOptionSheet
 				visible={picker !== null}
-				title={picker === 'lvl' ? '난이도 선택' : picker === 'scope' ? '주제 선택' : '카테고리 선택'}
+				title={picker === 'lvl' ? t('search.filter.pickLevel') : picker === 'scope' ? t('search.filter.pickScope') : t('search.filter.pickCategory')}
 				kind={picker === 'lvl' ? 'difficulty' : 'category'}
 				options={picker === 'lvl' ? levels : picker === 'scope' ? scopeOptions : categories}
 				value={picker === 'lvl' ? lvl : picker === 'scope' ? (scope === ALL ? ALL : scopeLabel) : cat}
 				accent={scopeAccent}
 				allValue={ALL}
-				allLabel={picker === 'scope' ? '전 주제' : '전체'}
+				allLabel={picker === 'scope' ? t('search.allScopes') : allLabel}
 				iconForOption={
 					picker === 'scope'
 						? (option) => {
@@ -453,12 +471,8 @@ const SearchTab = () => {
 			<CharacterGuide
 				visible={guide.visible}
 				onClose={guide.close}
-				lines={[
-					'궁금한 말이나 뜻을 그대로 검색해 보세요.',
-					'주제 필터에서 서브 퀴즈까지 고르면 카테고리·난이도로 더 좁힐 수 있어요.',
-					'마음에 드는 항목은 즐겨찾기에 저장해 두면 보관함에서 다시 볼 수 있어요.',
-				]}
-				title="검색, 이렇게 써요"
+				lines={[t('search.guide.line1'), t('search.guide.line2'), t('search.guide.line3')]}
+				title={t('search.guide.title')}
 			/>
 		</KeyboardAvoidingView>
 	);
@@ -482,7 +496,7 @@ const styles = themed(() => StyleSheet.create({
 	gridCell: { width: '49%' },
 	countBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xs, backgroundColor: Colors.background },
 	countScope: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginRight: Spacing.md },
-	recentWrap: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md },
+	recentWrap: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, backgroundColor: Colors.surface },
 	recentHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	recentTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	recentClear: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },
@@ -495,5 +509,6 @@ const styles = themed(() => StyleSheet.create({
 	countBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs },
 	countNum: { fontSize: Typography.body, fontWeight: '900' },
 	countUnit: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
+	footerLoader: { paddingVertical: SpacingV.lg },
 	skeletonCard: { backgroundColor: Colors.surface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },
 }));

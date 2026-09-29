@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
@@ -30,6 +31,7 @@ interface Props {
  * - 희귀도 색상, 진행률, 획득일을 한 장으로 보여준다.
  */
 const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, totalCount }) => {
+	const { t } = useTranslation();
 	// 공유 시 캡처할 카드 영역
 	const cardRef = useRef<View>(null);
 	return (
@@ -55,7 +57,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 						{badge.unlocked && <LottieBox source={LOTTIE_STAR} autoPlay loop={false} style={styles.lottie} />}
 						<IconComponent type="materialIcons" name={badge.unlocked ? badge.def.icon : 'lock'} size={scaledSize(34)} color={badge.unlocked ? badge.def.color : Colors.textMuted} />
 					</View>
-					<Text style={styles.state}>{badge.unlocked ? '달성한 뱃지' : '진행 중인 뱃지'}</Text>
+					<Text style={styles.state}>{t(badge.unlocked ? 'modal.badgeDetail.stateUnlocked' : 'modal.badgeDetail.stateLocked')}</Text>
 					<Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">{badge.def.title}</Text>
 					<View style={[styles.rarity, { backgroundColor: withAlpha(RARITY_META[badge.def.rarity].color, '18') }]}>
 						<IconComponent type="materialIcons" name="auto-awesome" size={scaledSize(12)} color={RARITY_META[badge.def.rarity].color} />
@@ -68,7 +70,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 					</View>
 					<View style={styles.progressBox}>
 						<View style={styles.progressTop}>
-							<Text style={styles.progressLabel}>진행률</Text>
+							<Text style={styles.progressLabel}>{t('modal.badgeDetail.progress')}</Text>
 							<Text style={[styles.progressValue, { color: badge.def.color }]}>
 								{badge.current}/{badge.def.target}{badge.def.unit ?? ''}
 							</Text>
@@ -79,7 +81,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 						{!!badge.unlockedAt && (
 							<View style={styles.dateRow}>
 								<IconComponent type="materialIcons" name="event-available" size={scaledSize(12)} color={Colors.textMuted} />
-								<Text style={styles.dateText}>{DateUtils.formatTimestamp(badge.unlockedAt, 'type3')} 획득</Text>
+								<Text style={styles.dateText}>{t('modal.badgeDetail.unlockedAt', { date: DateUtils.formatTimestamp(badge.unlockedAt, 'type3') })}</Text>
 							</View>
 						)}
 					</View>
@@ -89,14 +91,14 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 								style={styles.shareBtn}
 								activeOpacity={0.85}
 								accessibilityRole="button"
-								accessibilityLabel={`${badge.def.title} 뱃지 자랑하기`}
+								accessibilityLabel={t('modal.badgeDetail.shareA11y', { title: badge.def.title })}
 								onPress={() => shareBadge(cardRef, badge.def.title, unlockedCount, totalCount)}>
 								<IconComponent type="materialIcons" name="ios-share" size={scaledSize(17)} color={Colors.primary} />
-								<Text style={styles.shareText}>자랑하기</Text>
+								<Text style={styles.shareText}>{t('modal.badgeDetail.share')}</Text>
 							</TouchableOpacity>
 						)}
 						<TouchableOpacity style={styles.close} activeOpacity={0.85} onPress={onClose}>
-							<Text style={styles.closeText}>확인</Text>
+							<Text style={styles.closeText}>{t('common.confirm')}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>

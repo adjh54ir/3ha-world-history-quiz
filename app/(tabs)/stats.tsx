@@ -33,6 +33,7 @@ import RankingService, { RankRow } from '@/src/services/RankingService';
 import TabHeader from '@/src/screens/common/TabHeader';
 import { TAB_ILLUSTRATIONS } from '@/src/const/ConstTabIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 /** 그라데이션 테두리로 한 번 더 강조하는 상위 희귀도 */
 const HIGH_RARITY = new Set(['epic', 'legend']);
@@ -59,6 +60,7 @@ const GroupHead: React.FC<{ label: string; icon: string }> = ({ label, icon }) =
  * - 플랫 카드 · 명확한 위계 · 일관된 간격
  */
 const Stats = () => {
+	const { t } = useTranslation();
 	const [stats, setStats] = useState<LearnStats | null>(null);
 	const [achievements, setAchievements] = useState<AchievementStatus[]>([]);
 	const [selectedAchievement, setSelectedAchievement] = useState<AchievementStatus | null>(null);
@@ -246,8 +248,8 @@ const Stats = () => {
 	const renderTopicProgress = (quizMode: boolean) => (
 		<React.Fragment key={quizMode ? 'quiz-progress' : 'study-progress'}>
 				<SectionHead
-					title={quizMode ? '주제별 퀴즈 진도' : '주제별 학습 진도'}
-					sub={quizMode ? '주제별로 푼 문제 수와 정답률' : '주제별로 학습한 카드 수'}
+					title={quizMode ? t('stats.topic.quizTitle') : t('stats.topic.studyTitle')}
+					sub={quizMode ? t('stats.topic.quizSub') : t('stats.topic.studySub')}
 					style={styles.sectionHeadWide}
 				/>
 				<TouchableOpacity
@@ -258,13 +260,13 @@ const Stats = () => {
 					onPress={() => setWeakFirst((v) => !v)}
 					hitSlop={Layout.hitSlop}>
 					<IconComponent type="materialIcons" name="sort" size={scaledSize(14)} color={weakFirst ? Colors.primary : Colors.textMuted} />
-					<Text style={[styles.sortChipText, weakFirst && styles.sortChipTextOn]} numberOfLines={1} ellipsizeMode="tail">{quizMode ? '정답률 낮은 순' : '진도 낮은 순'}</Text>
+					<Text style={[styles.sortChipText, weakFirst && styles.sortChipTextOn]} numberOfLines={1} ellipsizeMode="tail">{quizMode ? t('stats.topic.sortQuiz') : t('stats.topic.sortStudy')}</Text>
 					{weakFirst && <IconComponent type="materialIcons" name="check" size={scaledSize(14)} color={Colors.primary} />}
 				</TouchableOpacity>
 				{/* 메인 주제 / 서브 퀴즈를 나눠 진도를 보여준다 */}
 				{([
-					{ key: 'main', label: '메인 주제', icon: 'category', list: sortDomains(domains, quizMode) },
-					{ key: 'sub', label: '서브 퀴즈', icon: 'extension', list: sortDomains(subDomains, quizMode) },
+					{ key: 'main', label: t('stats.topic.main'), icon: 'category', list: sortDomains(domains, quizMode) },
+					{ key: 'sub', label: t('stats.topic.sub'), icon: 'extension', list: sortDomains(subDomains, quizMode) },
 				] as const).map((g) => {
 					// 그룹 합계 — 목록 위에 진도 요약을 먼저 보여준다 (합계는 정렬과 무관하므로 원본 목록으로 계산)
 					const gSolved = g.list.reduce((a, d) => a + (quizStatOf(d.key)?.solved ?? 0), 0);
@@ -282,16 +284,16 @@ const Stats = () => {
 								<Text style={styles.topicGroupTitle} numberOfLines={1} ellipsizeMode="tail">{g.label}</Text>
 								<View style={styles.topicGroupPill}>
 									<Text style={styles.topicGroupPillText}>
-										{gRate}% · {quizMode ? '응시' : '완료'} {gClear}/{g.list.length}
+										{t(quizMode ? 'stats.topic.pillQuiz' : 'stats.topic.pillStudy', { rate: gRate, done: gClear, total: g.list.length })}
 									</Text>
 								</View>
 							</View>
 							<View style={styles.card}>
 								{/* 그룹 전체 진도 */}
 								<View style={styles.topicTotalRow}>
-									<Text style={styles.topicTotalLabel} numberOfLines={1} ellipsizeMode="tail">{quizMode ? '전체 정답률' : '전체 진도'}</Text>
+									<Text style={styles.topicTotalLabel} numberOfLines={1} ellipsizeMode="tail">{quizMode ? t('stats.topic.totalAccuracy') : t('stats.topic.totalProgress')}</Text>
 									<Text style={styles.topicTotalValue}>
-										{gDone.toLocaleString()} / {gTotal.toLocaleString()}{quizMode ? '문제' : '장'}
+										{t(quizMode ? 'stats.topic.totalQuiz' : 'stats.topic.totalStudy', { done: gDone.toLocaleString(), total: gTotal.toLocaleString() })}
 									</Text>
 								</View>
 								<AnimatedProgress ratio={gRate / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
@@ -304,8 +306,8 @@ const Stats = () => {
 									const studyRate = d.total > 0 ? Math.round((done / d.total) * 100) : 0;
 									const rate = quizMode ? qRate ?? 0 : studyRate;
 									const state = quizMode
-										? solved > 0 ? '응시함' : '미응시'
-										: studyRate >= 100 ? '완료' : done > 0 ? '진행 중' : '시작 전';
+										? solved > 0 ? t('stats.topic.stateAttempted') : t('stats.topic.stateNotAttempted')
+										: studyRate >= 100 ? t('stats.topic.stateDone') : done > 0 ? t('stats.topic.stateInProgress') : t('stats.topic.stateNotStarted');
 									const stateColor = quizMode
 										? solved > 0 ? d.color : Colors.textMuted
 										: studyRate >= 100 ? Colors.success : done > 0 ? d.color : Colors.textMuted;
@@ -328,27 +330,27 @@ const Stats = () => {
 														<>
 															<View style={styles.domainMetaItem}>
 																<IconComponent type="materialIcons" name="quiz" size={scaledSize(12)} color={Colors.textMuted} />
-																<Text style={styles.domainMetaText}>{solved.toLocaleString()}문제 풀이</Text>
+																<Text style={styles.domainMetaText}>{t('stats.topic.solved', { n: solved.toLocaleString() })}</Text>
 															</View>
 															<View style={styles.domainMetaItem}>
 																<IconComponent type="materialIcons" name="check-circle" size={scaledSize(12)} color={Colors.textMuted} />
-																<Text style={styles.domainMetaText}>정답 {correct.toLocaleString()}</Text>
+																<Text style={styles.domainMetaText}>{t('stats.topic.correct', { n: correct.toLocaleString() })}</Text>
 															</View>
 															<View style={styles.domainMetaItem}>
 																<IconComponent type="materialIcons" name="cancel" size={scaledSize(12)} color={Colors.textMuted} />
-																<Text style={styles.domainMetaText}>오답 {Math.max(0, solved - correct).toLocaleString()}</Text>
+																<Text style={styles.domainMetaText}>{t('stats.topic.wrong', { n: Math.max(0, solved - correct).toLocaleString() })}</Text>
 															</View>
 														</>
 													) : (
 														<>
 															<View style={styles.domainMetaItem}>
 																<IconComponent type="materialIcons" name="menu-book" size={scaledSize(12)} color={Colors.textMuted} />
-																<Text style={styles.domainMetaText}>{done.toLocaleString()}/{d.total.toLocaleString()}장</Text>
+																<Text style={styles.domainMetaText}>{t('stats.topic.cards', { done: done.toLocaleString(), total: d.total.toLocaleString() })}</Text>
 															</View>
 															{qRate !== null && (
 																<View style={styles.domainMetaItem}>
 																	<IconComponent type="materialIcons" name="check-circle" size={scaledSize(12)} color={accuracyColor(qRate)} />
-																	<Text style={[styles.domainMetaText, { color: accuracyColor(qRate), fontWeight: '800' }]}>정답률 {qRate}%</Text>
+																	<Text style={[styles.domainMetaText, { color: accuracyColor(qRate), fontWeight: '800' }]}>{t('stats.topic.accuracy', { rate: qRate })}</Text>
 																</View>
 															)}
 														</>
@@ -369,8 +371,8 @@ const Stats = () => {
 		<View style={styles.safe}>
 			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				<TabHeader
-					title="내 활동"
-					sub="학습 기록과 성취를 한눈에 확인해요"
+					title={t('stats.header.title')}
+					sub={t('stats.header.sub')}
 					illustration={TAB_ILLUSTRATIONS.stats}
 					right={<CharacterGuideButton onPress={guide.open} />}
 				/>
@@ -383,8 +385,8 @@ const Stats = () => {
 							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(24)} color={Colors.primary} />
 						</View>
 						<View style={styles.streakBody}>
-							<Text style={styles.streakNum}>{streak}일 연속 학습</Text>
-							<Text style={styles.streakSub}>최고 기록 {best}일</Text>
+							<Text style={styles.streakNum}>{t('stats.summary.streak', { days: streak })}</Text>
+							<Text style={styles.streakSub}>{t('stats.summary.best', { days: best })}</Text>
 						</View>
 					</View>
 
@@ -393,48 +395,49 @@ const Stats = () => {
 					{/* 퀴즈 지표 */}
 					<View style={styles.summaryGroupHead}>
 						<IconComponent type="materialIcons" name="quiz" size={scaledSize(13)} color={Colors.textMuted} />
-						<Text style={styles.summaryGroupLabel}>퀴즈</Text>
+						<Text style={styles.summaryGroupLabel}>{t('stats.summary.quiz')}</Text>
 					</View>
 					<View style={styles.summaryStats}>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: Colors.textStrong }]}>{totalSolved.toLocaleString()}</FitText>
-							<FitText style={styles.summaryStatLabel}>푼 문제</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.solved')}</FitText>
 						</View>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: accuracyColor(accuracy) }]}>{accuracy}%</FitText>
-							<FitText style={styles.summaryStatLabel}>정답률</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.accuracy')}</FitText>
 						</View>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: Colors.secondaryDark }]}>{quizzes.toLocaleString()}</FitText>
-							<FitText style={styles.summaryStatLabel}>퀴즈 횟수</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.quizCount')}</FitText>
 						</View>
 					</View>
 
 					{/* 학습 지표 — 카드·숏폼으로 실제 학습한 분량 */}
 					<View style={[styles.summaryGroupHead, styles.summaryGroupHeadSecond]}>
 						<IconComponent type="materialIcons" name="menu-book" size={scaledSize(13)} color={Colors.textMuted} />
-						<Text style={styles.summaryGroupLabel}>학습</Text>
+						<Text style={styles.summaryGroupLabel}>{t('stats.summary.study')}</Text>
 					</View>
 					<View style={styles.summaryStats}>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: Colors.textStrong }]}>{learnDone.toLocaleString()}</FitText>
-							<FitText style={styles.summaryStatLabel}>학습 완료</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.learnDone')}</FitText>
 						</View>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: Colors.primary }]}>{learnRate}%</FitText>
-							<FitText style={styles.summaryStatLabel}>전체 진도</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.learnRate')}</FitText>
 						</View>
 						<View style={styles.summaryStat}>
 							<FitText style={[styles.summaryStatNum, { color: Colors.secondaryDark }]}>{studiedToday.toLocaleString()}</FitText>
-							<FitText style={styles.summaryStatLabel}>오늘 학습</FitText>
+							<FitText style={styles.summaryStatLabel}>{t('stats.summary.studiedToday')}</FitText>
 						</View>
 					</View>
 				</View>
 
 				{/* ── 랭킹 · 성취 — 겨루기와 뱃지를 한 묶음으로 ── */}
-				<GroupHead label="랭킹" icon="emoji-events" />
 				{/* ── 전체 랭킹 — 뱃지와 함께 '겨루기·성취' 성격으로 묶는다 ── */}
 				{RankingService.isConfigured && (
+					<>
+					<GroupHead label={t('stats.group.ranking')} icon="emoji-events" />
 					<View style={styles.weeklyCard}>
 						{/* 명예의 전당 히어로 — 그라데이션 + 빛 흐름 + 트로피 펄스 */}
 						<View style={styles.rankHero}>
@@ -448,25 +451,25 @@ const Stats = () => {
 									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(22)} color={Colors.gold} />
 								</Animated.View>
 								<View style={styles.rowBody}>
-									<Text style={styles.rankHeroTitle} numberOfLines={1} ellipsizeMode="tail">전체 랭킹</Text>
-									<Text style={styles.rankHeroDesc} numberOfLines={2} ellipsizeMode="tail">나의 퀴즈 점수로 겨루는 명예의 전당</Text>
+									<Text style={styles.rankHeroTitle} numberOfLines={1} ellipsizeMode="tail">{t('stats.rank.title')}</Text>
+									<Text style={styles.rankHeroDesc} numberOfLines={2} ellipsizeMode="tail">{t('stats.rank.desc')}</Text>
 								</View>
 								<TouchableOpacity style={styles.rankMoreBtn} activeOpacity={0.85} onPress={() => router.push('/special/ranking' as never)} hitSlop={Layout.hitSlop}>
-									<Text style={styles.rankMoreText}>전체보기</Text>
+									<Text style={styles.rankMoreText}>{t('stats.rank.more')}</Text>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(15)} color={Colors.primaryDeep} />
 								</TouchableOpacity>
 							</View>
 							{rankJoined && (
 								<View style={styles.rankHeroStats}>
 									<View style={styles.rankHeroStat}>
-										<Text style={styles.rankHeroStatLabel}>내 순위</Text>
-										<FitText style={styles.rankHeroStatValue}>{rankMine ? `${rankMine.rank}위` : '-'}</FitText>
+										<Text style={styles.rankHeroStatLabel}>{t('stats.rank.myRank')}</Text>
+										<FitText style={styles.rankHeroStatValue}>{rankMine ? t('stats.rank.rankValue', { rank: rankMine.rank }) : '-'}</FitText>
 									</View>
 									<View style={styles.rankHeroDivider} />
 									<View style={styles.rankHeroStat}>
-										<Text style={styles.rankHeroStatLabel}>내 점수</Text>
+										<Text style={styles.rankHeroStatLabel}>{t('stats.rank.myScore')}</Text>
 										{/* 서버 반영이 늦어도 홈의 전체 점수보다 낮게 보이지 않도록 로컬 점수와 큰 값을 쓴다 */}
-										<FitText style={styles.rankHeroStatValue}>{Math.max(rankMine?.score ?? 0, myScore).toLocaleString()}점</FitText>
+										<FitText style={styles.rankHeroStatValue}>{t('stats.rank.scoreValue', { score: Math.max(rankMine?.score ?? 0, myScore).toLocaleString() })}</FitText>
 									</View>
 								</View>
 							)}
@@ -475,20 +478,21 @@ const Stats = () => {
 						{!rankJoined ? (
 							<TouchableOpacity style={styles.weeklyJoinBtn} activeOpacity={0.9} onPress={() => router.push('/special/ranking' as never)}>
 								<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(17)} color={Colors.textInverse} />
-								<Text style={styles.weeklyJoinText}>랭킹에 참여하고 내 순위 확인하기</Text>
+								<Text style={styles.weeklyJoinText}>{t('stats.rank.join')}</Text>
 							</TouchableOpacity>
 						) : rankRows.length === 0 ? (
-							<Text style={styles.weeklyEmpty}>아직 기록이 없어요. 퀴즈를 풀면 점수가 쌓여요!</Text>
+							<Text style={styles.weeklyEmpty}>{t('stats.rank.empty')}</Text>
 						) : (
 							<View style={styles.rankRowsWrap}>
 								{rankRows.slice(0, 5).map((r, i) => (
 									<FadeInUp key={`${r.rank}-${r.nickname}-${i}`} delay={Math.min(i * 70, 350)} duration={340} distance={12}>
-										<RankRowItem item={r} index={i} unit="점" />
+										<RankRowItem item={r} index={i} unit={t('stats.rank.unit')} />
 									</FadeInUp>
 								))}
 							</View>
 						)}
 					</View>
+					</>
 				)}
 
 				{/* 학습 / 퀴즈 — 기록·진도를 탭으로 완전히 분리해 본다 */}
@@ -498,11 +502,11 @@ const Stats = () => {
 					style={styles.recordTabScroll}
 					contentContainerStyle={styles.recordTabBar}>
 					{([
-						{ key: 'all', label: '전체', icon: 'dashboard' },
-						{ key: 'study', label: '학습', icon: 'menu-book' },
-						{ key: 'quiz', label: '퀴즈', icon: 'quiz' },
-						{ key: 'time', label: '타임 챌린지', icon: 'bolt' },
-						{ key: 'daily', label: '오늘의 퀴즈', icon: 'event-available' },
+						{ key: 'all', label: t('common.all'), icon: 'dashboard' },
+						{ key: 'study', label: t('stats.tabs.study'), icon: 'menu-book' },
+						{ key: 'quiz', label: t('stats.tabs.quiz'), icon: 'quiz' },
+						{ key: 'time', label: t('stats.tabs.time'), icon: 'bolt' },
+						{ key: 'daily', label: t('stats.tabs.daily'), icon: 'event-available' },
 					] as const).map((t) => {
 						const on = progressTab === t.key;
 						return (
@@ -518,7 +522,7 @@ const Stats = () => {
 				{/* 학습 탭 — 학습 기록(리포트) + 하단 학습 진도 */}
 				{showSection('study') && (
 					<>
-						<GroupHead label="학습 기록" icon="menu-book" />
+						<GroupHead label={t('stats.group.studyRecord')} icon="menu-book" />
 						<LearningReportCard variant="study" style={styles.reportCard} />
 					</>
 				)}
@@ -527,20 +531,20 @@ const Stats = () => {
 				{/* 퀴즈 탭 — 퀴즈 기록(리포트) + 하단 퀴즈 진도 */}
 				{showSection('quiz') && (
 					<>
-						<GroupHead label="퀴즈 기록" icon="quiz" />
+						<GroupHead label={t('stats.group.quizRecord')} icon="quiz" />
 						<LearningReportCard variant="quiz" style={styles.reportCard} />
 					</>
 				)}
 
 				{showSection('time') && (
 					<>
-					<GroupHead label="타임 챌린지 기록" icon="bolt" />
+					<GroupHead label={t('stats.group.timeRecord')} icon="bolt" />
 					<View style={styles.card}>
 						{timePlays === 0 ? (
 							<View style={styles.recordEmpty}>
-								<EmptyState icon="bolt" text="아직 타임 챌린지 기록이 없어요" subText="180초 챌린지로 콤보 점수를 쌓아보세요" />
+								<EmptyState icon="bolt" text={t('stats.time.emptyTitle')} subText={t('stats.time.emptySub')} />
 								<TouchableOpacity style={styles.recordCta} activeOpacity={0.9} onPress={() => router.push('/quiz/speed' as never)}>
-									<Text style={styles.recordCtaText}>타임 챌린지 시작하기</Text>
+									<Text style={styles.recordCtaText}>{t('stats.time.start')}</Text>
 								</TouchableOpacity>
 							</View>
 						) : (
@@ -550,7 +554,7 @@ const Stats = () => {
 										<IconComponent type="materialIcons" name="bolt" size={scaledSize(22)} color={Colors.primary} />
 									</View>
 									<Text style={styles.timeStatNum}>{timePlays.toLocaleString()}</Text>
-									<Text style={styles.timeStatLabel}>플레이</Text>
+									<Text style={styles.timeStatLabel}>{t('stats.time.plays')}</Text>
 								</View>
 								<View style={styles.timeStatDivider} />
 								<View style={styles.timeStat}>
@@ -558,7 +562,7 @@ const Stats = () => {
 										<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(22)} color={Colors.error} />
 									</View>
 									<Text style={styles.timeStatNum}>{bestCombo.toLocaleString()}</Text>
-									<Text style={styles.timeStatLabel}>최고 콤보</Text>
+									<Text style={styles.timeStatLabel}>{t('stats.time.bestCombo')}</Text>
 								</View>
 							</View>
 						)}
@@ -576,9 +580,9 @@ const Stats = () => {
 										LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 										setTimeHistOpen((v) => !v);
 									}}>
-									<Text style={styles.timeHistTitle}>플레이별 점수</Text>
+									<Text style={styles.timeHistTitle}>{t('stats.time.historyTitle')}</Text>
 									<View style={styles.timeHistCountPill}>
-										<Text style={styles.timeHistCountText}>{timeHistory.length}판</Text>
+										<Text style={styles.timeHistCountText}>{t('stats.time.playCount', { n: timeHistory.length })}</Text>
 									</View>
 									{timeHistory.length > 3 && (
 										<IconComponent type="materialIcons" name={timeHistOpen ? 'expand-less' : 'expand-more'} size={scaledSize(22)} color={Colors.textMuted} />
@@ -612,7 +616,7 @@ const Stats = () => {
 										</View>
 										<View style={styles.timeHistScoreWrap}>
 											<Text style={styles.timeHistScore}>{score.toLocaleString()}</Text>
-											<Text style={styles.timeHistScoreUnit}>점</Text>
+											<Text style={styles.timeHistScoreUnit}>{t('stats.time.scoreUnit')}</Text>
 										</View>
 									</View>
 									);
@@ -624,7 +628,7 @@ const Stats = () => {
 											LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 											setTimeHistOpen((v) => !v);
 										}}>
-										<Text style={styles.timeHistMore}>{timeHistOpen ? '접기' : `전체 기록 보기 (${timeHistory.length}판)`}</Text>
+										<Text style={styles.timeHistMore}>{timeHistOpen ? t('stats.time.collapse') : t('stats.time.showAll', { n: timeHistory.length })}</Text>
 									</TouchableOpacity>
 								)}
 							</View>
@@ -635,13 +639,13 @@ const Stats = () => {
 
 				{showSection('daily') && (
 					<>
-					<GroupHead label="오늘의 퀴즈 기록" icon="event-available" />
+					<GroupHead label={t('stats.group.dailyRecord')} icon="event-available" />
 					<View style={styles.card}>
 						{dailyList.length === 0 ? (
 							<View style={styles.recordEmpty}>
-								<EmptyState icon="event-available" text="아직 오늘의 퀴즈 기록이 없어요" subText="매일 오늘의 퀴즈를 풀면 기록이 쌓여요" />
+								<EmptyState icon="event-available" text={t('stats.daily.emptyTitle')} subText={t('stats.daily.emptySub')} />
 								<TouchableOpacity style={styles.recordCta} activeOpacity={0.9} onPress={() => router.push('/quiz/today' as never)}>
-									<Text style={styles.recordCtaText}>오늘의 퀴즈 풀기</Text>
+									<Text style={styles.recordCtaText}>{t('stats.daily.start')}</Text>
 								</TouchableOpacity>
 							</View>
 						) : (
@@ -650,12 +654,12 @@ const Stats = () => {
 								return (
 									<TouchableOpacity key={it.date} activeOpacity={0.85} onPress={() => setSelectedDaily(it)} style={[styles.dailyRow, i > 0 && styles.dailyRowBorder]}>
 										<View style={styles.dailyDateBox}>
-											<Text style={styles.dailyDateMonth}>{Number(it.date.slice(5, 7))}월</Text>
+											<Text style={styles.dailyDateMonth}>{t('stats.daily.month', { month: Number(it.date.slice(5, 7)) })}</Text>
 											<Text style={styles.dailyDateDay}>{Number(it.date.slice(8, 10))}</Text>
 										</View>
 										<View style={styles.dailyRowBody}>
-											<Text style={styles.dailyRowTitle} numberOfLines={1} ellipsizeMode="tail">{it.correct} / {it.total}문제 정답</Text>
-											<Text style={styles.dailyRowSub}>정답률 <Text style={{ color: accuracyColor(rate), fontWeight: '800' }}>{rate}%</Text></Text>
+											<Text style={styles.dailyRowTitle} numberOfLines={1} ellipsizeMode="tail">{t('stats.daily.rowTitle', { correct: it.correct, total: it.total })}</Text>
+											<Text style={styles.dailyRowSub}>{t('stats.daily.rateLabel')}<Text style={{ color: accuracyColor(rate), fontWeight: '800' }}>{rate}%</Text></Text>
 										</View>
 										<View style={[styles.dailyRatePill, { backgroundColor: withAlpha(accuracyColor(rate), '14') }]}>
 											<Text style={[styles.dailyRateText, { color: accuracyColor(rate) }]}>{rate}%</Text>
@@ -671,14 +675,14 @@ const Stats = () => {
 				{showTopicProgress && renderTopicProgress(true)}
 
 
-				<GroupHead label="성취" icon="military-tech" />
+				<GroupHead label={t('stats.group.achievement')} icon="military-tech" />
 				<TouchableOpacity style={styles.achSummary} activeOpacity={0.9} onPress={() => setShowAchSheet(true)}>
 					<View style={styles.achSummaryIcon}>
 						<IconComponent type="materialIcons" name="military-tech" size={scaledSize(22)} color={Colors.primary} />
 					</View>
 					<View style={styles.achSummaryBody}>
-						<Text style={styles.achSummaryTitle}>뱃지</Text>
-						<Text style={styles.achSummaryDesc}>{unlockedCount} / {achievements.length}개 획득</Text>
+						<Text style={styles.achSummaryTitle}>{t('stats.ach.title')}</Text>
+						<Text style={styles.achSummaryDesc}>{t('stats.ach.obtained', { unlocked: unlockedCount, total: achievements.length })}</Text>
 						<View style={styles.achSummaryTrack}>
 							<View style={[styles.achSummaryFill, { width: `${achievements.length ? Math.round((unlockedCount / achievements.length) * 100) : 0}%` }]} />
 						</View>
@@ -695,7 +699,7 @@ const Stats = () => {
 						<View style={[styles.achSheet, { paddingBottom: insets.bottom }]}>
 							<View style={styles.achSheetHandle} />
 							<View style={styles.achSheetHead}>
-								<Text style={styles.achSheetTitle}>뱃지</Text>
+								<Text style={styles.achSheetTitle}>{t('stats.ach.title')}</Text>
 								<Text style={styles.achCount}>{unlockedCount} / {achievements.length}</Text>
 								<TouchableOpacity onPress={() => setShowAchSheet(false)} hitSlop={10} activeOpacity={0.7}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textMuted} />
@@ -705,9 +709,9 @@ const Stats = () => {
 				{/* 40개가 넘어 한 화면에 안 들어오므로 상태 필터 제공 */}
 				<View style={styles.achFilterRow}>
 					{([
-						{ key: 'all', label: '전체', count: achievements.length },
-						{ key: 'progress', label: '진행 중', count: achievements.length - unlockedCount },
-						{ key: 'done', label: '달성', count: unlockedCount },
+						{ key: 'all', label: t('common.all'), count: achievements.length },
+						{ key: 'progress', label: t('stats.ach.filterProgress'), count: achievements.length - unlockedCount },
+						{ key: 'done', label: t('stats.ach.filterDone'), count: unlockedCount },
 					] as const).map((f) => {
 						const on = achFilter === f.key;
 						return (
@@ -719,7 +723,7 @@ const Stats = () => {
 				</View>
 				{visibleAchievements.length === 0 ? (
 					<View style={styles.achList}>
-						<Text style={styles.achEmpty}>{achFilter === 'done' ? '아직 달성한 뱃지가 없어요' : achFilter === 'progress' ? '모든 뱃지를 모았어요!' : '뱃지를 불러오는 중이에요'}</Text>
+						<Text style={styles.achEmpty}>{achFilter === 'done' ? t('stats.ach.emptyDone') : achFilter === 'progress' ? t('stats.ach.emptyProgress') : t('stats.ach.emptyLoading')}</Text>
 					</View>
 				) : (
 					achievementSections.map((sec) => (
@@ -761,7 +765,7 @@ const Stats = () => {
 												<Text style={[styles.achTitle, !a.unlocked && { color: Colors.textSecondary }]} numberOfLines={1}>{a.def.title}</Text>
 												{a.unlocked ? (
 													<View style={[styles.achBadge, { backgroundColor: a.def.color }]}>
-														<Text style={[styles.achBadgeText, { color: readableOn(a.def.color) }]}>달성</Text>
+														<Text style={[styles.achBadgeText, { color: readableOn(a.def.color) }]}>{t('stats.ach.unlocked')}</Text>
 													</View>
 												) : (
 													<Text style={styles.achProgress}>{a.current}/{a.def.target}{a.def.unit ?? ''}</Text>
@@ -796,12 +800,8 @@ const Stats = () => {
 			<CharacterGuide
 				visible={guide.visible}
 				onClose={guide.close}
-				lines={[
-					'여기는 내 활동이에요. 학습·퀴즈 기록이 자동으로 쌓여요.',
-					'위에서 아래로 랭킹 → 학습·퀴즈 기록 → 주제별 진도 → 성취(뱃지) 순서로 볼 수 있어요.',
-					'뱃지를 누르면 어떤 조건으로 얻는지 자세히 알려줄게요!',
-				]}
-				title="내 활동, 이렇게 봐요"
+				lines={[t('stats.guide.line1'), t('stats.guide.line2'), t('stats.guide.line3')]}
+				title={t('stats.guide.title')}
 			/>
 
 			<BadgeDetailModal badge={selectedAchievement} onClose={() => setSelectedAchievement(null)} unlockedCount={unlockedCount} totalCount={achievements.length} />
@@ -817,17 +817,17 @@ const Stats = () => {
 							<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 							<View style={styles.dailyModalHead}>
 								<View style={styles.dailyModalHeadBody}>
-									<Text style={styles.dailyModalTitle}>오늘의 퀴즈</Text>
+									<Text style={styles.dailyModalTitle}>{t('stats.daily.modalTitle')}</Text>
 									{!!selectedDaily && <Text style={styles.dailyModalDate}>{selectedDaily.date}</Text>}
 								</View>
-								<TouchableOpacity style={styles.dailyModalClose} onPress={() => setSelectedDaily(null)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="닫기">
+								<TouchableOpacity style={styles.dailyModalClose} onPress={() => setSelectedDaily(null)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(20)} color={Colors.textInverse} />
 								</TouchableOpacity>
 							</View>
 							{!!selectedDaily && (
 								<View style={styles.dailyModalScore}>
 									<Text style={styles.dailyModalScoreNum}>{selectedDaily.correct}</Text>
-									<Text style={styles.dailyModalScoreUnit}> / {selectedDaily.total}개 정답</Text>
+									<Text style={styles.dailyModalScoreUnit}>{t('stats.daily.scoreUnit', { total: selectedDaily.total })}</Text>
 									<View style={styles.dailyModalRatePill}>
 										<Text style={styles.dailyModalRateText}>
 											{selectedDaily.total > 0 ? Math.round((selectedDaily.correct / selectedDaily.total) * 100) : 0}%
@@ -851,7 +851,7 @@ const Stats = () => {
 											</View>
 											<Text style={[styles.pastDomain, { color: meta.color }]} numberOfLines={1}>{meta.title}</Text>
 											<View style={[styles.pastResultChip, { backgroundColor: it.correct ? withAlpha(Colors.success, '14') : withAlpha(Colors.error, '14') }]}>
-												<Text style={[styles.pastResult, { color: it.correct ? Colors.success : Colors.error }]}>{it.correct ? '정답' : '오답'}</Text>
+												<Text style={[styles.pastResult, { color: it.correct ? Colors.success : Colors.error }]}>{it.correct ? t('stats.daily.correct') : t('stats.daily.wrong')}</Text>
 											</View>
 										</View>
 										<Text lineBreakStrategyIOS="hangul-word" style={styles.pastPrompt}>{it.prompt}</Text>
@@ -1035,7 +1035,8 @@ const styles = themed(() => StyleSheet.create({
 	achCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.primary },
 
 	// 주제별 정답률 (카드 내부 행)
-	topicGroup: { marginBottom: SpacingV.sm },
+	// 그룹 사이 간격은 안쪽 card 의 marginBottom(sectionGap) 하나로 — 다른 섹션과 같은 리듬
+	topicGroup: {},
 	topicGroupHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	topicGroupTitle: { flex: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary },
 	topicGroupPill: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, borderRadius: Radius.pill, backgroundColor: Colors.primaryBg },

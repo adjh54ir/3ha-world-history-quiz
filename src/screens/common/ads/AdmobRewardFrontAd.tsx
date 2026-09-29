@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Platform, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { useTranslation } from 'react-i18next';
 import {
   RewardedInterstitialAd,
   TestIds,
@@ -11,10 +12,9 @@ import {
   GOOGLE_ADMOV_IOS_REWARD_FRONT,
   GOOGLE_ADMOV_ANDROID_REWARD_FRONT,
 } from "@env";
-import { isAdsRemoved } from "@/src/services/PurchaseService";
 import { resolveAdUnitId } from './adUnitId';
 import Colors from '@/src/const/ConstColors';
-import { Spacing } from '@/src/const/ConstDesign';
+import { Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 
 type AdUnitIdType = string;
@@ -37,11 +37,10 @@ const rewardedInterstitial = RewardedInterstitialAd.createForAdRequest(
  * @returns
  */
 const AdmobRewardFrontAd: React.FC = () => {
+  const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // ✅ 광고 제거 구매자는 로드하지 않음
-    if (isAdsRemoved()) return;
     const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
       RewardedAdEventType.LOADED,
       () => {
@@ -69,8 +68,8 @@ const AdmobRewardFrontAd: React.FC = () => {
     };
   }, []);
 
-  // No advert ready to show yet / 광고 제거 구매자
-  if (!loaded || isAdsRemoved()) {
+  // No advert ready to show yet
+  if (!loaded) {
     return null;
   }
 
@@ -79,7 +78,7 @@ const AdmobRewardFrontAd: React.FC = () => {
       style={styles.button}
       onPress={() => rewardedInterstitial.show()}
     >
-      <Text style={styles.buttonText}>보상형 전면 광고 보기</Text>
+      <Text style={styles.buttonText}>{t('ads.rewardFrontButton')}</Text>
     </TouchableOpacity>
   );
 };
@@ -89,13 +88,14 @@ export default AdmobRewardFrontAd;
 const styles = themed(() => StyleSheet.create({
   button: {
     backgroundColor: Colors.successDeep,
-    padding: Spacing.md,
-    borderRadius: 5,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: SpacingV.md,
+    borderRadius: Radius.sm,
     alignItems: "center",
   },
   buttonText: {
     color: Colors.textInverse,
-    fontSize: 16,
+    fontSize: Typography.callout,
     fontWeight: "bold",
   },
 }));

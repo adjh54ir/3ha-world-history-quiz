@@ -29,14 +29,16 @@ import { Image } from 'expo-image';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { ensureTowerDay, useTower } from '@/src/store/slice/TowerSlice';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
+type ModeKey = 'mix' | 'bundle' | 'ox' | 'blank' | 'initial' | 'picture' | 'flagMatch' | 'match' | 'bookmark' | 'wrongReview' | 'weakFocus' | 'exam' | 'league';
+
+/** 제목·설명·태그는 렌더 시점에 challenge.modes.<key>.title/desc/tag 로 번역한다 */
 interface ModeCard {
+	key: ModeKey;
 	href: string;
-	title: string;
-	desc: string;
 	icon: string;
 	color: string;
-	tag: string;
 }
 
 type ChallengeTab = 'time' | 'tower' | 'mode';
@@ -46,19 +48,19 @@ const TIME_CHALLENGE_HREF = '/quiz/speed';
 const BEST_CELEBRATED_KEY = 'TIME_BEST_CELEBRATED_AT';
 
 const MODES: ModeCard[] = themed(() => ([
-	{ href: '/quiz/mix', title: '데일리 믹스', desc: '전 주제에서 골고루 섞인 10문제로 매일 실력 점검', icon: 'casino', color: Colors.primary, tag: '4지선다' },
-	{ href: '/quiz/bundle', title: '묶음 퀴즈', desc: '원하는 주제만 골라 묶어서 한 번에 풀기', icon: 'library-add-check', color: Colors.primary, tag: '주제 선택' },
-	{ href: '/quiz/ox', title: 'OX 퀴즈', desc: '제시된 답이 맞는지 빠르게 O / X 로 판단', icon: 'rule', color: Colors.primary, tag: '스피드 판단' },
-	{ href: '/quiz/blank', title: '빈칸 채우기', desc: '설명 속 가려진 이름을 보기에서 골라 완성', icon: 'edit-note', color: Colors.primary, tag: '문맥 추론' },
-	{ href: '/quiz/initial', title: '초성 퀴즈', desc: '설명과 초성 힌트(ㄱㅇ)를 보고 이름 맞히기', icon: 'abc', color: Colors.primary, tag: '초성 힌트' },
-	{ href: '/quiz/picture', title: '그림 퀴즈', desc: '국기·초상·랜드마크 사진만 보고 이름 맞히기', icon: 'photo-library', color: Colors.primary, tag: '눈으로 풀기' },
-	{ href: '/quiz/match-game?mode=flag', title: '국기 짝 맞추기', desc: '국기와 나라 이름을 뒤집어 짝을 맞추는 메모리 게임', icon: 'flag', color: Colors.primary, tag: '메모리 게임' },
-	{ href: '/quiz/match-game', title: '짝 맞추기', desc: '이름과 설명을 뒤집어 짝을 맞추는 메모리 게임', icon: 'grid-view', color: Colors.primary, tag: '메모리 게임' },
-	{ href: '/quiz/bookmark', title: '즐겨찾기 퀴즈', desc: '내가 저장한 즐겨찾기로 나만의 퀴즈', icon: 'bookmark', color: Colors.primary, tag: '나만의 퀴즈' },
-	{ href: '/quiz/wrong-review', title: '오답 복습', desc: '틀린 문제만 모아 다시 풀고 약점을 보완', icon: 'history-edu', color: Colors.primary, tag: '약점 보완' },
-	{ href: '/special/weak-focus', title: '약점 집중', desc: '약한 주제만 모아 집중적으로 공략', icon: 'track-changes', color: Colors.primary, tag: '약점 공략' },
-	{ href: '/special/exam', title: '테마 코스', desc: '지리·세계사·교양 테마별로 묶어 한 회차 풀기', icon: 'workspace-premium', color: Colors.primary, tag: '테마 코스' },
-	{ href: '/special/league', title: '주간 리그', desc: 'XP를 쌓아 매주 승급에 도전', icon: 'leaderboard', color: Colors.primary, tag: 'XP 승급' },
+	{ key: 'mix', href: '/quiz/mix', icon: 'casino', color: Colors.primary },
+	{ key: 'bundle', href: '/quiz/bundle', icon: 'library-add-check', color: Colors.primary },
+	{ key: 'ox', href: '/quiz/ox', icon: 'rule', color: Colors.primary },
+	{ key: 'blank', href: '/quiz/blank', icon: 'edit-note', color: Colors.primary },
+	{ key: 'initial', href: '/quiz/initial', icon: 'abc', color: Colors.primary },
+	{ key: 'picture', href: '/quiz/picture', icon: 'photo-library', color: Colors.primary },
+	{ key: 'flagMatch', href: '/quiz/match-game?mode=flag', icon: 'flag', color: Colors.primary },
+	{ key: 'match', href: '/quiz/match-game', icon: 'grid-view', color: Colors.primary },
+	{ key: 'bookmark', href: '/quiz/bookmark', icon: 'bookmark', color: Colors.primary },
+	{ key: 'wrongReview', href: '/quiz/wrong-review', icon: 'history-edu', color: Colors.primary },
+	{ key: 'weakFocus', href: '/special/weak-focus', icon: 'track-changes', color: Colors.primary },
+	{ key: 'exam', href: '/special/exam', icon: 'workspace-premium', color: Colors.primary },
+	{ key: 'league', href: '/special/league', icon: 'leaderboard', color: Colors.primary },
 ]));
 
 /**
@@ -66,6 +68,7 @@ const MODES: ModeCard[] = themed(() => ([
  * - 플랫 카드 · 명확한 위계 · 일관된 간격
  */
 const Challenge = () => {
+	const { t } = useTranslation();
 	const scrollRef = useRef<any>(null);
 	useScrollToTop(scrollRef);
 	const [tab, setTab] = useState<ChallengeTab>('time');
@@ -203,40 +206,40 @@ const Challenge = () => {
 		if (ok) {
 			setNickname(nick);
 			playPop();
-			showToast('랭킹에 참여했어요!', 'emoji-events');
+			showToast(t('challenge.time.joinedToast'), 'emoji-events');
 			await refreshMyRank().catch(() => {});
 		} else {
-			showToast('랭킹 참여에 실패했어요. 잠시 후 다시 시도해 주세요', 'cloud-off');
+			showToast(t('challenge.time.joinFailedToast'), 'cloud-off');
 		}
 		setJoining(false);
 	};
 
-	const TABS: { key: ChallengeTab; label: string; icon: string }[] = [
-		{ key: 'time', label: '타임챌린지', icon: 'bolt' },
-		{ key: 'tower', label: '타워챌린지', icon: 'apartment' },
-		{ key: 'mode', label: '모드 선택', icon: 'apps' },
+	const TABS: { key: ChallengeTab; icon: string }[] = [
+		{ key: 'time', icon: 'bolt' },
+		{ key: 'tower', icon: 'apartment' },
+		{ key: 'mode', icon: 'apps' },
 	];
 
 	return (
 		<View style={styles.safe}>
 			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				<TabHeader
-					title="챌린지"
-					sub="다양한 방식으로 실력을 시험해요. 결과는 통계·보관함에 자동 저장돼요."
+					title={t('challenge.header.title')}
+					sub={t('challenge.header.sub')}
 					illustration={TAB_ILLUSTRATIONS.challenge}
 					right={<CharacterGuideButton onPress={guide.open} />}
 				/>
 
 				{/* 탭 (타임챌린지 / 타워챌린지 / 모드 선택) */}
 				<View style={styles.tabBar}>
-					{TABS.map((t) => {
-						const on = tab === t.key;
+					{TABS.map((item) => {
+						const on = tab === item.key;
 						return (
-							<TouchableOpacity key={t.key} style={[styles.tabBtn, on && styles.tabBtnOn]} activeOpacity={0.85} onPress={() => {
-									setTab(t.key);
+							<TouchableOpacity key={item.key} style={[styles.tabBtn, on && styles.tabBtnOn]} activeOpacity={0.85} onPress={() => {
+									setTab(item.key);
 								}}>
-								<IconComponent type="materialIcons" name={t.icon} size={scaledSize(16)} color={on ? Colors.primary : Colors.textMuted} />
-								<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1}>{t.label}</Text>
+								<IconComponent type="materialIcons" name={item.icon} size={scaledSize(16)} color={on ? Colors.primary : Colors.textMuted} />
+								<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1}>{t(`challenge.tabs.${item.key}`)}</Text>
 							</TouchableOpacity>
 						);
 					})}
@@ -252,8 +255,8 @@ const Challenge = () => {
 								accessible={false}
 							/>
 							<View style={styles.towerBody}>
-								<Text style={styles.cardTitle}>역사 사자와 함께, 180초 질주</Text>
-								<Text style={styles.cardDesc}>시간이 다하기 전에 더 많이 맞히고 최고 기록에 도전해요</Text>
+								<Text style={styles.cardTitle}>{t('challenge.time.heroTitle')}</Text>
+								<Text style={styles.cardDesc}>{t('challenge.time.heroDesc')}</Text>
 							</View>
 						</View>
 						{/* 타임챌린지 랭킹 — 랭킹 화면의 타임챌린지 보드를 그대로 사용 */}
@@ -263,12 +266,12 @@ const Challenge = () => {
 									<IconComponent type="materialIcons" name="bolt" size={scaledSize(18)} color={Colors.primary} />
 								</View>
 								<View style={styles.rankHeadBody}>
-									<Text style={styles.rankTitle}>타임챌린지 랭킹</Text>
-									<Text style={styles.rankDesc}>180초 순간 집중력 대결</Text>
+									<Text style={styles.rankTitle}>{t('challenge.time.rankTitle')}</Text>
+									<Text style={styles.rankDesc}>{t('challenge.time.rankDesc')}</Text>
 								</View>
 							</View>
 							<TouchableOpacity style={styles.moreBtn} activeOpacity={0.85} onPress={() => router.push({ pathname: '/special/ranking', params: { board: 'time' } } as never)}>
-								<Text style={styles.moreText}>전체보기</Text>
+								<Text style={styles.moreText}>{t('challenge.time.viewAll')}</Text>
 								<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.primary} />
 							</TouchableOpacity>
 						</View>
@@ -285,18 +288,18 @@ const Challenge = () => {
 									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(22)} color={Colors.gold} />
 								</Animated.View>
 								<View style={styles.rankHeadBody}>
-									<Text style={styles.bestLabel} numberOfLines={1} ellipsizeMode="tail">{nickname ? `${nickname} · 최고 점수` : '내 최고 점수'}</Text>
-									<FitText style={styles.bestValue}>{Math.max(myRank?.score ?? 0, localBest).toLocaleString()}점</FitText>
+									<Text style={styles.bestLabel} numberOfLines={1} ellipsizeMode="tail">{nickname ? t('challenge.time.bestWithNick', { nickname }) : t('challenge.time.myBest')}</Text>
+									<FitText style={styles.bestValue}>{t('challenge.time.scoreValue', { value: Math.max(myRank?.score ?? 0, localBest).toLocaleString() })}</FitText>
 								</View>
 							</View>
 							{/* 내 순위 — 점수와 같은 줄에 두면 폭이 좁은 기기에서 칩이 밀려 잘렸다. 아래 줄로 분리 */}
 							<View style={styles.bestRankRow}>
-								<Text style={styles.bestRankLabel}>내 순위</Text>
+								<Text style={styles.bestRankLabel}>{t('challenge.time.myRank')}</Text>
 								<View style={styles.bestPill}>
-									<Text style={styles.bestPillText} numberOfLines={1}>{myRank ? `${myRank.rank}위` : '미참여'}</Text>
+									<Text style={styles.bestPillText} numberOfLines={1}>{myRank ? t('challenge.time.rankValue', { rank: myRank.rank }) : t('challenge.time.notJoined')}</Text>
 								</View>
 							</View>
-							{nickname && <Text style={styles.bestHint}>랭킹에는 누적이 아니라 한 판 최고 점수가 반영돼요</Text>}
+							{nickname && <Text style={styles.bestHint}>{t('challenge.time.bestHint')}</Text>}
 						</View>
 
 						{/* 랭킹 미참여 — 닉네임 발급 후 참여 */}
@@ -304,10 +307,10 @@ const Challenge = () => {
 							<View style={styles.myCard}>
 								{rankingReady ? (
 									<>
-										<Text style={styles.joinTitle}>랭킹에 참여하면 전체 순위를 겨룰 수 있어요</Text>
+										<Text style={styles.joinTitle}>{t('challenge.time.joinTitle')}</Text>
 										<View style={styles.nickCard}>
 											<Text style={styles.nickValue} numberOfLines={1}>{nickInput}</Text>
-											<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} onPress={rollNickname}>
+											<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} onPress={rollNickname} accessibilityRole="button" accessibilityLabel={t('challenge.time.rollA11y')}>
 												<Animated.View style={{ transform: [{ rotate: diceSpin.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] }) }] }}>
 													<IconComponent type="materialIcons" name="casino" size={scaledSize(22)} color={Colors.primary} />
 												</Animated.View>
@@ -315,12 +318,12 @@ const Challenge = () => {
 										</View>
 										<TouchableOpacity style={[styles.joinBtn, joining && { opacity: 0.6 }]} activeOpacity={0.9} disabled={joining} onPress={joinRanking}>
 											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.textInverse} />
-											<Text style={styles.joinBtnText}>{joining ? '참여하는 중…' : '타임챌린지 랭킹 참여하기'}</Text>
+											<Text style={styles.joinBtnText}>{joining ? t('challenge.time.joining') : t('challenge.time.join')}</Text>
 										</TouchableOpacity>
-										<Text style={styles.joinHint}>비속어 방지를 위해 닉네임은 랜덤으로만 만들어져요</Text>
+										<Text style={styles.joinHint}>{t('challenge.time.joinHint')}</Text>
 									</>
 								) : (
-									<Text style={styles.myCardHint}>랭킹이 아직 준비 중이에요</Text>
+									<Text style={styles.myCardHint}>{t('challenge.time.notReady')}</Text>
 								)}
 							</View>
 						)}
@@ -329,12 +332,12 @@ const Challenge = () => {
 						<View style={styles.statRow}>
 							<View style={styles.statBox}>
 								<FitText style={styles.statNum}>{timePlays.toLocaleString()}</FitText>
-								<FitText style={styles.statLabel}>플레이</FitText>
+								<FitText style={styles.statLabel}>{t('challenge.time.plays')}</FitText>
 							</View>
 							<View style={styles.statDivider} />
 							<View style={styles.statBox}>
 								<FitText style={[styles.statNum, { color: Colors.error }]}>{bestCombo.toLocaleString()}</FitText>
-								<FitText style={styles.statLabel}>최고 콤보</FitText>
+								<FitText style={styles.statLabel}>{t('challenge.time.bestCombo')}</FitText>
 							</View>
 						</View>
 
@@ -342,8 +345,8 @@ const Challenge = () => {
 						{timeHistory.length > 0 && (
 							<View style={styles.histCard}>
 								<View style={styles.histHead}>
-									<Text style={styles.histTitle}>플레이별 점수</Text>
-									<Tag label={`${timeHistory.length}판`} variant="plain" />
+									<Text style={styles.histTitle}>{t('challenge.time.historyTitle')}</Text>
+									<Tag label={t('challenge.time.historyCount', { count: timeHistory.length })} variant="plain" />
 								</View>
 								{timeHistory.map((h, i) => {
 									// 역대 최고 점수 행은 왕관 + 배경으로 바로 눈에 띄게 (동점이면 가장 최근 한 판만)
@@ -373,7 +376,7 @@ const Challenge = () => {
 										</View>
 										<View style={styles.histScoreWrap}>
 											<Text style={styles.histScore}>{score.toLocaleString()}</Text>
-											<Text style={styles.histScoreUnit}>점</Text>
+											<Text style={styles.histScoreUnit}>{t('challenge.time.unit')}</Text>
 										</View>
 									</View>
 									);
@@ -384,7 +387,7 @@ const Challenge = () => {
 						{/* 주 행동 — 하단 고정 대신 기록 목록 바로 아래에 둔다 */}
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push(TIME_CHALLENGE_HREF as never)}>
 							<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.textInverse} />
-							<Text style={styles.startBtnText}>180초 타임 챌린지 시작</Text>
+							<Text style={styles.startBtnText}>{t('challenge.time.start')}</Text>
 						</TouchableOpacity>
 
 					</FadeInUp>
@@ -397,11 +400,11 @@ const Challenge = () => {
 								<TouchableOpacity style={styles.towerCard} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
 									<Image source={require('@/src/assets/tower/tower-challenge-hero.webp')} style={styles.towerHero} contentFit="cover" />
 									<View style={styles.towerBody}>
-										<Text style={styles.cardTitle}>{next ? `LV.${next.level} ${next.bossName}` : '모든 층 정복 완료'}</Text>
-										<Text style={styles.cardDesc}>층마다 보스를 물리치며 정상까지 올라가기</Text>
+										<Text style={styles.cardTitle}>{next ? `LV.${next.level} ${next.bossName}` : t('challenge.tower.allCleared')}</Text>
+										<Text style={styles.cardDesc}>{t('challenge.tower.desc')}</Text>
 										<View style={styles.towerProgressRow}>
-											<Text style={styles.towerMeta}>정복한 층 {cleared} / {TOWER_LEVELS.length}</Text>
-											<Text style={styles.towerMeta}>오늘 남은 도전 {tower.attempts}회</Text>
+											<Text style={styles.towerMeta}>{t('challenge.tower.cleared', { cleared, total: TOWER_LEVELS.length })}</Text>
+											<Text style={styles.towerMeta}>{t('challenge.tower.attempts', { count: tower.attempts })}</Text>
 										</View>
 										<View style={styles.towerTrack}>
 											<View style={[styles.towerFill, { width: `${(cleared / TOWER_LEVELS.length) * 100}%` }]} />
@@ -412,7 +415,7 @@ const Challenge = () => {
 						})()}
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
 							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.textInverse} />
-							<Text style={styles.startBtnText}>타워 챌린지 입장</Text>
+							<Text style={styles.startBtnText}>{t('challenge.tower.enter')}</Text>
 						</TouchableOpacity>
 					</FadeInUp>
 				) : (
@@ -425,10 +428,10 @@ const Challenge = () => {
 							</View>
 							<View style={styles.cardBody}>
 								<View style={styles.cardTitleRow}>
-									<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{m.title}</Text>
-									<Tag label={m.tag} color={m.color} />
+									<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{t(`challenge.modes.${m.key}.title`)}</Text>
+									<Tag label={t(`challenge.modes.${m.key}.tag`)} color={m.color} />
 								</View>
-								<Text style={styles.cardDesc} numberOfLines={2}>{m.desc}</Text>
+								<Text style={styles.cardDesc} numberOfLines={2}>{t(`challenge.modes.${m.key}.desc`)}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -444,12 +447,9 @@ const Challenge = () => {
 			<CharacterGuide
 				visible={guide.visible}
 				onClose={guide.close}
-				lines={[
-					'타임챌린지는 180초 안에 최대한 많이 맞히는 모드예요.',
-					'연속으로 맞히면 콤보가 쌓여 점수가 크게 올라가요.',
-					'한 판 최고 점수만 랭킹에 반영되니 여러 번 도전해 보세요!',
-				]}
-				title="타임챌린지, 이렇게 즐겨요"
+				// 점수는 정답 수 × POINT_PER_CORRECT(콤보 가산 없음), 랭킹은 한 판 최고점만 반영 — RankingService.recordTimeChallenge
+				lines={[t('challenge.guide.line1'), t('challenge.guide.line2', { point: POINT_PER_CORRECT }), t('challenge.guide.line3')]}
+				title={t('challenge.guide.title')}
 				accent={Colors.heatDark}
 			/>
 

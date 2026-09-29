@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
@@ -12,7 +13,7 @@ import DetailSheet, { DetailItem } from '@/src/screens/modal/DetailSheet';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { categoryIcon } from '@/src/const/ConstQuizMeta';
@@ -26,6 +27,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * - 전 주제의 이름·설명·더 알아보기를 읽을거리 카드로 넘겨봐요 (즐겨찾기 가능)
  */
 const StoryFeed = () => {
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [scope, setScope] = useState<string>(ALL_SCOPE);
 	const [refreshKey, setRefreshKey] = useState(0);
@@ -79,15 +81,14 @@ const StoryFeed = () => {
 			else next.delete(card.uid);
 			return next;
 		});
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			{/* 상단 배너 광고 — 목록 스크롤과 분리해 화면 최상단에 고정 */}
 			<ScrollView style={styles.scroll} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
-				<SectionHead title="오늘의 읽을거리" sub="전 주제에서 모은 세계 상식을 가볍게 넘겨보며 익혀요." />
+				<SectionHead title={t('special.storyFeed.sectionTitle')} sub={t('special.storyFeed.sectionSub')} />
 				</FadeInUp>
 
 				{/* 주제 선택 필터 — 공용 칩(맨 앞 '전체') */}
@@ -98,7 +99,7 @@ const StoryFeed = () => {
 				{cards.length === 0 && (
 					<View style={styles.empty}>
 						<IconComponent type="materialIcons" name="menu-book" size={scaledSize(28)} color={Colors.textMuted} />
-						<Text style={styles.emptyText}>이 주제의 읽을거리를 준비 중이에요.</Text>
+						<Text style={styles.emptyText}>{t('special.storyFeed.empty')}</Text>
 					</View>
 				)}
 				<AdaptiveGrid>
@@ -138,7 +139,7 @@ const StoryFeed = () => {
 
 								{!!c.examples && c.examples.length > 0 && (
 									<View style={styles.exampleGroup}>
-										<Text style={styles.exampleHead}>예시</Text>
+										<Text style={styles.exampleHead}>{t('special.storyFeed.examples')}</Text>
 										{c.examples.slice(0, 3).map((ex, i) => (
 											<View key={i} style={styles.exampleItem}>
 												<Text style={styles.example}>{ex}</Text>
@@ -149,9 +150,9 @@ const StoryFeed = () => {
 
 								{!!c.tags && c.tags.length > 0 && (
 									<View style={styles.tagRow}>
-										{c.tags.slice(0, 4).map((t, i) => (
+										{c.tags.slice(0, 4).map((tag, i) => (
 											<Text key={i} style={styles.tag}>
-												#{t}
+												#{tag}
 											</Text>
 										))}
 									</View>
@@ -163,13 +164,13 @@ const StoryFeed = () => {
 
 				<TouchableOpacity style={styles.moreBtn} activeOpacity={0.85} onPress={refresh}>
 					<IconComponent type="materialIcons" name="autorenew" size={scaledSize(18)} color={Colors.primary} />
-					<Text style={styles.moreText}>새로운 이야기 더 보기</Text>
+					<Text style={styles.moreText}>{t('special.storyFeed.more')}</Text>
 				</TouchableOpacity>
 				</FadeInUp>
 			</ScrollView>
 
 			{/* 하단 홈 버튼 (공용 BottomButton) */}
-			<BottomButton label="홈으로" icon="home" onPress={() => router.replace('/(tabs)/home' as never)} />
+			<BottomButton label={t('special.home')} icon="home" onPress={() => router.replace('/(tabs)/home' as never)} />
 
 			<DetailSheet visible={!!detail} item={detail} accent={detailAccent} onClose={() => { setDetail(null); LearnProgressService.getBookmarks().then((list) => setMarked(new Set(list.map((b) => b.uid)))); }} onBookmarkChange={() => LearnProgressService.getBookmarks().then((list) => setMarked(new Set(list.map((b) => b.uid))))} />
 		</SafeAreaView>

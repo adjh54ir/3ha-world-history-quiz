@@ -3,11 +3,11 @@ import { SpacingV, Typography, Radius } from '@/src/const/ConstDesign';
 import { GOOGLE_ADMOV_ANDROID_FRONT, GOOGLE_ADMOV_IOS_FRONT } from '@env';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { InterstitialAd, TestIds, AdEventType } from 'react-native-google-mobile-ads';
 import analytics from '@react-native-firebase/analytics'; // Firebase Analytics
 import DeviceInfo from 'react-native-device-info';
 import DateUtils from '@/src/utils/DateUtils';
-import { isAdsRemoved } from '@/src/services/PurchaseService';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -22,15 +22,11 @@ const AD_UNIT_ID = resolveAdUnitId(
  * 일반 전면 광고 (보상 없음)
  */
 const AdmobFrontAd: React.FC<{ onAdClosed?: () => void }> = ({ onAdClosed }) => {
+	const { t } = useTranslation();
 	const [, setLoaded] = useState(false);
 	const adRef = useRef<InterstitialAd | null>(null);
 
 	useEffect(() => {
-		// ✅ 광고 제거 구매자는 광고 없이 즉시 닫힘 처리
-		if (isAdsRemoved()) {
-			onAdClosed?.();
-			return;
-		}
 		const ad = InterstitialAd.createForAdRequest(AD_UNIT_ID);
 		adRef.current = ad;
 
@@ -86,16 +82,11 @@ const AdmobFrontAd: React.FC<{ onAdClosed?: () => void }> = ({ onAdClosed }) => 
 		};
 	}, []);
 
-	// ✅ 광고 제거 구매자는 광고 UI 자체를 렌더링하지 않음 (개발 모드에서는 테스트 광고 노출)
-	if (isAdsRemoved()) {
-		return null;
-	}
-
 	return (
 		<View style={styles.adOverlay}>
 			<View style={styles.container}>
 				<ActivityIndicator size="large" color={Colors.success} />
-				<Text style={styles.loadingTxt}>광고를 준비 중이에요…</Text>
+				<Text style={styles.loadingTxt}>{t('ads.preparing')}</Text>
 			</View>
 		</View>
 	);
@@ -105,7 +96,7 @@ const styles = themed(() => StyleSheet.create({
 	// styles 변경 부분
 
 	container: {
-		padding: SpacingV.xxxl,
+		paddingVertical: SpacingV.xxxl,
 		paddingHorizontal: scaleWidth(28),
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.xxl,

@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
@@ -38,39 +39,26 @@ interface TypeInfo {
 	sub: string; // 유형명
 	icon: string;
 	gradient: [string, string];
-	desc: string;
-	domain: string; // 추천 주제 키
-	domainLabel: string;
+	domain: string; // 추천 주제 키 (설명·추천 주제 이름은 special.typeTest.types.<key>)
 }
 
 const TYPES: Record<TypeKey, TypeInfo> = themed(() => ({
-	A: { key: 'A', name: '사색하는 역사가', sub: '세계사형', icon: 'history-edu', gradient: TYPE_RESULT_GRADIENTS.A, desc: '원인과 흐름을 따져 보는 당신. 세상을 바꾼 사건과 인물이 잘 어울려요.', domain: 'event', domainLabel: '세계사 사건' },
-	B: { key: 'B', name: '발길 닿는 여행가', sub: '지리형', icon: 'travel-explore', gradient: TYPE_RESULT_GRADIENTS.B, desc: '낯선 곳에 끌리는 당신. 나라와 수도, 랜드마크가 잘 어울려요.', domain: 'capital', domainLabel: '세계 수도' },
-	C: { key: 'C', name: '별을 보는 몽상가', sub: '우주형', icon: 'nights-stay', gradient: TYPE_RESULT_GRADIENTS.C, desc: '먼 곳을 상상하는 감성파. 태양계와 별자리가 잘 어울려요.', domain: 'constellation', domainLabel: '별자리와 천체' },
-	D: { key: 'D', name: '이야기 수집가', sub: '신화형', icon: 'auto-awesome', gradient: [Colors.gold, Colors.heat], desc: '흥미진진한 이야기를 좋아하는 당신. 신과 영웅의 신화가 잘 어울려요.', domain: 'myth', domainLabel: '그리스 로마 신화' },
+	A: { key: 'A', name: '사색하는 역사가', sub: '세계사형', icon: 'history-edu', gradient: TYPE_RESULT_GRADIENTS.A, domain: 'event' },
+	B: { key: 'B', name: '발길 닿는 여행가', sub: '지리형', icon: 'travel-explore', gradient: TYPE_RESULT_GRADIENTS.B, domain: 'capital' },
+	C: { key: 'C', name: '별을 보는 몽상가', sub: '우주형', icon: 'nights-stay', gradient: TYPE_RESULT_GRADIENTS.C, domain: 'constellation' },
+	D: { key: 'D', name: '이야기 수집가', sub: '신화형', icon: 'auto-awesome', gradient: [Colors.gold, Colors.heat], domain: 'myth' },
 }));
 
-interface Q {
-	q: string;
-	options: { text: string; t: TypeKey }[];
-}
-
-const QUESTIONS: Q[] = [
-	{ q: '친구들과의 대화에서 나는?', options: [{ text: '왜 그런지 따져 본다', t: 'A' }, { text: '가 본 곳 이야기를 한다', t: 'B' }, { text: '엉뚱한 상상을 나눈다', t: 'C' }, { text: '재밌는 썰을 푼다', t: 'D' }] },
-	{ q: '처음 듣는 나라 이름을 보면?', options: [{ text: '그 나라의 역사가 궁금하다', t: 'A' }, { text: '지도에서 어디인지 찾는다', t: 'B' }, { text: '그곳 밤하늘은 어떨까 상상한다', t: 'C' }, { text: '그 나라 전설이 궁금하다', t: 'D' }] },
-	{ q: '내가 좋아하는 콘텐츠는?', options: [{ text: '역사 다큐', t: 'A' }, { text: '여행 브이로그', t: 'B' }, { text: '우주 다큐', t: 'C' }, { text: '판타지 영화', t: 'D' }] },
-	{ q: '공부 스타일은?', options: [{ text: '원리와 흐름을 판다', t: 'A' }, { text: '직접 보고 익힌다', t: 'B' }, { text: '분위기 잡고 한다', t: 'C' }, { text: '이야기로 외운다', t: 'D' }] },
-	{ q: '여행지에서 나는?', options: [{ text: '역사·박물관', t: 'A' }, { text: '골목과 시장 탐방', t: 'B' }, { text: '풍경·밤하늘 감상', t: 'C' }, { text: '전설이 깃든 명소', t: 'D' }] },
-	{ q: '듣고 싶은 칭찬은?', options: [{ text: '똑똑하다', t: 'A' }, { text: '발이 넓다', t: 'B' }, { text: '감각있다', t: 'C' }, { text: '재밌다', t: 'D' }] },
-	{ q: '박물관에서 가장 오래 머무는 곳은?', options: [{ text: '연표와 유물관', t: 'A' }, { text: '세계 문화 전시관', t: 'B' }, { text: '천체 투영관', t: 'C' }, { text: '신화 속 조각상', t: 'D' }] },
-	{ q: '세계 상식의 가장 큰 매력은?', options: [{ text: '역사의 흐름', t: 'A' }, { text: '넓은 세상', t: 'B' }, { text: '끝없는 우주', t: 'C' }, { text: '흥미로운 이야기', t: 'D' }] },
-];
+/** 문항 키 — 질문·선택지 문구는 special.typeTest.questions.<q>.{title,A~D}. 선택지는 항상 A→D 순서 */
+const QUESTIONS = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const;
+const TYPE_ORDER: TypeKey[] = ['A', 'B', 'C', 'D'];
 
 /**
  * 세계 상식 유형 테스트 (MBTI식)
  * - 8문항으로 4가지 유형을 진단하고 결과를 공유
  */
 const TypeTest = () => {
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [started, setStarted] = useState(false);
 	const [index, setIndex] = useState(0);
@@ -103,15 +91,14 @@ const TypeTest = () => {
 	const current = QUESTIONS[index];
 	const progress = ((index + 1) / QUESTIONS.length) * 100;
 
-	const choose = (t: TypeKey) => {
-		const next = { ...counts, [t]: counts[t] + 1 };
+	const choose = (pick: TypeKey) => {
+		const next = { ...counts, [pick]: counts[pick] + 1 };
 		setCounts(next);
 		playPop(); // 정답/오답이 없는 성향 테스트라 선택감만 준다
 		if (index === QUESTIONS.length - 1) {
 			// 동점이면 항상 A로 몰리므로, 최다 득표가 여럿일 때는 그중 하나를 무작위로 고른다
-			const order: TypeKey[] = ['A', 'B', 'C', 'D'];
-			const max = Math.max(...order.map((k) => next[k]));
-			const tied = order.filter((k) => next[k] === max);
+			const max = Math.max(...TYPE_ORDER.map((k) => next[k]));
+			const tied = TYPE_ORDER.filter((k) => next[k] === max);
 			const top = tied[Math.floor(Math.random() * tied.length)];
 			setResultKey(top);
 			playFinish(); // 🎉 결과 등장 사운드
@@ -135,14 +122,14 @@ const TypeTest = () => {
 		LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 		setHistory(next);
 		AsyncStorage.setItem('TEST_HISTORY_TYPE', JSON.stringify(next)).catch(() => {});
-		showToast('기록을 삭제했어요', 'delete-outline');
+		showToast(t('special.typeTest.historyDeleted'), 'delete-outline');
 	};
 
 	// ── 결과 ──
 	if (resultKey) {
 		const r = TYPES[resultKey];
 		const onShare = () =>
-			Share.share({ message: `나의 세계 상식 유형은 '${r.name}(${r.sub})'! 🌏 너의 유형도 알아봐.` }).catch(() => {});
+			Share.share({ message: t('special.typeTest.shareMessage', { name: r.name, sub: r.sub }) }).catch(() => {});
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
 				<ScrollView style={styles.scroll} contentContainerStyle={[styles.resultScroll, { paddingTop: Layout.screenTop }]} showsVerticalScrollIndicator={false}>
@@ -158,24 +145,24 @@ const TypeTest = () => {
 					</View>
 
 					<View style={styles.msgCard}>
-						<Text style={styles.msgText}>{r.desc}</Text>
+						<Text style={styles.msgText}>{t(`special.typeTest.types.${r.key}.desc`)}</Text>
 					</View>
 
 					<TouchableOpacity style={styles.recBtn} activeOpacity={0.9} onPress={() => router.replace({ pathname: '/learn/category', params: { category: r.domain } } as never)}>
 						<IconComponent type="materialIcons" name="recommend" size={scaledSize(20)} color={Colors.textInverse} />
-						<Text style={styles.recBtnText}>추천 주제: {r.domainLabel} 배우기</Text>
+						<Text style={styles.recBtnText}>{t('special.typeTest.recommend', { label: t(`special.typeTest.types.${r.key}.domainLabel`) })}</Text>
 					</TouchableOpacity>
 
 					<TouchableOpacity style={styles.shareBtn} activeOpacity={0.9} onPress={onShare}>
 						<IconComponent type="materialIcons" name="ios-share" size={scaledSize(20)} color={Colors.text} />
-						<Text style={styles.shareBtnText}>결과 공유하기</Text>
+						<Text style={styles.shareBtnText}>{t('special.test.share')}</Text>
 					</TouchableOpacity>
 
 					</ScrollView>
 				<BottomButton
-					label="홈으로"
+					label={t('special.home')}
 					icon="home"
-					secondaryLabel="다시"
+					secondaryLabel={t('special.typeTest.again')}
 					secondaryIcon="replay"
 					onPress={() => router.replace('/home' as never)}
 					onSecondary={restart}
@@ -191,7 +178,7 @@ const TypeTest = () => {
 	if (!started) {
 		return (
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
-				<CommonHeader title="세계 상식 유형 테스트" onBack={() => router.back()} />
+				<CommonHeader title={t('special.typeTest.title')} onBack={() => router.back()} />
 				<ScrollView contentContainerStyle={styles.introWrap} showsVerticalScrollIndicator={false}>
 					{/* 히어로 — 그라데이션 카드 + 숨쉬는 아이콘 (레벨 테스트와 동일 구조) */}
 					<FadeInUp>
@@ -200,13 +187,13 @@ const TypeTest = () => {
 							<Animated.View style={{ transform: [{ scale: heroPulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] }) }] }}>
 								<ExpoImage source={FEATURE_ILLUSTRATIONS.typeTest} style={styles.heroIllustration} contentFit="contain" accessible={false} />
 							</Animated.View>
-							<Text style={styles.heroTitle}>나는 어떤 세계 상식 유형?</Text>
-							<Text style={styles.heroDesc}>{QUESTIONS.length}개의 질문으로 취향을 진단하고{'\n'}맞춤 추천 주제까지 알려드려요</Text>
+							<Text style={styles.heroTitle}>{t('special.typeTest.heroTitle')}</Text>
+							<Text style={styles.heroDesc}>{t('special.typeTest.heroDesc', { count: QUESTIONS.length })}</Text>
 							<View style={styles.heroChips}>
 								{[
-									{ icon: 'quiz', label: `${QUESTIONS.length}문항` },
-									{ icon: 'timer', label: '약 1분' },
-									{ icon: 'category', label: '4가지 유형' },
+									{ icon: 'quiz', label: t('special.typeTest.chipCount', { count: QUESTIONS.length }) },
+									{ icon: 'timer', label: t('special.typeTest.chipTime') },
+									{ icon: 'category', label: t('special.typeTest.chipTypes') },
 								].map((c) => (
 									<View key={c.label} style={styles.heroChip}>
 										<IconComponent type="materialIcons" name={c.icon} size={scaledSize(13)} color={Colors.textInverse} />
@@ -222,13 +209,13 @@ const TypeTest = () => {
 						<View style={styles.gradeCard}>
 							<View style={styles.gradeCardHead}>
 								<IconComponent type="materialIcons" name="emoji-objects" size={scaledSize(16)} color={Colors.primary} />
-								<Text style={styles.gradeCardTitle}>이런 유형이 나올 수 있어요</Text>
+								<Text style={styles.gradeCardTitle}>{t('special.typeTest.typePreview')}</Text>
 							</View>
 							<View style={styles.gradeRow}>
-								{Object.values(TYPES).map((t) => (
-									<View key={t.key} style={styles.gradePill}>
-										<View style={[styles.gradeDot, { backgroundColor: t.gradient[1] }]} />
-										<Text style={styles.gradePillText} numberOfLines={1} ellipsizeMode="tail">{t.name}</Text>
+								{Object.values(TYPES).map((ty) => (
+									<View key={ty.key} style={styles.gradePill}>
+										<View style={[styles.gradeDot, { backgroundColor: ty.gradient[1] }]} />
+										<Text style={styles.gradePillText} numberOfLines={1} ellipsizeMode="tail">{ty.name}</Text>
 									</View>
 								))}
 							</View>
@@ -240,8 +227,8 @@ const TypeTest = () => {
 						<FadeInUp delay={140}>
 							<View style={styles.historyWrap}>
 								<View style={styles.historyHead}>
-									<Text style={styles.historyTitle}>지난 결과</Text>
-									<Text style={styles.historyCount}>{history.length}회 응시</Text>
+									<Text style={styles.historyTitle}>{t('special.test.history')}</Text>
+									<Text style={styles.historyCount}>{t('special.test.historyCount', { count: history.length })}</Text>
 								</View>
 								{history.slice(0, 5).map((h, i) => (
 									<View key={`${h.date}-${i}`} style={styles.historyRow}>
@@ -259,6 +246,8 @@ const TypeTest = () => {
 											style={styles.historyDelete}
 											activeOpacity={0.7}
 											hitSlop={Layout.hitSlop}
+											accessibilityRole="button"
+											accessibilityLabel={t('common.delete')}
 											onPress={() => removeHistory(i)}>
 											<IconComponent type="materialIcons" name="close" size={scaledSize(16)} color={Colors.textMuted} />
 										</TouchableOpacity>
@@ -274,9 +263,9 @@ const TypeTest = () => {
 					<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => setStarted(true)}>
 						<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />
 						<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(22)} color={Colors.textInverse} />
-						<Text style={styles.startBtnText}>테스트 시작하기</Text>
+						<Text style={styles.startBtnText}>{t('special.test.start')}</Text>
 					</TouchableOpacity>
-					<Text style={styles.startHint}>결과는 기록으로 저장돼 취향 변화를 볼 수 있어요</Text>
+					<Text style={styles.startHint}>{t('special.typeTest.startHint')}</Text>
 				</View>
 			</SafeAreaView>
 		);
@@ -290,7 +279,7 @@ const TypeTest = () => {
 					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.text} />
 					</TouchableOpacity>
-					<Text style={styles.qHeaderTitle}>유형 테스트</Text>
+					<Text style={styles.qHeaderTitle}>{t('special.typeTest.qTitle')}</Text>
 					<View style={styles.qCountWrap}>
 						<Text style={styles.qCount}>{index + 1}/{QUESTIONS.length}</Text>
 					</View>
@@ -305,14 +294,14 @@ const TypeTest = () => {
 						<View style={styles.qDomainChip}>
 							<Text style={styles.qDomainText}>Q{index + 1}</Text>
 						</View>
-						<Text style={styles.qPrompt}>{current.q}</Text>
+						<Text style={styles.qPrompt}>{t(`special.typeTest.questions.${current}.title`)}</Text>
 					</View>
-					{current.options.map((o, i) => (
-						<TouchableOpacity key={i} style={styles.option} activeOpacity={0.85} onPress={() => choose(o.t)}>
+					{TYPE_ORDER.map((k, i) => (
+						<TouchableOpacity key={k} style={styles.option} activeOpacity={0.85} onPress={() => choose(k)}>
 							<View style={styles.optionIndex}>
 								<Text style={styles.optionIndexText}>{i + 1}</Text>
 							</View>
-							<Text style={styles.optionText}>{o.text}</Text>
+							<Text style={styles.optionText}>{t(`special.typeTest.questions.${current}.${k}`)}</Text>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					))}

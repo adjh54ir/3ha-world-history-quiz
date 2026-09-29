@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'reac
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import { Image as ExpoImage } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
@@ -55,11 +56,14 @@ export const CharacterGuideButton: React.FC<{ onPress: () => void; color?: strin
 	onPress,
 	color = Colors.textMuted,
 	size = scaledSize(20),
-}) => (
-	<TouchableOpacity onPress={onPress} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="이 화면 사용법 다시 보기">
-		<IconComponent type="materialIcons" name="help-outline" size={size} color={color} />
-	</TouchableOpacity>
-);
+}) => {
+	const { t } = useTranslation();
+	return (
+		<TouchableOpacity onPress={onPress} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.guideReopen')}>
+			<IconComponent type="materialIcons" name="help-outline" size={size} color={color} />
+		</TouchableOpacity>
+	);
+};
 
 /** 저장해 둔 '본 적 있음' 기록 초기화 (데이터 초기화에서 사용) */
 export const resetCharacterGuideSeen = async () => {
@@ -91,10 +95,13 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 	visible,
 	lines,
 	onClose,
-	title = '이렇게 써보세요',
+	title: titleProp,
 	accent = Colors.primary,
-	confirmLabel = '알겠어요',
+	confirmLabel: confirmLabelProp,
 }) => {
+	const { t } = useTranslation();
+	const title = titleProp ?? t('guide.title');
+	const confirmLabel = confirmLabelProp ?? t('guide.confirm');
 	// 탭·스택 화면은 포커스를 잃어도 마운트된 채 남는다.
 	// 그때 안내 모달이 살아 있으면 다른 화면 위에서 터치를 통째로 먹는다 — 포커스 없으면 렌더하지 않는다.
 	const focused = useIsFocused();
@@ -184,7 +191,7 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 
 	return (
 		<AppModal visible transparent animationType="fade" onRequestClose={onClose}>
-			<TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel="안내 다음으로">
+			<TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel={t('guide.nextA11y')}>
 				<Animated.View style={[styles.wrap, { opacity: enter, transform: [{ translateY }] }]}>
 					{/* 말풍선 */}
 					<View style={[styles.bubble, { borderColor: withAlpha(accent, '55') }]}>
@@ -208,8 +215,8 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 							activeOpacity={0.9}
 							onPress={next}
 							accessibilityRole="button"
-							accessibilityLabel={isLast ? confirmLabel : '다음 안내 보기'}>
-							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : accent }]}>{isLast ? confirmLabel : '다음'}</Text>
+							accessibilityLabel={isLast ? confirmLabel : t('guide.nextLineA11y')}>
+							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : accent }]}>{isLast ? confirmLabel : t('common.next')}</Text>
 							<IconComponent
 								type="materialIcons"
 								name={isLast ? 'check' : 'arrow-forward'}

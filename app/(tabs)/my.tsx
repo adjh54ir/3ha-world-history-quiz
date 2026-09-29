@@ -32,17 +32,16 @@ import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
 import BackupRestoreModal from '@/src/screens/modal/BackupRestoreModal';
 import BackupService from '@/src/services/BackupService';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
-import { devResetAdsRemoved } from '@/src/services/PurchaseService';
 import { shareApp as appShare } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
 import { COMMON_APPS_DATA } from '@/src/const/common/CommonAppsData';
-import InAppRemoveAdsSection from '@/src/screens/common/setting/InAppRemoveAdsSection';
 import { CommonType } from '@/src/types/CommonType';
 import { useToast } from '@/src/context/ToastContext';
 import { setThemeMode } from '@/src/utils/ThemeReload';
 import TabHeader from '@/src/screens/common/TabHeader';
 import { TAB_ILLUSTRATIONS } from '@/src/const/ConstTabIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 interface ResetRow {
 	key: string;
@@ -68,12 +67,13 @@ const SubHead: React.FC<{ label: string; icon: string; tint?: string }> = ({ lab
  * - 알림 / 데이터 초기화 / 정보
  */
 /** 화면 테마 — OS 설정을 따르지 않고 여기서 고른 값이 곧 앱 테마다. */
-const THEME_OPTIONS: { key: ThemeMode; label: string; desc: string; icon: string }[] = [
-	{ key: 'light', label: '라이트', desc: '밝은 배경으로 보여요 (기본)', icon: 'light-mode' },
-	{ key: 'dark', label: '다크', desc: '어두운 배경으로 눈부심을 줄여요', icon: 'dark-mode' },
-];
+const THEME_OPTIONS = [
+	{ key: 'light', labelKey: 'settings.theme.light', descKey: 'settings.theme.lightDesc', icon: 'light-mode' },
+	{ key: 'dark', labelKey: 'settings.theme.dark', descKey: 'settings.theme.darkDesc', icon: 'dark-mode' },
+] as const satisfies readonly { key: ThemeMode; labelKey: string; descKey: string; icon: string }[];
 
 const Setting = () => {
+	const { t } = useTranslation();
 	const [reminderOn, setReminderOn] = useState(false);
 	const [showAlarm, setShowAlarm] = useState(false);
 	const [showBackup, setShowBackup] = useState(false);
@@ -86,11 +86,11 @@ const Setting = () => {
 		setSoundOn(v);
 		setSoundEnabled(v);
 		if (v) playCorrect(); // 켤 때 바로 들려주기
-		showToast(v ? '효과음을 켰어요' : '효과음을 껐어요', v ? 'volume-up' : 'volume-off');
+		showToast(v ? t('settings.toast.soundOn') : t('settings.toast.soundOff'), v ? 'volume-up' : 'volume-off');
 	};
 	const testSound = () => {
 		playCorrect();
-		showToast('효과음을 재생했어요. 소리가 없으면 기기 음량·무음 모드를 확인해 주세요', 'volume-up');
+		showToast(t('settings.toast.soundTest'), 'volume-up');
 	};
 	/** 테마 변경 — 리마운트 없이 그 자리에서 반영된다. 바뀐 색 자체가 피드백이라 토스트는 띄우지 않는다. */
 	const changeTheme = (mode: ThemeMode) => {
@@ -101,7 +101,7 @@ const Setting = () => {
 	const toggleBgm = (v: boolean) => {
 		setBgmOn(v);
 		setBgmEnabled(v);
-		showToast(v ? '배경음악을 켰어요' : '배경음악을 껐어요', v ? 'music-note' : 'music-off');
+		showToast(v ? t('settings.toast.bgmOn') : t('settings.toast.bgmOff'), v ? 'music-note' : 'music-off');
 	};
 	const [notifGranted, setNotifGranted] = useState<boolean | null>(null);
 	const [trackingGranted, setTrackingGranted] = useState<boolean | null>(null);
@@ -199,17 +199,17 @@ const Setting = () => {
 		// 확인 모달이 완전히 닫힌 뒤에 안내 모달을 띄운다(둘 다 RN Modal — 겹치면 터치가 먹통)
 		if (resetAlertTimer.current) clearTimeout(resetAlertTimer.current);
 		resetAlertTimer.current = setTimeout(() => {
-			if (ok) showAlert('초기화 완료', `${label}이(가) 초기화되었습니다.`, 'check-circle');
-			else showAlert('초기화 실패', `${label} 초기화 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.`, 'error-outline');
+			if (ok) showAlert(t('settings.reset.doneTitle'), t('settings.reset.doneMessage', { label }), 'check-circle');
+			else showAlert(t('settings.reset.failTitle'), t('settings.reset.failMessage', { label }), 'error-outline');
 		}, 260);
 	};
 
 	// 초기화 항목은 사용자가 실제로 구분해서 인지하는 3가지(학습 / 퀴즈 / 타임챌린지)로만 둔다.
 	// 나머지(즐겨찾기·출석·펫·리그·테스트 등)는 '모두 초기화'에서 함께 지워진다.
 	const RESETS: ResetRow[] = [
-		{ key: 'learn', label: '학습', desc: '카드·숏폼으로 학습 완료한 기록 초기화', icon: 'menu-book', run: () => LearnProgressService.clearLearning() },
-		{ key: 'quiz', label: '퀴즈', desc: '점수·정답률·연속·오답노트·오늘의 퀴즈 초기화', icon: 'quiz', run: () => resetQuizRecords() },
-		{ key: 'time', label: '타임챌린지', desc: '타임챌린지 최고 점수·플레이 기록·랭킹 점수 초기화', icon: 'timer', run: () => resetTimeChallenge() },
+		{ key: 'learn', label: t('settings.reset.learn'), desc: t('settings.reset.learnDesc'), icon: 'menu-book', run: () => LearnProgressService.clearLearning() },
+		{ key: 'quiz', label: t('settings.reset.quiz'), desc: t('settings.reset.quizDesc'), icon: 'quiz', run: () => resetQuizRecords() },
+		{ key: 'time', label: t('settings.reset.time'), desc: t('settings.reset.timeDesc'), icon: 'timer', run: () => resetTimeChallenge() },
 	];
 
 	/** 오늘의 퀴즈 관련 저장키 (완료일·결과 스냅샷·히스토리·발급목록·알림설정) */
@@ -227,7 +227,7 @@ const Setting = () => {
 	/** 랭킹 서버 초기화 — 실패(RPC 미배포·네트워크)하면 조용히 넘기지 않고 알린다 */
 	const resetRankingWithNotice = async (opts?: { keepTimeBest?: boolean }) => {
 		const ok = await RankingService.reset(opts);
-		if (!ok) showToast('랭킹 서버 점수는 지우지 못했어요. 잠시 후 다시 시도해 주세요', 'cloud-off');
+		if (!ok) showToast(t('settings.toast.rankingResetFail'), 'cloud-off');
 	};
 
 	/** 퀴즈 초기화 — 점수·정답률·오답노트 + 오늘의 퀴즈. 타임챌린지 최고점은 건드리지 않는다 */
@@ -245,7 +245,7 @@ const Setting = () => {
 
 	const resetAll = () =>
 		confirmReset(
-			'모두',
+			t('settings.reset.all'),
 			async () => {
 			// 한 단계가 실패해도 나머지가 반드시 실행되도록 독립 처리(과거: 순차 await → 앞단계 실패 시 오늘의 퀴즈 초기화 누락)
 			await Promise.allSettled([
@@ -264,7 +264,7 @@ const Setting = () => {
 			]);
 			setReminderOn(false);
 			},
-			'즐겨찾기·오답노트·통계·점수·출석·펫·리그·테스트 기록 등 앱의 모든 학습 데이터',
+			t('settings.reset.allDesc'),
 			'delete-forever',
 		);
 
@@ -275,7 +275,7 @@ const Setting = () => {
 			Array.from({ length: d.total }, () => ({ domain: d.key, domainTitle: d.title, correct: true })),
 		);
 		await LearnProgressService.recordResults(entries);
-		showToast('모든 퀴즈를 완료 처리했어요', 'check-circle');
+		showToast(t('settings.dev.completedQuizzes'), 'check-circle');
 	};
 
 	// 모든 학습 완료: 도메인별 전체 학습카드 uid를 학습완료(STUDIED)로 기록
@@ -286,13 +286,7 @@ const Setting = () => {
 			studied[d.key] = LearnHubService.getDomain(d.key).getStudyCards().map((c) => c.uid);
 		});
 		await AsyncStorage.setItem('LEARN_STUDIED', JSON.stringify(studied));
-		showToast('모든 학습을 완료 처리했어요', 'check-circle');
-	};
-
-	// 광고제거 되돌리기(테스트용): 강제 미구매 상태로 전환 → 광고가 다시 노출됨
-	const devRevertAdsRemoved = async () => {
-		await devResetAdsRemoved();
-		showToast('미구매 상태로 전환했어요 (테스트용)', 'undo');
+		showToast(t('settings.dev.completedLearning'), 'check-circle');
 	};
 
 	const shareApp = () => appShare();
@@ -302,7 +296,7 @@ const Setting = () => {
 		<View style={styles.safe}>
 			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				{/* 헤더를 스크롤 안에 두어 목록과 함께 밀려 올라가게 한다 */}
-				<TabHeader title="설정" sub="알림과 학습 환경을 나에게 맞게 설정해요" illustration={TAB_ILLUSTRATIONS.my} />
+				<TabHeader title={t('settings.header.title')} sub={t('settings.header.sub')} illustration={TAB_ILLUSTRATIONS.my} />
 				<FadeInUp>
 					{/* 공유 카드 — 앱 아이콘과 함께 상단 강조 */}
 					<View style={styles.shareCard}>
@@ -310,35 +304,32 @@ const Setting = () => {
 							<View style={styles.shareTitleChip}>
 								<IconComponent type="materialIcons" name="mobile-friendly" size={scaledSize(16)} color={Colors.primary} />
 							</View>
-							<Text style={styles.shareCardTitle}>앱이 마음에 드셨나요?</Text>
+							<Text style={styles.shareCardTitle}>{t('settings.share.title')}</Text>
 						</View>
-						<Text style={styles.shareCardSub}>가족이나 친구, 지인에게 유용한 앱을 함께 나눠보세요!</Text>
+						<Text style={styles.shareCardSub}>{t('settings.share.sub')}</Text>
 						<View style={styles.shareIconWrap}>
 							{/* 앱 메인 아이콘(mainIcons) — 예전 아이콘이 남아 있었다 */}
 							<Image source={require('@/src/assets/mainIcon.webp')} style={styles.shareIconImg} resizeMode="contain" />
 						</View>
 						<TouchableOpacity style={styles.shareCardBtn} onPress={shareApp} activeOpacity={0.85}>
 							<IconComponent type="materialIcons" name="share" size={scaledSize(16)} color={Colors.textInverse} />
-							<Text style={styles.shareCardBtnText}>공유하기</Text>
+							<Text style={styles.shareCardBtnText}>{t('settings.share.button')}</Text>
 						</TouchableOpacity>
 					</View>
 
-					{/* 광고 제거 (인앱 결제) */}
-					<InAppRemoveAdsSection />
-
 					{/* 알림 */}
-					<SubHead label="알림" icon="notifications" />
+					<SubHead label={t('settings.section.notification')} icon="notifications" />
 					<View style={styles.card}>
 						<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={() => setShowAlarm(true)}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
 								<IconComponent type="materialIcons" name="notifications" size={scaledSize(20)} color={Colors.primary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">오늘의 상식 알림</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">매일 지정한 시간에 오늘의 상식을 알려드려요</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.reminder')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.reminderDesc')}</Text>
 							</View>
 							<View style={[styles.permPill, reminderOn ? styles.permOn : styles.permOff]}>
-								<Text style={[styles.permText, reminderOn ? styles.permTextOn : styles.permTextOff]}>{reminderOn ? '켜짐' : '꺼짐'}</Text>
+								<Text style={[styles.permText, reminderOn ? styles.permTextOn : styles.permTextOff]}>{reminderOn ? t('common.on') : t('common.off')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -347,13 +338,13 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="volume-up" size={scaledSize(20)} color={Colors.primary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">효과음</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">정답·오답·완료 효과음을 재생해요</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.sound')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.soundDesc')}</Text>
 							</View>
 							{/* 효과음이 실제로 나는지 즉시 확인 (무음 이슈 자가 진단) */}
 							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} disabled={!soundOn} onPress={testSound}>
 								<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(16)} color={soundOn ? Colors.primary : Colors.textMuted} />
-								<Text style={[styles.soundTestText, !soundOn && { color: Colors.textMuted }]}>듣기</Text>
+								<Text style={[styles.soundTestText, !soundOn && { color: Colors.textMuted }]}>{t('settings.notification.soundTest')}</Text>
 							</TouchableOpacity>
 							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
 						</View>
@@ -362,15 +353,15 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="music-note" size={scaledSize(20)} color={Colors.primary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">배경음악</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">퀴즈·타임챌린지 중 배경음악을 재생해요</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.bgm')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.bgmDesc')}</Text>
 							</View>
 							<Switch value={bgmOn} onValueChange={toggleBgm} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
 						</View>
 					</View>
 
 					{/* 화면 테마 — 시스템 설정과 무관하게 여기서 고른 값이 적용된다 */}
-					<SubHead label="화면 테마" icon="brightness-6" />
+					<SubHead label={t('settings.section.theme')} icon="brightness-6" />
 					<View style={styles.card}>
 						{THEME_OPTIONS.map((o, i) => {
 							const on = theme === o.key;
@@ -380,8 +371,8 @@ const Setting = () => {
 										<IconComponent type="materialIcons" name={o.icon} size={scaledSize(20)} color={on ? Colors.primary : Colors.textSecondary} />
 									</View>
 									<View style={styles.rowBody}>
-										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{o.label}</Text>
-										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{o.desc}</Text>
+										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t(o.labelKey)}</Text>
+										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t(o.descKey)}</Text>
 									</View>
 									{on && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(20)} color={Colors.primary} />}
 								</TouchableOpacity>
@@ -390,7 +381,7 @@ const Setting = () => {
 					</View>
 
 					{/* 관심 주제 — 홈 섹션 순서를 정한다 (온보딩에서 고른 값) */}
-					<SubHead label="관심 주제" icon="category" />
+					<SubHead label={t('settings.section.interest')} icon="category" />
 					<View style={styles.card}>
 						{INTEREST_OPTIONS.map((o, i) => {
 							const on = interest === o.key;
@@ -402,7 +393,7 @@ const Setting = () => {
 									onPress={() => {
 										setInterestState(o.key);
 										OnboardingService.setInterest(o.key);
-										showToast('홈 화면에 바로 반영돼요', 'check-circle');
+										showToast(t('settings.toast.interestApplied'), 'check-circle');
 									}}>
 									<View style={[styles.rowIcon, { backgroundColor: on ? Colors.primarySoft : Colors.surfaceAlt }]}>
 										<IconComponent type="materialIcons" name={o.icon} size={scaledSize(20)} color={on ? Colors.primary : Colors.textSecondary} />
@@ -420,15 +411,15 @@ const Setting = () => {
 					{/* 학습 기록 백업 — 기기 변경 시 진도 이전 */}
 					{BackupService.isConfigured && (
 						<>
-							<SubHead label="학습 기록 백업" icon="cloud-upload" />
+							<SubHead label={t('settings.section.backup')} icon="cloud-upload" />
 							<View style={styles.card}>
 								<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={() => setShowBackup(true)}>
 									<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
 										<IconComponent type="materialIcons" name="cloud-sync" size={scaledSize(20)} color={Colors.primary} />
 									</View>
 									<View style={styles.rowBody}>
-										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">백업 · 복원</Text>
-										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">복원 코드로 새 기기에 학습 기록을 그대로 옮겨요</Text>
+										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.backup.label')}</Text>
+										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.backup.desc')}</Text>
 									</View>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
@@ -437,7 +428,7 @@ const Setting = () => {
 					)}
 
 					{/* 데이터 초기화 */}
-					<SubHead label="데이터 초기화" icon="restart-alt" tint={Colors.error} />
+					<SubHead label={t('settings.section.reset')} icon="restart-alt" tint={Colors.error} />
 					<View style={styles.card}>
 						{RESETS.map((r, i) => (
 							<TouchableOpacity key={r.key} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => confirmReset(r.label, r.run, r.desc, r.icon)}>
@@ -455,22 +446,22 @@ const Setting = () => {
 
 					<TouchableOpacity style={styles.resetAllBtn} activeOpacity={0.85} onPress={resetAll}>
 						<IconComponent type="materialIcons" name="delete-forever" size={scaledSize(20)} color={Colors.error} />
-						<Text style={styles.resetAllText}>모두 초기화</Text>
+						<Text style={styles.resetAllText}>{t('settings.reset.allButton')}</Text>
 					</TouchableOpacity>
 
 					{/* 권한 관리 — 앱 목록 바로 위. 미설정 항목은 눌러서 바로 설정으로 이동한다. */}
-					<SubHead label="권한 관리" icon="verified-user" />
+					<SubHead label={t('settings.section.permission')} icon="verified-user" />
 					<View style={styles.card}>
 						<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={manageNotificationPermission}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
 								<IconComponent type="materialIcons" name="notifications" size={scaledSize(20)} color={Colors.primary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">알림</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">오늘의 상식·오답 복습 알림에 필요해요</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.notification')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.notificationDesc')}</Text>
 							</View>
 							<View style={[styles.permPill, notifGranted ? styles.permOn : styles.permOff]}>
-								<Text style={[styles.permText, notifGranted ? styles.permTextOn : styles.permTextOff]}>{notifGranted == null ? '확인 중' : notifGranted ? '허용됨' : '설정하기'}</Text>
+								<Text style={[styles.permText, notifGranted ? styles.permTextOn : styles.permTextOff]}>{notifGranted == null ? t('settings.permission.checking') : notifGranted ? t('settings.permission.granted') : t('settings.permission.request')}</Text>
 							</View>
 						</TouchableOpacity>
 						{Platform.OS === 'ios' && (
@@ -479,17 +470,17 @@ const Setting = () => {
 									<IconComponent type="materialIcons" name="privacy-tip" size={scaledSize(20)} color={Colors.primary} />
 								</View>
 								<View style={styles.rowBody}>
-									<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">추적 허용 (ATT)</Text>
-									<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">맞춤 광고 제공을 위한 선택 권한이에요</Text>
+									<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.tracking')}</Text>
+									<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.trackingDesc')}</Text>
 								</View>
 								<View style={[styles.permPill, trackingGranted ? styles.permOn : styles.permOff]}>
-									<Text style={[styles.permText, trackingGranted ? styles.permTextOn : styles.permTextOff]}>{trackingGranted == null ? '확인 중' : trackingGranted ? '허용됨' : '설정하기'}</Text>
+									<Text style={[styles.permText, trackingGranted ? styles.permTextOn : styles.permTextOff]}>{trackingGranted == null ? t('settings.permission.checking') : trackingGranted ? t('settings.permission.granted') : t('settings.permission.request')}</Text>
 								</View>
 							</TouchableOpacity>
 						)}
 					</View>
 					{/* 함께하면 좋은 퀴즈 앱 */}
-					<SubHead label="함께하면 좋은 퀴즈 앱" icon="apps" />
+					<SubHead label={t('settings.section.relatedApps')} icon="apps" />
 					<View style={styles.card}>
 						{previewApps.map((app, i) => (
 							<TouchableOpacity key={app.id} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
@@ -504,14 +495,14 @@ const Setting = () => {
 					</View>
 
 					{/* 정보 */}
-					<SubHead label="정보" icon="info-outline" />
+					<SubHead label={t('settings.section.info')} icon="info-outline" />
 					<View style={styles.card}>
 						<View style={styles.row}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.surfaceAlt }]}>
 								<IconComponent type="materialIcons" name="info" size={scaledSize(20)} color={Colors.textSecondary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">앱 버전</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.version')}</Text>
 							</View>
 							<Text style={styles.versionText}>{`${DeviceInfo.getVersion()} (${DeviceInfo.getBuildNumber()})`}</Text>
 						</View>
@@ -520,7 +511,7 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="ios-share" size={scaledSize(20)} color={Colors.primaryDeep} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">앱 공유하기</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.share')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -529,7 +520,7 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="mail" size={scaledSize(20)} color={Colors.textSecondary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">문의하기</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.contact')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">adjh54ir@gmail.com</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
@@ -539,8 +530,8 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="inventory-2" size={scaledSize(20)} color={Colors.textSecondary} />
 							</View>
 							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">오픈소스 라이브러리</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">사용 중인 오픈소스와 라이선스를 확인해요</Text>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.openSource')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.info.openSourceDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -549,31 +540,22 @@ const Setting = () => {
 					{/* 개발자 전용 (프로덕션 빌드에서는 숨김) */}
 					{__DEV__ && (
 						<>
-							<SubHead label="개발자 (DEV)" icon="code" />
+							<SubHead label={t('settings.section.dev')} icon="code" />
 							<View style={styles.devGroup}>
 								<TouchableOpacity style={styles.devBtn} activeOpacity={0.85} onPress={devCompleteAllQuizzes}>
 									<IconComponent type="materialIcons" name="quiz" size={scaledSize(20)} color={Colors.primaryDeep} />
-									<Text style={styles.devBtnText}>모든 퀴즈 완료</Text>
+									<Text style={styles.devBtnText}>{t('settings.dev.completeQuizzes')}</Text>
 								</TouchableOpacity>
 								<TouchableOpacity style={styles.devBtn} activeOpacity={0.85} onPress={devCompleteAllLearning}>
 									<IconComponent type="materialIcons" name="school" size={scaledSize(20)} color={Colors.primaryDeep} />
-									<Text style={styles.devBtnText}>모든 학습 완료</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={styles.devBtn}
-									activeOpacity={0.85}
-									delayLongPress={1000}
-									onLongPress={devRevertAdsRemoved}
-									onPress={() => showToast('실수 방지를 위해 1초간 길게 눌러주세요', 'info')}>
-									<IconComponent type="materialIcons" name="undo" size={scaledSize(20)} color={Colors.primaryDeep} />
-									<Text style={styles.devBtnText}>광고제거 되돌리기 (길게 누르기)</Text>
+									<Text style={styles.devBtnText}>{t('settings.dev.completeLearning')}</Text>
 								</TouchableOpacity>
 							</View>
 						</>
 					)}
 
 					{/* 제작자 앱 더보기 — 설정 화면 맨 아래 앱 목록(가로 스크롤) */}
-					<SubHead label="제작자 앱 더보기" icon="apps" />
+					<SubHead label={t('settings.section.moreApps')} icon="apps" />
 					<View style={styles.footerAppWrapper}>
 						<FlatList
 							horizontal
@@ -630,7 +612,7 @@ const styles = themed(() => StyleSheet.create({
 	subHeadLabel: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	subHeadLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: Colors.border, marginLeft: Spacing.sm },
 	safe: { flex: 1, backgroundColor: Colors.background },
-	shareCard: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xl, paddingHorizontal: Spacing.lg, marginBottom: Layout.sectionGap },
+	shareCard: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xl, paddingHorizontal: Spacing.lg },
 	shareTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.xs },
 	shareTitleChip: { width: scaleWidth(28), height: scaleWidth(28), borderRadius: Radius.pill, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center' },
 	shareCardTitle: { flexShrink: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },

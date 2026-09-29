@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Border, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 export interface DifficultyOption {
@@ -34,16 +35,18 @@ interface Props {
  * 난이도 선택 bottom sheet (홈/묶음 퀴즈 공용)
  * - 데이터 난이도 라벨(초급/중급/고급/특급)만 제공
  */
-const OPTIONS: { key: string; label: string; icon: string; desc: string }[] = [
-	{ key: '', label: '전체', icon: 'apps', desc: '모든 난이도에서 골고루 출제' },
-	{ key: '초급', label: '초급', icon: 'signal-cellular-alt', desc: '기초부터 차근차근' },
-	{ key: '중급', label: '중급', icon: 'bar-chart', desc: '한 단계씩 올라가기' },
-	{ key: '고급', label: '고급', icon: 'trending-up', desc: '실력을 단단하게' },
-	{ key: '특급', label: '특급', icon: 'whatshot', desc: '최고 난도에 도전' },
-];
+// key 는 데이터 난이도 라벨(필터 값) 그대로라 번역하지 않는다. 라벨도 key 와 같다('' = 전체).
+const OPTIONS = [
+	{ key: '', icon: 'apps', descKey: 'modal.difficulty.desc.all' },
+	{ key: '초급', icon: 'signal-cellular-alt', descKey: 'modal.difficulty.desc.beginner' },
+	{ key: '중급', icon: 'bar-chart', descKey: 'modal.difficulty.desc.intermediate' },
+	{ key: '고급', icon: 'trending-up', descKey: 'modal.difficulty.desc.advanced' },
+	{ key: '특급', icon: 'whatshot', descKey: 'modal.difficulty.desc.expert' },
+] as const;
 
 const DifficultyPickerModal: React.FC<Props> = ({ visible, value, onClose, onSelect, options, subtitle }) => {
-	const rows = options ?? OPTIONS;
+	const { t } = useTranslation();
+	const rows: DifficultyOption[] = options ?? OPTIONS.map((o) => ({ key: o.key, label: o.key || t('common.all'), icon: o.icon, desc: t(o.descKey) }));
 
 	const currentKey = value ?? '';
 
@@ -55,21 +58,21 @@ const DifficultyPickerModal: React.FC<Props> = ({ visible, value, onClose, onSel
 	return (
 		<BottomSheet visible={visible} onClose={onClose}>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7}>
+					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.difficulty.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
 
 					<View style={styles.headIcon}>
 						<IconComponent type="materialIcons" name="tune" size={scaledSize(26)} color={Colors.primary} />
 					</View>
-					<Text style={styles.title}>난이도 선택</Text>
-					<Text style={styles.sub} numberOfLines={3} ellipsizeMode="tail">{subtitle ?? '원하는 난이도로 퀴즈를 시작해요'}</Text>
+					<Text style={styles.title}>{t('modal.difficulty.title')}</Text>
+					<Text style={styles.sub} numberOfLines={3} ellipsizeMode="tail">{subtitle ?? t('modal.difficulty.sub')}</Text>
 
 					{/* 항목이 많으면 시트 안에서 스크롤 */}
 					<ScrollView contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
 						{rows.map((opt) => {
 							const on = opt.key === currentKey;
-							const descLine = opt.count != null ? `${opt.count.toLocaleString()}문제` : opt.desc;
+							const descLine = opt.count != null ? t('modal.difficulty.count', { value: opt.count.toLocaleString() }) : opt.desc;
 							return (
 								<TouchableOpacity
 									key={opt.key}

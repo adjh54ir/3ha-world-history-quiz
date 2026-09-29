@@ -7,6 +7,7 @@ import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
@@ -29,6 +30,7 @@ import { recordTower } from '@/src/store/slice/TowerSlice';
 
 
 const TowerQuizScreen = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams<{ level?: string }>();
 	const level = Number(params.level) || 1;
 	const quizLevel = TOWER_LEVEL_MAP[level] ?? '초급';
@@ -262,10 +264,10 @@ const TowerQuizScreen = () => {
 
 	const handleAutoPass = () => {
 		if (!__DEV__) return;
-		Alert.alert('개발자 모드', '모든 문제를 정답 처리하시겠습니까?', [
-			{ text: '취소', style: 'cancel' },
+		Alert.alert(t('tower.dev.title'), t('tower.dev.autoPass'), [
+			{ text: t('common.cancel'), style: 'cancel' },
 			{
-				text: '확인',
+				text: t('common.confirm'),
 				onPress: () => {
 					setCorrectCount(totalQuestions);
 					setCurrentQuestionIndex(totalQuestions - 1);
@@ -381,16 +383,19 @@ const TowerQuizScreen = () => {
 
 	// 차감은 진입 시 이미 끝났다. 여기서 또 빼지 않는다.
 	const handleExit = () =>
-		showConfirm({ title: '타워 챌린지 종료', message: '타워 챌린지를 종료할까요?\n도전 횟수는 차감됩니다.', confirmText: '종료', destructive: true }).then(
-			(ok) => ok && router.back(),
-		);
+		showConfirm({
+			title: t('tower.quiz.exitConfirm.title'),
+			message: t('tower.quiz.exitConfirm.message'),
+			confirmText: t('tower.quiz.exitConfirm.confirm'),
+			destructive: true,
+		}).then((ok) => ok && router.back());
 
 	if (isLoading) {
 		return (
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
-					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>퀴즈 생성 중...</Text>
+					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.loading')}</Text>
 				</SafeAreaView>
 			</View>
 		);
@@ -401,10 +406,10 @@ const TowerQuizScreen = () => {
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
-					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>타워 정보를 찾을 수 없습니다.</Text>
+					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.notFound')}</Text>
 					{/* 어두운 패널 위 링크 — primary 는 라이트 테마에서 1.8:1 로 묻혀 패널 전용 글씨색을 쓴다 */}
 					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }}>
-						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>뒤로 가기</Text>
+						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>{t('tower.quiz.back')}</Text>
 					</TouchableOpacity>
 				</SafeAreaView>
 			</View>
@@ -416,9 +421,9 @@ const TowerQuizScreen = () => {
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
-					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>레벨 {level}에 해당하는 문제가 없습니다.</Text>
+					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.noQuestions', { level })}</Text>
 					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }}>
-						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>뒤로 가기</Text>
+						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>{t('tower.quiz.back')}</Text>
 					</TouchableOpacity>
 				</SafeAreaView>
 			</View>
@@ -432,14 +437,14 @@ const TowerQuizScreen = () => {
 			{/* 상단 안전영역은 전역 배너가 이미 확보한다 — top 을 쓰면 여백이 두 번 들어간다 */}
 			<SafeAreaView style={styles.safeArea} edges={['left', 'right', 'bottom']}>
 				<View style={styles.header}>
-					<TouchableOpacity onPress={handleExit} style={styles.exitButton} accessibilityRole="button" accessibilityLabel="타워 나가기">
+					<TouchableOpacity onPress={handleExit} style={styles.exitButton} accessibilityRole="button" accessibilityLabel={t('tower.quiz.exitA11y')}>
 						<IconComponent type="materialIcons" name="close" size={28} color={Colors.textInverse} />
 					</TouchableOpacity>
 
 					<View style={styles.headerCenter}>
 						<Text style={styles.levelTitle} numberOfLines={1}>{towerLevel.name}</Text>
 						<Text style={styles.questionCount}>
-							{currentQuestionIndex + 1} / {totalQuestions} 문제
+							{t('tower.quiz.questionCount', { current: currentQuestionIndex + 1, total: totalQuestions })}
 						</Text>
 					</View>
 
@@ -467,7 +472,7 @@ const TowerQuizScreen = () => {
 
 				<View style={styles.progressBarContainer}>
 					<View style={styles.progressLabelRow}>
-						<Text style={styles.progressLabelText}>진행도</Text>
+						<Text style={styles.progressLabelText}>{t('tower.quiz.progress')}</Text>
 						<Text style={styles.progressLabelText}>
 							{Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100)}%
 						</Text>
@@ -550,7 +555,7 @@ const TowerQuizScreen = () => {
 						<View style={styles.questionCardGradient}>
 							<View style={[styles.questionBadge, { backgroundColor: withAlpha(towerLevel.color, '33') }]}>
 								<IconComponent type="materialCommunityIcons" name="help-circle-outline" size={14} color={towerLevel.color} />
-								<Text style={[styles.questionBadgeText, { color: towerLevel.color }]}>문제</Text>
+								<Text style={[styles.questionBadgeText, { color: towerLevel.color }]}>{t('tower.quiz.badge')}</Text>
 							</View>
 							{/*
 							 * 묻는 대상과 묻는 말을 두 줄로 나눈다 — 윗줄은 대상(나라·인물 이름)을 크게, 아랫줄은 "이곳의 수도는?".
@@ -625,7 +630,7 @@ const TowerQuizScreen = () => {
 							{/* 층 색(민트·앰버 등 밝은 색 포함) 면이라 흰 글씨가 1.7~3.2:1 로 흐렸다 — 타워 화면 도전 버튼처럼 면 밝기에 맞춘다 */}
 							<View style={[styles.nextButtonGradient, { backgroundColor: towerLevel.color }]}>
 								<Text style={[styles.nextButtonText, { color: readableOn(towerLevel.color) }]}>
-									{currentQuestionIndex < totalQuestions - 1 ? '다음 문제' : '결과 확인'}
+									{currentQuestionIndex < totalQuestions - 1 ? t('tower.quiz.next') : t('tower.quiz.showResult')}
 								</Text>
 								<IconComponent
 									type="materialIcons"
@@ -676,7 +681,7 @@ const makeStyles = () => StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		paddingHorizontal: Spacing.lg,
+		paddingHorizontal: Layout.screenH,
 		paddingVertical: SpacingV.md,
 	},
 	exitButton: {
@@ -690,7 +695,7 @@ const makeStyles = () => StyleSheet.create({
 	levelTitle: { fontSize: Typography.h3, fontWeight: FontWeight.heavy, color: Colors.textInverse },
 	questionCount: { fontSize: Typography.footnote, color: Colors.onBrandTextSoft, marginTop: SpacingV.xxs },
 	scoreText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse },
-	progressBarContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.lg },
+	progressBarContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.lg },
 	progressLabelRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -709,7 +714,7 @@ const makeStyles = () => StyleSheet.create({
 	// 마지막 보기가 화면 아래 끝(홈 인디케이터)에 붙지 않게 — 답을 고르기 전에는 아래 '다음 문제' 띠도 없다
 	// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭).
 	// 좌우 여백은 기둥 안쪽에 준다 — 스크롤 쪽에 주면 태블릿에서 카드가 헤더·진행 막대보다 16 씩 밖으로 삐져나왔다
-	contentInner: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.xl },
+	contentInner: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.xl },
 	bossSection: { alignItems: 'center', marginVertical: SpacingV.xl },
 	bossGlow: {
 		position: 'absolute',
@@ -727,7 +732,8 @@ const makeStyles = () => StyleSheet.create({
 		alignItems: 'center',
 		gap: Spacing.xs,
 		paddingHorizontal: Spacing.md,
-		height: scaleHeight(26),
+		// 고정 height 는 큰 글씨(1.25x)에서 글자가 잘린다 — 최소 높이로
+		minHeight: scaleHeight(26),
 		borderRadius: Radius.pill,
 	},
 	questionBadgeText: { fontSize: Typography.footnote, fontWeight: FontWeight.bold },
@@ -762,7 +768,7 @@ const makeStyles = () => StyleSheet.create({
 	},
 	answerNumberText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse },
 	answerText: { flex: 1, fontSize: Typography.subtitle, color: Colors.textInverse, lineHeight: scaledSize(22) },
-	nextButtonContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Spacing.lg, paddingTop: SpacingV.lg, paddingBottom: SpacingV.xxl },
+	nextButtonContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.lg, paddingBottom: SpacingV.xxl },
 	nextButton: { borderRadius: Radius.md, overflow: 'hidden' },
 	nextButtonGradient: {
 		flexDirection: 'row',

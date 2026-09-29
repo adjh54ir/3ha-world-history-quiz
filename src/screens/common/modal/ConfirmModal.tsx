@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
@@ -44,6 +45,7 @@ export const showAlert = (title: string, message?: string, icon?: string): Promi
 
 /** 루트 레이아웃에 1회만 마운트 */
 export const ConfirmModalHost: React.FC = () => {
+	const { t } = useTranslation();
 	const [pending, setPending] = useState<Pending | null>(null);
 
 	useEffect(() => {
@@ -76,11 +78,11 @@ export const ConfirmModalHost: React.FC = () => {
 						<View style={styles.btnRow}>
 							{pending.cancelText !== null && (
 								<TouchableOpacity style={[styles.btn, styles.cancelBtn]} activeOpacity={0.85} onPress={() => close(false)}>
-									<Text style={styles.cancelText}>{pending.cancelText ?? '취소'}</Text>
+									<Text style={styles.cancelText}>{pending.cancelText ?? t('common.cancel')}</Text>
 								</TouchableOpacity>
 							)}
 							<TouchableOpacity style={[styles.btn, { backgroundColor: pending?.destructive ? Colors.errorDark : Colors.primary }]} activeOpacity={0.9} onPress={() => close(true)}>
-								<Text style={styles.confirmText}>{pending.confirmText ?? '확인'}</Text>
+								<Text style={styles.confirmText}>{pending.confirmText ?? t('common.confirm')}</Text>
 							</TouchableOpacity>
 						</View>
 					</SheetIn>

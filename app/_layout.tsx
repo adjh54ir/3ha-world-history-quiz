@@ -122,16 +122,6 @@ export default function RootLayout() {
 	const [ready, setReady] = useState(false);
 	useNotifeeDeepLink();
 
-	// 인앱 결제(광고 제거) — 저장 플래그 로드 + 스토어 연결/구매 리스너 (광고 초기화보다 먼저)
-	useEffect(() => {
-		try {
-			const { initPurchase } = require('@/src/services/PurchaseService');
-			initPurchase().catch(() => {});
-		} catch (e) {
-			console.warn('PurchaseService 로드 실패:', e);
-		}
-	}, []);
-
 	// ATT와 시스템 언어는 앱이 active인 시점에 동기화합니다.
 	useEffect(() => {
 		let timer: ReturnType<typeof setTimeout> | undefined;
@@ -168,8 +158,6 @@ export default function RootLayout() {
 			try {
 				LogBox.ignoreAllLogs();
 				console.log('Now env mode : [', REACT_NATIVE_APP_MODE, ']');
-				// 광고 제거 플래그를 먼저 읽는다 — 안 기다리면 구매자에게도 배너가 한 번 마운트·요청된다
-				await require('@/src/services/PurchaseService').loadAdsRemoved();
 			} catch (e) {
 				console.warn('앱 초기화 중 오류:', e);
 			} finally {

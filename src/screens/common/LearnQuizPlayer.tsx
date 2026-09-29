@@ -20,6 +20,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import { ScheduleWrongReviewReminder } from '@/src/utils/NotifactionHelper';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -85,11 +86,12 @@ const getQuestionPresentation = (_q: LearnType.QuizQuestion) => ({ variant: 'cla
 /** 오답노트 표시용 — 원본 문항 + 그때 내가 고른 답의 인덱스(시간초과 시 -1) */
 type WrongEntry = LearnType.QuizQuestion & { userAnswerIndex: number };
 
+/** 결과 유형 — 문구는 렌더 시점에 번역 키로 푼다 */
 const getResultProfile = (rate: number, wrongCount: number) => {
-	if (rate >= 90) return { title: '정확한 판단형', desc: '핵심 단서를 빠르게 잡고 안정적으로 정답을 고르는 편이에요.' };
-	if (rate >= 70) return { title: '감각 성장형', desc: wrongCount > 0 ? '기본 상식은 탄탄해요. 헷갈린 문제만 다시 보면 더 단단해져요.' : '상식의 폭이 넓어요. 조금 더 어려운 문제도 도전해볼 만해요.' };
-	if (rate >= 40) return { title: '복습 효율형', desc: '틀린 문제가 학습 포인트예요. 오답노트로 같은 패턴을 짧게 반복하면 좋아요.' };
-	return { title: '기초 다지기형', desc: '지금은 정답보다 해설을 읽는 시간이 더 중요해요. 쉬운 문제부터 다시 쌓아보세요.' };
+	if (rate >= 90) return { title: 'player.profile.precise.title', desc: 'player.profile.precise.desc' } as const;
+	if (rate >= 70) return { title: 'player.profile.growth.title', desc: wrongCount > 0 ? 'player.profile.growth.descWrong' : 'player.profile.growth.descClean' } as const;
+	if (rate >= 40) return { title: 'player.profile.review.title', desc: 'player.profile.review.desc' } as const;
+	return { title: 'player.profile.basic.title', desc: 'player.profile.basic.desc' } as const;
 };
 
 export interface LearnQuizPlayerProps {
@@ -170,6 +172,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	trackProgress = true,
 	startIllustration,
 }) => {
+	const { t } = useTranslation();
 	// 퀴즈를 푸는 동안에는 테마 변경 리로드를 미룬다 (진행 중이던 문제가 날아가지 않게)
 	useEffect(() => {
 		setQuizInProgress(true);
@@ -282,7 +285,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			meaning: c?.meaning || q.explanation || q.options[q.answerIndex] || q.prompt,
 		});
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 		const bm = await LearnProgressService.getBookmarks();
 		setBmUids(new Set(bm.map((b) => b.uid)));
 	};
@@ -407,8 +410,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		if (questions.length === 0) return title;
 		if (reviewMode || timed) return title;
 		const domains = Array.from(new Set(questions.map((q) => q.domain)));
-		return domains.length === 1 ? `${LearnHubService.getDomainTitle(domains[0])} 퀴즈` : title;
-	}, [questions, title, reviewMode, timed]);
+		return domains.length === 1 ? t('player.domainQuiz', { domain: LearnHubService.getDomainTitle(domains[0]) }) : title;
+	}, [questions, title, reviewMode, timed, t]);
 
 	const timerPaused = (!timed && checked) || showExplain || showExitConfirm || showAchModal || !!detailQ || restarting || countdown > 0;
 
@@ -427,9 +430,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		const flash = Animated.timing(countFlash, { toValue: 0, duration: 260, easing: RNEasing.out(RNEasing.quad), useNativeDriver: true });
 		const ripple = Animated.timing(countRipple, { toValue: 1, duration, easing: RNEasing.out(RNEasing.quad), useNativeDriver: true });
 		Animated.parallel([slam, flash, ripple]).start();
-		const t = setTimeout(() => setCountdown((n) => n - 1), duration);
+		const timer = setTimeout(() => setCountdown((n) => n - 1), duration);
 		return () => {
-			clearTimeout(t);
+			clearTimeout(timer);
 			slam.stop();
 			flash.stop();
 			ripple.stop();
@@ -445,8 +448,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		}
 		// 마지막 5초 카운트다운 사운드
 		if (timeLeft <= 5) playTick();
-		const t = setTimeout(() => setTimeLeft((s) => s - 1), 1000);
-		return () => clearTimeout(t);
+		const timer = setTimeout(() => setTimeLeft((s) => s - 1), 1000);
+		return () => clearTimeout(timer);
 	}, [timed, finished, timeLeft, timerPaused]);
 
 	// 배경음악(BGM) — 퀴즈 진행 중에만 반복 재생, 타임챌린지는 긴박한 트랙. 시작 전/종료/이탈 시 정지.
@@ -759,8 +762,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			onSelect(-1);
 			return;
 		}
-		const t = setTimeout(() => setQTimeLeft((s) => s - 1), 1000);
-		return () => clearTimeout(t);
+		const timer = setTimeout(() => setQTimeLeft((s) => s - 1), 1000);
+		return () => clearTimeout(timer);
 	}, [timed, showStartModal, finished, timerPaused, qTimeLeft, current]);
 
 	// 5초 이하 남으면 타이머 펄스(초당 1회 팝). 언마운트/조건 이탈 시 정리
@@ -876,7 +879,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		const rate = solved > 0 ? Math.round((correctCount / solved) * 100) : 0;
 		const pass = rate >= 60;
 		const great = rate >= 90;
-		const head = great ? '완벽해요!' : pass ? '잘했어요!' : '조금 더 힘내요!';
+		const head = great ? t('player.result.head.perfect') : pass ? t('player.result.head.good') : t('player.result.head.cheer');
 		const profile = getResultProfile(rate, wrongList.length);
 		const resultIllustration = rate === 100
 				? SHARED_STATE_ILLUSTRATIONS.perfectScore
@@ -904,34 +907,34 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							)}
 						</DonutChart>
 						<Text style={styles.resultTitle} numberOfLines={1} ellipsizeMode="tail">{head}</Text>
-						<Text style={styles.resultSub}>{modeLabel ?? `${displayTitle} 결과`}</Text>
+						<Text style={styles.resultSub}>{modeLabel ?? t('player.result.sub', { title: displayTitle })}</Text>
 						<View style={styles.resultScoreChip}>
 							{mode === 'daily' || !trackProgress ? (
 								<>
 									<Text style={[styles.resultScoreNum, styles.resultScoreNumGreen]}>{correctCount}</Text>
-									<Text style={styles.resultScoreUnit}>개</Text>
+									<Text style={styles.resultScoreUnit}>{t('player.result.unitCount')}</Text>
 								</>
 							) : (
 								<>
 									<Animated.Text style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen]}>{displayResultScore}</Animated.Text>
-									<Text style={styles.resultScoreUnit}>점</Text>
+									<Text style={styles.resultScoreUnit}>{t('player.result.unitPoint')}</Text>
 								</>
 							)}
 						</View>
 						<Text style={styles.resultScoreDetail}>
-							{solved}문제 중 {correctCount}개 정답 · 정답률 {rate}%
+							{t('player.result.detail', { solved, correct: correctCount, rate })}
 						</Text>
 						{isNewTimeRecord && (
 							<FadeInUp delay={260}>
 								<View style={styles.recordBadge}>
 									<IconComponent type="materialIcons" name="military-tech" size={scaledSize(16)} color={Colors.heatDeep} />
-									<Text style={styles.recordBadgeText}>신기록! 이전 최고 {prevTimeBest!.toLocaleString()}점보다 +{(timeScore - prevTimeBest!).toLocaleString()}점</Text>
+									<Text style={styles.recordBadgeText}>{t('player.result.newRecord', { prev: prevTimeBest!.toLocaleString(), diff: (timeScore - prevTimeBest!).toLocaleString() })}</Text>
 								</View>
 							</FadeInUp>
 						)}
 						<View style={styles.resultProfile}>
-							<Text style={styles.resultProfileTitle} numberOfLines={1} ellipsizeMode="tail">{profile.title}</Text>
-							<Text style={styles.resultProfileDesc} numberOfLines={2} ellipsizeMode="tail">{profile.desc}</Text>
+							<Text style={styles.resultProfileTitle} numberOfLines={1} ellipsizeMode="tail">{t(profile.title)}</Text>
+							<Text style={styles.resultProfileDesc} numberOfLines={2} ellipsizeMode="tail">{t(profile.desc)}</Text>
 						</View>
 					</View>
 
@@ -939,15 +942,15 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={styles.statsRow}>
 							<TouchableOpacity style={[styles.statBox, resultTab === 'correct' && styles.statBoxActive]} activeOpacity={0.7} onPress={() => setResultTab('correct')}>
 								<Text style={[styles.statNum, { color: Colors.success }]}>{correctCount}</Text>
-								<Text style={styles.statLabel}>정답</Text>
+								<Text style={styles.statLabel}>{t('player.result.stat.correct')}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[styles.statBox, resultTab === 'wrong' && styles.statBoxActive]} activeOpacity={0.7} onPress={() => setResultTab('wrong')}>
 								<Text style={[styles.statNum, { color: Colors.error }]}>{timed ? timedWrongList.length : wrongList.length}</Text>
-								<Text style={styles.statLabel}>오답</Text>
+								<Text style={styles.statLabel}>{t('player.result.stat.wrong')}</Text>
 							</TouchableOpacity>
 							<View style={styles.statBox}>
 								<Text style={[styles.statNum, { color: Colors.primary }]}>{bestCombo}</Text>
-								<Text style={styles.statLabel}>최고 콤보</Text>
+								<Text style={styles.statLabel}>{t('player.result.stat.bestCombo')}</Text>
 							</View>
 						</View>
 					</FadeInUp>
@@ -955,8 +958,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					{!timed && (resultTab === 'wrong' ? wrongList.length > 0 : correctList.length > 0) && (
 						<View style={styles.wrongSection}>
 							<View style={styles.wrongSectionHead}>
-								<Text style={styles.wrongSectionTitle} numberOfLines={1} ellipsizeMode="tail">{resultTab === 'wrong' ? (trackProgress ? '오답 노트' : '오답 확인') : '정답 확인'}</Text>
-								<Text style={styles.wrongSectionCount}>{resultTab === 'wrong' ? `${wrongList.length}개${trackProgress ? ' · 보관함에 저장됨' : ''}` : `${correctList.length}개`}</Text>
+								<Text style={styles.wrongSectionTitle} numberOfLines={1} ellipsizeMode="tail">{resultTab === 'wrong' ? (trackProgress ? t('player.result.list.wrongNote') : t('player.result.list.wrongCheck')) : t('player.result.list.correctCheck')}</Text>
+								<Text style={styles.wrongSectionCount}>{resultTab === 'wrong' ? (trackProgress ? t('player.result.list.countSaved', { count: wrongList.length }) : t('common.count', { count: wrongList.length })) : t('common.count', { count: correctList.length })}</Text>
 							</View>
 							<AdaptiveGrid>
 							{(resultTab === 'wrong' ? wrongList : correctList).map((q, i) => (
@@ -972,7 +975,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 										onToggleBookmark={trackProgress ? () => toggleResultBookmark(q) : undefined}
 										onPress={() => setDetailQ(q)}>
 										<View style={styles.wrongDetailHint}>
-											<Text style={styles.wrongDetailHintText}>탭하여 자세히 보기</Text>
+											<Text style={styles.wrongDetailHintText}>{t('player.result.list.detailHint')}</Text>
 											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(11)} color={Colors.textMuted} />
 										</View>
 									</LearnItemCard>
@@ -988,13 +991,14 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						return (
 							<View style={styles.wrongSection}>
 								<View style={styles.wrongSectionHead}>
-									<Text style={styles.wrongSectionTitle} numberOfLines={1} ellipsizeMode="tail">{resultTab === 'wrong' ? '오답 해설' : '정답 해설'}</Text>
-									<Text style={styles.wrongSectionCount}>{list.length}개</Text>
+									<Text style={styles.wrongSectionTitle} numberOfLines={1} ellipsizeMode="tail">{resultTab === 'wrong' ? t('player.result.timed.wrongTitle') : t('player.result.timed.correctTitle')}</Text>
+									<Text style={styles.wrongSectionCount}>{t('common.count', { count: list.length })}</Text>
 								</View>
 								{list.length === 0 ? (
-									<Text style={styles.wrongSectionCount}>{resultTab === 'wrong' ? '틀린 문제가 없어요!' : '맞힌 문제가 없어요.'}</Text>
+									<Text style={styles.wrongSectionCount}>{resultTab === 'wrong' ? t('player.result.timed.noWrong') : t('player.result.timed.noCorrect')}</Text>
 								) : (
-									list.map((q, i) => (
+									<AdaptiveGrid>
+									{list.map((q, i) => (
 										<FadeInUp key={`ans-${q.uid}-${i}`} delay={Math.min(i, 6) * 40}>
 											<LearnItemCard
 												domain={q.domain}
@@ -1008,7 +1012,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 												onPress={() => setDetailQ(q)}
 											/>
 										</FadeInUp>
-									))
+									))}
+									</AdaptiveGrid>
 								)}
 							</View>
 						);
@@ -1016,15 +1021,15 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 
 					{(suggestWrongReview && wrongList.length > 0) || suggestTimeChallenge ? (
 						<View style={styles.nextWrap}>
-							<Text style={styles.nextTitle}>다음 단계</Text>
+							<Text style={styles.nextTitle}>{t('player.result.next.title')}</Text>
 							{suggestWrongReview && wrongList.length > 0 && (
 								<TouchableOpacity style={styles.stepBtn} activeOpacity={0.85} onPress={() => router.replace('/quiz/wrong-review' as never)}>
 									<View style={[styles.stepIcon, { backgroundColor: Colors.errorSoft }]}>
 										<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.error} />
 									</View>
 									<View style={styles.stepBody}>
-										<Text style={styles.stepBtnTitle}>오답노트 복습</Text>
-										<Text style={styles.stepBtnDesc}>틀린 문제만 모아 다시 풀어요</Text>
+										<Text style={styles.stepBtnTitle}>{t('player.result.next.wrongReviewTitle')}</Text>
+										<Text style={styles.stepBtnDesc}>{t('player.result.next.wrongReviewDesc')}</Text>
 									</View>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
@@ -1035,8 +1040,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 										<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.primary} />
 									</View>
 									<View style={styles.stepBody}>
-										<Text style={styles.stepBtnTitle}>타임 챌린지</Text>
-										<Text style={styles.stepBtnDesc}>180초 안에 최대한 많이 맞혀요</Text>
+										<Text style={styles.stepBtnTitle}>{t('player.result.next.timeTitle')}</Text>
+										<Text style={styles.stepBtnDesc}>{t('player.result.next.timeDesc')}</Text>
 									</View>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
@@ -1049,7 +1054,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					<View style={styles.loadingOverlay}>
 						<View style={styles.loadingCard}>
 							<ActivityIndicator size="large" color={accent} />
-							<Text style={styles.loadingTitle}>문제를 불러오는 중입니다</Text>
+							<Text style={styles.loadingTitle}>{t('player.result.loading')}</Text>
 							<View style={styles.loadingTrack}>
 								<Animated.View
 									style={[
@@ -1066,9 +1071,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				</AppModal>
 				{/* 타임챌린지는 챌린지(스코어) 화면으로 돌아가지만, 버튼 이름은 '홈으로'로 통일한다 */}
 				<BottomButton
-					label="홈으로"
+					label={t('player.result.home')}
 					icon="home"
-					{...(mode === 'daily' ? {} : { secondaryLabel: '다시 풀기', secondaryIcon: 'replay', onSecondary: restart })}
+					{...(mode === 'daily' ? {} : { secondaryLabel: t('player.result.retry'), secondaryIcon: 'replay', onSecondary: restart })}
 					onPress={() => router.replace(homeHref as never)}
 				/>
 				{/* 🎉 컨페티 — 콘텐츠 위(맨 앞)에서 뿌려지도록 마지막에 렌더 */}
@@ -1108,23 +1113,17 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								<View style={styles.preparingWrap}>
 									<LottieBox source={LOTTIE_LOADING} autoPlay loop style={styles.loadingLottie} />
 									<QuizCardSkeleton />
-									<Text style={styles.startDesc}>문제를 준비하고 있어요...</Text>
+									<Text style={styles.startDesc}>{t('player.start.preparing')}</Text>
 								</View>
 							) : (
 								<>
-									<Text style={styles.startSub}>준비되면 시작하세요. 아래 방식으로 진행돼요.</Text>
+									<Text style={styles.startSub}>{t('player.start.sub')}</Text>
 									<View style={styles.guideList}>
 										<View style={styles.guideRow}>
 											<View style={[styles.guideIconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
 												<IconComponent type="materialIcons" name="timer" size={scaledSize(18)} color={accent} />
 											</View>
-											<Text style={styles.guideText}>{timed ? `총 ${timeSec}초 동안 최대한 많이 풀어요.` : '문제마다 30초가 주어져요.'}</Text>
-										</View>
-										<View style={styles.guideRow}>
-											<View style={[styles.guideIconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
-												<IconComponent type="materialIcons" name="touch-app" size={scaledSize(18)} color={accent} />
-											</View>
-											<Text style={styles.guideText}>보기 중 알맞은 정답을 골라 풀어요.</Text>
+											<Text style={styles.guideText}>{timed ? t('player.start.timed', { sec: timeSec }) : hideTimer ? t('player.start.noTimer') : t('player.start.perQuestion', { sec: qLimit })}</Text>
 										</View>
 										<View style={styles.guideRow}>
 											<View style={[styles.guideIconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
@@ -1132,26 +1131,28 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											</View>
 											<Text style={styles.guideText}>
 												{!trackProgress
-													? '결과는 점수·오답노트에 반영되지 않아요.'
+													? t('player.start.noTrack')
 													: mode === 'daily'
-														? '틀린 문제는 오답노트에 저장돼요.'
-														: `정답 1개당 ${POINT_PER_CORRECT}점, 틀리면 오답노트에 저장돼요.`}
+														? t('player.start.daily')
+														: reviewMode
+															? t('player.start.pointsReview', { points: POINT_PER_CORRECT })
+															: t('player.start.points', { points: POINT_PER_CORRECT })}
 											</Text>
 										</View>
 										<View style={styles.guideRow}>
 											<View style={[styles.guideIconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
 												<IconComponent type="materialIcons" name="bookmark-added" size={scaledSize(18)} color={accent} />
 											</View>
-											<Text style={styles.guideText}>{trackProgress && mode !== 'daily' ? '중간에 종료해도 푼 만큼 점수가 반영돼요.' : '중간에 종료해도 푼 만큼 결과를 볼 수 있어요.'}</Text>
+											<Text style={styles.guideText}>{trackProgress && mode !== 'daily' ? t('player.start.endScore') : t('player.start.endResult')}</Text>
 										</View>
 									</View>
 									{/* 효과음 on/off 선택 */}
-									<TouchableOpacity style={styles.soundToggleRow} activeOpacity={0.8} onPress={toggleSound}>
+									<TouchableOpacity style={styles.soundToggleRow} activeOpacity={0.8} onPress={toggleSound} accessibilityRole="switch" accessibilityState={{ checked: soundOn }} accessibilityLabel={t('player.start.sound')}>
 										<View style={styles.soundToggleLeft}>
 											<View style={[styles.guideIconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
 												<IconComponent type="materialIcons" name={soundOn ? 'volume-up' : 'volume-off'} size={scaledSize(18)} color={accent} />
 											</View>
-											<Text style={styles.soundToggleLabel}>효과음</Text>
+											<Text style={styles.soundToggleLabel}>{t('player.start.sound')}</Text>
 										</View>
 										<View style={[styles.soundPill, { backgroundColor: soundOn ? accent : Colors.surfaceAlt }]}>
 											<Text style={[styles.soundPillText, { color: soundOn ? Colors.textInverse : Colors.textSecondary }]} numberOfLines={1} ellipsizeMode="tail">{soundOn ? 'ON' : 'OFF'}</Text>
@@ -1159,10 +1160,10 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									</TouchableOpacity>
 									<View style={styles.startBtns}>
 										<TouchableOpacity style={styles.startCancelBtn} activeOpacity={0.85} onPress={() => router.back()}>
-											<Text style={styles.startCancelText}>취소</Text>
+											<Text style={styles.startCancelText}>{t('common.cancel')}</Text>
 										</TouchableOpacity>
 										<TouchableOpacity style={[styles.startGoBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={beginQuiz}>
-											<Text style={styles.startGoText}>시작하기</Text>
+											<Text style={styles.startGoText}>{t('common.start')}</Text>
 										</TouchableOpacity>
 									</View>
 								</>
@@ -1246,7 +1247,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							]}
 						/>
 						<Text style={[styles.countNum, isGo && styles.countGo]} numberOfLines={1} adjustsFontSizeToFit>
-							{isGo ? '시작!' : countdown - 1}
+							{isGo ? t('player.count.go') : countdown - 1}
 						</Text>
 					</Animated.View>
 
@@ -1257,10 +1258,10 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						))}
 					</View>
 
-					<Text style={styles.countHint}>{timeSec}초 안에 최대한 많이 맞혀보세요!</Text>
+					<Text style={styles.countHint}>{t('player.count.hint', { sec: timeSec })}</Text>
 					<View style={styles.countTipRow}>
 						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(14)} color={Colors.heatSoft} />
-						<Text style={styles.countTipText}>연속 정답으로 콤보를 이어가 보세요</Text>
+						<Text style={styles.countTipText}>{t('player.count.tip')}</Text>
 					</View>
 				</View>
 			</SafeAreaView>
@@ -1271,11 +1272,11 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		return withSharedModals(
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
 				<View style={[styles.header, { backgroundColor: accent }]}>
-					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
+					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textInverse} />
 					</TouchableOpacity>
 				</View>
-				<Text style={styles.emptyText}>출제할 문제가 없습니다.</Text>
+				<Text style={styles.emptyText}>{t('player.empty')}</Text>
 			</SafeAreaView>
 		);
 	}
@@ -1289,7 +1290,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const timeProgress = activeLimit > 0 ? Math.max(0, Math.min(100, (activeTime / activeLimit) * 100)) : 0;
 	const presentation = getQuestionPresentation(current);
 	const currentDomainMeta = LearnHubService.getDomain(current.domain).meta;
-	const comboMessage = combo >= 10 ? 'UNSTOPPABLE!' : combo >= 5 ? '불꽃 질주!' : '연속 정답!';
+	const comboMessage = combo >= 10 ? 'UNSTOPPABLE!' : combo >= 5 ? t('player.combo.fire') : t('player.combo.streak');
 	// 콤보 단계별 열기(heat) 그라디언트 — 단계가 오를수록 진한 붉은색으로 (보라 계열 미사용)
 	const comboColors: [string, string, ...string[]] = combo >= 10 ? [Colors.errorDark, Colors.error, Colors.heat] : combo >= 5 ? [Colors.error, Colors.heat, Colors.bookmark] : [Colors.amber, Colors.heat];
 	// 오답 셰이크용 translateX (좌우 흔들림)
@@ -1303,12 +1304,12 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					<View style={styles.backBtn} />
 					<Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">{displayTitle}</Text>
 					<View style={styles.headerRight}>
-						<Text style={styles.headerCount}>{timed ? `${answeredCount + 1}번째` : `${index + 1}/${total}`}</Text>
+						<Text style={styles.headerCount}>{timed ? t('player.play.nth', { n: answeredCount + 1 }) : `${index + 1}/${total}`}</Text>
 					</View>
 				</View>
 				{/* 문항 진행 — 칸 농도로 난이도(초급→특급)를 보여준다 */}
 				{orderByLevel && total > 1 && total <= LEVEL_STRIP_MAX && (
-					<View style={styles.levelStrip} accessible accessibilityLabel={`${total}문항 중 ${index + 1}번째, 난이도 ${current.level ?? '미표기'}`}>
+					<View style={styles.levelStrip} accessible accessibilityLabel={t('player.play.levelA11y', { total, n: index + 1, level: current.level ?? t('player.play.levelUnknown') })}>
 						{questions.map((q, i) => (
 							<View
 								key={q.uid}
@@ -1327,26 +1328,26 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					<View style={styles.scoreItem}>
 						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={Colors.textInverse} />
 						<Animated.Text style={[styles.scoreValue, { transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
-						<Text style={styles.scoreLabel}>점수</Text>
+						<Text style={styles.scoreLabel}>{t('player.play.score')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
 						<IconComponent type="materialIcons" name="check-circle" size={scaledSize(15)} color={Colors.textInverse} />
 						<Text style={styles.scoreValue}>{correctCount}</Text>
-						<Text style={styles.scoreLabel}>정답</Text>
+						<Text style={styles.scoreLabel}>{t('player.play.correct')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
 						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={Colors.textInverse} />
 						<Text style={styles.scoreValue}>{combo}</Text>
-						<Text style={styles.scoreLabel}>콤보</Text>
+						<Text style={styles.scoreLabel}>{t('player.play.combo')}</Text>
 					</View>
 				</View>
 				{/* 남은 시간 — 스코어 바로 아래 (헤더 내 반투명 바) */}
 				{!hideTimer && (
 				<Reanimated.View
 					accessible
-					accessibilityLabel={`${timed ? '남은 도전 시간' : '남은 시간'} ${activeTime}초`}
+					accessibilityLabel={`${timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')} ${t('common.seconds', { count: activeTime })}`}
 					style={[styles.headerTimerMotion, timed && challengeTimerMotionStyle]}>
 					<Animated.View style={[styles.headerTimer, lowTime && styles.headerTimerDanger, { transform: [{ scale: timed || activeTime > 5 ? 1 : timerPulse }] }]}>
 						<View style={styles.headerTimerHead}>
@@ -1354,9 +1355,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								<Reanimated.View style={timed ? challengeBoltMotionStyle : undefined}>
 									<IconComponent type="materialIcons" name={timed ? 'bolt' : 'timer'} size={scaledSize(14)} color={Colors.textInverse} />
 								</Reanimated.View>
-								<Text style={styles.headerTimerLabel} numberOfLines={1} ellipsizeMode="tail">{timed ? '남은 도전 시간' : '남은 시간'}</Text>
+								<Text style={styles.headerTimerLabel} numberOfLines={1} ellipsizeMode="tail">{timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')}</Text>
 							</View>
-							<Text style={[styles.headerTimerValue, { color: timeBarColor }]}>{activeTime}초</Text>
+							<Text style={[styles.headerTimerValue, { color: timeBarColor }]}>{t('common.seconds', { count: activeTime })}</Text>
 						</View>
 						<View style={styles.headerTimerTrack}>
 							<View style={[styles.headerTimerFill, { width: `${timeProgress}%`, backgroundColor: timeBarColor }]}>
@@ -1407,7 +1408,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							transform: [{ translateY: scoreFloat.interpolate({ inputRange: [0, 1], outputRange: [0, -scaleHeight(38)] }) }],
 						},
 					]}>
-					+{POINT_PER_CORRECT}점
+					{t('player.play.plusPoints', { points: POINT_PER_CORRECT })}
 				</Animated.Text>
 				<ScrollView ref={questionScrollRef} style={styles.scrollFlex} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
 				<FadeInUp key={current.uid} distance={18}>
@@ -1445,7 +1446,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={[styles.promptFrame, presentation.variant === 'chat' && styles.promptFrameChat, presentation.variant === 'sentence' && styles.promptFrameSentence]}>
 							{current.imageRef ? (
 								<>
-									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), isWideImageRef(current.imageRef) ? scaleWidth(210) : scaleWidth(176))} fetchWidth={420} />
+									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176))} fetchWidth={isTablet ? 640 : 420} />
 									{!!current.subPrompt && <Text style={styles.subPromptText}>{current.subPrompt}</Text>}
 								</>
 							) : (
@@ -1528,7 +1529,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			{/* 해설 팝업 (애니메이션) — 뒤로가기로 닫아도 다음 문제로 진행되게 처리 */}
 				<View style={[styles.bottomBar, { paddingBottom: SpacingV.md + insets.bottom }]}>
 						<TouchableOpacity style={styles.endBottomBtn} activeOpacity={0.85} onPress={() => setShowExitConfirm(true)}>
-						<Text style={styles.endBottomText}>퀴즈 종료</Text>
+						<Text style={styles.endBottomText}>{t('player.play.end')}</Text>
 					</TouchableOpacity>
 				</View>
 				<AppModal visible={showExplain} transparent animationType="fade" onRequestClose={onNext}>
@@ -1552,7 +1553,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									{/* 해설 팝업 배지 — 확대 애니메이션은 이미지를 저해상도로 래스터화해 흐리게 만들므로 두지 않는다 */}
 									<ExpoImage source={correct ? IMG_CORRECT : timedOut ? IMG_TIMEOUT : IMG_WRONG} style={styles.explainBadgeImg} contentFit="contain" cachePolicy="memory-disk" transition={0} priority="high" />
 								</View>
-								<Text style={[styles.explainResult, { color: correct ? Colors.success : Colors.errorDark }]}>{correct ? '정답이에요!' : timedOut ? '아쉬워요! 시간 초과예요' : '아쉬워요! 오답이에요'}</Text>
+								<Text style={[styles.explainResult, { color: correct ? Colors.success : Colors.errorDark }]}>{correct ? t('player.explain.correct') : timedOut ? t('player.explain.timeout') : t('player.explain.wrong')}</Text>
 
 								{/* 정답 — 초록색 강조 */}
 								{(!!current.domain || !!current.categoryLabel || !!current.level) && (
@@ -1577,7 +1578,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								)}
 
 								<View style={[styles.answerCard, { backgroundColor: withAlpha(Colors.success, '12'), borderColor: withAlpha(Colors.success, '40') }]}>
-									<View style={styles.answerLabelRow}><IconComponent type="materialIcons" name="format-quote" size={scaledSize(16)} color={Colors.success} /><Text style={styles.answerCardLabel}>정답</Text></View>
+									<View style={styles.answerLabelRow}><IconComponent type="materialIcons" name="format-quote" size={scaledSize(16)} color={Colors.success} /><Text style={styles.answerCardLabel}>{t('player.explain.answer')}</Text></View>
 									<View style={styles.answerCardValueRow}>
 										{current.optionFlags && <CountryFlags name={current.options[current.answerIndex]} height={18} />}
 										<Text style={[styles.answerCardText, { color: Colors.success }]}>{current.options[current.answerIndex]}</Text>
@@ -1588,7 +1589,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								<ScrollView style={styles.explainScroll} showsVerticalScrollIndicator={false}>
 									{/* 문제 박스 */}
 									<View style={styles.explainSection}>
-										<View style={styles.explainBodyRow}><IconComponent type="materialIcons" name="article" size={scaledSize(16)} color={Colors.textSecondary} /><Text style={styles.explainBodyTitle}>문제</Text></View>
+										<View style={styles.explainBodyRow}><IconComponent type="materialIcons" name="article" size={scaledSize(16)} color={Colors.textSecondary} /><Text style={styles.explainBodyTitle}>{t('player.explain.question')}</Text></View>
 										{!!current.imageRef && <EntryImage imageRef={current.imageRef} width={scaleWidth(120)} style={styles.explainImage} />}
 										<Text style={styles.explainQuestion}>{current.prompt}</Text>
 										{!!current.subPrompt && <Text style={styles.explainQuestionSub}>{current.subPrompt}</Text>}
@@ -1598,7 +1599,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									<View style={[styles.explainSection, { borderColor: withAlpha(Colors.primary, '55'), backgroundColor: withAlpha(Colors.primary, '0C') }]}>
 										<View style={styles.explainBodyRow}>
 											<IconComponent type="materialIcons" name="lightbulb" size={scaledSize(16)} color={Colors.primary} />
-											<Text style={styles.explainBodyTitle}>해설</Text>
+											<Text style={styles.explainBodyTitle}>{t('player.explain.explanation')}</Text>
 										</View>
 										<Text style={styles.explainBody}>{current.explanation}</Text>
 									</View>
@@ -1608,7 +1609,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 										<View style={[styles.explainSection, { borderColor: withAlpha(accent, '55'), backgroundColor: withAlpha(accent, '0C') }]}>
 											<View style={styles.explainBodyRow}>
 												<IconComponent type="materialIcons" name="menu-book" size={scaledSize(16)} color={accent} />
-												<Text style={styles.explainBodyTitle}>더 알아보기</Text>
+												<Text style={styles.explainBodyTitle}>{t('learnCard.more')}</Text>
 											</View>
 											{current.examples.slice(0, 3).map((ex, i) => (
 												<Text key={i} style={styles.explainExample}>· {ex}</Text>
@@ -1618,7 +1619,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								</ScrollView>
 
 								<TouchableOpacity style={[styles.explainNextBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={onNext}>
-									<Text style={styles.explainNextText}>{isLast ? '결과 보기' : '다음 문제'}</Text>
+									<Text style={styles.explainNextText}>{isLast ? t('player.explain.result') : t('player.explain.next')}</Text>
 									<IconComponent type="materialIcons" name={isLast ? 'flag' : 'arrow-forward'} size={scaledSize(20)} color={Colors.textInverse} />
 								</TouchableOpacity>
 							</Animated.View>
@@ -1629,10 +1630,10 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 
 				<ExitConfirmModal
 					visible={showExitConfirm}
-					title="종료하시겠습니까?"
-					message="지금까지의 결과를 저장하고 리포트 화면으로 이동합니다."
-					confirmText="종료하기"
-					cancelText="취소"
+					title={t('player.exit.title')}
+					message={t('player.exit.message')}
+					confirmText={t('player.exit.confirm')}
+					cancelText={t('common.cancel')}
 					onCancel={() => setShowExitConfirm(false)}
 					onConfirm={onEnd}
 				/>
@@ -1689,7 +1690,7 @@ const styles = themed(() => StyleSheet.create({
 	guideLine: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary, textAlign: 'center', marginBottom: SpacingV.md },
 	explainOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', alignItems: 'center' },
 	explainSheet: { width: '100%', maxWidth: Layout.sheetMaxWidth, backgroundColor: Colors.surface, borderTopLeftRadius: scaleWidth(28), borderTopRightRadius: scaleWidth(28), paddingHorizontal: Spacing.xxl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
-	explainBadge: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.pill, backgroundColor: Colors.textInverse, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' },
+	explainBadge: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.pill, backgroundColor: Colors.surface, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' },
 	explainBadgeImg: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.xl },
 	loadingLottie: { width: scaleWidth(90), height: scaleWidth(90), alignSelf: 'center' },
 	resultConfetti: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(240) },
@@ -1702,7 +1703,7 @@ const styles = themed(() => StyleSheet.create({
 	introFill: { flex: 1 },
 	preparingWrap: { alignItems: 'center', gap: SpacingV.md, marginTop: SpacingV.xl },
 	startOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xxl },
-	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xxl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xl, alignItems: 'center' },
+	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xxl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	startIcon: { width: scaleWidth(60), height: scaleWidth(60), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.lg },
 	startIllustration: { width: scaleWidth(112), height: scaleWidth(112), marginBottom: SpacingV.md },
 	startTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
@@ -1839,7 +1840,8 @@ const styles = themed(() => StyleSheet.create({
 	resultHero: {
 		alignItems: 'center',
 		paddingTop: SpacingV.xxxl,
-		paddingBottom: SpacingV.xxl,
+		// 아래 통계 카드가 18 만큼 올라와 겹친다 — 24 면 결과 유형 박스와 6 만 남아 붙어 보여 32 로 띄운다
+		paddingBottom: SpacingV.xxxl,
 		paddingHorizontal: Spacing.xxl,
 		borderBottomLeftRadius: scaleWidth(28),
 		borderBottomRightRadius: scaleWidth(28),

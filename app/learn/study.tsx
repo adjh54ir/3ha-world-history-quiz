@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Animated, Easing, PanResponder } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaledSize, scaleHeight, scaleWidth, contentWidth, scaleArt} from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, contentWidth, scaleArt } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -24,11 +25,8 @@ import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const ITEM_W = contentWidth;
-/** 카드 조작법 안내 — 캐릭터가 최초 1회만 설명 */
-const COACH_LINES = [
-	'좌우로 넘기면 다음 카드를 볼 수 있어요.',
-	'카드를 탭하면 설명과 알아두면 좋은 이야기가 보여요.',
-];
+/** 카드 조작법 안내 — 캐릭터가 최초 1회만 설명 (문구는 렌더 시점에 번역) */
+const COACH_KEYS = ['learn.study.guide.swipe', 'learn.study.guide.flip', 'learn.study.guide.complete'] as const;
 /** 진행 도트 최대 개수 (카드가 많아도 한 줄 유지) */
 const DOT_MAX = 7;
 
@@ -40,6 +38,7 @@ type StudyTab = 'all' | 'learning' | 'done';
  * - 좌우로 넘기는 캐러셀. 카드를 탭하면 앞면(이름·그림) ↔ 뒷면(설명/정보/더 알아보기)이 뒤집힘. 뒷면은 스크롤 가능.
  */
 const LearnStudy = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, 'capital');
 	const cats = stringParam(params.cats, '');
@@ -47,7 +46,13 @@ const LearnStudy = () => {
 	const isBundle = catList.length > 0;
 	const domain = LearnHubService.getDomain(isBundle ? catList[0] : category);
 	const accent = isBundle ? Colors.primary : domain.meta.color;
-	const title = isBundle ? `${catList.length > 2 ? `${catList.length}개 주제` : catList.map((k) => LearnHubService.getDomainTitle(k)).join(', ')} 학습` : domain.meta.title;
+	const title = t('learn.titleOf', {
+		title: isBundle
+			? catList.length > 2
+				? t('quiz.common.topicCount', { count: catList.length })
+				: catList.map((k) => LearnHubService.getDomainTitle(k)).join(', ')
+			: domain.meta.title,
+	});
 	const activeDomains = useMemo(() => (isBundle ? catList : [category]), [category, cats]);
 	const { showToast } = useToast();
 
@@ -147,9 +152,9 @@ const LearnStudy = () => {
 			// 다음 카드로 부드럽게 이동(넘어가는 모션)
 			if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
 			scrollTimerRef.current = setTimeout(() => listRef.current?.scrollToOffset({ offset: nextIndex * ITEM_W, animated: true }), 220);
-			showToast('학습 완료! 다음 카드로 넘어가요');
+			showToast(t('learn.study.toastDone'));
 		},
-		[filtered, cards, studiedSet, goQuiz, showToast],
+		[filtered, cards, studiedSet, goQuiz, showToast, t],
 	);
 
 	// 복습하기 — 다시 학습중으로
@@ -162,9 +167,9 @@ const LearnStudy = () => {
 				next.delete(c.uid);
 				return next;
 			});
-			showToast('다시 학습 목록으로 옮겼어요', 'refresh');
+			showToast(t('learn.study.toastReview'), 'refresh');
 		},
-		[showToast],
+		[showToast, t],
 	);
 
 	const onMomentumEnd = (e: { nativeEvent: { contentOffset: { x: number } } }) => {
@@ -173,9 +178,9 @@ const LearnStudy = () => {
 	};
 
 	const TABS: { key: StudyTab; label: string; count: number }[] = [
-		{ key: 'all', label: '전체', count: cards.length },
-		{ key: 'learning', label: '학습중', count: learningCount },
-		{ key: 'done', label: '학습 완료', count: doneCount },
+		{ key: 'all', label: t('common.all'), count: cards.length },
+		{ key: 'learning', label: t('learn.study.learning'), count: learningCount },
+		{ key: 'done', label: t('learn.study.done'), count: doneCount },
 	];
 
 	return (
@@ -184,7 +189,7 @@ const LearnStudy = () => {
 			<FadeInUp>
 			<View style={styles.header}>
 				<CommonHeader
-					title={isBundle ? title : `${domain.meta.title} 학습`}
+					title={title}
 					subtitle={total > 0 ? `${Math.min(index + 1, total)} / ${total}` : '0 / 0'}
 					border={false}
 					style={styles.headerRow}
@@ -192,7 +197,7 @@ const LearnStudy = () => {
 					right={
 						<View style={styles.headerActions}>
 							<CharacterGuideButton onPress={coach.open} color={Colors.textSecondary} size={scaledSize(21)} />
-							<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel="학습 종료" onPress={() => setShowExit(true)}>
+							<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('learn.study.exit')} onPress={() => setShowExit(true)}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -206,12 +211,12 @@ const LearnStudy = () => {
 							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={accent} />
 						</View>
 						<Text style={styles.learnStatusText}>
-							학습 완료 <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
+							{t('learn.study.done')} <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
 							<Text style={styles.learnStatusMuted}> / {cards.length}</Text>
 						</Text>
 					</View>
 					<View style={[styles.learnStatusPctChip, { backgroundColor: withAlpha(accent, '14') }]}>
-						<Text style={[styles.learnStatusPct, { color: accent }]}>{donePct}% 달성</Text>
+						<Text style={[styles.learnStatusPct, { color: accent }]}>{t('learn.study.pctDone', { value: donePct })}</Text>
 					</View>
 				</View>
 
@@ -222,13 +227,13 @@ const LearnStudy = () => {
 
 				{/* 상단 탭 */}
 				<View style={styles.tabRow}>
-					{TABS.map((t) => {
-						const on = tab === t.key;
+					{TABS.map((item) => {
+						const on = tab === item.key;
 						return (
-							<TouchableOpacity key={t.key} style={[styles.tabBtn, on && { backgroundColor: accent }]} activeOpacity={0.85} onPress={() => changeTab(t.key)} hitSlop={Layout.hitSlop}>
-								<Text numberOfLines={1} style={[styles.tabText, on && { color: Colors.textInverse }]}>{t.label}</Text>
+							<TouchableOpacity key={item.key} style={[styles.tabBtn, on && { backgroundColor: accent }]} activeOpacity={0.85} onPress={() => changeTab(item.key)} hitSlop={Layout.hitSlop}>
+								<Text numberOfLines={1} style={[styles.tabText, on && { color: Colors.textInverse }]}>{item.label}</Text>
 								<View style={[styles.tabCount, on ? { backgroundColor: Colors.onBrandSurfaceStrong } : { backgroundColor: Colors.surface }]}>
-									<Text style={[styles.tabCountText, on && { color: Colors.textInverse }]}>{t.count}</Text>
+									<Text style={[styles.tabCountText, on && { color: Colors.textInverse }]}>{item.count}</Text>
 								</View>
 							</TouchableOpacity>
 						);
@@ -241,7 +246,7 @@ const LearnStudy = () => {
 				<View style={styles.emptyWrap}>
 					<IconComponent type="materialIcons" name={tab === 'done' ? 'inventory-2' : 'menu-book'} size={scaledSize(46)} color={Colors.textMuted} />
 					<Text style={styles.emptyText}>
-						{tab === 'done' ? '아직 학습 완료한 카드가 없어요.' : tab === 'learning' ? '학습중인 카드가 없어요. 전체에서 시작해보세요.' : '학습할 데이터가 없습니다.'}
+						{t(tab === 'done' ? 'learn.study.emptyDone' : tab === 'learning' ? 'learn.study.emptyLearning' : 'learn.study.emptyAll')}
 					</Text>
 				</View>
 			) : (
@@ -282,7 +287,7 @@ const LearnStudy = () => {
 							<View key={i} style={[styles.dot, i === index && [styles.dotOn, { backgroundColor: accent }]]} />
 						))}
 					</View>
-					<Text style={styles.swipeHint}>← 좌우로 넘겨 카드 보기 →</Text>
+					<Text style={styles.swipeHint}>{t('learn.study.swipeHint')}</Text>
 				</>
 			)}
 
@@ -290,8 +295,8 @@ const LearnStudy = () => {
 			<CharacterGuide
 				visible={coach.visible && total > 0}
 				onClose={coach.close}
-				lines={COACH_LINES}
-				title="카드 학습, 이렇게 써요"
+				lines={COACH_KEYS.map((k) => t(k))}
+				title={t('learn.study.guideTitle')}
 				accent={accent}
 			/>
 
@@ -322,6 +327,7 @@ interface CardItemProps {
 
 /** 개별 학습 카드 (뒤집기: 앞면 이름·그림 / 뒷면 설명·정보·더 알아보기, 뒷면 스크롤 가능) */
 const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domainTitle, isDone, isLast, onComplete, onReview, onToast }) => {
+	const { t } = useTranslation();
 	const domainMeta = LearnHubService.getDomain(card.domain).meta;
 	const [revealed, setRevealed] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
@@ -397,7 +403,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 		});
 		setBookmarked(now);
 		playPop();
-		onToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', 'bookmark');
+		onToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), 'bookmark');
 	};
 
 	return (
@@ -449,7 +455,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							{!!card.subTitle && <Text style={styles.cardSubTitle} numberOfLines={2} ellipsizeMode="tail">{card.subTitle}</Text>}
 							<View style={[styles.tapHint, { backgroundColor: withAlpha(accent, '0F') }]}>
 								<IconComponent type="materialIcons" name="flip" size={scaledSize(20)} color={accent} />
-								<Text style={[styles.tapHintText, { color: accent }]}>탭하여 카드 뒤집기</Text>
+								<Text style={[styles.tapHintText, { color: accent }]}>{t('learn.study.tapToFlip')}</Text>
 							</View>
 						</TouchableOpacity>
 					</Animated.View>
@@ -466,7 +472,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							{/* 정보 — infoRows 가 있으면 항목별 표로, 없으면 기존 요약 */}
 							{!!card.infoRows && card.infoRows.length > 0 ? (
 								<View style={[styles.sectionBox, styles.meaningHighlightBox]}>
-									<Text style={[styles.meaningLabel, { color: Colors.success }]}>정보</Text>
+									<Text style={[styles.meaningLabel, { color: Colors.success }]}>{t('learn.study.info')}</Text>
 									{card.infoRows.map((r, i) => (
 										<View key={i} style={styles.infoRow}>
 											<Text style={styles.infoLabel} numberOfLines={1}>{r.label}</Text>
@@ -477,7 +483,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							) : (
 								!!card.description && card.description !== card.meaning && (
 									<View style={[styles.sectionBox, styles.meaningHighlightBox]}>
-										<Text style={[styles.meaningLabel, { color: Colors.success }]}>요약</Text>
+										<Text style={[styles.meaningLabel, { color: Colors.success }]}>{t('learn.study.summary')}</Text>
 										<Text style={styles.descText}>{card.meaning}</Text>
 									</View>
 								)
@@ -485,7 +491,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 
 							{!!card.examples && card.examples.length > 0 && (
 								<View style={styles.sectionBox}>
-									<Text style={[styles.meaningLabel, { color: accent }]}>더 알아보기</Text>
+									<Text style={[styles.meaningLabel, { color: accent }]}>{t('learn.study.more')}</Text>
 									{card.examples.map((ex, i) => (
 										<View key={i} style={styles.exampleBox}>
 											<Text style={styles.exampleText}>{ex}</Text>
@@ -496,7 +502,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 
 							<TouchableOpacity style={styles.tapHintMini} activeOpacity={0.7} onPress={() => { hapticLight(); playFlip(); setRevealed(false); }}>
 								<IconComponent type="materialIcons" name="flip" size={scaledSize(14)} color={Colors.textMuted} />
-								<Text style={styles.tapHintMiniText}>탭하여 앞면으로</Text>
+								<Text style={styles.tapHintMiniText}>{t('learn.study.tapToFront')}</Text>
 							</TouchableOpacity>
 						</TouchableOpacity>
 					</ScrollView>
@@ -509,7 +515,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 				{isDone ? (
 					<TouchableOpacity style={[styles.completeBtn, { backgroundColor: Colors.surface, borderWidth: 1, borderColor: accent }]} activeOpacity={0.9} onPress={onReview}>
 						<IconComponent type="materialIcons" name="refresh" size={scaledSize(18)} color={accent} />
-						<Text style={[styles.completeBtnText, { color: accent }]}>복습하기</Text>
+						<Text style={[styles.completeBtnText, { color: accent }]}>{t('learn.study.review')}</Text>
 					</TouchableOpacity>
 				) : (
 					<TouchableOpacity
@@ -517,7 +523,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 						activeOpacity={0.9}
 						onPress={() => { playComplete(); (isLast ? onComplete : handleComplete)(); }}>
 						<IconComponent type="materialIcons" name={isLast ? 'quiz' : 'check-circle'} size={scaledSize(18)} color={Colors.textInverse} />
-						<Text style={styles.completeBtnText}>{isLast ? '학습 완료 · 퀴즈 풀기' : '학습 완료'}</Text>
+						<Text style={styles.completeBtnText}>{isLast ? t('learn.study.completeLast') : t('learn.study.done')}</Text>
 					</TouchableOpacity>
 				)}
 			</View>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
@@ -34,11 +35,13 @@ const FilterOptionSheet: React.FC<Props> = ({
 	value,
 	accent,
 	allValue,
-	allLabel = '전체',
+	allLabel: allLabelProp,
 	iconForOption,
 	onSelect,
 	onClose,
 }) => {
+	const { t } = useTranslation();
+	const allLabel = allLabelProp ?? t('common.all');
 	const items = Array.from(new Set([allValue, ...options.filter((option) => option && option !== allValue)]));
 
 	return (
@@ -54,7 +57,7 @@ const FilterOptionSheet: React.FC<Props> = ({
 							/>
 						</View>
 						<Text accessibilityRole="header" style={styles.title} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
-						<TouchableOpacity accessibilityRole="button" accessibilityLabel="선택 창 닫기" style={styles.close} hitSlop={Layout.hitSlop} activeOpacity={0.7} onPress={onClose}>
+						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('atomic.filterSheet.closeA11y')} style={styles.close} hitSlop={Layout.hitSlop} activeOpacity={0.7} onPress={onClose}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(20)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -73,7 +76,7 @@ const FilterOptionSheet: React.FC<Props> = ({
 									key={option}
 									accessibilityRole="radio"
 									accessibilityState={{ selected: active }}
-									accessibilityLabel={`${isAll ? allLabel : option}${active ? ', 선택됨' : ''}`}
+									accessibilityLabel={active ? t('atomic.filterSheet.selected', { label: isAll ? allLabel : option }) : isAll ? allLabel : option}
 									style={[styles.item, active && { backgroundColor: withAlpha(accent, '10'), borderColor: withAlpha(accent, '36') }]}
 									activeOpacity={0.75}
 									onPress={() => onSelect(option)}>

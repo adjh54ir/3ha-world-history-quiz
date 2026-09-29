@@ -3,6 +3,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
@@ -31,6 +32,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * - 카테고리 메인색 헤더 + 플랫 카드 + 명확한 위계
  */
 const LearnCategory = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, 'capital');
 	const domain = LearnHubService.getDomain(category);
@@ -86,10 +88,10 @@ const LearnCategory = () => {
 	// 공통 난이도 팝업(DifficultyPickerModal)용 옵션 — 전체 + 이 도메인에 존재하는 난이도(문제 수 포함)
 	const difficultyOptions = useMemo<DifficultyOption[]>(
 		() => [
-			{ key: '', label: '전체', icon: 'apps', count: totalCount },
+			{ key: '', label: t('common.all'), icon: 'apps', count: totalCount },
 			...selectableLevels.map((key) => ({ key, label: key, icon: difficultyIcon(key), count: levelCounts[key] ?? 0 })),
 		],
-		[selectableLevels, levelCounts, totalCount],
+		[selectableLevels, levelCounts, totalCount, t],
 	);
 	const quizProgress = total > 0 ? Math.min(100, Math.round((Math.min(solved, total) / total) * 100)) : 0;
 	const studyProgress = total > 0 ? Math.min(100, Math.round((Math.min(studied, total) / total) * 100)) : 0;
@@ -102,7 +104,6 @@ const LearnCategory = () => {
 	const lvSpan = nextLvDef ? nextLvDef.threshold - lvBase : 0;
 	const nextLevelPct = nextLvDef && lvSpan > 0 ? Math.min(100, Math.max(0, Math.round(((levelMetricVal - lvBase) / lvSpan) * 100))) : 100;
 	const nextLevelRemain = nextLvDef ? Math.max(0, nextLvDef.threshold - levelMetricVal) : 0;
-	const levelUnit = charMetric === 'solved' ? '문제' : '점';
 	// 다음 등급 캐릭터 미리보기(실루엣)
 	const nextLvImg = nextLvDef ? charImgs[charCurrentLevel] ?? null : null;
 
@@ -141,11 +142,11 @@ const LearnCategory = () => {
 	};
 
 	const actions = [
-		{ key: 'study', title: '학습하기', desc: '숏폼 또는 카드 모드로 골라서 익혀요', icon: 'school', color: accent, onPress: () => setShowModeModal(true), badge: 0, illustration: undefined },
-		{ key: 'quiz', title: '퀴즈 시작', desc: selectableLevels.length > 0 ? '난이도를 골라 4지선다로 실력을 확인해요' : '4지선다로 실력을 확인해요', icon: 'quiz', color: Colors.primary, onPress: () => (selectableLevels.length > 0 ? setShowLevelModal(true) : startQuizWithLevel('전체')), badge: 0, illustration: undefined },
-		{ key: 'wrong', title: '오답노트', desc: wrongCount > 0 ? '이 주제에서 틀린 문제만 복습해요' : '아직 틀린 문제가 없어요', icon: 'history-edu', color: Colors.error, onPress: () => go('/quiz/wrong-review'), badge: wrongCount, illustration: undefined },
-		{ key: 'browse', title: '전체 목록 둘러보기', desc: '카테고리·난이도로 필터해서 정독해요', icon: 'filter-list', color: Colors.textSecondary, onPress: () => router.push({ pathname: '/search', params: { scope: category } } as never), badge: 0, illustration: undefined },
-		{ key: 'favorite', title: '즐겨찾기', desc: bookmarkCount > 0 ? '이 주제에서 저장한 항목을 모아봐요' : '아직 즐겨찾기한 항목이 없어요', icon: 'bookmark', color: Colors.secondaryDark, onPress: () => router.push({ pathname: '/library', params: { category } } as never), badge: bookmarkCount, illustration: undefined },
+		{ key: 'study', title: t('learn.category.actions.studyTitle'), desc: t('learn.category.actions.studyDesc'), icon: 'school', color: accent, onPress: () => setShowModeModal(true), badge: 0, illustration: undefined },
+		{ key: 'quiz', title: t('learn.category.actions.quizTitle'), desc: selectableLevels.length > 0 ? t('learn.category.actions.quizDesc') : t('learn.category.actions.quizDescNoLevel'), icon: 'quiz', color: Colors.primary, onPress: () => (selectableLevels.length > 0 ? setShowLevelModal(true) : startQuizWithLevel('전체')), badge: 0, illustration: undefined },
+		{ key: 'wrong', title: t('learn.category.actions.wrongTitle'), desc: wrongCount > 0 ? t('learn.category.actions.wrongDesc') : t('learn.category.actions.wrongDescEmpty'), icon: 'history-edu', color: Colors.error, onPress: () => go('/quiz/wrong-review'), badge: wrongCount, illustration: undefined },
+		{ key: 'browse', title: t('learn.category.actions.browseTitle'), desc: t('learn.category.actions.browseDesc'), icon: 'filter-list', color: Colors.textSecondary, onPress: () => router.push({ pathname: '/search', params: { scope: category } } as never), badge: 0, illustration: undefined },
+		{ key: 'favorite', title: t('learn.category.actions.favoriteTitle'), desc: bookmarkCount > 0 ? t('learn.category.actions.favoriteDesc') : t('learn.category.actions.favoriteDescEmpty'), icon: 'bookmark', color: Colors.secondaryDark, onPress: () => router.push({ pathname: '/library', params: { category } } as never), badge: bookmarkCount, illustration: undefined },
 	];
 
 	return (
@@ -157,10 +158,10 @@ const LearnCategory = () => {
 						<ExpoImage pointerEvents="none" source={categoryIllustration} style={styles.heroIllustration} contentFit="contain" />
 					)}
 					<View style={styles.heroTopRow}>
-						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
+						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('header.back')}>
 							<IconComponent type="materialIcons" name="arrow-back-ios-new" size={scaledSize(18)} color={Colors.textStrong} />
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.push({ pathname: '/search', params: { category } } as never)} hitSlop={8}>
+						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.push({ pathname: '/search', params: { category } } as never)} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('learn.category.search')}>
 							<IconComponent type="materialIcons" name="search" size={scaledSize(22)} color={Colors.textStrong} />
 						</TouchableOpacity>
 					</View>
@@ -189,23 +190,25 @@ const LearnCategory = () => {
 								<View style={styles.heroNextTrack}>
 									<View style={[styles.heroNextFill, { width: `${nextLevelPct}%`, backgroundColor: accent }]} />
 								</View>
-								<Text style={styles.heroNextText}>{nextLvDef ? `다음 레벨까지 ${nextLevelRemain.toLocaleString()}${levelUnit}` : '최고 레벨 달성'}</Text>
+								<Text style={styles.heroNextText}>{nextLvDef
+									? t(charMetric === 'solved' ? 'learn.category.nextLevelSolved' : 'learn.category.nextLevelScore', { value: nextLevelRemain.toLocaleString() })
+									: t('learn.category.maxLevel')}</Text>
 								{!!nextLvDef && !!nextLvImg && (
 									<View style={styles.nextGradePreview}>
 										<ExpoImage source={nextLvImg} style={styles.nextGradePreviewImg} contentFit="contain" />
-										<Text style={styles.nextGradePreviewText}>다음 등급 · {nextLvDef.label}</Text>
+										<Text style={styles.nextGradePreviewText}>{t('learn.category.nextGrade', { label: nextLvDef.label })}</Text>
 									</View>
 								)}
 							</View>
 						)}
 						<View style={styles.heroChips}>
 							<View style={[styles.heroCountPill, { backgroundColor: withAlpha(accent, '1F') }]}>
-								<Text style={[styles.heroCountText, { color: accent }]}>전체 {total.toLocaleString()}개</Text>
+								<Text style={[styles.heroCountText, { color: accent }]}>{t('learn.category.totalCount', { value: total.toLocaleString() })}</Text>
 							</View>
 							{hasChar && (
 								<TouchableOpacity style={styles.charViewBtn} activeOpacity={0.85} onPress={() => setShowCharModal(true)}>
 									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(14)} color={accent} />
-									<Text style={[styles.charViewText, { color: accent }]}>레벨별 캐릭터</Text>
+									<Text style={[styles.charViewText, { color: accent }]}>{t('learn.category.charLevels')}</Text>
 								</TouchableOpacity>
 							)}
 						</View>
@@ -219,17 +222,17 @@ const LearnCategory = () => {
 					<View style={styles.summaryCard}>
 						<View style={styles.summaryStat}>
 							<Text style={[styles.summaryNum, { color: Colors.primary }]}>{accuracy !== null ? `${accuracy}%` : '–'}</Text>
-							<Text style={styles.summaryLabel}>정답률</Text>
+							<Text style={styles.summaryLabel}>{t('quiz.common.accuracy')}</Text>
 						</View>
 						<View style={styles.summaryDivider} />
 						<View style={styles.summaryStat}>
 							<Text style={[styles.summaryNum, { color: Colors.textStrong }]}>{solved.toLocaleString()}</Text>
-							<Text style={styles.summaryLabel}>푼 문제</Text>
+							<Text style={styles.summaryLabel}>{t('learn.category.solved')}</Text>
 						</View>
 						<View style={styles.summaryDivider} />
 						<View style={styles.summaryStat}>
 							<Text style={[styles.summaryNum, { color: Colors.primary }]}>{bookmarkCount}</Text>
-							<Text style={styles.summaryLabel}>즐겨찾기</Text>
+							<Text style={styles.summaryLabel}>{t('learn.category.actions.favoriteTitle')}</Text>
 						</View>
 					</View>
 
@@ -238,7 +241,7 @@ const LearnCategory = () => {
 						<View>
 							<View style={styles.progressTop}>
 								<IconComponent type="materialIcons" name="school" size={scaledSize(15)} color={accent} />
-								<Text style={styles.progressTitle}>학습 진도율</Text>
+								<Text style={styles.progressTitle}>{t('learn.category.studyProgress')}</Text>
 								<Text style={[styles.progressPct, { color: accent }]}>{studyProgress}%</Text>
 							</View>
 							<AnimatedProgress ratio={studyProgress / 100} color={accent} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
@@ -246,7 +249,7 @@ const LearnCategory = () => {
 						<View>
 							<View style={styles.progressTop}>
 								<IconComponent type="materialIcons" name="quiz" size={scaledSize(15)} color={Colors.primary} />
-								<Text style={styles.progressTitle}>퀴즈 진도율</Text>
+								<Text style={styles.progressTitle}>{t('learn.category.quizProgress')}</Text>
 								<Text style={[styles.progressPct, { color: Colors.primary }]}>{quizProgress}%</Text>
 							</View>
 							<AnimatedProgress ratio={quizProgress / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
@@ -260,8 +263,8 @@ const LearnCategory = () => {
 									<IconComponent type="materialIcons" name="psychology" size={scaledSize(22)} color={accent} />
 								</View>
 								<View style={styles.sampleHeadBody}>
-									<Text style={styles.sampleEyebrow}>바로 맛보기</Text>
-									<Text style={styles.sampleTitle}>이런 문제가 나와요</Text>
+									<Text style={styles.sampleEyebrow}>{t('learn.category.sampleEyebrow')}</Text>
+									<Text style={styles.sampleTitle}>{t('learn.category.sampleTitle')}</Text>
 								</View>
 								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={accent} />
 							</View>
@@ -282,7 +285,7 @@ const LearnCategory = () => {
 					)}
 
 					{/* 세부 메뉴 */}
-					<SectionHead title="무엇을 할까요?" style={styles.sectionHeadWide} />
+					<SectionHead title={t('learn.category.sectionActions')} style={styles.sectionHeadWide} />
 					<View style={styles.actionCard}>
 						{actions.map((a, i) => (
 							<TouchableOpacity key={a.key} style={[styles.actionRow, i > 0 && styles.actionRowBorder]} activeOpacity={0.85} onPress={a.onPress}>
@@ -316,20 +319,20 @@ const LearnCategory = () => {
 			<BottomSheet visible={showModeModal} onClose={() => setShowModeModal(false)}>
 					<View>
 						<View style={styles.modalTitleRow}>
-							<Text style={styles.modalTitle}>학습 방법 선택</Text>
+							<Text style={styles.modalTitle}>{t('learn.mode.title')}</Text>
 							<TouchableOpacity onPress={() => setShowModeModal(false)} hitSlop={10} activeOpacity={0.7}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
-						<Text style={styles.modalSub}>{domain.meta.title}을(를) 어떻게 익힐까요?</Text>
+						<Text style={styles.modalSub}>{t('learn.category.modeSub', { title: domain.meta.title })}</Text>
 
 						<TouchableOpacity style={styles.modeCard} activeOpacity={0.9} onPress={startShortsMode}>
 							<View style={[styles.modeIcon, { backgroundColor: Colors.primaryBg }]}>
 								<IconComponent type="materialIcons" name="play-circle" size={scaledSize(26)} color={Colors.primary} />
 							</View>
 							<View style={styles.modeBody}>
-								<Text style={styles.modeTitle}>숏폼 모드</Text>
-								<Text style={styles.modeDesc}>위로 넘기며 가볍게, 완료하면 자동으로 다음</Text>
+								<Text style={styles.modeTitle}>{t('learn.category.shortsTitle')}</Text>
+								<Text style={styles.modeDesc}>{t('learn.category.shortsDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -339,8 +342,8 @@ const LearnCategory = () => {
 								<IconComponent type="materialIcons" name="style" size={scaledSize(26)} color={accent} />
 							</View>
 							<View style={styles.modeBody}>
-								<Text style={styles.modeTitle}>카드 모드</Text>
-								<Text style={styles.modeDesc}>앞면 이름 → 탭하면 뒷면 설명, 학습 완료로 진행</Text>
+								<Text style={styles.modeTitle}>{t('learn.category.cardsTitle')}</Text>
+								<Text style={styles.modeDesc}>{t('learn.category.cardsDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -351,7 +354,7 @@ const LearnCategory = () => {
 			<DifficultyPickerModal
 				visible={showLevelModal}
 				options={difficultyOptions}
-				subtitle={`${domain.meta.title} 퀴즈의 난이도를 골라주세요`}
+				subtitle={t('learn.category.levelSubtitle', { title: domain.meta.title })}
 				onClose={() => setShowLevelModal(false)}
 				onSelect={(lvl) => startQuizWithLevel(lvl ?? '전체')}
 			/>
@@ -375,7 +378,7 @@ const styles = themed(() => StyleSheet.create({
 	heroTopRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: -Spacing.sm },
 	iconBtn: { width: scaleWidth(40), height: scaleWidth(40), justifyContent: 'center', alignItems: 'center' },
 	heroCenter: { alignItems: 'center', marginTop: SpacingV.sm },
-	heroIcon: { width: scaleWidth(76), height: scaleWidth(76), borderRadius: Radius.xl, borderWidth: 1, backgroundColor: Colors.surface, justifyContent: 'center', alignItems: 'center' },
+	heroIcon: { width: scaleArt(76), height: scaleArt(76), borderRadius: Radius.xl, borderWidth: 1, backgroundColor: Colors.surface, justifyContent: 'center', alignItems: 'center' },
 	heroCharImg: { width: scaleArt(62), height: scaleArt(62), borderRadius: Radius.lg },
 	heroLvBadge: { position: 'absolute', bottom: scaleWidth(-6), right: scaleWidth(-6), paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: scaleWidth(9), borderWidth: Border.thin, borderColor: Colors.surface },
 	heroLvText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900' },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout } from '@/src/const/ConstDesign';
@@ -10,8 +11,8 @@ const BottomHomeButton = ({
 	borderColor,
 	textColor,
 	iconColor,
-	confirmTitle = '퀴즈를 종료할까요?',
-	confirmMessage = '진행 중인 내용은 저장되지 않습니다.',
+	confirmTitle,
+	confirmMessage,
 }: {
 	borderColor: string;
 	textColor: string;
@@ -19,14 +20,21 @@ const BottomHomeButton = ({
 	confirmTitle?: string;
 	confirmMessage?: string;
 }) => {
+	const { t } = useTranslation();
 	const onPress = async () => {
-		const ok = await showConfirm({ title: confirmTitle, message: confirmMessage, confirmText: '나가기', destructive: true, icon: 'logout' });
+		const ok = await showConfirm({
+			title: confirmTitle ?? t('tower.homeButton.confirmTitle'),
+			message: confirmMessage ?? t('tower.homeButton.confirmMessage'),
+			confirmText: t('common.exit'),
+			destructive: true,
+			icon: 'logout',
+		});
 		if (ok) router.dismissTo('/(tabs)/home');
 	};
 
 	return (
 		<View style={styles.wrapper}>
-			<TouchableOpacity style={[styles.button, { borderColor }]} onPress={onPress} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel="홈으로">
+			<TouchableOpacity style={[styles.button, { borderColor }]} onPress={onPress} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel={t('tower.homeButton.a11y')}>
 				<IconComponent type="materialIcons" name="home" size={14} color={iconColor} />
 				<Text style={[styles.text, { color: textColor }]}>HOME</Text>
 			</TouchableOpacity>

@@ -1,11 +1,12 @@
 // components/VersionCheckModal.tsx
 import { setCurrentAppVerion } from '@/src/store/slice/UserDeviceInfoSlice';
-import { moderateScale, scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
+import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking, Platform, BackHandler, AppState } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import VersionCheck from 'react-native-version-check';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '../atomic/IconComponent';
 import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
 import { Radius, Shadow, Spacing, SpacingV, Typography, Tracking, Layout } from '@/src/const/ConstDesign';
@@ -24,6 +25,7 @@ const parseMajorMinor = (version: string): [number, number] => {
  * - 패치(1.0.x)만 다른 경우는 대상이 아니다.
  */
 const VersionCheckModal = () => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [showUpdateModal, setShowUpdateModal] = useState(false);
 	const [versionInfo, setVersionInfo] = useState({ current: '', latest: '' });
@@ -93,32 +95,32 @@ const VersionCheckModal = () => {
 						<View style={styles.heroIcon}>
 							<IconComponent type="MaterialCommunityIcons" name="rocket-launch-outline" size={scaledSize(30)} color={Colors.textInverse} />
 						</View>
-						<Text style={styles.heroBadge}>필수 업데이트</Text>
+						<Text style={styles.heroBadge}>{t('versionCheck.badge')}</Text>
 					</LinearGradient>
 
 					<View style={styles.body}>
-						<Text style={styles.title}>새로운 버전이 나왔어요</Text>
-						<Text style={styles.message}>계속 이용하려면 최신 버전으로{'\n'}업데이트해 주세요.</Text>
+						<Text style={styles.title}>{t('versionCheck.title')}</Text>
+						<Text style={styles.message}>{t('versionCheck.message')}</Text>
 
 						{versionInfo.latest !== '' && (
 							<View style={styles.versionRow}>
 								<View style={styles.versionChip}>
-									<Text style={styles.versionChipLabel}>현재</Text>
+									<Text style={styles.versionChipLabel}>{t('versionCheck.current')}</Text>
 									<Text style={styles.versionChipText} numberOfLines={1} ellipsizeMode="tail">v{versionInfo.current}</Text>
 								</View>
 								<IconComponent type="MaterialCommunityIcons" name="arrow-right" size={scaledSize(16)} color={Colors.textMuted} />
 								<View style={[styles.versionChip, styles.versionChipLatest]}>
-									<Text style={[styles.versionChipLabel, styles.versionChipLabelLatest]}>최신</Text>
+									<Text style={[styles.versionChipLabel, styles.versionChipLabelLatest]}>{t('versionCheck.latest')}</Text>
 									<Text style={[styles.versionChipText, styles.versionChipTextLatest]} numberOfLines={1} ellipsizeMode="tail">v{versionInfo.latest}</Text>
 								</View>
 							</View>
 						)}
 
-						<TouchableOpacity style={styles.updateButton} activeOpacity={0.85} onPress={handleUpdate} accessibilityRole="button" accessibilityLabel="지금 업데이트">
+						<TouchableOpacity style={styles.updateButton} activeOpacity={0.85} onPress={handleUpdate} accessibilityRole="button" accessibilityLabel={t('versionCheck.update')}>
 							<IconComponent type="materialIcons" name="system-update" size={scaledSize(18)} color={Colors.textInverse} />
-							<Text style={styles.buttonText}>지금 업데이트</Text>
+							<Text style={styles.buttonText}>{t('versionCheck.update')}</Text>
 						</TouchableOpacity>
-						<Text style={styles.notice}>업데이트 후 앱을 계속 이용할 수 있어요</Text>
+						<Text style={styles.notice}>{t('versionCheck.notice')}</Text>
 					</View>
 				</View>
 			</View>

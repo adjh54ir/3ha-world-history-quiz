@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -30,6 +31,7 @@ const shuffleBookmarks = (list: BookmarkItem[]): BookmarkItem[] => {
  * - 보관함에 모은 즐겨찾기 항목으로 4지선다 출제
  */
 const QuizBookmark = () => {
+	const { t } = useTranslation();
 	const [loading, setLoading] = useState(true);
 	const [items, setItems] = useState<BookmarkItem[]>([]);
 
@@ -43,7 +45,7 @@ const QuizBookmark = () => {
 	if (loading) {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<CommonHeader title="즐겨찾기 퀴즈" onBack={() => router.back()} />
+				<CommonHeader title={t('quiz.modes.bookmark')} onBack={() => router.back()} />
 				<ListSkeleton />
 			</SafeAreaView>
 		);
@@ -52,13 +54,13 @@ const QuizBookmark = () => {
 	if (items.length < 1) {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<CommonHeader title="즐겨찾기 퀴즈" onBack={() => router.back()} />
+				<CommonHeader title={t('quiz.modes.bookmark')} onBack={() => router.back()} />
 				<FadeInUp style={styles.center}>
 					<IconComponent type="materialIcons" name="bookmark-border" size={scaledSize(52)} color={Colors.textMuted} />
-					<Text style={styles.emptyTitle}>즐겨찾기한 항목이 없어요</Text>
-					<Text style={styles.emptySub}>학습 카드나 이야기 피드에서 별표를 눌러 모아보세요.</Text>
+					<Text style={styles.emptyTitle}>{t('quiz.bookmark.emptyTitle')}</Text>
+					<Text style={styles.emptySub}>{t('quiz.bookmark.emptySub')}</Text>
 					<TouchableOpacity style={styles.cta} activeOpacity={0.85} onPress={() => router.replace('/special/story-feed' as never)}>
-						<Text style={styles.ctaText}>이야기 피드 보기</Text>
+						<Text style={styles.ctaText}>{t('quiz.bookmark.cta')}</Text>
 					</TouchableOpacity>
 				</FadeInUp>
 			</SafeAreaView>
@@ -67,9 +69,9 @@ const QuizBookmark = () => {
 
 	return (
 		<LearnQuizPlayer
-			title="즐겨찾기 퀴즈"
+			title={t('quiz.modes.bookmark')}
 			accent={Colors.primary}
-			modeLabel="즐겨찾기 퀴즈 결과"
+			modeLabel={t('quiz.common.resultOf', { title: t('quiz.modes.bookmark') })}
 			mode="bookmark"
 			suggestWrongReview={false}
 			generate={() =>

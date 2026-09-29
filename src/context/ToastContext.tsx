@@ -82,7 +82,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 };
 
 const styles = themed(() => StyleSheet.create({
-	wrap: { position: 'absolute', left: 0, right: 0, bottom: scaleHeight(48), alignItems: 'center' },
+	// 좌우 screenH 여백 — 긴 문구도 화면 끝에 붙지 않는다. 폭은 maxWidth 로 태블릿에서도 폰 크기로 가운데 정렬
+	wrap: { position: 'absolute', left: 0, right: 0, bottom: scaleHeight(48), alignItems: 'center', paddingHorizontal: Layout.screenH },
 	toast: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -96,7 +97,8 @@ const styles = themed(() => StyleSheet.create({
 		borderRadius: Radius.pill,
 		maxWidth: scaleWidth(300),
 	},
-	text: { color: Colors.textInverse, fontSize: Typography.body, fontWeight: '700' },
+	// flexShrink — 긴 문구가 실행취소 버튼을 밀어내지 않고 줄바꿈된다
+	text: { flexShrink: 1, color: Colors.textInverse, fontSize: Typography.body, fontWeight: '700' },
 	actionBtn: { marginLeft: Spacing.xs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, borderRadius: Radius.sm, backgroundColor: Colors.onBrandSurfaceStrong },
 	actionText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '900' },
 }));

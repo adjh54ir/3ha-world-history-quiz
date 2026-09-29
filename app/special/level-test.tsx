@@ -4,13 +4,14 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Share, Animated, 
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { BRAND_GRADIENT, isDark, withAlpha } from '@/src/const/ConstColors';
+import Colors, { BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth } from '@/src/utils';
@@ -42,16 +43,17 @@ interface Grade {
 	tier: string;
 	icon: string;
 	gradient: [string, string];
-	message: string;
+	/** 등급 메시지 키 (special.levelTest.gradeMsg.*) — title/tier 는 기록에 저장되는 값이라 한국어 그대로 둔다 */
+	msg: 'master' | 'expert' | 'advanced' | 'intermediate' | 'beginner' | 'novice';
 }
 
 const GRADES: Grade[] = themed(() => ([
-	{ min: 95, title: '최상급', tier: '세계 상식 마스터', icon: 'workspace-premium', gradient: [Colors.primaryDark, Colors.primaryDeep], message: '최상위 실력! 거의 모든 문제를 정확히 맞혔어요.' },
-	{ min: 85, title: '특급', tier: '고수의 경지', icon: 'military-tech', gradient: [Colors.primary, Colors.primaryDark], message: '수준급 실력이에요. 디테일까지 탄탄합니다.' },
-	{ min: 70, title: '고급', tier: '탄탄한 실력', icon: 'trending-up', gradient: [Colors.primaryTint1, Colors.primary], message: '안정적인 실력이에요. 조금만 더 가면 고수!' },
-	{ min: 55, title: '중급', tier: '기본기 완성', icon: 'insights', gradient: [Colors.primaryTint2, Colors.primaryTint1], message: '기본기가 잡혀가는 중이에요. 꾸준히 가봐요.' },
-	{ min: 40, title: '초급', tier: '성장하는 중', icon: 'auto-graph', gradient: [Colors.primaryTint3, Colors.primaryTint2], message: '기초를 다지는 중! 매일 조금씩 쌓아가요.' },
-	{ min: 0, title: '입문', tier: '세계 여행 첫걸음', icon: 'flag', gradient: [Colors.primaryTint4, Colors.primaryTint3], message: '이제 막 출발! 학습 카드부터 천천히 시작해요.' },
+	{ min: 95, title: '최상급', tier: '세계 상식 마스터', icon: 'workspace-premium', gradient: [Colors.primaryDark, Colors.primaryDeep], msg: 'master' },
+	{ min: 85, title: '특급', tier: '고수의 경지', icon: 'military-tech', gradient: [Colors.primary, Colors.primaryDark], msg: 'expert' },
+	{ min: 70, title: '고급', tier: '탄탄한 실력', icon: 'trending-up', gradient: [Colors.primaryTint1, Colors.primary], msg: 'advanced' },
+	{ min: 55, title: '중급', tier: '기본기 완성', icon: 'insights', gradient: [Colors.primaryTint2, Colors.primaryTint1], msg: 'intermediate' },
+	{ min: 40, title: '초급', tier: '성장하는 중', icon: 'auto-graph', gradient: [Colors.primaryTint3, Colors.primaryTint2], msg: 'beginner' },
+	{ min: 0, title: '입문', tier: '세계 여행 첫걸음', icon: 'flag', gradient: [Colors.primaryTint4, Colors.primaryTint3], msg: 'novice' },
 ]));
 
 const gradeOf = (rate: number): Grade => GRADES.find((g) => rate >= g.min) ?? GRADES[GRADES.length - 1];
@@ -61,6 +63,7 @@ const gradeOf = (rate: number): Grade => GRADES.find((g) => rate >= g.min) ?? GR
  * - 전 주제에서 무작위로 TEST_COUNT문항을 풀고 등급을 산정, 결과를 공유할 수 있어요.
  */
 const LevelTest = () => {
+	const { t } = useTranslation();
 	const [started, setStarted] = useState(false);
 	const [questions, setQuestions] = useState(() => LearnHubService.generateMixedQuiz(TEST_COUNT));
 	const [index, setIndex] = useState(0);
@@ -187,7 +190,7 @@ const LevelTest = () => {
 
 	const onShare = () => {
 		Share.share({
-			message: `나의 세계 상식 등급은 '${grade.title}(${grade.tier})' — ${TEST_COUNT}문제 중 ${correct}개 정답(${rate}점)! 너의 세계 상식 실력도 진단해봐.`,
+			message: t('special.levelTest.shareMessage', { title: grade.title, tier: grade.tier, total: TEST_COUNT, correct, rate }),
 		}).catch(() => {});
 	};
 
@@ -195,7 +198,7 @@ const LevelTest = () => {
 	if (!started) {
 		return (
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
-				<CommonHeader title="세계 상식 레벨 테스트" onBack={() => router.back()} />
+				<CommonHeader title={t('special.levelTest.title')} onBack={() => router.back()} />
 				<ScrollView contentContainerStyle={styles.introWrap} showsVerticalScrollIndicator={false}>
 					{/* 히어로 — 그라데이션 카드 + 숨쉬는 메달 */}
 					<FadeInUp>
@@ -204,13 +207,13 @@ const LevelTest = () => {
 							<Animated.View style={{ transform: [{ scale: heroPulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.04] }) }] }}>
 								<ExpoImage source={FEATURE_ILLUSTRATIONS.levelTest} style={styles.heroIllustration} contentFit="contain" accessible={false} />
 							</Animated.View>
-							<Text style={styles.heroTitle}>나의 세계 상식 등급은?</Text>
-							<Text style={styles.heroDesc}>전 주제에서 뽑은 {TEST_COUNT}문제로{'\n'}지금 실력을 바로 확인해요</Text>
+							<Text style={styles.heroTitle}>{t('special.levelTest.heroTitle')}</Text>
+							<Text style={styles.heroDesc}>{t('special.levelTest.heroDesc', { count: TEST_COUNT })}</Text>
 							<View style={styles.heroChips}>
 								{[
-									{ icon: 'quiz', label: `${TEST_COUNT}문제` },
-									{ icon: 'timer', label: '약 2분' },
-									{ icon: 'stairs', label: '6단계 진단' },
+									{ icon: 'quiz', label: t('common.questions', { count: TEST_COUNT }) },
+									{ icon: 'timer', label: t('special.levelTest.chipTime') },
+									{ icon: 'stairs', label: t('special.levelTest.chipSteps') },
 								].map((c) => (
 									<View key={c.label} style={styles.heroChip}>
 										<IconComponent type="materialIcons" name={c.icon} size={scaledSize(13)} color={Colors.textInverse} />
@@ -226,7 +229,7 @@ const LevelTest = () => {
 						<View style={styles.gradeCard}>
 							<View style={styles.gradeCardHead}>
 								<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(16)} color={Colors.primary} />
-								<Text style={styles.gradeCardTitle}>이런 등급을 받을 수 있어요</Text>
+								<Text style={styles.gradeCardTitle}>{t('special.levelTest.gradePreview')}</Text>
 							</View>
 							<View style={styles.gradeRow}>
 								{[...GRADES].reverse().map((g) => (
@@ -244,8 +247,8 @@ const LevelTest = () => {
 						<FadeInUp delay={140}>
 							<View style={styles.historyWrap}>
 								<View style={styles.historyHead}>
-									<Text style={styles.historyTitle}>지난 결과</Text>
-									<Text style={styles.historyCount}>{history.length}회 응시</Text>
+									<Text style={styles.historyTitle}>{t('special.test.history')}</Text>
+									<Text style={styles.historyCount}>{t('special.test.historyCount', { count: history.length })}</Text>
 								</View>
 								{history.slice(0, 5).map((h, i) => (
 									<View key={`${h.date}-${i}`} style={styles.historyRow}>
@@ -257,7 +260,7 @@ const LevelTest = () => {
 											<Text style={styles.historyTier}>{h.gradeTier}</Text>
 										</View>
 										<View style={styles.historyRight}>
-											<Text style={styles.historyScore}>{h.rate}점</Text>
+											<Text style={styles.historyScore}>{t('common.points', { count: h.rate })}</Text>
 											<Text style={styles.historyDate}>{fmtDate(h.date)}</Text>
 										</View>
 									</View>
@@ -272,9 +275,9 @@ const LevelTest = () => {
 					<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => setStarted(true)}>
 						<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />
 						<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(22)} color={Colors.textInverse} />
-						<Text style={styles.startBtnText}>테스트 시작하기</Text>
+						<Text style={styles.startBtnText}>{t('special.test.start')}</Text>
 					</TouchableOpacity>
-					<Text style={styles.startHint}>결과는 기록으로 저장돼 성장 과정을 볼 수 있어요</Text>
+					<Text style={styles.startHint}>{t('special.levelTest.startHint')}</Text>
 				</View>
 			</SafeAreaView>
 		);
@@ -310,26 +313,27 @@ const LevelTest = () => {
 					<View style={styles.resultHero}>
 						<View style={styles.gradeIconWrap}>
 							<LottieBox source={LOTTIE_STAR} autoPlay loop={false} style={styles.gradeStar} />
-							<View style={[styles.gradeIcon, { backgroundColor: withAlpha(grade.gradient[1], '14') }]}>
-								<IconComponent type="materialIcons" name={grade.icon} size={scaledSize(46)} color={isDark() ? Colors.primary : grade.gradient[1]} />
+							{/* 아이콘은 primary 고정 — 낮은 등급의 옅은 틴트(primaryTint2·3)는 라이트 배경에서 거의 안 보였다 */}
+							<View style={[styles.gradeIcon, { backgroundColor: withAlpha(Colors.primary, '14') }]}>
+								<IconComponent type="materialIcons" name={grade.icon} size={scaledSize(46)} color={Colors.primary} />
 							</View>
 						</View>
 						<Text style={styles.gradeTier}>{grade.tier}</Text>
 						<Text style={styles.gradeTitle} numberOfLines={1} ellipsizeMode="tail">{grade.title}</Text>
-						<Text style={styles.gradeScore}>{rate}점</Text>
-						<Text style={styles.gradeDetail}>{TEST_COUNT}문제 중 {correct}개 정답</Text>
+						<Text style={styles.gradeScore}>{t('common.points', { count: rate })}</Text>
+						<Text style={styles.gradeDetail}>{t('special.levelTest.resultDetail', { total: TEST_COUNT, correct })}</Text>
 					</View>
 
 					<View style={styles.msgCard}>
-						<Text style={styles.msgText}>{grade.message}</Text>
+						<Text style={styles.msgText}>{t(`special.levelTest.gradeMsg.${grade.msg}`)}</Text>
 					</View>
 
 					{wrongItems.length > 0 && (
 						<FadeInUp delay={120}>
 							<View style={styles.reviewSection}>
 								<View style={styles.reviewHead}>
-									<Text style={styles.reviewTitle}>오답 노트</Text>
-									<Text style={[styles.reviewCount, { color: Colors.error }]}>{wrongItems.length}개</Text>
+									<Text style={styles.reviewTitle}>{t('special.levelTest.wrongNote')}</Text>
+									<Text style={[styles.reviewCount, { color: Colors.error }]}>{t('common.count', { count: wrongItems.length })}</Text>
 								</View>
 								{wrongItems.map((q, i) => renderReviewRow(q, i, false))}
 							</View>
@@ -340,8 +344,8 @@ const LevelTest = () => {
 						<FadeInUp delay={180}>
 							<View style={styles.reviewSection}>
 								<View style={styles.reviewHead}>
-									<Text style={styles.reviewTitle}>정답 노트</Text>
-									<Text style={[styles.reviewCount, { color: Colors.success }]}>{correctItems.length}개</Text>
+									<Text style={styles.reviewTitle}>{t('special.levelTest.correctNote')}</Text>
+									<Text style={[styles.reviewCount, { color: Colors.success }]}>{t('common.count', { count: correctItems.length })}</Text>
 								</View>
 								{correctItems.map((q, i) => renderReviewRow(q, i, true))}
 							</View>
@@ -350,14 +354,14 @@ const LevelTest = () => {
 
 					<TouchableOpacity style={styles.shareBtn} activeOpacity={0.9} onPress={onShare}>
 						<IconComponent type="materialIcons" name="ios-share" size={scaledSize(20)} color={Colors.textInverse} />
-						<Text style={styles.shareBtnText}>결과 공유하기</Text>
+						<Text style={styles.shareBtnText}>{t('special.test.share')}</Text>
 					</TouchableOpacity>
 
 					</ScrollView>
 				<BottomButton
-					label="홈으로"
+					label={t('special.home')}
 					icon="home"
-					secondaryLabel="다시 풀기"
+					secondaryLabel={t('special.levelTest.retry')}
 					secondaryIcon="replay"
 					onPress={() => router.replace('/home' as never)}
 					onSecondary={restart}
@@ -380,7 +384,7 @@ const LevelTest = () => {
 					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.text} />
 					</TouchableOpacity>
-					<Text style={styles.qHeaderTitle}>레벨 테스트</Text>
+					<Text style={styles.qHeaderTitle}>{t('special.levelTest.qTitle')}</Text>
 					<View style={styles.qCountWrap}>
 						<Text style={styles.qCount}>{index + 1}/{questions.length}</Text>
 					</View>
@@ -420,7 +424,7 @@ const LevelTest = () => {
 				})}
 			</ScrollView>
 
-			<BottomButton label={isLast ? '결과 보기' : '다음'} icon={isLast ? 'flag' : 'arrow-forward'} disabled={selected === null} onPress={onNext} />
+			<BottomButton label={isLast ? t('special.levelTest.seeResult') : t('common.next')} icon={isLast ? 'flag' : 'arrow-forward'} disabled={selected === null} onPress={onNext} />
 		</SafeAreaView>
 	);
 };

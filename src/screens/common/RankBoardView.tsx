@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
@@ -21,7 +22,9 @@ export const RANK_TIERS = themed(() => ([
  * TOP 3 시상대 — 랭킹 화면과 챌린지(타임챌린지) 탭에서 공용으로 사용
  * - rows 는 1위부터 정렬된 배열(3개 미만이면 빈 자리로 표시)
  */
-export const RankPodium: React.FC<{ rows: RankRow[]; unit?: string; compact?: boolean }> = ({ rows, unit = '점', compact = false }) => {
+export const RankPodium: React.FC<{ rows: RankRow[]; unit?: string; compact?: boolean }> = ({ rows, unit: unitProp, compact = false }) => {
+	const { t } = useTranslation();
+	const unit = unitProp ?? t('rankBoard.unit');
 	const pulse = useRef(new Animated.Value(0)).current;
 	useEffect(() => {
 		const loop = Animated.loop(
@@ -51,6 +54,7 @@ export const RankPodium: React.FC<{ rows: RankRow[]; unit?: string; compact?: bo
 
 /** RankPodium 렌더마다 새로 정의하면 매번 리마운트되어 크라운 애니메이션이 끊긴다 — 컴포넌트 밖으로 분리 */
 const PodiumCol: React.FC<{ row?: RankRow; place: 1 | 2 | 3; compact: boolean; pulse: Animated.Value; unit: string }> = ({ row, place, compact, pulse, unit }) => {
+	const { t } = useTranslation();
 	const tier = RANK_TIERS[place - 1];
 	const barHeight = compact ? tier.h * 0.72 : tier.h;
 	return (
@@ -64,7 +68,7 @@ const PodiumCol: React.FC<{ row?: RankRow; place: 1 | 2 | 3; compact: boolean; p
 				<IconComponent type="materialIcons" name={tier.icon} size={scaledSize(26)} color={tier.main} />
 			</View>
 			<Text style={[styles.podiumNick, row?.isMe && { color: Colors.primary, fontWeight: '900' }]} numberOfLines={1}>
-				{row ? `${row.nickname}${row.isMe ? ' (나)' : ''}` : '빈 자리'}
+				{row ? `${row.nickname}${row.isMe ? t('rankBoard.meSuffix') : ''}` : t('rankBoard.empty')}
 			</Text>
 			<Text style={[styles.podiumScore, { color: tier.main }]}>{row ? `${row.score.toLocaleString()}${unit}` : '-'}</Text>
 			<LinearGradient colors={tier.bar} style={[styles.podiumBar, { height: scaleHeight(barHeight) }]}>
@@ -76,7 +80,9 @@ const PodiumCol: React.FC<{ row?: RankRow; place: 1 | 2 | 3; compact: boolean; p
 };
 
 /** 순위 행 (전체 목록 — 1위부터) */
-export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string }> = ({ item, index, unit = '점' }) => {
+export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string }> = ({ item, index, unit: unitProp }) => {
+	const { t } = useTranslation();
+	const unit = unitProp ?? t('rankBoard.unit');
 	const tier = item.rank <= 3 ? RANK_TIERS[item.rank - 1] : null;
 	return (
 		<FadeInUp delay={Math.min(index, 10) * 35}>
@@ -87,9 +93,9 @@ export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string
 				</View>
 				<View style={styles.rowBody}>
 					<Text style={[styles.nick, item.isMe && { fontWeight: '900', color: Colors.primary }]} numberOfLines={1}>
-						{item.nickname}{item.isMe ? ' (나)' : ''}
+						{item.nickname}{item.isMe ? t('rankBoard.meSuffix') : ''}
 					</Text>
-					{!!tier && <Text style={[styles.rowTierLabel, { color: tier.main }]} numberOfLines={1} ellipsizeMode="tail">{item.rank}위 · TOP 3</Text>}
+					{!!tier && <Text style={[styles.rowTierLabel, { color: tier.main }]} numberOfLines={1} ellipsizeMode="tail">{t('rankBoard.tierLabel', { rank: item.rank })}</Text>}
 				</View>
 				<Text style={[styles.score, !!tier && { color: tier.main }]}>{item.score.toLocaleString()}{unit}</Text>
 			</View>

@@ -23,7 +23,7 @@ import OnboardingService, { type Interest } from '@/src/services/OnboardingServi
 import { AchievementDef, rarityRank, RARITY_ON_BRAND_COLOR } from '@/src/const/ConstAchievements';
 import TestHistoryService from '@/src/services/TestHistoryService';
 import { LearnType } from '@/src/types/data/LearnType';
-import { AnimatedProgress, CountUp, FadeInUp, Pulse, SheetIn } from '@/src/screens/common/anim/Motion';
+import { AnimatedProgress, CountUp, FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
 import AttendanceCheckInModal from '@/src/screens/modal/AttendanceCheckInModal';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import BadgeDetailModal from '@/src/screens/modal/BadgeDetailModal';
@@ -43,6 +43,7 @@ import { getCharacterImages, getOverallCharacterLevels, getOverallCharacterLevel
 import { getDomainLevels, DOMAIN_LEVELS } from '@/src/const/ConstDomainLevels';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 /**
  * 홈 (Toss 스타일 리디자인)
@@ -68,23 +69,18 @@ const REC_DISMISS_KEY = 'HOME_RECOMMEND_DISMISS_DATE';
  * - 각 단계를 한 번이라도 완료하면 체크 표시, 5단계를 모두 끝내면 카드 자체가 사라진다.
  */
 type CurriculumKey = 'level' | 'study' | 'quiz' | 'wrong' | 'time';
-const CURRICULUM: { key: CurriculumKey; icon: string; label: string; desc: string; href: string; accent?: string }[] = themed(() => ([
-	{ key: 'level', icon: 'military-tech', label: '레벨 테스트', desc: '10문제로 내 세계 상식 등급을 진단해요', href: '/special/level-test', accent: Colors.secondaryDark },
-	{ key: 'study', icon: 'school', label: '학습', desc: '카드를 넘기며 세계 상식을 익혀요', href: '/learn/bundle' },
-	{ key: 'quiz', icon: 'quiz', label: '퀴즈', desc: '익힌 내용을 문제로 확인해요', href: '/quiz/bundle' },
+// 라벨·설명은 렌더 시점에 home.curriculum.steps.<key>.label/desc 로 번역한다
+const CURRICULUM: { key: CurriculumKey; icon: string; href: string; accent?: string }[] = themed(() => ([
+	{ key: 'level', icon: 'military-tech', href: '/special/level-test', accent: Colors.secondaryDark },
+	{ key: 'study', icon: 'school', href: '/learn/bundle' },
+	{ key: 'quiz', icon: 'quiz', href: '/quiz/bundle' },
 	// 완료 판정이 '오답 복습 플레이' 기준이므로 목록(/library)이 아니라 복습 퀴즈로 이동
-	{ key: 'wrong', icon: 'history-edu', label: '오답노트', desc: '틀린 문제만 모아 다시 복습해요', href: '/quiz/wrong-review' },
-	{ key: 'time', icon: 'bolt', label: '타임챌린지', desc: '180초 집중 대결로 마무리해요', href: '/quiz/speed', accent: Colors.primary },
+	{ key: 'wrong', icon: 'history-edu', href: '/quiz/wrong-review' },
+	{ key: 'time', icon: 'bolt', href: '/quiz/speed', accent: Colors.primary },
 ]));
 
-const GREET_TITLES = [
-	'오늘도 세계로\n한 걸음 나아가요',
-	'반가워요!\n오늘도 함께 배워요',
-	'작은 습관이\n큰 실력이 돼요',
-	'오늘의 세계 상식,\n지금 시작해요',
-	'꾸준함이\n정답이에요',
-	'한 문제씩\n차근차근 쌓아요',
-];
+/** 홈 진입마다 바뀌는 헤더 문구 키 (첫 값이 디폴트) */
+const GREET_KEYS = ['home.greet.g1', 'home.greet.g2', 'home.greet.g3', 'home.greet.g4', 'home.greet.g5', 'home.greet.g6'] as const;
 
 /**
  * 출석 축하 팝업을 이미 띄운 '날짜' 저장 키.
@@ -92,6 +88,9 @@ const GREET_TITLES = [
  * 온보딩 등 다른 팝업에 밀려 못 뜬 날에는 다음 진입에서 다시 뜨도록 '닫은 시점'에만 기록한다.
  */
 const ATT_POPUP_SHOWN_KEY = 'HOME_ATT_POPUP_DATE';
+
+/** '주제 골라보기' 미리보기 문구가 있는 주제 */
+const PREVIEW_DOMAINS = ['capital', 'landmark', 'nature', 'figure', 'event', 'myth', 'space', 'constellation'] as const;
 
 /** 모달을 바꿔 열 때 이전 모달이 사라질 때까지 두는 간격(ms) */
 const MODAL_SWAP_MS = 260;
@@ -101,6 +100,7 @@ const AUTO_OVERLAY_MS = 350;
 const AUTO_OVERLAY_ORDER = ['onboarding', 'checkin', 'achievement', 'curriculum', 'unlock', 'guide'] as const;
 
 const Hub = () => {
+	const { t } = useTranslation();
 	const domains = LearnHubService.getDomainList();
 	// 서브 퀴즈 주제(월드컵·올림픽) — 메인 점수와 분리된 보너스 콘텐츠
 	const subDomains = LearnHubService.getSubQuizDomainList();
@@ -134,7 +134,7 @@ const Hub = () => {
 	const [topicsExpanded, setTopicsExpanded] = useState(false);
 	const [subExpanded, setSubExpanded] = useState(false);
 	const [subBests, setSubBests] = useState<Record<string, { correct: number; total: number }>>({});
-	const [greetTitle, setGreetTitle] = useState(GREET_TITLES[0]);
+	const [greetKey, setGreetKey] = useState<(typeof GREET_KEYS)[number]>(GREET_KEYS[0]);
 	const [todayQuizDone, setTodayQuizDone] = useState(true);
 	const [libraryCount, setLibraryCount] = useState(0);
 	const [wrongCount, setWrongCount] = useState(0);
@@ -222,8 +222,8 @@ const Hub = () => {
 			meaning: daily.description || daily.meaning,
 		});
 		setDailyBookmarked(now);
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
-	}, [daily, showToast]);
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
+	}, [daily, showToast, t]);
 
 	/**
 	 * 자동 출석 — 홈에 들어오면 버튼 없이 하루 1회 바로 출석 처리한다.
@@ -403,7 +403,7 @@ const Hub = () => {
 		scrollRef.current?.scrollTo?.({ y: 0, animated: false });
 		loadStatus();
 		promptCheckInIfNewDay();
-		setGreetTitle(GREET_TITLES[Math.floor(Math.random() * GREET_TITLES.length)]);
+		setGreetKey(GREET_KEYS[Math.floor(Math.random() * GREET_KEYS.length)]);
 	}, [loadStatus, promptCheckInIfNewDay]));
 
 	const openCheckIn = () => {
@@ -438,32 +438,26 @@ const Hub = () => {
 	// 빠른 시작 (원형 숏컷) — 출석체크가 학습 왼쪽
 	// emphasis: 매일 하는 핵심 습관 액션(출석/오늘의 퀴즈)만 솔리드 필로 강조 → 단일 포인트 컬러 내에서 리듬·위계 부여
 	const quickActions = [
-		{ key: 'attend', title: '출석체크', icon: 'event-available', color: Colors.primary, emphasis: true, onPress: openCheckIn },
-		{ key: 'today-quiz', title: '오늘의 퀴즈', icon: 'today', color: Colors.primary, emphasis: true, onPress: () => router.push('/quiz/today' as never) },
-		{ key: 'random-study', title: '학습', icon: 'auto-stories', color: Colors.primary, emphasis: false, onPress: () => router.push('/learn/bundle' as never) },
-		{ key: 'random-quiz', title: '퀴즈', icon: 'shuffle', color: Colors.primary, emphasis: false, onPress: () => router.push('/quiz/bundle' as never) },
-		{ key: 'wrong-note', title: '오답노트', icon: 'history-edu', color: Colors.primary, emphasis: false, onPress: () => router.push({ pathname: '/library', params: { tab: 'wrong' } } as never) },
-		{ key: 'challenge', title: '타임챌린지', icon: 'bolt', color: Colors.primary, emphasis: false, onPress: () => router.push('/quiz/speed' as never) },
-		{ key: 'library', title: '보관함', icon: 'bookmark', color: Colors.primary, emphasis: false, onPress: () => router.push('/library' as never) },
+		{ key: 'attend', title: t('home.quick.attend'), icon: 'event-available', color: Colors.primary, emphasis: true, onPress: openCheckIn },
+		{ key: 'today-quiz', title: t('home.quick.todayQuiz'), icon: 'today', color: Colors.primary, emphasis: true, onPress: () => router.push('/quiz/today' as never) },
+		{ key: 'random-study', title: t('home.quick.study'), icon: 'auto-stories', color: Colors.primary, emphasis: false, onPress: () => router.push('/learn/bundle' as never) },
+		{ key: 'random-quiz', title: t('home.quick.quiz'), icon: 'shuffle', color: Colors.primary, emphasis: false, onPress: () => router.push('/quiz/bundle' as never) },
+		{ key: 'wrong-note', title: t('home.quick.wrongNote'), icon: 'history-edu', color: Colors.primary, emphasis: false, onPress: () => router.push({ pathname: '/library', params: { tab: 'wrong' } } as never) },
+		{ key: 'challenge', title: t('home.quick.timeChallenge'), icon: 'bolt', color: Colors.primary, emphasis: false, onPress: () => router.push('/quiz/speed' as never) },
+		{ key: 'library', title: t('home.quick.library'), icon: 'bookmark', color: Colors.primary, emphasis: false, onPress: () => router.push('/library' as never) },
 	];
 
 	const features = [
-		{ href: '/special/exam', title: '테마 코스', desc: '지리·세계사·교양 맞춤 코스', icon: 'workspace-premium', color: Colors.primary },
-		{ href: '/special/level-test', title: '레벨 테스트', desc: '내 세계 상식 등급 진단', icon: 'military-tech', color: Colors.secondaryDark },
-		{ href: '/special/type-test', title: '유형 테스트', desc: '나의 상식 탐험 성향은?', icon: 'psychology', color: Colors.primary },
-		{ href: '/special/story-feed', title: '이야기 피드', desc: '읽으며 가볍게 익히기', icon: 'auto-stories', color: Colors.primaryDeep },
-		{ href: '/quiz/sub-quiz', title: '서브 퀴즈', desc: '월드컵·올림픽 보너스 문제', icon: 'extension', color: Colors.secondaryDark },
+		{ href: '/special/exam', title: t('home.features.exam.title'), desc: t('home.features.exam.desc'), icon: 'workspace-premium', color: Colors.primary },
+		{ href: '/special/level-test', title: t('home.features.levelTest.title'), desc: t('home.features.levelTest.desc'), icon: 'military-tech', color: Colors.secondaryDark },
+		{ href: '/special/type-test', title: t('home.features.typeTest.title'), desc: t('home.features.typeTest.desc'), icon: 'psychology', color: Colors.primary },
+		{ href: '/special/story-feed', title: t('home.features.storyFeed.title'), desc: t('home.features.storyFeed.desc'), icon: 'auto-stories', color: Colors.primaryDeep },
+		{ href: '/quiz/sub-quiz', title: t('home.features.subQuiz.title'), desc: t('home.features.subQuiz.desc'), icon: 'extension', color: Colors.secondaryDark },
 	];
-	const topicPreview: Partial<Record<LearnType.Domain, { tag: string; example: string }>> = {
-		capital: { tag: '세계 지리', example: '나라를 보고 수도·국기·대륙 맞히기' },
-		landmark: { tag: '여행 상식', example: '사진 속 랜드마크가 있는 곳 찾기' },
-		nature: { tag: '지도 감각', example: '강·산맥·사막이 있는 대륙과 나라 고르기' },
-		figure: { tag: '인물 탐구', example: '초상과 업적으로 세계 위인 알아보기' },
-		event: { tag: '세계사 흐름', example: '사건이 일어난 시기와 나라 연결하기' },
-		myth: { tag: '신화 이야기', example: '그리스 로마 신의 이름과 역할 맞히기' },
-		space: { tag: '우주 상식', example: '행성과 위성의 순서와 특징 알아보기' },
-		constellation: { tag: '밤하늘', example: '별자리 그림과 대표 별 연결하기' },
-	};
+	// 미리보기 문구가 있는 주제 — 문구는 home.topics.preview.<domain>.tag/example
+	const topicPreview: Partial<Record<LearnType.Domain, { tag: string; example: string }>> = Object.fromEntries(
+		PREVIEW_DOMAINS.map((k) => [k, { tag: t(`home.topics.preview.${k}.tag`), example: t(`home.topics.preview.${k}.example`) }]),
+	);
 	// 주제별 캐릭터 선택 — 탭(전체/주제)마다 해당 주제의 단계별 캐릭터를 모두 노출(잠금 표시)
 	const pickerItemsFor = useCallback(
 		(scope: string) => {
@@ -478,7 +472,7 @@ const Hub = () => {
 					title: c.title,
 					desc: getDomainLevels('overall')[c.level - 1]?.encouragement,
 					unlocked: solvedTotal >= c.requiredCount,
-					req: c.requiredCount === 0 ? '시작' : `${c.requiredCount.toLocaleString()}문제`,
+					req: c.requiredCount === 0 ? t('home.picker.start') : t('home.picker.reqQuestions', { value: c.requiredCount.toLocaleString() }),
 				}));
 			}
 			const s = domainStats[scope] ?? { solved: 0, correct: 0 };
@@ -493,14 +487,14 @@ const Hub = () => {
 				title: def.label,
 				desc: def.encouragement,
 				unlocked: value >= def.threshold,
-				req: def.threshold === 0 ? '시작' : metric === 'solved' ? `${def.threshold.toLocaleString()}문제` : `${def.threshold.toLocaleString()}점`,
+				req: def.threshold === 0 ? t('home.picker.start') : t(metric === 'solved' ? 'home.picker.reqQuestions' : 'home.picker.reqPoints', { value: def.threshold.toLocaleString() }),
 			}));
 		},
-		[score, domainStats, domains],
+		[score, domainStats, domains, t],
 	);
 	const pickerTabs = useMemo(
-		() => [{ key: 'overall', title: '전체' }, ...domains.filter((d) => hasCharacter(d.key) && getDomainLevels(d.key).length > 0).map((d) => ({ key: d.key, title: d.title }))],
-		[domains],
+		() => [{ key: 'overall', title: t('common.all') }, ...domains.filter((d) => hasCharacter(d.key) && getDomainLevels(d.key).length > 0).map((d) => ({ key: d.key, title: d.title }))],
+		[domains, t],
 	);
 	const pickerItems = useMemo(() => pickerItemsFor(pickerTab), [pickerItemsFor, pickerTab]);
 	const resolveChar = useCallback(
@@ -513,9 +507,9 @@ const Hub = () => {
 			const unlocked = items.filter((it) => it.unlocked);
 			if (unlocked.length) return unlocked[unlocked.length - 1];
 			const ov = getOverallCharacterLevels();
-			return { key: 'overall:1', level: 1, img: ov[0].img, title: ov[0].title, desc: getDomainLevels('overall')[0]?.encouragement, unlocked: true, req: '시작' };
+			return { key: 'overall:1', level: 1, img: ov[0].img, title: ov[0].title, desc: getDomainLevels('overall')[0]?.encouragement, unlocked: true, req: t('home.picker.start') };
 		},
-		[pickerItemsFor],
+		[pickerItemsFor, t],
 	);
 	// 초기화 등으로 잠긴 캐릭터가 저장돼 있으면 홈에는 해금된 최고 단계를 보여준다
 	const selectedCharacter = useMemo(() => {
@@ -549,7 +543,7 @@ const Hub = () => {
 		setSelectedCharacterKey(pendingCharKey);
 		AsyncStorage.setItem(HOME_CHARACTER_KEY, pendingCharKey).catch(() => {});
 		setShowCharacterPicker(false);
-		showToast('캐릭터가 변경되었습니다', 'check-circle');
+		showToast(t('home.toast.characterChanged'), 'check-circle');
 	};
 	/** 관심 주제(온보딩)에 따라 '주제 골라보기'와 '서브 퀴즈' 중 관심 쪽을 위로 올린다 */
 	const topicSection = (
@@ -557,11 +551,11 @@ const Hub = () => {
 				{/* 주제 골라보기 — 캐러셀 */}
 				<FadeInUp delay={240}>
 					<SectionHead
-						title="주제 골라보기"
-						sub={topicsExpanded ? '주제를 눌러 시작해요' : '좌우로 넘겨 고르고 학습·퀴즈를 시작해요'}
+						title={t('home.topics.title')}
+						sub={topicsExpanded ? t('home.topics.subExpanded') : t('home.topics.subCollapsed')}
 						right={
 							<TouchableOpacity style={styles.expandBtn} activeOpacity={0.8} onPress={() => setTopicsExpanded((v) => !v)} hitSlop={Layout.hitSlop}>
-								<Text style={styles.expandText}>{topicsExpanded ? '접기' : '펼치기'}</Text>
+								<Text style={styles.expandText}>{topicsExpanded ? t('home.topics.collapse') : t('home.topics.expand')}</Text>
 								<IconComponent type="materialIcons" name={topicsExpanded ? 'expand-less' : 'expand-more'} size={scaledSize(16)} color={Colors.primary} />
 							</TouchableOpacity>
 						}
@@ -580,7 +574,7 @@ const Hub = () => {
 										{!!topicPreview[d.key] && <Text style={styles.topicRowExample} numberOfLines={2} ellipsizeMode="tail">{topicPreview[d.key]?.example}</Text>}
 									</View>
 									<View style={[styles.countPill, { backgroundColor: withAlpha(d.color, '14') }]}>
-										<Text style={[styles.countPillText, { color: d.color }]}>{d.total.toLocaleString()}개</Text>
+										<Text style={[styles.countPillText, { color: d.color }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
 									</View>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
 								</TouchableOpacity>
@@ -605,7 +599,7 @@ const Hub = () => {
 											<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 32 : 24)} color={d.color} />
 										</View>
 										<View style={[styles.countPill, { backgroundColor: withAlpha(d.color, '14') }]}>
-											<Text style={[styles.countPillText, { color: d.color }]}>{d.total.toLocaleString()}개</Text>
+											<Text style={[styles.countPillText, { color: d.color }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
 										</View>
 									</View>
 									<Text style={styles.topicTitle} numberOfLines={1} ellipsizeMode="tail">{d.title}</Text>
@@ -617,7 +611,7 @@ const Hub = () => {
 										</View>
 									)}
 									<View style={[styles.topicBtn, { backgroundColor: d.color }]}>
-										<Text style={[styles.topicBtnText, { color: readableOn(d.color) }]}>시작하기</Text>
+										<Text style={[styles.topicBtnText, { color: readableOn(d.color) }]}>{t('common.start')}</Text>
 										<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={readableOn(d.color)} />
 									</View>
 								</TouchableOpacity>
@@ -632,11 +626,11 @@ const Hub = () => {
 				{/* 서브 퀴즈 — 주제 골라보기와 동일한 가로 스크롤 카드형 (펼치면 세로 목록) */}
 				<FadeInUp delay={270}>
 					<SectionHead
-						title="서브 퀴즈"
-						sub={subExpanded ? '주제를 눌러 시작해요 (메인 점수 미반영)' : '좌우로 넘겨 고르기 · 월드컵·올림픽 (메인 점수 미반영)'}
+						title={t('home.subQuiz.title')}
+						sub={subExpanded ? t('home.subQuiz.subExpanded') : t('home.subQuiz.subCollapsed')}
 						right={
 							<TouchableOpacity style={styles.expandBtn} activeOpacity={0.8} onPress={() => setSubExpanded((v) => !v)} hitSlop={Layout.hitSlop}>
-								<Text style={styles.expandText}>{subExpanded ? '접기' : '펼치기'}</Text>
+								<Text style={styles.expandText}>{subExpanded ? t('home.topics.collapse') : t('home.topics.expand')}</Text>
 								<IconComponent type="materialIcons" name={subExpanded ? 'expand-less' : 'expand-more'} size={scaledSize(16)} color={Colors.primary} />
 							</TouchableOpacity>
 						}
@@ -660,7 +654,7 @@ const Hub = () => {
 											<Text style={styles.topicRowSub} numberOfLines={2}>{d.subtitle}</Text>
 										</View>
 										<View style={[styles.subPlayPill, best ? { backgroundColor: withAlpha(Colors.primary, '1A') } : { backgroundColor: Colors.primaryBg }]}>
-											<Text style={[styles.subPlayText, { color: Colors.primary }]}>{best ? `최고 ${best.correct}/${best.total}` : 'NEW'}</Text>
+											<Text style={[styles.subPlayText, { color: Colors.primary }]}>{best ? t('home.subQuiz.best', { correct: best.correct, total: best.total }) : t('home.subQuiz.new')}</Text>
 										</View>
 										<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
 									</TouchableOpacity>
@@ -691,17 +685,17 @@ const Hub = () => {
 												<IconComponent type={d.iconType} name={d.icon} size={scaledSize(24)} color={Colors.primary} />
 											</View>
 											<View style={[styles.subPlayPill, best ? { backgroundColor: withAlpha(Colors.primary, '1A') } : { backgroundColor: Colors.primaryBg }]}>
-												<Text style={[styles.subPlayText, { color: Colors.primary }]}>{best ? `최고 ${best.correct}/${best.total}` : 'NEW'}</Text>
+												<Text style={[styles.subPlayText, { color: Colors.primary }]}>{best ? t('home.subQuiz.best', { correct: best.correct, total: best.total }) : t('home.subQuiz.new')}</Text>
 											</View>
 										</View>
 										<Text style={styles.topicTitle} numberOfLines={1} ellipsizeMode="tail">{d.title}</Text>
 										<Text style={styles.topicDesc} numberOfLines={2}>{d.subtitle}</Text>
 										<View style={styles.topicExampleBox}>
-											<Text style={[styles.topicExampleTag, { color: Colors.primary }]}>{best ? `최고 ${best.correct}/${best.total}정답` : `${d.total.toLocaleString()}문제 · 보너스`}</Text>
-											<Text style={styles.topicExampleText} numberOfLines={2}>메인 점수엔 반영되지 않는 가벼운 문제예요</Text>
+											<Text style={[styles.topicExampleTag, { color: Colors.primary }]}>{best ? t('home.subQuiz.bestCorrect', { correct: best.correct, total: best.total }) : t('home.subQuiz.bonus', { value: d.total.toLocaleString() })}</Text>
+											<Text style={styles.topicExampleText} numberOfLines={2}>{t('home.subQuiz.note')}</Text>
 										</View>
 										<View style={[styles.topicBtn, { backgroundColor: Colors.primary }]}>
-											<Text style={styles.topicBtnText}>시작하기</Text>
+											<Text style={styles.topicBtnText}>{t('common.start')}</Text>
 											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.textInverse} />
 										</View>
 									</TouchableOpacity>
@@ -757,7 +751,7 @@ const Hub = () => {
 				{/* 앱 서브타이틀 — 화면 최상단 고정 */}
 				<FadeInUp delay={0}>
 					<View style={styles.appTitleRow}>
-						<Text style={styles.appTitle}>세계 상식 퀴즈</Text>
+						<Text style={styles.appTitle}>{t('home.appTitle')}</Text>
 						<CharacterGuideButton onPress={homeGuide.open} />
 					</View>
 				</FadeInUp>
@@ -767,7 +761,7 @@ const Hub = () => {
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>
 							{/* 캐릭터 아바타 — 우하단 편집 뱃지로 변경 가능함을 알림 */}
-							<TouchableOpacity style={styles.greetCharacterWrap} activeOpacity={0.85} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel="홈 캐릭터 변경">
+							<TouchableOpacity style={styles.greetCharacterWrap} activeOpacity={0.85} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
 								<ExpoImage source={selectedCharacter.img} style={styles.greetCharacterImg} contentFit="contain" />
 								<View style={styles.characterEditBadge}>
 									<IconComponent type="materialIcons" name="edit" size={scaledSize(11)} color={Colors.textInverse} />
@@ -777,31 +771,31 @@ const Hub = () => {
 								{attStreak > 0 && (
 									<View style={styles.streakChip}>
 										<IconComponent type="materialIcons" name="whatshot" size={scaledSize(13)} color={Colors.primary} />
-										<Text style={styles.streakChipText} numberOfLines={1} ellipsizeMode="tail">{attStreak}일 연속</Text>
+										<Text style={styles.streakChipText} numberOfLines={1} ellipsizeMode="tail">{t('home.hero.streak', { count: attStreak })}</Text>
 									</View>
 								)}
-								<Text style={styles.greetTitle} numberOfLines={2} ellipsizeMode="tail">{greetTitle}</Text>
+								<Text style={styles.greetTitle} numberOfLines={2} ellipsizeMode="tail">{t(greetKey)}</Text>
 							</View>
 							{/* 알림 — 캐릭터가 포함된 영역의 오른쪽 끝 */}
-							<TouchableOpacity style={styles.headBellBtn} onPress={() => setShowAlarm(true)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="학습 알림 설정">
+							<TouchableOpacity style={styles.headBellBtn} onPress={() => setShowAlarm(true)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.hero.alarmA11y')}>
 								<IconComponent type="materialIcons" name={reminderOn ? 'notifications-active' : 'notifications-none'} size={scaledSize(20)} color={reminderOn ? Colors.primary : Colors.textMuted} />
 							</TouchableOpacity>
 						</View>
 
 						{/* 오늘의 목표 — 하루 10문제 진행 */}
 						<View style={styles.goalTop}>
-							<TouchableOpacity style={styles.goalTitleRow} activeOpacity={0.7} onPress={() => setShowGoalPicker(true)} accessibilityRole="button" accessibilityLabel="하루 목표 문항 수 변경">
+							<TouchableOpacity style={styles.goalTitleRow} activeOpacity={0.7} onPress={() => setShowGoalPicker(true)} accessibilityRole="button" accessibilityLabel={t('home.hero.goalA11y')}>
 								<IconComponent type="materialIcons" name="flag" size={scaledSize(15)} color={Colors.primary} />
-								<Text style={styles.goalTitle}>오늘의 목표</Text>
+								<Text style={styles.goalTitle}>{t('home.hero.goalTitle')}</Text>
 								<IconComponent type="materialIcons" name="edit" size={scaledSize(13)} color={Colors.textMuted} />
 							</TouchableOpacity>
 							{todaySolved >= dailyGoal ? (
 								<View style={styles.goalDoneRow}>
 									<IconComponent type="materialIcons" name="celebration" size={scaledSize(14)} color={Colors.success} />
-									<Text style={[styles.goalCount, { color: Colors.success }]}>목표 달성!</Text>
+									<Text style={[styles.goalCount, { color: Colors.success }]}>{t('home.hero.goalDone')}</Text>
 								</View>
 							) : (
-								<FitText style={styles.goalCount}>{Math.min(todaySolved, dailyGoal)}/{dailyGoal} 문제</FitText>
+								<FitText style={styles.goalCount}>{t('home.hero.goalProgress', { done: Math.min(todaySolved, dailyGoal), goal: dailyGoal })}</FitText>
 							)}
 						</View>
 						<AnimatedProgress
@@ -826,10 +820,10 @@ const Hub = () => {
 						<TouchableOpacity activeOpacity={0.9} onPress={() => router.push('/special/score-detail' as never)}>
 						<View style={styles.summaryTop}>
 							<View>
-								<Text style={styles.summaryLabel}>전체 점수</Text>
+								<Text style={styles.summaryLabel}>{t('home.summary.scoreLabel')}</Text>
 								<View style={styles.summaryScoreRow}>
 									<CountUp value={score} pop style={styles.summaryScore} />
-									<Text style={styles.summaryUnit}>점</Text>
+									<Text style={styles.summaryUnit}>{t('home.summary.unit')}</Text>
 								</View>
 							</View>
 							<View style={styles.summaryMore}>
@@ -843,15 +837,15 @@ const Hub = () => {
 						<View style={styles.summaryStats}>
 							<View style={styles.summaryStat}>
 								<FitText style={[styles.summaryStatNum, { color: accuracyColor(accuracy, true) }]}>{accuracy}%</FitText>
-								<FitText style={styles.summaryStatLabel}>정답률</FitText>
+								<FitText style={styles.summaryStatLabel}>{t('home.summary.accuracy')}</FitText>
 							</View>
 							<View style={styles.summaryStat}>
 								<FitText style={styles.summaryStatNum}>{solvedCount.toLocaleString()}</FitText>
-								<FitText style={styles.summaryStatLabel}>푼 문제</FitText>
+								<FitText style={styles.summaryStatLabel}>{t('home.summary.solved')}</FitText>
 							</View>
 							<View style={styles.summaryStat}>
-								<FitText style={styles.summaryStatNum}>{attStreak}일</FitText>
-								<FitText style={styles.summaryStatLabel}>연속 출석</FitText>
+								<FitText style={styles.summaryStatNum}>{t('common.days', { count: attStreak })}</FitText>
+								<FitText style={styles.summaryStatLabel}>{t('home.summary.streak')}</FitText>
 							</View>
 						</View>
 						</TouchableOpacity>
@@ -864,7 +858,7 @@ const Hub = () => {
 									{/* 뱃지 라벨 + 개수 태그 */}
 									<View style={styles.badgeLabelChip}>
 										<IconComponent type="materialIcons" name="military-tech" size={scaledSize(14)} color={Colors.textInverse} />
-										<Text style={styles.badgeLabelText}>뱃지</Text>
+										<Text style={styles.badgeLabelText}>{t('home.summary.badge')}</Text>
 									</View>
 									<View style={styles.badgeCountTag}>
 										<Text style={styles.badgeCountTagText}>{unlockedBadges.length}</Text>
@@ -874,9 +868,9 @@ const Hub = () => {
 										style={styles.badgeAllChip}
 										activeOpacity={0.85}
 										accessibilityRole="button"
-										accessibilityLabel="뱃지 전체 보기"
+										accessibilityLabel={t('home.summary.badgeAllA11y')}
 										onPress={() => setShowBadgeSheet(true)}>
-										<Text style={styles.badgeAllText}>도감</Text>
+										<Text style={styles.badgeAllText}>{t('home.summary.dex')}</Text>
 										<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(14)} color={Colors.textInverse} />
 									</TouchableOpacity>
 								</View>
@@ -890,7 +884,7 @@ const Hub = () => {
 												hitSlop={Layout.hitSlop}
 												activeOpacity={0.8}
 												accessibilityRole="button"
-												accessibilityLabel={`${b.def.title} 뱃지 상세`}
+												accessibilityLabel={t('home.summary.badgeA11y', { title: b.def.title })}
 												onPress={() => setBadgeDetail(b)}>
 											<IconComponent type="materialIcons" name={b.def.icon} size={scaledSize(21)} color={RARITY_ON_BRAND_COLOR[b.def.rarity]} />
 											</TouchableOpacity>
@@ -905,12 +899,12 @@ const Hub = () => {
 				{/* 학습 커리큘럼 — 레벨 테스트 → 학습 → 퀴즈 → 오답노트 → 타임챌린지 (전 단계 완료 시 숨김) */}
 				{!curHidden && (
 					<FadeInUp delay={100}>
-						<Animated.View style={[styles.curCard, { opacity: curFade, transform: [{ scale: curFade.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] }) }] }]}>
+						<Animated.View style={[styles.curCard, !curOpen && styles.curCardClosed, { opacity: curFade, transform: [{ scale: curFade.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] }) }] }]}>
 							<TouchableOpacity style={styles.curHead} activeOpacity={0.8} onPress={toggleCurriculum}>
 								<View style={styles.curHeadLeft}>
-									<Text style={styles.curTitle}>세계 상식 퀴즈 커리큘럼</Text>
+									<Text style={styles.curTitle}>{t('home.curriculum.title')}</Text>
 									<Text style={styles.curSub} numberOfLines={1}>
-										{curOpen ? '순서대로 따라가면 실력이 쌓여요' : curNextStep ? `다음 단계 · ${curNextStep.label}` : '모든 단계를 마쳤어요'}
+										{curOpen ? t('home.curriculum.subOpen') : curNextStep ? t('home.curriculum.next', { label: t(`home.curriculum.steps.${curNextStep.key}.label`) }) : t('home.curriculum.allDone')}
 									</Text>
 								</View>
 								<View style={styles.curCountPill}>
@@ -957,13 +951,13 @@ const Hub = () => {
 												</View>
 
 												<View style={styles.curBody}>
-													<Text style={[styles.curLabel, done && styles.curLabelDone]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{s.label}</Text>
-													<Text style={styles.curDesc} numberOfLines={1}>{s.desc}</Text>
+													<Text style={[styles.curLabel, done && styles.curLabelDone]} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.85}>{t(`home.curriculum.steps.${s.key}.label`)}</Text>
+													<Text style={styles.curDesc} numberOfLines={1}>{t(`home.curriculum.steps.${s.key}.desc`)}</Text>
 												</View>
 
 												{done ? (
 													<View style={styles.curDonePill}>
-														<Text style={styles.curDonePillText}>완료</Text>
+														<Text style={styles.curDonePillText}>{t('common.done')}</Text>
 													</View>
 												) : (
 													<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
@@ -987,7 +981,7 @@ const Hub = () => {
 								activeOpacity={0.7}
 								hitSlop={10}
 								accessibilityRole="button"
-								accessibilityLabel="오늘의 추천 닫기 (오늘 하루 숨김)"
+								accessibilityLabel={t('home.recommend.closeA11y')}
 								onPress={dismissRecommend}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(18)} color={Colors.textMuted} />
 							</TouchableOpacity>
@@ -996,13 +990,13 @@ const Hub = () => {
 									<DomainIcon mainIcon={recommend.domain.mainIcon} icon={recommend.domain.icon} iconType={recommend.domain.iconType} size={scaledSize(recommend.domain.mainIcon ? 30 : 22)} color={recommend.domain.color} />
 								</View>
 								<View style={styles.recBody}>
-									<Text style={styles.recEyebrow}>오늘의 추천</Text>
+									<Text style={styles.recEyebrow}>{t('home.recommend.eyebrow')}</Text>
 									<Text style={styles.recTitle} numberOfLines={1}>{recommend.domain.title}</Text>
 									{recommend.rate == null ? (
-										<Text style={styles.recDesc} numberOfLines={1}>아직 안 풀어본 주제예요</Text>
+										<Text style={styles.recDesc} numberOfLines={1}>{t('home.recommend.unseen')}</Text>
 									) : (
 										<Text style={styles.recDesc} numberOfLines={1}>
-											정답률 <Text style={{ color: accuracyColor(recommend.rate), fontWeight: '800' }}>{recommend.rate}%</Text> · 조금만 더 다듬어요
+											{t('home.recommend.rateLabel')} <Text style={{ color: accuracyColor(recommend.rate), fontWeight: '800' }}>{recommend.rate}%</Text> · {t('home.recommend.rateHint')}
 										</Text>
 									)}
 								</View>
@@ -1010,11 +1004,11 @@ const Hub = () => {
 							<View style={styles.recBtns}>
 								<TouchableOpacity style={styles.recGhostBtn} activeOpacity={0.85} onPress={() => moveToCategory(recommend.domain.key)}>
 									<IconComponent type="materialIcons" name="auto-stories" size={scaledSize(16)} color={Colors.primary} />
-									<Text style={styles.recGhostText}>학습하기</Text>
+									<Text style={styles.recGhostText}>{t('home.recommend.study')}</Text>
 								</TouchableOpacity>
 								<TouchableOpacity style={styles.recSolidBtn} activeOpacity={0.9} onPress={() => router.push({ pathname: '/learn/quiz', params: { category: recommend.domain.key } } as never)}>
 									<IconComponent type="materialIcons" name="quiz" size={scaledSize(16)} color={Colors.textInverse} />
-									<Text style={styles.recSolidText}>퀴즈 풀기</Text>
+									<Text style={styles.recSolidText}>{t('home.recommend.quiz')}</Text>
 								</TouchableOpacity>
 							</View>
 						</Animated.View>
@@ -1023,7 +1017,7 @@ const Hub = () => {
 
 				{/* 바로 시작하기 */}
 				<FadeInUp delay={120}>
-					<SectionHead title="바로 시작하기" sub="자주 쓰는 기능을 한 번에" />
+					<SectionHead title={t('home.quick.title')} sub={t('home.quick.sub')} />
 					<ScrollView
 						horizontal
 						showsHorizontalScrollIndicator={false}
@@ -1068,7 +1062,7 @@ const Hub = () => {
 				{/* 오늘의 상식 */}
 				{daily && (
 					<FadeInUp delay={180}>
-						<SectionHead title="오늘의 상식" sub="하루 한 개, 오늘의 세계 상식" />
+						<SectionHead title={t('home.daily.title')} sub={t('home.daily.sub')} />
 						<TouchableOpacity style={styles.dailyCard} activeOpacity={0.9} onPress={() => setShowDailyDetail(true)}>
 							<View style={styles.dailyHead}>
 								<View style={[styles.chip, { backgroundColor: withAlpha(dailyAccent, '14') }]}>
@@ -1082,7 +1076,7 @@ const Hub = () => {
 									<Text style={[styles.chipText, { color: dailyAccent }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(daily.domain)}</Text>
 								</View>
 								<View style={styles.dailyHeadRight}>
-									<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7}>
+									<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
 										<IconComponent type="materialIcons" name={dailyBookmarked ? 'star' : 'star-border'} size={scaledSize(22)} color={dailyBookmarked ? Colors.bookmark : Colors.textMuted} />
 									</TouchableOpacity>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
@@ -1099,14 +1093,14 @@ const Hub = () => {
 				{compact && newcomer !== null && (
 					<TouchableOpacity style={styles.showAllBtn} activeOpacity={0.85} onPress={() => setShowAllSections(true)}>
 						<IconComponent type="materialIcons" name="expand-more" size={scaledSize(18)} color={Colors.primary} />
-						<Text style={styles.showAllText}>모든 기능 보기</Text>
+						<Text style={styles.showAllText}>{t('home.showAll')}</Text>
 					</TouchableOpacity>
 				)}
 
 				{/* 특별 콘텐츠 */}
 				{!compact && (
 				<FadeInUp delay={360}>
-					<SectionHead title="특별 콘텐츠" sub="더 깊이 파고드는 학습 도구" />
+					<SectionHead title={t('home.features.title')} sub={t('home.features.sub')} />
 					<View style={styles.featureList}>
 						{features.map((f) => (
 							<TouchableOpacity key={f.href} style={styles.featureRow} activeOpacity={0.85} onPress={() => router.push(f.href as never)}>
@@ -1155,29 +1149,29 @@ const Hub = () => {
 				footer={
 					<TouchableOpacity style={[styles.charApplyBtn, !previewChar.unlocked && { opacity: 0.45 }]} activeOpacity={0.9} disabled={!previewChar.unlocked} onPress={applyCharacter}>
 						<IconComponent type="materialIcons" name={previewChar.unlocked ? 'check' : 'lock'} size={scaledSize(18)} color={Colors.textInverse} />
-						<Text style={styles.charApplyText}>{previewChar.unlocked ? '이 캐릭터로 설정' : '잠긴 캐릭터예요'}</Text>
+						<Text style={styles.charApplyText}>{previewChar.unlocked ? t('home.picker.apply') : t('home.picker.locked')}</Text>
 					</TouchableOpacity>
 				}>
 					<View style={styles.charSheetBody}>
 						<View style={styles.modalTitleRow}>
-							<Text style={styles.modalTitle}>홈 캐릭터 선택</Text>
-							<TouchableOpacity onPress={() => setShowCharacterPicker(false)} hitSlop={10} activeOpacity={0.7}>
+							<Text style={styles.modalTitle}>{t('home.picker.title')}</Text>
+							<TouchableOpacity onPress={() => setShowCharacterPicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 							</TouchableOpacity>
 						</View>
-						<Text style={styles.modalSub}>주제별로 획득한 캐릭터를 골라 홈에 표시해요</Text>
+						<Text style={styles.modalSub}>{t('home.picker.sub')}</Text>
 						{/* 카테고리 탭 */}
 						<ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.charTabBar} contentContainerStyle={styles.charTabRow}>
-							{pickerTabs.map((t) => {
-								const on = pickerTab === t.key;
+							{pickerTabs.map((tab) => {
+								const on = pickerTab === tab.key;
 								return (
-									<TouchableOpacity key={t.key} style={[styles.charTab, on && styles.charTabOn]} activeOpacity={0.85} onPress={() => onSelectTab(t.key)} hitSlop={Layout.hitSlop}>
-										{t.key === 'overall' ? (
+									<TouchableOpacity key={tab.key} style={[styles.charTab, on && styles.charTabOn]} activeOpacity={0.85} onPress={() => onSelectTab(tab.key)} hitSlop={Layout.hitSlop}>
+										{tab.key === 'overall' ? (
 											<ExpoImage source={require('@/src/assets/mainIcon.webp')} style={styles.charTabAppIcon} contentFit="contain" />
 										) : (
-											<DomainIcon mainIcon={LearnHubService.getDomain(t.key).meta.mainIcon} icon={LearnHubService.getDomain(t.key).meta.icon} iconType={LearnHubService.getDomain(t.key).meta.iconType} size={scaledSize(15)} color={on ? Colors.primary : LearnHubService.getDomain(t.key).meta.color} />
+											<DomainIcon mainIcon={LearnHubService.getDomain(tab.key).meta.mainIcon} icon={LearnHubService.getDomain(tab.key).meta.icon} iconType={LearnHubService.getDomain(tab.key).meta.iconType} size={scaledSize(15)} color={on ? Colors.primary : LearnHubService.getDomain(tab.key).meta.color} />
 										)}
-										<Text style={[styles.charTabText, on && styles.charTabTextOn]} numberOfLines={1} ellipsizeMode="tail">{t.title}</Text>
+										<Text style={[styles.charTabText, on && styles.charTabTextOn]} numberOfLines={1} ellipsizeMode="tail">{tab.title}</Text>
 									</TouchableOpacity>
 								);
 							})}
@@ -1190,7 +1184,7 @@ const Hub = () => {
 								</Animated.View>
 							)}
 							<Text style={styles.charPreviewTitle} numberOfLines={1} ellipsizeMode="tail">{previewChar.title}</Text>
-							<Text style={styles.charPreviewReq}>{previewChar.unlocked ? `획득 · ${previewChar.req}` : `잠김 · ${previewChar.req}`}</Text>
+							<Text style={styles.charPreviewReq}>{t(previewChar.unlocked ? 'home.picker.unlockedReq' : 'home.picker.lockedReq', { req: previewChar.req })}</Text>
 							{!!previewChar.desc && <Text style={styles.charPreviewDesc} numberOfLines={2} ellipsizeMode="tail">{previewChar.desc}</Text>}
 						</View>
 						<ScrollView style={styles.characterScroll} showsVerticalScrollIndicator={false}>
@@ -1239,12 +1233,8 @@ const Hub = () => {
 			<CharacterGuide
 				visible={showAuto('guide')}
 				onClose={homeGuide.close}
-				lines={[
-					'안녕! 여기가 홈이에요. 내 캐릭터를 누르면 다른 캐릭터로 바꿀 수 있어요.',
-					'아래 주제를 골라 학습하고 퀴즈까지 이어서 풀면 점수가 쌓여요.',
-					'매일 출석과 오늘의 퀴즈를 챙기면 뱃지를 모을 수 있어요!',
-				]}
-				title="홈, 이렇게 써요"
+				lines={[t('home.guide.line1'), t('home.guide.line2'), t('home.guide.line3')]}
+				title={t('home.guide.title')}
 			/>
 
 			<BadgeDetailModal
@@ -1264,12 +1254,12 @@ const Hub = () => {
 			<BottomSheet visible={showGoalPicker} onClose={() => setShowGoalPicker(false)}>
 				<View>
 					<View style={styles.modalTitleRow}>
-						<Text style={styles.modalTitle}>하루 목표</Text>
-						<TouchableOpacity style={styles.sheetCloseBtn} onPress={() => setShowGoalPicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="하루 목표 설정 닫기">
+						<Text style={styles.modalTitle}>{t('home.goal.title')}</Text>
+						<TouchableOpacity style={styles.sheetCloseBtn} onPress={() => setShowGoalPicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.goal.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
-					<Text style={styles.modalSub}>매일 몇 문제를 목표로 할까요?</Text>
+					<Text style={styles.modalSub}>{t('home.goal.sub')}</Text>
 					<View style={styles.goalOptions}>
 						{DAILY_GOAL_OPTIONS.map((n) => {
 							const on = dailyGoal === n;
@@ -1284,11 +1274,11 @@ const Hub = () => {
 										setDailyGoal(n);
 										AsyncStorage.setItem(DAILY_GOAL_KEY, String(n)).catch(() => {});
 										setShowGoalPicker(false);
-										showToast(`하루 목표를 ${n}문제로 바꿨어요`, 'flag');
+										showToast(t('home.toast.goalChanged', { count: n }), 'flag');
 									}}>
 									<Text style={[styles.goalOptionNum, on && styles.goalOptionNumOn]}>{n}</Text>
-									<Text style={[styles.goalOptionLabel, on && styles.goalOptionLabelOn]}>문제</Text>
-									<Text style={styles.goalOptionDesc}>{n === 5 ? '가볍게' : n === 10 ? '적당히' : '집중해서'}</Text>
+									<Text style={[styles.goalOptionLabel, on && styles.goalOptionLabelOn]}>{t('home.goal.unit')}</Text>
+									<Text style={styles.goalOptionDesc}>{t(n === 5 ? 'home.goal.light' : n === 10 ? 'home.goal.normal' : 'home.goal.focus')}</Text>
 								</TouchableOpacity>
 							);
 						})}
@@ -1308,11 +1298,11 @@ const Hub = () => {
 						<View style={styles.curDoneIcon}>
 							<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(40)} color={Colors.primary} />
 						</View>
-						<Text style={styles.unlockEyebrow}>커리큘럼 완주!</Text>
-						<Text style={styles.unlockTitle}>5단계를 모두 마쳤어요</Text>
-						<Text style={styles.curDoneDesc}>이제 홈이 더 깔끔해져요.{'\n'}원하는 학습을 자유롭게 이어가 보세요!</Text>
+						<Text style={styles.unlockEyebrow}>{t('home.curriculum.celebrate.eyebrow')}</Text>
+						<Text style={styles.unlockTitle}>{t('home.curriculum.celebrate.title')}</Text>
+						<Text style={styles.curDoneDesc}>{t('home.curriculum.celebrate.desc')}</Text>
 						<TouchableOpacity style={styles.unlockBtn} activeOpacity={0.9} onPress={closeCurriculumCelebrate}>
-							<Text style={styles.unlockBtnText}>좋아요</Text>
+							<Text style={styles.unlockBtnText}>{t('home.curriculum.celebrate.ok')}</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -1326,10 +1316,10 @@ const Hub = () => {
 						<View style={styles.unlockSheet}>
 							<LottieBox source={LOTTIE_CELEBRATE} autoPlay loop={false} style={styles.unlockLottie} />
 							<ExpoImage source={unlockedInfo.img} style={styles.unlockImg} contentFit="contain" />
-							<Text style={styles.unlockEyebrow}>새 캐릭터 해제!</Text>
+							<Text style={styles.unlockEyebrow}>{t('home.unlock.eyebrow')}</Text>
 							<Text style={styles.unlockTitle} numberOfLines={1} ellipsizeMode="tail">{unlockedInfo.title}</Text>
 							<TouchableOpacity style={styles.unlockBtn} activeOpacity={0.9} onPress={() => setUnlockedInfo(null)}>
-								<Text style={styles.unlockBtnText}>확인</Text>
+								<Text style={styles.unlockBtnText}>{t('common.confirm')}</Text>
 							</TouchableOpacity>
 						</View>
 					)}
@@ -1366,28 +1356,28 @@ const Hub = () => {
 							</View>
 							<View style={styles.modalTitleRow}>
 								<Text style={styles.modalTitle} numberOfLines={2} ellipsizeMode="tail">{daily.title}</Text>
-								<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7}>
+								<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
 									<IconComponent type="materialIcons" name={dailyBookmarked ? 'star' : 'star-border'} size={scaledSize(24)} color={dailyBookmarked ? Colors.bookmark : Colors.textMuted} />
 								</TouchableOpacity>
-								<TouchableOpacity onPress={() => setShowDailyDetail(false)} hitSlop={10} activeOpacity={0.7}>
+								<TouchableOpacity onPress={() => setShowDailyDetail(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							</View>
 							{!!daily.subTitle && <Text style={styles.modalSub} numberOfLines={2} ellipsizeMode="tail">{daily.subTitle}</Text>}
 							<ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={false}>
 								<View style={styles.modalGroup}>
-									<Text style={[styles.modalLabel, { color: dailyAccent }]}>뜻</Text>
+									<Text style={[styles.modalLabel, { color: dailyAccent }]}>{t('home.daily.meaning')}</Text>
 									<Text style={styles.modalText}>{daily.description || daily.meaning}</Text>
 									{!!daily.description && daily.description !== daily.meaning && (
 										<>
-											<Text style={[styles.modalLabel, { color: dailyAccent, marginTop: SpacingV.lg }]}>요약</Text>
+											<Text style={[styles.modalLabel, { color: dailyAccent, marginTop: SpacingV.lg }]}>{t('home.daily.summary')}</Text>
 											<Text style={styles.modalDesc} numberOfLines={2} ellipsizeMode="tail">{daily.meaning}</Text>
 										</>
 									)}
 									{!!daily.examples && daily.examples.length > 0 && (
 										<>
 											<View style={styles.modalGroupDivider} />
-											<Text style={[styles.modalLabel, { color: dailyAccent }]}>더 알아보기</Text>
+											<Text style={[styles.modalLabel, { color: dailyAccent }]}>{t('home.daily.more')}</Text>
 											{daily.examples.map((ex, i) => (
 												<Text key={i} style={styles.modalExample}>· {ex}</Text>
 											))}
@@ -1402,7 +1392,7 @@ const Hub = () => {
 									setShowDailyDetail(false);
 									router.push({ pathname: '/learn/category', params: { category: daily.domain } } as never);
 								}}>
-								<Text style={styles.modalCtaText}>이 주제 학습하기</Text>
+								<Text style={styles.modalCtaText}>{t('home.daily.cta')}</Text>
 								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(17)} color={Colors.textInverse} />
 							</TouchableOpacity>
 						</View>
@@ -1418,6 +1408,8 @@ export default withRemountOnFocus(Hub);
 /** 학습 커리큘럼 카드 (레벨 테스트 → … → 타임챌린지) */
 const flowStyles = themed(() => ({
 	curCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.lg, paddingBottom: SpacingV.sm, marginBottom: Layout.sectionGap },
+	// 접힘 상태는 진행바가 마지막 요소 — 상단(lg)과 같은 하단 여백으로 위아래를 맞춘다
+	curCardClosed: { paddingBottom: SpacingV.lg },
 	curHead: { flexDirection: 'row' as const, alignItems: 'center' as const, justifyContent: 'space-between' as const, gap: Spacing.sm, marginBottom: SpacingV.md },
 	curHeadLeft: { flex: 1, paddingRight: Spacing.md },
 	curTitle: { fontSize: Typography.callout, fontWeight: '900' as const, color: Colors.textStrong },
@@ -1453,8 +1445,9 @@ const styles = themed(() => StyleSheet.create({
 
 	// 히어로 (인사 + 오늘의 목표 + 주 CTA)
 	hero: { ...CardSurface, borderRadius: Radius.xl, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
-	appTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
-	appTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, marginBottom: SpacingV.md },
+	// 제목 아래 여백은 행에 둔다 — 텍스트에 주면 가이드 버튼이 제목보다 아래로 치우친다
+	appTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, marginBottom: SpacingV.md },
+	appTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
 	heroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginBottom: SpacingV.lg },
 	heroProgress: { marginBottom: 0 },
 

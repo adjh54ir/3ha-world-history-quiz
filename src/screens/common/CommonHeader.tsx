@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IconComponent from './atomic/IconComponent';
 import { Colors } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, FontWeight, Layout } from '@/src/const/ConstDesign';
@@ -39,6 +40,7 @@ const CommonHeader = ({
 	alignLeft = false,
 	style,
 }: CommonHeaderProps) => {
+	const { t } = useTranslation();
 	return (
 		<View style={[styles.container, border && styles.bordered, style]}>
 			<View style={styles.side}>
@@ -47,6 +49,8 @@ const CommonHeader = ({
 						onPress={onBack}
 						style={styles.backBtn}
 						hitSlop={Layout.hitSlop}
+						accessibilityRole="button"
+						accessibilityLabel={t('header.back')}
 						activeOpacity={0.7}>
 						<IconComponent type="materialIcons" name={backIcon} size={scaledSize(18)} color={Colors.text} />
 					</TouchableOpacity>

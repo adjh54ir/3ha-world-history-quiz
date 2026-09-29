@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -9,7 +10,7 @@ import { useReducedMotion } from '@/src/screens/common/anim/Motion';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Tracking, Shadow, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt, screenWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleArt, screenWidth } from '@/src/utils';
 import { AchievementDef, RARITY_META } from '@/src/const/ConstAchievements';
 import { playComplete } from '@/src/utils/SoundUtils';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -27,6 +28,7 @@ interface Props {
  * - 퀴즈 종료 시 새로 해금된 업적을 화려하게 알린다 (컨페티 + 광선 회전 + 팝 애니메이션)
  */
 const AchievementUnlockModal: React.FC<Props> = ({ visible, achievements, onClose }) => {
+	const { t } = useTranslation();
 	const reducedMotion = useReducedMotion();
 	const pop = useRef(new Animated.Value(0)).current;
 	const ray = useRef(new Animated.Value(0)).current;
@@ -70,7 +72,7 @@ const AchievementUnlockModal: React.FC<Props> = ({ visible, achievements, onClos
 				<Animated.View style={[styles.card, { transform: [{ scale: pop }] }]}>
 					<View style={styles.kickerRow}>
 						<IconComponent type="materialIcons" name="celebration" size={scaledSize(18)} color={Colors.primary} />
-						<Text style={styles.kicker}>새 뱃지 획득!</Text>
+						<Text style={styles.kicker}>{t('modal.achievement.kicker')}</Text>
 					</View>
 
 					<View style={styles.medalWrap}>
@@ -94,10 +96,10 @@ const AchievementUnlockModal: React.FC<Props> = ({ visible, achievements, onClos
 						<Text style={styles.condText}>{main.cond}</Text>
 					</View>
 
-					{extra > 0 && <Text style={styles.extra}>외 {extra}개의 뱃지를 함께 얻었어요!</Text>}
+					{extra > 0 && <Text style={styles.extra}>{t('modal.achievement.extra', { count: extra })}</Text>}
 
 					<TouchableOpacity style={[styles.btn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={onClose}>
-						<Text style={[styles.btnText, { color: readableOn(accent) }]}>확인</Text>
+						<Text style={[styles.btnText, { color: readableOn(accent) }]}>{t('common.confirm')}</Text>
 					</TouchableOpacity>
 				</Animated.View>
 			</View>

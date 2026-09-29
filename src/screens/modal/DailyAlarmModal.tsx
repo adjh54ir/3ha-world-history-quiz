@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch, Platform, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
@@ -22,17 +23,13 @@ interface Props {
 }
 
 const pad = (n: number) => `${n}`.padStart(2, '0');
-const label = (h: number, m: number) => {
-	const ampm = h < 12 ? '오전' : '오후';
-	const h12 = h % 12 === 0 ? 12 : h % 12;
-	return `${ampm} ${h12}:${pad(m)}`;
-};
 
 /**
  * 오늘의 상식 알람 설정 모달
  * - 알람 on/off + 시간 선택 + 권한 처리
  */
 const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [on, setOn] = useState(false);
 	const [time, setTime] = useState<{ hour: number; minute: number }>({ hour: 8, minute: 0 });
@@ -77,7 +74,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 				await CancelDailyWordReminder();
 			}
 			onChange?.(on);
-			showToast(on ? '오늘의 상식 알림을 켰어요' : '오늘의 상식 알림을 껐어요', on ? 'notifications-active' : 'notifications-off');
+			showToast(t(on ? 'modal.dailyAlarm.toastOn' : 'modal.dailyAlarm.toastOff'), on ? 'notifications-active' : 'notifications-off');
 			onClose();
 		} finally {
 			setSaving(false);
@@ -85,45 +82,51 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 	};
 
 	const pickerDate = DateUtils.getLocalTimeToday(time.hour, time.minute);
+	// '오전 8:00' 꼴 표기
+	const timeText = t('modal.dailyAlarm.timeLabel', {
+		ampm: t(time.hour < 12 ? 'modal.dailyAlarm.am' : 'modal.dailyAlarm.pm'),
+		hour: time.hour % 12 === 0 ? 12 : time.hour % 12,
+		minute: pad(time.minute),
+	});
 
 	return (
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<SheetIn visible={visible} style={styles.sheet}>
-					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10}>
+					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
 
 					<View style={styles.headIcon}>
 						<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(26)} color={Colors.primary} />
 					</View>
-					<Text style={styles.title}>오늘의 상식 알람</Text>
-					<Text style={styles.sub}>매일 정해진 시간에 오늘의 상식을 알려드려요</Text>
+					<Text style={styles.title}>{t('modal.dailyAlarm.title')}</Text>
+					<Text style={styles.sub}>{t('modal.dailyAlarm.sub')}</Text>
 
 					{permWarn && (
 						<View style={styles.permWarn}>
 							<IconComponent type="materialIcons" name="notifications-off" size={scaledSize(18)} color={Colors.errorDark} />
-							<Text style={styles.permWarnText}>설정에서 알림 권한을 허용해주세요.</Text>
+							<Text style={styles.permWarnText}>{t('modal.dailyAlarm.permWarn')}</Text>
 							<TouchableOpacity style={styles.permWarnBtn} activeOpacity={0.85} onPress={() => Linking.openSettings().catch(() => {})}>
-								<Text style={styles.permWarnBtnText}>설정 열기</Text>
+								<Text style={styles.permWarnBtnText}>{t('modal.dailyAlarm.openSettings')}</Text>
 							</TouchableOpacity>
 						</View>
 					)}
 
 					<View style={styles.toggleRow}>
-						<Text style={styles.toggleLabel}>알람 사용</Text>
+						<Text style={styles.toggleLabel}>{t('modal.dailyAlarm.toggle')}</Text>
 						<Switch value={on} onValueChange={toggle} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
 					</View>
 
 					<View style={[styles.timeRow, !on && { opacity: 0.45 }]}>
-						<Text style={styles.timeLabel}>알람 시간</Text>
+						<Text style={styles.timeLabel}>{t('modal.dailyAlarm.time')}</Text>
 						{Platform.OS === 'android' ? (
 							<TouchableOpacity style={styles.timeBtn} activeOpacity={0.8} disabled={!on} onPress={() => setShowPicker(true)}>
 								<IconComponent type="materialIcons" name="schedule" size={scaledSize(18)} color={Colors.primary} />
-								<Text style={styles.timeValue}>{label(time.hour, time.minute)}</Text>
+								<Text style={styles.timeValue}>{timeText}</Text>
 							</TouchableOpacity>
 						) : (
-							<Text style={styles.timeValue}>{label(time.hour, time.minute)}</Text>
+							<Text style={styles.timeValue}>{timeText}</Text>
 						)}
 					</View>
 
@@ -134,7 +137,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 					)}
 
 					<TouchableOpacity style={[styles.saveBtn, { backgroundColor: Colors.primary }]} activeOpacity={0.9} disabled={saving} onPress={save}>
-						<Text style={styles.saveBtnText}>저장</Text>
+						<Text style={styles.saveBtnText}>{t('common.save')}</Text>
 					</TouchableOpacity>
 				</SheetIn>
 			</View>

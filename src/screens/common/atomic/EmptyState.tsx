@@ -5,7 +5,7 @@ import { Image as ExpoImage, type ImageSource } from 'expo-image';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight } from '@/src/utils';
 import { getSharedStateIllustration, SharedStateIllustrationKey } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 

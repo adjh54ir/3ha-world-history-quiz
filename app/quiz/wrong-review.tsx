@@ -4,14 +4,14 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native
 import { Image as ExpoImage } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors from '@/src/const/ConstColors';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService, { WrongItem } from '@/src/services/LearnProgressService';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
@@ -19,7 +19,6 @@ import { playPop } from '@/src/utils/SoundUtils';
 import LearnItemCard, { learnListFields } from '@/src/screens/common/LearnItemCard';
 import { stringParam } from '@/src/navigation/expoRouterUtils';
 import DetailSheet from '@/src/screens/modal/DetailSheet';
-import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import DateUtils from '@/src/utils/DateUtils';
@@ -47,10 +46,11 @@ const cleanReviewExplanation = (explanation: string, answer: string): string => 
  * - 정답을 맞히면 해당 항목은 오답노트에서 자동 제거(reviewMode)
  */
 const QuizWrongReview = () => {
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, '');
 	const scoped = !!category && LearnHubService.isValidCategory(category);
-	const headerTitle = scoped ? `${LearnHubService.getDomainTitle(category)} 오답 복습` : '오답 복습';
+	const headerTitle = scoped ? t('quiz.wrong.titleScoped', { title: LearnHubService.getDomainTitle(category) }) : t('quiz.wrong.title');
 	const accent = scoped ? LearnHubService.getDomain(category).meta.color : Colors.error;
 
 	const { showToast } = useToast();
@@ -91,7 +91,7 @@ const QuizWrongReview = () => {
 		});
 		reloadBookmarks();
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 
 	if (loading) {
@@ -109,10 +109,10 @@ const QuizWrongReview = () => {
 				<CommonHeader title={headerTitle} onBack={() => router.back()} />
 				<View style={styles.center}>
 					<ExpoImage source={SHARED_STATE_ILLUSTRATIONS.allComplete} style={styles.emptyIllustration} contentFit="contain" />
-					<Text style={styles.emptyTitle}>복습할 오답이 없어요!</Text>
-					<Text style={styles.emptySub}>퀴즈를 풀면 틀린 문제가 모여 여기에서 복습할 수 있어요.</Text>
+					<Text style={styles.emptyTitle}>{t('quiz.wrong.emptyTitle')}</Text>
+					<Text style={styles.emptySub}>{t('quiz.wrong.emptySub')}</Text>
 					<TouchableOpacity style={styles.cta} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
-						<Text style={styles.ctaText}>주제 학습하러 가기</Text>
+						<Text style={styles.ctaText}>{t('quiz.wrong.cta')}</Text>
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
@@ -134,8 +134,8 @@ const QuizWrongReview = () => {
 					ListHeaderComponent={
 						<View style={styles.introTop}>
 							<ExpoImage source={SHARED_STATE_ILLUSTRATIONS.reviewNeeded} style={styles.reviewIllustration} contentFit="contain" />
-							<Text style={styles.introTitle}>틀린 문제 {items.length}개 복습</Text>
-							<Text style={styles.introDesc}>해설을 먼저 훑어보고 준비되면 시작하세요. 정답을 맞히면 오답노트에서 자동으로 지워져요.</Text>
+							<Text style={styles.introTitle}>{t('quiz.wrong.introTitle', { count: items.length })}</Text>
+							<Text style={styles.introDesc}>{t('quiz.wrong.introDesc')}</Text>
 						</View>
 					}
 					renderItem={({ item: w, index }) => {
@@ -155,11 +155,11 @@ const QuizWrongReview = () => {
 									onPress={() => setDetail(w)}>
 									<View style={styles.reviewFooterRow}>
 										<IconComponent type="materialIcons" name="schedule" size={scaledSize(12)} color={Colors.textMuted} />
-										<Text style={styles.reviewDateText}>최근 오답 {DateUtils.formatTimestamp(w.addedAt, 'type3')}</Text>
+										<Text style={styles.reviewDateText}>{t('quiz.wrong.recent', { date: DateUtils.formatTimestamp(w.addedAt, 'type3') })}</Text>
 										{(w.missCount ?? 1) >= 3 && (
 											<View style={styles.missTag}>
 												<IconComponent type="materialIcons" name="priority-high" size={scaledSize(11)} color={Colors.error} />
-												<Text style={styles.missTagText}>{w.missCount}회 틀림</Text>
+												<Text style={styles.missTagText}>{t('quiz.wrong.missCount', { count: w.missCount })}</Text>
 											</View>
 										)}
 									</View>
@@ -190,18 +190,14 @@ const QuizWrongReview = () => {
 							: null
 					}
 				/>
-				<BottomButton label={`복습 시작하기 (${items.length}문제)`} icon="play-arrow" color={accent} onPress={() => setStarted(true)} />
+				<BottomButton label={t('quiz.wrong.start', { count: items.length })} icon="play-arrow" color={accent} onPress={() => setStarted(true)} />
 
-			{/* 오답 복습 안내 — 최초 1회 */}
+				{/* 오답 복습 안내 — 최초 1회 */}
 				<CharacterGuide
 					visible={guide.visible}
 					onClose={guide.close}
-					lines={[
-						'틀린 문제만 모아 다시 풀 수 있는 오답 복습이에요.',
-						'해설을 먼저 훑어보고 준비되면 아래 버튼으로 시작해요.',
-						'정답을 맞히면 그 문제는 오답노트에서 자동으로 지워져요!',
-					]}
-					title="오답 복습, 이렇게 써요"
+					lines={[t('quiz.wrong.guide.intro'), t('quiz.wrong.guide.start'), t('quiz.wrong.guide.remove')]}
+					title={t('quiz.wrong.guideTitle')}
 					accent={accent}
 				/>
 			</SafeAreaView>
@@ -212,7 +208,7 @@ const QuizWrongReview = () => {
 		<LearnQuizPlayer
 			title={headerTitle}
 			accent={accent}
-			modeLabel={`${headerTitle} 결과`}
+			modeLabel={t('quiz.common.resultOf', { title: headerTitle })}
 			mode="review"
 			reviewMode
 			suggestWrongReview={false}

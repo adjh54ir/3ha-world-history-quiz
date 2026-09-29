@@ -12,6 +12,7 @@ import { LANDMARK_CREDITS } from '@/src/const/data/world/ConstLandmarkCredits';
 import { useToast } from '@/src/context/ToastContext';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 /**
  * 설정 > 오픈소스 라이브러리
@@ -21,6 +22,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  */
 const OpenSource = () => {
 	const { showToast } = useToast();
+	const { t } = useTranslation();
 
 	/** 라이선스별 개수 — 상단 요약 칩 */
 	const licenseCounts = useMemo(() => {
@@ -31,10 +33,10 @@ const OpenSource = () => {
 
 	const openUrl = (lib: OpenSourceLib) => {
 		if (!lib.url) {
-			showToast('공개된 저장소 주소가 없어요', 'info');
+			showToast(t('opensource.noRepo'), 'info');
 			return;
 		}
-		Linking.openURL(lib.url).catch(() => showToast('링크를 열 수 없어요', 'error-outline'));
+		Linking.openURL(lib.url).catch(() => showToast(t('opensource.linkError'), 'error-outline'));
 	};
 
 	const renderItem = ({ item, index }: { item: OpenSourceLib; index: number }) => (
@@ -57,7 +59,7 @@ const OpenSource = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<CommonHeader title="오픈소스 라이브러리" onBack={() => router.back()} />
+			<CommonHeader title={t('opensource.title')} onBack={() => router.back()} />
 			<FlatList
 				data={OPEN_SOURCE_LIBS}
 				keyExtractor={(item) => item.name}
@@ -68,7 +70,7 @@ const OpenSource = () => {
 				removeClippedSubviews
 				ListHeaderComponent={
 					<FadeInUp duration={280} distance={12} style={styles.summary}>
-						<Text style={styles.summaryTitle}>{`이 앱은 ${OPEN_SOURCE_LIBS.length}개의 오픈소스로 만들어졌어요`}</Text>
+						<Text style={styles.summaryTitle}>{t('opensource.summary', { n: OPEN_SOURCE_LIBS.length })}</Text>
 						<View style={styles.chipRow}>
 							{licenseCounts.map(([license, count]) => (
 								<View key={license} style={styles.summaryChip}>
@@ -81,15 +83,15 @@ const OpenSource = () => {
 				ListFooterComponent={
 					<View>
 						<View style={styles.creditHead}>
-							<Text style={styles.summaryTitle}>랜드마크 사진 출처</Text>
-							<Text style={styles.creditSub}>위키미디어 공용의 사진을 각 라이선스에 따라 사용해요. 누르면 원본 파일 정보가 열려요.</Text>
+							<Text style={styles.summaryTitle}>{t('opensource.creditTitle')}</Text>
+							<Text style={styles.creditSub}>{t('opensource.creditSub')}</Text>
 						</View>
 						{LANDMARK_CREDITS.map((c) => (
 							<TouchableOpacity
 								key={c.file}
 								style={styles.card}
 								activeOpacity={0.7}
-								onPress={() => Linking.openURL(`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(c.file)}`).catch(() => showToast('링크를 열 수 없어요', 'error-outline'))}>
+								onPress={() => Linking.openURL(`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(c.file)}`).catch(() => showToast(t('opensource.linkError'), 'error-outline'))}>
 								<View style={styles.cardBody}>
 									<Text style={styles.libName} numberOfLines={1} ellipsizeMode="tail">{c.name}</Text>
 									<View style={styles.metaRow}>
@@ -104,7 +106,7 @@ const OpenSource = () => {
 						))}
 						<View style={styles.footerRow}>
 							<IconComponent type="materialIcons" name="volunteer-activism" size={scaledSize(18)} color={Colors.primary} />
-							<Text style={styles.footer}>오픈소스 커뮤니티와 사진 작가분들께 감사드립니다.</Text>
+							<Text style={styles.footer}>{t('opensource.thanks')}</Text>
 						</View>
 					</View>
 				}
@@ -153,5 +155,5 @@ const styles = themed(() => StyleSheet.create({
 	creditSub: { fontSize: Typography.caption, color: Colors.textSecondary, lineHeight: Typography.caption * 1.5 },
 	creditArtist: { flexShrink: 1 },
 	footerRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: Layout.sectionGap },
-	footer: { fontSize: Typography.body, color: Colors.textMuted, textAlign: 'center' },
+	footer: { flexShrink: 1, fontSize: Typography.body, color: Colors.textMuted, textAlign: 'center' },
 }));

@@ -6,12 +6,13 @@
  */
 import { Share } from 'react-native';
 import type { RefObject } from 'react';
+import i18n from '@/src/translations';
 import { buildAppShareMessage } from './AppShare';
 
 /** 공유 문구 — 뱃지 이름 + 수집 현황 + 앱 추천 링크 */
 export const buildBadgeShareMessage = (title: string, unlocked?: number, total?: number): string => {
-	const head = `🏅 "${title}" 뱃지를 획득했어요!`;
-	const progress = unlocked && total ? `\n지금까지 모은 뱃지 ${unlocked}/${total}개` : '';
+	const head = i18n.t('svc.share.badgeHead', { title });
+	const progress = unlocked && total ? `\n${i18n.t('svc.share.badgeProgress', { unlocked, total })}` : '';
 	return `${head}${progress}\n\n${buildAppShareMessage()}`;
 };
 

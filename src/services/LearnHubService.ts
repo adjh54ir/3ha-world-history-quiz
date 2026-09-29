@@ -5,6 +5,7 @@ import { WORLD_TOPIC_TEXT } from '@/src/const/data/world/ConstWorldText';
 import { createWorldTopicService, WorldTopicService } from './WorldTopicService';
 import { selectFlagsByName } from '@/src/const/data/world/ConstFlagImages';
 import { shuffle } from './LearnQuizFactory';
+import i18n from '@/src/translations';
 
 /**
  * 통합 학습 도메인 인터페이스
@@ -103,19 +104,19 @@ const toOX = (q: LearnType.QuizQuestion): LearnType.QuizQuestion => {
 	const others = q.options.filter((_, i) => i !== q.answerIndex);
 	const showCorrect = Math.random() < 0.5;
 	const shown = showCorrect ? correct : others[Math.floor(Math.random() * others.length)] ?? correct;
-	const options = ['O (맞음)', 'X (틀림)'];
+	const options = [i18n.t('svc.learnHub.oxTrue'), i18n.t('svc.learnHub.oxFalse')];
 	return {
 		id: q.id,
 		uid: q.uid,
 		domain: q.domain,
 		kind: 'ox',
 		// 세계 문항은 모드마다 묻는 것이 달라(수도·대륙·시대) 원래 발문을 앞에 남겨야 무엇이 맞는지 판단할 수 있다
-		guide: `${q.guide} 제시된 답이 맞으면 O, 틀리면 X`,
+		guide: i18n.t('svc.learnHub.oxGuide', { guide: q.guide }),
 		prompt: q.prompt,
 		subPrompt: `"${shown}"`,
 		options,
 		answerIndex: showCorrect ? 0 : 1,
-		explanation: `올바른 답: ${correct}\n${q.explanation}`,
+		explanation: i18n.t('svc.learnHub.oxExplanation', { answer: correct, explanation: q.explanation }),
 		level: q.level,
 		categoryLabel: q.categoryLabel,
 		examples: q.examples,
@@ -232,7 +233,7 @@ const LearnHubService = {
 					uid: card.uid,
 					domain: card.domain,
 					kind: 'choice' as LearnType.QuizKind,
-					guide: '초성 힌트를 보고 알맞은 이름을 고르세요',
+					guide: i18n.t('svc.learnHub.chosungGuide'),
 					prompt: card.meaning,
 					subPrompt: toChosung(card.title),
 					options,
@@ -352,7 +353,7 @@ const LearnHubService = {
 					uid: it.uid,
 					domain: it.domain,
 					kind: 'choice' as LearnType.QuizKind,
-						guide: `오답 복습! ${it.guide ?? '올바른 답을 고르세요'}`,
+						guide: i18n.t('svc.learnHub.wrongReviewGuide', { guide: it.guide ?? i18n.t('svc.learnHub.wrongReviewDefault') }),
 						prompt: it.prompt,
 						subPrompt: it.subTitle,
 						options,
@@ -392,7 +393,7 @@ const LearnHubService = {
 					uid: card.uid,
 					domain: key,
 					kind: 'choice' as LearnType.QuizKind,
-					guide: '빈칸에 들어갈 말을 고르세요',
+					guide: i18n.t('svc.learnHub.blankGuide'),
 					prompt: sentence.replace(answer, '( ㅇㅇ )'),
 					subPrompt: slot === 'name' ? undefined : card.title,
 					options,

@@ -4,6 +4,7 @@ import LearnProgressService from '@/src/services/LearnProgressService';
 import Colors from '@/src/const/ConstColors';
 import DateUtils from '@/src/utils/DateUtils';
 import { themed } from '@/src/utils/ThemedStyles';
+import i18n from '@/src/translations';
 
 /**
  * 주간 XP 리그 (봇 시뮬레이션, 서버 없이 클라이언트에서 동작)
@@ -18,13 +19,17 @@ export interface LeagueTier {
 	icon: string;
 }
 
-export const LEAGUES: LeagueTier[] = themed(() => [
-	{ name: '브론즈', color: '#B45309', icon: 'military-tech' },
-	{ name: '실버', color: Colors.secondary, icon: 'military-tech' },
-	{ name: '골드', color: Colors.amber, icon: 'military-tech' },
-	{ name: '플래티넘', color: '#14B8A6', icon: 'workspace-premium' },
-	{ name: '다이아', color: '#3B82F6', icon: 'diamond' },
-	{ name: '마스터', color: '#EC4899', icon: 'emoji-events' },
+/** 티어 이름 키 — 이름은 getBoard 호출 시점에 번역한다 */
+const TIER_KEYS = ['bronze', 'silver', 'gold', 'platinum', 'diamond', 'master'] as const;
+
+// 메달 고유색(브론즈·플래티넘·다이아·마스터)은 테마와 무관한 티어 식별색이라 고정값으로 둔다
+export const LEAGUES: Omit<LeagueTier, 'name'>[] = themed(() => [
+	{ color: '#B45309', icon: 'military-tech' },
+	{ color: Colors.secondary, icon: 'military-tech' },
+	{ color: Colors.amber, icon: 'military-tech' },
+	{ color: '#14B8A6', icon: 'workspace-premium' },
+	{ color: '#3B82F6', icon: 'diamond' },
+	{ color: '#EC4899', icon: 'emoji-events' },
 ]);
 
 export interface LeagueEntry {
@@ -117,7 +122,7 @@ const LeagueService = {
 			// 지난 주 정산
 			const prevDates = weekDates(state.weekId);
 			const userPrevXp = xpForDates(stats.dailyLog, prevDates);
-			const prevEntries = rankByXp([...makeBots(state.weekId, state.leagueIndex), { name: '나', xp: userPrevXp, isMe: true }]);
+			const prevEntries = rankByXp([...makeBots(state.weekId, state.leagueIndex), { name: i18n.t('svc.league.me'), xp: userPrevXp, isMe: true }]);
 			const myPrevRank = prevEntries.find((e) => e.isMe)?.rank ?? 10;
 			if (myPrevRank <= 3 && state.leagueIndex < LEAGUES.length - 1) state.leagueIndex += 1;
 			else if (myPrevRank >= 8 && state.leagueIndex > 0) state.leagueIndex -= 1;
@@ -127,13 +132,13 @@ const LeagueService = {
 
 		const curDates = weekDates(curSun);
 		const myXp = xpForDates(stats.dailyLog, curDates);
-		const entries = rankByXp([...makeBots(curWeekId, state.leagueIndex), { name: '나', xp: myXp, isMe: true }]);
+		const entries = rankByXp([...makeBots(curWeekId, state.leagueIndex), { name: i18n.t('svc.league.me'), xp: myXp, isMe: true }]);
 		const myRank = entries.find((e) => e.isMe)?.rank ?? entries.length;
 		const dow = DateUtils.getLocalDayOfWeek(today);
 		const daysLeft = dow === 0 ? 7 : 7 - dow;
 
 		return {
-			league: LEAGUES[state.leagueIndex],
+			league: { ...LEAGUES[state.leagueIndex], name: i18n.t(`svc.league.tier.${TIER_KEYS[state.leagueIndex]}`) },
 			leagueIndex: state.leagueIndex,
 			weekId: curWeekId,
 			daysLeft,

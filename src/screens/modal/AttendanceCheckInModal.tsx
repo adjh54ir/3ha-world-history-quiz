@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
@@ -43,13 +44,13 @@ const todayStr = (): string => DateUtils.getLocalDateString();
 
 /** 연속 출석 뱃지 단계 — 가로 스크롤로 노출 */
 const STREAK_MILESTONES = [
-	{ days: 1, label: '첫 출석', icon: 'flag' },
-	{ days: 7, label: '일주일', icon: 'looks-one' },
-	{ days: 14, label: '2주', icon: 'looks-two' },
-	{ days: 30, label: '한 달', icon: 'military-tech' },
-	{ days: 50, label: '50일', icon: 'workspace-premium' },
-	{ days: 60, label: '두 달', icon: 'auto-awesome' },
-	{ days: 100, label: '100일', icon: 'emoji-events' },
+	{ days: 1, labelKey: 'modal.attendance.milestones.first', icon: 'flag' },
+	{ days: 7, labelKey: 'modal.attendance.milestones.week', icon: 'looks-one' },
+	{ days: 14, labelKey: 'modal.attendance.milestones.twoWeeks', icon: 'looks-two' },
+	{ days: 30, labelKey: 'modal.attendance.milestones.month', icon: 'military-tech' },
+	{ days: 50, labelKey: 'modal.attendance.milestones.fifty', icon: 'workspace-premium' },
+	{ days: 60, labelKey: 'modal.attendance.milestones.twoMonths', icon: 'auto-awesome' },
+	{ days: 100, labelKey: 'modal.attendance.milestones.hundred', icon: 'emoji-events' },
 ] as const;
 
 /**
@@ -58,6 +59,7 @@ const STREAK_MILESTONES = [
  * - 출석 시: 원형 도장 없이 '출석 완료' 축하 애니메이션(스케일 + 컨페티)
  */
 const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOnOpen = false, shielded = false }) => {
+	const { t } = useTranslation();
 	const [state, setState] = useState<AttendanceState>({ dates: [], lastCheck: null, streak: 0, bestStreak: 0 });
 	const [checkedToday, setCheckedToday] = useState(false);
 	const [celebrate, setCelebrate] = useState(false);
@@ -124,7 +126,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<SheetIn visible={visible} style={styles.sheet}>
-					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel="출석체크 닫기">
+					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.attendance.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textInverse} />
 					</TouchableOpacity>
 					{/* 히어로 — 시트 상단을 가로로 꽉 채운다 (스크롤 밖에 둬야 폭이 정확히 잡힌다) */}
@@ -133,20 +135,20 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 						<View pointerEvents="none" style={styles.heroWatermark}>
 							<IconComponent type="materialIcons" name="event-available" size={scaledSize(96)} color={Colors.onBrandWatermark} />
 						</View>
-						<Text style={styles.heroEyebrow}>출석체크</Text>
+						<Text style={styles.heroEyebrow}>{t('modal.attendance.eyebrow')}</Text>
 						<View style={styles.heroStreakRow}>
 							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(30)} color={Colors.goldSoft} />
 							<Text style={styles.heroStreak}>{state.streak}</Text>
-							<Text style={styles.heroStreakUnit}>일 연속</Text>
+							<Text style={styles.heroStreakUnit}>{t('modal.attendance.streakUnit')}</Text>
 						</View>
-						<Text style={styles.heroSub} numberOfLines={3} ellipsizeMode="tail">{checkedToday ? '오늘 출석 완료! 내일도 만나요' : '오늘 출석하고 기록을 이어가세요'}</Text>
+						<Text style={styles.heroSub} numberOfLines={3} ellipsizeMode="tail">{t(checkedToday ? 'modal.attendance.subDone' : 'modal.attendance.subTodo')}</Text>
 					</View>
 
 					<ScrollView style={styles.body} showsVerticalScrollIndicator={false} contentContainerStyle={styles.sheetBody}>
 
 					{/* 연속 출석 뱃지 — 가로 스크롤 (1 → 7 → 14 → 30 → 50 → 60 → 100일) */}
 					<View style={styles.milestoneSection}>
-						<Text style={styles.milestoneHead}>연속 출석 뱃지</Text>
+						<Text style={styles.milestoneHead}>{t('modal.attendance.milestoneHead')}</Text>
 						<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.milestoneRow}>
 							{STREAK_MILESTONES.map((m, i) => {
 								const done = bestStreak >= m.days;
@@ -157,8 +159,8 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 											<View style={[styles.milestoneIcon, done && styles.milestoneIconDone]}>
 												<IconComponent type="materialIcons" name={done ? m.icon : 'lock'} size={scaledSize(20)} color={done ? Colors.textInverse : Colors.textMuted} />
 											</View>
-											<Text style={[styles.milestoneDays, done && { color: Colors.primary }]}>{m.days}일</Text>
-											<Text style={styles.milestoneLabel} numberOfLines={1}>{m.label}</Text>
+											<Text style={[styles.milestoneDays, done && { color: Colors.primary }]}>{t('common.days', { count: m.days })}</Text>
+											<Text style={styles.milestoneLabel} numberOfLines={1}>{t(m.labelKey)}</Text>
 										</View>
 									</React.Fragment>
 								);
@@ -191,16 +193,16 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 					<View style={styles.legendRow}>
 						<View style={styles.legendItem}>
 							<View style={[styles.legendDot, { backgroundColor: Colors.primary }]} />
-							<Text style={styles.legendText}>참여한 날</Text>
+							<Text style={styles.legendText}>{t('modal.attendance.legendAttended')}</Text>
 						</View>
 						<View style={styles.legendItem}>
 							<View style={[styles.legendDot, { backgroundColor: Colors.success }]} />
-							<Text style={styles.legendText}>오늘</Text>
+							<Text style={styles.legendText}>{t('modal.attendance.legendToday')}</Text>
 						</View>
 						{(state.shieldDates ?? []).length > 0 && (
 							<View style={styles.legendItem}>
 								<View style={[styles.legendDot, styles.legendDotShield]} />
-								<Text style={styles.legendText}>보호권</Text>
+								<Text style={styles.legendText}>{t('modal.attendance.legendShield')}</Text>
 							</View>
 						)}
 					</View>
@@ -209,7 +211,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 
 					{/* 닫기 — 스크롤과 분리해 항상 같은 자리에 둔다 */}
 					<TouchableOpacity style={styles.confirmBtn} activeOpacity={0.85} accessibilityRole="button" onPress={onClose}>
-						<Text style={styles.confirmText}>확인</Text>
+						<Text style={styles.confirmText}>{t('common.confirm')}</Text>
 					</TouchableOpacity>
 
 				</SheetIn>
@@ -226,8 +228,8 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 								<View style={styles.celebrateIconCircle}>
 									<IconComponent type="materialIcons" name="celebration" size={scaledSize(34)} color={Colors.primary} />
 								</View>
-								<Text style={styles.celebrateText}>{shielded ? '연속 지켰어요!' : '출석 완료!'}</Text>
-								<Text style={styles.celebrateSub}>{shielded ? `보호권 사용 · 연속 ${state.streak}일째` : `연속 ${state.streak}일째`}</Text>
+								<Text style={styles.celebrateText}>{t(shielded ? 'modal.attendance.celebrateShielded' : 'modal.attendance.celebrateDone')}</Text>
+								<Text style={styles.celebrateSub}>{t(shielded ? 'modal.attendance.celebrateSubShielded' : 'modal.attendance.celebrateSub', { count: state.streak })}</Text>
 							</Animated.View>
 						</View>
 					</>

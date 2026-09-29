@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { Colors, withAlpha } from '@/src/const/ConstColors';
+import { Colors, LIGHT_COLORS, withAlpha } from '@/src/const/ConstColors';
 import { FontWeight, Radius, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -14,12 +15,12 @@ const STEP_MS = 800;
 const GO_HOLD_MS = 620;
 
 /** 칸마다 붙는 한마디 — 숫자만 세면 기다리는 시간이 그냥 빈다 */
-const STEP_TEXT: Record<number, string> = {
-	3: '심호흡 하세요',
-	2: '준비하세요!',
-	1: '곧 시작됩니다!',
-	0: '화이팅!',
-};
+const STEP_TEXT = {
+	3: 'tower.countdown.step3',
+	2: 'tower.countdown.step2',
+	1: 'tower.countdown.step1',
+	0: 'tower.countdown.step0',
+} as const;
 
 interface Props {
 	/** 켜지는 순간 3부터 세기 시작한다 */
@@ -42,6 +43,7 @@ interface Props {
  * 새 라이브러리를 붙이지 않는다 — 전부 Animated(네이티브 드라이버) 와 그라데이션 한 장이다.
  */
 const ChallengeCountdown = ({ visible, onDone }: Props) => {
+	const { t } = useTranslation();
 	/** 지금 보여 주는 칸. 3 → 2 → 1 → 0('시작!') */
 	const [step, setStep] = useState(3);
 	/** 숫자가 튀어 들어오는 값 */
@@ -126,17 +128,22 @@ const ChallengeCountdown = ({ visible, onDone }: Props) => {
 					{/* 바깥 링과 안쪽 링이 서로 반대로 돈다 */}
 					<Animated.View style={[styles.ringOuter, spinStyle]} pointerEvents="none" />
 					<Animated.View style={[styles.ringInner, spinBackStyle]} pointerEvents="none" />
+					{/* 무대는 테마와 무관하게 늘 어둡다 — 다크에서 밝게 뒤집히는 secondaryDark·primaryDeep 대신 라이트 원값을 고정해 흰 숫자를 지킨다 */}
 					<LinearGradient
-						colors={isGo ? [Colors.secondaryDark, Colors.primaryDeep] : [Colors.primaryDark, Colors.primaryDeep]}
+						colors={
+							isGo
+								? [LIGHT_COLORS.secondaryDark, LIGHT_COLORS.primaryDeep]
+								: [LIGHT_COLORS.primaryDark, LIGHT_COLORS.primaryDeep]
+						}
 						start={{ x: 0.2, y: 0 }}
 						end={{ x: 0.8, y: 1 }}
 						style={styles.disc}
 					/>
 					<Animated.Text style={[styles.number, isGo && styles.numberGo, numberStyle]} allowFontScaling={false}>
-						{isGo ? '시작!' : String(step)}
+						{isGo ? t('tower.countdown.go') : String(step)}
 					</Animated.Text>
 				</View>
-				<Text style={styles.message}>{STEP_TEXT[step]}</Text>
+				<Text style={styles.message}>{t(STEP_TEXT[step as keyof typeof STEP_TEXT])}</Text>
 			</View>
 		</AppModal>
 	);
@@ -167,8 +174,9 @@ const makeStyles = () =>
 			borderRadius: Radius.pill,
 			borderWidth: scaleWidth(2),
 			borderColor: 'transparent',
-			borderBottomColor: Colors.primaryLight,
-			borderLeftColor: withAlpha(Colors.primaryLight, '47'),
+			// 다크의 primaryLight 는 짙은 남색이라 어두운 무대에 묻힌다 — 라이트 원값(밝은 파랑)으로 고정
+			borderBottomColor: LIGHT_COLORS.primaryLight,
+			borderLeftColor: withAlpha(LIGHT_COLORS.primaryLight, '47'),
 		},
 		ripple: {
 			position: 'absolute',

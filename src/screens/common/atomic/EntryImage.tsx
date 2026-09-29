@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
@@ -16,6 +17,8 @@ interface Props {
 	/** 위키미디어에서 받아 올 그림 폭(px) — 작은 썸네일이면 낮춰 데이터를 아낀다 */
 	fetchWidth?: number;
 	style?: StyleProp<ViewStyle>;
+	/** 목록 썸네일처럼 작은 틀 — 실패 시 안내 문구 없이 아이콘만 */
+	compact?: boolean;
 }
 
 /**
@@ -24,7 +27,8 @@ interface Props {
  *   빈 네모만 남으면 그림 문항에서 무엇을 묻는지 알 수 없다.
  * - 참조가 바뀌면(다음 문항) 실패 표시를 되돌린다 — 실패한 참조를 들고 있어 따로 초기화하지 않는다.
  */
-const EntryImage: React.FC<Props> = ({ imageRef, width, fetchWidth, style }) => {
+const EntryImage: React.FC<Props> = ({ imageRef, width, fetchWidth, style, compact }) => {
+	const { t } = useTranslation();
 	const [brokenRef, setBrokenRef] = useState<string | null>(null);
 	const broken = brokenRef === imageRef;
 	const { source, fallback } = resolveImageRef(imageRef, fetchWidth);
@@ -33,15 +37,15 @@ const EntryImage: React.FC<Props> = ({ imageRef, width, fetchWidth, style }) => 
 
 	return (
 		// 국기는 옅은 면 위에 얹는다 — 흰 바탕 국기(일본·캐나다)가 흰 카드에 묻히지 않게
-		<View style={[styles.frame, wide && styles.wideFrame, { width, height }, style]}>
+		<View style={[styles.frame, wide && styles.wideFrame, wide && compact && styles.compactWide, { width, height }, style]}>
 			{source && !broken ? (
 				<Image source={source} style={styles.image} contentFit="contain" transition={160} cachePolicy="memory-disk" onError={() => setBrokenRef(imageRef)} accessibilityIgnoresInvertColors />
 			) : fallback ? (
 				<Image source={fallback} style={styles.image} contentFit="contain" transition={160} />
 			) : (
 				<View style={styles.broken}>
-					<IconComponent type="materialIcons" name="image-not-supported" size={scaledSize(28)} color={Colors.textMuted} />
-					<Text style={styles.brokenText}>그림을 불러오지 못했어요</Text>
+					<IconComponent type="materialIcons" name="image-not-supported" size={scaledSize(compact ? 20 : 28)} color={Colors.textMuted} />
+					{!compact && <Text style={styles.brokenText}>{t('atomic.entryImage.broken')}</Text>}
 				</View>
 			)}
 		</View>
@@ -52,6 +56,7 @@ const styles = themed(() =>
 	StyleSheet.create({
 		frame: { alignSelf: 'center', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
 		wideFrame: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, padding: Spacing.md },
+		compactWide: { padding: Spacing.xs },
 		image: { width: '100%', height: '100%' },
 		broken: { alignItems: 'center', gap: SpacingV.xs },
 		brokenText: { fontSize: Typography.caption, color: Colors.textMuted },

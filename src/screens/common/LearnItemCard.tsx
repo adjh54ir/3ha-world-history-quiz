@@ -1,15 +1,17 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ViewStyle, TextStyle, StyleProp } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import HighlightText from '@/src/screens/common/atomic/HighlightText';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
 import { themed } from '@/src/utils/ThemedStyles';
+import EntryImage from '@/src/screens/common/atomic/EntryImage';
 
 /**
  * 공통 학습 항목 카드 (목록용)
@@ -54,7 +56,7 @@ export interface LearnItemCardProps {
 	headerRight?: React.ReactNode;
 	/** 단어 바로 아래 슬롯 (뱃지·부가 정보 등) */
 	belowTitle?: React.ReactNode;
-	/** '예시' 서브타이틀 문구 교체 (기본 '예시') */
+	/** 예시 서브타이틀 문구 교체 (기본 '더 알아보기') */
 	exampleTitle?: string;
 	/** 예시 항목 커스텀 렌더러 (지정 시 기본 border 박스 대신 사용) */
 	renderExample?: (ex: string, index: number) => React.ReactNode;
@@ -64,6 +66,8 @@ export interface LearnItemCardProps {
 	explanationStyle?: StyleProp<TextStyle>;
 	/** 검색어 — 제목·부제·설명에서 일치 구간을 강조한다 */
 	highlight?: string;
+	/** 항목 그림 참조 — 있으면 단어·설명 오른쪽에 썸네일로 함께 보여 준다 */
+	imageRef?: string;
 }
 
 /**
@@ -94,13 +98,15 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 	children,
 	headerRight,
 	belowTitle,
-	exampleTitle = '더 알아보기',
+	exampleTitle,
 	renderExample,
 	style,
 	titleStyle,
 	explanationStyle,
 	highlight,
+	imageRef,
 }) => {
+	const { t } = useTranslation();
 	const meta = LearnHubService.getDomain(domain).meta;
 	const titleText = title;
 	const showCategory = !!categoryLabel && categoryLabel !== meta.title;
@@ -145,7 +151,7 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 							activeOpacity={0.7}
 							hitSlop={8}
 							accessibilityRole="button"
-							accessibilityLabel={bookmarked ? '즐겨찾기 해제' : '즐겨찾기 추가'}
+							accessibilityLabel={bookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}
 							onPress={onToggleBookmark}>
 							<IconComponent type="materialIcons" name={bookmarked ? 'star' : 'star-border'} size={scaledSize(20)} color={bookmarked ? Colors.bookmark : Colors.textMuted} />
 						</TouchableOpacity>
@@ -154,25 +160,31 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 				</View>
 			</View>
 
-			{/* 단어 */}
-			<HighlightText text={titleText} query={highlight} style={[styles.title, titleStyle]} numberOfLines={2} ellipsizeMode="tail" />
-			{!!subLine && <HighlightText text={subLine} query={highlight} style={styles.subLine} numberOfLines={2} ellipsizeMode="tail" />}
-			{belowTitle}
+			{/* 단어 · 해설 (+ 그림이 있으면 오른쪽 썸네일) */}
+			<View style={styles.bodyRow}>
+				<View style={styles.bodyText}>
+					<HighlightText text={titleText} query={highlight} style={[styles.title, titleStyle]} numberOfLines={2} ellipsizeMode="tail" />
+					{!!subLine && <HighlightText text={subLine} query={highlight} style={styles.subLine} numberOfLines={2} ellipsizeMode="tail" />}
+					{belowTitle}
 
-			{/* 정답 — 초록 강조 */}
-			{!!answer && (
-				<View style={styles.answerBox}>
-					<Text style={styles.answerText}>{answer}</Text>
+					{/* 정답 — 초록 강조 */}
+					{!!answer && (
+						<View style={styles.answerBox}>
+							<Text style={styles.answerText}>{answer}</Text>
+						</View>
+					)}
+
+					{/* 해설 */}
+					{!!explanation && <HighlightText text={explanation} query={highlight} lineBreakStrategyIOS="hangul-word" style={[styles.explanation, explanationStyle]} />}
 				</View>
-			)}
-
-			{/* 해설 */}
-			{!!explanation && <HighlightText text={explanation} query={highlight} lineBreakStrategyIOS="hangul-word" style={[styles.explanation, explanationStyle]} />}
+				{/* 태블릿은 카드 폭이 넓어 1.25배 썸네일이 왜소해진다 — 아트 배율로 키우고 받아 올 해상도도 올린다 */}
+				{!!imageRef && <EntryImage imageRef={imageRef} width={scaleArt(76)} fetchWidth={isTablet ? 320 : 200} compact style={styles.thumb} />}
+			</View>
 
 			{/* 예시 */}
 			{!!examples && examples.length > 0 && (
 				<View style={styles.exGroup}>
-					<Text style={styles.exHead}>{exampleTitle}</Text>
+					<Text style={styles.exHead}>{exampleTitle ?? t('learnCard.more')}</Text>
 					{examples.map((ex, i) =>
 						renderExample ? (
 							<React.Fragment key={i}>{renderExample(ex, i)}</React.Fragment>
@@ -212,6 +224,9 @@ const styles = themed(() => StyleSheet.create({
 	metaChipText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	actions: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs },
 	favBtn: { width: scaleWidth(32), height: scaleWidth(32), alignItems: 'center', justifyContent: 'center' },
+	bodyRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md },
+	bodyText: { flex: 1 },
+	thumb: { alignSelf: 'flex-start', marginTop: SpacingV.sm, borderRadius: Radius.md, backgroundColor: Colors.surfaceAlt },
 	title: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong, marginTop: SpacingV.sm },
 	subLine: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	answerBox: { backgroundColor: withAlpha(Colors.success, '12'), borderWidth: 1, borderColor: withAlpha(Colors.success, '40'), borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginTop: SpacingV.sm },

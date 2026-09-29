@@ -24,11 +24,13 @@ import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
+import { useTranslation } from 'react-i18next';
 
 type Tab = 'bookmark' | 'wrong';
 
 const Library = () => {
 	const { showToast } = useToast();
+	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, '');
 	const initialTab = stringParam(params.tab, 'bookmark');
@@ -132,7 +134,7 @@ const Library = () => {
 		await LearnProgressService.removeBookmark(b.uid);
 		reload();
 		playPop();
-		showToast('즐겨찾기를 해제했어요', 'star-border');
+		showToast(t('common.bookmarkUnsaved'), 'star-border');
 	};
 	const removeWrong = async (uid: string) => {
 		await LearnProgressService.removeWrongNote(uid);
@@ -151,14 +153,14 @@ const Library = () => {
 		});
 		reload();
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 	const clearWrong = async () => {
 		const ok = await showConfirm({
-			title: '오답노트 비우기',
-			message: scope === ALL_SCOPE ? `오답 ${wrongs.length}개를 모두 삭제할까요?` : `${LearnHubService.getDomainTitle(scope)} 오답 ${wrongs.length}개를 삭제할까요?`,
-			confirmText: '삭제',
-			cancelText: '취소',
+			title: t('library.clearTitle'),
+			message: scope === ALL_SCOPE ? t('library.clearAllMessage', { n: wrongs.length }) : t('library.clearDomainMessage', { domain: LearnHubService.getDomainTitle(scope), n: wrongs.length }),
+			confirmText: t('common.delete'),
+			cancelText: t('common.cancel'),
 			destructive: true,
 			icon: 'delete-sweep',
 		});
@@ -177,7 +179,7 @@ const Library = () => {
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<CommonHeader
-				title="보관함"
+				title={t('library.title')}
 				alignLeft
 				border={false}
 				onBack={() => (router.canGoBack() ? router.back() : router.replace('/home' as never))}
@@ -187,11 +189,11 @@ const Library = () => {
 			<View style={styles.segment}>
 				<TouchableOpacity style={[styles.segBtn, isBookmark && styles.segBtnActive]} activeOpacity={0.85} onPress={() => changeTab('bookmark')}>
 					<IconComponent type="materialIcons" name="bookmark" size={scaledSize(17)} color={isBookmark ? Colors.primary : Colors.textMuted} />
-					<Text style={[styles.segText, isBookmark && styles.segTextActive]}>즐겨찾기 {bookmarks.length}</Text>
+					<Text style={[styles.segText, isBookmark && styles.segTextActive]}>{t('library.tabBookmark', { n: bookmarks.length })}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={[styles.segBtn, !isBookmark && styles.segBtnActive]} activeOpacity={0.85} onPress={() => changeTab('wrong')}>
 					<IconComponent type="materialIcons" name="error-outline" size={scaledSize(17)} color={!isBookmark ? Colors.error : Colors.textMuted} />
-					<Text style={[styles.segText, !isBookmark && styles.segTextActive]}>오답노트 {wrongs.length}</Text>
+					<Text style={[styles.segText, !isBookmark && styles.segTextActive]}>{t('library.tabWrong', { n: wrongs.length })}</Text>
 				</TouchableOpacity>
 			</View>
 
@@ -215,7 +217,7 @@ const Library = () => {
 					</View>
 				) : isBookmark ? (
 					bookmarks.length === 0 ? (
-						<EmptyState illustration="empty" icon="bookmark-border" text="아직 즐겨찾기한 항목이 없어요." subText="학습 카드에서 별표를 눌러 저장해보세요." />
+						<EmptyState illustration="empty" icon="bookmark-border" text={t('library.emptyBookmark')} subText={t('library.emptyBookmarkSub')} />
 					) : (
 						<AdaptiveGrid>
 							{bookmarks.map((b, i) => {
@@ -240,16 +242,16 @@ const Library = () => {
 						</AdaptiveGrid>
 					)
 				) : wrongs.length === 0 ? (
-					<EmptyState illustration="allComplete" icon="check-circle" text="오답이 없어요!" subText="퀴즈에서 틀린 문제가 여기에 모입니다." />
+					<EmptyState illustration="allComplete" icon="check-circle" text={t('library.emptyWrong')} subText={t('library.emptyWrongSub')} />
 				) : (
 					<>
 						<TouchableOpacity style={styles.reviewCta} activeOpacity={0.9} onPress={() => router.push({ pathname: '/quiz/wrong-review', params: scope === ALL_SCOPE ? {} : { category: scope } } as never)}>
 							<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.textInverse} />
-							<Text style={styles.reviewCtaText}>오답 {wrongs.length}개 복습하기</Text>
+							<Text style={styles.reviewCtaText}>{t('library.review', { n: wrongs.length })}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.clearBtn} activeOpacity={0.8} onPress={clearWrong}>
 							<IconComponent type="materialIcons" name="delete-sweep" size={scaledSize(16)} color={Colors.textSecondary} />
-							<Text style={styles.clearText}>{scope === ALL_SCOPE ? '전체 비우기' : `${LearnHubService.getDomainTitle(scope)} 오답 비우기`}</Text>
+							<Text style={styles.clearText}>{scope === ALL_SCOPE ? t('library.clearAll') : t('library.clearDomain', { domain: LearnHubService.getDomainTitle(scope) })}</Text>
 						</TouchableOpacity>
 						<AdaptiveGrid>
 							{wrongs.map((w) => {
@@ -286,7 +288,7 @@ const Library = () => {
 						activeOpacity={0.85}
 						onPress={() => router.push({ pathname: '/learn/category', params: { category: scope } } as never)}>
 						<IconComponent type="materialIcons" name="school" size={scaledSize(18)} color={Colors.primary} />
-						<Text style={styles.goQuizText}>{LearnHubService.getDomainTitle(scope)} 학습하러 가기</Text>
+						<Text style={styles.goQuizText}>{t('library.goStudy', { domain: LearnHubService.getDomainTitle(scope) })}</Text>
 					</TouchableOpacity>
 				)}
 				</FadeInUp>
@@ -309,7 +311,7 @@ const Library = () => {
 				item={wrongItem}
 				primaryAction={
 					detail
-						? { label: '삭제', icon: 'delete', onPress: () => { const uid = detail.uid; setDetail(null); removeWrong(uid); } }
+						? { label: t('common.delete'), icon: 'delete', onPress: () => { const uid = detail.uid; setDetail(null); removeWrong(uid); } }
 						: undefined
 				}
 			/>

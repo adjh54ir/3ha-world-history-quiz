@@ -5,13 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTranslation } from 'react-i18next';
 
 import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { useDispatch } from 'react-redux';
-import { addTowerAttemptByAd, devResetTower, ensureTowerDay, recordTower, spendTowerAttempt, TOWER_AD_REWARD_MAX, useTower } from '@/src/store/slice/TowerSlice';
-import { Colors, readableOn, withAlpha } from '@/src/const/ConstColors';
-import { FontWeight, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { addTowerAttemptByAd, devResetTower, ensureTowerDay, recordTower, spendTowerAttempt, TOWER_AD_REWARD_MAX, TOWER_DAILY_ATTEMPTS, useTower } from '@/src/store/slice/TowerSlice';
+import { Colors, LIGHT_COLORS, readableOn, withAlpha } from '@/src/const/ConstColors';
+import { FontWeight, Layout, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -45,6 +46,7 @@ type FloorState = 'cleared' | 'current' | 'locked';
  * text/surfaceAlt 계열 대신 **darkOnPanel·darkCard 계열 토큰만** 쓴다.
  */
 const TowerChallengeScreen = () => {
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const dispatch = useDispatch();
 	/** 진행은 redux 한 벌뿐이다 — 홈·통계가 보는 값과 같아 두 곳이 어긋날 수 없다 */
@@ -80,7 +82,7 @@ const TowerChallengeScreen = () => {
 
 	const handleWatchAd = () => {
 		if (tower.adRewardUsed >= MAX_AD_REWARD) {
-			showToast('오늘은 더 이상 광고를 볼 수 없어요', 'alert-circle-outline');
+			showToast(t('tower.challenge.toast.adLimit'), 'alert-circle-outline');
 			return;
 		}
 		setShowAd(true);
@@ -91,7 +93,12 @@ const TowerChallengeScreen = () => {
 			return;
 		}
 		if (tower.attempts <= 0) {
-			showConfirm({ title: '도전 횟수 부족', message: '광고를 시청하여 도전 기회를 얻으시겠습니까?', confirmText: '광고 시청', icon: 'play-circle-filled' }).then((ok) => ok && handleWatchAd());
+			showConfirm({
+				title: t('tower.challenge.noAttempts.title'),
+				message: t('tower.challenge.noAttempts.message'),
+				confirmText: t('tower.challenge.noAttempts.confirm'),
+				icon: 'play-circle-filled',
+			}).then((ok) => ok && handleWatchAd());
 			return;
 		}
 
@@ -101,14 +108,14 @@ const TowerChallengeScreen = () => {
 	};
 
 	const handleDevReset = () => {
-		Alert.alert('개발자 모드', '작업을 선택하세요', [
-			{ text: '취소', style: 'cancel' },
+		Alert.alert(t('tower.dev.title'), t('tower.dev.chooseAction'), [
+			{ text: t('common.cancel'), style: 'cancel' },
 			...TOWER_LEVELS.map((item) => ({
-				text: `${item.level}단계 클리어`,
+				text: t('tower.dev.clearLevel', { level: item.level }),
 				onPress: () => dispatch(recordTower(item.level)),
 			})),
 			{
-				text: '처음 상태로 초기화',
+				text: t('tower.dev.reset'),
 				style: 'destructive',
 				onPress: () => dispatch(devResetTower()),
 			},
@@ -119,7 +126,7 @@ const TowerChallengeScreen = () => {
 	const renderProgressCard = () => (
 		<View style={styles.panel}>
 			<View style={styles.progressHead}>
-				<Text style={styles.progressTitle}>정복한 층</Text>
+				<Text style={styles.progressTitle}>{t('tower.challenge.progressTitle')}</Text>
 				<Text style={styles.progressCount}>
 					{clearedCount}
 					<Text style={styles.progressTotal}> / {TOWER_LEVELS.length}</Text>
@@ -131,7 +138,7 @@ const TowerChallengeScreen = () => {
 
 			<View style={styles.attemptRow}>
 				<View style={styles.attemptBox}>
-					<Text style={styles.attemptLabel}>오늘 남은 도전</Text>
+					<Text style={styles.attemptLabel}>{t('tower.challenge.attemptsLeft')}</Text>
 					<View style={styles.heartRow}>
 						{tower.attempts > 0 ? (
 							Array.from({ length: Math.min(tower.attempts, 5) }).map((_, i) => (
@@ -140,7 +147,7 @@ const TowerChallengeScreen = () => {
 						) : (
 							<IconComponent type="materialIcons" name="favorite-border" size={16} color={Colors.onBrandBorder} />
 						)}
-						<Text style={styles.attemptCount}>{tower.attempts}회</Text>
+						<Text style={styles.attemptCount}>{t('tower.challenge.attemptCount', { count: tower.attempts })}</Text>
 					</View>
 				</View>
 
@@ -150,12 +157,14 @@ const TowerChallengeScreen = () => {
 					disabled={tower.adRewardUsed >= MAX_AD_REWARD}
 					activeOpacity={0.85}
 					accessibilityRole="button"
-					accessibilityLabel="광고 보고 도전 횟수 1회 늘리기">
+					accessibilityLabel={t('tower.challenge.adA11y')}>
 					<IconComponent type="materialIcons" name="play-circle-filled" size={20} color={Colors.textInverse} />
 					<View style={styles.adTextWrap}>
-						<Text style={styles.adTitle}>광고 보고 +1회</Text>
+						<Text style={styles.adTitle}>{t('tower.challenge.adButton')}</Text>
 						<Text style={styles.adSub}>
-							{tower.adRewardUsed >= MAX_AD_REWARD ? '오늘 모두 사용함' : `오늘 ${tower.adRewardUsed}/${MAX_AD_REWARD} 사용`}
+							{tower.adRewardUsed >= MAX_AD_REWARD
+								? t('tower.challenge.adAllUsed')
+								: t('tower.challenge.adUsed', { used: tower.adRewardUsed, max: MAX_AD_REWARD })}
 						</Text>
 					</View>
 				</TouchableOpacity>
@@ -198,7 +207,7 @@ const TowerChallengeScreen = () => {
 				<View style={styles.rewardRow}>
 					<Image source={floor.reward.image} style={styles.rewardImage} contentFit="contain" />
 					<View style={styles.rewardTextWrap}>
-						<Text style={styles.rewardLabel}>클리어 보상</Text>
+						<Text style={styles.rewardLabel}>{t('tower.challenge.rewardLabel')}</Text>
 						<Text style={styles.rewardName} numberOfLines={1}>
 							{floor.reward.name}
 						</Text>
@@ -206,11 +215,11 @@ const TowerChallengeScreen = () => {
 				</View>
 
 				<TouchableOpacity
-					style={[styles.challengeButton, { backgroundColor: canChallenge ? floor.color : Colors.secondaryDark }]}
+					style={[styles.challengeButton, { backgroundColor: canChallenge ? floor.color : LIGHT_COLORS.secondaryDark }]}
 					onPress={() => handleStartChallenge(floor)}
 					activeOpacity={0.85}
 					accessibilityRole="button"
-					accessibilityLabel={canChallenge ? `${floor.level}층 도전하기` : '광고 보고 도전하기'}>
+					accessibilityLabel={canChallenge ? t('tower.challenge.startA11y', { level: floor.level }) : t('tower.challenge.watchAdToStart')}>
 					{/* 버튼 면이 층 색(민트·앰버 등 밝은 색 포함)이라 글씨·아이콘 색을 면 밝기에 맞춘다 */}
 					<IconComponent
 						type="materialIcons"
@@ -219,7 +228,7 @@ const TowerChallengeScreen = () => {
 						color={canChallenge ? readableOn(floor.color) : Colors.textInverse}
 					/>
 					<Text style={[styles.challengeButtonText, canChallenge && { color: readableOn(floor.color) }]}>
-						{canChallenge ? '도전하기 (하트 -1)' : '광고 보고 도전하기'}
+						{canChallenge ? t('tower.challenge.start') : t('tower.challenge.watchAdToStart')}
 					</Text>
 				</TouchableOpacity>
 			</View>
@@ -241,9 +250,9 @@ const TowerChallengeScreen = () => {
 			<View style={styles.clearedCopy}>
 				<View style={styles.clearedTitleRow}>
 					<IconComponent type="materialIcons" name="emoji-events" size={24} color={Colors.gold} />
-					<Text style={styles.allClearedTitle}>모든 층을 정복했습니다!</Text>
+					<Text style={styles.allClearedTitle}>{t('tower.challenge.allClearedTitle')}</Text>
 				</View>
-				<Text style={styles.allClearedSub}>정상에 올랐어요 · 모든 보상을 모았어요</Text>
+				<Text style={styles.allClearedSub}>{t('tower.challenge.allClearedSub')}</Text>
 			</View>
 		</View>
 	);
@@ -268,13 +277,13 @@ const TowerChallengeScreen = () => {
 					<View style={styles.floorTextWrap}>
 						<Text style={styles.floorName}>{floor.name}</Text>
 						<Text style={styles.floorSub} numberOfLines={1}>
-							{isLocked ? '이전 층을 먼저 깨야 열립니다' : floor.bossName}
+							{isLocked ? t('tower.challenge.lockedHint') : floor.bossName}
 						</Text>
 					</View>
-					{/* 어두운 패널 위 — primary 는 라이트 테마에서 1.8:1 로 묻혀 한 단 밝은 파랑을 쓴다 */}
-					{state === 'cleared' && <IconComponent type="materialIcons" name="check-circle" size={22} color={Colors.primaryLight} />}
+					{/* 어두운 패널 위 — primary 는 라이트 테마에서 1.8:1 로 묻혀 한 단 밝은 파랑을 쓴다 (다크의 primaryLight 는 남색이라 라이트 원값 고정) */}
+					{state === 'cleared' && <IconComponent type="materialIcons" name="check-circle" size={22} color={LIGHT_COLORS.primaryLight} />}
 					{/* 작은 글씨를 층 색으로 두면 1층 파랑이 어두운 패널 위에서 4.5:1 아래로 떨어진다 — 층 색은 줄 테두리가 맡는다 */}
-					{state === 'current' && <Text style={styles.floorTag}>도전 중</Text>}
+					{state === 'current' && <Text style={styles.floorTag}>{t('tower.challenge.currentTag')}</Text>}
 					{isLocked && <IconComponent type="materialIcons" name="lock" size={18} color={Colors.onBrandBorder} />}
 				</View>
 			</FadeInUp>
@@ -297,8 +306,8 @@ const TowerChallengeScreen = () => {
 						)}
 					</View>
 					<View style={styles.headerTitleWrap}>
-						<Text style={styles.headerTitle}>타워 챌린지</Text>
-						<Text style={styles.headerSub}>정상을 향한 여정</Text>
+						<Text style={styles.headerTitle}>{t('tower.challenge.title')}</Text>
+						<Text style={styles.headerSub}>{t('tower.challenge.subtitle')}</Text>
 					</View>
 					<View style={[styles.headerSide, styles.headerSideRight]}>
 						<CharacterGuideButton onPress={guide.open} color={Colors.onBrandTextSoft} size={20} />
@@ -316,7 +325,7 @@ const TowerChallengeScreen = () => {
 							<View style={styles.heroBannerShade} />
 							<View style={styles.heroBannerCopy}>
 								<Text style={styles.heroBannerEyebrow}>CLIMB TO THE TOP</Text>
-								<Text style={styles.heroBannerTitle}>한 층씩, 정상을 향해</Text>
+								<Text style={styles.heroBannerTitle}>{t('tower.challenge.heroTitle')}</Text>
 							</View>
 						</View>
 					</FadeInUp>
@@ -327,20 +336,19 @@ const TowerChallengeScreen = () => {
 						{isAllCleared || !currentTower ? renderAllClearedCard() : renderChallengeCard(currentTower)}
 					</FadeInUp>
 
-					<Text style={styles.sectionTitle}>전체 층</Text>
+					<Text style={styles.sectionTitle}>{t('tower.challenge.floorsTitle')}</Text>
 					{TOWER_LEVELS.map((tower, index) => renderFloorRow(tower, index + 3))}
 
 					<View style={styles.noticeBox}>
-						<Text style={styles.noticeLine}>• 한 층마다 5문제를 모두 맞춰야 클리어예요</Text>
-						<Text style={styles.noticeLine}>• 클리어하면 그 층의 보상을 받아요</Text>
-						<Text style={styles.noticeLine}>• 도전은 하루 1회, 매일 자정에 다시 채워져요</Text>
-						<Text style={styles.noticeLine}>• 광고를 보면 하루 {MAX_AD_REWARD}회까지 더 도전할 수 있어요</Text>
+						<Text style={styles.noticeLine}>{t('tower.challenge.notice.clear')}</Text>
+						<Text style={styles.noticeLine}>{t('tower.challenge.notice.reward')}</Text>
+						<Text style={styles.noticeLine}>{t('tower.challenge.notice.daily', { daily: TOWER_DAILY_ATTEMPTS })}</Text>
+						<Text style={styles.noticeLine}>{t('tower.challenge.notice.ad', { max: MAX_AD_REWARD })}</Text>
 					</View>
 				</ScrollView>
 
-
 				<BottomHomeButton
-					confirmTitle="타워 챌린지를 종료할까요?"
+					confirmTitle={t('tower.challenge.exitConfirm')}
 					borderColor={Colors.onBrandSurface}
 					textColor={Colors.onBrandText}
 					iconColor={Colors.onBrandTextSoft}
@@ -363,29 +371,29 @@ const TowerChallengeScreen = () => {
 						onRewarded={() => {
 							dispatch(addTowerAttemptByAd());
 							setShowAd(false);
-							showToast('도전 기회 1회가 추가됐어요', 'gift-outline');
+							showToast(t('tower.challenge.toast.adRewarded'), 'gift-outline');
 						}}
 						onClosed={() => {
 							setShowAd(false);
-							showToast('광고를 끝까지 봐야 보상을 받아요', 'movie-open-off-outline');
+							showToast(t('tower.challenge.toast.adClosed'), 'movie-open-off-outline');
 						}}
 						onFailed={() => {
 							setShowAd(false);
-							showToast('광고를 불러오지 못했어요. 잠시 뒤 다시 시도해 주세요', 'wifi-off');
+							showToast(t('tower.challenge.toast.adFailed'), 'wifi-off');
 						}}
 					/>
 				)}
-
 
 				<CharacterGuide
 					visible={guide.visible}
 					onClose={guide.close}
 					lines={[
-						'층을 하나씩 깨며 올라가요. 지금 도전할 층이 가운데 카드에 나와요.',
-						'층을 깨면 그 층의 보상 코스튬을 얻어요!',
-						`도전은 하루 1회, 광고를 보면 ${MAX_AD_REWARD}번까지 더 할 수 있어요!`,
+						t('tower.challenge.guide.line1'),
+						// 보상은 층마다 코스튬·캐릭터·아이템으로 갈린다 — '코스튬' 으로 못 박지 않는다
+						t('tower.challenge.guide.line2'),
+						t('tower.challenge.guide.line3', { daily: TOWER_DAILY_ATTEMPTS, max: MAX_AD_REWARD }),
 					]}
-					title="타워 챌린지, 이렇게 올라갑니다"
+					title={t('tower.challenge.guide.title')}
 				/>
 			</SafeAreaView>
 		</View>
@@ -407,7 +415,7 @@ const makeStyles = () =>
 			alignSelf: 'center',
 			flexDirection: 'row',
 			alignItems: 'center',
-			paddingHorizontal: Spacing.lg,
+			paddingHorizontal: Layout.screenH,
 			paddingTop: SpacingV.sm,
 			paddingBottom: SpacingV.sm,
 		},
@@ -432,7 +440,7 @@ const makeStyles = () =>
 
 		body: { flex: 1 },
 		// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭이라 제목과 카드 왼쪽 선이 맞는다)
-		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Spacing.lg, paddingBottom: SpacingV.xl, gap: SpacingV.md },
+		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.xl, gap: SpacingV.md },
 		heroBanner: {
 			height: scaleHeight(176),
 			borderRadius: Radius.xl,
@@ -476,7 +484,7 @@ const makeStyles = () =>
 			marginTop: SpacingV.sm,
 		},
 		// 어두운 패널 위 막대 — primary 는 라이트 테마에서 패널과 1.8:1 이라 채워진 길이가 안 보였다
-		progressFill: { height: '100%', borderRadius: Radius.pill, backgroundColor: Colors.primaryLight },
+		progressFill: { height: '100%', borderRadius: Radius.pill, backgroundColor: LIGHT_COLORS.primaryLight },
 
 		attemptRow: { flexDirection: 'row', alignItems: 'stretch', gap: Spacing.md, marginTop: SpacingV.md },
 		attemptBox: {
@@ -502,7 +510,8 @@ const makeStyles = () =>
 			paddingHorizontal: Spacing.md,
 			paddingVertical: SpacingV.sm,
 			borderRadius: Radius.lg,
-			backgroundColor: Colors.secondaryDark,
+			// 다크의 secondaryDark 는 밝은 회색(#CBD5E1)이라 흰 글씨가 사라진다 — 어두운 패널 전용이라 라이트 원값 고정
+			backgroundColor: LIGHT_COLORS.secondaryDark,
 		},
 		adButtonDisabled: { backgroundColor: Colors.onBrandSurface },
 		adTextWrap: { flexShrink: 1 },

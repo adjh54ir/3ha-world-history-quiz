@@ -3,6 +3,8 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { accuracyColor, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
@@ -16,19 +18,22 @@ import DonutChart from '@/src/screens/common/atomic/DonutChart';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { themed } from '@/src/utils/ThemedStyles';
 
-// 기간 선택 달력 한글화 (모듈 1회 설정)
-if (!LocaleConfig.locales.ko) {
+/** 요일 약칭 키 (일~토, Date.getDay 순서) */
+const DOW_KEYS = ['report.dow.sun', 'report.dow.mon', 'report.dow.tue', 'report.dow.wed', 'report.dow.thu', 'report.dow.fri', 'report.dow.sat'] as const;
+
+/** 기간 선택 달력 현지화 — 달력을 열 때마다 번역 파일 기준으로 채운다 */
+const syncCalendarLocale = (t: TFunction) => {
+	const months = Array.from({ length: 12 }, (_, i) => t('report.calendar.month', { month: i + 1 }));
+	const dows = DOW_KEYS.map((k) => t(k));
 	LocaleConfig.locales.ko = {
-		monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-		dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-		dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-		today: '오늘',
+		monthNames: months,
+		monthNamesShort: months,
+		dayNames: dows.map((dow) => t('report.calendar.dayName', { dow })),
+		dayNamesShort: dows,
+		today: t('report.calendar.today'),
 	};
 	LocaleConfig.defaultLocale = 'ko';
-}
-
-const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
+};
 
 type ReportDay = { date: string; dow: number; solved: number; correct: number; studied: number };
 type PeriodKey = '7' | '30' | 'custom';
@@ -49,6 +54,7 @@ const RANGE_MAX_DAYS = 180;
  */
 const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 	const isQuiz = variant === 'quiz';
+	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [stats, setStats] = useState<LearnStats | null>(null);
 	// 카드·숏폼으로 실제 학습한 일자별 개수 (퀴즈 풀이와 별개)
@@ -118,6 +124,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 
 	const changePeriod = (p: PeriodKey) => {
 		if (p === 'custom') {
+			syncCalendarLocale(t);
 			setRangeDraft({ start: '', end: null });
 			setShowRangePicker(true);
 			return;
@@ -140,7 +147,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 			// 기간이 길면 일자 막대를 수천 개 그리게 되어 화면이 멈춘다 — 최대 RANGE_MAX_DAYS 로 자른다
 			const capped = DateUtils.addLocalDays(rangeDraft.start, RANGE_MAX_DAYS - 1);
 			const end = rangeDraft.end > capped ? capped : rangeDraft.end;
-			if (end !== rangeDraft.end) showToast(`한 번에 최대 ${RANGE_MAX_DAYS}일까지 볼 수 있어요`, 'info');
+			if (end !== rangeDraft.end) showToast(t('report.rangeMax', { max: RANGE_MAX_DAYS }), 'info');
 			setCustomRange({ start: rangeDraft.start, end });
 			setPeriod('custom');
 			setSelectedDate(null);
@@ -166,22 +173,22 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 		return marks;
 	}, [rangeDraft]);
 
-	const periodLabel = period === '7' ? '최근 7일' : period === '30' ? '최근 30일' : `${range.start} ~ ${range.end}`;
+	const periodLabel = period === 'custom' ? `${range.start} ~ ${range.end}` : t('report.period.recent', { days: Number(period) });
 	// 기간 칩 라벨 — 직접 고른 기간은 칩에서 바로 날짜가 보이게 (캡션을 안 봐도 알 수 있게)
 	const shortDate = (d: string) => `${Number(d.slice(5, 7))}/${Number(d.slice(8, 10))}`;
 	const periodTabs: { key: PeriodKey; label: string }[] = [
-		{ key: '7', label: '7일' },
-		{ key: '30', label: '30일' },
-		{ key: 'custom', label: period === 'custom' && customRange ? `${shortDate(customRange.start)}~${shortDate(customRange.end)}` : '기간 선택' },
+		{ key: '7', label: t('common.days', { count: 7 }) },
+		{ key: '30', label: t('common.days', { count: 30 }) },
+		{ key: 'custom', label: period === 'custom' && customRange ? `${shortDate(customRange.start)}~${shortDate(customRange.end)}` : t('report.period.custom') },
 	];
 	const dayRate = selectedDay && selectedDay.solved > 0 ? Math.round((selectedDay.correct / selectedDay.solved) * 100) : 0;
 
 	return (
 		<View style={[styles.card, style]}>
 			<View style={styles.weekHead}>
-				<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{isQuiz ? '퀴즈 리포트' : '학습 리포트'}</Text>
+				<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{isQuiz ? t('report.title.quiz') : t('report.title.study')}</Text>
 				<View style={styles.weekActivePill}>
-					<Text style={styles.weekActiveText}>{report.activeDays}일 활동</Text>
+					<Text style={styles.weekActiveText}>{t('report.activeDays', { count: report.activeDays })}</Text>
 				</View>
 			</View>
 
@@ -202,29 +209,29 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 			<View style={styles.weekSummaryRow}>
 				{(isQuiz
 					? ([
-							{ key: 'solved', icon: 'quiz', color: Colors.primary, value: report.solved.toLocaleString(), label: '푼 문제' },
-							{ key: 'correct', icon: 'check-circle', color: Colors.success, value: report.correct.toLocaleString(), label: '정답' },
-							{ key: 'accuracy', icon: 'percent', color: accuracyColor(report.accuracy), value: `${report.accuracy}%`, label: '정답률' },
+							{ key: 'solved', icon: 'quiz', color: Colors.primary, value: report.solved.toLocaleString(), label: t('report.tile.solved') },
+							{ key: 'correct', icon: 'check-circle', color: Colors.success, value: report.correct.toLocaleString(), label: t('report.tile.correct') },
+							{ key: 'accuracy', icon: 'percent', color: accuracyColor(report.accuracy), value: `${report.accuracy}%`, label: t('report.tile.accuracy') },
 						] as const)
 					: ([
-							{ key: 'studied', icon: 'menu-book', color: Colors.success, value: report.studied.toLocaleString(), label: '학습(장)' },
-							{ key: 'days', icon: 'event-available', color: Colors.primary, value: `${report.activeDays}`, label: '활동일' },
-							{ key: 'avg', icon: 'trending-up', color: Colors.goldDark, value: report.activeDays > 0 ? Math.round(report.studied / report.activeDays).toLocaleString() : '0', label: '하루 평균(장)' },
+							{ key: 'studied', icon: 'menu-book', color: Colors.success, value: report.studied.toLocaleString(), label: t('report.tile.studied') },
+							{ key: 'days', icon: 'event-available', color: Colors.primary, value: `${report.activeDays}`, label: t('report.tile.activeDays') },
+							{ key: 'avg', icon: 'trending-up', color: Colors.goldDark, value: report.activeDays > 0 ? Math.round(report.studied / report.activeDays).toLocaleString() : '0', label: t('report.tile.dailyAvg') },
 						] as const)
-				).map((t) => (
-					<View key={t.key} style={styles.weekSummaryTile}>
-						<View style={[styles.weekSummaryIcon, { backgroundColor: withAlpha(t.color, '14') }]}>
-							<IconComponent type="materialIcons" name={t.icon} size={scaledSize(14)} color={t.color} />
+				).map((tile) => (
+					<View key={tile.key} style={styles.weekSummaryTile}>
+						<View style={[styles.weekSummaryIcon, { backgroundColor: withAlpha(tile.color, '14') }]}>
+							<IconComponent type="materialIcons" name={tile.icon} size={scaledSize(14)} color={tile.color} />
 						</View>
-						<Text style={[styles.weekSummaryNum, { color: t.color }]}>{t.value}</Text>
-						<Text style={styles.weekSummaryLabel} numberOfLines={1} ellipsizeMode="tail">{t.label}</Text>
+						<Text style={[styles.weekSummaryNum, { color: tile.color }]}>{tile.value}</Text>
+						<Text style={styles.weekSummaryLabel} numberOfLines={1} ellipsizeMode="tail">{tile.label}</Text>
 					</View>
 				))}
 			</View>
 			{weakTitle && weakDomain && (
 				<View style={styles.weekWeakRow}>
 					<IconComponent type="materialIcons" name="priority-high" size={scaledSize(13)} color={Colors.error} />
-					<Text style={styles.weekWeak}>약한 주제 · {weakTitle} {weakDomain.accuracy}%</Text>
+					<Text style={styles.weekWeak}>{t('report.weak', { title: weakTitle, accuracy: weakDomain.accuracy })}</Text>
 				</View>
 			)}
 
@@ -252,7 +259,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 									<View style={[styles.weekBarSeg, { height: `${Math.max(d.studied > 0 ? 6 : 0, Math.round((d.studied / reportMax) * 100))}%`, backgroundColor: d.studied > 0 ? (on ? Colors.successBright : Colors.success) : Colors.border }]} />
 								)}
 							</View>
-							<Text style={[styles.weekBarLabel, on && styles.weekBarLabelOn]} numberOfLines={1}>{compact ? dayNum : DAY_LABELS[d.dow]}</Text>
+							<Text style={[styles.weekBarLabel, on && styles.weekBarLabelOn]} numberOfLines={1}>{compact ? dayNum : t(DOW_KEYS[d.dow])}</Text>
 							{!compact && <Text style={[styles.weekBarSubLabel, on && styles.weekBarLabelOn]} numberOfLines={1}>{dayNum}</Text>}
 						</TouchableOpacity>
 					);
@@ -263,11 +270,11 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 			<View style={styles.legendRow}>
 				<View style={styles.legendItem}>
 					<View style={[styles.legendDot, { backgroundColor: isQuiz ? Colors.primary : Colors.success }]} />
-					<Text style={styles.legendText}>{isQuiz ? '푼 문제' : '학습한 카드'}</Text>
+					<Text style={styles.legendText}>{isQuiz ? t('report.tile.solved') : t('report.legend.studied')}</Text>
 				</View>
 				<View style={styles.legendSpacer} />
 				<IconComponent type="materialIcons" name="swipe" size={scaledSize(13)} color={Colors.textMuted} />
-				<Text style={styles.chartHintText}>날짜를 눌러 상세 보기</Text>
+				<Text style={styles.chartHintText}>{t('report.chartHint')}</Text>
 			</View>
 			</View>
 
@@ -275,11 +282,11 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 				<FadeInUp>
 					<View style={styles.dayScoreCard}>
 						<View style={styles.dayScoreHead}>
-							<Text style={styles.dayScoreDate}>{Number(selectedDay.date.slice(5, 7))}월 {Number(selectedDay.date.slice(8, 10))}일 ({DAY_LABELS[selectedDay.dow]})</Text>
+							<Text style={styles.dayScoreDate}>{t('report.dayTitle', { month: Number(selectedDay.date.slice(5, 7)), day: Number(selectedDay.date.slice(8, 10)), dow: t(DOW_KEYS[selectedDay.dow]) })}</Text>
 							{isQuiz && (
 								<View style={[styles.dayScoreTrend, { backgroundColor: dayRate >= report.accuracy ? Colors.successSoft : Colors.surfaceAlt }]}>
 									<IconComponent type="materialIcons" name={dayRate >= report.accuracy ? 'trending-up' : 'trending-down'} size={scaledSize(12)} color={dayRate >= report.accuracy ? Colors.success : Colors.textSecondary} />
-									<Text style={[styles.dayScoreTrendText, { color: dayRate >= report.accuracy ? Colors.success : Colors.textSecondary }]}>평균 {report.accuracy}%</Text>
+									<Text style={[styles.dayScoreTrendText, { color: dayRate >= report.accuracy ? Colors.success : Colors.textSecondary }]}>{t('report.dayAvg', { accuracy: report.accuracy })}</Text>
 								</View>
 							)}
 						</View>
@@ -288,14 +295,14 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 							{/* 카드 배경(surfaceAlt)과 트랙 색이 같으면 테두리만 남아 링이 안 보인다 → 밝은 트랙으로 전체 링을 드러낸다 */}
 							<DonutChart size={92} strokeWidth={10} percent={dayRate} color={Colors.primary} trackColor={Colors.surface}>
 								<Text style={styles.dayScoreDonutNum}>{dayRate}%</Text>
-								<Text style={styles.dayScoreDonutLabel}>정답률</Text>
+								<Text style={styles.dayScoreDonutLabel}>{t('report.tile.accuracy')}</Text>
 							</DonutChart>
 							<View style={styles.dayScoreBig}>
 								<View style={styles.dayScoreBigRow}>
 									<Text style={styles.dayScoreBigNum}>{selectedDay.correct}</Text>
 									<Text style={styles.dayScoreBigSlash}> / {selectedDay.solved}</Text>
 								</View>
-								<Text style={styles.dayScoreBigLabel}>정답 맞힌 문항</Text>
+								<Text style={styles.dayScoreBigLabel}>{t('report.day.correctItems')}</Text>
 							</View>
 						</View>
 						) : (
@@ -303,9 +310,9 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 							<View style={styles.dayScoreBig}>
 								<View style={styles.dayScoreBigRow}>
 									<Text style={styles.dayScoreBigNum}>{selectedDay.studied}</Text>
-									<Text style={styles.dayScoreBigSlash}> 장</Text>
+									<Text style={styles.dayScoreBigSlash}>{t('report.day.cardUnit')}</Text>
 								</View>
-								<Text style={styles.dayScoreBigLabel}>이날 학습한 카드</Text>
+								<Text style={styles.dayScoreBigLabel}>{t('report.day.studiedCards')}</Text>
 							</View>
 						</View>
 						)}
@@ -313,15 +320,15 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 						<View style={styles.dayScoreTiles}>
 							<View style={styles.dayScoreTile}>
 								<Text style={styles.dayScoreTileNum}>{selectedDay.solved}</Text>
-								<Text style={styles.dayScoreTileLabel}>푼 문제</Text>
+								<Text style={styles.dayScoreTileLabel}>{t('report.tile.solved')}</Text>
 							</View>
 							<View style={[styles.dayScoreTile, styles.dayScoreTileOk]}>
 								<Text style={[styles.dayScoreTileNum, { color: Colors.success }]}>{selectedDay.correct}</Text>
-								<Text style={styles.dayScoreTileLabel}>정답</Text>
+								<Text style={styles.dayScoreTileLabel}>{t('report.tile.correct')}</Text>
 							</View>
 							<View style={[styles.dayScoreTile, styles.dayScoreTileNg]}>
 								<Text style={[styles.dayScoreTileNum, { color: Colors.error }]}>{Math.max(0, selectedDay.solved - selectedDay.correct)}</Text>
-								<Text style={styles.dayScoreTileLabel}>오답</Text>
+								<Text style={styles.dayScoreTileLabel}>{t('report.day.wrong')}</Text>
 							</View>
 						</View>
 						)}
@@ -334,13 +341,13 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 				<TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setShowRangePicker(false)}>
 					<TouchableOpacity activeOpacity={1} style={styles.rangeModal}>
 						<View style={styles.dailyModalHead}>
-							<Text style={styles.dailyModalTitle}>기간 선택</Text>
-							<TouchableOpacity onPress={() => setShowRangePicker(false)} hitSlop={10} activeOpacity={0.7}>
+							<Text style={styles.dailyModalTitle}>{t('report.period.custom')}</Text>
+							<TouchableOpacity onPress={() => setShowRangePicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
 						<Text style={styles.rangeHint}>
-							{rangeDraft.start ? (rangeDraft.end ? `${rangeDraft.start} ~ ${rangeDraft.end}` : `${rangeDraft.start} ~ 종료일을 선택하세요`) : '시작일을 선택하세요'}
+							{rangeDraft.start ? (rangeDraft.end ? `${rangeDraft.start} ~ ${rangeDraft.end}` : t('report.picker.pickEnd', { start: rangeDraft.start })) : t('report.picker.pickStart')}
 						</Text>
 						<Calendar
 							maxDate={DateUtils.getLocalDateString()}
@@ -354,7 +361,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 							activeOpacity={0.9}
 							disabled={!(rangeDraft.start && rangeDraft.end)}
 							onPress={confirmRange}>
-							<Text style={[styles.rangeConfirmText, !(rangeDraft.start && rangeDraft.end) && styles.rangeConfirmTextOff]}>이 기간으로 보기</Text>
+							<Text style={[styles.rangeConfirmText, !(rangeDraft.start && rangeDraft.end) && styles.rangeConfirmTextOff]}>{t('report.picker.confirm')}</Text>
 						</TouchableOpacity>
 					</TouchableOpacity>
 				</TouchableOpacity>
@@ -390,7 +397,7 @@ const styles = themed(() => StyleSheet.create({
 	weekBarTrack: { flexDirection: 'row', alignItems: 'flex-end', gap: Spacing.xxs, width: isTablet ? scaleWidth(26) : scaleWidth(18), height: scaleHeight(66), backgroundColor: Colors.surface, borderRadius: Radius.sm, overflow: 'hidden' },
 	weekBarSeg: { flex: 1, borderRadius: scaleWidth(4) },
 	// 차트 영역을 한 박스로 묶어 기간 요약과 시각적으로 분리한다
-	chartBox: { marginTop: SpacingV.sm, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.md, paddingTop: SpacingV.md, paddingBottom: SpacingV.sm },
+	chartBox: { marginTop: SpacingV.sm, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.md, paddingTop: SpacingV.md, paddingBottom: SpacingV.md },
 	legendRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.sm },
 	legendSpacer: { flex: 1 },
 	legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },

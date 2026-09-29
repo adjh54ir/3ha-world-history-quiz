@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
@@ -25,13 +26,14 @@ interface Props {
  */
 const ExitConfirmModal: React.FC<Props> = ({
 	visible,
-	title = '학습을 종료하시겠습니까?',
-	message = '지금 나가면 이번 학습 화면을 벗어나요.',
-	confirmText = '종료',
-	cancelText = '계속하기',
+	title,
+	message,
+	confirmText,
+	cancelText,
 	onCancel,
 	onConfirm,
 }) => {
+	const { t } = useTranslation();
 	return (
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
 			<View style={styles.overlay}>
@@ -40,14 +42,14 @@ const ExitConfirmModal: React.FC<Props> = ({
 					<View style={styles.iconWrap}>
 						<IconComponent type="materialIcons" name="logout" size={scaledSize(26)} color={Colors.primary} />
 					</View>
-					<Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
-					<Text style={styles.message}>{message}</Text>
+					<Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">{title ?? t('modal.exitConfirm.title')}</Text>
+					<Text style={styles.message}>{message ?? t('modal.exitConfirm.message')}</Text>
 					<View style={styles.btnRow}>
 						<TouchableOpacity style={[styles.btn, styles.cancelBtn]} activeOpacity={0.85} onPress={onCancel}>
-							<Text style={styles.cancelText}>{cancelText}</Text>
+							<Text style={styles.cancelText}>{cancelText ?? t('common.continue')}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[styles.btn, styles.confirmBtn]} activeOpacity={0.9} onPress={onConfirm}>
-							<Text style={styles.confirmText}>{confirmText}</Text>
+							<Text style={styles.confirmText}>{confirmText ?? t('modal.exitConfirm.confirm')}</Text>
 						</TouchableOpacity>
 					</View>
 				</SheetIn>

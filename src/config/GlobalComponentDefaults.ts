@@ -1,7 +1,7 @@
 import { Text, TextInput } from 'react-native';
 
 import { Typography } from '@/src/const/ConstDesign';
-import Colors from '@/src/const/ConstColors';
+import Colors, { isDark } from '@/src/const/ConstColors';
 
 type ComponentWithDefaultProps = {
 	defaultProps?: Record<string, unknown>;
@@ -33,6 +33,8 @@ export const installGlobalComponentDefaults = () => {
 		...textInput.defaultProps,
 		maxFontSizeMultiplier: textInput.defaultProps?.maxFontSizeMultiplier ?? MAX_FONT_SCALE,
 		placeholderTextColor: Colors.textMuted,
+		// 다크 모드에서 흰 키보드가 튀지 않게 테마를 따른다 (화면별로 지정하면 그 값이 우선)
+		keyboardAppearance: isDark() ? 'dark' : 'light',
 		style: { fontSize: Typography.callout, color: Colors.textStrong },
 	};
 };

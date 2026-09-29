@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -17,12 +18,15 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const MIN_SOLVED = 5;
+/** 한 회차 문항 수 — 안내 문구와 출제 수를 같은 값으로 묶는다 */
+const QUIZ_COUNT = 10;
 
 /**
  * 약점 집중 코스
  * - 통계에서 정답률이 낮은 주제를 골라 집중 출제
  */
 const WeakFocus = () => {
+	const { t } = useTranslation();
 	const [loading, setLoading] = useState(true);
 	const [started, setStarted] = useState(false);
 	const [weakKeys, setWeakKeys] = useState<string[]>([]);
@@ -50,7 +54,7 @@ const WeakFocus = () => {
 	if (loading) {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<CommonHeader title="약점 집중 코스" onBack={() => router.back()} />
+				<CommonHeader title={t('special.weakFocus.title')} onBack={() => router.back()} />
 				<ListSkeleton />
 			</SafeAreaView>
 		);
@@ -59,11 +63,11 @@ const WeakFocus = () => {
 	if (started) {
 		return (
 			<LearnQuizPlayer
-				title="약점 집중"
+				title={t('special.weakFocus.playerTitle')}
 				accent={accent}
-				modeLabel="약점 집중 결과"
+				modeLabel={t('special.weakFocus.resultLabel')}
 				mode="weak"
-				generate={() => LearnHubService.generateFocusedQuiz(weakKeys, 10)}
+				generate={() => LearnHubService.generateFocusedQuiz(weakKeys, QUIZ_COUNT)}
 			/>
 		);
 	}
@@ -72,18 +76,18 @@ const WeakFocus = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<CommonHeader title="약점 집중 코스" onBack={() => router.back()} />
+			<CommonHeader title={t('special.weakFocus.title')} onBack={() => router.back()} />
 
 			<View style={styles.introWrap}>
 				<FadeInUp>
 				<View style={[styles.introIcon, { backgroundColor: withAlpha(accent, '14'), alignSelf: 'center' }]}>
 					<IconComponent type="materialIcons" name="track-changes" size={scaledSize(42)} color={accent} />
 				</View>
-				<Text style={styles.introTitle} numberOfLines={1} ellipsizeMode="tail">{hasWeak ? '약한 주제를 집중 공략!' : '먼저 실력을 쌓아볼까요?'}</Text>
+				<Text style={styles.introTitle} numberOfLines={1} ellipsizeMode="tail">{hasWeak ? t('special.weakFocus.weakTitle') : t('special.weakFocus.emptyTitle')}</Text>
 				<Text style={styles.introDesc}>
 					{hasWeak
-						? '내 정답률이 낮은 주제를 모아 10문제로 약점을 보완해요.'
-						: '아직 데이터가 부족해요. 일단 전 주제 섞인 문제로 시작해볼게요.'}
+						? t('special.weakFocus.weakDesc', { count: QUIZ_COUNT })
+						: t('special.weakFocus.emptyDesc')}
 				</Text>
 
 				{hasWeak && (
@@ -100,7 +104,7 @@ const WeakFocus = () => {
 			</View>
 
 			{/* 주 액션은 엄지 도달 범위인 하단 고정 바로 통일 */}
-			<BottomButton label="집중 학습 시작" icon="arrow-forward" color={accent} onPress={() => setStarted(true)} />
+			<BottomButton label={t('special.weakFocus.start')} icon="arrow-forward" color={accent} onPress={() => setStarted(true)} />
 		</SafeAreaView>
 	);
 };

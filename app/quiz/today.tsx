@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
@@ -50,16 +51,26 @@ interface TodayResult {
 	items: TodayResultItem[];
 }
 
-const todayLabel = (): string => {
-	const { month, day } = DateUtils.getLocalMonthDay();
-	const days = ['일', '월', '화', '수', '목', '금', '토'];
-	return `${month}월 ${day}일 (${days[DateUtils.getLocalDayOfWeek()]})`;
-};
+/** 요일 번역 키 (getLocalDayOfWeek: 0=일 ~ 6=토) */
+const WEEKDAY_KEYS = [
+	'quiz.today.weekday.sun',
+	'quiz.today.weekday.mon',
+	'quiz.today.weekday.tue',
+	'quiz.today.weekday.wed',
+	'quiz.today.weekday.thu',
+	'quiz.today.weekday.fri',
+	'quiz.today.weekday.sat',
+] as const;
 
 /**
  * 오늘의 퀴즈 — 하루 5문제 랜덤. 완료 시 해설(공용 플레이어), 푸시 알림 설정 제공.
  */
 const TodayChallenge = () => {
+	const { t } = useTranslation();
+	const todayLabel = (): string => {
+		const { month, day } = DateUtils.getLocalMonthDay();
+		return t('quiz.today.dateLabel', { month, day, dow: t(WEEKDAY_KEYS[DateUtils.getLocalDayOfWeek()]) });
+	};
 	const [started, setStarted] = useState(false);
 	const [alarmOn, setAlarmOn] = useState(false);
 	const [doneToday, setDoneToday] = useState(false);
@@ -197,8 +208,8 @@ const TodayChallenge = () => {
 		});
 		reloadBookmarks();
 		playPop();
-		showToast(now ? '즐겨찾기에 저장했어요' : '즐겨찾기를 해제했어요', now ? 'star' : 'star-border');
-	}, [reloadBookmarks, showToast]);
+		showToast(now ? t('common.bookmarkSaved') : t('common.bookmarkUnsaved'), now ? 'star' : 'star-border');
+	}, [reloadBookmarks, showToast, t]);
 
 	// 결과 문항 → 검색 탭과 동일한 풍부한 DetailItem 구성
 	const buildDetailItem = useCallback((it: TodayResultItem): DetailItem => {
@@ -254,7 +265,7 @@ const TodayChallenge = () => {
 		if (next) {
 			const ok = await RequestNotificationPermission();
 			if (!ok) {
-				showAlert('알림 권한 필요', '설정에서 알림 권한을 허용해주세요.', 'notifications-off');
+				showAlert(t('quiz.today.permTitle'), t('quiz.today.permMsg'), 'notifications-off');
 				return;
 			}
 			await ScheduleTodayQuizReminder(9, 0);
@@ -264,7 +275,7 @@ const TodayChallenge = () => {
 		setAlarmOn(next);
 		AsyncStorage.setItem(ALARM_KEY, next ? '1' : '0');
 		playPop();
-		showToast(next ? '오늘의 퀴즈 알림을 켰어요' : '오늘의 퀴즈 알림을 껐어요', next ? 'notifications-active' : 'notifications-off');
+		showToast(next ? t('quiz.today.alarmOn') : t('quiz.today.alarmOff'), next ? 'notifications-active' : 'notifications-off');
 	};
 
 	/** 알림 설정 카드 — 완료/미완료 화면 양쪽에서 같은 모양으로 쓴다 */
@@ -274,8 +285,8 @@ const TodayChallenge = () => {
 				<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(22)} color={Colors.primary} />
 			</View>
 			<View style={styles.alarmBody}>
-				<Text style={styles.alarmTitle}>오늘의 퀴즈 알림</Text>
-				<Text style={styles.alarmDesc}>매일 오전 9시에 알림을 받아요</Text>
+				<Text style={styles.alarmTitle}>{t('quiz.today.alarmTitle')}</Text>
+				<Text style={styles.alarmDesc}>{t('quiz.today.alarmDesc')}</Text>
 			</View>
 			<Switch value={alarmOn} onValueChange={toggleAlarm} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
 		</View>
@@ -284,9 +295,9 @@ const TodayChallenge = () => {
 	if (started) {
 		return (
 			<LearnQuizPlayer
-				title="오늘의 퀴즈"
+				title={t('quiz.modes.today')}
 				accent={Colors.primary}
-				modeLabel="오늘의 퀴즈 결과"
+				modeLabel={t('quiz.common.resultOf', { title: t('quiz.modes.today') })}
 				mode="daily"
 				generate={() => questions}
 				onAnswered={({ uid, correct }) => {
@@ -317,7 +328,7 @@ const TodayChallenge = () => {
 									<IconComponent type="materialIcons" name={allPerfect ? 'emoji-events' : 'check-circle'} size={scaledSize(26)} color={doneColor} />
 								</View>
 								<Text style={styles.heroDoneDate}>{todayLabel()}</Text>
-								<Text style={[styles.heroDoneTitle, { color: doneColor }]} numberOfLines={1} ellipsizeMode="tail">{allPerfect ? '완벽해요!' : '오늘 완료!'}</Text>
+								<Text style={[styles.heroDoneTitle, { color: doneColor }]} numberOfLines={1} ellipsizeMode="tail">{allPerfect ? t('quiz.today.perfect') : t('quiz.today.doneTitle')}</Text>
 								{result ? (
 									<>
 										<FadeInUp delay={220} duration={420} distance={10} style={styles.heroDonut}>
@@ -328,17 +339,17 @@ const TodayChallenge = () => {
 												color={doneColor}
 												trackColor={Colors.surfaceAlt}>
 												<CountUp value={pct} duration={900} format={(v) => `${v}%`} style={[styles.heroDonutPct, { color: doneColor }]} />
-												<Text style={styles.heroDonutLabel}>정답률</Text>
+												<Text style={styles.heroDonutLabel}>{t('quiz.common.accuracy')}</Text>
 											</DonutChart>
 										</FadeInUp>
 										<View style={styles.heroStatRow}>
 											{([
-												{ label: '정답', value: result.correct, icon: 'check-circle', color: Colors.success },
-												{ label: '오답', value: result.total - result.correct, icon: 'cancel', color: Colors.error },
-												{ label: '문항', value: result.total, icon: 'quiz', color: Colors.textSecondary },
+												{ label: t('quiz.common.correct'), value: result.correct, icon: 'check-circle', color: Colors.success },
+												{ label: t('quiz.common.wrong'), value: result.total - result.correct, icon: 'cancel', color: Colors.error },
+												{ label: t('quiz.today.statItems'), value: result.total, icon: 'quiz', color: Colors.textSecondary },
 											] as const).map((st, i) => (
 												// 정답 → 오답 → 문항 순으로 하나씩 올라오게 (완료 연출)
-												<FadeInUp key={st.label} delay={420 + i * 110} duration={380} distance={12} style={styles.heroStat}>
+												<FadeInUp key={st.icon} delay={420 + i * 110} duration={380} distance={12} style={styles.heroStat}>
 													<IconComponent type="materialIcons" name={st.icon} size={scaledSize(15)} color={st.color} />
 													<CountUp value={st.value} duration={800} style={styles.heroStatNum} />
 													<Text style={styles.heroStatLabel} numberOfLines={1} ellipsizeMode="tail">{st.label}</Text>
@@ -352,26 +363,26 @@ const TodayChallenge = () => {
 									</View>
 								)}
 								<FadeInUp delay={780} duration={420} distance={10}>
-									<Text style={styles.heroDoneDesc} numberOfLines={2} ellipsizeMode="tail">{allPerfect ? '한 문제도 놓치지 않았어요!' : '오늘의 퀴즈를 모두 풀었어요. 내일 또 만나요'}</Text>
+									<Text style={styles.heroDoneDesc} numberOfLines={2} ellipsizeMode="tail">{allPerfect ? t('quiz.today.descPerfect') : t('quiz.today.descDone')}</Text>
 								</FadeInUp>
 							</Animated.View>
 
 							<View style={styles.infoCard}>
 								<View style={styles.infoRow}>
 									<IconComponent type="materialIcons" name="schedule" size={scaledSize(20)} color={Colors.primary} />
-									<Text style={styles.infoText}>다음 퀴즈까지 {remain}</Text>
+									<Text style={styles.infoText}>{t('quiz.today.nextIn', { time: remain })}</Text>
 								</View>
 							</View>
 
 							{!!result && result.items.length > 0 && (
 								<View style={styles.resultList}>
 									<View style={styles.resultListHead}>
-										<Text style={styles.resultListTitle}>오늘의 결과</Text>
+										<Text style={styles.resultListTitle}>{t('quiz.today.resultTitle')}</Text>
 										<View style={styles.resultFilterRow}>
 											{([
-												{ key: 'all', label: '전체', n: result.items.length },
-												{ key: 'correct', label: '정답', n: result.correct },
-												{ key: 'wrong', label: '오답', n: result.total - result.correct },
+												{ key: 'all', label: t('common.all'), n: result.items.length },
+												{ key: 'correct', label: t('quiz.common.correct'), n: result.correct },
+												{ key: 'wrong', label: t('quiz.common.wrong'), n: result.total - result.correct },
 											] as const).map((f) => {
 												const on = resultFilter === f.key;
 												return (
@@ -412,7 +423,7 @@ const TodayChallenge = () => {
 									</AdaptiveGrid>
 									{filteredResultItems.length > RESULT_PREVIEW && (
 										<TouchableOpacity style={styles.resultMoreBtn} activeOpacity={0.85} onPress={() => setResultExpanded((v) => !v)}>
-											<Text style={styles.resultMoreText}>{resultExpanded ? '접기' : `${filteredResultItems.length - RESULT_PREVIEW}개 더보기`}</Text>
+											<Text style={styles.resultMoreText}>{resultExpanded ? t('quiz.today.collapse') : t('quiz.today.moreCount', { count: filteredResultItems.length - RESULT_PREVIEW })}</Text>
 											<IconComponent type="materialIcons" name={resultExpanded ? 'expand-less' : 'expand-more'} size={scaledSize(18)} color={Colors.primary} />
 										</TouchableOpacity>
 									)}
@@ -423,7 +434,7 @@ const TodayChallenge = () => {
 							{!!result && result.correct < result.total && (
 								<TouchableOpacity style={styles.reviewBtn} activeOpacity={0.85} onPress={() => router.push('/quiz/wrong-review' as never)}>
 									<IconComponent type="materialIcons" name="history-edu" size={scaledSize(18)} color={Colors.error} />
-									<Text style={styles.reviewBtnText}>오답 {result.total - result.correct}개 복습하기</Text>
+									<Text style={styles.reviewBtnText}>{t('quiz.today.reviewWrong', { count: result.total - result.correct })}</Text>
 								</TouchableOpacity>
 							)}
 
@@ -434,19 +445,19 @@ const TodayChallenge = () => {
 								<ExpoImage source={require('@/src/assets/selection/today-quiz-hero.webp')} style={styles.heroIllustration} contentFit="cover" accessible={false} />
 								<View style={styles.hero}>
 								<Text style={styles.heroDate}>{todayLabel()}</Text>
-								<Text style={styles.heroTitle}>오늘의 5문제</Text>
-								<Text style={styles.heroDesc}>전 주제에서 매일 새롭게 출제돼요.{'\n'}가볍게 5문제로 오늘의 감각을 확인해요.</Text>
+								<Text style={styles.heroTitle}>{t('quiz.today.heroTitle', { count: DAILY_COUNT })}</Text>
+								<Text style={styles.heroDesc}>{t('quiz.today.heroDesc', { count: DAILY_COUNT })}</Text>
 							</View>
 
 							<View style={styles.infoCard}>
 								<View style={styles.infoRow}>
 									<IconComponent type="materialIcons" name="quiz" size={scaledSize(20)} color={Colors.primary} />
-									<Text style={styles.infoText}>오늘의 문제 {DAILY_COUNT}개</Text>
+									<Text style={styles.infoText}>{t('quiz.today.infoCount', { count: DAILY_COUNT })}</Text>
 								</View>
 								<View style={styles.infoDivider} />
 								<View style={styles.infoRow}>
 									<IconComponent type="materialIcons" name="lightbulb" size={scaledSize(20)} color={Colors.primary} />
-									<Text style={styles.infoText}>결과·해설 확인</Text>
+									<Text style={styles.infoText}>{t('quiz.today.infoExplain')}</Text>
 								</View>
 							</View>
 
@@ -458,13 +469,13 @@ const TodayChallenge = () => {
 
 			{/* 주 행동(시작)은 하단 고정 — 스크롤 끝에 묻히지 않게 한다 */}
 			{doneToday ? (
-				<BottomButton label="홈으로" icon="home" onPress={() => router.replace('/(tabs)/home' as never)} />
+				<BottomButton label={t('quiz.common.home')} icon="home" onPress={() => router.replace('/(tabs)/home' as never)} />
 			) : (
 				<BottomButton
-					label="오늘의 퀴즈 시작"
+					label={t('quiz.today.start')}
 					icon="play-arrow"
 					onPress={() => setStarted(true)}
-					secondaryLabel="홈으로"
+					secondaryLabel={t('quiz.common.home')}
 					secondaryIcon="home"
 					onSecondary={() => router.replace('/(tabs)/home' as never)}
 				/>
@@ -474,12 +485,8 @@ const TodayChallenge = () => {
 			<CharacterGuide
 				visible={guide.visible && !doneToday}
 				onClose={guide.close}
-				lines={[
-					'오늘의 퀴즈는 전 주제에서 매일 새로 5문제가 나와요.',
-					'하루에 한 번만 풀 수 있으니 천천히 생각하고 답해요.',
-					'다 풀면 결과와 해설을 바로 볼 수 있어요!',
-				]}
-				title="오늘의 퀴즈, 이렇게 써요"
+				lines={[t('quiz.today.guide.count', { count: DAILY_COUNT }), t('quiz.today.guide.once'), t('quiz.today.guide.result')]}
+				title={t('quiz.today.guideTitle')}
 			/>
 
 			{/* 결과 문항 선택 시 검색 탭과 동일한 공용 상세 팝업 */}
@@ -533,4 +540,5 @@ const styles = themed(() => StyleSheet.create({
 	alarmIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	alarmBody: { flex: 1 },
 	alarmTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
-	alarmDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },}));
+	alarmDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
+}));

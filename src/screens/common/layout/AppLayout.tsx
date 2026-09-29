@@ -8,7 +8,6 @@ import Colors from '@/src/const/ConstColors';
 import { SpacingV } from '@/src/const/ConstDesign';
 
 import AdmobBannerAd from '@/src/screens/common/ads/AdmobBannerAd';
-import useAdsRemoved from '@/src/hooks/useAdsRemoved';
 import { useTopBarColor } from '@/src/utils/TopBarColor';
 import { contentWidth, isTablet } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -86,9 +85,7 @@ const AppLayout = () => {
 		() => !AD_BLOCKED_ROUTES.some((p) => pathname === p || pathname.startsWith(`${p}/`)),
 		[pathname],
 	);
-	// 광고 제거 구매자만 미노출
-	const adsRemoved = useAdsRemoved();
-	const showAd = isAdRoute && !adsRemoved;
+	const showAd = isAdRoute;
 	// 배너 실제 높이(측정값)까지 펴고 0 으로 접는다
 	const [bannerH, setBannerH] = useState(0);
 	const bannerClipH = useSharedValue(0);
@@ -97,7 +94,7 @@ const AppLayout = () => {
 	}, [showAd, bannerH, bannerClipH]);
 	const bannerClipStyle = useAnimatedStyle(() => ({ height: bannerClipH.value }));
 	// 전체화면(숏폼)만 제외하고 항상 top 인셋을 준다.
-	// 광고 제거 구매 여부와 무관해야 한다 — showAd 에 묶으면 구매자 화면이 상태바에 붙는다.
+	// showAd 에 묶으면 배너 차단 경로의 화면이 상태바에 붙는다.
 	const needsTopInset = useMemo(
 		() => !FULLSCREEN_ROUTES.some((p) => pathname === p || pathname.startsWith(`${p}/`)),
 		[pathname],

@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, Easing } from 'react-native';
 import { Image } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { Layout } from '@/src/const/ConstDesign';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { Typography, FontWeight, Spacing, SpacingV, Radius } from '@/src/const/ConstDesign';
-import { Colors, readableOn, withAlpha } from '@/src/const/ConstColors';
+import { Colors, LIGHT_COLORS, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { themed } from '@/src/utils/ThemedStyles';
 
 interface TowerReward {
@@ -64,6 +65,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 	onNext,
 	onReview,
 }) => {
+	const { t } = useTranslation();
 	const scaleAnim = useRef(new Animated.Value(0)).current;
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const starAnims = useRef([new Animated.Value(0), new Animated.Value(0), new Animated.Value(0)]).current;
@@ -152,9 +154,10 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 	const borderColor = isVictory ? Colors.primary : Colors.error;
 	/**
 	 * 어두운 패널 위 '맞힘' 표시색 — primary 는 라이트에서 짙은 파랑(#1249C9)이라 남색 창 위 대비가 2.2:1 이었다.
-	 * 어두운 면 위에 얹는 밝은 파랑(primaryLight)을 쓴다 (다크에서도 5.6:1).
+	 * 어두운 면 위에 얹는 밝은 파랑(primaryLight)을 쓴다.
+	 * 다크의 primaryLight 는 짙은 남색(#1E3A5F)으로 뒤집혀 남색 창에 묻히므로 라이트 원값을 고정한다.
 	 */
-	const correctColor = Colors.primaryLight;
+	const correctColor = LIGHT_COLORS.primaryLight;
 
 	const renderScoreDots = () =>
 		Array.from({ length: totalQuestions }).map((_, i) => (
@@ -298,8 +301,8 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 						{!!reviews?.length && (
 							<View style={styles.reviewSection}>
 								<View style={styles.reviewHeadRow}>
-									<Text style={styles.reviewHeader}>📋 문제 다시 보기</Text>
-									<Text style={styles.reviewHeadHint}>{`${wrongCount}개 틀림`}</Text>
+									<Text style={styles.reviewHeader}>{t('tower.result.reviewTitle')}</Text>
+									<Text style={styles.reviewHeadHint}>{t('tower.result.wrongCount', { count: wrongCount })}</Text>
 								</View>
 								{reviews.map((review, index) => {
 									const open = !review.isCorrect || opened.includes(index);
@@ -310,7 +313,12 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 											onPress={() => setOpened((prev) => (prev.includes(index) ? prev.filter((at) => at !== index) : [...prev, index]))}
 											style={[styles.reviewCard, { borderColor: review.isCorrect ? withAlpha(correctColor, '80') : withAlpha(Colors.error, '80') }]}
 											accessibilityRole="button"
-											accessibilityLabel={`${index + 1}번 ${review.proverb} ${review.isCorrect ? '정답' : '오답'}, 눌러서 해설 ${open ? '접기' : '펼치기'}`}>
+											accessibilityLabel={t('tower.result.reviewA11y', {
+											no: index + 1,
+											word: review.proverb,
+											result: review.isCorrect ? t('tower.result.correct') : t('tower.result.wrong'),
+											action: open ? t('tower.result.collapse') : t('tower.result.expand'),
+										})}>
 											<View style={styles.reviewTop}>
 												<View style={[styles.reviewNo, { backgroundColor: review.isCorrect ? correctColor : Colors.error }]}>
 													<Text style={[styles.reviewNoText, { color: readableOn(review.isCorrect ? correctColor : Colors.error) }]}>{index + 1}</Text>
@@ -339,11 +347,11 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 													{/* 틀린 문제만 "내가 고른 답" 을 보여 준다 — 맞힌 문제에 같은 줄을 두면 읽을 것만 늘어난다 */}
 													{!review.isCorrect && (
 														<Text style={styles.reviewPicked} numberOfLines={2}>
-															{`내 답 · ${review.picked || '고르지 않음'}`}
+															{t('tower.result.myAnswer', { answer: review.picked || t('tower.result.notPicked') })}
 														</Text>
 													)}
 													<Text style={styles.reviewAnswer} numberOfLines={2}>
-														{`정답 · ${review.answer}`}
+														{t('tower.result.answer', { answer: review.answer })}
 													</Text>
 													<Text style={styles.reviewExplain}>{review.explanation}</Text>
 												</>
@@ -359,7 +367,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 								{wrongCount > 0 && !!onReview && (
 									<TouchableOpacity style={styles.reviewGoButton} onPress={onReview} activeOpacity={0.85} accessibilityRole="button">
 										<IconComponent type="materialCommunityIcons" name="notebook-edit-outline" size={18} color={Colors.gold} />
-										<Text style={styles.reviewGoText}>{`틀린 ${wrongCount}문제 복습하러 가기`}</Text>
+										<Text style={styles.reviewGoText}>{t('tower.result.goReview', { count: wrongCount })}</Text>
 										<IconComponent type="materialIcons" name="chevron-right" size={18} color={Colors.gold} />
 									</TouchableOpacity>
 								)}
@@ -370,7 +378,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 						{!isVictory && (
 							<View style={styles.failSection}>
 								<Text style={styles.failLabel}>MISSION FAILED</Text>
-								<Text style={styles.failText}>모든 문제를 맞춰야 클리어됩니다.{'\n'}포기하지 말고 다시 도전하세요!</Text>
+								<Text style={styles.failText}>{t('tower.result.failText')}</Text>
 							</View>
 						)}
 					</ScrollView>
@@ -379,7 +387,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 					<View style={styles.buttonsContainer}>
 						<TouchableOpacity onPress={onHome} style={styles.btnSecondary}>
 							<IconComponent type="materialIcons" name="home" size={20} color={Colors.textInverse} />
-							<Text style={styles.btnSecondaryText}>홈</Text>
+							<Text style={styles.btnSecondaryText}>{t('tower.result.home')}</Text>
 						</TouchableOpacity>
 
 						{isVictory ? (
