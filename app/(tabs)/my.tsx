@@ -29,12 +29,10 @@ import { RequestNotificationPermission, CancelDailyWordReminder } from '@/src/ut
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
-import BackupRestoreModal from '@/src/screens/modal/BackupRestoreModal';
-import BackupService from '@/src/services/BackupService';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
 import { shareApp as appShare } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
-import { COMMON_APPS_DATA } from '@/src/const/common/CommonAppsData';
+import { COMMON_APPS_DATA, appStoreUrl, isNewApp } from '@/src/const/common/CommonAppsData';
 import { CommonType } from '@/src/types/CommonType';
 import { useToast } from '@/src/context/ToastContext';
 import { setThemeMode } from '@/src/utils/ThemeReload';
@@ -76,7 +74,6 @@ const Setting = () => {
 	const { t } = useTranslation();
 	const [reminderOn, setReminderOn] = useState(false);
 	const [showAlarm, setShowAlarm] = useState(false);
-	const [showBackup, setShowBackup] = useState(false);
 	const [interest, setInterestState] = useState<Interest>('both');
 	const [theme, setTheme] = useState<ThemeMode>(() => getThemeMode());
 	const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
@@ -114,16 +111,13 @@ const Setting = () => {
 	// 함께 쓰기 좋은 상식·퀴즈 앱만 노출 (수픽·한국어 상식 퀴즈·한자 급수 퀴즈·무한 수학 퀴즈·냥픽·멍픽)
 	const RELATED_APP_IDS = [3, 24, 23, 19, 8, 6];
 	const previewApps = RELATED_APP_IDS.map((id) => COMMON_APPS_DATA.Apps.find((a) => a.id === id)).filter(Boolean) as typeof COMMON_APPS_DATA.Apps;
-	// 맨 아래 앱 목록의 NEW 배지 — id 가 큰(최근 등록) 2개에만 붙인다
-	const newAppIds = new Set(
-		[...COMMON_APPS_DATA.Apps]
-			.sort((a, b) => b.id - a.id)
-			.slice(0, 2)
-			.map((app) => app.id),
-	);
 	const openStore = (app: CommonType.AppItem) => {
-		const url = (Platform.OS === 'android' ? app.android : app.ios) || app.android || app.ios;
-		if (url) Linking.openURL(url).catch(() => { });
+		const url = appStoreUrl(app);
+		if (!url) {
+			showToast(t('settings.toast.notOnThisStore'), 'info-outline');
+			return;
+		}
+		Linking.openURL(url).catch(() => { });
 	};
 
 	const refreshPermissionState = useCallback(() => {
@@ -408,25 +402,6 @@ const Setting = () => {
 						})}
 					</View>
 
-					{/* 학습 기록 백업 — 기기 변경 시 진도 이전 */}
-					{BackupService.isConfigured && (
-						<>
-							<SubHead label={t('settings.section.backup')} icon="cloud-upload" />
-							<View style={styles.card}>
-								<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={() => setShowBackup(true)}>
-									<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
-										<IconComponent type="materialIcons" name="cloud-sync" size={scaledSize(20)} color={Colors.primary} />
-									</View>
-									<View style={styles.rowBody}>
-										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.backup.label')}</Text>
-										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.backup.desc')}</Text>
-									</View>
-									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
-								</TouchableOpacity>
-							</View>
-						</>
-					)}
-
 					{/* 데이터 초기화 */}
 					<SubHead label={t('settings.section.reset')} icon="restart-alt" tint={Colors.error} />
 					<View style={styles.card}>
@@ -569,7 +544,7 @@ const Setting = () => {
 										<View style={styles.footerAppIconWrapper}>
 											<Image source={item.icon} style={styles.footerAppIcon} resizeMode="contain" />
 										</View>
-										{newAppIds.has(item.id) && (
+										{isNewApp(item) && (
 											<View style={styles.footerNewBadge}>
 												<Text style={styles.footerNewBadgeText}>NEW</Text>
 											</View>
@@ -586,9 +561,6 @@ const Setting = () => {
 			</ScrollView>
 
 			<DailyAlarmModal visible={showAlarm} onClose={() => setShowAlarm(false)} onChange={setReminderOn} />
-
-			{/* 학습 기록 백업·복원 */}
-			<BackupRestoreModal visible={showBackup} onClose={() => setShowBackup(false)} />
 
 			{/* 데이터 초기화 전용 확인 팝업 */}
 			<ResetConfirmModal
