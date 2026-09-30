@@ -29,8 +29,6 @@ import { RequestNotificationPermission, CancelDailyWordReminder } from '@/src/ut
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
-import BackupRestoreModal from '@/src/screens/modal/BackupRestoreModal';
-import BackupService from '@/src/services/BackupService';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
 import { shareApp as appShare } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
@@ -76,7 +74,6 @@ const Setting = () => {
 	const { t } = useTranslation();
 	const [reminderOn, setReminderOn] = useState(false);
 	const [showAlarm, setShowAlarm] = useState(false);
-	const [showBackup, setShowBackup] = useState(false);
 	const [interest, setInterestState] = useState<Interest>('both');
 	const [theme, setTheme] = useState<ThemeMode>(() => getThemeMode());
 	const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
@@ -408,25 +405,6 @@ const Setting = () => {
 						})}
 					</View>
 
-					{/* 학습 기록 백업 — 기기 변경 시 진도 이전 */}
-					{BackupService.isConfigured && (
-						<>
-							<SubHead label={t('settings.section.backup')} icon="cloud-upload" />
-							<View style={styles.card}>
-								<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={() => setShowBackup(true)}>
-									<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
-										<IconComponent type="materialIcons" name="cloud-sync" size={scaledSize(20)} color={Colors.primary} />
-									</View>
-									<View style={styles.rowBody}>
-										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.backup.label')}</Text>
-										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.backup.desc')}</Text>
-									</View>
-									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
-								</TouchableOpacity>
-							</View>
-						</>
-					)}
-
 					{/* 데이터 초기화 */}
 					<SubHead label={t('settings.section.reset')} icon="restart-alt" tint={Colors.error} />
 					<View style={styles.card}>
@@ -586,9 +564,6 @@ const Setting = () => {
 			</ScrollView>
 
 			<DailyAlarmModal visible={showAlarm} onClose={() => setShowAlarm(false)} onChange={setReminderOn} />
-
-			{/* 학습 기록 백업·복원 */}
-			<BackupRestoreModal visible={showBackup} onClose={() => setShowBackup(false)} />
 
 			{/* 데이터 초기화 전용 확인 팝업 */}
 			<ResetConfirmModal
