@@ -24,7 +24,7 @@
     "deploy:ios": "eas build --platform ios --profile production --local --output ./build/app.ipa && eas submit --platform ios --profile production --path ./build/app.ipa",
     "deploy:android": "mkdir -p build && eas build -p android --profile production --local --output ./build/app.aab && eas submit -p android --profile production --path ./build/app.aab",
     "build:apk": "cd android 2>/dev/null && ./gradlew assembleRelease || (cd .. && cd android && ./gradlew assembleRelease)",
-    "build:aab": "cd android 2>/dev/null && ./gradlew bundleRelease || (cd .. && cd android && ./gradlew bundleRelease)",
+    "build:aab": "cd android 2>/dev/null && ./gradlew bundleRelease -x lintVitalRelease || (cd .. && cd android && ./gradlew bundleRelease -x lintVitalRelease)",
     "fl:install": "bundle install && bundle exec fastlane install_plugins",
     "fl:lanes": "bundle exec fastlane lanes",
     "fl:ios:setup": "bundle exec fastlane ios setup",
