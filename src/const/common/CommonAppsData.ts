@@ -1,11 +1,24 @@
 import { Platform } from 'react-native';
 
 import { CommonType } from '@/src/types/CommonType';
+import DateUtils from '@/src/utils/DateUtils';
 
 export const COMMON_APPS_DATA: {
 	Apps: CommonType.AppItem[];
 } = {
 	Apps: [
+		{
+			id: 29,
+			icon: require('@/src/assets/appicons/main_birthdaylog.webp'),
+			title: '생일 관리',
+			desc: '생일 관리는 생일을 미리 알려 주고, 해마다 주고받은 선물까지 기록해 두는 생일 관리 앱입니다.',
+			category: 'utility',
+			// 출시일 미정 — 오늘 날짜로 넣어 둠, 실제 스토어 출시일로 고쳐 주세요
+			releasedAt: '2026-09-30',
+			// Play 출시되면 채우기 — https://play.google.com/store/apps/details?id=com.tha.birthdaylog
+			android: '',
+			ios: 'https://apps.apple.com/ko/app/id6815043532',
+		},
 		{
 			id: 28,
 			icon: require('@/src/assets/appicons/main_jptravel.webp'),
@@ -24,8 +37,8 @@ export const COMMON_APPS_DATA: {
 			desc: '소음 측정기는 층간소음·생활 소음을 데시벨로 재고 녹음해, 최고소음도와 1·5분 등가소음도를 주간·야간 기준과 견주어 제출용 측정 결과 보고서 한 장으로 만들어 주는 소음 기록 앱입니다.',
 			category: 'utility',
 			releasedAt: '2026-09-15',
-			android: '',
 			// 안드로이드 미출시 — Play 스토어 페이지가 아직 없어 링크를 비워 둔다
+			android: '',
 			ios: 'https://apps.apple.com/us/app/id6810932339',
 		},
 		{
@@ -286,3 +299,20 @@ export const COMMON_APPS_DATA: {
  */
 export const appStoreUrl = (app: CommonType.AppItem): string | null =>
 	(Platform.OS === 'android' ? app.android : app.ios) || null;
+
+/** NEW 배지가 붙는 기간 */
+const NEW_APP_DAYS = 60;
+
+/**
+ * 갓 나온 앱인지.
+ * -------------------------------------------------
+ * 예전에는 "id 가 가장 큰 두 개" 를 NEW 로 봤다. 그러면 새 앱을 한참 안 올린 동안에도
+ * 같은 앱에 NEW 가 영영 붙어 있어, 배지가 아무 뜻도 없는 장식이 된다.
+ * 출시일이 적힌 앱만, 그것도 최근 것만 배지를 단다(안 적힌 앱은 붙지 않는다).
+ */
+export const isNewApp = (app: CommonType.AppItem, now = DateUtils.now()): boolean => {
+	if (!app.releasedAt || !/^\d{4}-\d{2}-\d{2}$/.test(app.releasedAt)) return false;
+	// 기기 타임존의 날짜 단위로 센다 — UTC 자정으로 세면 한국에서는 배지가 오전 9시에 바뀌었다
+	const days = DateUtils.differenceInLocalDays(app.releasedAt, DateUtils.getLocalDateString(now));
+	return days >= 0 && days <= NEW_APP_DAYS;
+};

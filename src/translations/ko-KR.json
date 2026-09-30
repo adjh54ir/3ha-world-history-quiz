@@ -522,7 +522,8 @@
                 "bgmOn": "배경음악을 켰어요",
                 "bgmOff": "배경음악을 껐어요",
                 "interestApplied": "홈 화면에 바로 반영돼요",
-                "rankingResetFail": "랭킹 서버 점수는 지우지 못했어요. 잠시 후 다시 시도해 주세요"
+                "rankingResetFail": "랭킹 서버 점수는 지우지 못했어요. 잠시 후 다시 시도해 주세요",
+                "notOnThisStore": "이 스토어에는 아직 출시되지 않은 앱이에요"
             },
             "theme": {
                 "light": "라이트",
