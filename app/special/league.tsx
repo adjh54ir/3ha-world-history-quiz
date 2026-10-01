@@ -15,11 +15,13 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 주간 XP 리그 — 듀오링고식 승급/강등 리더보드
  */
 const League = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const [board, setBoard] = useState<LeagueBoard | null>(null);
 
@@ -49,7 +51,7 @@ const League = () => {
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<CommonHeader title={t('special.league.title')} onBack={() => router.back()} />
 
-			<ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 			<FadeInUp>
 				{/* 리그 배지 */}
 				<View style={styles.badge}>
@@ -106,6 +108,8 @@ const League = () => {
 				<Text style={styles.note}>{t('special.league.note')}</Text>
 			</FadeInUp>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 		</SafeAreaView>
 	);
 };

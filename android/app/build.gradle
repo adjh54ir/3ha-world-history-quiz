@@ -129,7 +129,12 @@ android {
             }
             def enableShrinkResources = findProperty('android.enableShrinkResourcesInReleaseBuilds') ?: 'false'
             shrinkResources enableShrinkResources.toBoolean()
+            // R8 이 켜져 있으면 mapping.txt 가 AAB(BUNDLE-METADATA)에 함께 들어가 Play Console 이 자동으로 가독화한다
             minifyEnabled enableMinifyInReleaseBuilds
+            // 네이티브(.so) 크래시·ANR 도 함수명으로 보이도록 디버그 심볼 테이블을 AAB 에 넣는다
+            ndk {
+                debugSymbolLevel 'SYMBOL_TABLE'
+            }
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             def enablePngCrunchInRelease = findProperty('android.enablePngCrunchInReleaseBuilds') ?: 'true'
             crunchPngs enablePngCrunchInRelease.toBoolean()

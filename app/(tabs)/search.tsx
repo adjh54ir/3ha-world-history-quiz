@@ -29,6 +29,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 const ALL = 'all';
 const RECENT_KEY = 'SEARCH_RECENT_QUERIES';
@@ -43,6 +44,12 @@ const PAGE_SIZE = 50;
  * - 주제 선택 시 카테고리/난이도 드롭다운으로 상세 검색
  * - 목록 카드: 주제·카테고리·난이도 태그를 제목 위
  */
+/** 빈 영역을 누르면 키보드를 닫는다 (터치는 가로채지 않는다) */
+const dismissKeyboard = () => {
+	Keyboard.dismiss();
+	return false;
+};
+
 const SearchTab = () => {
 	const { showToast } = useToast();
 	const { t } = useTranslation();
@@ -62,6 +69,7 @@ const SearchTab = () => {
 		setPicker(next);
 	};
 	const listRef = useRef<any>(null);
+	const scrollTop = useScrollTop(listRef);
 	useScrollToTop(listRef);
 
 	// 최근 검색어 (최신순, 최대 RECENT_CAP개)
@@ -258,8 +266,9 @@ const SearchTab = () => {
 	};
 
 	// 안드로이드는 액티비티가 adjustResize 라 KeyboardAvoidingView 로 다시 밀면 이중 축소된다
+	// 버튼·입력창·목록이 가져가지 않은 빈 영역 터치는 여기까지 올라온다 → 키보드만 닫고 터치는 넘긴다
 	return (
-		<KeyboardAvoidingView style={styles.safe} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+		<KeyboardAvoidingView style={styles.safe} behavior={Platform.OS === 'ios' ? 'padding' : undefined} onStartShouldSetResponder={dismissKeyboard}>
 			{/* 검색 입력 (타이틀/구분선 없음) */}
 			<View style={styles.header}>
 				<View style={styles.searchBox}>
@@ -370,7 +379,7 @@ const SearchTab = () => {
 			</View>
 
 			{/* 태블릿에서만 2단 — 검색 결과 카드는 블록형이라 열을 나눠도 본문이 눌리지 않는다 */}
-			<FlatList
+			<FlatList onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16}
 				ref={listRef}
 				data={visible}
 				extraData={bmUids}
@@ -381,7 +390,8 @@ const SearchTab = () => {
 				renderItem={renderItem}
 				numColumns={isTablet ? 2 : 1}
 				columnWrapperStyle={isTablet ? styles.gridRow : undefined}
-				contentContainerStyle={styles.list}
+				// 결과가 없으면 빈 상태가 남은 높이를 다 써서 정중앙에 온다
+				contentContainerStyle={[styles.list, ready && visible.length === 0 && styles.listFill]}
 				keyboardShouldPersistTaps="handled"
 				keyboardDismissMode="on-drag"
 				onScrollBeginDrag={Keyboard.dismiss}
@@ -409,6 +419,8 @@ const SearchTab = () => {
 						)
 					}
 			/>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			<DetailSheet
 				visible={!!detail}
@@ -492,6 +504,7 @@ const styles = themed(() => StyleSheet.create({
 	dropValueRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 	dropValue: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	listFill: { flexGrow: 1 },
 	gridRow: { justifyContent: 'space-between' },
 	gridCell: { width: '49%' },
 	countBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xs, backgroundColor: Colors.background },

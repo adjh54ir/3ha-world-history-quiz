@@ -10,8 +10,11 @@
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="remove" />
   <uses-permission android:name="android.permission.USE_EXACT_ALARM" tools:node="remove" />
 
-  <!-- 앱은 진동을 쓰지 않는다. 라이브러리가 끌고 들어오는 선언까지 병합 단계에서 제거한다 -->
-  <uses-permission android:name="android.permission.VIBRATE" tools:node="remove" />
+  <!-- 정답·오답·카드 뒤집기 햅틱(expo-haptics, src/utils/HapticUtils.ts)이 Vibrator 를 쓴다 -->
+  <uses-permission android:name="android.permission.VIBRATE" />
+
+  <!-- 녹음 기능이 없다. expo-audio 가 끌고 들어오는 마이크 권한을 병합 단계에서 제거한다 -->
+  <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
 
   <!-- 기기를 껐다 켜도 예약 알림이 살아 있어야 한다 -->
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

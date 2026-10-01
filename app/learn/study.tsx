@@ -22,6 +22,7 @@ import { playComplete, playFlip, playPop } from '@/src/utils/SoundUtils';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
+import { reportQuizIssue } from '@/src/utils/ReportIssue';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const ITEM_W = contentWidth;
@@ -504,6 +505,15 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 								<IconComponent type="materialIcons" name="flip" size={scaledSize(14)} color={Colors.textMuted} />
 								<Text style={styles.tapHintMiniText}>{t('learn.study.tapToFront')}</Text>
 							</TouchableOpacity>
+							{/* 내용 오류 제보 — 메일 본문에 항목 정보를 채워 연다 */}
+							<TouchableOpacity
+								style={styles.reportBtn}
+								activeOpacity={0.7}
+								hitSlop={8}
+								onPress={() => reportQuizIssue({ uid: card.uid, domain: card.domain, prompt: card.title, answer: card.meaning, explanation: card.examples?.join(' / ') })}>
+								<IconComponent type="materialIcons" name="outlined-flag" size={scaledSize(14)} color={Colors.textMuted} />
+								<Text style={styles.reportBtnText}>{t('learn.study.reportIssue')}</Text>
+							</TouchableOpacity>
 						</TouchableOpacity>
 					</ScrollView>
 					</Animated.View>
@@ -590,6 +600,8 @@ const styles = themed(() => StyleSheet.create({
 	tapHintText: { fontSize: Typography.body, fontWeight: '700' },
 	tapHintMini: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.sm, marginBottom: SpacingV.xs, paddingVertical: SpacingV.sm },
 	tapHintMiniText: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted },
+	reportBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginBottom: SpacingV.sm, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt },
+	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted },
 	sectionBox: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: SpacingV.md },
 	meaningHighlightBox: { backgroundColor: Colors.successSoft, borderColor: withAlpha(Colors.success, '40') },
 	meaningLabel: { fontSize: Typography.footnote, fontWeight: '900', marginTop: 0, marginBottom: SpacingV.sm },

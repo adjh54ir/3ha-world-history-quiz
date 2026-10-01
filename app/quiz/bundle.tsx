@@ -18,6 +18,7 @@ import LearnHubService from '@/src/services/LearnHubService';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
 import DifficultyPickerModal, { DifficultyOption } from '@/src/screens/modal/DifficultyPickerModal';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /** 시작 시 즉시 생성할 첫 묶음 문항 수 (나머지는 백그라운드로 이어붙임) */
 const FIRST_CHUNK = 20;
@@ -46,6 +47,7 @@ const QuizBundle = () => {
 	);
 	const visibleDomains = topicTab === 'main' ? mainDomains : subDomains;
 	const listRef = useRef<ScrollView>(null);
+	const scrollTop = useScrollTop(listRef);
 	/** 탭 전환 — 목록·선택을 갈아 끼우고 스크롤을 맨 위로 되돌린다 */
 	const changeTopicTab = (next: 'main' | 'sub') => {
 		if (next === topicTab) return;
@@ -170,7 +172,9 @@ const QuizBundle = () => {
 				})}
 			</View>
 
-			<ScrollView ref={listRef} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+			<View style={{ flex: 1 }}>
+			<ScrollView onScroll={scrollTop.onScroll} scrollEventThrottle={16} ref={listRef} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
 				<View style={styles.heroCard}>
 					<Image
 						source={topicTab === 'main'
@@ -229,6 +233,9 @@ const QuizBundle = () => {
 					);
 				})}
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+			</View>
 
 			<BottomButton
 				label={selected.length > 0 ? t('quiz.bundle.startWith', { count: selected.length }) : t('quiz.bundle.startAll', { tab: tabLabel })}

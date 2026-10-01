@@ -142,10 +142,10 @@ const TowerChallengeScreen = () => {
 					<View style={styles.heartRow}>
 						{tower.attempts > 0 ? (
 							Array.from({ length: Math.min(tower.attempts, 5) }).map((_, i) => (
-								<IconComponent key={i} type="materialIcons" name="favorite" size={16} color={Colors.error} />
+								<IconComponent key={i} type="materialIcons" name="favorite" size={scaledSize(16)} color={Colors.error} />
 							))
 						) : (
-							<IconComponent type="materialIcons" name="favorite-border" size={16} color={Colors.onBrandBorder} />
+							<IconComponent type="materialIcons" name="favorite-border" size={scaledSize(16)} color={Colors.onBrandBorder} />
 						)}
 						<Text style={styles.attemptCount}>{t('tower.challenge.attemptCount', { count: tower.attempts })}</Text>
 					</View>
@@ -158,7 +158,7 @@ const TowerChallengeScreen = () => {
 					activeOpacity={0.85}
 					accessibilityRole="button"
 					accessibilityLabel={t('tower.challenge.adA11y')}>
-					<IconComponent type="materialIcons" name="play-circle-filled" size={20} color={Colors.textInverse} />
+					<IconComponent type="materialIcons" name="play-circle-filled" size={scaledSize(20)} color={Colors.textInverse} />
 					<View style={styles.adTextWrap}>
 						<Text style={styles.adTitle}>{t('tower.challenge.adButton')}</Text>
 						<Text style={styles.adSub}>
@@ -224,7 +224,7 @@ const TowerChallengeScreen = () => {
 					<IconComponent
 						type="materialIcons"
 						name={canChallenge ? 'bolt' : 'play-circle-filled'}
-						size={18}
+						size={scaledSize(18)}
 						color={canChallenge ? readableOn(floor.color) : Colors.textInverse}
 					/>
 					<Text style={[styles.challengeButtonText, canChallenge && { color: readableOn(floor.color) }]}>
@@ -249,7 +249,7 @@ const TowerChallengeScreen = () => {
 			/>
 			<View style={styles.clearedCopy}>
 				<View style={styles.clearedTitleRow}>
-					<IconComponent type="materialIcons" name="emoji-events" size={24} color={Colors.gold} />
+					<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(24)} color={Colors.gold} />
 					<Text style={styles.allClearedTitle}>{t('tower.challenge.allClearedTitle')}</Text>
 				</View>
 				<Text style={styles.allClearedSub}>{t('tower.challenge.allClearedSub')}</Text>
@@ -269,7 +269,7 @@ const TowerChallengeScreen = () => {
 					</View>
 					{isLocked ? (
 						<View style={styles.floorThumbLocked}>
-							<IconComponent type="materialIcons" name="lock" size={18} color={Colors.onBrandBorder} />
+							<IconComponent type="materialIcons" name="lock" size={scaledSize(18)} color={Colors.onBrandBorder} />
 						</View>
 					) : (
 						<Image source={floor.bossImage} style={styles.floorThumb} contentFit="contain" />
@@ -281,10 +281,10 @@ const TowerChallengeScreen = () => {
 						</Text>
 					</View>
 					{/* 어두운 패널 위 — primary 는 라이트 테마에서 1.8:1 로 묻혀 한 단 밝은 파랑을 쓴다 (다크의 primaryLight 는 남색이라 라이트 원값 고정) */}
-					{state === 'cleared' && <IconComponent type="materialIcons" name="check-circle" size={22} color={LIGHT_COLORS.primaryLight} />}
+					{state === 'cleared' && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(22)} color={LIGHT_COLORS.primaryLight} />}
 					{/* 작은 글씨를 층 색으로 두면 1층 파랑이 어두운 패널 위에서 4.5:1 아래로 떨어진다 — 층 색은 줄 테두리가 맡는다 */}
 					{state === 'current' && <Text style={styles.floorTag}>{t('tower.challenge.currentTag')}</Text>}
-					{isLocked && <IconComponent type="materialIcons" name="lock" size={18} color={Colors.onBrandBorder} />}
+					{isLocked && <IconComponent type="materialIcons" name="lock" size={scaledSize(18)} color={Colors.onBrandBorder} />}
 				</View>
 			</FadeInUp>
 		);
@@ -300,7 +300,7 @@ const TowerChallengeScreen = () => {
 					<View style={styles.headerSide}>
 						{__DEV__ && (
 							<TouchableOpacity onPress={handleDevReset} style={styles.devButton} activeOpacity={0.8}>
-								<IconComponent type="materialIcons" name="build" size={16} color={Colors.warning} />
+								<IconComponent type="materialIcons" name="build" size={scaledSize(16)} color={Colors.warning} />
 								<Text style={styles.devButtonText}>DEV</Text>
 							</TouchableOpacity>
 						)}
@@ -310,7 +310,7 @@ const TowerChallengeScreen = () => {
 						<Text style={styles.headerSub}>{t('tower.challenge.subtitle')}</Text>
 					</View>
 					<View style={[styles.headerSide, styles.headerSideRight]}>
-						<CharacterGuideButton onPress={guide.open} color={Colors.onBrandTextSoft} size={20} />
+						<CharacterGuideButton onPress={guide.open} color={Colors.onBrandTextSoft} size={scaledSize(20)} />
 					</View>
 				</View>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View, type StyleProp, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -31,6 +31,12 @@ interface Props {
  * - 배경 탭 영역을 시트 위에 겹치지 않게 깔아 내부 스크롤 제스처를 가로채지 않는다.
  * - 새 하단 팝업은 반드시 이 컴포넌트를 쓴다. (오버레이·손잡이·insets 를 화면마다 다시 만들지 말 것)
  */
+/** 시트 안 빈 영역을 누르면 키보드를 닫는다 (터치는 가로채지 않는다) */
+const dismissKeyboard = () => {
+	Keyboard.dismiss();
+	return false;
+};
+
 const BottomSheet: React.FC<Props> = ({ visible, onClose, children, maxHeightRatio = 0.88, heightRatio, handle = true, footer, contentStyle }) => {
 	const { t } = useTranslation();
 	const insets = useSafeAreaInsets();
@@ -48,7 +54,7 @@ const BottomSheet: React.FC<Props> = ({ visible, onClose, children, maxHeightRat
 			<KeyboardAvoidingView style={styles.overlay} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} accessibilityLabel={t('common.close')} onPress={onClose} />
 				<SheetIn visible={visible} style={sizeStyle}>
-					<View accessibilityViewIsModal style={[styles.sheet, heightRatio ? styles.sheetFill : null, { paddingBottom: SpacingV.lg + insets.bottom }, contentStyle]}>
+					<View accessibilityViewIsModal onStartShouldSetResponder={dismissKeyboard} style={[styles.sheet, heightRatio ? styles.sheetFill : null, { paddingBottom: SpacingV.lg + insets.bottom }, contentStyle]}>
 						{handle && <View style={styles.handle} />}
 						{children}
 						{footer}

@@ -170,7 +170,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 						borderColor: i < correctCount ? accentColor : Colors.onBrandWatermark,
 					},
 				]}>
-				{i < correctCount && <IconComponent type="materialIcons" name="check" size={10} color={Colors.darkBackground} />}
+				{i < correctCount && <IconComponent type="materialIcons" name="check" size={scaledSize(10)} color={Colors.darkBackground} />}
 			</View>
 		));
 
@@ -268,7 +268,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 												},
 											],
 										}}>
-										<IconComponent type="materialIcons" name="star" size={36} color={Colors.gold} />
+										<IconComponent type="materialIcons" name="star" size={scaledSize(36)} color={Colors.gold} />
 									</Animated.View>
 								))}
 							</View>
@@ -329,7 +329,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 												<IconComponent
 													type="materialIcons"
 													name={review.isCorrect ? 'check-circle' : 'cancel'}
-													size={18}
+													size={scaledSize(18)}
 													color={review.isCorrect ? correctColor : Colors.errorPale}
 												/>
 												{/* 맞힌 문제만 접힌 채로 열리므로, 펼칠 수 있다는 표시도 그쪽에만 둔다 */}
@@ -337,7 +337,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 													<IconComponent
 														type="materialIcons"
 														name={open ? 'expand-less' : 'expand-more'}
-														size={18}
+														size={scaledSize(18)}
 														color={Colors.onBrandTextSoft}
 													/>
 												)}
@@ -366,9 +366,9 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 								 */}
 								{wrongCount > 0 && !!onReview && (
 									<TouchableOpacity style={styles.reviewGoButton} onPress={onReview} activeOpacity={0.85} accessibilityRole="button">
-										<IconComponent type="materialCommunityIcons" name="notebook-edit-outline" size={18} color={Colors.gold} />
+										<IconComponent type="materialCommunityIcons" name="notebook-edit-outline" size={scaledSize(18)} color={Colors.gold} />
 										<Text style={styles.reviewGoText}>{t('tower.result.goReview', { count: wrongCount })}</Text>
-										<IconComponent type="materialIcons" name="chevron-right" size={18} color={Colors.gold} />
+										<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(18)} color={Colors.gold} />
 									</TouchableOpacity>
 								)}
 							</View>
@@ -386,7 +386,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 					{/* 버튼 - 항상 하단 고정 */}
 					<View style={styles.buttonsContainer}>
 						<TouchableOpacity onPress={onHome} style={styles.btnSecondary}>
-							<IconComponent type="materialIcons" name="home" size={20} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="home" size={scaledSize(20)} color={Colors.textInverse} />
 							<Text style={styles.btnSecondaryText}>{t('tower.result.home')}</Text>
 						</TouchableOpacity>
 
@@ -394,13 +394,13 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 							onNext && (
 								<TouchableOpacity onPress={onNext} style={[styles.btnPrimary, { backgroundColor: Colors.warning }]}>
 									<Text style={[styles.btnPrimaryText, { color: Colors.darkBackground }]}>NEXT LEVEL</Text>
-									<IconComponent type="materialIcons" name="arrow-forward" size={20} color={Colors.darkBackground} />
+									<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={Colors.darkBackground} />
 								</TouchableOpacity>
 							)
 						) : (
 							<TouchableOpacity onPress={onRetry} style={[styles.btnPrimary, { backgroundColor: Colors.error }]}>
 								{/* 다크에서 error 는 밝은 살몬(#F87171)이 되어 흰 글씨가 2.8:1 로 뭉개진다 — 면 밝기에 맞춰 고른다 */}
-								<IconComponent type="materialIcons" name="refresh" size={20} color={readableOn(Colors.error)} />
+								<IconComponent type="materialIcons" name="refresh" size={scaledSize(20)} color={readableOn(Colors.error)} />
 								<Text style={[styles.btnPrimaryText, { color: readableOn(Colors.error) }]}>RETRY</Text>
 							</TouchableOpacity>
 						)}

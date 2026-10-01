@@ -34,6 +34,7 @@ import TabHeader from '@/src/screens/common/TabHeader';
 import { TAB_ILLUSTRATIONS } from '@/src/const/ConstTabIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /** 그라데이션 테두리로 한 번 더 강조하는 상위 희귀도 */
 const HIGH_RARITY = new Set(['epic', 'legend']);
@@ -147,6 +148,7 @@ const Stats = () => {
 	// 홈의 '획득한 뱃지'에서 넘어오면 해당 뱃지 상세를 바로 연다
 	const params = useLocalSearchParams<{ ach?: string }>();
 	const scrollRef = useRef<any>(null);
+	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 
 	useFocusEffect(
@@ -369,7 +371,7 @@ const Stats = () => {
 
 	return (
 		<View style={styles.safe}>
-			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16} ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				<TabHeader
 					title={t('stats.header.title')}
 					sub={t('stats.header.sub')}
@@ -692,11 +694,13 @@ const Stats = () => {
 
 			</FadeInUp>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 			<AppModal visible={showAchSheet} transparent animationType="fade" onRequestClose={() => setShowAchSheet(false)}>
 				<View style={styles.achSheetOverlay}>
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setShowAchSheet(false)} />
 					<SheetIn visible={showAchSheet} style={styles.achSheetWrap}>
-						<View style={[styles.achSheet, { paddingBottom: insets.bottom }]}>
+						<View style={[styles.achSheet, { paddingBottom: SpacingV.lg + insets.bottom }]}>
 							<View style={styles.achSheetHandle} />
 							<View style={styles.achSheetHead}>
 								<Text style={styles.achSheetTitle}>{t('stats.ach.title')}</Text>

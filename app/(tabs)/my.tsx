@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Linking, Image, Platform, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Linking, Image, Platform, FlatList, AppState } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { router, useFocusEffect } from 'expo-router';
 import DeviceInfo from 'react-native-device-info';
@@ -40,6 +40,7 @@ import TabHeader from '@/src/screens/common/TabHeader';
 import { TAB_ILLUSTRATIONS } from '@/src/const/ConstTabIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 interface ResetRow {
 	key: string;
@@ -94,6 +95,7 @@ const Setting = () => {
 		if (mode === theme) return;
 		setTheme(mode);
 		setThemeMode(mode);
+		showToast(t(mode === 'dark' ? 'settings.toast.themeDark' : 'settings.toast.themeLight'), mode === 'dark' ? 'dark-mode' : 'light-mode');
 	};
 	const toggleBgm = (v: boolean) => {
 		setBgmOn(v);
@@ -106,6 +108,7 @@ const Setting = () => {
 
 	const openAppSettings = () => Linking.openSettings().catch(() => { });
 	const scrollRef = useRef<any>(null);
+	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 
 	// 함께 쓰기 좋은 상식·퀴즈 앱만 노출 (수픽·한국어 상식 퀴즈·한자 급수 퀴즈·무한 수학 퀴즈·냥픽·멍픽)
@@ -145,11 +148,21 @@ const Setting = () => {
 		}, [refreshPermissionState]),
 	);
 
+	// 시스템 설정에서 권한을 바꾸고 돌아오면 탭 포커스가 바뀌지 않으므로 앱 복귀 시에도 다시 읽는다
+	useEffect(() => {
+		const sub = AppState.addEventListener('change', (state) => {
+			if (state === 'active') refreshPermissionState();
+		});
+		return () => sub.remove();
+	}, [refreshPermissionState]);
+
 	const manageNotificationPermission = async () => {
 		if (notifGranted) return openAppSettings();
 		const granted = await RequestNotificationPermission();
-		if (granted) setNotifGranted(true);
-		else openAppSettings();
+		if (granted) {
+			setNotifGranted(true);
+			showToast(t('settings.toast.notifGranted'), 'notifications-active');
+		} else openAppSettings();
 	};
 
 	const manageTrackingPermission = async () => {
@@ -158,7 +171,9 @@ const Setting = () => {
 		const current = await check(permission);
 		if (current === RESULTS.DENIED) {
 			const result = await request(permission);
-			setTrackingGranted(result === RESULTS.GRANTED);
+			const granted = result === RESULTS.GRANTED;
+			setTrackingGranted(granted);
+			showToast(t(granted ? 'settings.toast.trackingGranted' : 'settings.toast.trackingDenied'), granted ? 'check-circle' : 'info-outline');
 			return;
 		}
 		openAppSettings();
@@ -288,7 +303,7 @@ const Setting = () => {
 
 	return (
 		<View style={styles.safe}>
-			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16} ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				{/* 헤더를 스크롤 안에 두어 목록과 함께 밀려 올라가게 한다 */}
 				<TabHeader title={t('settings.header.title')} sub={t('settings.header.sub')} illustration={TAB_ILLUSTRATIONS.my} />
 				<FadeInUp>
@@ -435,9 +450,7 @@ const Setting = () => {
 								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.notification')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.notificationDesc')}</Text>
 							</View>
-							<View style={[styles.permPill, notifGranted ? styles.permOn : styles.permOff]}>
-								<Text style={[styles.permText, notifGranted ? styles.permTextOn : styles.permTextOff]}>{notifGranted == null ? t('settings.permission.checking') : notifGranted ? t('settings.permission.granted') : t('settings.permission.request')}</Text>
-							</View>
+							<PermPill granted={notifGranted} />
 						</TouchableOpacity>
 						{Platform.OS === 'ios' && (
 							<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={manageTrackingPermission}>
@@ -448,9 +461,7 @@ const Setting = () => {
 									<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.tracking')}</Text>
 									<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.trackingDesc')}</Text>
 								</View>
-								<View style={[styles.permPill, trackingGranted ? styles.permOn : styles.permOff]}>
-									<Text style={[styles.permText, trackingGranted ? styles.permTextOn : styles.permTextOff]}>{trackingGranted == null ? t('settings.permission.checking') : trackingGranted ? t('settings.permission.granted') : t('settings.permission.request')}</Text>
-								</View>
+								<PermPill granted={trackingGranted} />
 							</TouchableOpacity>
 						)}
 					</View>
@@ -499,6 +510,16 @@ const Setting = () => {
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">adjh54ir@gmail.com</Text>
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
+						</TouchableOpacity>
+						<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={() => Linking.openURL(HOMEPAGE_URL).catch(() => { })}>
+							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
+								<IconComponent type="materialIcons" name="language" size={scaledSize(20)} color={Colors.primaryDeep} />
+							</View>
+							<View style={styles.rowBody}>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.homepage')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.info.homepageDesc')}</Text>
+							</View>
+							<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
 						</TouchableOpacity>
 						<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={() => router.push('/opensource')}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.surfaceAlt }]}>
@@ -559,6 +580,8 @@ const Setting = () => {
 
 				</FadeInUp>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			<DailyAlarmModal visible={showAlarm} onClose={() => setShowAlarm(false)} onChange={setReminderOn} />
 
@@ -578,6 +601,22 @@ const Setting = () => {
 
 export default withRemountOnFocus(Setting);
 
+/** 제작자(EcodeLab) 공식 홈페이지 */
+const HOMEPAGE_URL = 'https://ecodelab.im/main';
+
+/** 권한 상태 배지 — 허용됨은 체크, 미설정은 눌러서 설정으로 간다는 화살표를 함께 보여 준다 */
+const PermPill = ({ granted }: { granted: boolean | null }) => {
+	const { t } = useTranslation();
+	const on = !!granted;
+	const label = granted == null ? t('settings.permission.checking') : on ? t('settings.permission.granted') : t('settings.permission.request');
+	return (
+		<View style={[styles.permPill, on ? styles.permOn : styles.permOff]}>
+			{granted != null && <IconComponent type="materialIcons" name={on ? 'check-circle' : 'arrow-forward'} size={scaledSize(14)} color={on ? Colors.success : Colors.primary} />}
+			<Text style={[styles.permText, on ? styles.permTextOn : styles.permTextOff]} numberOfLines={1}>{label}</Text>
+		</View>
+	);
+};
+
 const styles = themed(() => StyleSheet.create({
 	subHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Layout.sectionGap, marginBottom: SpacingV.sm },
 	subHeadIcon: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.sm, alignItems: 'center', justifyContent: 'center' },
@@ -593,7 +632,7 @@ const styles = themed(() => StyleSheet.create({
 	shareIconImg: { width: '100%', height: '100%' },
 	shareCardBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.md },
 	shareCardBtnText: { flexShrink: 1, color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800', textAlign: 'center' },
-	permPill: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
+	permPill: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill },
 	permOn: { backgroundColor: Colors.successSoft },
 	permOff: { backgroundColor: Colors.primaryBg },
 	permText: { fontSize: Typography.footnote, fontWeight: '800' },

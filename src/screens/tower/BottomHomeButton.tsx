@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { scaledSize } from '@/src/utils';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -35,7 +36,7 @@ const BottomHomeButton = ({
 	return (
 		<View style={styles.wrapper}>
 			<TouchableOpacity style={[styles.button, { borderColor }]} onPress={onPress} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel={t('tower.homeButton.a11y')}>
-				<IconComponent type="materialIcons" name="home" size={14} color={iconColor} />
+				<IconComponent type="materialIcons" name="home" size={scaledSize(14)} color={iconColor} />
 				<Text style={[styles.text, { color: textColor }]}>HOME</Text>
 			</TouchableOpacity>
 		</View>

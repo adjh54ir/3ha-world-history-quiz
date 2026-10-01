@@ -30,6 +30,7 @@ import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { ensureTowerDay, useTower } from '@/src/store/slice/TowerSlice';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 type ModeKey = 'mix' | 'bundle' | 'ox' | 'blank' | 'initial' | 'picture' | 'flagMatch' | 'match' | 'bookmark' | 'wrongReview' | 'weakFocus' | 'exam' | 'league';
 
@@ -70,6 +71,7 @@ const MODES: ModeCard[] = themed(() => ([
 const Challenge = () => {
 	const { t } = useTranslation();
 	const scrollRef = useRef<any>(null);
+	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 	const [tab, setTab] = useState<ChallengeTab>('time');
 	// 타임챌린지 탭: 내 기록만 노출(전체 순위는 랭킹 화면에서) + 랭킹 참여 상태
@@ -222,7 +224,7 @@ const Challenge = () => {
 
 	return (
 		<View style={styles.safe}>
-			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16} ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				<TabHeader
 					title={t('challenge.header.title')}
 					sub={t('challenge.header.sub')}
@@ -441,6 +443,8 @@ const Challenge = () => {
 					</>
 				)}
 		</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			{/* 🎉 신기록 축하 — 한 번 터지고 스스로 정리된다 */}
 			{/* 타임챌린지 규칙 안내 — 최초 1회, 홈에서 고른 캐릭터가 설명 */}

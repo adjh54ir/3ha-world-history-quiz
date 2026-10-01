@@ -12,7 +12,50 @@
       "googleServicesFile": "./GoogleService-Info.plist",
       "requireFullScreen": true,
       "infoPlist": {
-        "NSUserTrackingUsageDescription": "사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다."
+        "NSUserTrackingUsageDescription": "사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다.",
+        "NSPhotoLibraryUsageDescription": "이 앱은 사진을 읽거나 저장하지 않습니다. 앱에 포함된 이미지 표시 라이브러리가 사진 보관함 기능을 참조하고 있어 안내 문구를 둡니다."
+      },
+      "privacyManifests": {
+        "NSPrivacyTracking": true,
+        "NSPrivacyTrackingDomains": [
+          "app-measurement.com",
+          "googleads.g.doubleclick.net",
+          "pagead2.googlesyndication.com",
+          "tpc.googlesyndication.com",
+          "www.googleadservices.com"
+        ],
+        "NSPrivacyCollectedDataTypes": [],
+        "NSPrivacyAccessedAPITypes": [
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "CA92.1",
+              "1C8F.1",
+              "C56D.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "0A2A.1",
+              "3B52.1",
+              "C617.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "E174.1",
+              "85F4.1"
+            ]
+          },
+          {
+            "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategorySystemBootTime",
+            "NSPrivacyAccessedAPITypeReasons": [
+              "35F9.1"
+            ]
+          }
+        ]
       }
     },
     "android": {
@@ -28,7 +71,15 @@
         "android.permission.INTERNET",
         "android.permission.POST_NOTIFICATIONS",
         "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE",
         "com.google.android.gms.permission.AD_ID"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.USE_EXACT_ALARM",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
       ]
     },
     "web": {
@@ -53,7 +104,14 @@
           ]
         }
       ],
-      "expo-audio",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
+        }
+      ],
       [
         "expo-splash-screen",
         {

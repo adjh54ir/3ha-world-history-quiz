@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/src/translations';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
@@ -43,17 +44,17 @@ interface Grade {
 	tier: string;
 	icon: string;
 	gradient: [string, string];
-	/** 등급 메시지 키 (special.levelTest.gradeMsg.*) — title/tier 는 기록에 저장되는 값이라 한국어 그대로 둔다 */
+	/** 등급 메시지 키 (special.levelTest.gradeMsg.*) — title/tier 는 special.levelTest.grades.* (기록에 저장되는 값이라 앱 언어 문구로 남는다) */
 	msg: 'master' | 'expert' | 'advanced' | 'intermediate' | 'beginner' | 'novice';
 }
 
 const GRADES: Grade[] = themed(() => ([
-	{ min: 95, title: '최상급', tier: '세계 상식 마스터', icon: 'workspace-premium', gradient: [Colors.primaryDark, Colors.primaryDeep], msg: 'master' },
-	{ min: 85, title: '특급', tier: '고수의 경지', icon: 'military-tech', gradient: [Colors.primary, Colors.primaryDark], msg: 'expert' },
-	{ min: 70, title: '고급', tier: '탄탄한 실력', icon: 'trending-up', gradient: [Colors.primaryTint1, Colors.primary], msg: 'advanced' },
-	{ min: 55, title: '중급', tier: '기본기 완성', icon: 'insights', gradient: [Colors.primaryTint2, Colors.primaryTint1], msg: 'intermediate' },
-	{ min: 40, title: '초급', tier: '성장하는 중', icon: 'auto-graph', gradient: [Colors.primaryTint3, Colors.primaryTint2], msg: 'beginner' },
-	{ min: 0, title: '입문', tier: '세계 여행 첫걸음', icon: 'flag', gradient: [Colors.primaryTint4, Colors.primaryTint3], msg: 'novice' },
+	{ min: 95, title: i18n.t('special.levelTest.grades.master.title'), tier: i18n.t('special.levelTest.grades.master.tier'), icon: 'workspace-premium', gradient: [Colors.primaryDark, Colors.primaryDeep], msg: 'master' },
+	{ min: 85, title: i18n.t('special.levelTest.grades.expert.title'), tier: i18n.t('special.levelTest.grades.expert.tier'), icon: 'military-tech', gradient: [Colors.primary, Colors.primaryDark], msg: 'expert' },
+	{ min: 70, title: i18n.t('special.levelTest.grades.advanced.title'), tier: i18n.t('special.levelTest.grades.advanced.tier'), icon: 'trending-up', gradient: [Colors.primaryTint1, Colors.primary], msg: 'advanced' },
+	{ min: 55, title: i18n.t('special.levelTest.grades.intermediate.title'), tier: i18n.t('special.levelTest.grades.intermediate.tier'), icon: 'insights', gradient: [Colors.primaryTint2, Colors.primaryTint1], msg: 'intermediate' },
+	{ min: 40, title: i18n.t('special.levelTest.grades.beginner.title'), tier: i18n.t('special.levelTest.grades.beginner.tier'), icon: 'auto-graph', gradient: [Colors.primaryTint3, Colors.primaryTint2], msg: 'beginner' },
+	{ min: 0, title: i18n.t('special.levelTest.grades.novice.title'), tier: i18n.t('special.levelTest.grades.novice.tier'), icon: 'flag', gradient: [Colors.primaryTint4, Colors.primaryTint3], msg: 'novice' },
 ]));
 
 const gradeOf = (rate: number): Grade => GRADES.find((g) => rate >= g.min) ?? GRADES[GRADES.length - 1];

@@ -3,8 +3,9 @@ import { Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
-import { scaleHeight } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
+import DateUtils from '@/src/utils/DateUtils';
+import { recordAdClick } from '@/src/services/AdClickGuard';
 
 type AdUnitIdType = string;
 
@@ -41,7 +42,9 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 		}
 	});
 
+	// 배너 onAdOpened 는 사용자가 배너를 눌러 광고 랜딩이 열릴 때 온다 → 클릭으로 센다
 	const handleAdOpened = async () => {
+		void recordAdClick();
 		try {
 			const instanceId = await analytics().getAppInstanceId();
 			await analytics().logEvent('ad_banner_opened', {
@@ -56,7 +59,7 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 				device_brand: DeviceInfo.getBrand(),
 				system_version: DeviceInfo.getSystemVersion(),
 				app_instance_id: instanceId,
-				timestamp: new Date().toISOString(),
+				timestamp: DateUtils.toISOString(),
 			});
 		} catch (error) {
 			console.error('🔥 Failed to log ad click:', error);
@@ -86,11 +89,12 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 };
 
 const styles = themed(() => StyleSheet.create({
+	// 너비는 화면 전체 — ANCHORED_ADAPTIVE_BANNER 가 이 폭에 맞춰 높이를 계산한다
 	container: {
+		width: '100%',
 		alignItems: 'center',
 		backgroundColor: 'transparent',
-		marginBottom: scaleHeight(3),
-	},
+			},
 }));
 
 export default React.memo(AdmobBannerAd);

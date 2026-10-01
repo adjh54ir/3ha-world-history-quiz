@@ -16,6 +16,8 @@ import { GOOGLE_ADMOV_ANDROID_OPEN_APP, GOOGLE_ADMOV_IOS_OPEN_APP } from '@env';
 import { shouldShowAppOpenAd } from '@/src/services/AppOpenAdGate';
 import { resolveAdUnitId } from '@/src/screens/common/ads/adUnitId';
 import { logAdEvent } from '@/src/screens/common/ads/adLogEvent';
+import DateUtils from '@/src/utils/DateUtils';
+import { recordAdClick } from '@/src/services/AdClickGuard';
 
 const AD_UNIT_ID = resolveAdUnitId(
 	Platform.select({ ios: GOOGLE_ADMOV_IOS_OPEN_APP, android: GOOGLE_ADMOV_ANDROID_OPEN_APP }),
@@ -40,7 +42,7 @@ let pendingShow = false;
 let watching = false;
 
 /** 받아둔 광고가 아직 쓸 수 있는 상태인지 */
-const isFresh = (): boolean => !!ad && ad.loaded && Date.now() - loadedAt < EXPIRY_MS;
+const isFresh = (): boolean => !!ad && ad.loaded && DateUtils.getTimestamp() - loadedAt < EXPIRY_MS;
 
 /**
  * 광고를 미리 받아둔다. 중복 호출·유효 광고 보유 시에는 아무것도 하지 않는다.
@@ -57,7 +59,7 @@ export const preloadAppOpenAd = (): void => {
 
 	next.addAdEventListener(AdEventType.LOADED, () => {
 		loading = false;
-		loadedAt = Date.now();
+		loadedAt = DateUtils.getTimestamp();
 		void logAdEvent('ad_app_open_loaded', LOG);
 		if (pendingShow) {
 			pendingShow = false;
@@ -74,7 +76,10 @@ export const preloadAppOpenAd = (): void => {
 	});
 
 	next.addAdEventListener(AdEventType.OPENED, () => void logAdEvent('ad_app_open_opened', LOG));
-	next.addAdEventListener(AdEventType.CLICKED, () => void logAdEvent('ad_app_open_clicked', LOG));
+	next.addAdEventListener(AdEventType.CLICKED, () => {
+		void recordAdClick();
+		void logAdEvent('ad_app_open_clicked', LOG);
+	});
 
 	next.addAdEventListener(AdEventType.CLOSED, () => {
 		showing = false;
@@ -96,7 +101,7 @@ const showAppOpenAd = async (): Promise<void> => {
 	if (showing || !isFresh()) return;
 
 	showing = true;
-	lastShowAt = Date.now();
+	lastShowAt = DateUtils.getTimestamp();
 	try {
 		await ad!.show();
 	} catch (e) {
@@ -135,7 +140,7 @@ const watchForeground = (): void => {
 		const returned = state === 'active' && prev === 'background';
 		prev = state;
 		if (!returned || showing) return;
-		if (Date.now() - lastShowAt < SELF_RETURN_GUARD_MS) return;
+		if (DateUtils.getTimestamp() - lastShowAt < SELF_RETURN_GUARD_MS) return;
 		void requestShowIfDue();
 	});
 };

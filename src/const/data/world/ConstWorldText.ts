@@ -91,7 +91,7 @@ export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
 		modes: {
 			city: { label: '개최 도시', question: '이 대회가 열린 도시는?' },
 			host: { label: '개최국', question: '이 대회를 연 나라는?' },
-			top: { label: '종합 1위', question: '이 대회에서 금메달을 가장 많이 딴 나라는?' },
+			top: { label: '종합 1위', question: '이 대회 메달 순위 1위 나라는? (금메달 수 우선)' },
 		},
 	},
 	space: {
@@ -110,7 +110,7 @@ export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
 		modes: {
 			city: { label: '개최 도시', question: '이 대회가 열린 도시는?' },
 			host: { label: '개최국', question: '이 대회를 연 나라는?' },
-			top: { label: '종합 1위', question: '이 대회에서 금메달을 가장 많이 딴 나라는?' },
+			top: { label: '종합 1위', question: '이 대회 메달 순위 1위 나라는? (금메달 수 우선)' },
 		},
 	},
 	worldcup: {

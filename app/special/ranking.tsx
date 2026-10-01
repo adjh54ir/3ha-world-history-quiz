@@ -23,6 +23,7 @@ import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 const LOTTIE_EMPTY = require('@/src/assets/lottie/empty.json');
@@ -35,6 +36,7 @@ const TABS = themed(() => ([
 ]));
 
 const Ranking = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const insets = useSafeAreaInsets();
@@ -253,7 +255,8 @@ const Ranking = () => {
 					<Text style={styles.emptyText}>{t('special.ranking.empty')}</Text>
 				</View>
 			) : (
-				<FlatList
+				<View style={{ flex: 1 }}>
+				<FlatList ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16}
 					data={rows}
 					keyExtractor={(r, i) => `${r.rank}-${r.nickname}-${i}`}
 					contentContainerStyle={[styles.list, { paddingBottom: (mine ? 0 : insets.bottom) + Layout.screenBottom }]}
@@ -271,6 +274,9 @@ const Ranking = () => {
 						</FadeInUp>
 					)}
 				/>
+				{/* 긴 목록 — 우하단 맨 위로 버튼 (목록 영역 기준이라 아래 내 순위 바와 겹치지 않는다) */}
+				<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={!mine} />
+				</View>
 			)}
 
 			{/* 내 순위 바 — 하단 SafeArea 확보 */}

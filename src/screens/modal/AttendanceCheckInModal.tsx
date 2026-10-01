@@ -18,17 +18,25 @@ import { hapticSuccess } from '@/src/utils/HapticUtils';
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 import { playFinish } from '@/src/utils/SoundUtils';
 import DateUtils from '@/src/utils/DateUtils';
+import i18n from '@/src/translations';
 import { themed } from '@/src/utils/ThemedStyles';
 
-// 달력 한국어 로케일 (요일/월 한글 표기)
-LocaleConfig.locales.ko = {
-	monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-	dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-	today: '오늘',
+// 달력 로케일 — 월·요일 이름은 번역 파일(calendar.*)에서 가져온다
+// 번역이 아직 안 올라온 상태면 i18n 이 키 문자열을 돌려준다 → 배열이 아니면 숫자 표기로 대신해 달력이 죽지 않게 한다
+const tList = (key: 'calendar.monthNames' | 'calendar.dayNames' | 'calendar.dayNamesShort', fallback: string[]): string[] => {
+	const v = i18n.t(key, { returnObjects: true });
+	return Array.isArray(v) ? (v as string[]) : fallback;
 };
-LocaleConfig.defaultLocale = 'ko';
+const monthNames = tList('calendar.monthNames', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
+const weekFallback = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+LocaleConfig.locales.app = {
+	monthNames,
+	monthNamesShort: monthNames,
+	dayNames: tList('calendar.dayNames', weekFallback),
+	dayNamesShort: tList('calendar.dayNamesShort', weekFallback),
+	today: i18n.t('calendar.today'),
+};
+LocaleConfig.defaultLocale = 'app';
 
 interface Props {
 	visible: boolean;

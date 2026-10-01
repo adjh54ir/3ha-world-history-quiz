@@ -5,6 +5,7 @@
  * 완료 횟수를 세어 N회에 1번만 통과시키고, 최소 간격도 함께 둔다.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isAdClickCapped } from '@/src/services/AdClickGuard';
 
 const COUNT_KEY = 'INTERSTITIAL_COUNT';
 const LAST_SHOWN_KEY = 'INTERSTITIAL_LAST_AT';
@@ -20,6 +21,8 @@ const MIN_GAP_MS = 3 * 60 * 1000;
  */
 export const shouldShowInterstitial = async (now: number): Promise<boolean> => {
 	try {
+		// 오늘 광고 클릭이 상한을 넘었으면 전면 광고는 띄우지 않는다
+		if (await isAdClickCapped()) return false;
 		const [rawCount, rawLast] = await AsyncStorage.multiGet([COUNT_KEY, LAST_SHOWN_KEY]);
 		const count = (parseInt(rawCount[1] ?? '0', 10) || 0) + 1;
 		const lastAt = parseInt(rawLast[1] ?? '0', 10) || 0;

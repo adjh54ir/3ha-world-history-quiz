@@ -25,10 +25,12 @@ import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 type Tab = 'bookmark' | 'wrong';
 
 const Library = () => {
+	const scrollTop = useScrollTop();
 	const { showToast } = useToast();
 	const { t } = useTranslation();
 	const params = useLocalSearchParams();
@@ -175,6 +177,7 @@ const Library = () => {
 	};
 
 	const isBookmark = tab === 'bookmark';
+	const isEmpty = !loading && (isBookmark ? bookmarks.length === 0 : wrongs.length === 0);
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
@@ -202,9 +205,10 @@ const Library = () => {
 				<CategoryScopeChips value={scope} onChange={setScope} showCount={false} style={{ backgroundColor: Colors.background }} />
 			</View>
 
-			<ScrollView style={styles.scroll} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+			{/* 빈 상태는 남은 화면 높이를 다 써서 정중앙에 온다 (위쪽에 붙어 보이지 않게) */}
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={[styles.list, isEmpty && styles.listFill]} showsVerticalScrollIndicator={false}>
 				{/* key 로 리마운트해야 탭·로딩 전환에도 진입 연출이 다시 재생된다 */}
-				<FadeInUp key={`${tab}-${loading}`}>
+				<FadeInUp key={`${tab}-${loading}`} style={isEmpty ? styles.listFill : undefined}>
 				{loading ? (
 					<View>
 						{[0, 1, 2, 3, 4].map((i) => (
@@ -293,6 +297,8 @@ const Library = () => {
 				)}
 				</FadeInUp>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			{/* 즐겨찾기 상세 — 검색과 동일한 공통 팝업(원본 카드 데이터 사용) */}
 			<DetailSheet
@@ -356,6 +362,7 @@ const styles = themed(() => StyleSheet.create({
 	segTextActive: { color: Colors.textStrong },
 	scroll: { flex: 1 },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	listFill: { flexGrow: 1 },
 	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.md },
 	reviewCta: {
 		flexDirection: 'row',

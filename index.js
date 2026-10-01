@@ -15,6 +15,15 @@ import { renderRootComponent } from 'expo-router/build/renderRootComponent';
 
 import { bootstrapTheme } from './src/utils/ThemeReload';
 
+// 운영 빌드는 콘솔을 전부 끈다. babel transform-remove-console 은 NODE_ENV=production 일 때만 돌아
+// 빌드 환경에 따라 빠질 수 있으므로, 남은 호출과 라이브러리 로그까지 런타임에서 한 번 더 막는다.
+if (!__DEV__) {
+	const noop = () => {};
+	['log', 'info', 'warn', 'error', 'debug', 'trace'].forEach((level) => {
+		console[level] = noop;
+	});
+}
+
 const Root = () => {
 	const [ready, setReady] = useState(false);
 

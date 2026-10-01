@@ -22,6 +22,8 @@ let bgmEnabled = true;
 let currentPlayer: any = null;
 let currentTrack: BgmTrack | null = null;
 let isAv = false;
+/** start/stop 호출마다 올라가는 번호 — 준비(await) 중에 stop 되거나 다른 트랙이 요청되면 늦게 끝난 start 를 버린다 */
+let generation = 0;
 
 /** BGM on/off (설정 연동용) */
 export const setBgmEnabled = (v: boolean) => {
@@ -47,6 +49,7 @@ export const loadBgmSetting = async () => {
 
 /** 현재 재생 중인 BGM 정지 + 리소스 해제 */
 export const stopBgm = () => {
+	generation += 1;
 	const player = currentPlayer;
 	currentPlayer = null;
 	currentTrack = null;
@@ -72,10 +75,14 @@ export const startBgm = async (track: BgmTrack) => {
 	if (!bgmEnabled) return;
 	if (currentTrack === track && currentPlayer) return; // 이미 재생 중
 	stopBgm(); // 다른 트랙 정리
+	const my = generation;
 
 	try {
 		// 오디오 세션 설정(무음 스위치 대응)은 SoundUtils.preloadSounds에서 1회 수행한다
 		await preloadSounds();
+		// 기다리는 사이 화면을 벗어났거나(stopBgm) 다른 start 가 들어왔으면 플레이어를 만들지 않는다
+		// (만들면 아무도 멈출 수 없는 BGM 이 화면 밖에서 계속 돈다)
+		if (my !== generation || !bgmEnabled) return;
 		const audio = require('expo-audio');
 		const player = audio.createAudioPlayer(SOURCES[track]);
 		player.loop = true;

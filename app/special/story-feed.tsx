@@ -21,12 +21,14 @@ import { LearnType } from '@/src/types/data/LearnType';
 import { useToast } from '@/src/context/ToastContext';
 import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 이야기 피드
  * - 전 주제의 이름·설명·더 알아보기를 읽을거리 카드로 넘겨봐요 (즐겨찾기 가능)
  */
 const StoryFeed = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [scope, setScope] = useState<string>(ALL_SCOPE);
@@ -86,7 +88,9 @@ const StoryFeed = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<ScrollView style={styles.scroll} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+			<View style={{ flex: 1 }}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
 				<SectionHead title={t('special.storyFeed.sectionTitle')} sub={t('special.storyFeed.sectionSub')} />
 				</FadeInUp>
@@ -168,6 +172,9 @@ const StoryFeed = () => {
 				</TouchableOpacity>
 				</FadeInUp>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+			</View>
 
 			{/* 하단 홈 버튼 (공용 BottomButton) */}
 			<BottomButton label={t('special.home')} icon="home" onPress={() => router.replace('/(tabs)/home' as never)} />

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Modal, type ModalProps } from 'react-native';
+import { ToastHost } from '@/src/context/ToastContext';
 
 /**
  * 현재 화면에 떠 있는 AppModal 수.
@@ -28,6 +29,7 @@ const STACK_FALLBACK_MS = 400;
  * 모달 공통 래퍼.
  * - 숨겨진 모달을 네이티브 트리에 남기지 않아 연속 전환 시 이전 모달이 번쩍이는 현상을 막습니다.
  * - 다른 모달이 아직 떠 있으면 그 모달이 완전히 닫힌 뒤에 올립니다(겹침 방지).
+ * - 모달 안에서 부른 토스트(useToast)도 보이도록 ToastHost 를 함께 그립니다.
  * - 하단 여백은 각 시트가 자체 insets.bottom 으로 처리하므로 래퍼에서 패딩을 주지 않습니다.
  */
 const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullScreen', animationType = 'fade', children, ...props }: ModalProps) => {
@@ -92,6 +94,8 @@ const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullSc
 			navigationBarTranslucent
 			hardwareAccelerated>
 			{children}
+			{/* 모달은 별도 창이라 루트 토스트가 가려진다 — 모달 안에서 토스트를 그린다 */}
+			<ToastHost />
 		</Modal>
 	);
 };

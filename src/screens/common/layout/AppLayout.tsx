@@ -9,7 +9,7 @@ import { SpacingV } from '@/src/const/ConstDesign';
 
 import AdmobBannerAd from '@/src/screens/common/ads/AdmobBannerAd';
 import { useTopBarColor } from '@/src/utils/TopBarColor';
-import { contentWidth, isTablet } from '@/src/utils/DementionUtils';
+import { contentWidth, isTablet, scaleHeight } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 /**
@@ -113,7 +113,7 @@ const AppLayout = () => {
 			    높이를 애니메이션으로 접고 펴서 차단 경로 진입·이탈 때 본문이 툭 튀지 않게 한다 */}
 			<Animated.View style={[styles.bannerClip, { backgroundColor: bg }, bannerClipStyle]}>
 				<View style={styles.bannerWrap} onLayout={(e) => setBannerH(e.nativeEvent.layout.height)}>
-					<AdmobBannerAd paramMarginTop={Platform.OS === 'android' ? 4 : 2} paramMarginBottom={8} />
+					<AdmobBannerAd paramMarginTop={Platform.OS === 'android' ? 4 : 2} paramMarginBottom={scaleHeight(12)} />
 				</View>
 			</Animated.View>
 

@@ -26,12 +26,14 @@ import CharacterLevelsModal from '@/src/screens/modal/CharacterLevelsModal';
 import { getDomainIllustration } from '@/src/const/ConstIllustrationAssets';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 카테고리 상세 (Toss 스타일)
  * - 카테고리 메인색 헤더 + 플랫 카드 + 명확한 위계
  */
 const LearnCategory = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, 'capital');
@@ -151,7 +153,7 @@ const LearnCategory = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				{/* 헤더 — 카테고리 메인색 틴트 */}
 				<View style={[styles.hero, { backgroundColor: withAlpha(accent, '12') }]}>
 					{!!categoryIllustration && (
@@ -314,6 +316,8 @@ const LearnCategory = () => {
 					</FadeInUp>
 				</View>
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			{/* 학습 모드 선택 모달 */}
 			<BottomSheet visible={showModeModal} onClose={() => setShowModeModal(false)}>

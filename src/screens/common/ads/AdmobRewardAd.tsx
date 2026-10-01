@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RewardedAd, TestIds, RewardedAdEventType, AdEventType } from 'react-native-google-mobile-ads';
+import { recordAdClick } from '@/src/services/AdClickGuard';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -47,6 +48,11 @@ const AdmobRewardAd: React.FC<{
 			}
 		});
 
+		// 보상형은 막지 않지만, 클릭은 하루 광고 클릭 수에 함께 센다
+		const unsubscribeClicked = ad.addAdEventListener(AdEventType.CLICKED, () => {
+			void recordAdClick();
+		});
+
 		const unsubscribeFailed = ad.addAdEventListener(AdEventType.ERROR, (error) => {
 			console.warn('❌ 리워드 광고 실패:', error?.message ?? error);
 			onFailed();
@@ -59,6 +65,7 @@ const AdmobRewardAd: React.FC<{
 			unsubscribeEarned();
 			unsubscribeClosed();
 			unsubscribeFailed();
+			unsubscribeClicked();
 		};
 	}, []);
 

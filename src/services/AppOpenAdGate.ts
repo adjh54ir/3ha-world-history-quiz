@@ -6,6 +6,7 @@
  * 스토리지 오류는 광고를 띄우지 않는 쪽(false)으로 넘어간다.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { isAdClickCapped } from '@/src/services/AdClickGuard';
 
 /** 최초 설치 1회 노출을 이미 소비했는지 */
 const FIRST_KEY = 'APP_OPEN_FIRST_SHOWN';
@@ -21,6 +22,8 @@ export const EVERY = 2;
  */
 export const shouldShowAppOpenAd = async (): Promise<boolean> => {
 	try {
+		// 오늘 광고 클릭이 상한을 넘었으면 전면 광고는 띄우지 않는다 (카운터도 소비하지 않음)
+		if (await isAdClickCapped()) return false;
 		const first = await AsyncStorage.getItem(FIRST_KEY);
 		// 최초 설치: 무조건 노출
 		if (!first) {

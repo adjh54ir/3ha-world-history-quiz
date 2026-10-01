@@ -20,7 +20,10 @@ const toUrl = (repo) => {
 		.replace(/\.git$/, '')
 		.replace(/^git:\/\//, 'https://')
 		.replace(/^ssh:\/\/git@/, 'https://')
-		.replace(/^github:/, 'https://github.com/');
+		.replace(/^github:/, 'https://github.com/')
+		.replace(/^git@github\.com:/, 'https://github.com/')
+		// 'owner/repo' 단축 표기는 GitHub 주소로 펼친다
+		.replace(/^([\w.-]+\/[\w.-]+)$/, 'https://github.com/$1');
 };
 
 /** license 필드가 없으면 LICENSE 파일 본문에서 추정 */

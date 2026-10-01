@@ -14,8 +14,10 @@ import LearnHubService from '@/src/services/LearnHubService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { getDomainIllustration } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 export default function SubQuizHub() {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const domains = LearnHubService.getSubQuizDomainList();
 
@@ -23,7 +25,7 @@ export default function SubQuizHub() {
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<CommonHeader title={t('quiz.common.tabSub')} onBack={() => router.back()} />
 
-			<ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
 				<ExpoImage source={require('@/src/assets/selection/quiz-sub-hero.webp')} style={styles.heroBanner} contentFit="cover" accessible={false} />
 				<View style={styles.introCard}>
 					<View style={styles.introIcon}>
@@ -68,6 +70,8 @@ export default function SubQuizHub() {
 					);
 				})}
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 		</SafeAreaView>
 	);
 }

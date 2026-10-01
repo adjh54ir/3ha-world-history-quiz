@@ -13,6 +13,7 @@ import { useToast } from '@/src/context/ToastContext';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 설정 > 오픈소스 라이브러리
@@ -21,6 +22,7 @@ import { useTranslation } from 'react-i18next';
  *   이 목록이 곧 그 조건을 지키는 자리다 — 빼면 안 된다 (ConstLandmarkCredits 참고).
  */
 const OpenSource = () => {
+	const scrollTop = useScrollTop();
 	const { showToast } = useToast();
 	const { t } = useTranslation();
 
@@ -60,7 +62,7 @@ const OpenSource = () => {
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<CommonHeader title={t('opensource.title')} onBack={() => router.back()} />
-			<FlatList
+			<FlatList ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16}
 				data={OPEN_SOURCE_LIBS}
 				keyExtractor={(item) => item.name}
 				renderItem={renderItem}
@@ -111,6 +113,8 @@ const OpenSource = () => {
 					</View>
 				}
 			/>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 		</SafeAreaView>
 	);
 };

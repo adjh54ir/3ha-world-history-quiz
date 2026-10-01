@@ -438,7 +438,7 @@ const TowerQuizScreen = () => {
 			<SafeAreaView style={styles.safeArea} edges={['left', 'right', 'bottom']}>
 				<View style={styles.header}>
 					<TouchableOpacity onPress={handleExit} style={styles.exitButton} accessibilityRole="button" accessibilityLabel={t('tower.quiz.exitA11y')}>
-						<IconComponent type="materialIcons" name="close" size={28} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="close" size={scaledSize(28)} color={Colors.textInverse} />
 					</TouchableOpacity>
 
 					<View style={styles.headerCenter}>
@@ -451,7 +451,7 @@ const TowerQuizScreen = () => {
 					<View style={styles.headerRight}>
 						{__DEV__ && (
 							<TouchableOpacity hitSlop={Layout.hitSlop} onPress={handleAutoPass} style={styles.devButton}>
-								<IconComponent type="materialIcons" name="flash-on" size={20} color={Colors.warning} />
+								<IconComponent type="materialIcons" name="flash-on" size={scaledSize(20)} color={Colors.warning} />
 							</TouchableOpacity>
 						)}
 						<View style={styles.scoreContainer}>
@@ -461,7 +461,7 @@ const TowerQuizScreen = () => {
 									<IconComponent
 										type="materialIcons"
 										name={i < correctCount ? 'star' : 'star-border'}
-										size={18}
+										size={scaledSize(18)}
 										color={i < correctCount ? Colors.gold : Colors.onBrandBorder}
 									/>
 								</Animated.View>
@@ -526,7 +526,7 @@ const TowerQuizScreen = () => {
 								},
 							]}>
 							<View style={[styles.bigStarGlow, { backgroundColor: withAlpha(Colors.gold, '47') }]} />
-							<IconComponent type="materialIcons" name="star" size={72} color={Colors.gold} />
+							<IconComponent type="materialIcons" name="star" size={scaledSize(72)} color={Colors.gold} />
 						</Animated.View>
 					</View>
 
@@ -554,7 +554,7 @@ const TowerQuizScreen = () => {
 						/>
 						<View style={styles.questionCardGradient}>
 							<View style={[styles.questionBadge, { backgroundColor: withAlpha(towerLevel.color, '33') }]}>
-								<IconComponent type="materialCommunityIcons" name="help-circle-outline" size={14} color={towerLevel.color} />
+								<IconComponent type="materialCommunityIcons" name="help-circle-outline" size={scaledSize(14)} color={towerLevel.color} />
 								<Text style={[styles.questionBadgeText, { color: towerLevel.color }]}>{t('tower.quiz.badge')}</Text>
 							</View>
 							{/*
@@ -613,8 +613,8 @@ const TowerQuizScreen = () => {
 											</View>
 											{currentQuestion.optionFlags && <CountryFlags name={option} height={16} />}
 											<Text style={[styles.answerText, { color: ink }]}>{option}</Text>
-											{showCorrect && <IconComponent type="materialIcons" name="check-circle" size={24} color={ink} />}
-											{showWrong && <IconComponent type="materialIcons" name="cancel" size={24} color={ink} />}
+											{showCorrect && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(24)} color={ink} />}
+											{showWrong && <IconComponent type="materialIcons" name="cancel" size={scaledSize(24)} color={ink} />}
 										</View>
 									</View>
 								</TouchableOpacity>
@@ -635,7 +635,7 @@ const TowerQuizScreen = () => {
 								<IconComponent
 									type="materialIcons"
 									name={currentQuestionIndex < totalQuestions - 1 ? 'arrow-forward' : 'check'}
-									size={24}
+									size={scaledSize(24)}
 									color={readableOn(towerLevel.color)}
 								/>
 							</View>

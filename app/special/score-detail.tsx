@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useCallback, useRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Image as ExpoImage } from 'expo-image';
@@ -11,7 +11,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { accuracyColor, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Shadow, Border } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt} from '@/src/utils';
 import LearnProgressService, { LearnStats } from '@/src/services/LearnProgressService';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -24,6 +24,7 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import Tag from '@/src/screens/common/atomic/Tag';
 import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 // 전체(종합) 히어로·목록 아이콘용 앱 메인 아이콘 이미지
 const MAIN_ICON = require('@/src/assets/mainIcon.webp');
@@ -35,7 +36,6 @@ const MAIN_ICON = require('@/src/assets/mainIcon.webp');
  */
 const ScoreDetail = () => {
 	const { t } = useTranslation();
-	const insets = useSafeAreaInsets();
 	const domains = LearnHubService.getDomainList();
 	const [stats, setStats] = useState<LearnStats | null>(null);
 	const [selectedKey, setSelectedKey] = useState<string | null>(null);
@@ -46,13 +46,7 @@ const ScoreDetail = () => {
 	const [sortBy, setSortBy] = useState<'name' | 'score' | 'rate'>('name');
 	// 상단 이동 FAB — 일정 높이 이상 내려가면 서서히 등장
 	const scrollRef = useRef<ScrollView>(null);
-	const [showTopBtn, setShowTopBtn] = useState(false);
-	const fabAnim = useRef(new Animated.Value(0)).current;
-	useEffect(() => {
-		const a = Animated.timing(fabAnim, { toValue: showTopBtn ? 1 : 0, duration: 220, easing: Easing.out(Easing.quad), useNativeDriver: true });
-		a.start();
-		return () => a.stop();
-	}, [showTopBtn, fabAnim]);
+	const scrollTop = useScrollTop(scrollRef);
 	useFocusEffect(
 		useCallback(() => {
 			LearnProgressService.getStats().then(setStats);
@@ -140,12 +134,14 @@ const ScoreDetail = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
+			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+			<View style={{ flex: 1 }}>
 			<ScrollView
 				ref={scrollRef}
 				contentContainerStyle={styles.container}
 				showsVerticalScrollIndicator={false}
 				scrollEventThrottle={16}
-				onScroll={(e) => setShowTopBtn(e.nativeEvent.contentOffset.y > scaleHeight(320))}>
+				onScroll={scrollTop.onScroll}>
 				{/* 헤더를 뺀 대신 화면 제목은 스크롤 첫 줄에 크게 */}
 				<Text style={styles.screenTitle}>{t('special.scoreDetail.title')}</Text>
 				<FadeInUp>
@@ -372,23 +368,9 @@ const ScoreDetail = () => {
 				</FadeInUp>
 			</ScrollView>
 
-			{/* 상단 이동 FAB — 스크롤을 충분히 내렸을 때만 노출 */}
-			<Animated.View
-				pointerEvents={showTopBtn ? 'auto' : 'none'}
-				style={[
-					styles.topFab,
-					{ bottom: insets.bottom + scaleHeight(78) },
-					{ opacity: fabAnim, transform: [{ scale: fabAnim.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1] }) }, { translateY: fabAnim.interpolate({ inputRange: [0, 1], outputRange: [scaleHeight(12), 0] }) }] },
-				]}>
-				<TouchableOpacity
-					style={styles.topFabBtn}
-					activeOpacity={0.85}
-					accessibilityRole="button"
-					accessibilityLabel={t('special.scoreDetail.toTop')}
-					onPress={() => scrollRef.current?.scrollTo({ y: 0, animated: true })}>
-					<IconComponent type="materialIcons" name="arrow-upward" size={scaledSize(22)} color={Colors.textInverse} />
-				</TouchableOpacity>
-			</Animated.View>
+			{/* 상단 이동 — 공통 맨 위로 버튼 (하단 홈 버튼 위) */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+			</View>
 
 			{/* 레벨별 캐릭터 모달 — 공통 팝업(열람 전용, 선택은 홈에서만) */}
 			<CharacterLevelsModal visible={showCharModal} onClose={() => setShowCharModal(false)} initialTab={selectedKey ?? 'overall'} />
@@ -421,17 +403,6 @@ const styles = themed(() => StyleSheet.create({
 
 	// 상단 이동 FAB
 	// bottom 은 렌더 시 insets.bottom + 하단 바 높이(≈62) + 여백(16)으로 준다
-	topFab: { position: 'absolute', right: Layout.screenH },
-	topFabBtn: {
-		width: scaleWidth(48),
-		height: scaleWidth(48),
-		borderRadius: Radius.xxl,
-		backgroundColor: Colors.primary,
-		alignItems: 'center',
-		justifyContent: 'center',
-		...Shadow.floating,
-	},
-
 	// 히어로
 	banner: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap, overflow: 'hidden' },
 	charSlot: { width: scaleArt(104), height: scaleArt(104), borderRadius: Radius.xl, backgroundColor: Colors.surface, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },

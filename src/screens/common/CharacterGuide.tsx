@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useIsFocused } from '@react-navigation/native';
 import { Image as ExpoImage } from 'expo-image';
 import { useTranslation } from 'react-i18next';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
@@ -99,6 +100,7 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 	accent = Colors.primary,
 	confirmLabel: confirmLabelProp,
 }) => {
+	const insets = useSafeAreaInsets();
 	const { t } = useTranslation();
 	const title = titleProp ?? t('guide.title');
 	const confirmLabel = confirmLabelProp ?? t('guide.confirm');
@@ -191,7 +193,7 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 
 	return (
 		<AppModal visible transparent animationType="fade" onRequestClose={onClose}>
-			<TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel={t('guide.nextA11y')}>
+			<TouchableOpacity style={[styles.backdrop, { paddingBottom: Layout.screenBottom + insets.bottom }]} activeOpacity={1} onPress={next} accessibilityRole="button" accessibilityLabel={t('guide.nextA11y')}>
 				<Animated.View style={[styles.wrap, { opacity: enter, transform: [{ translateY }] }]}>
 					{/* 말풍선 */}
 					<View style={[styles.bubble, { borderColor: withAlpha(accent, '55') }]}>
@@ -247,7 +249,8 @@ export default CharacterGuide;
 const CHAR = scaleArt(112);
 
 const styles = themed(() => StyleSheet.create({
-	backdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', paddingBottom: Layout.screenBottom },
+	// 하단 여백은 안드로이드 내비게이션 키(insets.bottom)만큼 더해서 렌더 시 준다
+	backdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end' },
 	wrap: { width: '100%', maxWidth: Layout.sheetMaxWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, alignItems: 'flex-start' },
 	bubble: {
 		alignSelf: 'stretch',

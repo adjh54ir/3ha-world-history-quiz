@@ -17,6 +17,7 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 세계 상식 학습 — 여러 주제를 골라 묶어서 학습하거나, 그냥 랜덤으로 학습
@@ -31,6 +32,7 @@ const StudyBundle = () => {
 	const [topicTab, setTopicTab] = useState<'main' | 'sub'>('main');
 	const domains = topicTab === 'main' ? mainDomains : subDomains;
 	const listRef = useRef<ScrollView>(null);
+	const scrollTop = useScrollTop(listRef);
 	const [selected, setSelected] = useState<string[]>([]);
 	const [showMode, setShowMode] = useState(false);
 	const [randomMode, setRandomMode] = useState(false);
@@ -95,7 +97,9 @@ const StudyBundle = () => {
 				})}
 			</View>
 
-			<ScrollView ref={listRef} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+			<View style={{ flex: 1 }}>
+			<ScrollView onScroll={scrollTop.onScroll} scrollEventThrottle={16} ref={listRef} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
 					<View style={styles.heroCard}>
 						<Image
@@ -151,6 +155,9 @@ const StudyBundle = () => {
 					);
 				})}
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+			</View>
 
 			<BottomButton
 				label={selected.length > 0 ? t('learn.bundle.startWith', { count: selected.length }) : t('learn.bundle.pickTopic')}

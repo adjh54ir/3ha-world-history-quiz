@@ -25,6 +25,7 @@ import DateUtils from '@/src/utils/DateUtils';
 import { useToast } from '@/src/context/ToastContext';
 import { SHARED_STATE_ILLUSTRATIONS } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -46,6 +47,7 @@ const cleanReviewExplanation = (explanation: string, answer: string): string => 
  * - 정답을 맞히면 해당 항목은 오답노트에서 자동 제거(reviewMode)
  */
 const QuizWrongReview = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const params = useLocalSearchParams();
 	const category = stringParam(params.category, '');
@@ -124,7 +126,9 @@ const QuizWrongReview = () => {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
 				<CommonHeader title={headerTitle} onBack={() => router.back()} right={<CharacterGuideButton onPress={guide.open} />} />
-				<FlatList
+				{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+				<View style={{ flex: 1 }}>
+				<FlatList ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16}
 					data={items}
 					keyExtractor={(w, i) => `${w.uid}-${i}`}
 					contentContainerStyle={styles.introList}
@@ -168,6 +172,9 @@ const QuizWrongReview = () => {
 						);
 					}}
 				/>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+				</View>
 				<DetailSheet
 					visible={!!detail}
 					accent={accent}

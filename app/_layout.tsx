@@ -59,6 +59,15 @@ const initAdMob = () => {
 		mobileAds()
 			.initialize()
 			.then((s: unknown) => {
+				// 광고 소리를 끈다 — 앱을 켜자마자 동영상 광고가 붙으면 아무것도 안 눌렀는데 소리부터 난다.
+				// 안드로이드는 initialize() 전에 부르면 네이티브 IllegalStateException 으로 앱이 죽는다 → 반드시 초기화 뒤에 건다.
+				// 앱 열기 광고는 이 뒤에 요청하므로 첫 광고부터 적용된다.
+				try {
+					mobileAds().setAppMuted(true);
+					mobileAds().setAppVolume(0);
+				} catch (e) {
+					console.warn('AdMob 음소거 설정 실패:', e);
+				}
 				console.log('✅ AdMob 초기화 완료:', s);
 				require('@/src/services/AppOpenAdService').initAppOpenAd();
 			})

@@ -18,6 +18,7 @@ import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
 import { LearnType } from '@/src/types/data/LearnType';
 import { EXAM_PACKS, getExamPack, type ExamPack } from '@/src/const/ConstExamPacks';
 import { themed } from '@/src/utils/ThemedStyles';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 테마 코스 (한국어 퀴즈의 시험 대비 팩 화면)
@@ -26,6 +27,7 @@ import { themed } from '@/src/utils/ThemedStyles';
  * - ?pack=geo 로 진입하면 목록을 건너뛰고 해당 팩 소개부터 보여준다.
  */
 const ExamPacks = () => {
+	const scrollTop = useScrollTop();
 	const { t } = useTranslation();
 	const params = useLocalSearchParams<{ pack?: string }>();
 	const [selected, setSelected] = useState<ExamPack | null>(() => getExamPack(params.pack) ?? null);
@@ -106,7 +108,9 @@ const ExamPacks = () => {
 		return (
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
 				<CommonHeader title={selected.title} onBack={() => (params.pack ? router.back() : setSelected(null))} />
-				<ScrollView contentContainerStyle={styles.introWrap} showsVerticalScrollIndicator={false}>
+				{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
+				<View style={{ flex: 1 }}>
+				<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} contentContainerStyle={styles.introWrap} showsVerticalScrollIndicator={false}>
 					<FadeInUp>
 						<View style={[styles.introIcon, { backgroundColor: withAlpha(selected.color, '14') }]}>
 							<IconComponent type="materialIcons" name={selected.icon} size={scaledSize(42)} color={selected.color} />
@@ -158,6 +162,9 @@ const ExamPacks = () => {
 
 					</FadeInUp>
 				</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+				</View>
 
 				{/* 시작 CTA — 스크롤과 무관하게 엄지 닿는 하단에 고정 */}
 				<View style={styles.introFooter}>

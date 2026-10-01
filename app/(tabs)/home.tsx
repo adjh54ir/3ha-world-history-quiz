@@ -44,6 +44,7 @@ import { getDomainLevels, DOMAIN_LEVELS } from '@/src/const/ConstDomainLevels';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 홈 (Toss 스타일 리디자인)
@@ -105,6 +106,7 @@ const Hub = () => {
 	// 서브 퀴즈 주제(월드컵·올림픽) — 메인 점수와 분리된 보너스 콘텐츠
 	const subDomains = LearnHubService.getSubQuizDomainList();
 	const scrollRef = useRef<any>(null);
+	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 
 	const [daily, setDaily] = useState<LearnType.StudyCard | null>(null);
@@ -384,6 +386,7 @@ const Hub = () => {
 	const dismissRecommend = () => {
 		AsyncStorage.setItem(REC_DISMISS_KEY, DateUtils.getLocalDateString()).catch(() => {});
 		Animated.timing(recFade, { toValue: 0, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(() => setRecHidden(true));
+		showToast(t('home.toast.recommendHidden'), 'visibility-off');
 	};
 
 	/** 완주 축하 닫기 → 커리큘럼 카드가 스르륵 사라짐 */
@@ -747,7 +750,7 @@ const Hub = () => {
 
 	return (
 		<View style={styles.safe}>
-			<ScrollView ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<ScrollView onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16} ref={scrollRef} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				{/* 앱 서브타이틀 — 화면 최상단 고정 */}
 				<FadeInUp delay={0}>
 					<View style={styles.appTitleRow}>
@@ -1118,6 +1121,8 @@ const Hub = () => {
 				</FadeInUp>
 				)}
 			</ScrollView>
+			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			{/* 첫 실행 온보딩 — 관심 주제·하루 목표를 정하고 홈에 바로 반영 */}
 			<OnboardingModal

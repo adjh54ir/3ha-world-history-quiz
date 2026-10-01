@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/src/translations';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
@@ -43,10 +44,10 @@ interface TypeInfo {
 }
 
 const TYPES: Record<TypeKey, TypeInfo> = themed(() => ({
-	A: { key: 'A', name: '사색하는 역사가', sub: '세계사형', icon: 'history-edu', gradient: TYPE_RESULT_GRADIENTS.A, domain: 'event' },
-	B: { key: 'B', name: '발길 닿는 여행가', sub: '지리형', icon: 'travel-explore', gradient: TYPE_RESULT_GRADIENTS.B, domain: 'capital' },
-	C: { key: 'C', name: '별을 보는 몽상가', sub: '우주형', icon: 'nights-stay', gradient: TYPE_RESULT_GRADIENTS.C, domain: 'constellation' },
-	D: { key: 'D', name: '이야기 수집가', sub: '신화형', icon: 'auto-awesome', gradient: [Colors.gold, Colors.heat], domain: 'myth' },
+	A: { key: 'A', name: i18n.t('special.typeTest.types.A.name'), sub: i18n.t('special.typeTest.types.A.sub'), icon: 'history-edu', gradient: TYPE_RESULT_GRADIENTS.A, domain: 'event' },
+	B: { key: 'B', name: i18n.t('special.typeTest.types.B.name'), sub: i18n.t('special.typeTest.types.B.sub'), icon: 'travel-explore', gradient: TYPE_RESULT_GRADIENTS.B, domain: 'capital' },
+	C: { key: 'C', name: i18n.t('special.typeTest.types.C.name'), sub: i18n.t('special.typeTest.types.C.sub'), icon: 'nights-stay', gradient: TYPE_RESULT_GRADIENTS.C, domain: 'constellation' },
+	D: { key: 'D', name: i18n.t('special.typeTest.types.D.name'), sub: i18n.t('special.typeTest.types.D.sub'), icon: 'auto-awesome', gradient: [Colors.gold, Colors.heat], domain: 'myth' },
 }));
 
 /** 문항 키 — 질문·선택지 문구는 special.typeTest.questions.<q>.{title,A~D}. 선택지는 항상 A→D 순서 */

@@ -232,22 +232,12 @@ test('국기 맞히기 모드에는 보기 국기를 달지 않는다', () => {
 	});
 });
 
-/**
- * 곁가지가 겹쳐도 되는 자리 — 수도 주제 242개 가운데 84개는 곁가지를 출처의 인구·면적에서 기계로 뽑아 썼다.
- * '인구는 약 4만명이다.' 같은 문장은 나라가 달라도 같아질 수밖에 없다.
- * ponytail: 손으로 다시 쓰기 전까지는 이 문장들만 빼고 본다. 84개를 손으로 쓰면 이 예외를 지워라.
- */
-const GENERATED_FACT = /^(인구는|면적은)/;
-
 test('같은 곁가지 문장이 두 항목에 붙어 있지 않다', () => {
 	// 학습 카드는 항목마다 곁가지 두 줄이 전부다. 같은 문장이 다른 항목에 또 나오면 베껴 쓴 것처럼 보인다.
 	WORLD_TOPICS.forEach((topic) => {
 		const seen = new Map<string, string>();
 		ENTRIES[topic.key].forEach((entry) => {
 			entry.facts.forEach((fact) => {
-				if (GENERATED_FACT.test(fact)) {
-					return;
-				}
 				const before = seen.get(fact);
 				assert.ok(before === undefined, `${topic.key} 안에서 곁가지가 겹친다: "${fact}" (${before} · ${entry.id})`);
 				seen.set(fact, entry.id);
