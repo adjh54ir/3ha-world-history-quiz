@@ -1,0 +1,21 @@
+{
+  "count": 90,
+  "format": "WebP",
+  "width": 512,
+  "height": 512,
+  "uniqueImages": 90,
+  "beforeBytes": 7906002,
+  "afterBytes": 4758788,
+  "generator": "built-in image_gen",
+  "categories": {
+    "신": 50,
+    "인물": 12,
+    "영웅": 13,
+    "괴물": 15
+  },
+  "assetMatchCount": 90,
+  "dataTests": {
+    "passed": 20,
+    "failed": 0
+  }
+}

@@ -62,6 +62,7 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 				title: entry.name,
 				meaning: entry.summary,
 				examples: entry.facts,
+				stories: entry.stories,
 				levelLabel: levelLabel(entry.level),
 				categoryLabel: categoryOf(entry),
 				infoRows: infoRowsOf(entry),

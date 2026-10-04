@@ -1,0 +1,87 @@
+{
+  "points": {
+    "Regulus": {
+      "x": 952.5720791312528,
+      "y": 600.6053103577851
+    },
+    "eta Leo": {
+      "x": 951.815800282329,
+      "y": 435.33302884130484
+    },
+    "Algieba": {
+      "x": 844.0062444991038,
+      "y": 335.3178615668408
+    },
+    "Adhafera": {
+      "x": 864.962382945181,
+      "y": 213.0496542409744
+    },
+    "Rasalas": {
+      "x": 1047.7512728082916,
+      "y": 110.0
+    },
+    "epsilon Leo": {
+      "x": 1110.0,
+      "y": 181.59147192873615
+    },
+    "Zosma": {
+      "x": 414.97311676490426,
+      "y": 311.56304310966016
+    },
+    "Chertan": {
+      "x": 406.60427023774304,
+      "y": 484.2816009214083
+    },
+    "Denebola": {
+      "x": 110.0,
+      "y": 498.7030775324686
+    }
+  },
+  "edges": [
+    [
+      "epsilon Leo",
+      "Rasalas"
+    ],
+    [
+      "Rasalas",
+      "Adhafera"
+    ],
+    [
+      "Adhafera",
+      "Algieba"
+    ],
+    [
+      "Algieba",
+      "eta Leo"
+    ],
+    [
+      "eta Leo",
+      "Regulus"
+    ],
+    [
+      "Algieba",
+      "Zosma"
+    ],
+    [
+      "Regulus",
+      "Chertan"
+    ],
+    [
+      "Zosma",
+      "Chertan"
+    ],
+    [
+      "Zosma",
+      "Denebola"
+    ],
+    [
+      "Chertan",
+      "Denebola"
+    ]
+  ],
+  "width": 1254,
+  "height": 1254,
+  "projection": "uniform gnomonic",
+  "north": "up",
+  "east": "left"
+}

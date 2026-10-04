@@ -1,0 +1,60 @@
+{
+  "frame": "ICRS J2000",
+  "resolver": "CDS Sesame / SIMBAD",
+  "stars": [
+    {
+      "name": "Regulus",
+      "raDeg": 152.09296244,
+      "decDeg": 11.96720878,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Regulus"
+    },
+    {
+      "name": "eta Leo",
+      "raDeg": 151.83313496,
+      "decDeg": 16.76266332,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?eta%20Leo"
+    },
+    {
+      "name": "Algieba",
+      "raDeg": 154.99312733,
+      "decDeg": 19.84148522,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Algieba"
+    },
+    {
+      "name": "Adhafera",
+      "raDeg": 154.17256318,
+      "decDeg": 23.41731699,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Adhafera"
+    },
+    {
+      "name": "Rasalas",
+      "raDeg": 148.19090422,
+      "decDeg": 26.00695119,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Rasalas"
+    },
+    {
+      "name": "epsilon Leo",
+      "raDeg": 146.46280674,
+      "decDeg": 23.77425378,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?epsilon%20Leo"
+    },
+    {
+      "name": "Zosma",
+      "raDeg": 168.52708927,
+      "decDeg": 20.52371814,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Zosma"
+    },
+    {
+      "name": "Chertan",
+      "raDeg": 168.56002363,
+      "decDeg": 15.42957109,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Chertan"
+    },
+    {
+      "name": "Denebola",
+      "raDeg": 177.26490976,
+      "decDeg": 14.57205806,
+      "source": "https://cds.unistra.fr/cgi-bin/nph-sesame/-oxp/S?Denebola"
+    }
+  ]
+}

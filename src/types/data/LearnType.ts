@@ -37,6 +37,7 @@ export declare namespace LearnType {
 		meaning: string; // 핵심 뜻 / 설명
 		description?: string; // 상세 설명 (긴 의미, 정답 해설 등)
 		examples?: string[]; // 더 알아보기 (곁가지 이야기)
+		stories?: string[]; // 짧은 이야기 1~3편 (신화)
 		tags?: string[]; // 연관 키워드
 		levelLabel?: string; // 난이도 라벨 (쉬움/중급 등)
 		categoryLabel?: string; // 세부 카테고리 라벨 (인간관계 등)
