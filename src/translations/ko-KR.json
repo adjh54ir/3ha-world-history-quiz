@@ -742,7 +742,8 @@
                 "question": "문제",
                 "explanation": "해설",
                 "result": "결과 보기",
-                "next": "다음 문제"
+                "next": "다음 문제",
+                "report": "문제가 이상해요"
             },
             "exit": {
                 "title": "종료하시겠습니까?",

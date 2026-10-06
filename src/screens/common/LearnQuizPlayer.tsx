@@ -63,6 +63,7 @@ import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import CountryFlags from '@/src/screens/common/atomic/CountryFlags';
 import { isWideImageRef } from '@/src/const/data/world/ConstWorldImages';
 import { themed } from '@/src/utils/ThemedStyles';
+import { reportQuizIssue } from '@/src/utils/ReportIssue';
 
 // 보기 선택 피드백 애니메이션용 (정답 팝 / 오답 셰이크)
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
@@ -1616,6 +1617,24 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											))}
 										</View>
 									)}
+
+									{/* 문항 오류 제보 — 메일 본문에 문항 정보를 채워 연다 */}
+									<TouchableOpacity
+										style={styles.reportBtn}
+										activeOpacity={0.7}
+										hitSlop={8}
+										onPress={() =>
+											reportQuizIssue({
+												uid: current.uid,
+												domain: current.domain,
+												prompt: [current.guide, current.prompt].filter(Boolean).join(' '),
+												answer: current.options[current.answerIndex],
+												explanation: current.explanation,
+											})
+										}>
+										<IconComponent type="materialIcons" name="outlined-flag" size={scaledSize(14)} color={Colors.textMuted} />
+										<Text style={styles.reportBtnText}>{t('player.explain.report')}</Text>
+									</TouchableOpacity>
 								</ScrollView>
 
 								<TouchableOpacity style={[styles.explainNextBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={onNext}>
@@ -1729,6 +1748,8 @@ const styles = themed(() => StyleSheet.create({
 	explainScroll: { alignSelf: 'stretch', flexShrink: 1 },
 	explainSection: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.sm },
 	explainExample: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(21), marginTop: SpacingV.xs },
+	reportBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginTop: SpacingV.xs, marginBottom: SpacingV.sm, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt },
+	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted },
 	explainDivider: { height: 1, alignSelf: 'stretch', backgroundColor: Colors.border, marginVertical: SpacingV.lg },
 	explainBodyRow: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	explainBodyTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
