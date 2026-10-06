@@ -470,6 +470,26 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 								<Text style={styles.meaningText}>{card.description || card.meaning}</Text>
 							</View>
 
+							{/* 신화 이야기 1~3편 — 뒤집을 때마다 한 편씩 차례로 떠오르도록 revealed 로 다시 마운트한다 */}
+							{!!card.stories && card.stories.length > 0 && (
+								<View style={[styles.sectionBox, styles.storyBox, { backgroundColor: withAlpha(accent, '0D'), borderColor: withAlpha(accent, '33') }]}>
+									<View style={styles.storyHead}>
+										<IconComponent type="materialIcons" name="auto-stories" size={scaledSize(15)} color={accent} />
+										<Text style={[styles.meaningLabel, styles.storyLabel, { color: accent }]}>{t('learn.study.story')}</Text>
+									</View>
+									{card.stories.map((story, i) => (
+										<FadeInUp key={`${revealed ? 'shown' : 'hidden'}-${i}`} delay={160 + i * 120} duration={420} style={[styles.storyItem, i > 0 && [styles.storyItemDivider, { borderTopColor: withAlpha(accent, '26') }]]}>
+											{card.stories!.length > 1 && (
+												<View style={[styles.storyNum, { backgroundColor: withAlpha(accent, '1A') }]}>
+													<Text style={[styles.storyNumText, { color: accent }]}>{i + 1}</Text>
+												</View>
+											)}
+											<Text lineBreakStrategyIOS="hangul-word" style={styles.storyText}>{story}</Text>
+										</FadeInUp>
+									))}
+								</View>
+							)}
+
 							{/* 정보 — infoRows 가 있으면 항목별 표로, 없으면 기존 요약 */}
 							{!!card.infoRows && card.infoRows.length > 0 ? (
 								<View style={[styles.sectionBox, styles.meaningHighlightBox]}>
@@ -610,6 +630,14 @@ const styles = themed(() => StyleSheet.create({
 	flipBackTap: { flex: 1 },
 	meaningText: { fontSize: Typography.title, color: Colors.textStrong, fontWeight: '700', lineHeight: scaleHeight(27), textAlign: 'center' },
 	descText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22) },
+	storyBox: { paddingVertical: SpacingV.lg },
+	storyHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
+	storyLabel: { marginBottom: 0 },
+	storyItem: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
+	storyItemDivider: { marginTop: SpacingV.md, paddingTop: SpacingV.md, borderTopWidth: 1 },
+	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: scaleHeight(2) },
+	storyNumText: { fontSize: Typography.micro, fontWeight: '900' },
+	storyText: { flex: 1, fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(24) },
 	infoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, paddingVertical: SpacingV.xs },
 	infoLabel: { width: scaleWidth(72), fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	infoValue: { flex: 1, fontSize: Typography.footnote, color: Colors.text, lineHeight: scaleHeight(20) },

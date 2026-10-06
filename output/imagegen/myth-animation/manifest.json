@@ -1,0 +1,632 @@
+[
+  {
+    "key": "zeus",
+    "name": "제우스",
+    "kind": "신",
+    "domain": "하늘과 번개",
+    "symbol": "번개와 독수리"
+  },
+  {
+    "key": "hera",
+    "name": "헤라",
+    "kind": "신",
+    "domain": "결혼과 가정",
+    "symbol": "공작"
+  },
+  {
+    "key": "poseidon",
+    "name": "포세이돈",
+    "kind": "신",
+    "domain": "바다와 지진",
+    "symbol": "삼지창"
+  },
+  {
+    "key": "demeter",
+    "name": "데메테르",
+    "kind": "신",
+    "domain": "곡물과 농사",
+    "symbol": "밀 이삭"
+  },
+  {
+    "key": "athena",
+    "name": "아테나",
+    "kind": "신",
+    "domain": "지혜와 전쟁 기술",
+    "symbol": "올빼미와 방패"
+  },
+  {
+    "key": "apollo",
+    "name": "아폴론",
+    "kind": "신",
+    "domain": "태양과 음악, 예언",
+    "symbol": "리라와 월계관"
+  },
+  {
+    "key": "artemis",
+    "name": "아르테미스",
+    "kind": "신",
+    "domain": "달과 사냥",
+    "symbol": "활과 사슴"
+  },
+  {
+    "key": "ares",
+    "name": "아레스",
+    "kind": "신",
+    "domain": "전쟁",
+    "symbol": "창과 투구"
+  },
+  {
+    "key": "aphrodite",
+    "name": "아프로디테",
+    "kind": "신",
+    "domain": "사랑과 아름다움",
+    "symbol": "조개와 비둘기"
+  },
+  {
+    "key": "hephaestus",
+    "name": "헤파이스토스",
+    "kind": "신",
+    "domain": "불과 대장간",
+    "symbol": "망치와 모루"
+  },
+  {
+    "key": "hermes",
+    "name": "헤르메스",
+    "kind": "신",
+    "domain": "전령과 상업, 여행",
+    "symbol": "날개 달린 신발과 지팡이"
+  },
+  {
+    "key": "dionysus",
+    "name": "디오니소스",
+    "kind": "신",
+    "domain": "포도주와 축제",
+    "symbol": "포도 넝쿨과 지팡이"
+  },
+  {
+    "key": "hestia",
+    "name": "헤스티아",
+    "kind": "신",
+    "domain": "화덕과 가정",
+    "symbol": "꺼지지 않는 불"
+  },
+  {
+    "key": "hades",
+    "name": "하데스",
+    "kind": "신",
+    "domain": "저승",
+    "symbol": "보이지 않는 투구와 케르베로스"
+  },
+  {
+    "key": "persephone",
+    "name": "페르세포네",
+    "kind": "신",
+    "domain": "봄과 저승의 왕비",
+    "symbol": "석류"
+  },
+  {
+    "key": "eros",
+    "name": "에로스",
+    "kind": "신",
+    "domain": "사랑의 화살",
+    "symbol": "활과 화살"
+  },
+  {
+    "key": "nike",
+    "name": "니케",
+    "kind": "신",
+    "domain": "승리",
+    "symbol": "날개와 월계관"
+  },
+  {
+    "key": "helios",
+    "name": "헬리오스",
+    "kind": "신",
+    "domain": "태양 마차",
+    "symbol": "네 마리 말이 끄는 마차"
+  },
+  {
+    "key": "selene",
+    "name": "셀레네",
+    "kind": "신",
+    "domain": "달",
+    "symbol": "초승달 관"
+  },
+  {
+    "key": "eos",
+    "name": "에오스",
+    "kind": "신",
+    "domain": "새벽",
+    "symbol": "새벽빛"
+  },
+  {
+    "key": "cronus",
+    "name": "크로노스",
+    "kind": "신",
+    "domain": "농경과 수확",
+    "symbol": "낫"
+  },
+  {
+    "key": "gaia",
+    "name": "가이아",
+    "kind": "신",
+    "domain": "대지",
+    "symbol": "대지"
+  },
+  {
+    "key": "uranus",
+    "name": "우라노스",
+    "kind": "신",
+    "domain": "하늘",
+    "symbol": "밤하늘"
+  },
+  {
+    "key": "pan",
+    "name": "판",
+    "kind": "신",
+    "domain": "목동과 숲",
+    "symbol": "갈대 피리"
+  },
+  {
+    "key": "tyche",
+    "name": "티케",
+    "kind": "신",
+    "domain": "운명과 행운",
+    "symbol": "운명의 수레바퀴"
+  },
+  {
+    "key": "asclepius",
+    "name": "아스클레피오스",
+    "kind": "신",
+    "domain": "의술",
+    "symbol": "뱀이 감긴 지팡이"
+  },
+  {
+    "key": "hecate",
+    "name": "헤카테",
+    "kind": "신",
+    "domain": "마법과 갈림길",
+    "symbol": "횃불"
+  },
+  {
+    "key": "eris",
+    "name": "에리스",
+    "kind": "신",
+    "domain": "불화",
+    "symbol": "황금 사과"
+  },
+  {
+    "key": "hypnos",
+    "name": "히프노스",
+    "kind": "신",
+    "domain": "잠",
+    "symbol": "양귀비"
+  },
+  {
+    "key": "thanatos",
+    "name": "타나토스",
+    "kind": "신",
+    "domain": "죽음",
+    "symbol": "꺼진 횃불"
+  },
+  {
+    "key": "moirai",
+    "name": "모이라이",
+    "kind": "신",
+    "domain": "운명",
+    "symbol": "실과 가위"
+  },
+  {
+    "key": "muses",
+    "name": "무사",
+    "kind": "신",
+    "domain": "예술과 학문",
+    "symbol": "리라와 두루마리"
+  },
+  {
+    "key": "prometheus",
+    "name": "프로메테우스",
+    "kind": "신",
+    "domain": "불을 전한 티탄",
+    "symbol": "횃불"
+  },
+  {
+    "key": "atlas",
+    "name": "아틀라스",
+    "kind": "신",
+    "domain": "하늘을 떠받치는 티탄",
+    "symbol": "천구"
+  },
+  {
+    "key": "pandora",
+    "name": "판도라",
+    "kind": "인물",
+    "domain": "재앙이 든 항아리",
+    "symbol": "항아리"
+  },
+  {
+    "key": "heracles",
+    "name": "헤라클레스",
+    "kind": "영웅",
+    "domain": "열두 과업의 영웅",
+    "symbol": "사자 가죽과 몽둥이"
+  },
+  {
+    "key": "perseus",
+    "name": "페르세우스",
+    "kind": "영웅",
+    "domain": "메두사를 벤 영웅",
+    "symbol": "거울 방패"
+  },
+  {
+    "key": "theseus",
+    "name": "테세우스",
+    "kind": "영웅",
+    "domain": "미노타우로스를 잡은 영웅",
+    "symbol": "실타래"
+  },
+  {
+    "key": "odysseus",
+    "name": "오디세우스",
+    "kind": "영웅",
+    "domain": "트로이 목마와 귀향",
+    "symbol": "목마"
+  },
+  {
+    "key": "achilles",
+    "name": "아킬레우스",
+    "kind": "영웅",
+    "domain": "트로이 전쟁의 용사",
+    "symbol": "창과 방패"
+  },
+  {
+    "key": "jason",
+    "name": "이아손",
+    "kind": "영웅",
+    "domain": "황금 양털 원정",
+    "symbol": "황금 양털"
+  },
+  {
+    "key": "orpheus",
+    "name": "오르페우스",
+    "kind": "영웅",
+    "domain": "저승에 내려간 악사",
+    "symbol": "리라"
+  },
+  {
+    "key": "daedalus",
+    "name": "다이달로스",
+    "kind": "인물",
+    "domain": "미궁을 만든 장인",
+    "symbol": "날개와 밀랍"
+  },
+  {
+    "key": "icarus",
+    "name": "이카로스",
+    "kind": "인물",
+    "domain": "밀랍 날개로 난 소년",
+    "symbol": "녹은 날개"
+  },
+  {
+    "key": "aeneas",
+    "name": "아이네이아스",
+    "kind": "영웅",
+    "domain": "로마의 조상이 된 왕자",
+    "symbol": "아버지를 업은 모습"
+  },
+  {
+    "key": "hector",
+    "name": "헥토르",
+    "kind": "영웅",
+    "domain": "트로이의 맏왕자",
+    "symbol": "투구"
+  },
+  {
+    "key": "paris",
+    "name": "파리스",
+    "kind": "영웅",
+    "domain": "황금 사과를 판정한 왕자",
+    "symbol": "황금 사과"
+  },
+  {
+    "key": "agamemnon",
+    "name": "아가멤논",
+    "kind": "영웅",
+    "domain": "그리스 연합군 총사령관",
+    "symbol": "황금 가면"
+  },
+  {
+    "key": "bellerophon",
+    "name": "벨레로폰",
+    "kind": "영웅",
+    "domain": "페가수스를 탄 영웅",
+    "symbol": "날개 달린 말"
+  },
+  {
+    "key": "oedipus",
+    "name": "오이디푸스",
+    "kind": "영웅",
+    "domain": "스핑크스의 수수께끼를 푼 왕",
+    "symbol": "수수께끼"
+  },
+  {
+    "key": "medusa",
+    "name": "메두사",
+    "kind": "괴물",
+    "domain": "고르곤 세 자매",
+    "symbol": "뱀 머리카락"
+  },
+  {
+    "key": "minotaur",
+    "name": "미노타우로스",
+    "kind": "괴물",
+    "domain": "미궁의 괴물",
+    "symbol": "소머리"
+  },
+  {
+    "key": "cerberus",
+    "name": "케르베로스",
+    "kind": "괴물",
+    "domain": "저승의 문지기",
+    "symbol": "세 개의 머리"
+  },
+  {
+    "key": "hydra",
+    "name": "히드라",
+    "kind": "괴물",
+    "domain": "머리가 여럿인 물뱀",
+    "symbol": "여러 개의 목"
+  },
+  {
+    "key": "chimera",
+    "name": "키마이라",
+    "kind": "괴물",
+    "domain": "여러 짐승이 섞인 괴물",
+    "symbol": "사자 머리와 염소 몸"
+  },
+  {
+    "key": "sphinx",
+    "name": "스핑크스",
+    "kind": "괴물",
+    "domain": "수수께끼를 내는 괴물",
+    "symbol": "사자 몸과 사람 얼굴"
+  },
+  {
+    "key": "siren",
+    "name": "세이렌",
+    "kind": "괴물",
+    "domain": "노래로 홀리는 바다 괴물",
+    "symbol": "노랫소리"
+  },
+  {
+    "key": "cyclops",
+    "name": "키클롭스",
+    "kind": "괴물",
+    "domain": "외눈 거인",
+    "symbol": "하나뿐인 눈"
+  },
+  {
+    "key": "pegasus",
+    "name": "페가수스",
+    "kind": "괴물",
+    "domain": "날개 달린 말",
+    "symbol": "흰 날개"
+  },
+  {
+    "key": "centaur",
+    "name": "켄타우로스",
+    "kind": "괴물",
+    "domain": "반인반마 종족",
+    "symbol": "말의 몸"
+  },
+  {
+    "key": "scylla",
+    "name": "스킬라",
+    "kind": "괴물",
+    "domain": "해협의 괴물",
+    "symbol": "여섯 개의 머리"
+  },
+  {
+    "key": "charybdis",
+    "name": "카립디스",
+    "kind": "괴물",
+    "domain": "바다의 소용돌이",
+    "symbol": "소용돌이"
+  },
+  {
+    "key": "harpy",
+    "name": "하르피이아",
+    "kind": "괴물",
+    "domain": "음식을 채 가는 새 괴물",
+    "symbol": "새의 날개"
+  },
+  {
+    "key": "typhon",
+    "name": "티폰",
+    "kind": "괴물",
+    "domain": "가장 강한 괴물",
+    "symbol": "백 개의 뱀 머리"
+  },
+  {
+    "key": "narcissus",
+    "name": "나르키소스",
+    "kind": "인물",
+    "domain": "제 모습에 반한 소년",
+    "symbol": "수선화"
+  },
+  {
+    "key": "echo",
+    "name": "에코",
+    "kind": "인물",
+    "domain": "말끝만 되풀이한 님프",
+    "symbol": "메아리"
+  },
+  {
+    "key": "midas",
+    "name": "미다스",
+    "kind": "인물",
+    "domain": "손대면 금이 되는 왕",
+    "symbol": "황금"
+  },
+  {
+    "key": "sisyphus",
+    "name": "시시포스",
+    "kind": "인물",
+    "domain": "바위를 굴리는 벌",
+    "symbol": "바위"
+  },
+  {
+    "key": "tantalus",
+    "name": "탄탈로스",
+    "kind": "인물",
+    "domain": "닿지 않는 물과 열매",
+    "symbol": "물과 과일"
+  },
+  {
+    "key": "arachne",
+    "name": "아라크네",
+    "kind": "인물",
+    "domain": "거미가 된 직녀",
+    "symbol": "거미줄"
+  },
+  {
+    "key": "pygmalion",
+    "name": "피그말리온",
+    "kind": "인물",
+    "domain": "조각상을 사랑한 조각가",
+    "symbol": "상아 조각상"
+  },
+  {
+    "key": "helen",
+    "name": "헬레네",
+    "kind": "인물",
+    "domain": "트로이 전쟁의 불씨",
+    "symbol": "황금 사과"
+  },
+  {
+    "key": "chaos",
+    "name": "카오스",
+    "kind": "신",
+    "domain": "태초의 혼돈",
+    "symbol": "텅 빈 어둠"
+  },
+  {
+    "key": "nyx",
+    "name": "닉스",
+    "kind": "신",
+    "domain": "밤",
+    "symbol": "별이 박힌 장막"
+  },
+  {
+    "key": "pontus",
+    "name": "폰토스",
+    "kind": "신",
+    "domain": "태초의 바다",
+    "symbol": "끝없는 물결"
+  },
+  {
+    "key": "tartarus",
+    "name": "타르타로스",
+    "kind": "신",
+    "domain": "가장 깊은 나락",
+    "symbol": "청동 문"
+  },
+  {
+    "key": "oceanus",
+    "name": "오케아노스",
+    "kind": "신",
+    "domain": "세상을 감싼 강",
+    "symbol": "휘감아 도는 물줄기"
+  },
+  {
+    "key": "tethys",
+    "name": "테티스",
+    "kind": "신",
+    "domain": "바닷물과 샘",
+    "symbol": "샘물"
+  },
+  {
+    "key": "hyperion",
+    "name": "히페리온",
+    "kind": "신",
+    "domain": "빛",
+    "symbol": "타오르는 빛"
+  },
+  {
+    "key": "theia",
+    "name": "테이아",
+    "kind": "신",
+    "domain": "빛과 눈부심",
+    "symbol": "빛나는 관"
+  },
+  {
+    "key": "coeus",
+    "name": "코이오스",
+    "kind": "신",
+    "domain": "지성과 북쪽 하늘",
+    "symbol": "하늘 기둥"
+  },
+  {
+    "key": "phoebe",
+    "name": "포이베",
+    "kind": "신",
+    "domain": "예언과 달빛",
+    "symbol": "월계관"
+  },
+  {
+    "key": "crius",
+    "name": "크리오스",
+    "kind": "신",
+    "domain": "별자리와 남쪽 하늘",
+    "symbol": "숫양 뿔"
+  },
+  {
+    "key": "iapetus",
+    "name": "이아페토스",
+    "kind": "신",
+    "domain": "인간의 조상 계보",
+    "symbol": "창"
+  },
+  {
+    "key": "mnemosyne",
+    "name": "므네모시네",
+    "kind": "신",
+    "domain": "기억",
+    "symbol": "물병"
+  },
+  {
+    "key": "themis",
+    "name": "테미스",
+    "kind": "신",
+    "domain": "율법과 정의",
+    "symbol": "저울과 칼"
+  },
+  {
+    "key": "rhea",
+    "name": "레아",
+    "kind": "신",
+    "domain": "신들의 어머니",
+    "symbol": "사자가 끄는 수레"
+  },
+  {
+    "key": "epimetheus",
+    "name": "에피메테우스",
+    "kind": "신",
+    "domain": "뒤늦게 깨닫는 티탄",
+    "symbol": "빈 손"
+  },
+  {
+    "key": "minos",
+    "name": "미노스",
+    "kind": "인물",
+    "domain": "크레타의 왕",
+    "symbol": "왕홀"
+  },
+  {
+    "key": "griffin",
+    "name": "그리핀",
+    "kind": "괴물",
+    "domain": "보물을 지키는 짐승",
+    "symbol": "독수리 머리와 사자 몸"
+  }
+]

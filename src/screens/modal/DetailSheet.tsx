@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { FadeInUp, SheetIn } from '@/src/screens/common/anim/Motion';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
@@ -42,6 +42,8 @@ export interface DetailItem {
 	explanation?: string;
 	/** 더 알아보기 (곁가지 이야기) */
 	examples?: string[];
+	/** 짧은 이야기 1~3편 (신화) — 없으면 uid 로 학습 카드를 찾아 건다 */
+	stories?: string[];
 	/** 대조 보기 (정답 + 헷갈리는 표기) */
 	options?: string[];
 	/** 기본 정보 묶음 (수도: 수도/대륙) */
@@ -99,7 +101,10 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 	if (!item) return null;
 	const titleText = item.title;
 	// 국기·초상·사진이 있는 주제는 표제 위에 그림을 건다 — 호출하는 화면마다 넘기지 않아도 uid 로 찾는다
-	const imageRef = item.imageRef ?? (item.domain && item.uid ? LearnHubService.getStudyCardByUid(item.domain, item.uid)?.imageRef : undefined);
+	const sourceCard = item.domain && item.uid ? LearnHubService.getStudyCardByUid(item.domain, item.uid) : undefined;
+	const imageRef = item.imageRef ?? sourceCard?.imageRef;
+	// 신화 이야기도 화면마다 넘기지 않아도 uid 로 찾는다
+	const stories = item.stories ?? sourceCard?.stories ?? [];
 	const tags = (item.tags ?? []).filter(Boolean);
 	// 도메인(수도·위인 등) 태그 왼쪽에 표시할 상수 지정 아이콘
 	const domainMeta = item.domain && LearnHubService.isValidCategory(item.domain) ? LearnHubService.getDomain(item.domain).meta : null;
@@ -255,6 +260,24 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 								<Text lineBreakStrategyIOS="hangul-word" style={styles.desc}>{item.explanation}</Text>
 							</View>
 						)}
+						{stories.length > 0 && (
+							<View style={[styles.box, styles.storyBox, { backgroundColor: withAlpha(accent, '0D'), borderColor: withAlpha(accent, '33') }]}>
+								<View style={styles.storyHead}>
+									<IconComponent type="materialIcons" name="auto-stories" size={scaledSize(15)} color={accent} />
+									<Text style={[styles.label, { color: accent, marginBottom: 0 }]}>{t('modal.detail.story')}</Text>
+								</View>
+								{stories.map((story, i) => (
+									<FadeInUp key={i} delay={120 + i * 110} style={[styles.storyItem, i > 0 && [styles.storyItemDivider, { borderTopColor: withAlpha(accent, '26') }]]}>
+										{stories.length > 1 && (
+											<View style={[styles.storyNum, { backgroundColor: withAlpha(accent, '1A') }]}>
+												<Text style={[styles.storyNumText, { color: accent }]}>{i + 1}</Text>
+											</View>
+										)}
+										<Text lineBreakStrategyIOS="hangul-word" style={styles.storyText}>{story}</Text>
+									</FadeInUp>
+								))}
+							</View>
+						)}
 						{!!item.examples && item.examples.length > 0 && (
 							<View style={styles.box}>
 								<Text style={[styles.label, { color: accent }]}>{t('modal.detail.more')}</Text>
@@ -344,6 +367,13 @@ const styles = themed(() => StyleSheet.create({
 	phraseMean: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(21) },
 	exampleBox: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginTop: SpacingV.sm },
 	example: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(22) },
+	storyBox: { paddingVertical: SpacingV.lg },
+	storyHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
+	storyItem: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
+	storyItemDivider: { marginTop: SpacingV.md, paddingTop: SpacingV.md, borderTopWidth: 1 },
+	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: scaleHeight(2) },
+	storyNumText: { fontSize: Typography.micro, fontWeight: '900' },
+	storyText: { flex: 1, fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(24) },
 	vsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
 	vsBox: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, borderWidth: Border.thin, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
 	vsWord: { fontSize: Typography.title, fontWeight: '900' },

@@ -86,6 +86,21 @@ test('학습 카드에 빈칸이 생기지 않는다', () => {
 	});
 });
 
+test('신화는 모두 짧은 이야기를 1~3편 가진다', () => {
+	// 카드 뒷면에 이야기 칸이 어떤 신은 있고 어떤 신은 없으면 빠진 것처럼 보인다. 너무 길거나 많으면 카드가 스크롤 덩어리가 된다
+	const seen = new Map<string, string>();
+	ENTRIES.myth.forEach((entry) => {
+		const stories = entry.stories ?? [];
+		assert.ok(stories.length >= 1 && stories.length <= 3, `${entry.id} 의 이야기가 ${stories.length}편이다 (1~3편)`);
+		stories.forEach((story) => {
+			assert.ok(story.trim().length > 0, `${entry.id} 에 빈 이야기가 있다`);
+			assert.ok(story.length <= 220, `${entry.id} 의 이야기가 ${story.length}자다 (220자 이하로)`);
+			assert.ok(!seen.has(story), `이야기가 겹친다: ${seen.get(story)} · ${entry.id}`);
+			seen.set(story, entry.id);
+		});
+	});
+});
+
 test('모든 퀴즈 모드가 실제로 문항을 낸다', () => {
 	WORLD_TOPICS.forEach((topic) => {
 		const pool = ENTRIES[topic.key];
@@ -250,7 +265,7 @@ test('인용은 큰따옴표로 적는다', () => {
 	// 위인 42곳이 큰따옴표를 쓰는데 사건 네 곳만 작은따옴표였다. 같은 앱 안에서 인용 표기가 둘이면 눈에 걸린다.
 	WORLD_TOPICS.forEach((topic) => {
 		ENTRIES[topic.key].forEach((entry) => {
-			[entry.summary, ...entry.facts].forEach((line) => {
+			[entry.summary, ...entry.facts, ...(entry.stories ?? [])].forEach((line) => {
 				assert.ok(!line.includes("'"), `${entry.id} 에 작은따옴표가 있다: ${line}`);
 			});
 		});

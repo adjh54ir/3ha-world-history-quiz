@@ -37,6 +37,11 @@ export namespace WorldType {
 		 * 개수는 ConstWorldData.test.ts 가 지킨다.
 		 */
 		facts: string[];
+		/**
+		 * 짧은 이야기 1~3편 — 학습 카드 뒷면·상세 시트에 나온다. 지금은 신화만 쓴다.
+		 * 한 편마다 출처가 있어야 한다 (docs/myth-story-sources.md). 개수·길이는 ConstWorldData.test.ts 가 지킨다.
+		 */
+		stories?: string[];
 		/** 주제별 값 주머니 — 열쇠 목록은 ConstWorldTopics 의 modes 가 쓰는 것과 같다 */
 		fields: Record<string, string>;
 		/**

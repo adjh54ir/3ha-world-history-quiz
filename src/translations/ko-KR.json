@@ -891,6 +891,7 @@
                 "reportIssue": "내용이 이상해요",
                 "info": "정보",
                 "summary": "요약",
+                "story": "신화 이야기",
                 "more": "더 알아보기",
                 "review": "복습하기",
                 "completeLast": "학습 완료 · 퀴즈 풀기",
@@ -1509,6 +1510,7 @@
                 "infoChon": "기본정보",
                 "info": "정보",
                 "explanation": "해설",
+                "story": "신화 이야기",
                 "more": "더 알아보기",
                 "closeA11y": "상세 닫기"
             },
