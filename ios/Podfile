@@ -84,6 +84,10 @@ target 'WorldHistoryQuiz' do
           if current.nil? || Gem::Version.new(current) < Gem::Version.new(min_target)
             build_config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_target
           end
+          # Xcode 27 explicit modules 가 SDK 를 iPhoneOS.sdk / iPhoneOS27.0.sdk 두 경로로 읽어
+          # 'redefinition of module' 로 clang 이 죽는다. 꺼서 implicit modules 로 빌드.
+          build_config.build_settings['CLANG_ENABLE_EXPLICIT_MODULES'] = 'NO'
+          build_config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
         end
       end
     end
