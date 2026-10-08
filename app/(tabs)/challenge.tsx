@@ -279,7 +279,8 @@ const Challenge = () => {
 						</View>
 
 						{/* 최고 점수 히어로 — 그라데이션 + 빛 흐름 + 트로피 펄스 */}
-						<View style={styles.bestHero}>
+						{/* 닉네임이 있으면 참여 카드가 없어 이 카드가 랭킹 섹션의 끝 */}
+						<View style={[styles.bestHero, !!nickname && { marginBottom: Layout.sectionGap }]}>
 							<LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 							<Animated.View
 								pointerEvents="none"
@@ -319,7 +320,7 @@ const Challenge = () => {
 											</TouchableOpacity>
 										</View>
 										<TouchableOpacity style={[styles.joinBtn, joining && { opacity: 0.6 }]} activeOpacity={0.9} disabled={joining} onPress={joinRanking}>
-											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.textInverse} />
+											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.onFill} />
 											<Text style={styles.joinBtnText}>{joining ? t('challenge.time.joining') : t('challenge.time.join')}</Text>
 										</TouchableOpacity>
 										<Text style={styles.joinHint}>{t('challenge.time.joinHint')}</Text>
@@ -388,7 +389,7 @@ const Challenge = () => {
 
 						{/* 주 행동 — 하단 고정 대신 기록 목록 바로 아래에 둔다 */}
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push(TIME_CHALLENGE_HREF as never)}>
-							<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.startBtnText}>{t('challenge.time.start')}</Text>
 						</TouchableOpacity>
 
@@ -416,7 +417,7 @@ const Challenge = () => {
 							);
 						})()}
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
-							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.startBtnText}>{t('challenge.tower.enter')}</Text>
 						</TouchableOpacity>
 					</FadeInUp>
@@ -503,7 +504,7 @@ const styles = themed(() => StyleSheet.create({
 	moreBtn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, backgroundColor: Colors.primaryBg, borderRadius: Radius.pill, paddingLeft: Spacing.md, paddingRight: Spacing.sm, paddingVertical: SpacingV.xs },
 	moreText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	// 내 기록 카드 + 랭킹 참여
-	myCard: { backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
+	myCard: { backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	bestHero: { overflow: 'hidden', borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
 	bestShine: { position: 'absolute', top: scaleHeight(-40), left: 0, width: scaleWidth(56), height: scaleHeight(200), backgroundColor: Colors.onBrandDivider },
 	bestHeroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
@@ -522,11 +523,11 @@ const styles = themed(() => StyleSheet.create({
 	nickValue: { flex: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	diceBtn: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
 	joinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md, marginTop: SpacingV.md },
-	joinBtnText: { flexShrink: 1, color: Colors.textInverse, fontSize: Typography.body, fontWeight: '900' },
+	joinBtnText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.body, fontWeight: '900' },
 	joinHint: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center', marginTop: SpacingV.sm },
 
 	// 타임챌린지 탭 — 내 기록
-	statRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
+	statRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	statBox: { flex: 1, alignItems: 'center' },
 	statNum: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
 	statLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
@@ -534,9 +535,9 @@ const styles = themed(() => StyleSheet.create({
 	// 플레이별 점수 아코디언
 	// 타임챌린지 시작 — 기록 목록 아래 인라인 pill 버튼
 	startBtn: { alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, minHeight: scaleHeight(46), paddingHorizontal: Spacing.xxl, borderRadius: Radius.xl, backgroundColor: Colors.primary, marginTop: SpacingV.md },
-	startBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	startBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 	// 타워챌린지 탭
-	timeHeroCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg, marginBottom: SpacingV.lg },
+	timeHeroCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg, marginBottom: Layout.sectionGap },
 	towerCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg },
 	towerHero: { width: '100%', aspectRatio: 16 / 9 },
 	towerBody: { paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, gap: SpacingV.xs },
@@ -568,7 +569,7 @@ const styles = themed(() => StyleSheet.create({
 
 	// 모드 카드
 	card: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', padding: Spacing.lg, marginBottom: Layout.itemGap },
-	iconChip: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.lg },
+	iconChip: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	cardBody: { flex: 1 },
 	cardTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flexWrap: 'wrap' },
 	cardTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },

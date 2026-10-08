@@ -102,7 +102,7 @@ const League = () => {
 				</View>
 
 				<TouchableOpacity style={styles.cta} activeOpacity={0.9} onPress={() => router.push('/challenge' as never)}>
-					<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.textInverse} />
+					<IconComponent type="materialIcons" name="bolt" size={scaledSize(20)} color={Colors.onFill} />
 					<Text style={styles.ctaText}>{t('special.league.cta')}</Text>
 				</TouchableOpacity>
 				<Text style={styles.note}>{t('special.league.note')}</Text>
@@ -125,7 +125,7 @@ const styles = themed(() => StyleSheet.create({
 	badgeSub: { color: Colors.textSecondary, fontSize: Typography.body, marginTop: SpacingV.sm },
 	myXpPill: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, marginTop: SpacingV.lg },
 	myXpText: { fontSize: Typography.callout, fontWeight: '900' },
-	legendRow: { flexDirection: 'row', gap: Spacing.lg, marginBottom: SpacingV.md, paddingHorizontal: Spacing.xs },
+	legendRow: { flexDirection: 'row', gap: Spacing.lg, marginBottom: SpacingV.md },
 	legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 	legendDot: { width: scaleWidth(9), height: scaleWidth(9), borderRadius: scaleWidth(5) },
 	legendText: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: '700' },
@@ -140,6 +140,6 @@ const styles = themed(() => StyleSheet.create({
 	zoneLine: { borderTopWidth: Border.thin, borderStyle: 'dashed', marginHorizontal: Spacing.lg, marginVertical: SpacingV.xs, alignItems: 'flex-end' },
 	zoneText: { fontSize: Typography.micro, fontWeight: '800', marginTop: SpacingV.xs },
 	cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: Layout.sectionGap },
-	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	note: { fontSize: Typography.footnote, color: Colors.textMuted, textAlign: 'center', marginTop: SpacingV.md },
 }));

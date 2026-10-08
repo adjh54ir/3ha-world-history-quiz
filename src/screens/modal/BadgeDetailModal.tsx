@@ -112,7 +112,7 @@ export default BadgeDetailModal;
 
 const styles = themed(() => StyleSheet.create({
 	backdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	modal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
+	modal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
 	iconWrap: { width: scaleArt(96), height: scaleArt(96), borderRadius: Radius.xxl, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },
 	lottie: { position: 'absolute', width: scaleArt(112), height: scaleArt(112) },
 	state: { marginTop: SpacingV.lg, fontSize: Typography.footnote, fontWeight: '900', color: Colors.primary },
@@ -134,5 +134,5 @@ const styles = themed(() => StyleSheet.create({
 	shareBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primarySoft, borderRadius: Radius.md, paddingVertical: SpacingV.lg },
 	shareText: { color: Colors.primary, fontSize: Typography.callout, fontWeight: '800' },
 	close: { flex: 1, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.lg, alignItems: 'center', justifyContent: 'center' },
-	closeText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	closeText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 }));

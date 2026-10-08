@@ -6,7 +6,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Tag from '@/src/screens/common/atomic/Tag';
 import Colors, { BRAND_GRADIENT, withAlpha, isDark, readableOn } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
+import { BODY_FONTS, Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { AchievementStatus } from '@/src/services/AchievementService';
 import { AchievementRarity, RARITY_META, RARITY_ORDER } from '@/src/const/ConstAchievements';
@@ -73,7 +73,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 		<BottomSheet visible={visible} onClose={onClose}>
 			<View style={styles.titleRow}>
 				<Text style={styles.title}>{t('modal.badgeDex.title')}</Text>
-				<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.closeA11y')}>
+				<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.closeA11y')}>
 					<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 				</TouchableOpacity>
 			</View>
@@ -123,7 +123,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 						onSubmitEditing={() => Keyboard.dismiss()}
 					/>
 					{query.length > 0 && (
-						<TouchableOpacity onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.clearSearch')}>
+						<TouchableOpacity onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('modal.badgeDex.clearSearch')}>
 							<IconComponent type="materialIcons" name="cancel" size={scaledSize(16)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					)}
@@ -135,7 +135,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 					accessibilityRole="button"
 					accessibilityState={{ selected: onlyLocked }}
 					onPress={() => setOnlyLocked((v) => !v)}>
-					<IconComponent type="materialIcons" name={onlyLocked ? 'lock' : 'lock-open'} size={scaledSize(15)} color={onlyLocked ? Colors.textInverse : Colors.textSecondary} />
+					<IconComponent type="materialIcons" name={onlyLocked ? 'lock' : 'lock-open'} size={scaledSize(15)} color={onlyLocked ? Colors.onFill : Colors.textSecondary} />
 					<Text style={[styles.lockedChipText, onlyLocked && styles.lockedChipTextOn]}>{t('modal.badgeDex.onlyLocked')}</Text>
 				</TouchableOpacity>
 			</View>
@@ -273,18 +273,18 @@ const styles = themed(() => StyleSheet.create({
 	heroFootRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginTop: SpacingV.sm },
 	heroFoot: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.onBrandText },
 	// 목록과 겹치지 않도록 아래 여백 확보(칩 높이 + 간격)
-	filterBar: { flexGrow: 0, flexShrink: 0, marginHorizontal: -Spacing.xl, marginTop: SpacingV.md, marginBottom: SpacingV.md },
-	filterRow: { alignItems: 'center', paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xs, gap: Spacing.sm },
+	filterBar: { flexGrow: 0, flexShrink: 0, marginHorizontal: -Layout.screenH, marginTop: SpacingV.md, marginBottom: SpacingV.md },
+	filterRow: { alignItems: 'center', paddingHorizontal: Layout.screenH, paddingVertical: SpacingV.xs, gap: Spacing.sm },
 	filterChip: { minHeight: scaleHeight(36), justifyContent: 'center', paddingHorizontal: Spacing.md, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	filterText: { fontSize: Typography.footnote, fontWeight: '800' },
 	// 히어로→검색→필터→목록 간격을 같은 리듬(≈16)으로 — 필터 줄 marginTop(md) + 내부 paddingVertical(xs)
 	searchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.lg },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
-	searchInput: { flex: 1, fontSize: Typography.body, fontWeight: '600', color: Colors.textStrong, paddingVertical: 0 },
+	searchInput: { flex: 1, fontSize: Typography.body, fontFamily: BODY_FONTS.bold, color: Colors.textStrong, paddingVertical: 0 },
 	lockedChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	lockedChipOn: { backgroundColor: Colors.primary, borderColor: Colors.primary },
 	lockedChipText: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textSecondary },
-	lockedChipTextOn: { color: Colors.textInverse },
+	lockedChipTextOn: { color: Colors.onFill },
 	emptyText: { fontSize: Typography.body, fontWeight: '700', color: Colors.textMuted, textAlign: 'center', paddingVertical: SpacingV.xxl },
 	scroll: { flexGrow: 0, flexShrink: 1 },
 	group: { marginBottom: SpacingV.lg },

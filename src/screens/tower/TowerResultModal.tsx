@@ -3,10 +3,9 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, ScrollView, Easing } from 'react-native';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
-import { Layout } from '@/src/const/ConstDesign';
+import { isTablet, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { Typography, FontWeight, Spacing, SpacingV, Radius } from '@/src/const/ConstDesign';
+import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout, Border } from '@/src/const/ConstDesign';
 import { Colors, LIGHT_COLORS, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { themed } from '@/src/utils/ThemedStyles';
 
@@ -425,10 +424,11 @@ const makeStyles = () => StyleSheet.create({
 		width: '90%',
 		maxWidth: Layout.dialogMaxWidth,
 		// 화면 높이의 80%로 고정 → 버튼이 항상 화면 안에 들어옴
-		height: '80%',
+		// 태블릿은 80% 면 450×950 의 길쭉한 판이 되어 속이 빈다 — 내용에 맞는 고정 높이(화면 안에 들어오는 값)로
+		height: isTablet ? scaleHeight(560) : '80%',
 		borderRadius: Radius.xl,
 		overflow: 'hidden',
-		borderWidth: 1.5,
+		borderWidth: Border.thin,
 		// flex 구조: 헤더(고정) + 보스(고정) + 스크롤 + 버튼(고정)
 		flexDirection: 'column',
 	},
@@ -552,7 +552,7 @@ const makeStyles = () => StyleSheet.create({
 		width: scaleWidth(24),
 		height: scaleWidth(24),
 		borderRadius: Radius.md,
-		borderWidth: 1.5,
+		borderWidth: Border.thin,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},

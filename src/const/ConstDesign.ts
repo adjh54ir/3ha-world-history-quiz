@@ -54,6 +54,34 @@ export const Typography = {
 } as const;
 
 /**
+ * 디스플레이 서체 — 정글 탐험대 표지판처럼 굵게 깎은 한글 제목체 (Black Han Sans, OFL)
+ * - 제목(탭 헤더·화면 헤더·섹션 제목·히어로)에만 쓴다. 본문은 시스템 서체 그대로.
+ * - 굵기 하나짜리 서체라 fontWeight 를 400 으로 되돌린다 (안드로이드는 굵기를 주면 가짜 볼드로 뭉갠다).
+ * - 서체가 아직 안 올라왔으면 시스템 서체로 그려진다 (app/_layout 에서 스플래시 전에 올린다).
+ */
+export const DISPLAY_FONT = 'BlackHanSans';
+export const DisplayText = { fontFamily: DISPLAY_FONT, fontWeight: '400' } as const;
+
+/**
+ * 본문 서체 — 나눔스퀘어라운드 (NAVER, OFL). 둥근 획이 굵은 제목체와 짝을 이룬다.
+ * 시스템 서체 대신 앱 전역 Text 가 fontWeight 에 맞는 파일을 고른다 (GlobalComponentDefaults).
+ * 굵기마다 파일이 따로라 fontWeight 로 굵게 하지 않고 서체 이름을 바꾼다.
+ */
+export const BODY_FONTS = {
+	regular: 'NanumSquareRoundR',
+	bold: 'NanumSquareRoundB',
+	heavy: 'NanumSquareRoundEB',
+} as const;
+
+/** fontWeight → 본문 서체 파일. 300 이하 얇은 굵기는 파일을 두지 않아 regular 로 그린다 */
+export const bodyFontFor = (weight?: string | number): string => {
+	const w = weight === 'bold' ? 700 : Number(weight) || 400;
+	if (w >= 800) return BODY_FONTS.heavy;
+	if (w >= 600) return BODY_FONTS.bold;
+	return BODY_FONTS.regular;
+};
+
+/**
  * 폰트 두께 표준
  */
 export const FontWeight = {
@@ -213,6 +241,12 @@ export const Layout = {
 	touch: scaleWidth(44),
 	/** 작은 아이콘 버튼의 터치 여유 — 실제 손가락 크기 기준이라 화면 크기에 비례시키지 않는다 */
 	hitSlop: { top: 8, bottom: 8, left: 8, right: 8 },
+	/** 퀴즈 보기 버튼 최소 높이 — 화면마다 패딩으로만 정하던 높이를 통일 */
+	optionMinH: scaleHeight(56),
+	/** 퀴즈 보기 버튼 최대 높이 — 남는 높이를 채우되 판자처럼 커지지 않게 */
+	optionMaxH: scaleHeight(88),
+	/** 하단 주요 버튼 최소 높이 */
+	ctaMinH: scaleHeight(52),
 	/** 진행바 두께 */
 	barH: scaleHeight(6),
 	/** 다이얼로그(가운데 팝업) 최대 폭 — 태블릿에서 카드가 화면 끝까지 늘어나지 않게 한다.

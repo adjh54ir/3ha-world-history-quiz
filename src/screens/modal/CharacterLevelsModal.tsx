@@ -7,7 +7,7 @@ import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleArt, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
@@ -127,7 +127,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 				<View>
 					<View style={styles.titleRow}>
 						<Text style={styles.title}>{t('modal.characterLevels.title')}</Text>
-						<TouchableOpacity onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.characterLevels.closeA11y')}>
+						<TouchableOpacity onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.characterLevels.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -219,7 +219,7 @@ const styles = themed(() => StyleSheet.create({
 	previewTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.sm },
 	previewReq: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
 	gridScroll: { marginTop: SpacingV.md, maxHeight: scaleHeight(240) },
-	grid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, paddingBottom: SpacingV.sm },
+	grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: Spacing.sm, paddingBottom: SpacingV.sm },
 	cell: { width: isTablet ? '23%' : '30%', alignItems: 'center', borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingVertical: SpacingV.md, paddingHorizontal: Spacing.xs },
 	cellSelected: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	cellLocked: { opacity: 0.75 },

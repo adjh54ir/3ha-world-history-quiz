@@ -58,9 +58,9 @@ const CategoryScopeChips: React.FC<CategoryScopeChipsProps> = ({
 						activeOpacity={0.85}
 						onPress={() => onChange(ALL_SCOPE)}>
 						{showIcon && (
-							<IconComponent type="materialIcons" name="apps" size={scaledSize(15)} color={value === ALL_SCOPE ? Colors.textInverse : Colors.textSecondary} />
+							<IconComponent type="materialIcons" name="apps" size={scaledSize(15)} color={value === ALL_SCOPE ? Colors.onFill : Colors.textSecondary} />
 						)}
-						<Text style={[styles.chipText, value === ALL_SCOPE && { color: Colors.textInverse }]} numberOfLines={1} ellipsizeMode="tail">{allLabel ?? t('common.all')}</Text>
+						<Text style={[styles.chipText, value === ALL_SCOPE && { color: Colors.onFill }]} numberOfLines={1} ellipsizeMode="tail">{allLabel ?? t('common.all')}</Text>
 					</TouchableOpacity>
 				)}
 				{domains.map((d) => {

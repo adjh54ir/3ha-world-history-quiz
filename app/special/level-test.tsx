@@ -354,7 +354,7 @@ const LevelTest = () => {
 					)}
 
 					<TouchableOpacity style={styles.shareBtn} activeOpacity={0.9} onPress={onShare}>
-						<IconComponent type="materialIcons" name="ios-share" size={scaledSize(20)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="ios-share" size={scaledSize(20)} color={Colors.onFill} />
 						<Text style={styles.shareBtnText}>{t('special.test.share')}</Text>
 					</TouchableOpacity>
 
@@ -382,7 +382,7 @@ const LevelTest = () => {
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<View style={[styles.qHeader, { paddingTop: Layout.screenTop }]}>
 				<View style={styles.qHeaderRow}>
-					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
+					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.text} />
 					</TouchableOpacity>
 					<Text style={styles.qHeaderTitle}>{t('special.levelTest.qTitle')}</Text>
@@ -390,7 +390,7 @@ const LevelTest = () => {
 						<Text style={styles.qCount}>{index + 1}/{questions.length}</Text>
 					</View>
 				</View>
-				<AnimatedProgress ratio={progress / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(7)} radius={scaleWidth(4)} style={styles.progressTrack} />
+				<AnimatedProgress ratio={progress / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(7)} radius={scaleWidth(4)} style={styles.progressTrack} />
 			</View>
 
 			<ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
@@ -407,6 +407,7 @@ const LevelTest = () => {
 					{!!current.subPrompt && <Text style={styles.qSub} numberOfLines={2} ellipsizeMode="tail">{current.subPrompt}</Text>}
 				</View>
 
+				<View style={styles.answers}>
 				{current.options.map((opt, i) => {
 					const isSelected = i === selected;
 					return (
@@ -416,13 +417,14 @@ const LevelTest = () => {
 							activeOpacity={0.8}
 							onPress={() => setSelected(i)}>
 							<View style={[styles.optionIndex, isSelected && styles.optionIndexSelected]}>
-								<Text style={[styles.optionIndexText, isSelected && { color: Colors.textInverse }]}>{i + 1}</Text>
+								<Text style={[styles.optionIndexText, isSelected && { color: Colors.onFill }]}>{i + 1}</Text>
 							</View>
 							{current.optionFlags && <CountryFlags name={opt} height={16} />}
 							<Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>{opt}</Text>
 						</TouchableOpacity>
 					);
 				})}
+				</View>
 			</ScrollView>
 
 			<BottomButton label={isLast ? t('special.levelTest.seeResult') : t('common.next')} icon={isLast ? 'flag' : 'arrow-forward'} disabled={selected === null} onPress={onNext} />
@@ -455,7 +457,7 @@ const styles = themed(() => StyleSheet.create({
 	gradeDot: { width: scaleWidth(8), height: scaleWidth(8), borderRadius: Radius.pill, borderWidth: Border.hairline, borderColor: Colors.borderStrong },
 	gradePillText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	// 시작 CTA
-	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md, paddingBottom: SpacingV.lg, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
+	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
 	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden' },
 	startBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900' },
 	startHint: { marginTop: SpacingV.sm, fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center' },
@@ -466,7 +468,7 @@ const styles = themed(() => StyleSheet.create({
 	qCountWrap: { width: scaleWidth(46), alignItems: 'flex-end' },
 	qCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.textSecondary },
 	progressTrack: { height: scaleHeight(7), borderRadius: scaleWidth(4), backgroundColor: Colors.surfaceAlt, overflow: 'hidden', marginTop: SpacingV.sm },
-	body: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	body: { flexGrow: 1, paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	qCard: { ...CardSurface, borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.lg, alignItems: 'center', marginBottom: SpacingV.lg },
 	qDomainChip: { backgroundColor: Colors.primaryBg, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md, marginBottom: SpacingV.md },
 	qDomainText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
@@ -474,7 +476,9 @@ const styles = themed(() => StyleSheet.create({
 	qImage: { marginVertical: SpacingV.sm },
 	qPrompt: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, textAlign: 'center', lineHeight: scaleHeight(33) },
 	qSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center' },
-	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: Border.thin, borderColor: Colors.border, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, marginBottom: Layout.itemGap },
+	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: Border.thin, borderColor: Colors.border, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, flexGrow: 1, minHeight: Layout.optionMinH, maxHeight: Layout.optionMaxH },
+	// 보기 묶음 — 남는 높이를 받아 키 큰 화면에서 가운데가 비지 않게 한다
+	answers: { flexGrow: 1, gap: Layout.itemGap },
 	optionSelected: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	optionIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, justifyContent: 'center', alignItems: 'center' },
 	optionIndexSelected: { backgroundColor: Colors.primary },
@@ -506,7 +510,7 @@ const styles = themed(() => StyleSheet.create({
 	msgCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	msgText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), textAlign: 'center', fontWeight: '600' },
 	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.lg, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
-	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	reviewSection: { marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	reviewHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	reviewTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },

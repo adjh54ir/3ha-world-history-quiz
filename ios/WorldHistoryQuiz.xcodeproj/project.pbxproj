@@ -12,7 +12,6 @@
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		4194B92CF5AB47ECAB9C2F51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777A04B30F524AABAC15E6BD /* GoogleService-Info.plist */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D23BF15BE95D423B9F8F7ED2 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED41746DDECC41E19054B157 /* Colors.xcassets */; };
 		DF19CC1321F552F833E38B12 /* Pods_WorldHistoryQuiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C0AD80D1401A7B676ED8B7E /* Pods_WorldHistoryQuiz.framework */; };
 		E7C011F14DBDB296F73D4795 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21921E2B65C5E84DF70EF017 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
@@ -31,7 +30,6 @@
 		B9A75F4ADE8D05FCE6CEAEDD /* Pods-WorldHistoryQuiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorldHistoryQuiz.release.xcconfig"; path = "Target Support Files/Pods-WorldHistoryQuiz/Pods-WorldHistoryQuiz.release.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		ED41746DDECC41E19054B157 /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = WorldHistoryQuiz/Colors.xcassets; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = WorldHistoryQuiz/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* WorldHistoryQuiz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "WorldHistoryQuiz-Bridging-Header.h"; path = "WorldHistoryQuiz/WorldHistoryQuiz-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,7 +64,6 @@
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
 				777A04B30F524AABAC15E6BD /* GoogleService-Info.plist */,
 				4C5C1540F6AF318B76E0ADFA /* PrivacyInfo.xcprivacy */,
-				ED41746DDECC41E19054B157 /* Colors.xcassets */,
 			);
 			name = WorldHistoryQuiz;
 			sourceTree = "<group>";
@@ -214,7 +211,6 @@
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				4194B92CF5AB47ECAB9C2F51 /* GoogleService-Info.plist in Resources */,
 				04647CCD3E14AC4F2179D465 /* PrivacyInfo.xcprivacy in Resources */,
-				D23BF15BE95D423B9F8F7ED2 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

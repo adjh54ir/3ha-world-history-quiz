@@ -12,7 +12,7 @@ import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { accuracyColor, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt} from '@/src/utils';
+import { isTablet, scaledSize, scaleHeight, scaleWidth, scaleArt} from '@/src/utils';
 import LearnProgressService, { LearnStats } from '@/src/services/LearnProgressService';
 import LearnHubService from '@/src/services/LearnHubService';
 import { AnimatedProgress, FadeInUp } from '@/src/screens/common/anim/Motion';
@@ -292,7 +292,7 @@ const ScoreDetail = () => {
 								<Text style={styles.rowTitle}>{t('common.all')}</Text>
 								<Text style={styles.rowScore}>{t('special.scoreDetail.scoreValue', { value: totalScore.toLocaleString() })}</Text>
 							</View>
-							<AnimatedProgress ratio={overallPct / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
+							<AnimatedProgress ratio={overallPct / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(8)} />
 							<View style={styles.rowMetaRow}>
 								<Tag label={t('special.scoreDetail.tagCorrect', { value: totalCorrect.toLocaleString() })} variant="plain" />
 								<Tag label={t('special.scoreDetail.tagRate', { value: accuracy })} color={accuracyColor(accuracy)} />
@@ -410,7 +410,7 @@ const styles = themed(() => StyleSheet.create({
 	titleBadgeCol: { alignItems: 'center', marginTop: SpacingV.sm },
 	titleBadgeRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginTop: SpacingV.sm, backgroundColor: Colors.primaryBg, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs },
 	titleBadgeText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
-	nextGradeWrap: { alignItems: 'center', marginTop: SpacingV.sm, width: scaleWidth(200) },
+	nextGradeWrap: { alignItems: 'center', marginTop: SpacingV.sm, width: isTablet ? '60%' : scaleWidth(200) },
 	nextGradeTrack: { width: '100%', height: scaleHeight(8), borderRadius: scaleWidth(4), backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
 	nextGradeFill: { height: '100%', borderRadius: scaleWidth(3), backgroundColor: Colors.primary },
 	// 등급 진행 라벨 — 태그(칩) 형태로 통일
@@ -422,7 +422,7 @@ const styles = themed(() => StyleSheet.create({
 	scoreUnit: { color: Colors.textStrong, fontSize: Typography.h3, fontWeight: '900', marginLeft: Spacing.xs },
 	labelRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.xs },
 	lvPill: { backgroundColor: Colors.primary, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.sm },
-	lvPillText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900' },
+	lvPillText: { color: Colors.onFill, fontSize: Typography.micro, fontWeight: '900' },
 	heroTitle: { color: Colors.textSecondary, fontSize: Typography.body, fontWeight: '700' },
 	scoreBox: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },
 	scoreBoxItem: { flex: 1, alignItems: 'center' },
@@ -437,7 +437,7 @@ const styles = themed(() => StyleSheet.create({
 	resetText: { color: Colors.textSecondary, fontSize: Typography.footnote, fontWeight: '700' },
 
 	// 섹션 / 주제행
-	sectionHeadRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: Spacing.md, marginBottom: SpacingV.lg },
+	sectionHeadRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: Spacing.md, marginBottom: SpacingV.md },
 	sortRow: { flexDirection: 'row', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, padding: Spacing.xxs },
 	sortChip: { minHeight: scaleHeight(36), justifyContent: 'center', paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.sm },
 	sortChipOn: { backgroundColor: Colors.surface },
@@ -447,7 +447,7 @@ const styles = themed(() => StyleSheet.create({
 	rowCharWrap: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowCharImg: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: scaleWidth(11) },
 	rowLvBadge: { position: 'absolute', bottom: scaleWidth(-4), right: scaleWidth(-4), backgroundColor: Colors.primary, paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xs, borderRadius: Radius.sm, borderWidth: Border.thin, borderColor: Colors.surface },
-	rowLvText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900' },
+	rowLvText: { color: Colors.onFill, fontSize: Typography.micro, fontWeight: '900' },
 	rowIcon: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowBody: { flex: 1, justifyContent: 'center' },
 	rowTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },

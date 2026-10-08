@@ -8,7 +8,7 @@ import { getHomeCharacterImage } from '@/src/const/ConstCharacters';
 import { SheetIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
 import { RequestNotificationPermission } from '@/src/utils/NotifactionHelper';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -207,7 +207,7 @@ export default OnboardingModal;
 
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
+	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
 	dots: { flexDirection: 'row', gap: Spacing.xxs, marginBottom: SpacingV.lg },
 	dot: { width: scaleWidth(6), height: scaleWidth(6), borderRadius: Radius.pill, backgroundColor: Colors.borderStrong },
 	dotOn: { width: scaleWidth(18), backgroundColor: Colors.primary },
@@ -222,7 +222,7 @@ const styles = themed(() => StyleSheet.create({
 	greetCaret: { color: Colors.primary },
 	greetTail: { position: 'absolute', left: scaleWidth(36), bottom: -scaleHeight(11), width: 0, height: 0, borderLeftWidth: scaleWidth(10), borderRightWidth: scaleWidth(10), borderTopWidth: scaleHeight(12), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.surfaceAlt, zIndex: 2 },
 	greetTailBorder: { position: 'absolute', left: scaleWidth(35), bottom: -scaleHeight(13), width: 0, height: 0, borderLeftWidth: scaleWidth(11), borderRightWidth: scaleWidth(11), borderTopWidth: scaleHeight(13), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.primarySoft, zIndex: 1 },
-	greetChar: { alignSelf: 'flex-start', width: scaleArt(104), height: scaleArt(104), marginTop: SpacingV.md, marginLeft: Spacing.sm, borderRadius: Radius.xl },
+	greetChar: { alignSelf: 'flex-start', width: scaleWidth(104), height: scaleWidth(104), marginTop: SpacingV.md, marginLeft: Spacing.sm, borderRadius: Radius.xl },
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.xs, lineHeight: scaleHeight(20) },
 	optionList: { alignSelf: 'stretch', gap: SpacingV.xs, marginTop: SpacingV.lg },
 	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
@@ -236,7 +236,7 @@ const styles = themed(() => StyleSheet.create({
 	goalNum: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textMuted },
 	goalNumOn: { color: Colors.primary },
 	primaryBtn: { alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.lg, borderRadius: Radius.md, marginTop: SpacingV.xl, backgroundColor: Colors.primary },
-	primaryText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	primaryText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 	btnDisabled: { opacity: 0.5 },
 	skipBtn: { alignSelf: 'stretch', alignItems: 'center', paddingVertical: SpacingV.md, marginTop: SpacingV.xs },
 	skipText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textMuted },

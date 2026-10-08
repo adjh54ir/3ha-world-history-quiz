@@ -127,7 +127,7 @@ const StoryFeed = () => {
 										)}
 									</View>
 									<View style={styles.cardTopRight}>
-										<TouchableOpacity onPress={() => toggle(c)} hitSlop={10} activeOpacity={0.7}>
+										<TouchableOpacity onPress={() => toggle(c)} hitSlop={Layout.hitSlop} activeOpacity={0.7}>
 											<IconComponent type="materialIcons" name={isMarked ? 'star' : 'star-border'} size={scaledSize(22)} color={isMarked ? Colors.bookmark : Colors.textMuted} />
 										</TouchableOpacity>
 										<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
@@ -194,7 +194,7 @@ const styles = themed(() => StyleSheet.create({
 	filterBar: { marginHorizontal: -Layout.screenH, backgroundColor: 'transparent', marginBottom: SpacingV.md },
 	empty: { alignItems: 'center', justifyContent: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xxxl },
 	emptyText: { fontSize: Typography.body, color: Colors.textMuted, fontWeight: '600' },
-	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.lg },
+	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
 	cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	cardTopLeft: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, flexWrap: 'wrap' },
 	cardTopRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },

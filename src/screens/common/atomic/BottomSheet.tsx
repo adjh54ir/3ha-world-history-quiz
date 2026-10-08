@@ -69,7 +69,7 @@ export default BottomSheet;
 
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', alignItems: 'center' },
-	sheet: { width: '100%', maxHeight: '100%', backgroundColor: Colors.surface, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md },
+	sheet: { width: '100%', maxHeight: '100%', backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md },
 	sheetFill: { flex: 1 },
 	handle: { alignSelf: 'center', width: scaleWidth(40), height: scaleHeight(4), borderRadius: scaleWidth(2), backgroundColor: isDark() ? Colors.borderStrong : Colors.border, marginBottom: SpacingV.lg },
 }));

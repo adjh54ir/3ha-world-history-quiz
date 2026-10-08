@@ -61,7 +61,7 @@
     "android": {
       "icon": "./assets/icon.png",
       "adaptiveIcon": {
-        "backgroundColor": "#1249C9",
+        "backgroundColor": "#0A4F40",
         "foregroundImage": "./assets/adaptive-icon.png"
       },
       "googleServicesFile": "./google-services.json",
@@ -118,7 +118,7 @@
           "image": "./assets/splash.png",
           "imageWidth": 220,
           "resizeMode": "contain",
-          "backgroundColor": "#1249C9"
+          "backgroundColor": "#0A4F40"
         }
       ],
       "@react-native-firebase/app",

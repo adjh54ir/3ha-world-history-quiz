@@ -42,6 +42,8 @@
     android:theme="@style/AppTheme"
     android:supportsRtl="true"
     android:enableOnBackInvokedCallback="false">
+    <!-- Android 16(API 36): sw600dp 이상 태블릿은 screenOrientation 을 무시하고 가로 회전을 허용한다. 세로 전용 앱이라 opt-out -->
+    <property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true"/>
     <meta-data
       android:name="com.google.android.gms.ads.APPLICATION_ID"
       android:value="ca-app-pub-1996095472780376~3451831828"

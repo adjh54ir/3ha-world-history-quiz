@@ -158,13 +158,13 @@ const Ranking = () => {
 			<View style={styles.hero}>
 				<LinearGradient colors={meta.colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 				<View style={styles.heroTop}>
-					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
+					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop}>
 						<IconComponent type="materialIcons" name="arrow-back-ios-new" size={scaledSize(18)} color={Colors.textInverse} />
 					</TouchableOpacity>
 					{/* 특정 보드로 진입하면 탭이 숨으므로 제목으로 맥락을 유지한다 */}
 					<Text style={styles.heroTitle} numberOfLines={1}>{lockedBoard ? t('special.ranking.boardTitle', { label: t(meta.labelKey) }) : t('special.ranking.title')}</Text>
 					{nickname ? (
-						<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={openEditNick} hitSlop={8}>
+						<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={openEditNick} hitSlop={Layout.hitSlop}>
 							<IconComponent type="materialIcons" name="edit" size={scaledSize(19)} color={Colors.textInverse} />
 						</TouchableOpacity>
 					) : (
@@ -239,7 +239,7 @@ const Ranking = () => {
 					<Text style={styles.nickHint}>{t('special.ranking.nickHint')}</Text>
 
 					<TouchableOpacity style={styles.nickBtn} activeOpacity={0.9} onPress={saveNickname}>
-						<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.onFill} />
 						<Text style={styles.nickBtnText}>{t('special.ranking.joinBtn')}</Text>
 					</TouchableOpacity>
 				</View>
@@ -301,7 +301,7 @@ const Ranking = () => {
 					<View style={styles.modalSheet}>
 						<View style={styles.modalTitleRow}>
 							<Text style={styles.modalTitle}>{t('special.ranking.editTitle')}</Text>
-							<TouchableOpacity onPress={() => setEditNick(false)} hitSlop={10} activeOpacity={0.7}>
+							<TouchableOpacity onPress={() => setEditNick(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -316,7 +316,7 @@ const Ranking = () => {
 						</View>
 						<Text style={styles.nickHint} numberOfLines={1} ellipsizeMode="tail">{t('special.ranking.currentNick', { name: nickname })}</Text>
 						<TouchableOpacity style={[styles.nickBtn, saving && { opacity: 0.6 }]} activeOpacity={0.9} disabled={saving} onPress={applyNickChange}>
-							<IconComponent type="materialIcons" name="check" size={scaledSize(18)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="check" size={scaledSize(18)} color={Colors.onFill} />
 							<Text style={styles.nickBtnText} numberOfLines={1} ellipsizeMode="tail">{saving ? t('special.ranking.changing') : t('special.ranking.changeBtn')}</Text>
 						</TouchableOpacity>
 					</View>
@@ -382,7 +382,7 @@ const styles = themed(() => StyleSheet.create({
 	nickValue: { flex: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	diceBtn: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
 	nickHint: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600', textAlign: 'center', marginTop: SpacingV.xs },
-	nickBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: SpacingV.sm },
-	nickBtnText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	nickBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: SpacingV.xl },
+	nickBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	celebrate: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(340) },
 }));

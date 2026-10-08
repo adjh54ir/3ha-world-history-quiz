@@ -250,7 +250,7 @@ const styles = themed(() => StyleSheet.create({
 	emptyTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
 	emptySub: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.sm, lineHeight: scaleHeight(20) },
 	cta: { marginTop: SpacingV.xxl, backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
-	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.body, fontWeight: '800' },
+	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 	introList: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	gridRow: { justifyContent: 'space-between' },
 	gridCell: { width: '49%' },

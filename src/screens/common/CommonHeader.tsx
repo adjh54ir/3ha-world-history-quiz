@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from '
 import { useTranslation } from 'react-i18next';
 import IconComponent from './atomic/IconComponent';
 import { Colors } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Typography, FontWeight, Layout } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Typography, FontWeight, Layout, DisplayText } from '@/src/const/ConstDesign';
 import { scaledSize, scaleWidth } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
@@ -70,7 +70,9 @@ const CommonHeader = ({
 				)}
 			</View>
 
-			<View style={[styles.side, styles.sideRight]}>{right}</View>
+			<View style={[styles.side, styles.sideRight]}>
+				{!!right && <View style={styles.rightInner}>{right}</View>}
+			</View>
 		</View>
 	);
 };
@@ -99,6 +101,11 @@ const styles = themed(() => StyleSheet.create({
 	sideRight: {
 		alignItems: 'flex-end',
 	},
+	// 작은 아이콘도 터치 칸 가운데에 둬 뒤로가기와 같은 안쪽 여백으로 맞춘다 (넓은 액션 묶음은 그대로 오른쪽 정렬)
+	rightInner: {
+		minWidth: Layout.touch,
+		alignItems: 'center',
+	},
 	backBtn: {
 		width: Layout.touch,
 		height: Layout.touch,
@@ -115,7 +122,7 @@ const styles = themed(() => StyleSheet.create({
 	},
 	title: {
 		fontSize: Typography.title,
-		fontWeight: FontWeight.heavy,
+		...DisplayText,
 		color: Colors.textStrong,
 		textAlign: 'center',
 	},

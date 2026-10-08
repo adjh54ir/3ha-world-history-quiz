@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 import Colors from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { DisplayText, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 
 interface Props {
@@ -34,6 +34,6 @@ export default SectionHead;
 const styles = themed(() => StyleSheet.create({
 	head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.md },
 	left: { flex: 1, paddingRight: Spacing.sm },
-	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
+	title: { fontSize: Typography.title, ...DisplayText, color: Colors.textStrong },
 	sub: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 }));

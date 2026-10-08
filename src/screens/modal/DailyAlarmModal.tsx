@@ -93,7 +93,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<SheetIn visible={visible} style={styles.sheet}>
-					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
+					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
 
@@ -115,7 +115,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 
 					<View style={styles.toggleRow}>
 						<Text style={styles.toggleLabel}>{t('modal.dailyAlarm.toggle')}</Text>
-						<Switch value={on} onValueChange={toggle} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
+						<Switch value={on} onValueChange={toggle} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
 					</View>
 
 					<View style={[styles.timeRow, !on && { opacity: 0.45 }]}>
@@ -153,7 +153,7 @@ const styles = themed(() => StyleSheet.create({
 	permWarnBtn: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md, backgroundColor: Colors.errorDark },
 	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse },
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	closeBtn: { position: 'absolute', top: SpacingV.md, right: Spacing.md, zIndex: 2, padding: Spacing.xs },
 	headIcon: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, backgroundColor: Colors.primarySoft, justifyContent: 'center', alignItems: 'center' },
 	title: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md },
@@ -166,5 +166,5 @@ const styles = themed(() => StyleSheet.create({
 	timeValue: { fontSize: Typography.callout, fontWeight: '800', color: Colors.primary },
 	pickerWrap: { alignSelf: 'stretch', alignItems: 'center' },
 	saveBtn: { alignSelf: 'stretch', paddingVertical: SpacingV.lg, borderRadius: Radius.md, alignItems: 'center', marginTop: SpacingV.xl },
-	saveBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	saveBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 }));

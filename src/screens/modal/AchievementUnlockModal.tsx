@@ -81,7 +81,7 @@ const AchievementUnlockModal: React.FC<Props> = ({ visible, achievements, onClos
 							<LinearGradient colors={[withAlpha(rarityColor, '00'), withAlpha(rarityColor, '66'), withAlpha(rarityColor, '00')]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 						</Animated.View>
 						<LinearGradient colors={[rarityColor, accent, withAlpha(accent, 'CC')]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.medal}>
-							<IconComponent type="materialIcons" name={main.icon} size={scaledSize(44)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name={main.icon} size={scaledSize(44)} color={readableOn(accent)} />
 						</LinearGradient>
 					</View>
 
@@ -111,7 +111,7 @@ export default AchievementUnlockModal;
 
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, paddingHorizontal: Spacing.xl, alignItems: 'center' },
+	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, paddingHorizontal: Spacing.xl, alignItems: 'center' },
 	rarityPill: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.pill, marginTop: SpacingV.sm },
 	rarityText: { fontSize: Typography.footnote, fontWeight: '900' },
 	condRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginTop: SpacingV.md },

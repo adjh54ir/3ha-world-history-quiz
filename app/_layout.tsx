@@ -3,6 +3,7 @@ import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
 import { AppState, LogBox, Platform } from 'react-native';
 import { Provider } from 'react-redux';
@@ -24,6 +25,7 @@ import '@/src/config/GlobalComponentDefaults';
 import { ReconcileNotificationSchedules } from '@/src/utils/NotifactionHelper';
 import { StatusBar } from 'expo-status-bar';
 import Colors, { isDark } from '@/src/const/ConstColors';
+import { BODY_FONTS, DISPLAY_FONT } from '@/src/const/ConstDesign';
 import { ThemeProvider, DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 /**
@@ -167,6 +169,13 @@ export default function RootLayout() {
 			try {
 				LogBox.ignoreAllLogs();
 				console.log('Now env mode : [', REACT_NATIVE_APP_MODE, ']');
+				// 제목·본문 서체 — 실패해도 시스템 서체로 그려지므로 앱 시작을 막지 않는다
+				await Font.loadAsync({
+					[DISPLAY_FONT]: require('@/src/assets/fonts/BlackHanSans-Regular.ttf'),
+					[BODY_FONTS.regular]: require('@/src/assets/fonts/NanumSquareRoundR.ttf'),
+					[BODY_FONTS.bold]: require('@/src/assets/fonts/NanumSquareRoundB.ttf'),
+					[BODY_FONTS.heavy]: require('@/src/assets/fonts/NanumSquareRoundEB.ttf'),
+				}).catch((e) => console.warn('앱 서체 로드 실패:', e));
 			} catch (e) {
 				console.warn('앱 초기화 중 오류:', e);
 			} finally {

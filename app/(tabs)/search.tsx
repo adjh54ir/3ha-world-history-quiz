@@ -8,7 +8,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import FilterOptionSheet from '@/src/screens/common/atomic/filter-option-sheet';
 import Colors, { isDark } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
+import { BODY_FONTS, Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet, scaleArt} from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -287,7 +287,7 @@ const SearchTab = () => {
 						}}
 					/>
 					{query.length > 0 && (
-						<TouchableOpacity activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.clearQuery')} onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={8}>
+						<TouchableOpacity activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.clearQuery')} onPress={() => { Keyboard.dismiss(); setQuery(''); }} hitSlop={Layout.hitSlop}>
 							<IconComponent type="materialIcons" name="cancel" size={scaledSize(18)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					)}
@@ -305,13 +305,13 @@ const SearchTab = () => {
 							<Text style={styles.recentClear}>{t('search.recent.clearAll')}</Text>
 						</TouchableOpacity>
 					</View>
-					<ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.recentRow} keyboardShouldPersistTaps="handled">
+					<ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recentScroll} contentContainerStyle={styles.recentRow} keyboardShouldPersistTaps="handled">
 						{recent.map((term) => (
 							<View key={term} style={styles.recentChip}>
 								<TouchableOpacity activeOpacity={0.8} onPress={() => { setQuery(term); pushRecent(term); Keyboard.dismiss(); }}>
 									<Text style={styles.recentChipText} numberOfLines={1}>{term}</Text>
 								</TouchableOpacity>
-								<TouchableOpacity hitSlop={6} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.recent.removeA11y', { term })} onPress={() => removeRecent(term)}>
+								<TouchableOpacity hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('search.recent.removeA11y', { term })} onPress={() => removeRecent(term)}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(13)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							</View>
@@ -401,9 +401,10 @@ const SearchTab = () => {
 				removeClippedSubviews
 				ListEmptyComponent={
 						!ready ? (
-							<View>
-								{[0, 1, 2, 3, 4].map((i) => (
-									<View key={i} style={styles.skeletonCard}>
+							// 태블릿은 결과와 같은 2열 — 결과가 들어올 때 1열→2열로 튀지 않게
+							<View style={isTablet ? styles.skeletonGrid : undefined}>
+								{(isTablet ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4]).map((i) => (
+									<View key={i} style={[styles.skeletonCard, isTablet && styles.gridCell]}>
 										<Skeleton width={'35%'} height={scaleHeight(16)} radius={Radius.md} />
 										<Skeleton width={'60%'} height={scaleHeight(20)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
 										<Skeleton width={'100%'} height={scaleHeight(18)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
@@ -497,7 +498,7 @@ const styles = themed(() => StyleSheet.create({
 	header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, backgroundColor: Colors.surface },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md },
 	headerIllustration: { width: scaleArt(68), height: scaleArt(68) },
-	input: { flex: 1, fontSize: Typography.callout, color: Colors.textStrong, padding: 0 },
+	input: { flex: 1, fontSize: Typography.callout, fontFamily: BODY_FONTS.regular, color: Colors.textStrong, padding: 0 },
 	dropRow: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.surface },
 	dropBtn: { flex: 1, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	dropLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted, marginBottom: SpacingV.xs },
@@ -507,13 +508,16 @@ const styles = themed(() => StyleSheet.create({
 	listFill: { flexGrow: 1 },
 	gridRow: { justifyContent: 'space-between' },
 	gridCell: { width: '49%' },
+	skeletonGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
 	countBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xs, backgroundColor: Colors.background },
 	countScope: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginRight: Spacing.md },
 	recentWrap: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, backgroundColor: Colors.surface },
 	recentHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	recentTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	recentClear: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },
-	recentRow: { flexDirection: 'row', gap: Spacing.xs, paddingRight: Spacing.sm },
+	// 칩 줄은 화면 끝까지 스크롤, 첫 칩은 본문 좌측선에 맞춤
+	recentScroll: { marginHorizontal: -Layout.screenH },
+	recentRow: { flexDirection: 'row', gap: Spacing.xs, paddingHorizontal: Layout.screenH },
 	recentChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, maxWidth: scaleWidth(180), minHeight: scaleHeight(36), borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, borderRadius: Radius.pill, paddingLeft: Spacing.lg, paddingRight: Spacing.md, paddingVertical: SpacingV.sm },
 	recentChipText: { flexShrink: 1, fontSize: Typography.body, fontWeight: '700', color: Colors.text },
 	countRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },

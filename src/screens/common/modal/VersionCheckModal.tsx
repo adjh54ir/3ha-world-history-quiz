@@ -117,7 +117,7 @@ const VersionCheckModal = () => {
 						)}
 
 						<TouchableOpacity style={styles.updateButton} activeOpacity={0.85} onPress={handleUpdate} accessibilityRole="button" accessibilityLabel={t('versionCheck.update')}>
-							<IconComponent type="materialIcons" name="system-update" size={scaledSize(18)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="system-update" size={scaledSize(18)} color={Colors.onFill} />
 							<Text style={styles.buttonText}>{t('versionCheck.update')}</Text>
 						</TouchableOpacity>
 						<Text style={styles.notice}>{t('versionCheck.notice')}</Text>
@@ -142,6 +142,8 @@ const styles = themed(() => StyleSheet.create({
 		width: '100%',
 		maxWidth: Layout.dialogMaxWidth,
 		backgroundColor: Colors.surface,
+		borderWidth: 1,
+		borderColor: Colors.border,
 		borderRadius: Radius.xl,
 		overflow: 'hidden',
 		...Shadow.floating,
@@ -235,7 +237,7 @@ const styles = themed(() => StyleSheet.create({
 		marginTop: SpacingV.xl,
 	},
 	buttonText: {
-		color: Colors.textInverse,
+		color: Colors.onFill,
 		fontSize: Typography.callout,
 		fontWeight: '800',
 	},

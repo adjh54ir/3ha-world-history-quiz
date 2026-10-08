@@ -9,7 +9,7 @@ import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { stringParam } from '@/src/navigation/expoRouterUtils';
@@ -160,10 +160,10 @@ const LearnCategory = () => {
 						<ExpoImage pointerEvents="none" source={categoryIllustration} style={styles.heroIllustration} contentFit="contain" />
 					)}
 					<View style={styles.heroTopRow}>
-						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('header.back')}>
+						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('header.back')}>
 							<IconComponent type="materialIcons" name="arrow-back-ios-new" size={scaledSize(18)} color={Colors.textStrong} />
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.push({ pathname: '/search', params: { category } } as never)} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('learn.category.search')}>
+						<TouchableOpacity style={styles.iconBtn} activeOpacity={0.7} onPress={() => router.push({ pathname: '/search', params: { category } } as never)} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('learn.category.search')}>
 							<IconComponent type="materialIcons" name="search" size={scaledSize(22)} color={Colors.textStrong} />
 						</TouchableOpacity>
 					</View>
@@ -246,7 +246,7 @@ const LearnCategory = () => {
 								<Text style={styles.progressTitle}>{t('learn.category.studyProgress')}</Text>
 								<Text style={[styles.progressPct, { color: accent }]}>{studyProgress}%</Text>
 							</View>
-							<AnimatedProgress ratio={studyProgress / 100} color={accent} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
+							<AnimatedProgress ratio={studyProgress / 100} color={accent} trackColor={Colors.border} height={scaleHeight(8)} />
 						</View>
 						<View>
 							<View style={styles.progressTop}>
@@ -254,7 +254,7 @@ const LearnCategory = () => {
 								<Text style={styles.progressTitle}>{t('learn.category.quizProgress')}</Text>
 								<Text style={[styles.progressPct, { color: Colors.primary }]}>{quizProgress}%</Text>
 							</View>
-							<AnimatedProgress ratio={quizProgress / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
+							<AnimatedProgress ratio={quizProgress / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(8)} />
 						</View>
 					</View>
 
@@ -324,7 +324,7 @@ const LearnCategory = () => {
 					<View>
 						<View style={styles.modalTitleRow}>
 							<Text style={styles.modalTitle}>{t('learn.mode.title')}</Text>
-							<TouchableOpacity onPress={() => setShowModeModal(false)} hitSlop={10} activeOpacity={0.7}>
+							<TouchableOpacity onPress={() => setShowModeModal(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -372,7 +372,7 @@ const LearnCategory = () => {
 export default LearnCategory;
 
 const styles = themed(() => StyleSheet.create({
-	sectionHeadWide: { marginBottom: SpacingV.lg },
+	sectionHeadWide: { marginBottom: SpacingV.md },
 	safe: { flex: 1, backgroundColor: Colors.background },
 	container: { paddingBottom: Layout.screenBottom },
 
@@ -388,7 +388,7 @@ const styles = themed(() => StyleSheet.create({
 	heroLvText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900' },
 	heroTitle: { color: Colors.textStrong, fontSize: Typography.h2, fontWeight: '900', marginTop: SpacingV.md, textAlign: 'center' },
 	heroSub: { color: Colors.textSecondary, fontSize: Typography.body, marginTop: SpacingV.xs, lineHeight: scaleHeight(19), textAlign: 'center', paddingHorizontal: Spacing.md },
-	heroNextLevel: { alignItems: 'center', marginTop: SpacingV.md, width: scaleWidth(200), alignSelf: 'center' },
+	heroNextLevel: { alignItems: 'center', marginTop: SpacingV.md, width: isTablet ? '60%' : scaleWidth(200), alignSelf: 'center' },
 	heroNextTrack: { width: '100%', height: scaleHeight(8), borderRadius: scaleWidth(4), backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, overflow: 'hidden' },
 	heroNextFill: { height: '100%', borderRadius: scaleWidth(4) },
 	heroNextText: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.sm },
@@ -437,7 +437,7 @@ const styles = themed(() => StyleSheet.create({
 	actionCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg },
 	actionRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.lg },
 	actionRowBorder: { borderTopWidth: 1, borderTopColor: Colors.border },
-	actionIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.lg },
+	actionIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	actionIllustration: { width: scaleWidth(44), height: scaleWidth(44) },
 	actionBody: { flex: 1 },
 	actionTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
@@ -451,7 +451,7 @@ const styles = themed(() => StyleSheet.create({
 	modalTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong },
 	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, marginBottom: SpacingV.lg },
 	modeCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
-	modeIcon: { width: scaleWidth(50), height: scaleWidth(50), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.lg },
+	modeIcon: { width: scaleWidth(50), height: scaleWidth(50), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	modeBody: { flex: 1 },
 	modeTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	modeDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs, lineHeight: scaleHeight(18) },

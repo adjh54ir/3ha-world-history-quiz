@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import HighlightText from '@/src/screens/common/atomic/HighlightText';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -118,7 +118,7 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 				<View style={styles.tags}>
 					{!!indexBadge && (
 						<View style={[styles.statusMark, { backgroundColor: indexBadge.color ?? Colors.primary }]}>
-							<Text style={styles.indexText}>{indexBadge.num}</Text>
+							<Text style={[styles.indexText, { color: readableOn(indexBadge.color ?? Colors.primary) }]}>{indexBadge.num}</Text>
 						</View>
 					)}
 					{!!statusMark && (
@@ -149,7 +149,7 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 						<TouchableOpacity
 							style={styles.favBtn}
 							activeOpacity={0.7}
-							hitSlop={8}
+							hitSlop={Layout.hitSlop}
 							accessibilityRole="button"
 							accessibilityLabel={bookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}
 							onPress={onToggleBookmark}>

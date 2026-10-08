@@ -25,8 +25,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { withAlpha, EMBER_GRADIENT, HEAT_GRADIENT, NIGHT_GRADIENT } from '@/src/const/ConstColors';
-import { Border, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
+import Colors, { isDark, withAlpha, EMBER_GRADIENT, HEAT_GRADIENT, NIGHT_GRADIENT } from '@/src/const/ConstColors';
+import { BODY_FONTS, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenHeight, contentWidth, scaleArt, isTablet } from '@/src/utils';
 import { LearnType } from '@/src/types/data/LearnType';
 import { setQuizInProgress } from '@/src/utils/ThemeReload';
@@ -890,6 +890,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		// 타임 챌린지 개인 최고 기록 경신 여부 (첫 플레이는 비교 대상이 없어 제외)
 		const timeScore = correctCount * POINT_PER_CORRECT;
 		const isNewTimeRecord = timed && trackProgress && prevTimeBest !== null && prevTimeBest > 0 && timeScore > prevTimeBest;
+		// 타임 히어로는 어두운 heat 그라디언트라 흰 글자, 일반 히어로는 accent 단색이라 onFill
+		const heroInk = timed ? Colors.textInverse : Colors.onFill;
+		const heroSubInk = timed ? Colors.onBrandText : withAlpha(Colors.onFill, 'E6');
 
 		return withSharedModals(
 			<SafeAreaView style={styles.safe} edges={[]}>
@@ -898,31 +901,31 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					<View style={[styles.resultHero, { backgroundColor: timed ? HEAT_GRADIENT[1] : accent, paddingTop: SpacingV.xxl }]}>
 						{timed && <LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />}
 						{pass && <LottieBox source={LOTTIE_CONFETTI} autoPlay loop={false} style={styles.resultConfetti} />}
-						<DonutChart size={104} strokeWidth={8} percent={rate} color={Colors.textInverse} tone="dark">
+						<DonutChart size={104} strokeWidth={8} percent={rate} color={heroInk} tone="dark">
 							{resultIllustration ? (
 								<Image source={resultIllustration} style={styles.resultIllustration} resizeMode="contain" />
 							) : (
 								<View style={styles.resultIconWrap}>
-									<IconComponent type="materialIcons" name={pass ? 'emoji-events' : 'self-improvement'} size={scaledSize(40)} color={Colors.textInverse} />
+									<IconComponent type="materialIcons" name={pass ? 'emoji-events' : 'self-improvement'} size={scaledSize(40)} color={heroInk} />
 								</View>
 							)}
 						</DonutChart>
-						<Text style={styles.resultTitle} numberOfLines={1} ellipsizeMode="tail">{head}</Text>
-						<Text style={styles.resultSub}>{modeLabel ?? t('player.result.sub', { title: displayTitle })}</Text>
+						<Text style={[styles.resultTitle, { color: heroInk }]} numberOfLines={1} ellipsizeMode="tail">{head}</Text>
+						<Text style={[styles.resultSub, { color: heroSubInk }]}>{modeLabel ?? t('player.result.sub', { title: displayTitle })}</Text>
 						<View style={styles.resultScoreChip}>
 							{mode === 'daily' || !trackProgress ? (
 								<>
 									<Text style={[styles.resultScoreNum, styles.resultScoreNumGreen]}>{correctCount}</Text>
-									<Text style={styles.resultScoreUnit}>{t('player.result.unitCount')}</Text>
+									<Text style={[styles.resultScoreUnit, { color: heroSubInk }]}>{t('player.result.unitCount')}</Text>
 								</>
 							) : (
 								<>
 									<Animated.Text style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen]}>{displayResultScore}</Animated.Text>
-									<Text style={styles.resultScoreUnit}>{t('player.result.unitPoint')}</Text>
+									<Text style={[styles.resultScoreUnit, { color: heroSubInk }]}>{t('player.result.unitPoint')}</Text>
 								</>
 							)}
 						</View>
-						<Text style={styles.resultScoreDetail}>
+						<Text style={[styles.resultScoreDetail, { color: heroSubInk }]}>
 							{t('player.result.detail', { solved, correct: correctCount, rate })}
 						</Text>
 						{isNewTimeRecord && (
@@ -934,8 +937,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							</FadeInUp>
 						)}
 						<View style={styles.resultProfile}>
-							<Text style={styles.resultProfileTitle} numberOfLines={1} ellipsizeMode="tail">{t(profile.title)}</Text>
-							<Text style={styles.resultProfileDesc} numberOfLines={2} ellipsizeMode="tail">{t(profile.desc)}</Text>
+							<Text style={[styles.resultProfileTitle, { color: heroInk }]} numberOfLines={1} ellipsizeMode="tail">{t(profile.title)}</Text>
+							<Text style={[styles.resultProfileDesc, { color: heroSubInk }]}numberOfLines={2} ellipsizeMode="tail">{t(profile.desc)}</Text>
 						</View>
 					</View>
 
@@ -1156,7 +1159,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											<Text style={styles.soundToggleLabel}>{t('player.start.sound')}</Text>
 										</View>
 										<View style={[styles.soundPill, { backgroundColor: soundOn ? accent : Colors.surfaceAlt }]}>
-											<Text style={[styles.soundPillText, { color: soundOn ? Colors.textInverse : Colors.textSecondary }]} numberOfLines={1} ellipsizeMode="tail">{soundOn ? 'ON' : 'OFF'}</Text>
+											<Text style={[styles.soundPillText, { color: soundOn ? Colors.onFill : Colors.textSecondary }]} numberOfLines={1} ellipsizeMode="tail">{soundOn ? 'ON' : 'OFF'}</Text>
 										</View>
 									</TouchableOpacity>
 									<View style={styles.startBtns}>
@@ -1273,8 +1276,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		return withSharedModals(
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
 				<View style={[styles.header, { backgroundColor: accent }]}>
-					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('common.close')}>
-						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textInverse} />
+					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('common.close')}>
+						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.onFill} />
 					</TouchableOpacity>
 				</View>
 				<Text style={styles.emptyText}>{t('player.empty')}</Text>
@@ -1287,7 +1290,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const lowTime = timed && timeLeft <= 10;
 	const activeTime = timed ? timeLeft : qTimeLeft;
 	const activeLimit = timed ? timeSec : qLimit;
-	const timeBarColor = activeTime >= activeLimit / 2 ? Colors.textInverse : activeTime > Math.min(10, activeLimit / 4) ? Colors.goldSoft : Colors.errorPale;
+	const timeBarColor = activeTime >= activeLimit / 2 ? Colors.onFill : activeTime > Math.min(10, activeLimit / 4) ? Colors.goldSoft : Colors.errorPale;
 	const timeProgress = activeLimit > 0 ? Math.max(0, Math.min(100, (activeTime / activeLimit) * 100)) : 0;
 	const presentation = getQuestionPresentation(current);
 	const currentDomainMeta = LearnHubService.getDomain(current.domain).meta;
@@ -1316,7 +1319,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								key={q.uid}
 								style={[
 									styles.levelSeg,
-									{ backgroundColor: withAlpha(Colors.textInverse, LEVEL_ALPHA[q.level ?? ''] ?? '59') },
+									{ backgroundColor: withAlpha(Colors.onFill, LEVEL_ALPHA[q.level ?? ''] ?? '59') },
 									i > index && styles.levelSegTodo,
 									i === index && styles.levelSegCurrent,
 								]}
@@ -1327,19 +1330,19 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				{/* 상단 스코어 영역: 점수 / 정답 / 콤보 */}
 				<View style={styles.scoreStrip}>
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={Colors.onFill} />
 						<Animated.Text style={[styles.scoreValue, { transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
 						<Text style={styles.scoreLabel}>{t('player.play.score')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="check-circle" size={scaledSize(15)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="check-circle" size={scaledSize(15)} color={Colors.onFill} />
 						<Text style={styles.scoreValue}>{correctCount}</Text>
 						<Text style={styles.scoreLabel}>{t('player.play.correct')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={Colors.onFill} />
 						<Text style={styles.scoreValue}>{combo}</Text>
 						<Text style={styles.scoreLabel}>{t('player.play.combo')}</Text>
 					</View>
@@ -1354,7 +1357,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={styles.headerTimerHead}>
 							<View style={styles.headerTimerLabelRow}>
 								<Reanimated.View style={timed ? challengeBoltMotionStyle : undefined}>
-									<IconComponent type="materialIcons" name={timed ? 'bolt' : 'timer'} size={scaledSize(14)} color={Colors.textInverse} />
+									<IconComponent type="materialIcons" name={timed ? 'bolt' : 'timer'} size={scaledSize(14)} color={Colors.onFill} />
 								</Reanimated.View>
 								<Text style={styles.headerTimerLabel} numberOfLines={1} ellipsizeMode="tail">{timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')}</Text>
 							</View>
@@ -1488,7 +1491,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					</View>
 				) : (
 					// 그림 문항은 그림이 세로 자리를 먹어 보기 넷이 화면 밖으로 밀린다 — 2×2 격자로 한눈에 보이게 한다
-					<View style={current.imageRef ? styles.optionGrid : undefined}>
+					<View style={[styles.answers, !!current.imageRef && styles.optionGrid]}>
 					{current.options.map((opt, i) => {
 						const isAnswer = i === current.answerIndex;
 						const isSelected = i === selected;
@@ -1622,7 +1625,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									<TouchableOpacity
 										style={styles.reportBtn}
 										activeOpacity={0.7}
-										hitSlop={8}
+										hitSlop={Layout.hitSlop}
 										onPress={() =>
 											reportQuizIssue({
 												uid: current.uid,
@@ -1639,7 +1642,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 
 								<TouchableOpacity style={[styles.explainNextBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={onNext}>
 									<Text style={styles.explainNextText}>{isLast ? t('player.explain.result') : t('player.explain.next')}</Text>
-									<IconComponent type="materialIcons" name={isLast ? 'flag' : 'arrow-forward'} size={scaledSize(20)} color={Colors.textInverse} />
+									<IconComponent type="materialIcons" name={isLast ? 'flag' : 'arrow-forward'} size={scaledSize(20)} color={Colors.onFill} />
 								</TouchableOpacity>
 							</Animated.View>
 						);
@@ -1702,13 +1705,13 @@ const styles = themed(() => StyleSheet.create({
 	endBottomBtn: { alignSelf: 'center', minWidth: scaleWidth(168), flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.xl, backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.borderStrong },
 	endBottomText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	backBtn: { width: scaleWidth(40), height: scaleWidth(40), justifyContent: 'center', alignItems: 'center' },
-	headerTitle: { flex: 1, textAlign: 'center', fontSize: Typography.title, fontWeight: '800', color: Colors.textInverse },
+	headerTitle: { flex: 1, textAlign: 'center', fontSize: Typography.title, fontWeight: '800', color: Colors.onFill },
 	chipRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginBottom: SpacingV.md, flexWrap: 'wrap' },
 	metaChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
 	metaChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	guideLine: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary, textAlign: 'center', marginBottom: SpacingV.md },
 	explainOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', alignItems: 'center' },
-	explainSheet: { width: '100%', maxWidth: Layout.sheetMaxWidth, backgroundColor: Colors.surface, borderTopLeftRadius: scaleWidth(28), borderTopRightRadius: scaleWidth(28), paddingHorizontal: Spacing.xxl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	explainSheet: { width: '100%', maxWidth: Layout.sheetMaxWidth, backgroundColor: Colors.surface, borderTopLeftRadius: scaleWidth(28), borderTopRightRadius: scaleWidth(28), paddingHorizontal: Layout.screenH, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	explainBadge: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.pill, backgroundColor: Colors.surface, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' },
 	explainBadgeImg: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.xl },
 	loadingLottie: { width: scaleWidth(90), height: scaleWidth(90), alignSelf: 'center' },
@@ -1721,8 +1724,8 @@ const styles = themed(() => StyleSheet.create({
 	answerCardText: { fontSize: Typography.callout, fontWeight: '900', textAlign: 'center', marginTop: SpacingV.xxs, lineHeight: scaleHeight(22) },
 	introFill: { flex: 1 },
 	preparingWrap: { alignItems: 'center', gap: SpacingV.md, marginTop: SpacingV.xl },
-	startOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xxl },
-	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xxl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	startOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
+	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	startIcon: { width: scaleWidth(60), height: scaleWidth(60), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.lg },
 	startIllustration: { width: scaleWidth(112), height: scaleWidth(112), marginBottom: SpacingV.md },
 	startTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
@@ -1737,11 +1740,11 @@ const styles = themed(() => StyleSheet.create({
 	soundToggleLabel: { fontSize: Typography.body, fontWeight: '700', color: Colors.textStrong },
 	soundPill: { minWidth: scaleWidth(48), alignItems: 'center', borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	soundPillText: { fontSize: Typography.footnote, fontWeight: '900' },
-	startBtns: { flexDirection: 'row', gap: Spacing.sm, alignSelf: 'stretch', marginTop: SpacingV.xxl },
+	startBtns: { flexDirection: 'row', gap: Spacing.sm, alignSelf: 'stretch', marginTop: SpacingV.xl },
 	startCancelBtn: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.lg, borderRadius: Radius.md, backgroundColor: Colors.surfaceAlt },
 	startCancelText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textSecondary },
 	startGoBtn: { flex: 1.6, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.lg, borderRadius: Radius.md },
-	startGoText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	startGoText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 	explainMetaRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md },
 	explainMetaChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
 	explainMetaText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
@@ -1759,12 +1762,12 @@ const styles = themed(() => StyleSheet.create({
 	explainImage: { marginBottom: SpacingV.sm },
 	// 광고 제거 구매자는 배너가 없으므로 헤더와 같은 색으로 상단 안전영역만 채운다
 	explainNextBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, alignSelf: 'stretch', paddingVertical: SpacingV.lg, borderRadius: Radius.lg, marginTop: SpacingV.xl },
-	explainNextText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
-	headerCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.onBrandText },
+	explainNextText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
+	headerCount: { fontSize: Typography.body, fontWeight: '800', color: withAlpha(Colors.onFill, 'E6') },
 	scoreStrip: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.onBrandSurface, borderRadius: Radius.lg, paddingVertical: SpacingV.sm, marginTop: SpacingV.md },
 	scoreItem: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs },
-	scoreValue: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900' },
-	scoreLabel: { color: Colors.onBrandText, fontSize: Typography.footnote, fontWeight: '700', marginLeft: Spacing.xs },
+	scoreValue: { color: Colors.onFill, fontSize: Typography.callout, fontFamily: BODY_FONTS.heavy }, // Animated.Text 는 앱 Text 를 거치지 않아 서체를 직접 준다
+	scoreLabel: { color: withAlpha(Colors.onFill, 'E6'), fontSize: Typography.footnote, fontWeight: '700', marginLeft: Spacing.xs },
 	scoreDivider: { width: 1, height: scaleHeight(18), backgroundColor: Colors.onBrandSurfaceStrong },
 	emptyText: { textAlign: 'center', marginTop: SpacingV.xxxxl, color: Colors.textSecondary, fontSize: Typography.body },
 
@@ -1781,9 +1784,10 @@ const styles = themed(() => StyleSheet.create({
 	comboText: { color: Colors.textInverse, fontSize: Typography.title, fontWeight: '900', letterSpacing: Tracking.normal },
 	comboMultiplier: { minWidth: scaleWidth(34), height: scaleWidth(34), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.onBrandSurfaceStrong, borderWidth: 1, borderColor: Colors.onBrandBorder },
 	comboMultiplierText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '900' },
-	scoreFloat: { position: 'absolute', alignSelf: 'center', zIndex: 25, fontSize: Typography.h3, fontWeight: '900', color: Colors.goldSoft },
+	scoreFloat: { position: 'absolute', alignSelf: 'center', zIndex: 25, fontSize: Typography.h3, ...DisplayText, color: Colors.goldSoft },
 
-	body: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	// flexGrow — 키 큰 화면(태블릿)에서 남는 높이를 보기 묶음이 받아 가운데가 비지 않게 한다. 넘치면 그대로 스크롤
+	body: { flexGrow: 1, paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	questionCard: {
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.lg,
@@ -1806,8 +1810,8 @@ const styles = themed(() => StyleSheet.create({
 	headerTimerDanger: { backgroundColor: Colors.onBrandSurfaceStrong },
 	headerTimerHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.xs },
 	headerTimerLabelRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-	headerTimerLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse },
-	headerTimerValue: { fontSize: Typography.body, fontWeight: '900', color: Colors.textInverse, fontVariant: ['tabular-nums'] },
+	headerTimerLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.onFill },
+	headerTimerValue: { fontSize: Typography.body, fontWeight: '900', color: Colors.onFill, fontVariant: ['tabular-nums'] },
 	headerTimerTrack: { height: scaleHeight(6), borderRadius: Radius.sm, backgroundColor: Colors.onBrandSurfaceStrong, overflow: 'hidden' },
 	headerTimerFill: { height: '100%', borderRadius: Radius.sm, overflow: 'hidden' },
 	headerTimerShimmer: { position: 'absolute', top: 0, bottom: 0, left: 0, width: scaleWidth(54) },
@@ -1831,10 +1835,16 @@ const styles = themed(() => StyleSheet.create({
 		borderColor: Colors.border,
 		paddingVertical: SpacingV.lg,
 		paddingHorizontal: Spacing.lg,
-		marginBottom: SpacingV.sm,
+		// 남는 높이를 나눠 받되 상한을 둬 12.9" 에서 판자가 되지 않게 한다
+		flexGrow: 1,
+		minHeight: Layout.optionMinH,
+		maxHeight: Layout.optionMaxH,
 	},
-	optionGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: SpacingV.sm },
-	optionHalf: { width: '48.8%', marginBottom: 0, gap: Spacing.sm, paddingHorizontal: Spacing.md, minHeight: scaleHeight(64) },
+	// 보기 묶음 — 간격은 gap 하나로 (marginBottom 과 섞이지 않게)
+	answers: { flexGrow: 1, gap: SpacingV.sm },
+	// 2×2 — 가로·세로 간격을 같은 gap 으로. space-between + 48.8% 는 가운데 골이 줄 간격보다 넓었다
+	optionGrid: { flexDirection: 'row', flexWrap: 'wrap', alignContent: 'stretch', gap: Spacing.sm },
+	optionHalf: { flexBasis: '40%', gap: Spacing.sm, paddingHorizontal: Spacing.md, minHeight: scaleHeight(64), maxHeight: scaleHeight(140) },
 	optionCorrect: { borderColor: Colors.success, backgroundColor: Colors.successSoft },
 	optionWrong: { borderColor: Colors.error, backgroundColor: Colors.errorSoft },
 	optionIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, justifyContent: 'center', alignItems: 'center' },
@@ -1842,7 +1852,8 @@ const styles = themed(() => StyleSheet.create({
 	optionText: { flex: 1, fontSize: Typography.callout, color: Colors.text, lineHeight: scaleHeight(22) },
 	optionTextStrong: { fontWeight: '700', color: Colors.textStrong },
 
-	oxRow: { flexDirection: 'row', gap: Spacing.md },
+	// 남는 높이까지 채워 정사각에 가깝게 — 납작한 두 판 아래가 비지 않게
+	oxRow: { flexGrow: 1, flexDirection: 'row', gap: Spacing.md, maxHeight: scaleHeight(240) },
 	oxBtn: {
 		flex: 1,
 		alignItems: 'center',
@@ -1863,7 +1874,7 @@ const styles = themed(() => StyleSheet.create({
 		paddingTop: SpacingV.xxxl,
 		// 아래 통계 카드가 18 만큼 올라와 겹친다 — 24 면 결과 유형 박스와 6 만 남아 붙어 보여 32 로 띄운다
 		paddingBottom: SpacingV.xxxl,
-		paddingHorizontal: Spacing.xxl,
+		paddingHorizontal: Layout.screenH,
 		borderBottomLeftRadius: scaleWidth(28),
 		borderBottomRightRadius: scaleWidth(28),
 		overflow: 'hidden',
@@ -1873,8 +1884,9 @@ const styles = themed(() => StyleSheet.create({
 	resultTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textInverse },
 	resultSub: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.sm },
 	resultScoreChip: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.sm, marginTop: SpacingV.lg },
-	resultScoreNum: { fontSize: Typography.displayXl, fontWeight: '900', lineHeight: scaleHeight(56), color: Colors.textInverse },
-	resultScoreNumGreen: { color: Colors.successBright },
+	resultScoreNum: { fontSize: Typography.displayXl, ...DisplayText, lineHeight: scaleHeight(56), color: Colors.textInverse },
+	// 비취 히어로 위 — 초록은 배경에 묻혀 보물 금빛으로 띄운다. 다크는 히어로가 밝아져 금빛이 1.6:1 로 묻혀 채움 글자색으로
+	resultScoreNumGreen: { color: isDark() ? Colors.onFill : Colors.goldSoft },
 	resultScoreUnit: { fontSize: Typography.h3, fontWeight: '900', color: Colors.onBrandText, marginLeft: Spacing.xs, marginBottom: SpacingV.sm },
 	recordBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, alignSelf: 'center', backgroundColor: Colors.bookmarkSoft, borderWidth: 1, borderColor: Colors.goldDark, borderRadius: Radius.pill, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.xs, marginTop: SpacingV.md },
 	recordBadgeText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.heatDeep },
@@ -1917,8 +1929,8 @@ const styles = themed(() => StyleSheet.create({
 	stepBody: { flex: 1 },
 	stepBtnTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	stepBtnDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
-	loadingOverlay: { flex: 1, backgroundColor: Colors.backdrop, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxl },
-	loadingCard: { width: '100%', maxWidth: Layout.dialogMaxWidth, alignItems: 'center', borderRadius: Radius.xl, backgroundColor: Colors.surface, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.xxl },
+	loadingOverlay: { flex: 1, backgroundColor: Colors.backdrop, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xl },
+	loadingCard: { width: '100%', maxWidth: Layout.dialogMaxWidth, alignItems: 'center', borderRadius: Radius.xl, backgroundColor: Colors.surface, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
 	loadingTitle: { marginTop: SpacingV.md, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	loadingTrack: { alignSelf: 'stretch', height: scaleHeight(6), marginTop: SpacingV.lg, borderRadius: scaleWidth(3), backgroundColor: Colors.border, overflow: 'hidden' },
 	loadingFill: { height: '100%', borderRadius: scaleWidth(3) },

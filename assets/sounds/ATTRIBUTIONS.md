@@ -264,3 +264,21 @@ EBU R128(`loudnorm=I=-18:TP=-3:LRA=11`)로 라우드니스를 맞춘 뒤 64kbps 
 `3ha-korea-quiz` 화면을 옮기며 그 앱의 효과음·배경음을 파일 이름 그대로 가져왔다 (`src/utils/SoundUtils.ts`, `src/utils/BgmUtils.ts` 가 require 한다).
 `correct.wav` `wrong.mp3` `timeout.wav` `complete.wav` `finish.wav` `combo.wav` `tick.wav` `whoosh.wav` `pop.wav` `flip.wav` `match.wav` `bgm-quiz.mp3` `bgm-time.mp3`.
 효과음 원본은 Kenney Interface Sounds (kenney.nl, CC0). 배경음(`bgm-*.mp3`) 출처는 원본 저장소에도 적혀 있지 않다 — 출시 전에 라이선스를 확인할 것.
+
+## 정글 테마 배경음 (2026-10-08) — 지금 `BgmUtils.ts` 가 쓰는 BGM
+
+앱 테마(정글 탐험대)에 맞춰 배경음을 교체·확대했다. **무료 음원만** 사용 — 음악은 전부 Komiku(CC0), 정글 앰비언스는 Pixabay Content License(상업 사용 가능 · 표기 불요).
+Komiku CC0 근거: FMA 곡 페이지(Escaping like Indiana Jones) CC0 1.0 표기, OpenGameArt 업로드분 "All music written by Komiku under Creative Commons 0 licence".
+마스터링: `scripts/master_jungle_bgm.sh` (구간 발췌 → 정글 앰비언스 믹스(150Hz HPF) → 끝 2.5초를 처음에 크로스페이드한 심리스 루프 → `loudnorm I=-18` → 64kbps AAC).
+
+| 파일 | 쓰는 화면 | 음악 (CC0) | 길이 |
+|---|---|---|---|
+| bgm_jungle_quiz.m4a | 퀴즈 전반(LearnQuizPlayer)·레벨 테스트·탑 퀴즈·성향 테스트 | Komiku, "Le Grand Village" | 89.2초 |
+| bgm_jungle_time.m4a | 타임챌린지·짝 맞추기 게임 | Komiku, "Escaping like Indiana Jones" | 91.6초 |
+| bgm_jungle_study.m4a | 카드 학습·숏폼 학습 | Komiku, "Chill Out Theme" | 172.1초 |
+
+음악 원본은 [SoundSafari/CC0-1.0-Music](https://github.com/SoundSafari/CC0-1.0-Music) `chosic.com` 폴더, 앰비언스는 [Moodist](https://github.com/remvze/moodist) `public/sounds/nature/jungle.mp3` (곡마다 다른 구간).
+
+> 같은 저장소의 John Bartmann 곡(Happy African Village 등)은 파일 태그가 **CC BY-NC-ND 4.0**(비상업·변경 금지)이라 쓰지 않는다 — 저장소 이름만 믿지 말고 태그를 확인할 것.
+
+이전 BGM `bgm-quiz.mp3`·`bgm-time.mp3`(출처 미상)와 `bgm_*.m4a` 3종은 더 이상 require 되지 않는다. 사운드 폴더 정리 방침에 따라 파일은 남겨 둠.

@@ -159,7 +159,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 								</View>
 							)}
 						</View>
-						<TouchableOpacity style={styles.headerSide} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.detail.closeA11y')}>
+						<TouchableOpacity style={styles.headerSide} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.detail.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -173,7 +173,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 						<TouchableOpacity
 							style={[styles.favBtn, bookmarked ? { backgroundColor: withAlpha(accent, '14'), borderColor: withAlpha(accent, '40') } : { borderColor: Colors.border }]}
 							onPress={toggleBookmark}
-							hitSlop={8}
+							hitSlop={Layout.hitSlop}
 							activeOpacity={0.8}
 							accessibilityRole="button"
 							accessibilityLabel={t(bookmarked ? 'common.bookmarkRemove' : 'common.bookmarkAdd')}>
@@ -338,7 +338,7 @@ export default DetailSheet;
 
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, maxHeight: isTablet ? scaleHeight(560) : '80%' },
+	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, maxHeight: isTablet ? scaleHeight(560) : '80%' },
 	headerRow: { flexDirection: 'row', alignItems: 'center', marginBottom: SpacingV.sm },
 	headerSide: { width: scaleWidth(32), height: scaleWidth(32), alignItems: 'center', justifyContent: 'center' },
 	tagRow: { flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
@@ -371,7 +371,7 @@ const styles = themed(() => StyleSheet.create({
 	storyHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	storyItem: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
 	storyItemDivider: { marginTop: SpacingV.md, paddingTop: SpacingV.md, borderTopWidth: 1 },
-	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: scaleHeight(2) },
+	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: SpacingV.xxs },
 	storyNumText: { fontSize: Typography.micro, fontWeight: '900' },
 	storyText: { flex: 1, fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(24) },
 	vsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
@@ -389,7 +389,7 @@ const styles = themed(() => StyleSheet.create({
 	chipWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
 	chip: { paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.pill, borderWidth: 1 },
 	chipText: { fontSize: Typography.footnote, fontWeight: '700' },
-	ctaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.md },
+	ctaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.xl },
 	// 흐름에 끼면 나타날 때 하단 CTA 가 밀린다 — 시트 하단 위에 겹쳐 띄운다
 	localToast: { position: 'absolute', bottom: scaleHeight(78), alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.overlayStrong, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.xl },
 	localToastText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '700' },

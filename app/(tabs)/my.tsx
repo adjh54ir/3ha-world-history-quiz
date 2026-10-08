@@ -14,7 +14,7 @@ import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
 import { setSoundEnabled, isSoundEnabled, playCorrect } from '@/src/utils/SoundUtils';
 import { resetCharacterGuideSeen } from '@/src/screens/common/CharacterGuide';
 import { setBgmEnabled, isBgmEnabled } from '@/src/utils/BgmUtils';
-import Colors, { withAlpha, getThemeMode, type ThemeMode } from '@/src/const/ConstColors';
+import Colors, { withAlpha, getThemeMode, isDark, type ThemeMode } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, CardSurface, Tracking } from '@/src/const/ConstDesign';
 import { scaledSize, scaleWidth, scaleHeight } from '@/src/utils';
 import DailyWordService from '@/src/services/DailyWordService';
@@ -321,7 +321,7 @@ const Setting = () => {
 							<Image source={require('@/src/assets/mainIcon.webp')} style={styles.shareIconImg} resizeMode="contain" />
 						</View>
 						<TouchableOpacity style={styles.shareCardBtn} onPress={shareApp} activeOpacity={0.85}>
-							<IconComponent type="materialIcons" name="share" size={scaledSize(16)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="share" size={scaledSize(16)} color={Colors.onFill} />
 							<Text style={styles.shareCardBtnText}>{t('settings.share.button')}</Text>
 						</TouchableOpacity>
 					</View>
@@ -355,7 +355,7 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(16)} color={soundOn ? Colors.primary : Colors.textMuted} />
 								<Text style={[styles.soundTestText, !soundOn && { color: Colors.textMuted }]}>{t('settings.notification.soundTest')}</Text>
 							</TouchableOpacity>
-							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
+							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
 						</View>
 						<View style={[styles.row, styles.rowBorder]}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
@@ -365,7 +365,7 @@ const Setting = () => {
 								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.bgm')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.bgmDesc')}</Text>
 							</View>
-							<Switch value={bgmOn} onValueChange={toggleBgm} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
+							<Switch value={bgmOn} onValueChange={toggleBgm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
 						</View>
 					</View>
 
@@ -618,7 +618,7 @@ const PermPill = ({ granted }: { granted: boolean | null }) => {
 };
 
 const styles = themed(() => StyleSheet.create({
-	subHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Layout.sectionGap, marginBottom: SpacingV.sm },
+	subHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Layout.sectionGap, marginBottom: SpacingV.md },
 	subHeadIcon: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.sm, alignItems: 'center', justifyContent: 'center' },
 	subHeadLabel: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	subHeadLine: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: Colors.border, marginLeft: Spacing.sm },
@@ -631,7 +631,7 @@ const styles = themed(() => StyleSheet.create({
 	shareIconWrap: { width: scaleWidth(80), height: scaleWidth(80), borderRadius: Radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border, marginBottom: SpacingV.lg },
 	shareIconImg: { width: '100%', height: '100%' },
 	shareCardBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.md },
-	shareCardBtnText: { flexShrink: 1, color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800', textAlign: 'center' },
+	shareCardBtnText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', textAlign: 'center' },
 	permPill: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill },
 	permOn: { backgroundColor: Colors.successSoft },
 	permOff: { backgroundColor: Colors.primaryBg },
@@ -667,9 +667,9 @@ const styles = themed(() => StyleSheet.create({
 		borderColor: Colors.border,
 	},
 	devBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.primaryDeep },
-	// 맨 아래 앱 목록 — 가로 카드 리스트
-	footerAppWrapper: { paddingVertical: SpacingV.sm },
-	footerAppList: { gap: Spacing.md },
+	// 맨 아래 앱 목록 — 가로 카드 리스트 (화면 끝까지 스크롤, 첫 카드는 본문 좌측선에 맞춤)
+	footerAppWrapper: { paddingVertical: SpacingV.sm, marginHorizontal: -Layout.screenH },
+	footerAppList: { paddingHorizontal: Layout.screenH, gap: Spacing.md },
 	footerAppCard: { width: scaleWidth(120), padding: Spacing.md, borderRadius: Radius.md, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'flex-start', borderWidth: 1, borderColor: Colors.border },
 	footerAppIconBox: { position: 'relative', marginBottom: SpacingV.sm },
 	footerAppIconWrapper: { width: scaleWidth(64), height: scaleWidth(64), borderRadius: Radius.md, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border },

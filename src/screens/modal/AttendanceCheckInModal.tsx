@@ -115,7 +115,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	// 달력 마킹: 참여한 날은 파란색(채움), 오늘은 초록색 강조
 	const marked: Record<string, any> = {};
 	state.dates.forEach((d) => {
-		marked[d] = { customStyles: { container: { backgroundColor: Colors.primary }, text: { color: Colors.textInverse, fontWeight: '800' } } };
+		marked[d] = { customStyles: { container: { backgroundColor: Colors.primary }, text: { color: Colors.onFill, fontWeight: '800' } } };
 	});
 	// 보호권으로 살린 날 = 금색 (빠졌지만 연속은 유지된 날)
 	(state.shieldDates ?? []).forEach((d) => {
@@ -165,7 +165,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 										{i > 0 && <IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.textMuted} style={styles.milestoneArrow} />}
 										<View style={[styles.milestoneItem, done && styles.milestoneItemDone]}>
 											<View style={[styles.milestoneIcon, done && styles.milestoneIconDone]}>
-												<IconComponent type="materialIcons" name={done ? m.icon : 'lock'} size={scaledSize(20)} color={done ? Colors.textInverse : Colors.textMuted} />
+												<IconComponent type="materialIcons" name={done ? m.icon : 'lock'} size={scaledSize(20)} color={done ? Colors.onFill : Colors.textMuted} />
 											</View>
 											<Text style={[styles.milestoneDays, done && { color: Colors.primary }]}>{t('common.days', { count: m.days })}</Text>
 											<Text style={styles.milestoneLabel} numberOfLines={1}>{t(m.labelKey)}</Text>
@@ -252,15 +252,15 @@ export default AttendanceCheckInModal;
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	// 히어로가 시트 상단까지 꽉 차도록 위쪽 여백은 히어로가 직접 가진다
-	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, overflow: 'hidden', paddingHorizontal: 0, paddingTop: 0, paddingBottom: SpacingV.lg, maxHeight: isTablet ? scaleHeight(620) : '76%' },
+	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, overflow: 'hidden', paddingHorizontal: 0, paddingTop: 0, paddingBottom: SpacingV.xxl, maxHeight: isTablet ? scaleHeight(620) : '76%' },
 	body: { alignSelf: 'stretch', flexGrow: 0, flexShrink: 1 },
 	sheetBody: { alignItems: 'center', paddingHorizontal: Spacing.xl },
 	closeBtn: { position: 'absolute', top: SpacingV.md, right: Spacing.md, zIndex: 2, padding: Spacing.xs },
 	// 시트 상단 가로 전체를 채운다 (좌우 패딩은 아래 스크롤 영역이 가진다)
 	hero: { alignSelf: 'stretch', overflow: 'hidden', paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xl, paddingBottom: SpacingV.md, alignItems: 'center' },
 	legendDotShield: { backgroundColor: Colors.goldBg, borderWidth: Border.thin, borderColor: Colors.goldDark },
-	confirmBtn: { alignSelf: 'stretch', marginHorizontal: Spacing.xl, marginTop: SpacingV.lg, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.lg, alignItems: 'center' },
-	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	confirmBtn: { alignSelf: 'stretch', marginHorizontal: Spacing.xl, marginTop: SpacingV.xl, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.lg, alignItems: 'center' },
+	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 	heroWatermark: { position: 'absolute', right: scaleWidth(-16), bottom: scaleHeight(-20) },
 	heroEyebrow: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse, opacity: 0.9 },
 	heroStreakRow: { flexDirection: 'row', alignItems: 'flex-end', gap: Spacing.xs, marginTop: SpacingV.xs },
@@ -288,6 +288,6 @@ const styles = themed(() => StyleSheet.create({
 	celebrateLottie: { width: '100%', height: scaleHeight(320) },
 	celebrateBadge: { alignItems: 'center', backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.xl, borderRadius: Radius.xl },
 	celebrateIconCircle: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.xl, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.xs },
-	celebrateText: { color: Colors.textInverse, fontSize: Typography.h2, fontWeight: '900', marginTop: SpacingV.sm },
+	celebrateText: { color: Colors.onFill, fontSize: Typography.h2, fontWeight: '900', marginTop: SpacingV.sm },
 	celebrateSub: { color: Colors.onBrandText, fontSize: Typography.body, fontWeight: '700', marginTop: SpacingV.xs },
 }));

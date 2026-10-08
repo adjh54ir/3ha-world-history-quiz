@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { Colors, LIGHT_COLORS, withAlpha } from '@/src/const/ConstColors';
-import { FontWeight, Radius, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { DisplayText, FontWeight, Radius, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { playTick, playWhoosh } from '@/src/utils/SoundUtils';
@@ -190,7 +190,7 @@ const makeStyles = () =>
 			position: 'absolute',
 			fontSize: scaledSize(84),
 			lineHeight: scaledSize(96),
-			fontWeight: FontWeight.heavy,
+			...DisplayText,
 			color: Colors.textInverse,
 			includeFontPadding: false,
 		},

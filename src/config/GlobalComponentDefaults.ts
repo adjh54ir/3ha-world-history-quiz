@@ -1,8 +1,8 @@
 import { createElement, useContext, type ComponentType } from 'react';
-import { Platform, unstable_TextAncestorContext as TextAncestorContext, type TextProps, type TextStyle } from 'react-native';
+import { Platform, StyleSheet, unstable_TextAncestorContext as TextAncestorContext, type TextProps, type TextStyle } from 'react-native';
 
 import Colors from '@/src/const/ConstColors';
-import { Typography } from '@/src/const/ConstDesign';
+import { bodyFontFor, Typography } from '@/src/const/ConstDesign';
 
 /**
  * OS 큰 글씨 설정에서 글자가 커지는 배율 상한.
@@ -45,14 +45,27 @@ const fitProps = (props: TextProps): Partial<TextProps> => {
 	};
 };
 
+/**
+ * 앱 본문 서체 — 서체를 직접 고르지 않은 글자는 fontWeight 에 맞는 나눔스퀘어라운드 파일로 그린다.
+ * 굵기는 파일이 맡으므로 fontWeight 는 normal 로 되돌린다 (안드로이드 가짜 볼드 방지).
+ * 중첩 Text 는 부모 서체를 물려받으므로 굵기를 따로 준 경우에만 바꾼다.
+ */
+const appFont = (style: TextProps['style'], nested: boolean): TextStyle | null => {
+	const flat = StyleSheet.flatten(style) ?? {};
+	if (flat.fontFamily) return null;
+	if (nested && flat.fontWeight == null) return null;
+	return { fontFamily: bodyFontFor(flat.fontWeight), fontWeight: 'normal' };
+};
+
 const AppText = (props: TextProps) => {
 	const nested = useContext(TextAncestorContext);
+	const font = appFont(props.style, nested);
 	return createElement(OriginalText, {
 		maxFontSizeMultiplier: MAX_FONT_SCALE,
 		...props,
 		...fitProps(props),
 		// fontSize 를 안 준 글자는 안드로이드에서 시스템 기본(아주 작게 보이는 경우가 있음) 대신 본문 크기로 그린다
-		style: nested ? props.style : [{ color: Colors.text, fontSize: Typography.body }, ANDROID_TEXT_FIX, props.style],
+		style: nested ? [props.style, font] : [{ color: Colors.text, fontSize: Typography.body }, ANDROID_TEXT_FIX, props.style, font],
 	});
 };
 AppText.displayName = 'Text';

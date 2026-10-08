@@ -62,7 +62,7 @@ export default ExitConfirmModal;
 
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
+	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
 	iconWrap: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, backgroundColor: Colors.primarySoft, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.md },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
 	message: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(21) },
@@ -71,5 +71,5 @@ const styles = themed(() => StyleSheet.create({
 	cancelBtn: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	cancelText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.text },
 	confirmBtn: { backgroundColor: Colors.primary },
-	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 }));

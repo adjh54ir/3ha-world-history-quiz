@@ -89,7 +89,7 @@ export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string
 			<View style={[styles.row, !!tier && { borderColor: withAlpha(tier.main, '66') }, item.isMe && styles.rowMe]}>
 				{!!tier && <LinearGradient colors={[withAlpha(tier.main, '14'), 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />}
 				<View style={[styles.rankBadge, tier ? { backgroundColor: tier.main } : item.isMe ? { backgroundColor: Colors.primary } : null]}>
-					{tier ? <IconComponent type="materialIcons" name={tier.icon} size={scaledSize(18)} color={readableOn(tier.main)} /> : <Text style={[styles.rankText, item.isMe && { color: Colors.textInverse }]}>{item.rank}</Text>}
+					{tier ? <IconComponent type="materialIcons" name={tier.icon} size={scaledSize(18)} color={readableOn(tier.main)} /> : <Text style={[styles.rankText, item.isMe && { color: Colors.onFill }]}>{item.rank}</Text>}
 				</View>
 				<View style={styles.rowBody}>
 					<Text style={[styles.nick, item.isMe && { fontWeight: '900', color: Colors.primary }]} numberOfLines={1}>
@@ -105,7 +105,7 @@ export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string
 
 const styles = themed(() => StyleSheet.create({
 	// 시상대
-	podiumCard: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.md, paddingBottom: 0, paddingHorizontal: Spacing.md, marginBottom: SpacingV.xl, overflow: 'hidden' },
+	podiumCard: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.md, paddingBottom: 0, paddingHorizontal: Spacing.lg, marginBottom: SpacingV.xl, overflow: 'hidden' },
 	podiumHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, marginBottom: SpacingV.md },
 	podiumHeadText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textStrong, letterSpacing: 1 },
 	podiumWrap: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: Spacing.sm },

@@ -298,7 +298,7 @@ const Stats = () => {
 										{t(quizMode ? 'stats.topic.totalQuiz' : 'stats.topic.totalStudy', { done: gDone.toLocaleString(), total: gTotal.toLocaleString() })}
 									</Text>
 								</View>
-								<AnimatedProgress ratio={gRate / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
+								<AnimatedProgress ratio={gRate / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(8)} />
 								{g.list.map((d) => {
 									const q = quizStatOf(d.key);
 									const solved = q?.solved ?? 0;
@@ -326,7 +326,7 @@ const Stats = () => {
 													</View>
 													<Text style={[styles.domainRate, { color: quizMode && qRate !== null ? accuracyColor(qRate) : d.color }]}>{rate}%</Text>
 												</View>
-												<AnimatedProgress ratio={rate / 100} color={quizMode && qRate !== null ? accuracyColor(qRate) : d.color} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} />
+												<AnimatedProgress ratio={rate / 100} color={quizMode && qRate !== null ? accuracyColor(qRate) : d.color} trackColor={Colors.border} height={scaleHeight(8)} />
 												<View style={styles.domainMetaRow}>
 													{quizMode ? (
 														<>
@@ -479,7 +479,7 @@ const Stats = () => {
 
 						{!rankJoined ? (
 							<TouchableOpacity style={styles.weeklyJoinBtn} activeOpacity={0.9} onPress={() => router.push('/special/ranking' as never)}>
-								<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(17)} color={Colors.textInverse} />
+								<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(17)} color={Colors.onFill} />
 								<Text style={styles.weeklyJoinText}>{t('stats.rank.join')}</Text>
 							</TouchableOpacity>
 						) : rankRows.length === 0 ? (
@@ -705,7 +705,7 @@ const Stats = () => {
 							<View style={styles.achSheetHead}>
 								<Text style={styles.achSheetTitle}>{t('stats.ach.title')}</Text>
 								<Text style={styles.achCount}>{unlockedCount} / {achievements.length}</Text>
-								<TouchableOpacity onPress={() => setShowAchSheet(false)} hitSlop={10} activeOpacity={0.7}>
+								<TouchableOpacity onPress={() => setShowAchSheet(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							</View>
@@ -824,7 +824,7 @@ const Stats = () => {
 									<Text style={styles.dailyModalTitle}>{t('stats.daily.modalTitle')}</Text>
 									{!!selectedDaily && <Text style={styles.dailyModalDate}>{selectedDaily.date}</Text>}
 								</View>
-								<TouchableOpacity style={styles.dailyModalClose} onPress={() => setSelectedDaily(null)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
+								<TouchableOpacity style={styles.dailyModalClose} onPress={() => setSelectedDaily(null)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(20)} color={Colors.textInverse} />
 								</TouchableOpacity>
 							</View>
@@ -881,9 +881,9 @@ export default withRemountOnFocus(Stats);
 
 
 const styles = themed(() => StyleSheet.create({
-	sectionHeadWide: { marginBottom: SpacingV.lg },
-	// 섹션 묶음 머리 — 아이콘 칩 + 라벨 (왼쪽 강조선은 쓰지 않는다)
-	groupHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.md, marginBottom: SpacingV.lg },
+	sectionHeadWide: { marginBottom: SpacingV.md },
+	// 섹션 묶음 머리 — 아이콘 칩 + 라벨 (왼쪽 강조선은 쓰지 않는다). 위 간격은 앞 카드의 sectionGap이 맡는다
+	groupHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.lg },
 	groupIcon: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.sm, backgroundColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
 	groupLabel: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	safe: { flex: 1, backgroundColor: Colors.background },
@@ -940,7 +940,7 @@ const styles = themed(() => StyleSheet.create({
 	rankRowsWrap: { gap: SpacingV.xs },
 	weeklyEmpty: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textSecondary, textAlign: 'center', paddingVertical: SpacingV.lg },
 	weeklyJoinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md },
-	weeklyJoinText: { flexShrink: 1, color: Colors.textInverse, fontSize: Typography.body, fontWeight: '900' },
+	weeklyJoinText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.body, fontWeight: '900' },
 
 	// 가로 행 카드
 	rowBody: { flex: 1 },
@@ -976,7 +976,7 @@ const styles = themed(() => StyleSheet.create({
 	// 학습 기록 탭
 	recordTabScroll: { flexGrow: 0, marginBottom: SpacingV.lg },
 	recordTabBar: { flexDirection: 'row', gap: Spacing.xxs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.pill, padding: Spacing.xs },
-	sortChip: { alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginTop: -SpacingV.sm, marginBottom: SpacingV.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
+	sortChip: { alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	sortChipOn: { borderColor: Colors.primarySoft, backgroundColor: Colors.primaryBg },
 	sortChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },
 	sortChipTextOn: { color: Colors.primary },
@@ -986,7 +986,7 @@ const styles = themed(() => StyleSheet.create({
 	recordTabTextOn: { color: Colors.textInverse },
 	recordEmpty: { alignItems: 'center' },
 	recordCta: { marginTop: SpacingV.md, backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.md },
-	recordCtaText: { color: Colors.textInverse, fontSize: Typography.body, fontWeight: '800' },
+	recordCtaText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 
 	// 타임 챌린지 통계
 	timeStatsRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.sm },
@@ -1009,21 +1009,21 @@ const styles = themed(() => StyleSheet.create({
 	dailyRateText: { fontSize: Typography.footnote, fontWeight: '900' },
 
 	// 오늘의 퀴즈 상세 모달
-	dailyModal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingBottom: SpacingV.md, maxHeight: '86%', overflow: 'hidden' },
+	dailyModal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingBottom: SpacingV.md, maxHeight: '86%', overflow: 'hidden' },
 	dailyModalHero: { paddingTop: SpacingV.lg, paddingBottom: SpacingV.lg, overflow: 'hidden' },
-	dailyModalHead: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, paddingHorizontal: Spacing.lg },
+	dailyModalHead: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, paddingHorizontal: Spacing.xl },
 	dailyModalHeadBody: { flex: 1 },
 	dailyModalClose: { width: scaleWidth(32), height: scaleWidth(32), borderRadius: Radius.pill, backgroundColor: Colors.onBrandSurface, justifyContent: 'center', alignItems: 'center' },
 	dailyModalTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textInverse },
 	dailyModalDate: { fontSize: Typography.footnote, color: Colors.onBrandText, fontWeight: '600', marginTop: SpacingV.xs },
-	dailyModalScore: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.sm, marginTop: SpacingV.md, paddingHorizontal: Spacing.lg },
+	dailyModalScore: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.sm, marginTop: SpacingV.md, paddingHorizontal: Spacing.xl },
 	dailyModalScoreNum: { fontSize: Typography.h1, fontWeight: '900', color: Colors.textInverse },
 	dailyModalScoreUnit: { flex: 1, flexShrink: 1, fontSize: Typography.body, fontWeight: '700', color: Colors.onBrandText },
 	dailyModalRatePill: { backgroundColor: Colors.onBrandSurface, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xxs },
 	dailyModalRateText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textInverse },
 	// 목록 높이를 명시해 항목이 많아도 확실히 스크롤된다
 	dailyModalList: { flexGrow: 0, flexShrink: 1 },
-	dailyModalListContent: { paddingHorizontal: Spacing.lg, paddingTop: SpacingV.md, paddingBottom: SpacingV.xl, gap: SpacingV.sm },
+	dailyModalListContent: { paddingHorizontal: Spacing.xl, paddingTop: SpacingV.md, paddingBottom: SpacingV.xl, gap: SpacingV.sm },
 	pastItem: { ...CardSurface, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
 	pastItemTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 	pastMark: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center' },
@@ -1071,7 +1071,7 @@ const styles = themed(() => StyleSheet.create({
 	achFilterTextOn: { color: Colors.primary },
 	achEmpty: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', textAlign: 'center', paddingVertical: SpacingV.xl },
 	achSection: { marginBottom: Layout.sectionGap },
-	achGroupHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm, paddingHorizontal: Spacing.xs },
+	achGroupHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	achGroupLabel: { flex: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary },
 	achGroupCount: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },
 	achList: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, overflow: 'hidden' },

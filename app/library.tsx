@@ -250,7 +250,7 @@ const Library = () => {
 				) : (
 					<>
 						<TouchableOpacity style={styles.reviewCta} activeOpacity={0.9} onPress={() => router.push({ pathname: '/quiz/wrong-review', params: scope === ALL_SCOPE ? {} : { category: scope } } as never)}>
-							<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.textInverse} />
+							<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.reviewCtaText}>{t('library.review', { n: wrongs.length })}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.clearBtn} activeOpacity={0.8} onPress={clearWrong}>
@@ -363,7 +363,7 @@ const styles = themed(() => StyleSheet.create({
 	scroll: { flex: 1 },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	listFill: { flexGrow: 1 },
-	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.md },
+	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
 	reviewCta: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -374,7 +374,7 @@ const styles = themed(() => StyleSheet.create({
 		paddingVertical: SpacingV.lg,
 		marginBottom: SpacingV.sm,
 	},
-	reviewCtaText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	reviewCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	clearBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	clearText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	goQuizBtn: {

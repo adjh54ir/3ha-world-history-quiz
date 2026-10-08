@@ -160,7 +160,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 		const { start, end } = rangeDraft;
 		if (!start) return marks;
 		if (!end) {
-			marks[start] = { startingDay: true, endingDay: true, color: Colors.primary, textColor: Colors.textInverse };
+			marks[start] = { startingDay: true, endingDay: true, color: Colors.primary, textColor: Colors.onFill };
 			return marks;
 		}
 		const span = DateUtils.differenceInLocalDays(start, end);
@@ -168,8 +168,8 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 			const d = DateUtils.addLocalDays(start, i);
 			marks[d] = { color: Colors.primarySoft, textColor: Colors.primaryDeep };
 		}
-		marks[start] = { startingDay: true, color: Colors.primary, textColor: Colors.textInverse };
-		marks[end] = { endingDay: true, color: Colors.primary, textColor: Colors.textInverse };
+		marks[start] = { startingDay: true, color: Colors.primary, textColor: Colors.onFill };
+		marks[end] = { endingDay: true, color: Colors.primary, textColor: Colors.onFill };
 		return marks;
 	}, [rangeDraft]);
 
@@ -293,7 +293,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 						{isQuiz ? (
 						<View style={styles.dayScoreMain}>
 							{/* 카드 배경(surfaceAlt)과 트랙 색이 같으면 테두리만 남아 링이 안 보인다 → 밝은 트랙으로 전체 링을 드러낸다 */}
-							<DonutChart size={92} strokeWidth={10} percent={dayRate} color={Colors.primary} trackColor={Colors.surface}>
+							<DonutChart size={92} strokeWidth={10} percent={dayRate} color={Colors.primary} trackColor={Colors.borderStrong}>
 								<Text style={styles.dayScoreDonutNum}>{dayRate}%</Text>
 								<Text style={styles.dayScoreDonutLabel}>{t('report.tile.accuracy')}</Text>
 							</DonutChart>
@@ -342,7 +342,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 					<TouchableOpacity activeOpacity={1} style={styles.rangeModal}>
 						<View style={styles.dailyModalHead}>
 							<Text style={styles.dailyModalTitle}>{t('report.period.custom')}</Text>
-							<TouchableOpacity onPress={() => setShowRangePicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
+							<TouchableOpacity onPress={() => setShowRangePicker(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -434,8 +434,8 @@ const styles = themed(() => StyleSheet.create({
 	dailyModalHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	dailyModalTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
 	rangeHint: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.md, marginBottom: SpacingV.sm },
-	rangeConfirm: { marginTop: SpacingV.lg, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.lg, alignItems: 'center' },
+	rangeConfirm: { marginTop: SpacingV.xl, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.lg, alignItems: 'center' },
 	rangeConfirmOff: { backgroundColor: Colors.surfaceAlt },
-	rangeConfirmText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	rangeConfirmText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	rangeConfirmTextOff: { color: Colors.textMuted },
 }));

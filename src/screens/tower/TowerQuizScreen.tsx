@@ -9,14 +9,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { contentWidth, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { generateTowerQuiz, TOWER_LEVEL_MAP, TowerQuizQuestion } from '@/src/const/ConstTowerQuizData';
 import TowerResultModal from './TowerResultModal';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { playCorrect, playWrong, playWhoosh, playFinish } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
-import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout } from '@/src/const/ConstDesign';
+import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout, DisplayText } from '@/src/const/ConstDesign';
 import { Colors, readableOn, withAlpha } from '@/src/const/ConstColors';
 import useAnimationCleanup from './useAnimationCleanup';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -714,15 +714,16 @@ const makeStyles = () => StyleSheet.create({
 	// 마지막 보기가 화면 아래 끝(홈 인디케이터)에 붙지 않게 — 답을 고르기 전에는 아래 '다음 문제' 띠도 없다
 	// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭).
 	// 좌우 여백은 기둥 안쪽에 준다 — 스크롤 쪽에 주면 태블릿에서 카드가 헤더·진행 막대보다 16 씩 밖으로 삐져나왔다
-	contentInner: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.xl },
+	contentInner: { flexGrow: 1, width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: Layout.screenBottom },
 	bossSection: { alignItems: 'center', marginVertical: SpacingV.xl },
 	bossGlow: {
 		position: 'absolute',
-		width: scaleWidth(120),
-		height: scaleWidth(120),
-		borderRadius: scaleWidth(60),
+		width: scaleArt(120),
+		height: scaleArt(120),
+		borderRadius: scaleArt(60),
 	},
-	bossImage: { width: scaleWidth(120), height: scaleWidth(120), borderRadius: scaleWidth(60) },
+	// 본문 속 아트 — 태블릿 넓은 기둥에서 작아 보이지 않게 scaleArt
+	bossImage: { width: scaleArt(120), height: scaleArt(120), borderRadius: scaleArt(60) },
 	// 면은 층 색 그라데이션이 채운다 — 밑에 darkCard 를 한 겹 깔아 색이 옅은 층에서도 둥근 모서리가 보이게 한다
 	questionCard: { marginBottom: SpacingV.xxl, borderRadius: Radius.lg, borderWidth: 1.5, overflow: 'hidden', backgroundColor: Colors.onBrandWatermark },
 	questionCardGradient: { alignItems: 'center', gap: SpacingV.sm, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.lg },
@@ -754,9 +755,10 @@ const makeStyles = () => StyleSheet.create({
 		lineHeight: scaledSize(22),
 		textAlign: 'center',
 	},
-	answersContainer: { gap: SpacingV.md },
-	answerButton: { borderRadius: Radius.md, overflow: 'hidden' },
-	answerGradient: { padding: Spacing.lg },
+	// 남는 높이를 보기 넷이 나눠 받는다 — 태블릿에서 보기 아래가 크게 비지 않게 (상한은 Layout.optionMaxH)
+	answersContainer: { flexGrow: 1, gap: SpacingV.md },
+	answerButton: { flexGrow: 1, minHeight: Layout.optionMinH, maxHeight: Layout.optionMaxH, borderRadius: Radius.md, overflow: 'hidden' },
+	answerGradient: { flex: 1, justifyContent: 'center', padding: Spacing.lg },
 	answerContent: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
 	answerNumber: {
 		width: scaleWidth(32),
@@ -796,7 +798,7 @@ const makeStyles = () => StyleSheet.create({
 	effectText: {
 		position: 'absolute',
 		fontSize: Typography.h1,
-		fontWeight: FontWeight.bold,
+		...DisplayText,
 		textShadowColor: Colors.backdrop,
 		textShadowOffset: { width: 1, height: 1 },
 		textShadowRadius: 4,

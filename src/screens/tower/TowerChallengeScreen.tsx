@@ -7,7 +7,7 @@ import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 
-import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { contentWidth, isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { useDispatch } from 'react-redux';
 import { addTowerAttemptByAd, devResetTower, ensureTowerDay, recordTower, spendTowerAttempt, TOWER_AD_REWARD_MAX, TOWER_DAILY_ATTEMPTS, useTower } from '@/src/store/slice/TowerSlice';
@@ -440,9 +440,10 @@ const makeStyles = () =>
 
 		body: { flex: 1 },
 		// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭이라 제목과 카드 왼쪽 선이 맞는다)
-		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.xl, gap: SpacingV.md },
+		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: SpacingV.md },
 		heroBanner: {
-			height: scaleHeight(176),
+			// 태블릿 넓은 기둥에서 고정 높이면 2.9:1 띠가 되어 그림이 크게 잘린다 — 폰 비율 유지
+			...(isTablet ? { aspectRatio: 343 / 176 } : { height: scaleHeight(176) }),
 			borderRadius: Radius.xl,
 			overflow: 'hidden',
 			backgroundColor: Colors.onBrandWatermark,
@@ -536,7 +537,7 @@ const makeStyles = () =>
 			alignItems: 'center',
 			justifyContent: 'center',
 		},
-		bossImage: { width: scaleWidth(78), height: scaleWidth(78) },
+		bossImage: { width: scaleArt(78), height: scaleArt(78) },
 		bossTextWrap: { flex: 1, gap: SpacingV.xxs },
 		bossLabel: { fontSize: Typography.micro, color: Colors.onBrandTextSoft, fontWeight: FontWeight.semibold },
 		bossName: { fontSize: Typography.body, fontWeight: FontWeight.heavy, color: Colors.textInverse },

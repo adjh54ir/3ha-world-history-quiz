@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Shadow, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
 import { HOME_CHARACTER_KEY, getHomeCharacterImage } from '@/src/const/ConstCharacters';
@@ -60,7 +60,7 @@ export const CharacterGuideButton: React.FC<{ onPress: () => void; color?: strin
 }) => {
 	const { t } = useTranslation();
 	return (
-		<TouchableOpacity onPress={onPress} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.guideReopen')}>
+		<TouchableOpacity onPress={onPress} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.guideReopen')}>
 			<IconComponent type="materialIcons" name="help-outline" size={size} color={color} />
 		</TouchableOpacity>
 	);
@@ -218,12 +218,12 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 							onPress={next}
 							accessibilityRole="button"
 							accessibilityLabel={isLast ? confirmLabel : t('guide.nextLineA11y')}>
-							<Text style={[styles.ctaText, { color: isLast ? Colors.textInverse : accent }]}>{isLast ? confirmLabel : t('common.next')}</Text>
+							<Text style={[styles.ctaText, { color: isLast ? readableOn(accent) : accent }]}>{isLast ? confirmLabel : t('common.next')}</Text>
 							<IconComponent
 								type="materialIcons"
 								name={isLast ? 'check' : 'arrow-forward'}
 								size={scaledSize(15)}
-								color={isLast ? Colors.textInverse : accent}
+								color={isLast ? readableOn(accent) : accent}
 							/>
 						</TouchableOpacity>
 						{/* 말풍선 꼬리 — 캐릭터 쪽을 향한다 */}

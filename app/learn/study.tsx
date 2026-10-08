@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp } from '@/src/screens/common/anim/Motion';
 import { scaledSize, scaleHeight, scaleWidth, contentWidth, scaleArt } from '@/src/utils';
@@ -19,6 +19,7 @@ import { useToast } from '@/src/context/ToastContext';
 import ExitConfirmModal from '@/src/screens/modal/ExitConfirmModal';
 import { hapticLight } from '@/src/utils/HapticUtils';
 import { playComplete, playFlip, playPop } from '@/src/utils/SoundUtils';
+import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
@@ -47,6 +48,7 @@ const LearnStudy = () => {
 	const isBundle = catList.length > 0;
 	const domain = LearnHubService.getDomain(isBundle ? catList[0] : category);
 	const accent = isBundle ? Colors.primary : domain.meta.color;
+	const onAccent = readableOn(accent);
 	const title = t('learn.titleOf', {
 		title: isBundle
 			? catList.length > 2
@@ -93,6 +95,11 @@ const LearnStudy = () => {
 	}, [activeDomains]);
 
 	useFocusEffect(useCallback(() => loadStudied(), [loadStudied]));
+	// 배경음악 — 화면에 있는 동안 잔잔한 학습 트랙, 다른 화면으로 가면 정지
+	useFocusEffect(useCallback(() => {
+		startBgm('study');
+		return () => stopBgm();
+	}, []));
 
 	const doneCount = useMemo(() => cards.filter((c) => studiedSet.has(c.uid)).length, [cards, studiedSet]);
 	const learningCount = cards.length - doneCount;
@@ -198,7 +205,7 @@ const LearnStudy = () => {
 					right={
 						<View style={styles.headerActions}>
 							<CharacterGuideButton onPress={coach.open} color={Colors.textSecondary} size={scaledSize(21)} />
-							<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('learn.study.exit')} onPress={() => setShowExit(true)}>
+							<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('learn.study.exit')} onPress={() => setShowExit(true)}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textSecondary} />
 							</TouchableOpacity>
 						</View>
@@ -223,7 +230,7 @@ const LearnStudy = () => {
 
 				{/* 진행바 */}
 				<View style={styles.progressWrap}>
-					<AnimatedProgress ratio={donePct / 100} color={accent} trackColor={Colors.surfaceAlt} height={scaleHeight(8)} radius={scaleWidth(4)} />
+					<AnimatedProgress ratio={donePct / 100} color={accent} trackColor={Colors.border} height={scaleHeight(8)} radius={scaleWidth(4)} />
 				</View>
 
 				{/* 상단 탭 */}
@@ -232,9 +239,9 @@ const LearnStudy = () => {
 						const on = tab === item.key;
 						return (
 							<TouchableOpacity key={item.key} style={[styles.tabBtn, on && { backgroundColor: accent }]} activeOpacity={0.85} onPress={() => changeTab(item.key)} hitSlop={Layout.hitSlop}>
-								<Text numberOfLines={1} style={[styles.tabText, on && { color: Colors.textInverse }]}>{item.label}</Text>
+								<Text numberOfLines={1} style={[styles.tabText, on && { color: onAccent }]}>{item.label}</Text>
 								<View style={[styles.tabCount, on ? { backgroundColor: Colors.onBrandSurfaceStrong } : { backgroundColor: Colors.surface }]}>
-									<Text style={[styles.tabCountText, on && { color: Colors.textInverse }]}>{item.count}</Text>
+									<Text style={[styles.tabCountText, on && { color: onAccent }]}>{item.count}</Text>
 								</View>
 							</TouchableOpacity>
 						);
@@ -441,7 +448,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							</View>
 						)}
 					</View>
-					<TouchableOpacity style={styles.cardSaveBtn} activeOpacity={0.8} onPress={toggleBookmark} hitSlop={8}>
+					<TouchableOpacity style={styles.cardSaveBtn} activeOpacity={0.8} onPress={toggleBookmark} hitSlop={Layout.hitSlop}>
 						<IconComponent type="materialIcons" name={bookmarked ? 'star' : 'star-border'} size={scaledSize(24)} color={bookmarked ? Colors.bookmark : Colors.textMuted} />
 					</TouchableOpacity>
 				</View>
@@ -529,7 +536,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							<TouchableOpacity
 								style={styles.reportBtn}
 								activeOpacity={0.7}
-								hitSlop={8}
+								hitSlop={Layout.hitSlop}
 								onPress={() => reportQuizIssue({ uid: card.uid, domain: card.domain, prompt: card.title, answer: card.meaning, explanation: card.examples?.join(' / ') })}>
 								<IconComponent type="materialIcons" name="outlined-flag" size={scaledSize(14)} color={Colors.textMuted} />
 								<Text style={styles.reportBtnText}>{t('learn.study.reportIssue')}</Text>
@@ -552,8 +559,8 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 						style={[styles.completeBtn, { backgroundColor: accent }]}
 						activeOpacity={0.9}
 						onPress={() => { playComplete(); (isLast ? onComplete : handleComplete)(); }}>
-						<IconComponent type="materialIcons" name={isLast ? 'quiz' : 'check-circle'} size={scaledSize(18)} color={Colors.textInverse} />
-						<Text style={styles.completeBtnText}>{isLast ? t('learn.study.completeLast') : t('learn.study.done')}</Text>
+						<IconComponent type="materialIcons" name={isLast ? 'quiz' : 'check-circle'} size={scaledSize(18)} color={readableOn(accent)} />
+						<Text style={[styles.completeBtnText, { color: readableOn(accent) }]}>{isLast ? t('learn.study.completeLast') : t('learn.study.done')}</Text>
 					</TouchableOpacity>
 				)}
 			</View>
@@ -635,7 +642,7 @@ const styles = themed(() => StyleSheet.create({
 	storyLabel: { marginBottom: 0 },
 	storyItem: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm },
 	storyItemDivider: { marginTop: SpacingV.md, paddingTop: SpacingV.md, borderTopWidth: 1 },
-	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: scaleHeight(2) },
+	storyNum: { width: scaleWidth(20), height: scaleWidth(20), borderRadius: scaleWidth(10), alignItems: 'center', justifyContent: 'center', marginTop: SpacingV.xxs },
 	storyNumText: { fontSize: Typography.micro, fontWeight: '900' },
 	storyText: { flex: 1, fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(24) },
 	infoRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.sm, paddingVertical: SpacingV.xs },

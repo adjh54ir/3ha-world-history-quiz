@@ -1,5 +1,5 @@
 import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
-import { SpacingV, Typography, Radius } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Typography, Radius } from '@/src/const/ConstDesign';
 import { GOOGLE_ADMOV_ANDROID_FRONT, GOOGLE_ADMOV_IOS_FRONT } from '@env';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
@@ -97,7 +97,7 @@ const styles = themed(() => StyleSheet.create({
 
 	container: {
 		paddingVertical: SpacingV.xxxl,
-		paddingHorizontal: scaleWidth(28),
+		paddingHorizontal: Spacing.xxl,
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.xxl,
 		borderWidth: 1,

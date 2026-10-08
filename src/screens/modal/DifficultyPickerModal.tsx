@@ -58,7 +58,7 @@ const DifficultyPickerModal: React.FC<Props> = ({ visible, value, onClose, onSel
 	return (
 		<BottomSheet visible={visible} onClose={onClose}>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.difficulty.closeA11y')}>
+					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.difficulty.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
 
@@ -80,7 +80,7 @@ const DifficultyPickerModal: React.FC<Props> = ({ visible, value, onClose, onSel
 									activeOpacity={0.85}
 									onPress={() => pick(opt.key)}>
 									<View style={[styles.rowIcon, on ? styles.rowIconOn : styles.rowIconOff]}>
-										<IconComponent type="materialIcons" name={opt.icon} size={scaledSize(20)} color={on ? Colors.textInverse : Colors.primary} />
+										<IconComponent type="materialIcons" name={opt.icon} size={scaledSize(20)} color={on ? Colors.onFill : Colors.primary} />
 									</View>
 									<View style={styles.rowBody}>
 										<Text style={[styles.rowLabel, on && { color: Colors.primary }]} numberOfLines={1} ellipsizeMode="tail">{opt.label}</Text>

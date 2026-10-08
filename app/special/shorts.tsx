@@ -18,6 +18,7 @@ import { useToast } from '@/src/context/ToastContext';
 import ExitConfirmModal from '@/src/screens/modal/ExitConfirmModal';
 import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
 import { playComplete, playPop } from '@/src/utils/SoundUtils';
+import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -113,6 +114,11 @@ const Shorts = () => {
 	}, [activeDomains]);
 
 	useFocusEffect(useCallback(() => loadStudied(), [loadStudied]));
+	// 배경음악 — 화면에 있는 동안 잔잔한 학습 트랙, 다른 화면으로 가면 정지
+	useFocusEffect(useCallback(() => {
+		startBgm('study');
+		return () => stopBgm();
+	}, []));
 
 	// 목록 필터는 '탭 진입 시점의 학습 상태' 스냅샷으로 고정한다.
 	// (완료를 누른 즉시 목록에서 카드가 빠지면 스크롤 보정과 겹쳐 카드가 깜빡였다)
@@ -365,7 +371,7 @@ const Shorts = () => {
 				<CharacterGuideButton onPress={coach.open} color={Colors.darkText} size={scaledSize(22)} />
 			</View>
 
-			<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('special.shorts.exitA11y')} style={[styles.close, { top: insets.top + scaleHeight(8) }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={8}>
+			<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('special.shorts.exitA11y')} style={[styles.close, { top: insets.top + scaleHeight(8) }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={Layout.hitSlop}>
 				<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.darkText} />
 			</TouchableOpacity>
 		</View>

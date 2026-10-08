@@ -162,7 +162,7 @@ const QuizBundle = () => {
 							accessibilityRole="tab"
 							accessibilityState={{ selected: on }}
 							onPress={() => changeTopicTab(tab.key)}>
-							<IconComponent type="materialIcons" name={tab.icon} size={scaledSize(16)} color={on ? Colors.textInverse : Colors.textMuted} />
+							<IconComponent type="materialIcons" name={tab.icon} size={scaledSize(16)} color={on ? Colors.onFill : Colors.textMuted} />
 							<Text style={[styles.tabText, on && styles.tabTextOn]} numberOfLines={1} ellipsizeMode="tail">{tab.label}</Text>
 							<View style={[styles.tabCount, on && styles.tabCountOn]}>
 								<Text style={[styles.tabCountText, on && styles.tabCountTextOn]}>{tab.count}</Text>
@@ -204,7 +204,7 @@ const QuizBundle = () => {
 							<View style={styles.countBadge}>
 								<Text style={styles.countText}>{visibleSelected}/{visibleDomains.length}</Text>
 							</View>
-							<TouchableOpacity onPress={allSelected ? clearAll : selectAll} activeOpacity={0.7} hitSlop={8}>
+							<TouchableOpacity onPress={allSelected ? clearAll : selectAll} activeOpacity={0.7} hitSlop={Layout.hitSlop}>
 								<Text style={styles.actionText}>{allSelected ? t('quiz.common.clearAll') : t('quiz.common.selectAll')}</Text>
 							</TouchableOpacity>
 						</View>
@@ -260,7 +260,7 @@ export default QuizBundle;
 const styles = themed(() => StyleSheet.create({
 	heroCard: { ...CardSurface, borderRadius: Radius.lg, overflow: 'hidden' },
 	selectionHero: { width: '100%', aspectRatio: 2 },
-	sectionHead: { marginTop: SpacingV.xl },
+	sectionHead: { marginTop: Layout.sectionGap },
 	countBadge: { borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, backgroundColor: Colors.primarySoft },
 	countText: { fontSize: Typography.caption, fontWeight: '900', color: Colors.primary },
 	safe: { flex: 1, backgroundColor: Colors.background },
@@ -269,12 +269,12 @@ const styles = themed(() => StyleSheet.create({
 	tabBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
 	tabBtnOn: { backgroundColor: Colors.primary },
 	tabText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textSecondary },
-	tabTextOn: { color: Colors.textInverse },
+	tabTextOn: { color: Colors.onFill },
 	// 개수 — 라벨 옆 알약 태그로 감싸 허전하지 않게
 	tabCount: { minWidth: scaleWidth(22), alignItems: 'center', borderRadius: Radius.pill, paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xxs, backgroundColor: Colors.surface },
 	tabCountOn: { backgroundColor: Colors.onBrandSurfaceStrong },
 	tabCountText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.textMuted },
-	tabCountTextOn: { color: Colors.textInverse },
+	tabCountTextOn: { color: Colors.onFill },
 	randomCta: { flexDirection: 'row', alignItems: 'center', padding: Spacing.lg },
 	randomIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md, backgroundColor: Colors.primarySoft },
 	actionBtns: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },

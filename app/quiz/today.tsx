@@ -10,7 +10,7 @@ import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -288,7 +288,7 @@ const TodayChallenge = () => {
 				<Text style={styles.alarmTitle}>{t('quiz.today.alarmTitle')}</Text>
 				<Text style={styles.alarmDesc}>{t('quiz.today.alarmDesc')}</Text>
 			</View>
-			<Switch value={alarmOn} onValueChange={toggleAlarm} trackColor={{ true: Colors.primary, false: Colors.borderStrong }} thumbColor={Colors.textInverse} />
+			<Switch value={alarmOn} onValueChange={toggleAlarm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
 		</View>
 	);
 
@@ -337,7 +337,7 @@ const TodayChallenge = () => {
 												strokeWidth={12}
 												percent={pct}
 												color={doneColor}
-												trackColor={Colors.surfaceAlt}>
+												trackColor={Colors.border}>
 												<CountUp value={pct} duration={900} format={(v) => `${v}%`} style={[styles.heroDonutPct, { color: doneColor }]} />
 												<Text style={styles.heroDonutLabel}>{t('quiz.common.accuracy')}</Text>
 											</DonutChart>
@@ -501,7 +501,7 @@ const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	scroll: { flex: 1 },
 	// 하단 고정 버튼과 마지막 카드가 붙어 보이지 않도록 한 섹션만큼 더 띄운다
-	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom + Layout.sectionGap },
+	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	hero: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
 	heroIllustration: { width: '100%', aspectRatio: 16 / 9, borderRadius: Radius.lg, marginBottom: Layout.itemGap },
 	heroDone: { ...CardSurface, overflow: 'hidden', alignItems: 'center', borderRadius: Radius.lg, paddingTop: SpacingV.xl, paddingBottom: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
@@ -529,7 +529,7 @@ const styles = themed(() => StyleSheet.create({
 	resultMoreBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xxs, paddingVertical: SpacingV.md },
 	resultMoreText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	resultFilterText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
-	resultFilterTextOn: { color: Colors.textInverse },
+	resultFilterTextOn: { color: Colors.onFill },
 	reviewBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.errorSoft, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
 	reviewBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.error },
 	infoCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },

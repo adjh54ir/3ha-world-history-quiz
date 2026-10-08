@@ -14,6 +14,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { playFlip, playMatch, playWrong, playFinish } from '@/src/utils/SoundUtils';
+import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -88,6 +89,13 @@ const MatchGame = () => {
 	const totalPairs = tiles.length / 2;
 	const done = totalPairs > 0 && matched.size === totalPairs;
 
+	// 배경음악 — 시계가 도는 동안만 긴박한 트랙, 다 맞추면/이탈하면 정지
+	useEffect(() => {
+		if (done) stopBgm();
+		else startBgm('time');
+	}, [done]);
+	useEffect(() => () => stopBgm(), []);
+
 	useEffect(() => {
 		if (done) return;
 		const id = setInterval(() => setSeconds((s) => s + 1), 1000);
@@ -153,7 +161,7 @@ const MatchGame = () => {
 					style={styles.headerRow}
 					onBack={() => router.back()}
 					right={
-						<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={8} accessibilityRole="button" accessibilityLabel={t('quiz.match.shuffle')} onPress={restart}>
+						<TouchableOpacity style={styles.headerAction} activeOpacity={0.7} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('quiz.match.shuffle')} onPress={restart}>
 							<IconComponent type="materialIcons" name="refresh" size={scaledSize(20)} color={Colors.text} />
 						</TouchableOpacity>
 					}
@@ -178,7 +186,7 @@ const MatchGame = () => {
 								<Text style={styles.outlineBtnText}>{t('quiz.match.again')}</Text>
 							</TouchableOpacity>
 							<TouchableOpacity style={[styles.filledBtn, { backgroundColor: Colors.primary }]} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
-								<IconComponent type="materialIcons" name="home" size={scaledSize(20)} color={Colors.textInverse} />
+								<IconComponent type="materialIcons" name="home" size={scaledSize(20)} color={Colors.onFill} />
 								<Text style={styles.filledBtnText}>{t('quiz.common.home')}</Text>
 							</TouchableOpacity>
 						</View>
@@ -222,7 +230,8 @@ export default MatchGame;
 // 2열 타일 — 가로·세로 간격을 같은 gap 으로 맞추려고 폭을 컬럼 폭에서 직접 계산한다.
 // 태블릿은 폰 비율(약 1.68:1)을 유지하도록 높이를 폭에서 역산한다.
 const TILE_W = (contentWidth - Layout.screenH * 2 - Spacing.sm) / 2;
-const TILE_H = isTablet ? Math.round(TILE_W / 1.68) : scaleHeight(96);
+// 상한 — 폰 비율 그대로면 태블릿 타일이 186pt 가 되어 판이 화면보다 길어진다
+const TILE_H = isTablet ? Math.min(Math.round(TILE_W / 1.68), scaleHeight(120)) : scaleHeight(96);
 /** 국기 타일 — 국기 틀(가로:세로 = 1 : 0.62)이 타일 안쪽 높이에 들어가게 폭을 줄인다 */
 const FLAG_W = Math.min(TILE_W - Spacing.md * 2, Math.round((TILE_H - Spacing.md * 2) / 0.62));
 
@@ -252,7 +261,7 @@ const styles = themed(() => StyleSheet.create({
 	tileWord: { backgroundColor: Colors.primaryBg, borderColor: Colors.primary },
 	tileMeaning: { backgroundColor: Colors.surface, borderColor: Colors.primary },
 	tileMatched: { backgroundColor: Colors.successSoft, borderColor: Colors.success },
-	tileText: { fontSize: Typography.body, color: Colors.text, textAlign: 'center', lineHeight: scaleHeight(18) },
+	tileText: { fontSize: isTablet ? Typography.callout : Typography.body, color: Colors.text, textAlign: 'center', lineHeight: isTablet ? scaleHeight(20) : scaleHeight(18) },
 	tileWordText: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
 	resultCard: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
 	resultIllustration: { width: scaleArt(136), height: scaleArt(120) },
@@ -262,5 +271,5 @@ const styles = themed(() => StyleSheet.create({
 	outlineBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	outlineBtnText: { fontSize: Typography.callout, fontWeight: '700', color: Colors.text },
 	filledBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg },
-	filledBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	filledBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 }));

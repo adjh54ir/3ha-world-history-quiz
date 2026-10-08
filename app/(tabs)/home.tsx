@@ -9,7 +9,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border, DisplayText } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet} from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import DailyWordService from '@/src/services/DailyWordService';
@@ -24,6 +24,7 @@ import { AchievementDef, rarityRank, RARITY_ON_BRAND_COLOR } from '@/src/const/C
 import TestHistoryService from '@/src/services/TestHistoryService';
 import { LearnType } from '@/src/types/data/LearnType';
 import { AnimatedProgress, CountUp, FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
+import JungleCanopy from '@/src/screens/common/anim/JungleCanopy';
 import AttendanceCheckInModal from '@/src/screens/modal/AttendanceCheckInModal';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import BadgeDetailModal from '@/src/screens/modal/BadgeDetailModal';
@@ -699,7 +700,7 @@ const Hub = () => {
 										</View>
 										<View style={[styles.topicBtn, { backgroundColor: Colors.primary }]}>
 											<Text style={styles.topicBtnText}>{t('common.start')}</Text>
-											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.textInverse} />
+											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.onFill} />
 										</View>
 									</TouchableOpacity>
 								);
@@ -767,7 +768,7 @@ const Hub = () => {
 							<TouchableOpacity style={styles.greetCharacterWrap} activeOpacity={0.85} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
 								<ExpoImage source={selectedCharacter.img} style={styles.greetCharacterImg} contentFit="contain" />
 								<View style={styles.characterEditBadge}>
-									<IconComponent type="materialIcons" name="edit" size={scaledSize(11)} color={Colors.textInverse} />
+									<IconComponent type="materialIcons" name="edit" size={scaledSize(11)} color={Colors.onFill} />
 								</View>
 							</TouchableOpacity>
 							<View style={styles.greeting}>
@@ -780,7 +781,7 @@ const Hub = () => {
 								<Text style={styles.greetTitle} numberOfLines={2} ellipsizeMode="tail">{t(greetKey)}</Text>
 							</View>
 							{/* 알림 — 캐릭터가 포함된 영역의 오른쪽 끝 */}
-							<TouchableOpacity style={styles.headBellBtn} onPress={() => setShowAlarm(true)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.hero.alarmA11y')}>
+							<TouchableOpacity style={styles.headBellBtn} onPress={() => setShowAlarm(true)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.hero.alarmA11y')}>
 								<IconComponent type="materialIcons" name={reminderOn ? 'notifications-active' : 'notifications-none'} size={scaledSize(20)} color={reminderOn ? Colors.primary : Colors.textMuted} />
 							</TouchableOpacity>
 						</View>
@@ -804,7 +805,7 @@ const Hub = () => {
 						<AnimatedProgress
 							ratio={todaySolved / dailyGoal}
 							color={todaySolved >= dailyGoal ? Colors.success : Colors.primary}
-							trackColor={Colors.surfaceAlt}
+							trackColor={Colors.border}
 							height={scaleHeight(8)}
 							radius={scaleWidth(4)}
 							style={styles.heroProgress}
@@ -816,10 +817,8 @@ const Hub = () => {
 				<FadeInUp delay={60}>
 					<View style={styles.summaryCard}>
 						<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
-						{/* 워터마크 — 우하단 트로피 */}
-						<View pointerEvents="none" style={styles.summaryWatermark}>
-							<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(120)} color={Colors.onBrandWatermark} />
-						</View>
+						{/* 정글 캐노피 — 카드 우상단에 매달려 흔들리는 잎 (앱 테마의 상징 장식) */}
+						<JungleCanopy colors={[Colors.onBrandWatermark, Colors.onBrandSurface, Colors.onBrandDivider]} ribColor={Colors.onBrandWatermark} />
 						<TouchableOpacity activeOpacity={0.9} onPress={() => router.push('/special/score-detail' as never)}>
 						<View style={styles.summaryTop}>
 							<View>
@@ -918,7 +917,7 @@ const Hub = () => {
 							<AnimatedProgress
 								ratio={curriculumCleared / CURRICULUM.length}
 								color={Colors.primary}
-								trackColor={Colors.surfaceAlt}
+								trackColor={Colors.border}
 								height={scaleHeight(6)}
 								radius={scaleWidth(3)}
 							/>
@@ -937,7 +936,7 @@ const Hub = () => {
 													{i < arr.length - 1 && <View style={[styles.curLine, done && { backgroundColor: withAlpha(Colors.success, '55') }]} />}
 													<View style={[styles.curDot, { backgroundColor: withAlpha(tint, '14'), borderColor: withAlpha(tint, '33') }, done && styles.curDotDone]}>
 														{done ? (
-															<IconComponent type="materialIcons" name="check" size={scaledSize(16)} color={Colors.textInverse} />
+															<IconComponent type="materialIcons" name="check" size={scaledSize(16)} color={Colors.onFill} />
 														) : (
 															<Text style={[styles.curDotText, { color: tint }]}>{i + 1}</Text>
 														)}
@@ -982,7 +981,7 @@ const Hub = () => {
 							<TouchableOpacity
 								style={styles.recClose}
 								activeOpacity={0.7}
-								hitSlop={10}
+								hitSlop={Layout.hitSlop}
 								accessibilityRole="button"
 								accessibilityLabel={t('home.recommend.closeA11y')}
 								onPress={dismissRecommend}>
@@ -1010,7 +1009,7 @@ const Hub = () => {
 									<Text style={styles.recGhostText}>{t('home.recommend.study')}</Text>
 								</TouchableOpacity>
 								<TouchableOpacity style={styles.recSolidBtn} activeOpacity={0.9} onPress={() => router.push({ pathname: '/learn/quiz', params: { category: recommend.domain.key } } as never)}>
-									<IconComponent type="materialIcons" name="quiz" size={scaledSize(16)} color={Colors.textInverse} />
+									<IconComponent type="materialIcons" name="quiz" size={scaledSize(16)} color={Colors.onFill} />
 									<Text style={styles.recSolidText}>{t('home.recommend.quiz')}</Text>
 								</TouchableOpacity>
 							</View>
@@ -1029,7 +1028,7 @@ const Hub = () => {
 						{quickActions.map((q) => (
 							<TouchableOpacity key={q.key} style={styles.quickItem} activeOpacity={0.8} onPress={q.onPress}>
 								<View style={[styles.quickCircle, q.emphasis ? { backgroundColor: q.color } : { backgroundColor: withAlpha(q.color, '14') }]}>
-									<IconComponent type="materialIcons" name={q.icon} size={scaledSize(24)} color={q.emphasis ? Colors.textInverse : q.color} />
+									<IconComponent type="materialIcons" name={q.icon} size={scaledSize(24)} color={q.emphasis ? Colors.onFill : q.color} />
 										{q.key === 'today-quiz' && !todayQuizDone && (
 											<Pulse style={styles.quickBadge}>
 												<Text style={styles.quickBadgeText}>!</Text>
@@ -1037,12 +1036,12 @@ const Hub = () => {
 										)}
 										{q.key === 'today-quiz' && todayQuizDone && (
 											<View style={styles.quickDone}>
-												<IconComponent type="materialIcons" name="check" size={scaledSize(10)} color={Colors.textInverse} />
+												<IconComponent type="materialIcons" name="check" size={scaledSize(10)} color={Colors.onFill} />
 											</View>
 										)}
 										{q.key === 'attend' && checkedToday && (
 											<View style={styles.quickDone}>
-												<IconComponent type="materialIcons" name="check" size={scaledSize(10)} color={Colors.textInverse} />
+												<IconComponent type="materialIcons" name="check" size={scaledSize(10)} color={Colors.onFill} />
 											</View>
 										)}
 										{q.key === 'library' && libraryCount > 0 && (
@@ -1079,7 +1078,7 @@ const Hub = () => {
 									<Text style={[styles.chipText, { color: dailyAccent }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(daily.domain)}</Text>
 								</View>
 								<View style={styles.dailyHeadRight}>
-									<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
+									<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
 										<IconComponent type="materialIcons" name={dailyBookmarked ? 'star' : 'star-border'} size={scaledSize(22)} color={dailyBookmarked ? Colors.bookmark : Colors.textMuted} />
 									</TouchableOpacity>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
@@ -1150,17 +1149,18 @@ const Hub = () => {
 			<BottomSheet
 				visible={showCharacterPicker}
 				onClose={() => setShowCharacterPicker(false)}
-				heightRatio={0.88}
+				// 태블릿은 88% 면 4열 격자 아래가 크게 빈다 — 통계 화면 시트와 같은 70%
+				heightRatio={isTablet ? 0.7 : 0.88}
 				footer={
 					<TouchableOpacity style={[styles.charApplyBtn, !previewChar.unlocked && { opacity: 0.45 }]} activeOpacity={0.9} disabled={!previewChar.unlocked} onPress={applyCharacter}>
-						<IconComponent type="materialIcons" name={previewChar.unlocked ? 'check' : 'lock'} size={scaledSize(18)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name={previewChar.unlocked ? 'check' : 'lock'} size={scaledSize(18)} color={Colors.onFill} />
 						<Text style={styles.charApplyText}>{previewChar.unlocked ? t('home.picker.apply') : t('home.picker.locked')}</Text>
 					</TouchableOpacity>
 				}>
 					<View style={styles.charSheetBody}>
 						<View style={styles.modalTitleRow}>
 							<Text style={styles.modalTitle}>{t('home.picker.title')}</Text>
-							<TouchableOpacity onPress={() => setShowCharacterPicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
+							<TouchableOpacity onPress={() => setShowCharacterPicker(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 								<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 							</TouchableOpacity>
 						</View>
@@ -1260,7 +1260,7 @@ const Hub = () => {
 				<View>
 					<View style={styles.modalTitleRow}>
 						<Text style={styles.modalTitle}>{t('home.goal.title')}</Text>
-						<TouchableOpacity style={styles.sheetCloseBtn} onPress={() => setShowGoalPicker(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.goal.closeA11y')}>
+						<TouchableOpacity style={styles.sheetCloseBtn} onPress={() => setShowGoalPicker(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.goal.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -1361,10 +1361,10 @@ const Hub = () => {
 							</View>
 							<View style={styles.modalTitleRow}>
 								<Text style={styles.modalTitle} numberOfLines={2} ellipsizeMode="tail">{daily.title}</Text>
-								<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
+								<TouchableOpacity onPress={toggleDailyBookmark} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={dailyBookmarked ? t('common.bookmarkRemove') : t('common.bookmarkAdd')}>
 									<IconComponent type="materialIcons" name={dailyBookmarked ? 'star' : 'star-border'} size={scaledSize(24)} color={dailyBookmarked ? Colors.bookmark : Colors.textMuted} />
 								</TouchableOpacity>
-								<TouchableOpacity onPress={() => setShowDailyDetail(false)} hitSlop={10} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
+								<TouchableOpacity onPress={() => setShowDailyDetail(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
 									<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							</View>
@@ -1398,7 +1398,7 @@ const Hub = () => {
 									router.push({ pathname: '/learn/category', params: { category: daily.domain } } as never);
 								}}>
 								<Text style={styles.modalCtaText}>{t('home.daily.cta')}</Text>
-								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(17)} color={Colors.textInverse} />
+								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(17)} color={Colors.onFill} />
 							</TouchableOpacity>
 						</View>
 						)}
@@ -1436,7 +1436,7 @@ const flowStyles = themed(() => ({
 	curDonePill: { backgroundColor: Colors.successSoft, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs },
 	curDonePillText: { fontSize: Typography.micro, fontWeight: '900' as const, color: Colors.success },
 	curCountBadge: { position: 'absolute' as const, top: -scaleHeight(4), right: -scaleWidth(6), minWidth: scaleWidth(16), height: scaleWidth(16), paddingHorizontal: Spacing.xxs, borderRadius: Radius.pill, backgroundColor: Colors.error, justifyContent: 'center' as const, alignItems: 'center' as const, borderWidth: Border.thin, borderColor: Colors.surface },
-	curCountBadgeText: { fontSize: Typography.micro, fontWeight: '900' as const, color: Colors.textInverse },
+	curCountBadgeText: { fontSize: Typography.micro, fontWeight: '900' as const, color: Colors.onFill },
 	subPlayPill: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.pill },
 	subPlayText: { fontSize: Typography.footnote, fontWeight: '800' as const },
 }));
@@ -1452,7 +1452,7 @@ const styles = themed(() => StyleSheet.create({
 	hero: { ...CardSurface, borderRadius: Radius.xl, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	// 제목 아래 여백은 행에 둔다 — 텍스트에 주면 가이드 버튼이 제목보다 아래로 치우친다
 	appTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, marginBottom: SpacingV.md },
-	appTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
+	appTitle: { fontSize: Typography.h1, ...DisplayText, color: Colors.textStrong },
 	heroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginBottom: SpacingV.lg },
 	heroProgress: { marginBottom: 0 },
 
@@ -1461,14 +1461,14 @@ const styles = themed(() => StyleSheet.create({
 	characterEditBadge: { position: 'absolute', right: -scaleWidth(3), bottom: -scaleWidth(3), width: scaleWidth(22), height: scaleWidth(22), borderRadius: Radius.pill, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center', borderWidth: Border.thick, borderColor: Colors.surface },
 	greetCharacterImg: { width: scaleArt(64), height: scaleArt(64), borderRadius: Radius.lg },
 	greeting: { flex: 1 },
-	greetTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, lineHeight: scaleHeight(27) },
+	greetTitle: { fontSize: Typography.h3, ...DisplayText, color: Colors.textStrong, lineHeight: scaleHeight(27) },
 
 	// 요약 카드 (히어로)
 	summaryCard: { paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap, borderRadius: Radius.xl, overflow: 'hidden' },
 	summaryTop: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' },
 	summaryLabel: { fontSize: Typography.body, fontWeight: '800', color: Colors.onBrandTextSoft },
 	summaryScoreRow: { flexDirection: 'row', alignItems: 'baseline', marginTop: SpacingV.sm },
-	summaryScore: { fontSize: Typography.displayLg, fontWeight: '900', color: Colors.successBright, letterSpacing: 0 },
+	summaryScore: { fontSize: Typography.displayLg, ...DisplayText, color: Colors.goldSoft, letterSpacing: 0 },
 	summaryUnit: { fontSize: Typography.title, fontWeight: '900', color: Colors.onBrandText, marginLeft: Spacing.xs },
 	summaryMore: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginTop: SpacingV.xxs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm, borderRadius: Radius.lg, backgroundColor: Colors.onBrandSurface },
 	summaryDivider: { height: 1, backgroundColor: Colors.onBrandDivider, marginVertical: SpacingV.lg },
@@ -1484,17 +1484,16 @@ const styles = themed(() => StyleSheet.create({
 	quickCircle: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.sm },
 	quickLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.text, textAlign: 'center' },
 	quickBadge: { position: 'absolute', top: scaleWidth(-4), right: scaleWidth(-4), width: scaleWidth(18), height: scaleWidth(18), borderRadius: Radius.pill, backgroundColor: Colors.error, borderWidth: Border.thin, borderColor: Colors.background, justifyContent: 'center', alignItems: 'center' },
-	quickBadgeText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900', lineHeight: scaledSize(12) },
+	quickBadgeText: { color: Colors.onFill, fontSize: Typography.micro, fontWeight: '900', lineHeight: scaledSize(12) },
 	quickDone: { position: 'absolute', top: scaleWidth(-2), right: scaleWidth(-2), width: scaleWidth(16), height: scaleWidth(16), borderRadius: Radius.pill, backgroundColor: Colors.success, justifyContent: 'center', alignItems: 'center', borderWidth: Border.thin, borderColor: Colors.background },
 	quickCountBadge: { position: 'absolute', top: scaleWidth(-5), right: scaleWidth(-6), minWidth: scaleWidth(18), height: scaleWidth(18), paddingHorizontal: Spacing.xs, borderRadius: Radius.pill, backgroundColor: Colors.primary, justifyContent: 'center', alignItems: 'center', borderWidth: Border.thin, borderColor: Colors.background },
-	quickCountText: { color: Colors.textInverse, fontSize: Typography.micro, fontWeight: '900', lineHeight: scaledSize(12) },
+	quickCountText: { color: Colors.onFill, fontSize: Typography.micro, fontWeight: '900', lineHeight: scaledSize(12) },
 	streakChip: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', gap: Spacing.xxs, backgroundColor: Colors.primarySoft, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, marginBottom: SpacingV.xs },
 	goalTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	goalTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 	goalTitle: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	goalCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.primary },
 	goalDoneRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-	summaryWatermark: { position: 'absolute', right: -scaleWidth(14), bottom: -scaleHeight(18), transform: [{ rotate: '-12deg' }] },
 	unlockOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Layout.screenH },
 	unlockSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, alignItems: 'center' },
 	unlockLottie: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(180) },
@@ -1512,15 +1511,15 @@ const styles = themed(() => StyleSheet.create({
 	recGhostBtn: { flex: 1, flexDirection: 'row' as const, alignItems: 'center' as const, justifyContent: 'center' as const, gap: Spacing.xs, paddingVertical: SpacingV.md, borderRadius: Radius.md, backgroundColor: Colors.primaryBg },
 	recGhostText: { fontSize: Typography.footnote, fontWeight: '800' as const, color: Colors.primary },
 	recSolidBtn: { flex: 1, flexDirection: 'row' as const, alignItems: 'center' as const, justifyContent: 'center' as const, gap: Spacing.xs, paddingVertical: SpacingV.md, borderRadius: Radius.md, backgroundColor: Colors.primary },
-	recSolidText: { fontSize: Typography.footnote, fontWeight: '800' as const, color: Colors.textInverse },
+	recSolidText: { fontSize: Typography.footnote, fontWeight: '800' as const, color: Colors.onFill },
 
 	// 커리큘럼 완주 축하
 	curDoneIcon: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.pill, backgroundColor: Colors.primarySoft, alignItems: 'center' as const, justifyContent: 'center' as const },
 	curDoneDesc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center' as const, lineHeight: scaleHeight(20), marginTop: SpacingV.sm },
 	unlockEyebrow: { fontSize: Typography.body, fontWeight: '800', color: Colors.primary, marginTop: SpacingV.md },
 	unlockTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.xs, textAlign: 'center' },
-	unlockBtn: { alignSelf: 'stretch', marginTop: SpacingV.lg, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.primary, alignItems: 'center' },
-	unlockBtnText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	unlockBtn: { alignSelf: 'stretch', marginTop: SpacingV.xl, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.primary, alignItems: 'center' },
+	unlockBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	streakChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 
 	// 오늘의 상식
@@ -1541,7 +1540,7 @@ const styles = themed(() => StyleSheet.create({
 
 	// 주제 목록 (펼치기)
 	topicList: { marginBottom: Layout.sectionGap, gap: Layout.itemGap },
-	topicRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', padding: Spacing.md, gap: Spacing.md },
+	topicRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md },
 	topicRowIcon: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center' },
 	topicRowBody: { flex: 1 },
 	topicRowTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
@@ -1560,7 +1559,7 @@ const styles = themed(() => StyleSheet.create({
 	topicExampleTag: { fontSize: Typography.footnote, fontWeight: '900', marginBottom: SpacingV.xs },
 	topicExampleText: { fontSize: Typography.footnote, color: Colors.text, lineHeight: scaleHeight(17), fontWeight: '600' },
 	topicBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, borderRadius: Radius.md, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },
-	topicBtnText: { color: Colors.textInverse, fontSize: Typography.body, fontWeight: '800' },
+	topicBtnText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 
 	// 공통 카운트 필
 	countPill: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
@@ -1617,12 +1616,12 @@ const styles = themed(() => StyleSheet.create({
 	modalDesc: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22) },
 	modalExample: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(22), marginTop: SpacingV.xs },
 	modalCta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.md, paddingVertical: SpacingV.lg, marginTop: SpacingV.lg, backgroundColor: Colors.primary },
-	modalCtaText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	modalCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	charTabBar: { marginTop: SpacingV.md, height: scaleHeight(44), flexGrow: 0, flexShrink: 0 },
 	charTabRow: { gap: Spacing.sm, alignItems: 'center' },
 	charTab: { flexDirection: 'row', gap: Spacing.xs, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, borderRadius: Radius.xl, backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
 	charApplyBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.primary },
-	charApplyText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	charApplyText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	charTabOn: { backgroundColor: Colors.primaryBg, borderColor: Colors.primarySoft },
 	charTabAppIcon: { width: scaleWidth(16), height: scaleWidth(16), borderRadius: scaleWidth(4) },
 	charTabText: { flexShrink: 1, fontSize: Typography.footnote, lineHeight: scaleHeight(18), fontWeight: '800', color: Colors.textMuted, textAlign: 'center' },
@@ -1633,7 +1632,8 @@ const styles = themed(() => StyleSheet.create({
 	charPreviewReq: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
 	charPreviewDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, textAlign: 'center', lineHeight: scaleHeight(19), marginTop: SpacingV.xs, paddingHorizontal: Spacing.lg },
 	characterScroll: { marginTop: SpacingV.sm, flex: 1 },
-	characterGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, paddingBottom: SpacingV.sm },
+	// center — % 폭 + gap 이라 남는 몇 pt 가 오른쪽에만 몰리지 않게 좌우로 나눈다
+	characterGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: Spacing.sm, paddingBottom: SpacingV.sm },
 	characterCell: { width: isTablet ? '23%' : '30%', alignItems: 'center', borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingVertical: SpacingV.md, paddingHorizontal: Spacing.xs },
 	characterCellSelected: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	characterCellLocked: { opacity: 0.75 },

@@ -68,6 +68,13 @@ describe('readableOn', () => {
 	it('어두운 배경 위에서는 흰 글자를 돌려준다', () => {
 		expect(readableOn('#1450B0')).toBe(Colors.textInverse);
 	});
+	it('다크 채움색(primary·success·error) 위 글자는 4.5:1 이상', () => {
+		for (const fill of [DARK_OVERRIDES.primary, DARK_OVERRIDES.success, DARK_OVERRIDES.error]) {
+			expect(contrast(readableOn(fill), fill)).toBeGreaterThanOrEqual(4.5);
+			expect(contrast(DARK_OVERRIDES.onFill, fill)).toBeGreaterThanOrEqual(4.5);
+		}
+		expect(contrast(LIGHT_COLORS.onFill, LIGHT_COLORS.primary)).toBeGreaterThanOrEqual(4.5);
+	});
 });
 
 describe('화면 테마 적용', () => {

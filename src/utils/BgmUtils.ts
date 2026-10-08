@@ -1,16 +1,17 @@
 /**
  * 배경음악(BGM) 유틸 — 퀴즈/타임챌린지 동안 반복 재생
  * - expo-audio 기반, 없으면 expo-av 폴백, 둘 다 없으면 무음(앱이 죽지 않음)
- * - 트랙: assets/sounds/bgm-quiz.mp3 (일반 퀴즈), bgm-time.mp3 (타임챌린지)
+ * - 트랙: 정글 테마 — bgm_jungle_quiz.m4a (일반 퀴즈), bgm_jungle_time.m4a (타임챌린지·짝맞추기), bgm_jungle_study.m4a (카드·숏폼 학습). 무료 음원(CC0·Pixabay), 출처는 assets/sounds/ATTRIBUTIONS.md
  * - 한 번에 하나만 재생. 화면 전환/종료 시 stopBgm()으로 반드시 정리(메모리 누수 방지)
  * - SFX(효과음)와 별개 토글. 기본 ON.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { preloadSounds } from './SoundUtils';
+import { ensureAudioMode, preloadSounds } from './SoundUtils';
 
 const SOURCES = {
-	quiz: require('../../assets/sounds/bgm-quiz.mp3'),
-	time: require('../../assets/sounds/bgm-time.mp3'),
+	quiz: require('../../assets/sounds/bgm_jungle_quiz.m4a'),
+	time: require('../../assets/sounds/bgm_jungle_time.m4a'),
+	study: require('../../assets/sounds/bgm_jungle_study.m4a'),
 } as const;
 
 export type BgmTrack = keyof typeof SOURCES;
@@ -69,7 +70,7 @@ export const stopBgm = () => {
 
 /**
  * BGM 재생 시작 (반복). 이미 같은 트랙이 재생 중이면 무시.
- * @param track 'quiz' | 'time'
+ * @param track 'quiz' | 'time' | 'study'
  */
 export const startBgm = async (track: BgmTrack) => {
 	if (!bgmEnabled) return;
@@ -80,6 +81,8 @@ export const startBgm = async (track: BgmTrack) => {
 	try {
 		// 오디오 세션 설정(무음 스위치 대응)은 SoundUtils.preloadSounds에서 1회 수행한다
 		await preloadSounds();
+		// 보상형 광고 등은 앱 안에서 떠서 AppState 변화 없이 세션을 바꿔 놓는다 — 재생 직전 mix 모드 재지정
+		await ensureAudioMode();
 		// 기다리는 사이 화면을 벗어났거나(stopBgm) 다른 start 가 들어왔으면 플레이어를 만들지 않는다
 		// (만들면 아무도 멈출 수 없는 BGM 이 화면 밖에서 계속 돈다)
 		if (my !== generation || !bgmEnabled) return;

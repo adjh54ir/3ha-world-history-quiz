@@ -20,6 +20,7 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth } from '@/src/utils';
 import { useToast } from '@/src/context/ToastContext';
 import { playFinish, playPop } from '@/src/utils/SoundUtils';
+import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import TestHistoryService, { TypeTestRecord } from '@/src/services/TestHistoryService';
 import DateUtils from '@/src/utils/DateUtils';
 import { Image as ExpoImage } from 'expo-image';
@@ -65,6 +66,13 @@ const TypeTest = () => {
 	const [index, setIndex] = useState(0);
 	const [counts, setCounts] = useState<Record<TypeKey, number>>({ A: 0, B: 0, C: 0, D: 0 });
 	const [resultKey, setResultKey] = useState<TypeKey | null>(null);
+
+	// 배경음악 — 문항을 고르는 동안만 재생, 시작 전/결과/이탈 시 정지
+	useEffect(() => {
+		if (started && !resultKey) startBgm('quiz');
+		else stopBgm();
+	}, [started, resultKey]);
+	useEffect(() => () => stopBgm(), []);
 	const [history, setHistory] = useState<TypeTestRecord[]>([]);
 	// 결과 화면만 배경색, 시작·질문 화면은 헤더(surface)와 상단 인셋 색을 잇는다
 	useTopBarAccent(resultKey ? Colors.background : Colors.surface);
@@ -150,7 +158,7 @@ const TypeTest = () => {
 					</View>
 
 					<TouchableOpacity style={styles.recBtn} activeOpacity={0.9} onPress={() => router.replace({ pathname: '/learn/category', params: { category: r.domain } } as never)}>
-						<IconComponent type="materialIcons" name="recommend" size={scaledSize(20)} color={Colors.textInverse} />
+						<IconComponent type="materialIcons" name="recommend" size={scaledSize(20)} color={Colors.onFill} />
 						<Text style={styles.recBtnText}>{t('special.typeTest.recommend', { label: t(`special.typeTest.types.${r.key}.domainLabel`) })}</Text>
 					</TouchableOpacity>
 
@@ -277,7 +285,7 @@ const TypeTest = () => {
 		<SafeAreaView style={styles.safe} edges={['bottom']}>
 			<View style={[styles.qHeader, { paddingTop: Layout.screenTop }]}>
 				<View style={styles.qHeaderRow}>
-					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={8}>
+					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.text} />
 					</TouchableOpacity>
 					<Text style={styles.qHeaderTitle}>{t('special.typeTest.qTitle')}</Text>
@@ -285,18 +293,19 @@ const TypeTest = () => {
 						<Text style={styles.qCount}>{index + 1}/{QUESTIONS.length}</Text>
 					</View>
 				</View>
-				<AnimatedProgress ratio={progress / 100} color={Colors.primary} trackColor={Colors.surfaceAlt} height={scaleHeight(7)} radius={scaleWidth(4)} style={styles.progressTrack} />
+				<AnimatedProgress ratio={progress / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(7)} radius={scaleWidth(4)} style={styles.progressTrack} />
 			</View>
 
 			<ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
 				{/* 문항 카드 + 선택지 — 레벨 테스트와 동일 구조 */}
-				<FadeInUp key={`q-${index}`}>
+				<FadeInUp key={`q-${index}`} style={styles.qWrap}>
 					<View style={styles.qCard}>
 						<View style={styles.qDomainChip}>
 							<Text style={styles.qDomainText}>Q{index + 1}</Text>
 						</View>
 						<Text style={styles.qPrompt}>{t(`special.typeTest.questions.${current}.title`)}</Text>
 					</View>
+					<View style={styles.answers}>
 					{TYPE_ORDER.map((k, i) => (
 						<TouchableOpacity key={k} style={styles.option} activeOpacity={0.85} onPress={() => choose(k)}>
 							<View style={styles.optionIndex}>
@@ -306,6 +315,7 @@ const TypeTest = () => {
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					))}
+					</View>
 				</FadeInUp>
 			</ScrollView>
 		</SafeAreaView>
@@ -350,7 +360,7 @@ const styles = themed(() => StyleSheet.create({
 	historyDate: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600' },
 	historyDelete: { width: scaleWidth(28), height: scaleWidth(28), borderRadius: Radius.sm, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.surfaceAlt },
 
-	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md, paddingBottom: SpacingV.lg, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
+	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
 	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden' },
 	startBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900' },
 	startHint: { marginTop: SpacingV.sm, fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center' },
@@ -360,12 +370,15 @@ const styles = themed(() => StyleSheet.create({
 	qCountWrap: { width: scaleWidth(46), alignItems: 'flex-end' },
 	qCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.textSecondary },
 	progressTrack: { height: scaleHeight(7), borderRadius: scaleWidth(4), backgroundColor: Colors.surfaceAlt, overflow: 'hidden', marginTop: SpacingV.sm },
-	body: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	body: { flexGrow: 1, paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	qWrap: { flexGrow: 1 },
 	qCard: { ...CardSurface, borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.lg, alignItems: 'center', marginBottom: SpacingV.lg },
 	qDomainChip: { backgroundColor: Colors.primaryBg, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md, marginBottom: SpacingV.md },
 	qDomainText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	qPrompt: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, textAlign: 'center', lineHeight: scaleHeight(33) },
-	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: Border.thin, borderColor: Colors.border, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, marginBottom: Layout.itemGap },
+	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: Border.thin, borderColor: Colors.border, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, flexGrow: 1, minHeight: Layout.optionMinH, maxHeight: Layout.optionMaxH },
+	// 보기 묶음 — 남는 높이를 받아 키 큰 화면에서 가운데가 비지 않게 한다
+	answers: { flexGrow: 1, gap: Layout.itemGap },
 	optionIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, justifyContent: 'center', alignItems: 'center' },
 	optionIndexText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textSecondary },
 	optionText: { flex: 1, fontSize: Typography.callout, color: Colors.text, fontWeight: '600' },
@@ -379,7 +392,7 @@ const styles = themed(() => StyleSheet.create({
 	msgCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	msgText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), textAlign: 'center', fontWeight: '600' },
 	recBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.lg, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
-	recBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	recBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.text, fontSize: Typography.callout, fontWeight: '700' },
 }));
