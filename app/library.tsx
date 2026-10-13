@@ -25,7 +25,7 @@ import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 
 type Tab = 'bookmark' | 'wrong';
 
@@ -44,6 +44,8 @@ const Library = () => {
 	const [loading, setLoading] = useState(true);
 	// 주제별 필터 (검색과 동일한 공용 칩) — 파라미터로 진입 시 해당 주제 선택
 	const [scope, setScope] = useState<string>(hasFilter ? category : ALL_SCOPE);
+	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
+	useScrollTopOnChange(scrollTop.ref, [tab, scope]);
 	// 상세 팝업(검색과 동일한 공통 DetailSheet)
 	const [detail, setDetail] = useState<WrongItem | null>(null);
 	const [bookmarkDetail, setBookmarkDetail] = useState<BookmarkItem | null>(null);
@@ -138,9 +140,20 @@ const Library = () => {
 		playPop();
 		showToast(t('common.bookmarkUnsaved'), 'star-border');
 	};
+	/** 오답 삭제 뒤 토스트의 '되돌리기' — 지운 항목을 원래 값 그대로 복구 */
+	const undoWrongRemove = (removed: WrongItem[]) => ({
+		label: t('common.undo'),
+		onPress: async () => {
+			await LearnProgressService.restoreWrongNotes(removed);
+			reload();
+			showToast(t('library.wrongRestored'), 'restore');
+		},
+	});
 	const removeWrong = async (uid: string) => {
+		const removed = allWrongs.filter((w) => w.uid === uid);
 		await LearnProgressService.removeWrongNote(uid);
 		reload();
+		showToast(t('library.wrongRemoved'), 'delete', removed.length ? undoWrongRemove(removed) : undefined);
 	};
 	// 오답 항목 즐겨찾기 토글 (별 아이콘)
 	const toggleWrongBookmark = async (w: WrongItem) => {
@@ -174,6 +187,7 @@ const Library = () => {
 			await Promise.all(wrongs.map((w) => LearnProgressService.removeWrongNote(w.uid)));
 		}
 		reload();
+		showToast(t('library.wrongCleared', { n: wrongs.length }), 'delete-sweep', undoWrongRemove(wrongs));
 	};
 
 	const isBookmark = tab === 'bookmark';
@@ -210,7 +224,8 @@ const Library = () => {
 				{/* key 로 리마운트해야 탭·로딩 전환에도 진입 연출이 다시 재생된다 */}
 				<FadeInUp key={`${tab}-${loading}`} style={isEmpty ? styles.listFill : undefined}>
 				{loading ? (
-					<View>
+					// 실제 목록과 같은 열 구성(태블릿 2단)으로 그려야 로딩 → 목록 전환 때 카드 폭이 튀지 않는다
+					<AdaptiveGrid>
 						{[0, 1, 2, 3, 4].map((i) => (
 							<View key={i} style={styles.skeletonCard}>
 								<Skeleton width={'40%'} height={scaleHeight(16)} radius={Radius.md} />
@@ -218,7 +233,7 @@ const Library = () => {
 								<Skeleton width={'100%'} height={scaleHeight(36)} radius={Radius.md} style={{ marginTop: SpacingV.sm }} />
 							</View>
 						))}
-					</View>
+					</AdaptiveGrid>
 				) : isBookmark ? (
 					bookmarks.length === 0 ? (
 						<EmptyState illustration="empty" icon="bookmark-border" text={t('library.emptyBookmark')} subText={t('library.emptyBookmarkSub')} />

@@ -5,9 +5,9 @@ import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { RARITY_META } from '@/src/const/ConstAchievements';
 import { AchievementStatus } from '@/src/services/AchievementService';
 import DateUtils from '@/src/utils/DateUtils';
@@ -113,8 +113,9 @@ export default BadgeDetailModal;
 const styles = themed(() => StyleSheet.create({
 	backdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	modal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
-	iconWrap: { width: scaleArt(96), height: scaleArt(96), borderRadius: Radius.xxl, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },
-	lottie: { position: 'absolute', width: scaleArt(112), height: scaleArt(112) },
+	// 다이얼로그(최대 450) 안의 아트는 scaleArt 를 쓰지 않는다 — 태블릿에서 카드 대비 아이콘만 과하게 커진다 (폰은 같은 값)
+	iconWrap: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.xxl, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },
+	lottie: { position: 'absolute', width: scaleWidth(112), height: scaleWidth(112) },
 	state: { marginTop: SpacingV.lg, fontSize: Typography.footnote, fontWeight: '900', color: Colors.primary },
 	title: { marginTop: SpacingV.xs, fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
 	rarity: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginTop: SpacingV.sm },
@@ -126,7 +127,8 @@ const styles = themed(() => StyleSheet.create({
 	progressTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: SpacingV.sm },
 	progressLabel: { fontSize: Typography.body, fontWeight: '800', color: Colors.textSecondary },
 	progressValue: { fontSize: Typography.body, fontWeight: '900' },
-	track: { height: scaleHeight(8), borderRadius: scaleWidth(4), backgroundColor: Colors.border, overflow: 'hidden' },
+	// 다크 surfaceAlt 위에선 border 가 거의 같은 명도라 빈 트랙이 사라진다
+	track: { height: scaleHeight(8), borderRadius: scaleWidth(4), backgroundColor: isDark() ? Colors.borderStrong : Colors.border, overflow: 'hidden' },
 	fill: { height: '100%', borderRadius: scaleWidth(4) },
 	dateRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, marginTop: SpacingV.sm },
 	dateText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },

@@ -2,6 +2,7 @@
 
 import type { LearnType } from '@/src/types/data/LearnType';
 import LearnHubService from '@/src/services/LearnHubService';
+import i18n from '@/src/translations';
 
 export interface TowerQuizQuestion {
 	/** 원본 문항 — 오답 노트로 넘길 때 쓴다 */
@@ -29,7 +30,7 @@ export const generateTowerQuiz = (level: string, questionCount: number = 5): Tow
 		question: q.guide,
 		options: q.options,
 		correctAnswer: q.answerIndex,
-		explanation: q.examples?.length ? `${q.explanation}\n\n더 알아보기:\n${q.examples.join('\n')}` : q.explanation,
+		explanation: q.examples?.length ? `${q.explanation}\n\n${i18n.t('learnCard.more')}:\n${q.examples.join('\n')}` : q.explanation,
 		proverb: q.subPrompt ? `${q.prompt}\n${q.subPrompt}` : q.prompt,
 		imageRef: q.imageRef,
 		optionFlags: q.optionFlags,

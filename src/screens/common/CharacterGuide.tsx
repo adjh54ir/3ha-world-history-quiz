@@ -257,7 +257,8 @@ const styles = themed(() => StyleSheet.create({
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.xl,
 		borderWidth: 1,
-		padding: Spacing.lg,
+		paddingHorizontal: Spacing.lg,
+		paddingVertical: SpacingV.lg,
 		...Shadow.floating,
 	},
 	bubbleHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
@@ -276,9 +277,10 @@ const styles = themed(() => StyleSheet.create({
 	},
 	ctaText: { fontSize: Typography.body, fontWeight: '700' },
 	// 삼각 꼬리 — 배경색 삼각형 위에 테두리색 삼각형을 1px 겹쳐 테두리 선을 잇는다
+	// left 는 캐릭터(scaleArt)와 같은 배율로 잡아 태블릿에서도 꼬리가 캐릭터 쪽을 가리키게 한다 (폰은 scaleWidth 와 같은 값)
 	tail: {
 		position: 'absolute',
-		left: scaleWidth(36),
+		left: scaleArt(36),
 		bottom: -scaleHeight(11),
 		width: 0,
 		height: 0,
@@ -291,7 +293,7 @@ const styles = themed(() => StyleSheet.create({
 	},
 	tailBorder: {
 		position: 'absolute',
-		left: scaleWidth(35),
+		left: scaleArt(35),
 		bottom: -scaleHeight(13),
 		width: 0,
 		height: 0,

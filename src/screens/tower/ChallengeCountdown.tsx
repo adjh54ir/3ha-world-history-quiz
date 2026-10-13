@@ -153,7 +153,8 @@ const DISC = scaleWidth(168);
 
 const makeStyles = () =>
 	StyleSheet.create({
-		overlay: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: SpacingV.xxl, backgroundColor: Colors.overlayStrong },
+		// 무대는 늘 어둡다 — 다크의 overlayStrong 은 토스트용으로 밝힌 회녹색이라 원반·링이 뜨지 않는다. 라이트 원값 고정
+		overlay: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: SpacingV.xxl, backgroundColor: LIGHT_COLORS.overlayStrong },
 		stage: { width: DISC * 1.9, height: DISC * 1.9, alignItems: 'center', justifyContent: 'center' },
 		disc: { width: DISC, height: DISC, borderRadius: Radius.pill },
 		// 링은 한쪽 변만 색을 줘서 회전이 눈에 보이게 한다
@@ -188,13 +189,13 @@ const makeStyles = () =>
 		},
 		number: {
 			position: 'absolute',
-			fontSize: scaledSize(84),
+			fontSize: Typography.countdown,
 			lineHeight: scaledSize(96),
 			...DisplayText,
 			color: Colors.textInverse,
 			includeFontPadding: false,
 		},
-		numberGo: { fontSize: scaledSize(52), lineHeight: scaledSize(62) },
+		numberGo: { fontSize: Typography.displayXl, lineHeight: scaledSize(62) },
 		message: {
 			minHeight: scaleHeight(26),
 			fontSize: Typography.subtitle,

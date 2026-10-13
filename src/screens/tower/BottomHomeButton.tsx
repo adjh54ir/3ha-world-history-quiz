@@ -35,7 +35,8 @@ const BottomHomeButton = ({
 
 	return (
 		<View style={styles.wrapper}>
-			<TouchableOpacity style={[styles.button, { borderColor }]} onPress={onPress} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel={t('tower.homeButton.a11y')}>
+			{/* 띠 높이가 32 남짓이라 손가락 기준 44 에 못 미친다 — 모양은 두고 터치 여유만 넓힌다 */}
+			<TouchableOpacity style={[styles.button, { borderColor }]} onPress={onPress} hitSlop={Layout.hitSlop} activeOpacity={0.85} accessibilityRole="button" accessibilityLabel={t('tower.homeButton.a11y')}>
 				<IconComponent type="materialIcons" name="home" size={scaledSize(14)} color={iconColor} />
 				<Text style={[styles.text, { color: textColor }]}>HOME</Text>
 			</TouchableOpacity>

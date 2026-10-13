@@ -6,12 +6,18 @@ import DeviceInfo from 'react-native-device-info';
 import { themed } from '@/src/utils/ThemedStyles';
 import DateUtils from '@/src/utils/DateUtils';
 import { recordAdClick } from '@/src/services/AdClickGuard';
+import { markBannerSettled } from '@/src/services/AppOpenAdService';
+import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
+import { resolveAdUnitId } from './adUnitId';
 
 type AdUnitIdType = string;
 
-// 배너는 운영 빌드에서도 테스트(DEV) 유닛으로 고정한다.
-// 운영 광고로 되돌리려면: resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.BANNER, 'banner')
-const AD_UNIT_ID: AdUnitIdType = TestIds.BANNER;
+// 개발·로컬 설치는 테스트 유닛, 스토어 설치 운영 빌드만 운영 유닛 (규칙은 adUnitId.ts)
+const AD_UNIT_ID: AdUnitIdType = resolveAdUnitId(
+	Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }),
+	TestIds.BANNER,
+	'banner',
+);
 
 interface AdmobBannerAdProps {
 	paramMarginTop?: number;
@@ -31,6 +37,7 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 
 	// 로드 실패(오프라인 시작 등) 시 30초 뒤 재요청 — 빈 배너로 남지 않게
 	const handleAdFailed = (e: Error) => {
+		markBannerSettled();
 		console.warn('❌ [AdMob] 배너 로드 실패:', AD_UNIT_ID, e);
 		clearTimeout(retryTimer.current);
 		retryTimer.current = setTimeout(() => bannerRef.current?.load(), 30000);
@@ -81,6 +88,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 				ref={bannerRef}
 				unitId={AD_UNIT_ID}
 				size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+				// 첫 배너가 그려진 뒤에 스플래시를 걷는다 (빈 자리가 보였다가 광고가 툭 들어오지 않게)
+				onAdLoaded={markBannerSettled}
 				onAdOpened={handleAdOpened}
 				onAdFailedToLoad={handleAdFailed}
 			/>

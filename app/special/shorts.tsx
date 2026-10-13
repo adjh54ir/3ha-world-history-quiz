@@ -7,9 +7,9 @@ import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, contentWidth, screenWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt, contentWidth, screenWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -50,6 +50,8 @@ const Shorts = () => {
 	const isBundleMode = catList.length > 0;
 	// 진행 표시 강조색 — 카드 모드와 동일하게(주제 색, 믹스면 브랜드 색)
 	const accent = isCategoryMode ? LearnHubService.getDomain(category).meta.color : Colors.primary;
+	// 이 화면은 테마와 무관하게 늘 어둡다 — 라이트 primary(#0E7C66)는 어두운 무대 위 글자로 2.9:1 이라 믹스 모드는 무대용 밝은 비취를 쓴다
+	const stageAccent = isCategoryMode ? accent : Colors.infoBright;
 
 	// 학습 완료 집계 대상 도메인
 	const activeDomains = useMemo(() => {
@@ -202,8 +204,9 @@ const Shorts = () => {
 				<View style={[styles.pageContent, { paddingTop: insets.top + scaleHeight(136), paddingBottom: insets.bottom + scaleHeight(30) }]}>
 					<View style={styles.topRow}>
 						<View style={[styles.domainChip, { backgroundColor: color }]}>
-							<DomainIcon mainIcon={domainMeta.mainIcon} icon={domainMeta.icon} iconType={domainMeta.iconType} size={scaledSize(15)} color={Colors.darkText} />
-							<Text style={styles.domainText}>{LearnHubService.getDomainTitle(item.domain)}</Text>
+							{/* 주제색이 밝은 주제(주황·앰버)는 흰 글자가 묻는다 — 채움 명도로 흰/검을 고른다 */}
+							<DomainIcon mainIcon={domainMeta.mainIcon} icon={domainMeta.icon} iconType={domainMeta.iconType} size={scaledSize(15)} color={readableOn(color)} />
+							<Text style={[styles.domainText, { color: readableOn(color) }]}>{LearnHubService.getDomainTitle(item.domain)}</Text>
 						</View>
 						<View style={styles.swipeHintTop}>
 							<IconComponent type="materialIcons" name="swipe-vertical" size={scaledSize(15)} color={Colors.darkTextSecondary} />
@@ -241,7 +244,8 @@ const Shorts = () => {
 						scrollEnabled={overflow}
 						onLayout={(e) => (viewportRef.current = e.nativeEvent.layout.height)}
 						onContentSizeChange={(_w, h) => setOverflow(h > viewportRef.current + 1)}>
-						{!!item.imageRef && <EntryImage imageRef={item.imageRef} width={compactHeight ? scaleWidth(120) : scaleWidth(170)} fetchWidth={360} style={styles.image} />}
+						{/* 태블릿은 본문 폭이 넓어 1.25배 그림이 왜소하다 — 아트 배율 (폰은 scaleWidth 와 같은 값) */}
+						{!!item.imageRef && <EntryImage imageRef={item.imageRef} width={compactHeight ? scaleWidth(120) : scaleArt(170)} fetchWidth={360} style={styles.image} />}
 						<Text style={[styles.title, compactHeight && styles.titleCompact]} numberOfLines={1} ellipsizeMode="tail">{item.title}</Text>
 						{!!item.subTitle && <Text style={styles.subTitle} numberOfLines={2} ellipsizeMode="tail">{item.subTitle}</Text>}
 						<View style={[styles.divider, { backgroundColor: color }]} />
@@ -341,16 +345,16 @@ const Shorts = () => {
 			{baseCards.length > 0 && (
 				<View style={[styles.learnStatus, { top: insets.top + scaleHeight(52) }]} pointerEvents="none">
 					<View style={styles.learnStatusLeft}>
-						<View style={[styles.learnStatusIcon, { backgroundColor: withAlpha(accent, '33') }]}>
-							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={accent} />
+						<View style={[styles.learnStatusIcon, { backgroundColor: withAlpha(stageAccent, '33') }]}>
+							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={stageAccent} />
 						</View>
 						<Text style={styles.learnStatusText}>
-							{t('special.shorts.complete')} <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
+							{t('special.shorts.complete')} <Text style={[styles.learnStatusStrong, { color: stageAccent }]}>{doneCount}</Text>
 							<Text style={styles.learnStatusMuted}> / {baseCards.length}</Text>
 						</Text>
 					</View>
-					<View style={[styles.learnStatusPctChip, { backgroundColor: withAlpha(accent, '33') }]}>
-						<Text style={[styles.learnStatusPct, { color: accent }]}>{t('special.shorts.pct', { value: donePct })}</Text>
+					<View style={[styles.learnStatusPctChip, { backgroundColor: withAlpha(stageAccent, '33') }]}>
+						<Text style={[styles.learnStatusPct, { color: stageAccent }]}>{t('special.shorts.pct', { value: donePct })}</Text>
 					</View>
 				</View>
 			)}
@@ -414,8 +418,9 @@ const styles = themed(() => StyleSheet.create({
 	bottomRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
 	completeBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.textInverse, paddingVertical: SpacingV.md, borderRadius: Radius.xxl },
 	completeBtnText: { color: Colors.ink, fontSize: Typography.callout, fontWeight: '900' },
-	reviewBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.darkSurface, borderWidth: Border.thin, borderColor: Colors.darkBorder, paddingVertical: SpacingV.lg, borderRadius: Radius.xxl },
-	reviewBtnText: { color: Colors.darkText, fontSize: Typography.title, fontWeight: '900' },
+	// 학습 완료 버튼과 같은 높이 — 완료/미완료 카드를 넘길 때 버튼·레일 위치가 튀지 않게 (테두리 두께만큼 패딩을 덜어낸다)
+	reviewBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.darkSurface, borderWidth: Border.thin, borderColor: Colors.darkBorder, paddingVertical: SpacingV.md - Border.thin, borderRadius: Radius.xxl },
+	reviewBtnText: { color: Colors.darkText, fontSize: Typography.callout, fontWeight: '900' },
 	pageIdx: { color: Colors.darkTextSecondary, fontSize: Typography.body, fontWeight: '800' },
 	rail: { position: 'absolute', right: Layout.screenH + SHORTS_SIDE, alignItems: 'center', gap: SpacingV.lg },
 	railBtn: { alignItems: 'center', gap: SpacingV.xs },

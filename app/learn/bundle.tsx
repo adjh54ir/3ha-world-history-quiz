@@ -11,7 +11,7 @@ import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import CommonHeader from '@/src/screens/common/CommonHeader';
@@ -234,11 +234,12 @@ const styles = themed(() => StyleSheet.create({
 	rowTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	rowSub: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	modalTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-	modalTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
-	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, marginBottom: SpacingV.lg },
-	modeCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.surface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },
-	modeIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
+	// 학습 방법 시트 — 주제 상세(learn/category)의 같은 시트와 제목·간격·카드 면을 맞춘다
+	modalTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong },
+	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, marginBottom: SpacingV.lg },
+	modeCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
+	modeIcon: { width: scaleWidth(50), height: scaleWidth(50), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	modeBody: { flex: 1 },
 	modeTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
-	modeDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
+	modeDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs, lineHeight: scaleHeight(18) },
 }));

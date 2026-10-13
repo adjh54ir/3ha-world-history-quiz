@@ -13,7 +13,7 @@ import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { TYPE_RESULT_GRADIENTS, BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
+import Colors, { TYPE_RESULT_GRADIENTS, BRAND_GRADIENT, withAlpha, isDark } from '@/src/const/ConstColors';
 import { AnimatedProgress, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
@@ -54,6 +54,8 @@ const TYPES: Record<TypeKey, TypeInfo> = themed(() => ({
 /** 문항 키 — 질문·선택지 문구는 special.typeTest.questions.<q>.{title,A~D}. 선택지는 항상 A→D 순서 */
 const QUESTIONS = ['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8'] as const;
 const TYPE_ORDER: TypeKey[] = ['A', 'B', 'C', 'D'];
+/** 유형 아이콘·점 색 — 그라디언트 끝색(#0E7C66 등)은 다크 표면에서 묻혀 다크에선 밝은 시작색을 쓴다 */
+const typeTone = (ty: TypeInfo): string => (isDark() ? ty.gradient[0] : ty.gradient[1]);
 
 /**
  * 세계 상식 유형 테스트 (MBTI식)
@@ -145,8 +147,8 @@ const TypeTest = () => {
 					<View style={styles.resultHero}>
 						<View style={styles.resultIconWrap}>
 							<LottieBox source={LOTTIE_STAR} autoPlay loop={false} style={styles.resultStar} />
-							<View style={[styles.resultIcon, { backgroundColor: withAlpha(r.gradient[1], '14'), marginBottom: 0 }]}>
-								<IconComponent type="materialIcons" name={r.icon} size={scaledSize(46)} color={r.gradient[1]} />
+							<View style={[styles.resultIcon, { backgroundColor: withAlpha(typeTone(r), '14'), marginBottom: 0 }]}>
+								<IconComponent type="materialIcons" name={r.icon} size={scaledSize(46)} color={typeTone(r)} />
 							</View>
 						</View>
 						<Text style={styles.resultSub} numberOfLines={2} ellipsizeMode="tail">{r.sub}</Text>
@@ -223,7 +225,7 @@ const TypeTest = () => {
 							<View style={styles.gradeRow}>
 								{Object.values(TYPES).map((ty) => (
 									<View key={ty.key} style={styles.gradePill}>
-										<View style={[styles.gradeDot, { backgroundColor: ty.gradient[1] }]} />
+										<View style={[styles.gradeDot, { backgroundColor: typeTone(ty) }]} />
 										<Text style={styles.gradePillText} numberOfLines={1} ellipsizeMode="tail">{ty.name}</Text>
 									</View>
 								))}
@@ -348,7 +350,8 @@ const styles = themed(() => StyleSheet.create({
 	gradePillText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 
 	historyWrap: { alignSelf: 'stretch', marginTop: Layout.sectionGap },
-	historyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm, paddingHorizontal: Spacing.xs },
+	// 제목은 아래 카드와 같은 좌측선에 둔다(SectionHead·결과 목록 머리와 통일)
+	historyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	historyTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	historyCount: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	historyRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },

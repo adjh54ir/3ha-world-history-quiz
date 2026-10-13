@@ -74,6 +74,8 @@ interface Props {
 const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, onClose, onBookmarkChange, primaryAction }) => {
 	const { t } = useTranslation();
 	const [bookmarked, setBookmarked] = useState(false);
+	// 즐겨찾기 여부를 읽은 뒤에 연다 — 별 아이콘이 꺼졌다 켜지는 깜빡임 방지
+	const [loaded, setLoaded] = useState(false);
 	// 팝업 내부 자체 토스트 (팝업 뒤에 가려지는 문제 해결)
 	const [localToast, setLocalToast] = useState<{ msg: string; icon: string } | null>(null);
 	const toastAnim = useRef(new Animated.Value(0)).current;
@@ -93,9 +95,17 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 	useEffect(() => {
 		if (!visible || !item?.uid) {
 			setBookmarked(false);
+			setLoaded(!!visible);
 			return;
 		}
-		LearnProgressService.isBookmarked(item.uid).then(setBookmarked);
+		let alive = true;
+		// 열린 채 항목만 바뀌는 경우는 닫았다 열지 않는다 — 처음 열 때만 기다린다
+		LearnProgressService.isBookmarked(item.uid)
+			.then((v) => alive && setBookmarked(v))
+			.finally(() => alive && setLoaded(true));
+		return () => {
+			alive = false;
+		};
 	}, [visible, item?.uid]);
 
 	if (!item) return null;
@@ -132,7 +142,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 	};
 
 	return (
-		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
 				<SheetIn visible={visible} style={styles.sheet}>

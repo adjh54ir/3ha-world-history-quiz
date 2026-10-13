@@ -23,9 +23,10 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { isDark, withAlpha, EMBER_GRADIENT, HEAT_GRADIENT, NIGHT_GRADIENT } from '@/src/const/ConstColors';
+import Colors, { isDark, withAlpha, readableOn, EMBER_GRADIENT, HEAT_GRADIENT, LIGHT_COLORS, NIGHT_GRADIENT } from '@/src/const/ConstColors';
 import { BODY_FONTS, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenHeight, contentWidth, scaleArt, isTablet } from '@/src/utils';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -584,8 +585,14 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		// 중도 종료(퀴즈 종료 버튼)는 플레이어 결과 화면을 그대로 보여준다
 		if (onFinish && !endedEarly) saved.then(() => onFinish());
 		// 오답이 있으면 다음 날 오전 복습 리마인더 예약 (알림 권한 없으면 조용히 무시)
+		// 알림 문구의 개수는 '실제 알림 시각까지 복습할 차례가 되는 오답 전체' — 이번 판 개수만 넣으면 여러 판을 풀어도 첫 판 숫자로 남고,
+		// 오늘 9시 예약이 이미 있으면 내일 0시에야 차례가 오는 방금 틀린 문제는 세지 않아야 한다
 		if (wrongList.length > 0) {
-			ScheduleWrongReviewReminder(wrongList.length).catch(() => {});
+			ScheduleWrongReviewReminder((at) =>
+				LearnProgressService.getWrongNotes()
+					.then((all) => all.filter((w) => (w.nextReviewAt ?? 0) <= at).length)
+					.catch(() => 0),
+			).catch(() => {});
 		}
 		(async () => {
 			try {
@@ -901,7 +908,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					<View style={[styles.resultHero, { backgroundColor: timed ? HEAT_GRADIENT[1] : accent, paddingTop: SpacingV.xxl }]}>
 						{timed && <LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />}
 						{pass && <LottieBox source={LOTTIE_CONFETTI} autoPlay loop={false} style={styles.resultConfetti} />}
-						<DonutChart size={104} strokeWidth={8} percent={rate} color={heroInk} tone="dark">
+						{/* 태블릿: scaleArt 일러스트(121)가 104 링 안쪽(110)을 넘어 겹친다 — 링을 키운다 */}
+						<DonutChart size={isTablet ? 128 : 104} strokeWidth={8} percent={rate} color={heroInk} tone="dark">
 							{resultIllustration ? (
 								<Image source={resultIllustration} style={styles.resultIllustration} resizeMode="contain" />
 							) : (
@@ -1280,7 +1288,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.onFill} />
 					</TouchableOpacity>
 				</View>
-				<Text style={styles.emptyText}>{t('player.empty')}</Text>
+				<EmptyState icon="quiz" text={t('player.empty')} />
 			</SafeAreaView>
 		);
 	}
@@ -1296,8 +1304,12 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const currentDomainMeta = LearnHubService.getDomain(current.domain).meta;
 	const comboMessage = combo >= 10 ? 'UNSTOPPABLE!' : combo >= 5 ? t('player.combo.fire') : t('player.combo.streak');
 	// 콤보 단계별 열기(heat) 그라디언트 — 단계가 오를수록 진한 붉은색으로 (보라 계열 미사용)
-	const comboColors: [string, string, ...string[]] = combo >= 10 ? [Colors.errorDark, Colors.error, Colors.heat] : combo >= 5 ? [Colors.error, Colors.heat, Colors.bookmark] : [Colors.amber, Colors.heat];
+	// 흰 글자를 얹는 배지라 테마와 무관하게 라이트 값 고정 — 다크 기능색은 밝아져 흰 글자가 묻힌다
+	const comboColors: [string, string, ...string[]] = combo >= 10 ? [LIGHT_COLORS.errorDark, LIGHT_COLORS.error, LIGHT_COLORS.heat] : combo >= 5 ? [LIGHT_COLORS.error, LIGHT_COLORS.heat, LIGHT_COLORS.bookmark] : [LIGHT_COLORS.amber, LIGHT_COLORS.heat];
 	// 오답 셰이크용 translateX (좌우 흔들림)
+	// 태블릿: 보기 묶음은 각 보기 상한까지만 자라고, 그 이상 남는 높이는 body 가 위아래로 나눠 문제+보기 덩어리를 가운데 둔다
+	const answerRows = current.imageRef ? Math.ceil(current.options.length / 2) : current.options.length;
+	const answersMaxH = answerRows * (current.imageRef ? scaleHeight(140) : Layout.optionMaxH) + (answerRows - 1) * SpacingV.sm;
 	const shakeX = optionShake.interpolate({ inputRange: [-1, 1], outputRange: [-scaleWidth(9), scaleWidth(9)] });
 
 	// ── 퀴즈 ──────────────────────────────
@@ -1361,7 +1373,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								</Reanimated.View>
 								<Text style={styles.headerTimerLabel} numberOfLines={1} ellipsizeMode="tail">{timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')}</Text>
 							</View>
-							<Text style={[styles.headerTimerValue, { color: timeBarColor }]}>{t('common.seconds', { count: activeTime })}</Text>
+							{/* 다크는 헤더(accent)가 밝아 금빛·분홍 숫자가 묻힌다 — 색 신호는 막대가 맡고 숫자는 채움 글자색으로 */}
+							<Text style={[styles.headerTimerValue, { color: isDark() ? Colors.onFill : timeBarColor }]}>{t('common.seconds', { count: activeTime })}</Text>
 						</View>
 						<View style={styles.headerTimerTrack}>
 							<View style={[styles.headerTimerFill, { width: `${timeProgress}%`, backgroundColor: timeBarColor }]}>
@@ -1491,7 +1504,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					</View>
 				) : (
 					// 그림 문항은 그림이 세로 자리를 먹어 보기 넷이 화면 밖으로 밀린다 — 2×2 격자로 한눈에 보이게 한다
-					<View style={[styles.answers, !!current.imageRef && styles.optionGrid]}>
+					<View style={[styles.answers, !!current.imageRef && styles.optionGrid, isTablet && { maxHeight: answersMaxH }]}>
 					{current.options.map((opt, i) => {
 						const isAnswer = i === current.answerIndex;
 						const isSelected = i === selected;
@@ -1517,7 +1530,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								activeOpacity={checked ? 1 : 0.8}
 								onPress={() => onSelect(i)}>
 								<View style={[styles.optionIndex, showCorrect && { backgroundColor: Colors.successDeep }, showWrong && { backgroundColor: Colors.errorDark }]}>
-									<Text style={[styles.optionIndexText, (showCorrect || showWrong) && { color: Colors.textInverse }]}>{i + 1}</Text>
+									<Text style={[styles.optionIndexText, (showCorrect || showWrong) && { color: readableOn(showCorrect ? Colors.successDeep : Colors.errorDark) }]}>{i + 1}</Text>
 								</View>
 								{current.optionFlags && <CountryFlags name={opt} height={16} />}
 								<Text style={[styles.optionText, (showCorrect || showWrong) && styles.optionTextStrong]}>{opt}</Text>
@@ -1769,7 +1782,6 @@ const styles = themed(() => StyleSheet.create({
 	scoreValue: { color: Colors.onFill, fontSize: Typography.callout, fontFamily: BODY_FONTS.heavy }, // Animated.Text 는 앱 Text 를 거치지 않아 서체를 직접 준다
 	scoreLabel: { color: withAlpha(Colors.onFill, 'E6'), fontSize: Typography.footnote, fontWeight: '700', marginLeft: Spacing.xs },
 	scoreDivider: { width: 1, height: scaleHeight(18), backgroundColor: Colors.onBrandSurfaceStrong },
-	emptyText: { textAlign: 'center', marginTop: SpacingV.xxxxl, color: Colors.textSecondary, fontSize: Typography.body },
 
 	comboBadge: {
 		position: 'absolute',
@@ -1784,10 +1796,11 @@ const styles = themed(() => StyleSheet.create({
 	comboText: { color: Colors.textInverse, fontSize: Typography.title, fontWeight: '900', letterSpacing: Tracking.normal },
 	comboMultiplier: { minWidth: scaleWidth(34), height: scaleWidth(34), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.onBrandSurfaceStrong, borderWidth: 1, borderColor: Colors.onBrandBorder },
 	comboMultiplierText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '900' },
-	scoreFloat: { position: 'absolute', alignSelf: 'center', zIndex: 25, fontSize: Typography.h3, ...DisplayText, color: Colors.goldSoft },
+	// 헤더(accent) 위에 뜬다 — 다크는 헤더가 밝아 금빛이 묻혀 채움 글자색으로
+	scoreFloat: { position: 'absolute', alignSelf: 'center', zIndex: 25, fontSize: Typography.h3, ...DisplayText, color: isDark() ? Colors.onFill : Colors.goldSoft },
 
 	// flexGrow — 키 큰 화면(태블릿)에서 남는 높이를 보기 묶음이 받아 가운데가 비지 않게 한다. 넘치면 그대로 스크롤
-	body: { flexGrow: 1, paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
+	body: { flexGrow: 1, justifyContent: isTablet ? 'center' : 'flex-start', paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	questionCard: {
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.lg,
@@ -1913,15 +1926,14 @@ const styles = themed(() => StyleSheet.create({
 	wrongSectionCount: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted },
 	wrongDetailHint: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: Spacing.xxs, marginTop: SpacingV.sm },
 	wrongDetailHintText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },
-	nextWrap: { paddingHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
-	nextTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong, marginBottom: SpacingV.sm },
+	nextWrap: { paddingHorizontal: Layout.screenH, marginTop: Layout.sectionGap, gap: SpacingV.sm },
+	nextTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	stepBtn: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.lg,
 		padding: Spacing.lg,
-		marginBottom: SpacingV.sm,
 		borderWidth: 1,
 		borderColor: Colors.border,
 	},

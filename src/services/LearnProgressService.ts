@@ -131,7 +131,11 @@ export interface WeeklyReport {
 const WRONG_CAP = 200;
 /** 오답 복습 간격(일) — 맞힐 때마다 다음 칸으로. 마지막까지 맞히면 오답노트에서 졸업 */
 const REVIEW_INTERVALS_DAY = [1, 3, 7, 14];
-const DAY_MS = 24 * 60 * 60 * 1000;
+/**
+ * N일 뒤 복습 예정 시각 — 현지 날짜 기준 그날 00:00.
+ * (예전: now + N×24h → 밤에 틀린 문제는 다음 날 09시 복습 알림 때 아직 '예정 전'이라 목록이 비어 있었다)
+ */
+const reviewDueAt = (days: number): number => DateUtils.getLocalTimeAfterDays(days, 0).getTime();
 
 const todayStr = (): string => DateUtils.getLocalDateString();
 const diffDays = (from: string, to: string): number => DateUtils.differenceInLocalDays(from, to);
@@ -234,7 +238,7 @@ const LearnProgressService = {
 			...i,
 			addedAt: now,
 			reviewStage: 0,
-			nextReviewAt: now + REVIEW_INTERVALS_DAY[0] * DAY_MS,
+			nextReviewAt: reviewDueAt(REVIEW_INTERVALS_DAY[0]),
 			missCount: (prevByUid.get(i.uid)?.missCount ?? (prevByUid.has(i.uid) ? 1 : 0)) + 1,
 		}));
 		[...fresh, ...list].forEach((w) => {
@@ -259,14 +263,13 @@ const LearnProgressService = {
 	async applyReviewResult(results: { uid: string; correct: boolean }[]): Promise<void> {
 		if (!results.length) return;
 		const byUid = new Map(results.map((r) => [r.uid, r.correct]));
-		const now = DateUtils.getTimestamp();
 		const next = (await this.getWrongNotes()).flatMap((w) => {
 			const correct = byUid.get(w.uid);
 			if (correct === undefined) return [w];
 			const stage = correct ? (w.reviewStage ?? 0) + 1 : 0;
 			if (stage >= REVIEW_INTERVALS_DAY.length) return []; // 졸업 — 오답노트에서 제거
 			const missCount = (w.missCount ?? 1) + (correct ? 0 : 1);
-			return [{ ...w, reviewStage: stage, missCount, nextReviewAt: now + REVIEW_INTERVALS_DAY[stage] * DAY_MS }];
+			return [{ ...w, reviewStage: stage, missCount, nextReviewAt: reviewDueAt(REVIEW_INTERVALS_DAY[stage]) }];
 		});
 		await writeJson(KEY.WRONG_NOTES, next);
 		if (next.length === 0) await CancelWrongReviewReminder();
@@ -277,6 +280,18 @@ const LearnProgressService = {
 		await writeJson(KEY.WRONG_NOTES, next);
 		// 오답이 다 사라졌는데 '어제 틀린 N문제' 알림만 남는 일이 없도록 예약을 정리한다
 		if (next.length === 0) await CancelWrongReviewReminder();
+	},
+
+	/**
+	 * 지운 오답 되돌리기 (삭제 토스트의 '되돌리기') — 복습 단계·예정일 등 원래 값 그대로 다시 넣는다.
+	 * 그사이 같은 문항이 다시 쌓였으면 지금 것을 유지한다.
+	 */
+	async restoreWrongNotes(items: WrongItem[]): Promise<void> {
+		if (!items.length) return;
+		const list = await this.getWrongNotes();
+		const have = new Set(list.map((w) => w.uid));
+		const back = items.filter((w) => !have.has(w.uid));
+		await writeJson(KEY.WRONG_NOTES, [...back, ...list].slice(0, WRONG_CAP));
 	},
 
 	async clearWrongNotes(): Promise<void> {

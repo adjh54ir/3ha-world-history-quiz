@@ -30,7 +30,7 @@ import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { ensureTowerDay, useTower } from '@/src/store/slice/TowerSlice';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 
 type ModeKey = 'mix' | 'bundle' | 'ox' | 'blank' | 'initial' | 'picture' | 'flagMatch' | 'match' | 'bookmark' | 'wrongReview' | 'weakFocus' | 'exam' | 'league';
 
@@ -74,6 +74,8 @@ const Challenge = () => {
 	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 	const [tab, setTab] = useState<ChallengeTab>('time');
+	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
+	useScrollTopOnChange(scrollRef, [tab]);
 	// 타임챌린지 탭: 내 기록만 노출(전체 순위는 랭킹 화면에서) + 랭킹 참여 상태
 	const [myRank, setMyRank] = useState<{ rank: number; score: number } | null>(null);
 	// 규칙 안내 — 처음 들어온 사용자에게만 1회
@@ -545,7 +547,8 @@ const styles = themed(() => StyleSheet.create({
 	towerMeta: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	towerTrack: { height: scaleHeight(8), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
 	towerFill: { height: '100%', borderRadius: Radius.pill, backgroundColor: Colors.primary },
-	histCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: SpacingV.md },
+	// 아래 시작 버튼(marginTop md)과의 간격을 타워 탭(카드→버튼 md)과 맞춘다 — 둘 다 주면 두 배가 된다
+	histCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
 	histHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
 	histTitle: { flex: 1, fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	histRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: SpacingV.md },
@@ -568,7 +571,7 @@ const styles = themed(() => StyleSheet.create({
 
 
 	// 모드 카드
-	card: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', padding: Spacing.lg, marginBottom: Layout.itemGap },
+	card: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
 	iconChip: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	cardBody: { flex: 1 },
 	cardTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flexWrap: 'wrap' },

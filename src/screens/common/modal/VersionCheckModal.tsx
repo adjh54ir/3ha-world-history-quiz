@@ -12,6 +12,7 @@ import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
 import { Radius, Shadow, Spacing, SpacingV, Typography, Tracking, Layout } from '@/src/const/ConstDesign';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { themed } from '@/src/utils/ThemedStyles';
+import { FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
 
 /** '1.2.3' → [1, 2] (패치는 강제 업데이트 대상이 아니므로 버린다) */
 const parseMajorMinor = (version: string): [number, number] => {
@@ -89,18 +90,37 @@ const VersionCheckModal = () => {
 	return (
 		<AppModal visible={showUpdateModal} transparent animationType="fade" statusBarTranslucent presentationStyle="overFullScreen" onRequestClose={() => {}}>
 			<View style={styles.backdrop}>
+				{/* 카드가 아래에서 떠오르고, 아이콘은 은은하게 숨쉬듯 움직여 시선을 '업데이트'로 모은다 */}
+				<FadeInUp distance={24} duration={420} style={styles.cardWrap}>
 				<View style={styles.card}>
 					{/* 헤더 — 브랜드 그라디언트 위 아이콘 */}
 					<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
-						<View style={styles.heroIcon}>
-							<IconComponent type="MaterialCommunityIcons" name="rocket-launch-outline" size={scaledSize(30)} color={Colors.textInverse} />
-						</View>
+						<Pulse minOpacity={1} minScale={0.96} maxScale={1.06} duration={1100}>
+							<View style={styles.heroIcon}>
+								<IconComponent type="MaterialCommunityIcons" name="rocket-launch-outline" size={scaledSize(30)} color={Colors.textInverse} />
+							</View>
+						</Pulse>
 						<Text style={styles.heroBadge}>{t('versionCheck.badge')}</Text>
 					</LinearGradient>
 
 					<View style={styles.body}>
 						<Text style={styles.title}>{t('versionCheck.title')}</Text>
 						<Text style={styles.message}>{t('versionCheck.message')}</Text>
+
+						{/* 이번 업데이트에 담긴 것 — 새 기능 / 버그 개선 */}
+						<View style={styles.highlights}>
+							{([
+								{ icon: 'auto-awesome', key: 'versionCheck.feature' },
+								{ icon: 'build-circle', key: 'versionCheck.fix' },
+							] as const).map((h) => (
+								<View key={h.key} style={styles.highlightRow}>
+									<View style={styles.highlightIcon}>
+										<IconComponent type="materialIcons" name={h.icon} size={scaledSize(16)} color={Colors.primary} />
+									</View>
+									<Text style={styles.highlightText}>{t(h.key)}</Text>
+								</View>
+							))}
+						</View>
 
 						{versionInfo.latest !== '' && (
 							<View style={styles.versionRow}>
@@ -123,6 +143,7 @@ const VersionCheckModal = () => {
 						<Text style={styles.notice}>{t('versionCheck.notice')}</Text>
 					</View>
 				</View>
+				</FadeInUp>
 			</View>
 		</AppModal>
 	);
@@ -138,9 +159,12 @@ const styles = themed(() => StyleSheet.create({
 		alignItems: 'center',
 		paddingHorizontal: Spacing.xl,
 	},
-	card: {
+	cardWrap: {
 		width: '100%',
 		maxWidth: Layout.dialogMaxWidth,
+	},
+	card: {
+		width: '100%',
 		backgroundColor: Colors.surface,
 		borderWidth: 1,
 		borderColor: Colors.border,
@@ -187,6 +211,34 @@ const styles = themed(() => StyleSheet.create({
 		lineHeight: scaleHeight(21),
 		includeFontPadding: false,
 		marginTop: SpacingV.sm,
+	},
+	highlights: {
+		alignSelf: 'stretch',
+		gap: SpacingV.sm,
+		marginTop: SpacingV.lg,
+		backgroundColor: Colors.surfaceAlt,
+		borderRadius: Radius.md,
+		paddingVertical: SpacingV.md,
+		paddingHorizontal: Spacing.lg,
+	},
+	highlightRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: Spacing.sm,
+	},
+	highlightIcon: {
+		width: scaleWidth(28),
+		height: scaleWidth(28),
+		borderRadius: Radius.pill,
+		backgroundColor: Colors.primarySoft,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	highlightText: {
+		flex: 1,
+		fontSize: Typography.callout,
+		fontWeight: '700',
+		color: Colors.text,
 	},
 	versionRow: {
 		flexDirection: 'row',

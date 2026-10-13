@@ -373,7 +373,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 export default LearningReportCard;
 
 const styles = themed(() => StyleSheet.create({
-	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg },
+	card: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
 	cardTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	weekHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	weekActivePill: { backgroundColor: Colors.primaryBg, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },

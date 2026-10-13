@@ -8,6 +8,7 @@ import { Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { scaleArt, scaledSize, scaleHeight } from '@/src/utils';
 import { getSharedStateIllustration, SharedStateIllustrationKey } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import { FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
 
 interface Props {
 	/** materialIcons 아이콘명 */
@@ -31,15 +32,20 @@ interface Props {
  */
 const EmptyState: React.FC<Props> = ({ icon, text, subText, illustration = 'empty', illustrationSource, lottie = true }) => {
 	return (
-		<View style={styles.wrap}>
-			{lottie ? (
-				<ExpoImage source={illustrationSource ?? getSharedStateIllustration(illustration)} style={styles.illustration} contentFit="contain" />
-			) : (
-				<IconComponent type="materialIcons" name={icon} size={scaledSize(46)} color={Colors.textMuted} />
-			)}
+		// 빈 화면도 살짝 떠오르며 등장하고, 일러스트는 숨 쉬듯 아주 작게 움직인다 ('동작 줄이기' 설정 시 정지)
+		<FadeInUp style={styles.wrap} distance={18} duration={420}>
+			<Pulse minOpacity={1} minScale={0.97} maxScale={1.03} duration={1600}>
+				{lottie ? (
+					<ExpoImage source={illustrationSource ?? getSharedStateIllustration(illustration)} style={styles.illustration} contentFit="contain" />
+				) : (
+					<View style={styles.iconCircle}>
+						<IconComponent type="materialIcons" name={icon} size={scaledSize(40)} color={Colors.textMuted} />
+					</View>
+				)}
+			</Pulse>
 			<Text style={styles.text}>{text}</Text>
 			{!!subText && <Text style={styles.sub} numberOfLines={2} ellipsizeMode="tail">{subText}</Text>}
-		</View>
+		</FadeInUp>
 	);
 };
 
@@ -48,6 +54,7 @@ export default EmptyState;
 const styles = themed(() => StyleSheet.create({
 	wrap: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxxxl, paddingVertical: SpacingV.xxxxl },
 	illustration: { width: scaleArt(148), height: scaleArt(148) },
+	iconCircle: { width: scaledSize(84), height: scaledSize(84), borderRadius: scaledSize(42), backgroundColor: Colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' },
 	text: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.lg, textAlign: 'center', lineHeight: scaleHeight(22) },
-	sub: { fontSize: Typography.body, color: Colors.textMuted, marginTop: SpacingV.sm, textAlign: 'center' },
+	sub: { fontSize: Typography.body, color: Colors.textMuted, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
 }));

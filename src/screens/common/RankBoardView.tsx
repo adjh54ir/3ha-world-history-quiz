@@ -87,7 +87,8 @@ export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string
 	return (
 		<FadeInUp delay={Math.min(index, 10) * 35}>
 			<View style={[styles.row, !!tier && { borderColor: withAlpha(tier.main, '66') }, item.isMe && styles.rowMe]}>
-				{!!tier && <LinearGradient colors={[withAlpha(tier.main, '14'), 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />}
+				{/* 'transparent' 는 투명한 검정이라 iOS 에서 중간이 거무스름하게 섞인다 — 같은 색의 알파 0 으로 끝낸다 */}
+				{!!tier && <LinearGradient colors={[withAlpha(tier.main, '14'), withAlpha(tier.main, '00')]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={StyleSheet.absoluteFill} />}
 				<View style={[styles.rankBadge, tier ? { backgroundColor: tier.main } : item.isMe ? { backgroundColor: Colors.primary } : null]}>
 					{tier ? <IconComponent type="materialIcons" name={tier.icon} size={scaledSize(18)} color={readableOn(tier.main)} /> : <Text style={[styles.rankText, item.isMe && { color: Colors.onFill }]}>{item.rank}</Text>}
 				</View>

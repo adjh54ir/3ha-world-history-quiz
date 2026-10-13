@@ -107,7 +107,7 @@ export default DifficultyPickerModal;
 const styles = themed(() => StyleSheet.create({
 	body: { flexShrink: 1 },
 	closeBtn: { position: 'absolute', top: 0, right: 0, width: Layout.touch, height: Layout.touch, alignItems: 'center', justifyContent: 'center', zIndex: 2 },
-	headIcon: { alignSelf: 'center', width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center' },
+	headIcon: { alignSelf: 'center', width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, backgroundColor: Colors.primarySoft, justifyContent: 'center', alignItems: 'center' },
 	title: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md, textAlign: 'center' },
 	sub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, textAlign: 'center' },
 	list: { marginTop: SpacingV.xl, gap: SpacingV.sm },

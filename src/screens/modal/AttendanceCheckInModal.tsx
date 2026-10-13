@@ -71,6 +71,8 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	const [state, setState] = useState<AttendanceState>({ dates: [], lastCheck: null, streak: 0, bestStreak: 0 });
 	const [checkedToday, setCheckedToday] = useState(false);
 	const [celebrate, setCelebrate] = useState(false);
+	// 저장값을 다 읽은 뒤에 연다 — 그 전에 열면 직전에 열었던 값이 잠깐 보였다가 바뀐다
+	const [loaded, setLoaded] = useState(false);
 	const successScale = useRef(new Animated.Value(0)).current;
 	// 축하 연출 타이머 — 모달 언마운트 시 정리
 	const celebrateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -80,10 +82,12 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 
 	/** 출석 처리는 홈 진입 시 자동으로 끝난다 — 팝업은 결과(연속·달력)만 보여준다 */
 	const load = useCallback(() => {
-		AttendanceService.getState().then((st) => {
-			setState(st);
-			setCheckedToday(st.lastCheck === today);
-		});
+		AttendanceService.getState()
+			.then((st) => {
+				setState(st);
+				setCheckedToday(st.lastCheck === today);
+			})
+			.finally(() => setLoaded(true));
 	}, [today]);
 
 	/** 방금 출석이 처리돼 열린 팝업이면 축하 연출을 재생한다 */
@@ -104,6 +108,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 			load();
 			if (celebrateOnOpen) playCelebrate();
 		} else {
+			setLoaded(false);
 			setCelebrate(false);
 			successScale.setValue(0);
 		}
@@ -131,7 +136,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	const successRotate = successScale.interpolate({ inputRange: [0, 1], outputRange: ['-12deg', '0deg'] });
 
 	return (
-		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<SheetIn visible={visible} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.attendance.closeA11y')}>
@@ -145,7 +150,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 						</View>
 						<Text style={styles.heroEyebrow}>{t('modal.attendance.eyebrow')}</Text>
 						<View style={styles.heroStreakRow}>
-							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(30)} color={Colors.goldSoft} />
+							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(30)} color={Colors.goldSoft} style={styles.heroStreakIcon} />
 							<Text style={styles.heroStreak}>{state.streak}</Text>
 							<Text style={styles.heroStreakUnit}>{t('modal.attendance.streakUnit')}</Text>
 						</View>
@@ -264,6 +269,8 @@ const styles = themed(() => StyleSheet.create({
 	heroWatermark: { position: 'absolute', right: scaleWidth(-16), bottom: scaleHeight(-20) },
 	heroEyebrow: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse, opacity: 0.9 },
 	heroStreakRow: { flexDirection: 'row', alignItems: 'flex-end', gap: Spacing.xs, marginTop: SpacingV.xs },
+	// 숫자·단위는 바닥선 정렬을 유지하고 불꽃 아이콘만 숫자 높이의 정중앙에 둔다
+	heroStreakIcon: { alignSelf: 'center' },
 	heroStreak: { fontSize: Typography.h1, fontWeight: '900', color: Colors.textInverse },
 	heroStreakUnit: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse, marginBottom: SpacingV.xs },
 	heroSub: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textInverse, opacity: 0.92, marginTop: SpacingV.xxs },
@@ -289,5 +296,6 @@ const styles = themed(() => StyleSheet.create({
 	celebrateBadge: { alignItems: 'center', backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.xl, borderRadius: Radius.xl },
 	celebrateIconCircle: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.xl, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.xs },
 	celebrateText: { color: Colors.onFill, fontSize: Typography.h2, fontWeight: '900', marginTop: SpacingV.sm },
-	celebrateSub: { color: Colors.onBrandText, fontSize: Typography.body, fontWeight: '700', marginTop: SpacingV.xs },
+	// primary 채움 위 — 다크에선 채움이 밝아지므로 흰 반투명(onBrandText) 대신 onFill 을 옅게 쓴다 (라이트는 동일한 흰 90%)
+	celebrateSub: { color: Colors.onFill, opacity: 0.9, fontSize: Typography.body, fontWeight: '700', marginTop: SpacingV.xs },
 }));

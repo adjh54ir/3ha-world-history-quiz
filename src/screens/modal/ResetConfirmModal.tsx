@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
-import Colors from '@/src/const/ConstColors';
+import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -66,7 +66,7 @@ export default ResetConfirmModal;
 const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	card: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
-	iconWrap: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.md, backgroundColor: Colors.surfaceAlt },
+	iconWrap: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.md, backgroundColor: withAlpha(Colors.error, '14') },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
 	targetBox: { alignSelf: 'stretch', marginTop: SpacingV.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt },
 	targetText: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', lineHeight: scaleHeight(20) },

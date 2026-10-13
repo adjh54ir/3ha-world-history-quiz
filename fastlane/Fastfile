@@ -172,6 +172,8 @@ platform :android do
     supply(
       track: "internal",
       aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      # R8 가독화 파일 — AAB 에도 들어가지만 Play Console 경고가 남지 않도록 명시적으로 함께 올린다
+      mapping: "android/app/build/outputs/mapping/release/mapping.txt",
       release_status: "draft",
       skip_upload_metadata: true,
       skip_upload_images: true,
@@ -197,6 +199,8 @@ platform :android do
     supply(
       track: "production",
       aab: "android/app/build/outputs/bundle/release/app-release.aab",
+      # R8 가독화 파일 — AAB 에도 들어가지만 Play Console 경고가 남지 않도록 명시적으로 함께 올린다
+      mapping: "android/app/build/outputs/mapping/release/mapping.txt",
       release_status: ENV["AUTO_RELEASE"] == "true" ? "completed" : "draft",
       skip_upload_metadata: false,
       skip_upload_images: false,

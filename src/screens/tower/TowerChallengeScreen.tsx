@@ -5,6 +5,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StatusBar } from 'expo-status-bar';
+import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
 import { contentWidth, isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -55,6 +57,8 @@ const TowerChallengeScreen = () => {
 	const [countdownLevel, setCountdownLevel] = useState<number | null>(null);
 	const [showAd, setShowAd] = useState(false);
 	const guide = useCharacterGuideOnce('tower-challenge');
+	// 위에 다른 화면이 쌓여도 이 화면은 마운트된 채라, 보이는 동안에만 상태바를 밝힌다
+	const focused = useIsFocused();
 
 	const scrollRef = useRef<ScrollView>(null);
 
@@ -244,7 +248,7 @@ const TowerChallengeScreen = () => {
 				contentFit="cover"
 			/>
 			<LinearGradient
-				colors={['rgba(5, 12, 22, 0.04)', 'rgba(5, 12, 22, 0.92)']}
+				colors={[withAlpha(Colors.nightDeep, '0A'), withAlpha(Colors.nightDeep, 'EB')]}
 				style={StyleSheet.absoluteFillObject}
 			/>
 			<View style={styles.clearedCopy}>
@@ -293,6 +297,8 @@ const TowerChallengeScreen = () => {
 	return (
 		<View style={styles.container}>
 			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+			{/* 테마와 무관하게 어두운 화면 — 라이트 테마의 어두운 상태바 아이콘이 상단 띠(inkSoft)에 묻히지 않게 밝게 */}
+			{focused && <StatusBar style="light" />}
 
 			{/* 상단 안전영역은 전역 배너가 이미 확보한다 — top 을 쓰면 여백이 두 번 들어간다 */}
 			<SafeAreaView style={styles.safeArea} edges={['left', 'right', 'bottom']}>
@@ -457,7 +463,7 @@ const makeStyles = () =>
 			right: 0,
 			bottom: 0,
 			height: '48%',
-			backgroundColor: 'rgba(5, 12, 22, 0.72)',
+			backgroundColor: withAlpha(Colors.nightDeep, 'B8'),
 		},
 		heroBannerCopy: { position: 'absolute', left: Spacing.lg, right: Spacing.lg, bottom: SpacingV.md, gap: SpacingV.xxs },
 		heroBannerEyebrow: { fontSize: Typography.micro, fontWeight: FontWeight.heavy, color: Colors.gold, letterSpacing: 1.2 },
@@ -529,10 +535,11 @@ const makeStyles = () =>
 		challengeName: { flex: 1, fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse },
 
 		bossRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.lg },
+		// 안의 보스 그림이 scaleArt 라 틀도 같은 배율로 — 태블릿에서 그림(124)이 틀(120)을 넘쳐 잘렸다
 		bossFrame: {
-			width: scaleWidth(96),
-			height: scaleWidth(96),
-			borderRadius: scaleWidth(48),
+			width: scaleArt(96),
+			height: scaleArt(96),
+			borderRadius: scaleArt(48),
 			borderWidth: 2,
 			alignItems: 'center',
 			justifyContent: 'center',
@@ -549,7 +556,8 @@ const makeStyles = () =>
 			gap: Spacing.md,
 			paddingTop: SpacingV.md,
 			borderTopWidth: 1,
-			borderTopColor: Colors.onBrandWatermark,
+			// 패널 면(onBrandWatermark)과 같은 값이면 구분선이 사라진다 — 패널 테두리와 같은 단계로
+			borderTopColor: Colors.onBrandSurface,
 		},
 		rewardImage: { width: scaleWidth(36), height: scaleWidth(36) },
 		rewardTextWrap: { flex: 1 },
@@ -570,7 +578,8 @@ const makeStyles = () =>
 
 		// ===== 모두 정복 =====
 		clearedPanel: {
-			height: scaleHeight(190),
+			// 태블릿 넓은 기둥에서 고정 높이면 그림이 가늘게 잘린다 — 히어로 배너처럼 폰 비율 유지
+			...(isTablet ? { aspectRatio: 343 / 190 } : { height: scaleHeight(190) }),
 			padding: 0,
 			justifyContent: 'flex-end',
 			overflow: 'hidden',

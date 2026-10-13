@@ -443,7 +443,8 @@ const styles = themed(() => StyleSheet.create({
 	actionTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 	actionTitle: { flexShrink: 1, fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	countBadge: { backgroundColor: Colors.errorDark, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs },
-	countBadgeText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '800' },
+	// 다크에선 errorDark 가 밝아져 흰 글자가 3.8:1 — 채움 위 글자 토큰으로 뒤집는다
+	countBadgeText: { color: Colors.onFill, fontSize: Typography.footnote, fontWeight: '800' },
 	actionDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 
 	// 모달 공통

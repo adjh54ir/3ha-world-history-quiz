@@ -6,7 +6,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { getHomeCharacterImage } from '@/src/const/ConstCharacters';
 import { SheetIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
-import Colors from '@/src/const/ConstColors';
+import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
@@ -214,17 +214,18 @@ const styles = themed(() => StyleSheet.create({
 	iconWrap: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.md, backgroundColor: Colors.primarySoft },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
 	// 도우미 캐릭터 인사 — 말풍선 + 아래를 향한 꼬리 + 캐릭터
-	greetBubble: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderRadius: Radius.xl, borderWidth: 1, borderColor: Colors.primarySoft, padding: Spacing.lg },
+	// 다크에선 primarySoft 가 surfaceAlt 와 거의 같아 테두리가 사라진다 — CharacterGuide 와 같은 반투명 포인트색으로 잇는다
+	greetBubble: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderRadius: Radius.xl, borderWidth: 1, borderColor: isDark() ? withAlpha(Colors.primary, '55') : Colors.primarySoft, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
 	greetBubbleHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	greetBubbleTitle: { flex: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	// 타이핑 중 글자 수가 늘어나며 말풍선 높이가 튀지 않게 최소 높이를 잡아둔다
 	greetBubbleText: { fontSize: Typography.body, lineHeight: scaleHeight(22), color: Colors.textStrong, fontWeight: '600', minHeight: scaleHeight(66) },
 	greetCaret: { color: Colors.primary },
 	greetTail: { position: 'absolute', left: scaleWidth(36), bottom: -scaleHeight(11), width: 0, height: 0, borderLeftWidth: scaleWidth(10), borderRightWidth: scaleWidth(10), borderTopWidth: scaleHeight(12), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.surfaceAlt, zIndex: 2 },
-	greetTailBorder: { position: 'absolute', left: scaleWidth(35), bottom: -scaleHeight(13), width: 0, height: 0, borderLeftWidth: scaleWidth(11), borderRightWidth: scaleWidth(11), borderTopWidth: scaleHeight(13), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: Colors.primarySoft, zIndex: 1 },
+	greetTailBorder: { position: 'absolute', left: scaleWidth(35), bottom: -scaleHeight(13), width: 0, height: 0, borderLeftWidth: scaleWidth(11), borderRightWidth: scaleWidth(11), borderTopWidth: scaleHeight(13), borderLeftColor: 'transparent', borderRightColor: 'transparent', borderTopColor: isDark() ? withAlpha(Colors.primary, '55') : Colors.primarySoft, zIndex: 1 },
 	greetChar: { alignSelf: 'flex-start', width: scaleWidth(104), height: scaleWidth(104), marginTop: SpacingV.md, marginLeft: Spacing.sm, borderRadius: Radius.xl },
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.xs, lineHeight: scaleHeight(20) },
-	optionList: { alignSelf: 'stretch', gap: SpacingV.xs, marginTop: SpacingV.lg },
+	optionList: { alignSelf: 'stretch', gap: Layout.itemGap, marginTop: SpacingV.lg },
 	option: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	optionOn: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	optionIcon: { width: scaleWidth(36), height: scaleWidth(36), borderRadius: Radius.md, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surfaceAlt },

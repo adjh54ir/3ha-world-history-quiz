@@ -10,7 +10,7 @@ import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import Colors, { accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Tracking } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Tracking, Border } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
 import DateUtils from '@/src/utils/DateUtils';
 import LearnProgressService, { LearnStats } from '@/src/services/LearnProgressService';
@@ -752,7 +752,7 @@ const Stats = () => {
 											style={[
 												styles.achIcon,
 												{ backgroundColor: a.unlocked ? withAlpha(a.def.color, '1A') : Colors.surfaceAlt },
-												a.unlocked && { borderWidth: HIGH_RARITY.has(a.def.rarity) ? 2 : 1, borderColor: RARITY_META[a.def.rarity].color },
+												a.unlocked && { borderWidth: HIGH_RARITY.has(a.def.rarity) ? Border.thick : Border.hairline, borderColor: RARITY_META[a.def.rarity].color },
 											]}>
 											{a.unlocked && HIGH_RARITY.has(a.def.rarity) && (
 												<LinearGradient
@@ -860,7 +860,9 @@ const Stats = () => {
 										</View>
 										<Text lineBreakStrategyIOS="hangul-word" style={styles.pastPrompt}>{it.prompt}</Text>
 										<View style={styles.pastAnswerBox}>
-											<IconComponent type="materialIcons" name="format-quote" size={scaledSize(13)} color={Colors.success} />
+											<View style={styles.pastAnswerIcon}>
+												<IconComponent type="materialIcons" name="format-quote" size={scaledSize(13)} color={Colors.success} />
+											</View>
 											<Text style={styles.pastAnswer}>{it.answer}</Text>
 										</View>
 										{!!it.explanation && <Text lineBreakStrategyIOS="hangul-word" style={styles.pastExplain}>{it.explanation}</Text>}
@@ -890,7 +892,7 @@ const styles = themed(() => StyleSheet.create({
 	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 
 	// 요약 카드
-	summaryCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	summaryCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	streakRow: { flexDirection: 'row', alignItems: 'center' },
 	streakIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	streakBody: { flex: 1 },
@@ -909,7 +911,7 @@ const styles = themed(() => StyleSheet.create({
 	reportCard: { marginBottom: Layout.sectionGap },
 
 	// 주간 랭킹 (연속 학습 요약 아래)
-	achSummary: { ...CardSurface, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	achSummary: { ...CardSurface, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	achSummaryIcon: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center' },
 	achSummaryBody: { flex: 1 },
 	achSummaryTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
@@ -923,7 +925,7 @@ const styles = themed(() => StyleSheet.create({
 	achSheetHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingBottom: SpacingV.md },
 	achSheetTitle: { flex: 1, fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong },
 	achSheetBody: { paddingBottom: SpacingV.xxl },
-	weeklyCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	weeklyCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	rankHero: { overflow: 'hidden', borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
 	rankShine: { position: 'absolute', top: scaleHeight(-50), left: 0, width: scaleWidth(52), height: scaleHeight(240), backgroundColor: Colors.onBrandDivider },
 	rankHeroRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
@@ -937,7 +939,9 @@ const styles = themed(() => StyleSheet.create({
 	rankHeroDivider: { width: 1, height: scaleHeight(26), backgroundColor: Colors.onBrandSurfaceStrong },
 	rankHeroStatLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textInverse, opacity: 0.9 },
 	rankHeroStatValue: { fontSize: Typography.title, fontWeight: '900', color: Colors.textInverse, marginTop: SpacingV.xxs },
-	rankRowsWrap: { gap: SpacingV.xs },
+	// 행마다 itemGap(marginBottom)이 이미 붙는다 — gap 을 더하면 랭킹 화면보다 행 간격이 벌어지고,
+	// 마지막 행 여백 때문에 카드 아래 안쪽 여백만 두 배가 된다 → 마지막 행 여백을 상쇄
+	rankRowsWrap: { marginBottom: -Layout.itemGap },
 	weeklyEmpty: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textSecondary, textAlign: 'center', paddingVertical: SpacingV.lg },
 	weeklyJoinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md },
 	weeklyJoinText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.body, fontWeight: '900' },
@@ -946,7 +950,7 @@ const styles = themed(() => StyleSheet.create({
 	rowBody: { flex: 1 },
 
 	// 카드 공통
-	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	card: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 
 	// 플레이별 점수 아코디언
 	timeHistWrap: { marginTop: SpacingV.lg, paddingTop: SpacingV.lg, borderTopWidth: 1, borderTopColor: Colors.border },
@@ -975,12 +979,13 @@ const styles = themed(() => StyleSheet.create({
 
 	// 학습 기록 탭
 	recordTabScroll: { flexGrow: 0, marginBottom: SpacingV.lg },
-	recordTabBar: { flexDirection: 'row', gap: Spacing.xxs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.pill, padding: Spacing.xs },
+	// 태블릿은 탭 5개가 한 줄에 다 들어가 오른쪽이 비었다 — 트랙을 본문 폭까지 채우고 탭을 고르게 나눈다 (폰은 0 = 기본값)
+	recordTabBar: { flexDirection: 'row', flexGrow: isTablet ? 1 : 0, gap: Spacing.xxs, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.pill, padding: Spacing.xs },
 	sortChip: { alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface },
 	sortChipOn: { borderColor: Colors.primarySoft, backgroundColor: Colors.primaryBg },
 	sortChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },
 	sortChipTextOn: { color: Colors.primary },
-	recordTab: { overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xxs, paddingVertical: SpacingV.sm, paddingHorizontal: Spacing.lg, borderRadius: Radius.pill, backgroundColor: 'transparent' },
+	recordTab: { flexGrow: isTablet ? 1 : 0, overflow: 'hidden', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xxs, paddingVertical: SpacingV.sm, paddingHorizontal: Spacing.lg, borderRadius: Radius.pill, backgroundColor: 'transparent' },
 	recordTabOn: { backgroundColor: Colors.primary },
 	recordTabText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted, textAlign: 'center' },
 	recordTabTextOn: { color: Colors.textInverse },
@@ -1032,6 +1037,8 @@ const styles = themed(() => StyleSheet.create({
 	pastResult: { fontSize: Typography.footnote, fontWeight: '900' },
 	pastPrompt: { flexShrink: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginTop: SpacingV.sm, lineHeight: scaleHeight(21) },
 	pastAnswerBox: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.xs, marginTop: SpacingV.sm },
+	// 여러 줄 답에서도 아이콘이 첫 줄 정중앙에 오도록 줄 높이만큼의 상자에 세로 중앙 정렬
+	pastAnswerIcon: { height: scaleHeight(19), justifyContent: 'center' },
 	pastAnswer: { flex: 1, fontSize: Typography.body, fontWeight: '700', color: Colors.success, lineHeight: scaleHeight(19) },
 	pastExplain: { flexShrink: 1, fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs, lineHeight: scaleHeight(18) },
 

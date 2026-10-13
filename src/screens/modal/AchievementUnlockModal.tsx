@@ -10,7 +10,7 @@ import { useReducedMotion } from '@/src/screens/common/anim/Motion';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Tracking, Shadow, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleArt, screenWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, screenWidth } from '@/src/utils';
 import { AchievementDef, RARITY_META } from '@/src/const/ConstAchievements';
 import { playComplete } from '@/src/utils/SoundUtils';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -118,10 +118,11 @@ const styles = themed(() => StyleSheet.create({
 	condText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	kicker: { fontSize: Typography.callout, fontWeight: '900', color: Colors.primary, letterSpacing: Tracking.tight },
 	kickerRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-	medalWrap: { width: scaleArt(150), height: scaleArt(150), justifyContent: 'center', alignItems: 'center', marginTop: SpacingV.lg },
-	medalStar: { position: 'absolute', width: scaleArt(150), height: scaleArt(150) },
-	rays: { position: 'absolute', width: scaleArt(150), height: scaleArt(150), borderRadius: Radius.pill, overflow: 'hidden' },
-	medal: { width: scaleArt(96), height: scaleArt(96), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', ...Shadow.floating },
+	// 다이얼로그(최대 450) 안의 아트는 scaleArt 를 쓰지 않는다 — 태블릿에서 메달이 카드 폭의 절반을 넘는다 (폰은 같은 값)
+	medalWrap: { width: scaleWidth(150), height: scaleWidth(150), justifyContent: 'center', alignItems: 'center', marginTop: SpacingV.lg },
+	medalStar: { position: 'absolute', width: scaleWidth(150), height: scaleWidth(150) },
+	rays: { position: 'absolute', width: scaleWidth(150), height: scaleWidth(150), borderRadius: Radius.pill, overflow: 'hidden' },
+	medal: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', ...Shadow.floating },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg, textAlign: 'center' },
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
 	extra: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary, marginTop: SpacingV.sm },

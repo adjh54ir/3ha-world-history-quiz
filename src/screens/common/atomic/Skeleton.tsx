@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View, ViewStyle, DimensionValue } from 'react-native';
 import { useReducedMotion } from 'react-native-reanimated';
-import Colors from '@/src/const/ConstColors';
+import Colors, { isDark } from '@/src/const/ConstColors';
 import { Radius, Spacing, SpacingV } from '@/src/const/ConstDesign';
 import { scaleHeight, scaleWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -40,7 +40,8 @@ const Skeleton: React.FC<SkeletonProps> = ({ width = '100%', height = scaleHeigh
 
 	const opacity = reduceMotion ? 0.6 : pulse.interpolate({ inputRange: [0, 1], outputRange: [0.45, 0.9] });
 
-	return <Animated.View style={[{ width, height, borderRadius: radius, backgroundColor: Colors.surfaceAlt, opacity }, style]} />;
+	// 다크의 surfaceAlt 는 카드 면(surface)과 거의 같아 펄스 투명도까지 얹으면 덩어리가 사라진다 — 한 단계 밝은 면으로
+	return <Animated.View style={[{ width, height, borderRadius: radius, backgroundColor: isDark() ? Colors.borderStrong : Colors.surfaceAlt, opacity }, style]} />;
 };
 
 /**

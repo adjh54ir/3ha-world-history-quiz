@@ -13,7 +13,7 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { RankPodium, RankRowItem } from '@/src/screens/common/RankBoardView';
 import Colors, { BRAND_GRADIENT, HEAT_GRADIENT, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border, Tracking } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
 import RankingService, { RankBoard, RankRow } from '@/src/services/RankingService';
 import { useToast } from '@/src/context/ToastContext';
 import { playPop } from '@/src/utils/SoundUtils';
@@ -23,7 +23,7 @@ import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 const LOTTIE_EMPTY = require('@/src/assets/lottie/empty.json');
@@ -44,6 +44,8 @@ const Ranking = () => {
 	const params = useLocalSearchParams();
 	const lockedBoard = stringParam(params.board, '') as RankBoard | '';
 	const [tab, setTab] = useState<RankBoard>(lockedBoard || 'total');
+	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
+	useScrollTopOnChange(scrollTop.ref, [tab]);
 	const [rows, setRows] = useState<RankRow[]>([]);
 	const [mine, setMine] = useState<{ rank: number; score: number } | null>(null);
 	const [nickname, setNickname] = useState<string | null>(null);
@@ -372,7 +374,8 @@ const styles = themed(() => StyleSheet.create({
 	myRank: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textInverse },
 	myScore: { fontSize: Typography.title, fontWeight: '900', color: Colors.textInverse },
 	// 공통
-	center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxxxl, gap: SpacingV.sm },
+	// 태블릿은 참여 카드·버튼이 본문 폭 끝까지 늘어나지 않게 다이얼로그 폭으로 모은다
+	center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: isTablet ? Math.max(Spacing.xxxxl, (contentWidth - Layout.dialogMaxWidth) / 2) : Spacing.xxxxl, gap: SpacingV.sm },
 	emptyLottie: { width: scaleArt(130), height: scaleArt(130) },
 	emptyText: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', textAlign: 'center' },
 	joinLottie: { width: scaleArt(150), height: scaleArt(150) },

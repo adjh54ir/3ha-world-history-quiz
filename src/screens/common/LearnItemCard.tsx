@@ -123,7 +123,8 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 					)}
 					{!!statusMark && (
 						<View style={[styles.statusMark, { backgroundColor: statusMark === 'correct' ? Colors.successDeep : Colors.errorDark }]}>
-							<IconComponent type="materialIcons" name={statusMark === 'correct' ? 'check' : 'close'} size={scaledSize(12)} color={Colors.textInverse} />
+							{/* 다크 errorDark 는 밝아 흰 아이콘이 묻는다 — 채움 명도로 흰/검을 고른다 */}
+							<IconComponent type="materialIcons" name={statusMark === 'correct' ? 'check' : 'close'} size={scaledSize(12)} color={readableOn(statusMark === 'correct' ? Colors.successDeep : Colors.errorDark)} />
 						</View>
 					)}
 					<View style={[styles.domainChip, { backgroundColor: withAlpha(meta.color, '14') }]}>
@@ -233,8 +234,9 @@ const styles = themed(() => StyleSheet.create({
 	answerText: { fontSize: Typography.body, color: Colors.success, fontWeight: '900' },
 	// 해설은 단어(굵은 제목)보다 옅고 가늘게 — 위계 유지
 	explanation: { fontSize: Typography.body, fontWeight: '400', color: Colors.textSecondary, lineHeight: scaleHeight(20), marginTop: SpacingV.xs },
-	exGroup: { marginTop: SpacingV.md },
-	exHead: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary, marginBottom: SpacingV.sm },
-	exItem: { borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginBottom: SpacingV.sm },
+	// 항목마다 marginBottom 을 주면 마지막 예시 아래가 카드 패딩보다 두꺼워진다 — gap 으로 사이만 띄운다
+	exGroup: { marginTop: SpacingV.md, gap: SpacingV.sm },
+	exHead: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary },
+	exItem: { borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	exText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(20) },
 }));

@@ -25,7 +25,7 @@ import PetService from '@/src/services/PetService';
 import LeagueService from '@/src/services/LeagueService';
 import TestHistoryService from '@/src/services/TestHistoryService';
 import RankingService from '@/src/services/RankingService';
-import { RequestNotificationPermission, CancelDailyWordReminder } from '@/src/utils/NotifactionHelper';
+import { RequestNotificationPermission, CancelDailyWordReminder, SendTestNotification } from '@/src/utils/NotifactionHelper';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
@@ -165,6 +165,18 @@ const Setting = () => {
 		} else openAppSettings();
 	};
 
+	/** 알림 미리 받아보기 — 권한이 없으면 요청하고, 거절되면 설정으로 안내 */
+	const [testSending, setTestSending] = useState(false);
+	const sendTestNotification = async () => {
+		if (testSending) return;
+		setTestSending(true);
+		const ok = await SendTestNotification();
+		setTestSending(false);
+		refreshPermissionState();
+		if (ok) showToast(t('settings.toast.testSent'), 'notifications-active');
+		else showToast(t('settings.toast.testFail'), 'notifications-off', { label: t('settings.permission.request'), onPress: openAppSettings });
+	};
+
 	const manageTrackingPermission = async () => {
 		if (Platform.OS !== 'ios') return;
 		const permission = PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY;
@@ -222,7 +234,7 @@ const Setting = () => {
 	];
 
 	/** 오늘의 퀴즈 관련 저장키 (완료일·결과 스냅샷·히스토리·발급목록·알림설정) */
-	const TODAY_QUIZ_KEYS = ['TODAY_QUIZ_DONE_DATE', 'TODAY_QUIZ_RESULT', 'TODAY_QUIZ_HISTORY', 'TodayQuizList', 'TODAY_QUIZ_ALARM_ON'];
+	const TODAY_QUIZ_KEYS = ['TODAY_QUIZ_DONE_DATE', 'TODAY_QUIZ_RESULT', 'TODAY_QUIZ_HISTORY', 'TodayQuizList', 'TODAY_QUIZ_ALARM_ON', 'TODAY_QUIZ_ALARM_TIME'];
 
 	/** 홈 화면 상태 저장키 — 남겨두면 초기화 후에도 커리큘럼 카드가 숨겨진 채로 남는다 */
 	const HOME_STATE_KEYS = ['HOME_CURRICULUM_CELEBRATED', 'HOME_CURRICULUM_OPEN', 'HOME_SEEN_CHAR_LEVEL', 'HOME_RECOMMEND_DISMISS_DATE', 'HOME_SELECTED_CHARACTER', 'HOME_DAILY_GOAL', 'HOME_ATT_POPUP_DATE'];
@@ -342,6 +354,20 @@ const Setting = () => {
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
+						{/* 알림이 실제로 오는지 바로 확인 (알림 안 와요 문의 자가 진단) */}
+						<View style={[styles.row, styles.rowBorder]}>
+							<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
+								<IconComponent type="materialIcons" name="send" size={scaledSize(20)} color={Colors.primary} />
+							</View>
+							<View style={styles.rowBody}>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.test')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.testDesc')}</Text>
+							</View>
+							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} disabled={testSending} onPress={sendTestNotification} accessibilityRole="button" accessibilityLabel={t('settings.notification.test')}>
+								<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(16)} color={Colors.primary} />
+								<Text style={styles.soundTestText}>{t('settings.notification.testSend')}</Text>
+							</TouchableOpacity>
+						</View>
 						<View style={[styles.row, styles.rowBorder]}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
 								<IconComponent type="materialIcons" name="volume-up" size={scaledSize(20)} color={Colors.primary} />
@@ -355,7 +381,7 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(16)} color={soundOn ? Colors.primary : Colors.textMuted} />
 								<Text style={[styles.soundTestText, !soundOn && { color: Colors.textMuted }]}>{t('settings.notification.soundTest')}</Text>
 							</TouchableOpacity>
-							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
+							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} ios_backgroundColor={isDark() ? Colors.textMuted : undefined} />
 						</View>
 						<View style={[styles.row, styles.rowBorder]}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
@@ -365,7 +391,7 @@ const Setting = () => {
 								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.bgm')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.bgmDesc')}</Text>
 							</View>
-							<Switch value={bgmOn} onValueChange={toggleBgm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
+							<Switch value={bgmOn} onValueChange={toggleBgm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} ios_backgroundColor={isDark() ? Colors.textMuted : undefined} />
 						</View>
 					</View>
 
@@ -439,47 +465,6 @@ const Setting = () => {
 						<Text style={styles.resetAllText}>{t('settings.reset.allButton')}</Text>
 					</TouchableOpacity>
 
-					{/* 권한 관리 — 앱 목록 바로 위. 미설정 항목은 눌러서 바로 설정으로 이동한다. */}
-					<SubHead label={t('settings.section.permission')} icon="verified-user" />
-					<View style={styles.card}>
-						<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={manageNotificationPermission}>
-							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
-								<IconComponent type="materialIcons" name="notifications" size={scaledSize(20)} color={Colors.primary} />
-							</View>
-							<View style={styles.rowBody}>
-								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.notification')}</Text>
-								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.notificationDesc')}</Text>
-							</View>
-							<PermPill granted={notifGranted} />
-						</TouchableOpacity>
-						{Platform.OS === 'ios' && (
-							<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={manageTrackingPermission}>
-								<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
-									<IconComponent type="materialIcons" name="privacy-tip" size={scaledSize(20)} color={Colors.primary} />
-								</View>
-								<View style={styles.rowBody}>
-									<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.tracking')}</Text>
-									<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.trackingDesc')}</Text>
-								</View>
-								<PermPill granted={trackingGranted} />
-							</TouchableOpacity>
-						)}
-					</View>
-					{/* 함께하면 좋은 퀴즈 앱 */}
-					<SubHead label={t('settings.section.relatedApps')} icon="apps" />
-					<View style={styles.card}>
-						{previewApps.map((app, i) => (
-							<TouchableOpacity key={app.id} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
-								<Image source={app.icon} style={styles.appIcon} />
-								<View style={styles.rowBody}>
-									<Text style={styles.rowLabel} numberOfLines={1}>{app.title}</Text>
-									<Text style={styles.rowDesc} numberOfLines={2}>{app.desc}</Text>
-								</View>
-								<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
-							</TouchableOpacity>
-						))}
-					</View>
-
 					{/* 정보 */}
 					<SubHead label={t('settings.section.info')} icon="info-outline" />
 					<View style={styles.card}>
@@ -549,6 +534,47 @@ const Setting = () => {
 							</View>
 						</>
 					)}
+
+					{/* 권한 관리 — 설정 맨 끝, 앱 목록 바로 위. 미설정 항목은 눌러서 바로 설정으로 이동한다. */}
+					<SubHead label={t('settings.section.permission')} icon="verified-user" />
+					<View style={styles.card}>
+						<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={manageNotificationPermission}>
+							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
+								<IconComponent type="materialIcons" name="notifications" size={scaledSize(20)} color={Colors.primary} />
+							</View>
+							<View style={styles.rowBody}>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.notification')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.notificationDesc')}</Text>
+							</View>
+							<PermPill granted={notifGranted} />
+						</TouchableOpacity>
+						{Platform.OS === 'ios' && (
+							<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={manageTrackingPermission}>
+								<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
+									<IconComponent type="materialIcons" name="privacy-tip" size={scaledSize(20)} color={Colors.primary} />
+								</View>
+								<View style={styles.rowBody}>
+									<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.permission.tracking')}</Text>
+									<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.permission.trackingDesc')}</Text>
+								</View>
+								<PermPill granted={trackingGranted} />
+							</TouchableOpacity>
+						)}
+					</View>
+					{/* 함께하면 좋은 퀴즈 앱 */}
+					<SubHead label={t('settings.section.relatedApps')} icon="apps" />
+					<View style={styles.card}>
+						{previewApps.map((app, i) => (
+							<TouchableOpacity key={app.id} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
+								<Image source={app.icon} style={styles.appIcon} />
+								<View style={styles.rowBody}>
+									<Text style={styles.rowLabel} numberOfLines={1}>{app.title}</Text>
+									<Text style={styles.rowDesc} numberOfLines={2}>{app.desc}</Text>
+								</View>
+								<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
+							</TouchableOpacity>
+						))}
+					</View>
 
 					{/* 제작자 앱 더보기 — 설정 화면 맨 아래 앱 목록(가로 스크롤) */}
 					<SubHead label={t('settings.section.moreApps')} icon="apps" />
@@ -670,12 +696,13 @@ const styles = themed(() => StyleSheet.create({
 	// 맨 아래 앱 목록 — 가로 카드 리스트 (화면 끝까지 스크롤, 첫 카드는 본문 좌측선에 맞춤)
 	footerAppWrapper: { paddingVertical: SpacingV.sm, marginHorizontal: -Layout.screenH },
 	footerAppList: { paddingHorizontal: Layout.screenH, gap: Spacing.md },
-	footerAppCard: { width: scaleWidth(120), padding: Spacing.md, borderRadius: Radius.md, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'flex-start', borderWidth: 1, borderColor: Colors.border },
+	footerAppCard: { width: scaleWidth(120), paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md, borderRadius: Radius.md, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'flex-start', borderWidth: 1, borderColor: Colors.border },
 	footerAppIconBox: { position: 'relative', marginBottom: SpacingV.sm },
 	footerAppIconWrapper: { width: scaleWidth(64), height: scaleWidth(64), borderRadius: Radius.md, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border },
 	footerAppIcon: { width: '100%', height: '100%' },
 	footerAppTitle: { fontSize: Typography.bodySm, fontWeight: '700', color: Colors.textStrong, textAlign: 'center', marginBottom: SpacingV.xs },
 	footerAppDesc: { fontSize: Typography.caption, color: Colors.textSecondary, textAlign: 'center' },
 	footerNewBadge: { position: 'absolute', top: scaleHeight(-4), right: scaleWidth(-6), backgroundColor: Colors.errorDark, borderRadius: Radius.pill, paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xxs },
-	footerNewBadgeText: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textInverse, letterSpacing: Tracking.tight },
+	// errorDark 채움은 다크에서 밝아져 흰 글자가 3.8:1 — onFill 로 뒤집는다
+	footerNewBadgeText: { fontSize: Typography.micro, fontWeight: '800', color: Colors.onFill, letterSpacing: Tracking.tight },
 }));

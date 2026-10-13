@@ -96,6 +96,25 @@ export const useScrollTop = (externalRef?: React.RefObject<Scrollable>) => {
 	return { ref, onScroll, onContentSizeChange, visible, toTop, progress };
 };
 
+/**
+ * 필터·탭 값이 바뀌면 목록을 맨 위로 올린다 (애니메이션 없이 즉시).
+ * 첫 렌더는 건너뛴다 — 위에 쌓인 화면에서 돌아올 때 되살린 스크롤 위치를 지우지 않게.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useScrollTopOnChange = (ref: React.RefObject<any>, deps: unknown[]) => {
+	const first = useRef(true);
+	useEffect(() => {
+		if (first.current) {
+			first.current = false;
+			return;
+		}
+		const r = ref.current;
+		if (r?.scrollToOffset) r.scrollToOffset({ offset: 0, animated: false });
+		else r?.scrollTo?.({ y: 0, animated: false });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, deps);
+};
+
 interface Props {
 	visible: boolean;
 	toTop: () => void;

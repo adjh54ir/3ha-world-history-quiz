@@ -145,16 +145,17 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 	 * 창 바탕 — 탑은 테마와 무관하게 늘 어두운 패널이다(ConstTowerData 와 같은 규칙).
 	 * 예전에는 primaryInk / errorInk 를 썼는데, 이 둘은 다크에서 밝은 쪽으로 뒤집히는 '글씨용' 토큰이라
 	 * 다크 모드에서 창이 흰 판이 되고 그 위 글씨(darkOnPanel·textInverse)는 그대로 흰색이라 전부 사라졌다.
-	 * 뒤집히지 않는 고정값으로 둔다 — 라이트에서 쓰던 남색·진홍 그대로다.
+	 * 뒤집히지 않는 고정값으로 둔다.
+	 * 승리 창은 옛 파랑 테마의 남색(#082463)이 남아 있어 비취 테마와 따로 놀았다 — 라이트의 짙은 비취(숲그늘)로 맞춘다.
 	 */
-	const bgColor = isVictory ? '#082463' : '#7F1D1D';
+	const bgColor = isVictory ? LIGHT_COLORS.primaryDeep : '#7F1D1D';
 	// 패배 띠도 창과 같은 이유로 고정값 — errorDeep 은 다크에서 연분홍(#FCA5A5) 글씨색으로 뒤집혀 어두운 창 위에 밝은 띠가 떴다
 	const headerBgColor = isVictory ? Colors.primary : '#B91C1C';
 	const borderColor = isVictory ? Colors.primary : Colors.error;
 	/**
-	 * 어두운 패널 위 '맞힘' 표시색 — primary 는 라이트에서 짙은 파랑(#1249C9)이라 남색 창 위 대비가 2.2:1 이었다.
+	 * 어두운 패널 위 '맞힘' 표시색 — primary 는 라이트에서 짙은 파랑(#1249C9)이라 어두운 창 위 대비가 2.2:1 이었다.
 	 * 어두운 면 위에 얹는 밝은 파랑(primaryLight)을 쓴다.
-	 * 다크의 primaryLight 는 짙은 남색(#1E3A5F)으로 뒤집혀 남색 창에 묻히므로 라이트 원값을 고정한다.
+	 * 다크의 primaryLight 는 짙은 남색(#1E3A5F)으로 뒤집혀 어두운 창에 묻히므로 라이트 원값을 고정한다.
 	 */
 	const correctColor = LIGHT_COLORS.primaryLight;
 
@@ -392,8 +393,9 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 						{isVictory ? (
 							onNext && (
 								<TouchableOpacity onPress={onNext} style={[styles.btnPrimary, { backgroundColor: Colors.warning }]}>
-									<Text style={[styles.btnPrimaryText, { color: Colors.darkBackground }]}>NEXT LEVEL</Text>
-									<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={Colors.darkBackground} />
+									{/* warning 은 이제 비취(라이트 #0E7C66)라 어두운 글씨가 3.4:1 로 흐렸다 — RETRY 처럼 면 밝기에 맞춰 고른다 */}
+									<Text style={[styles.btnPrimaryText, { color: readableOn(Colors.warning) }]}>NEXT LEVEL</Text>
+									<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={readableOn(Colors.warning)} />
 								</TouchableOpacity>
 							)
 						) : (
@@ -707,7 +709,8 @@ const makeStyles = () => StyleSheet.create({
 		borderRadius: Radius.md,
 		backgroundColor: Colors.onBrandWatermark,
 		borderWidth: 1,
-		borderColor: Colors.onBrandWatermark,
+		// 면과 같은 값이면 테두리가 안 보여 버튼 경계가 흐렸다 — 한 단계 진하게
+		borderColor: Colors.onBrandSurface,
 	},
 	btnSecondaryText: {
 		// 옆에 나란히 선 기본 버튼(btnPrimaryText)과 같은 크기여야 한 쌍으로 읽힌다

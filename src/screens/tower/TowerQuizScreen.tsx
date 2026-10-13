@@ -5,18 +5,20 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, Animated, Easing } from 'react-native';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
+import { useIsFocused } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { contentWidth, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { contentWidth, isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { generateTowerQuiz, TOWER_LEVEL_MAP, TowerQuizQuestion } from '@/src/const/ConstTowerQuizData';
 import TowerResultModal from './TowerResultModal';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { playCorrect, playWrong, playWhoosh, playFinish } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
-import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout, DisplayText } from '@/src/const/ConstDesign';
+import { Typography, FontWeight, Spacing, SpacingV, Radius, Layout, DisplayText, Border } from '@/src/const/ConstDesign';
 import { Colors, readableOn, withAlpha } from '@/src/const/ConstColors';
 import useAnimationCleanup from './useAnimationCleanup';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -49,6 +51,8 @@ const TowerQuizScreen = () => {
 	 */
 	const [picked, setPicked] = useState<(number | null)[]>([]);
 	const handoff = useModalHandoff();
+	// 위에 다른 화면이 쌓여도 이 화면은 마운트된 채라, 보이는 동안에만 상태바를 밝힌다
+	const focused = useIsFocused();
 	const dispatch = useDispatch();
 	/** 오답 노트 쓰기 — 복습 화면으로 넘어가기 전에 끝나기를 기다린다 */
 	const wrongWriteRef = useRef<Promise<unknown>>(Promise.resolve());
@@ -394,6 +398,7 @@ const TowerQuizScreen = () => {
 		return (
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.loading')}</Text>
 				</SafeAreaView>
@@ -405,6 +410,7 @@ const TowerQuizScreen = () => {
 		return (
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.notFound')}</Text>
 					{/* 어두운 패널 위 링크 — primary 는 라이트 테마에서 1.8:1 로 묻혀 패널 전용 글씨색을 쓴다 */}
@@ -420,6 +426,7 @@ const TowerQuizScreen = () => {
 		return (
 			<View style={styles.container}>
 				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.noQuestions', { level })}</Text>
 					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }}>
@@ -433,11 +440,13 @@ const TowerQuizScreen = () => {
 	return (
 		<View style={styles.container}>
 			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+			{/* 테마와 무관하게 어두운 화면 — 라이트 테마의 어두운 상태바 아이콘이 상단 띠(inkSoft)에 묻히지 않게 밝게 */}
+			{focused && <StatusBar style="light" />}
 
 			{/* 상단 안전영역은 전역 배너가 이미 확보한다 — top 을 쓰면 여백이 두 번 들어간다 */}
 			<SafeAreaView style={styles.safeArea} edges={['left', 'right', 'bottom']}>
 				<View style={styles.header}>
-					<TouchableOpacity onPress={handleExit} style={styles.exitButton} accessibilityRole="button" accessibilityLabel={t('tower.quiz.exitA11y')}>
+					<TouchableOpacity onPress={handleExit} style={styles.exitButton} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('tower.quiz.exitA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(28)} color={Colors.textInverse} />
 					</TouchableOpacity>
 
@@ -567,7 +576,7 @@ const TowerQuizScreen = () => {
 							<View style={styles.questionTextWrap}>
 								{/* minimumFontScale 이 없으면 안드로이드가 lineHeight 상자까지 폭으로 계산해 글자를 터무니없이 줄인다 */}
 								{currentQuestion.imageRef ? (
-									<EntryImage imageRef={currentQuestion.imageRef} width={scaleWidth(150)} fetchWidth={360} />
+									<EntryImage imageRef={currentQuestion.imageRef} width={scaleArt(150)} fetchWidth={isTablet ? 640 : 360} />
 								) : (
 									<Text style={styles.questionTarget} numberOfLines={3} adjustsFontSizeToFit minimumFontScale={0.75}>
 										{currentQuestion.proverb}
@@ -725,7 +734,7 @@ const makeStyles = () => StyleSheet.create({
 	// 본문 속 아트 — 태블릿 넓은 기둥에서 작아 보이지 않게 scaleArt
 	bossImage: { width: scaleArt(120), height: scaleArt(120), borderRadius: scaleArt(60) },
 	// 면은 층 색 그라데이션이 채운다 — 밑에 darkCard 를 한 겹 깔아 색이 옅은 층에서도 둥근 모서리가 보이게 한다
-	questionCard: { marginBottom: SpacingV.xxl, borderRadius: Radius.lg, borderWidth: 1.5, overflow: 'hidden', backgroundColor: Colors.onBrandWatermark },
+	questionCard: { marginBottom: SpacingV.xxl, borderRadius: Radius.lg, borderWidth: Border.thin, overflow: 'hidden', backgroundColor: Colors.onBrandWatermark },
 	questionCardGradient: { alignItems: 'center', gap: SpacingV.sm, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.lg },
 	// '문제' 머리표 — 칸 맨 위 가운데. 층 색 글씨라 흰 문장보다 한 단 낮게 읽힌다
 	questionBadge: {

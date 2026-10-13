@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { useEffect, useState } from 'react';
-import { AppState, LogBox, Platform } from 'react-native';
+import { AppState, LogBox, Platform, useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
@@ -131,6 +131,8 @@ const useNotifeeDeepLink = () => {
 
 export default function RootLayout() {
 	const [ready, setReady] = useState(false);
+	// 설정에서 테마를 바꾸면 Appearance 가 바뀐다 — 구독해 두어야 아래 상태바·네비 테마가 그 자리에서 다시 그려진다
+	useColorScheme();
 	useNotifeeDeepLink();
 
 	// ATT와 시스템 언어는 앱이 active인 시점에 동기화합니다.
@@ -179,9 +181,17 @@ export default function RootLayout() {
 			} catch (e) {
 				console.warn('앱 초기화 중 오류:', e);
 			} finally {
+				// 화면은 스플래시 뒤에서 먼저 그려 두고(배너가 로드를 시작하도록),
+				// 시작 광고(앱 열기·배너)가 자리를 잡은 뒤에 스플래시를 걷는다 — 최대 3.5초
 				setReady(true);
+				let waitAds: Promise<void> = Promise.resolve();
+				try {
+					waitAds = require('@/src/services/AppOpenAdService').waitForStartupAds(3500);
+				} catch (e) {
+					console.warn('시작 광고 대기 생략:', e);
+				}
 				// 네이티브 스플래시 페이드 아웃
-				SplashScreen.hideAsync().catch(() => {});
+				waitAds.finally(() => SplashScreen.hideAsync().catch(() => {}));
 			}
 		})();
 	}, []);

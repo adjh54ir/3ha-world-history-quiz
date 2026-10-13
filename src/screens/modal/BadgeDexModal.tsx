@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
+import { useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Keyboard } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +37,9 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 	// 40개가 넘어 스크롤이 길다 — 이름·설명 검색과 '미획득만' 보기를 함께 제공
 	const [query, setQuery] = useState('');
 	const [onlyLocked, setOnlyLocked] = useState(false);
+	// 검색·필터를 바꾸면 목록 맨 위부터 보여 준다
+	const listRef = useRef<ScrollView>(null);
+	useScrollTopOnChange(listRef, [filter, onlyLocked, query]);
 	const pct = badges.length ? Math.round((unlockedCount / badges.length) * 100) : 0;
 
 	// 검색어·미획득 조건을 먼저 적용한 목록 (희귀도 필터 개수도 이 목록 기준)
@@ -134,14 +138,14 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 					activeOpacity={0.85}
 					accessibilityRole="button"
 					accessibilityState={{ selected: onlyLocked }}
-					onPress={() => setOnlyLocked((v) => !v)}>
+					onPress={() => { Keyboard.dismiss(); setOnlyLocked((v) => !v); }}>
 					<IconComponent type="materialIcons" name={onlyLocked ? 'lock' : 'lock-open'} size={scaledSize(15)} color={onlyLocked ? Colors.onFill : Colors.textSecondary} />
 					<Text style={[styles.lockedChipText, onlyLocked && styles.lockedChipTextOn]}>{t('modal.badgeDex.onlyLocked')}</Text>
 				</TouchableOpacity>
 			</View>
 
 			{/* 희귀도 필터 — 뱃지가 많아 스크롤만 길어지지 않도록 */}
-			<ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterBar} contentContainerStyle={styles.filterRow}>
+			<ScrollView horizontal showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" style={styles.filterBar} contentContainerStyle={styles.filterRow}>
 				{DEX_FILTERS.map((key) => {
 					const on = filter === key;
 					const count = key === 'all' ? searched.length : searched.filter((b) => b.def.rarity === key).length;
@@ -155,14 +159,14 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 							activeOpacity={0.85}
 							accessibilityRole="button"
 							accessibilityState={{ selected: on }}
-							onPress={() => setFilter(key)}>
+							onPress={() => { Keyboard.dismiss(); setFilter(key); }}>
 							<Text style={[styles.filterText, on ? { color: readableOn(tint) } : { color: tint }]}>{label} {count}</Text>
 						</TouchableOpacity>
 					);
 				})}
 			</ScrollView>
 
-			<ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
+			<ScrollView ref={listRef} style={styles.scroll} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
 				{groups.length === 0 && (
 					<Text style={styles.emptyText}>{t(onlyLocked ? 'modal.badgeDex.emptyLocked' : 'modal.badgeDex.emptySearch')}</Text>
 				)}
@@ -280,7 +284,7 @@ const styles = themed(() => StyleSheet.create({
 	// 히어로→검색→필터→목록 간격을 같은 리듬(≈16)으로 — 필터 줄 marginTop(md) + 내부 paddingVertical(xs)
 	searchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.lg },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
-	searchInput: { flex: 1, fontSize: Typography.body, fontFamily: BODY_FONTS.bold, color: Colors.textStrong, paddingVertical: 0 },
+	searchInput: { flex: 1, fontSize: Typography.body, fontFamily: BODY_FONTS.bold, color: Colors.textStrong, paddingVertical: 0, includeFontPadding: false, textAlignVertical: 'center' },
 	lockedChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	lockedChipOn: { backgroundColor: Colors.primary, borderColor: Colors.primary },
 	lockedChipText: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textSecondary },

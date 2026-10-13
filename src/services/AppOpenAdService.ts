@@ -41,6 +41,48 @@ let lastShowAt = 0;
 let pendingShow = false;
 let watching = false;
 
+/**
+ * 시작 광고 게이트 — 첫 화면이 보이기 전에 광고가 먼저 자리를 잡도록 스플래시를 붙잡아 둘 기준.
+ * - 앱 열기 광고: 띄울 차례가 아니거나 / 떴거나(OPENED) / 실패하면 정리된다.
+ * - 배너: 로드되거나 실패하면 정리된다 (AdmobBannerAd 가 알린다).
+ */
+let startupWaiting = true;
+let openSettled = false;
+let bannerSettled = false;
+const startupWaiters = new Set<() => void>();
+const notifyStartup = () => {
+	if (openSettled && bannerSettled) startupWaiters.forEach((done) => done());
+};
+const settleOpenAd = () => {
+	openSettled = true;
+	notifyStartup();
+};
+/** 배너가 로드(또는 실패)되면 호출 */
+export const markBannerSettled = (): void => {
+	bannerSettled = true;
+	notifyStartup();
+};
+
+/**
+ * 시작 광고(앱 열기·배너)가 준비될 때까지 기다린다. 최대 maxWaitMs.
+ * 시간을 넘기면 첫 실행 앱 열기 광고는 포기한다 — 화면이 뜬 뒤에 광고가 덮치면 안 되므로.
+ */
+export const waitForStartupAds = (maxWaitMs = 3500): Promise<void> =>
+	new Promise<void>((resolve) => {
+		const finish = () => {
+			clearTimeout(timer);
+			startupWaiters.delete(finish);
+			if (startupWaiting) {
+				startupWaiting = false;
+				if (!openSettled) pendingShow = false;
+			}
+			resolve();
+		};
+		const timer = setTimeout(finish, maxWaitMs);
+		if (openSettled && bannerSettled) finish();
+		else startupWaiters.add(finish);
+	});
+
 /** 받아둔 광고가 아직 쓸 수 있는 상태인지 */
 const isFresh = (): boolean => !!ad && ad.loaded && DateUtils.getTimestamp() - loadedAt < EXPIRY_MS;
 
@@ -71,11 +113,16 @@ export const preloadAppOpenAd = (): void => {
 		loading = false;
 		loadedAt = 0;
 		pendingShow = false;
+		settleOpenAd();
 		console.warn('❌ [AdMob] 앱 열기 광고 로드 실패:', error?.message ?? error);
 		void logAdEvent('ad_app_open_failed', LOG, { error_message: error?.message ?? String(error) });
 	});
 
-	next.addAdEventListener(AdEventType.OPENED, () => void logAdEvent('ad_app_open_opened', LOG));
+	next.addAdEventListener(AdEventType.OPENED, () => {
+		// 광고가 화면을 덮었다 — 그 아래에서 스플래시를 걷어도 된다
+		settleOpenAd();
+		void logAdEvent('ad_app_open_opened', LOG);
+	});
 	next.addAdEventListener(AdEventType.CLICKED, () => {
 		void recordAdClick();
 		void logAdEvent('ad_app_open_clicked', LOG);
@@ -107,6 +154,7 @@ const showAppOpenAd = async (): Promise<void> => {
 	} catch (e) {
 		showing = false;
 		loadedAt = 0;
+		settleOpenAd();
 		const message = e instanceof Error ? e.message : String(e);
 		console.warn('❌ [AdMob] 앱 열기 광고 노출 실패:', message);
 		void logAdEvent('ad_app_open_show_failed', LOG, { error_message: message });
@@ -119,7 +167,10 @@ const showAppOpenAd = async (): Promise<void> => {
  * 조건 판단(스토리지 I/O)이 로드를 막지 않도록 프리로드와 병렬로 돌린다.
  */
 const requestShowIfDue = async (): Promise<void> => {
-	if (!(await shouldShowAppOpenAd())) return;
+	if (!(await shouldShowAppOpenAd())) {
+		settleOpenAd();
+		return;
+	}
 	if (isFresh()) {
 		void showAppOpenAd();
 		return;
@@ -155,4 +206,4 @@ export const initAppOpenAd = (): void => {
 	watchForeground();
 };
 
-export default { initAppOpenAd, preloadAppOpenAd };
+export default { initAppOpenAd, preloadAppOpenAd, waitForStartupAds, markBannerSettled };

@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { useTranslation } from 'react-i18next';
@@ -42,22 +43,32 @@ interface Item {
 const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 'overall' }) => {
 	const { t } = useTranslation();
 	const [tab, setTab] = useState(initialTab);
+	// 탭을 바꾸면 목록 맨 위부터 보여 준다
+	const gridRef = useRef<ScrollView>(null);
+	useScrollTopOnChange(gridRef, [tab]);
 	const [previewKey, setPreviewKey] = useState<string | null>(null);
 	const [score, setScore] = useState(0);
 	const [domainStats, setDomainStats] = useState<Record<string, { solved: number; correct: number }>>({});
+	// 저장값을 다 읽은 뒤에 연다 — 그 전에 열면 직전에 열었던 값이 잠깐 보였다가 바뀐다
+	const [loaded, setLoaded] = useState(false);
 	const previewAnim = useRef(new Animated.Value(1)).current;
 	// 언마운트 시 진행 중인 애니메이션 정리
 	useEffect(() => () => previewAnim.stopAnimation(), [previewAnim]);
 
 	// 열릴 때 최신 통계 로드 + 탭 초기화
 	useEffect(() => {
-		if (!visible) return;
+		if (!visible) {
+			setLoaded(false);
+			return;
+		}
 		setTab(initialTab);
 		setPreviewKey(null);
-		LearnProgressService.getStats().then((s) => {
-			setScore(s.totalCorrect * POINT_PER_CORRECT);
-			setDomainStats(s.byDomain);
-		});
+		LearnProgressService.getStats()
+			.then((s) => {
+				setScore(s.totalCorrect * POINT_PER_CORRECT);
+				setDomainStats(s.byDomain);
+			})
+			.finally(() => setLoaded(true));
 	}, [visible, initialTab]);
 
 	// 서비스가 매번 새 배열을 만들어 아래 useMemo/useCallback 이 무효화되지 않게 고정한다
@@ -123,7 +134,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 	};
 
 	return (
-		<BottomSheet visible={visible} onClose={onClose}>
+		<BottomSheet visible={visible && loaded} onClose={onClose}>
 				<View>
 					<View style={styles.titleRow}>
 						<Text style={styles.title}>{t('modal.characterLevels.title')}</Text>
@@ -171,7 +182,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 					</View>
 
 					{/* 단계 그리드 */}
-					<ScrollView style={styles.gridScroll} showsVerticalScrollIndicator={false}>
+					<ScrollView ref={gridRef} style={styles.gridScroll} showsVerticalScrollIndicator={false}>
 						<View style={styles.grid}>
 							{items.map((c) => {
 								const selected = preview?.key === c.key;

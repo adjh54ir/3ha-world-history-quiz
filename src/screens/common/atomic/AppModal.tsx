@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Modal, type ModalProps } from 'react-native';
+import { Modal, StyleSheet, View, useWindowDimensions, type ModalProps } from 'react-native';
 import { ToastHost } from '@/src/context/ToastContext';
 
 /**
@@ -10,6 +10,8 @@ import { ToastHost } from '@/src/context/ToastContext';
 let presentedCount = 0;
 /** 겹침 대기 중인 모달들에게 앞 모달이 닫혔음을 알리는 구독자 목록 */
 const waiters = new Set<() => void>();
+/** 마지막으로 모달이 닫힌 시각 — 같은 커밋에서 닫힘·열림이 겹치면 카운트가 이미 0이라 대기를 건너뛰던 문제를 막는다 */
+let lastReleaseAt = 0;
 
 const acquire = () => {
 	presentedCount += 1;
@@ -17,7 +19,10 @@ const acquire = () => {
 
 const release = () => {
 	presentedCount = Math.max(0, presentedCount - 1);
-	if (presentedCount === 0) waiters.forEach((notify) => notify());
+	if (presentedCount === 0) {
+		lastReleaseAt = Date.now();
+		waiters.forEach((notify) => notify());
+	}
 };
 
 /** 네이티브 dismiss 애니메이션이 끝날 때까지의 여유 (RN Modal fade 기준) */
@@ -34,6 +39,7 @@ const STACK_FALLBACK_MS = 400;
  */
 const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullScreen', animationType = 'fade', children, ...props }: ModalProps) => {
 	const [ready, setReady] = useState(false);
+	const { width, height } = useWindowDimensions();
 	/** 이 인스턴스가 presentedCount 를 점유 중인지 */
 	const heldRef = useRef(false);
 
@@ -44,8 +50,15 @@ const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullSc
 			return;
 		}
 		if (presentedCount === 0) {
-			setReady(true);
-			return;
+			// 앞 모달이 방금 닫혔다면(닫힘 애니메이션 진행 중) 남은 시간만큼 기다렸다가 올린다.
+			// 효과 실행 순서상 닫히는 모달의 release 가 먼저 돌면 카운트가 0으로 보여 바로 열리면서 이전 모달이 번쩍였다.
+			const remain = DISMISS_MS - (Date.now() - lastReleaseAt);
+			if (remain <= 0) {
+				setReady(true);
+				return;
+			}
+			const wait = setTimeout(() => setReady(true), remain);
+			return () => clearTimeout(wait);
 		}
 		let timer: ReturnType<typeof setTimeout> | undefined;
 		const notify = () => {
@@ -93,11 +106,19 @@ const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullSc
 			statusBarTranslucent
 			navigationBarTranslucent
 			hardwareAccelerated>
-			{children}
-			{/* 모달은 별도 창이라 루트 토스트가 가려진다 — 모달 안에서 토스트를 그린다 */}
-			<ToastHost />
+			{/* 안드로이드 모달 루트는 0×0 으로 시작해 네이티브 크기 통보 후에야 커진다.
+			    첫 표시 때 창 인셋 반영 전 크기로 잡히면 배경(dim)이 화면을 다 덮지 못하므로 최소 창 크기를 보장한다 */}
+			<View style={[styles.fill, { minWidth: width, minHeight: height }]}>
+				{children}
+				{/* 모달은 별도 창이라 루트 토스트가 가려진다 — 모달 안에서 토스트를 그린다 */}
+				<ToastHost />
+			</View>
 		</Modal>
 	);
 };
+
+const styles = StyleSheet.create({
+	fill: { flex: 1 },
+});
 
 export default AppModal;

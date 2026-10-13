@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Keyboard, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { useScrollToTop } from '@react-navigation/native';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -29,7 +29,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 
 const ALL = 'all';
 const RECENT_KEY = 'SEARCH_RECENT_QUERIES';
@@ -70,6 +70,8 @@ const SearchTab = () => {
 	};
 	const listRef = useRef<any>(null);
 	const scrollTop = useScrollTop(listRef);
+	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
+	useScrollTopOnChange(listRef, [scope, cat, lvl]);
 	useScrollToTop(listRef);
 
 	// 최근 검색어 (최신순, 최대 RECENT_CAP개)
@@ -103,12 +105,20 @@ const SearchTab = () => {
 		showToast(t('search.recent.cleared'), 'delete-sweep');
 	}, [showToast, t]);
 	const removeRecent = useCallback((term: string) => {
-		setRecent((prev) => {
-			const next = prev.filter((v) => v !== term);
-			AsyncStorage.setItem(RECENT_KEY, JSON.stringify(next)).catch(() => {});
-			return next;
+		const before = recent;
+		const next = before.filter((v) => v !== term);
+		setRecent(next);
+		AsyncStorage.setItem(RECENT_KEY, JSON.stringify(next)).catch(() => {});
+		// 실수로 지웠으면 같은 자리로 되돌린다
+		showToast(t('search.recent.removed'), 'close', {
+			label: t('common.undo'),
+			onPress: () => {
+				setRecent(before);
+				AsyncStorage.setItem(RECENT_KEY, JSON.stringify(before)).catch(() => {});
+				showToast(t('search.recent.restored'), 'restore');
+			},
 		});
-	}, []);
+	}, [recent, showToast, t]);
 
 	// 첫 페인트 이후 무거운 목록 생성을 지연 → 진입 즉시 스켈레톤부터 보여 체감 로딩 개선
 	const [ready, setReady] = useState(false);
@@ -265,10 +275,10 @@ const SearchTab = () => {
 		);
 	};
 
-	// 안드로이드는 액티비티가 adjustResize 라 KeyboardAvoidingView 로 다시 밀면 이중 축소된다
+	// edge-to-edge(gradle.properties edgeToEdgeEnabled) 에서는 안드로이드도 adjustResize 가 창을 줄여 주지 않는다 → 양 플랫폼 모두 padding 으로 밀어 올린다
 	// 버튼·입력창·목록이 가져가지 않은 빈 영역 터치는 여기까지 올라온다 → 키보드만 닫고 터치는 넘긴다
 	return (
-		<KeyboardAvoidingView style={styles.safe} behavior={Platform.OS === 'ios' ? 'padding' : undefined} onStartShouldSetResponder={dismissKeyboard}>
+		<KeyboardAvoidingView style={styles.safe} behavior="padding" onStartShouldSetResponder={dismissKeyboard}>
 			{/* 검색 입력 (타이틀/구분선 없음) */}
 			<View style={styles.header}>
 				<View style={styles.searchBox}>
@@ -498,7 +508,7 @@ const styles = themed(() => StyleSheet.create({
 	header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, backgroundColor: Colors.surface },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md },
 	headerIllustration: { width: scaleArt(68), height: scaleArt(68) },
-	input: { flex: 1, fontSize: Typography.callout, fontFamily: BODY_FONTS.regular, color: Colors.textStrong, padding: 0 },
+	input: { flex: 1, fontSize: Typography.callout, fontFamily: BODY_FONTS.regular, color: Colors.textStrong, padding: 0, includeFontPadding: false, textAlignVertical: 'center' },
 	dropRow: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.surface },
 	dropBtn: { flex: 1, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	dropLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted, marginBottom: SpacingV.xs },
@@ -527,5 +537,5 @@ const styles = themed(() => StyleSheet.create({
 	countNum: { fontSize: Typography.body, fontWeight: '900' },
 	countUnit: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	footerLoader: { paddingVertical: SpacingV.lg },
-	skeletonCard: { backgroundColor: Colors.surface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },
+	skeletonCard: { backgroundColor: Colors.surface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },
 }));

@@ -37,13 +37,27 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 	const [saving, setSaving] = useState(false);
 	// 권한 안내는 모달 안 배너로 표시한다 — 열린 모달 위에 또 모달을 띄우면 기기에 따라 보이지 않는다
 	const [permWarn, setPermWarn] = useState(false);
+	// 저장값을 다 읽은 뒤에 연다 — 그 전에 열면 직전에 열었던 값이 잠깐 보였다가 바뀐다
+	const [loaded, setLoaded] = useState(false);
 
 	useEffect(() => {
-		if (!visible) return;
+		if (!visible) {
+			setLoaded(false);
+			return;
+		}
+		let alive = true;
 		setPermWarn(false);
-		DailyWordService.isReminderOn().then(setOn);
-		DailyWordService.getReminderTime().then(setTime);
 		setShowPicker(Platform.OS === 'ios');
+		Promise.all([DailyWordService.isReminderOn(), DailyWordService.getReminderTime()])
+			.then(([savedOn, savedTime]) => {
+				if (!alive) return;
+				setOn(savedOn);
+				setTime(savedTime);
+			})
+			.finally(() => alive && setLoaded(true));
+		return () => {
+			alive = false;
+		};
 	}, [visible]);
 
 	const onPickTime = (_e: unknown, date?: Date) => {
@@ -76,6 +90,8 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 			onChange?.(on);
 			showToast(t(on ? 'modal.dailyAlarm.toastOn' : 'modal.dailyAlarm.toastOff'), on ? 'notifications-active' : 'notifications-off');
 			onClose();
+		} catch {
+			showToast(t('modal.dailyAlarm.toastFail'), 'error-outline');
 		} finally {
 			setSaving(false);
 		}
@@ -90,7 +106,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 	});
 
 	return (
-		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<SheetIn visible={visible} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
@@ -151,7 +167,8 @@ const styles = themed(() => StyleSheet.create({
 	permWarn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, alignSelf: 'stretch', backgroundColor: Colors.errorSoft, borderWidth: 1, borderColor: Colors.errorBorder, borderRadius: Radius.lg, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginTop: SpacingV.md },
 	permWarnText: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: isDark() ? Colors.error : Colors.errorDark, lineHeight: scaleHeight(17) },
 	permWarnBtn: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md, backgroundColor: Colors.errorDark },
-	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse },
+	// errorDark 채움은 다크에서 밝아져 흰 글자가 3.8:1 — onFill 로 뒤집는다 (라이트는 흰색 그대로)
+	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.onFill },
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	closeBtn: { position: 'absolute', top: SpacingV.md, right: Spacing.md, zIndex: 2, padding: Spacing.xs },

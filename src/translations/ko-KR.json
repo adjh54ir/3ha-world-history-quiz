@@ -24,6 +24,7 @@
         },
         "common": {
             "cancel": "취소",
+            "undo": "되돌리기",
             "confirm": "확인",
             "delete": "삭제",
             "close": "닫기",
@@ -514,6 +515,9 @@
                 "sound": "효과음",
                 "soundDesc": "정답·오답·완료 효과음을 재생해요",
                 "soundTest": "듣기",
+                "test": "알림 미리 받아보기",
+                "testDesc": "알림이 제대로 오는지 지금 바로 확인해요",
+                "testSend": "보내기",
                 "bgm": "배경음악",
                 "bgmDesc": "퀴즈·게임·학습 중 정글 배경음악을 재생해요"
             },
@@ -529,6 +533,8 @@
                 "themeLight": "라이트 모드로 바꿨어요",
                 "themeDark": "다크 모드로 바꿨어요",
                 "notifGranted": "알림을 허용했어요",
+                "testSent": "알림을 보냈어요. 알림 창을 확인해 보세요",
+                "testFail": "알림 권한이 꺼져 있어요. 설정에서 허용해 주세요",
                 "trackingGranted": "맞춤 광고를 허용했어요",
                 "trackingDenied": "맞춤 광고를 허용하지 않았어요"
             },
@@ -589,7 +595,9 @@
                 "removeA11y": "{{term}} 검색어 삭제",
                 "confirmTitle": "최근 검색어 삭제",
                 "confirmMessage": "저장된 최근 검색어를 모두 지울까요?",
-                "cleared": "최근 검색어를 지웠어요"
+                "cleared": "최근 검색어를 지웠어요",
+                "removed": "검색어를 삭제했어요",
+                "restored": "검색어를 되돌렸어요"
             },
             "filter": {
                 "scope": "주제",
@@ -626,6 +634,9 @@
             "clearTitle": "오답노트 비우기",
             "clearAllMessage": "오답 {{n}}개를 모두 삭제할까요?",
             "clearDomainMessage": "{{domain}} 오답 {{n}}개를 삭제할까요?",
+            "wrongRemoved": "오답노트에서 삭제했어요",
+            "wrongCleared": "오답 {{n}}개를 삭제했어요",
+            "wrongRestored": "오답을 되돌렸어요",
             "goStudy": "{{domain}} 학습하러 가기"
         },
         "opensource": {
@@ -985,7 +996,9 @@
                 "infoCount": "오늘의 문제 {{count}}개",
                 "infoExplain": "결과·해설 확인",
                 "alarmTitle": "오늘의 퀴즈 알림",
-                "alarmDesc": "매일 오전 9시에 알림을 받아요",
+                "alarmDesc": "매일 {{time}}에 알림을 받아요",
+                "alarmTime": "알림 시간",
+                "alarmTimeChanged": "알림 시간을 바꿨어요 · {{time}}",
                 "permTitle": "알림 권한 필요",
                 "permMsg": "설정에서 알림 권한을 허용해주세요.",
                 "alarmOn": "오늘의 퀴즈 알림을 켰어요",
@@ -1480,7 +1493,8 @@
                 "pm": "오후",
                 "timeLabel": "{{ampm}} {{hour}}:{{minute}}",
                 "toastOn": "오늘의 상식 알림을 켰어요",
-                "toastOff": "오늘의 상식 알림을 껐어요"
+                "toastOff": "오늘의 상식 알림을 껐어요",
+                "toastFail": "알림을 저장하지 못했어요. 다시 시도해 주세요"
             },
             "difficulty": {
                 "title": "난이도 선택",
@@ -1553,7 +1567,9 @@
         "versionCheck": {
             "badge": "필수 업데이트",
             "title": "새로운 버전이 나왔어요",
-            "message": "계속 이용하려면 최신 버전으로\n업데이트해 주세요.",
+            "message": "새로운 기능을 더하고 불편했던 점을 고쳤어요.\n최신 버전으로 업데이트해 주세요.",
+            "feature": "새로운 기능 추가",
+            "fix": "버그 수정 및 안정성 개선",
             "current": "현재",
             "latest": "최신",
             "update": "지금 업데이트",
@@ -1561,6 +1577,8 @@
         },
         "svc": {
             "notification": {
+                "testTitle": "알림이 잘 도착했어요 🎉",
+                "testBody": "이제 오늘의 상식과 퀴즈 알림을 놓치지 않을 거예요.",
                 "streakTitle": "출석 잊지 마세요!",
                 "streakBodyOn": "{{streak}}일 연속 출석 중! 오늘도 출석하고 기록을 이어가세요.",
                 "streakBodyOff": "오늘 출석하고 세계 상식 하나 배워볼까요?",
@@ -1569,12 +1587,12 @@
                 "todayQuizTitle": "오늘의 퀴즈",
                 "todayQuizBody": "오늘의 세계 상식 퀴즈 5문제를 풀어볼까요?",
                 "wrongReviewTitle": "오답 복습 시간이에요",
-                "wrongReviewBody": "어제 틀린 {{n}}문제, 지금 다시 풀어볼까요?"
+                "wrongReviewBody": "복습할 오답 {{n}}문제가 기다리고 있어요. 지금 다시 풀어볼까요?"
             },
             "share": {
                 "appIntro": "요즘 제가 재미있게 쓰고 있는 앱이 있어서 추천드려요! 😊",
                 "appLink": "👇 아래 링크에서 받아보세요",
-                "badgeHead": "🏅 \"{{title}}\" 뱃지를 획득했어요!",
+                "badgeHead": "🏅 '{{title}}' 뱃지를 획득했어요!",
                 "badgeProgress": "지금까지 모은 뱃지 {{unlocked}}/{{total}}개"
             },
             "report": {

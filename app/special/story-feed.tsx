@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
@@ -21,7 +22,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import { useToast } from '@/src/context/ToastContext';
 import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { themed } from '@/src/utils/ThemedStyles';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /**
  * 이야기 피드
@@ -32,6 +33,8 @@ const StoryFeed = () => {
 	const { t } = useTranslation();
 	const { showToast } = useToast();
 	const [scope, setScope] = useState<string>(ALL_SCOPE);
+	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
+	useScrollTopOnChange(scrollTop.ref, [scope]);
 	const [refreshKey, setRefreshKey] = useState(0);
 	const [marked, setMarked] = useState<Set<string>>(new Set());
 	const [detail, setDetail] = useState<DetailItem | null>(null);
@@ -90,7 +93,7 @@ const StoryFeed = () => {
 		<SafeAreaView style={styles.safe} edges={[]}>
 			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
 			<View style={{ flex: 1 }}>
-			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={[styles.list, cards.length === 0 && styles.listFill]} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
 				<SectionHead title={t('special.storyFeed.sectionTitle')} sub={t('special.storyFeed.sectionSub')} />
 				</FadeInUp>
@@ -99,13 +102,9 @@ const StoryFeed = () => {
 				<CategoryScopeChips value={scope} onChange={setScope} showCount={false} style={styles.filterBar} />
 
 				{/* 필터 전환 시 카드 그룹을 리마운트하여 부드러운 진입 애니메이션 재생 */}
-				<FadeInUp key={scope}>
-				{cards.length === 0 && (
-					<View style={styles.empty}>
-						<IconComponent type="materialIcons" name="menu-book" size={scaledSize(28)} color={Colors.textMuted} />
-						<Text style={styles.emptyText}>{t('special.storyFeed.empty')}</Text>
-					</View>
-				)}
+				{/* 빈 상태는 칩 아래 남은 높이를 다 써서 정중앙에 온다 */}
+				<FadeInUp key={scope} style={cards.length === 0 ? styles.listFill : undefined}>
+				{cards.length === 0 && <EmptyState icon="menu-book" text={t('special.storyFeed.empty')} />}
 				<AdaptiveGrid>
 					{cards.map((c) => {
 						const meta = LearnHubService.getDomain(c.domain).meta;
@@ -192,8 +191,7 @@ const styles = themed(() => StyleSheet.create({
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	// 공용 칩바의 좌우 내부 여백(Spacing.xl)을 리스트 패딩과 정렬시키기 위해 음수 마진으로 상쇄
 	filterBar: { marginHorizontal: -Layout.screenH, backgroundColor: 'transparent', marginBottom: SpacingV.md },
-	empty: { alignItems: 'center', justifyContent: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.xxxl },
-	emptyText: { fontSize: Typography.body, color: Colors.textMuted, fontWeight: '600' },
+	listFill: { flexGrow: 1 },
 	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
 	cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	cardTopLeft: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, flexWrap: 'wrap' },
@@ -207,9 +205,10 @@ const styles = themed(() => StyleSheet.create({
 	divider: { height: 1, backgroundColor: Colors.border, marginVertical: SpacingV.lg },
 	meaning: { fontSize: Typography.callout, color: Colors.textStrong, fontWeight: '700', lineHeight: scaleHeight(24) },
 	desc: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(21), marginTop: SpacingV.sm },
-	exampleGroup: { marginTop: SpacingV.md, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, backgroundColor: Colors.surfaceAlt, padding: Spacing.md },
-	exampleHead: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary, marginBottom: SpacingV.sm },
-	exampleItem: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, marginBottom: SpacingV.sm },
+	// 마지막 항목의 marginBottom 이 박스 아래 패딩에 더해져 위아래가 어긋났다 — gap 으로 사이만 띄운다
+	exampleGroup: { marginTop: SpacingV.md, gap: SpacingV.sm, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md },
+	exampleHead: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary },
+	exampleItem: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.md, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	example: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(20) },
 	tagRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: SpacingV.md },
 	tag: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600' },

@@ -15,7 +15,7 @@ import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
 import { playFinish, playCorrect, playWrong } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -29,6 +29,7 @@ import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAsset
 import { themed } from '@/src/utils/ThemedStyles';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import CountryFlags from '@/src/screens/common/atomic/CountryFlags';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 const LOTTIE_STAR = require('@/src/assets/lottie/star.json');
 
@@ -336,7 +337,8 @@ const LevelTest = () => {
 									<Text style={styles.reviewTitle}>{t('special.levelTest.wrongNote')}</Text>
 									<Text style={[styles.reviewCount, { color: Colors.error }]}>{t('common.count', { count: wrongItems.length })}</Text>
 								</View>
-								{wrongItems.map((q, i) => renderReviewRow(q, i, false))}
+								{/* 태블릿은 2단 — 오늘의 퀴즈·오답 복습 목록과 같은 배치 */}
+								<AdaptiveGrid>{wrongItems.map((q, i) => renderReviewRow(q, i, false))}</AdaptiveGrid>
 							</View>
 						</FadeInUp>
 					)}
@@ -348,7 +350,7 @@ const LevelTest = () => {
 									<Text style={styles.reviewTitle}>{t('special.levelTest.correctNote')}</Text>
 									<Text style={[styles.reviewCount, { color: Colors.success }]}>{t('common.count', { count: correctItems.length })}</Text>
 								</View>
-								{correctItems.map((q, i) => renderReviewRow(q, i, true))}
+								<AdaptiveGrid>{correctItems.map((q, i) => renderReviewRow(q, i, true))}</AdaptiveGrid>
 							</View>
 						</FadeInUp>
 					)}
@@ -399,8 +401,9 @@ const LevelTest = () => {
 						<Text style={styles.qDomainText}>{LearnHubService.getDomainTitle(current.domain)}</Text>
 					</View>
 					<Text style={styles.qGuide}>{current.guide}</Text>
+					{/* 문제 이미지 — 태블릿은 넓어진 본문 폭에 맞춰 공용 퀴즈 플레이어와 같은 아트 배율로 키운다 */}
 					{current.imageRef ? (
-						<EntryImage imageRef={current.imageRef} width={scaleWidth(160)} fetchWidth={360} style={styles.qImage} />
+						<EntryImage imageRef={current.imageRef} width={isTablet ? scaleArt(176) : scaleWidth(160)} fetchWidth={isTablet ? 640 : 360} style={styles.qImage} />
 					) : (
 						<Text style={styles.qPrompt}>{current.prompt}</Text>
 					)}
@@ -487,7 +490,8 @@ const styles = themed(() => StyleSheet.create({
 	optionTextSelected: { fontWeight: '700', color: Colors.textStrong },
 
 	historyWrap: { alignSelf: 'stretch', marginTop: Layout.sectionGap },
-	historyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm, paddingHorizontal: Spacing.xs },
+	// 제목은 아래 카드와 같은 좌측선에 둔다(SectionHead·결과 목록 머리와 통일)
+	historyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },
 	historyTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	historyCount: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	historyRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: Layout.itemGap, borderWidth: 1, borderColor: Colors.border },

@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Animated, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +20,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
 import DetailSheet, { DetailItem } from '@/src/screens/modal/DetailSheet';
 import { FadeInUp, CountUp } from '@/src/screens/common/anim/Motion';
-import { RequestNotificationPermission, ScheduleTodayQuizReminder, CancelTodayQuizReminder } from '@/src/utils/NotifactionHelper';
+import { RequestNotificationPermission, ScheduleTodayQuizReminder, CancelTodayQuizReminder, GetTodayQuizReminderTime, SetTodayQuizReminderTime } from '@/src/utils/NotifactionHelper';
 import DateUtils from '@/src/utils/DateUtils';
 import { useToast } from '@/src/context/ToastContext';
 import { playPop } from '@/src/utils/SoundUtils';
@@ -73,6 +74,9 @@ const TodayChallenge = () => {
 	};
 	const [started, setStarted] = useState(false);
 	const [alarmOn, setAlarmOn] = useState(false);
+	// 사용자가 고른 알림 시각 (기본 09:00)
+	const [alarmTime, setAlarmTime] = useState({ hour: 9, minute: 0 });
+	const [showTimePicker, setShowTimePicker] = useState(false);
 	const [doneToday, setDoneToday] = useState(false);
 	const [result, setResult] = useState<TodayResult | null>(null);
 	const [remain, setRemain] = useState('');
@@ -126,7 +130,15 @@ const TodayChallenge = () => {
 
 	useEffect(() => {
 		AsyncStorage.getItem(ALARM_KEY).then((v) => setAlarmOn(v === '1'));
+		GetTodayQuizReminderTime().then(setAlarmTime);
 	}, []);
+
+	// '오전 9:00' 꼴 표기 — 알림 설정 팝업과 같은 형식
+	const alarmTimeText = t('modal.dailyAlarm.timeLabel', {
+		ampm: t(alarmTime.hour < 12 ? 'modal.dailyAlarm.am' : 'modal.dailyAlarm.pm'),
+		hour: alarmTime.hour % 12 === 0 ? 12 : alarmTime.hour % 12,
+		minute: `${alarmTime.minute}`.padStart(2, '0'),
+	});
 
 	// 결과 필터 기본값을 이미 맞춰준 날짜 — 같은 날 재진입 때 사용자의 선택을 덮어쓰지 않는다
 	const filterSyncedRef = useRef<string | null>(null);
@@ -268,7 +280,7 @@ const TodayChallenge = () => {
 				showAlert(t('quiz.today.permTitle'), t('quiz.today.permMsg'), 'notifications-off');
 				return;
 			}
-			await ScheduleTodayQuizReminder(9, 0);
+			await ScheduleTodayQuizReminder(alarmTime.hour, alarmTime.minute);
 		} else {
 			await CancelTodayQuizReminder();
 		}
@@ -278,17 +290,61 @@ const TodayChallenge = () => {
 		showToast(next ? t('quiz.today.alarmOn') : t('quiz.today.alarmOff'), next ? 'notifications-active' : 'notifications-off');
 	};
 
+	/** 알림 시각 변경 — 저장 후 켜져 있으면 새 시각으로 다시 예약한다 */
+	const onPickAlarmTime = async (_e: unknown, date?: Date) => {
+		if (Platform.OS === 'android') setShowTimePicker(false);
+		if (!date) return;
+		const { hour, minute } = DateUtils.getZonedParts(date);
+		if (hour === alarmTime.hour && minute === alarmTime.minute) return;
+		const next = { hour, minute };
+		setAlarmTime(next);
+		await SetTodayQuizReminderTime(next).catch(() => {});
+		if (alarmOn) await ScheduleTodayQuizReminder(hour, minute);
+		const text = t('modal.dailyAlarm.timeLabel', {
+			ampm: t(hour < 12 ? 'modal.dailyAlarm.am' : 'modal.dailyAlarm.pm'),
+			hour: hour % 12 === 0 ? 12 : hour % 12,
+			minute: `${minute}`.padStart(2, '0'),
+		});
+		showToast(t('quiz.today.alarmTimeChanged', { time: text }), 'schedule');
+	};
+
 	/** 알림 설정 카드 — 완료/미완료 화면 양쪽에서 같은 모양으로 쓴다 */
 	const alarmCardNode = (
 		<View style={styles.alarmCard}>
-			<View style={[styles.alarmIcon, { backgroundColor: Colors.primarySoft }]}>
-				<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(22)} color={Colors.primary} />
+			<View style={styles.alarmTop}>
+				<View style={[styles.alarmIcon, { backgroundColor: Colors.primarySoft }]}>
+					<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(22)} color={Colors.primary} />
+				</View>
+				<View style={styles.alarmBody}>
+					<Text style={styles.alarmTitle}>{t('quiz.today.alarmTitle')}</Text>
+					<Text style={styles.alarmDesc}>{t('quiz.today.alarmDesc', { time: alarmTimeText })}</Text>
+				</View>
+				<Switch value={alarmOn} onValueChange={toggleAlarm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
 			</View>
-			<View style={styles.alarmBody}>
-				<Text style={styles.alarmTitle}>{t('quiz.today.alarmTitle')}</Text>
-				<Text style={styles.alarmDesc}>{t('quiz.today.alarmDesc')}</Text>
-			</View>
-			<Switch value={alarmOn} onValueChange={toggleAlarm} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} />
+			{/* 알림이 켜져 있을 때만 시각을 고른다 — iOS 는 인라인 컴팩트 피커, 안드로이드는 시스템 시계 다이얼로그 */}
+			{alarmOn && (
+				<View style={styles.alarmTimeRow}>
+					<Text style={styles.alarmTimeLabel}>{t('quiz.today.alarmTime')}</Text>
+					{Platform.OS === 'ios' ? (
+						<DateTimePicker
+							value={DateUtils.getLocalTimeToday(alarmTime.hour, alarmTime.minute)}
+							mode="time"
+							display="compact"
+							themeVariant={isDark() ? 'dark' : 'light'}
+							accentColor={Colors.primary}
+							onChange={onPickAlarmTime}
+						/>
+					) : (
+						<TouchableOpacity style={styles.alarmTimeBtn} activeOpacity={0.8} onPress={() => setShowTimePicker(true)} accessibilityRole="button" accessibilityLabel={t('quiz.today.alarmTime')}>
+							<IconComponent type="materialIcons" name="schedule" size={scaledSize(16)} color={Colors.primary} />
+							<Text style={styles.alarmTimeValue}>{alarmTimeText}</Text>
+						</TouchableOpacity>
+					)}
+				</View>
+			)}
+			{Platform.OS === 'android' && showTimePicker && (
+				<DateTimePicker value={DateUtils.getLocalTimeToday(alarmTime.hour, alarmTime.minute)} mode="time" is24Hour={false} display="default" onChange={onPickAlarmTime} />
+			)}
 		</View>
 	);
 
@@ -532,11 +588,17 @@ const styles = themed(() => StyleSheet.create({
 	resultFilterTextOn: { color: Colors.onFill },
 	reviewBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.errorSoft, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
 	reviewBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.error },
-	infoCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
+	// 좌우 안쪽 여백은 같은 화면의 알림 카드(padding: Spacing.lg)와 맞춘다 — 문구가 길면 카드 테두리에 붙었다
+	infoCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, marginBottom: SpacingV.md },
 	infoRow: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
 	infoText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	infoDivider: { width: 1, height: scaleHeight(28), backgroundColor: Colors.border },
-	alarmCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, padding: Spacing.lg },
+	alarmCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg },
+	alarmTop: { flexDirection: 'row', alignItems: 'center' },
+	alarmTimeRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: SpacingV.md, paddingTop: SpacingV.md, borderTopWidth: 1, borderTopColor: Colors.border },
+	alarmTimeLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
+	alarmTimeBtn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.primarySoft, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs },
+	alarmTimeValue: { fontSize: Typography.callout, fontWeight: '800', color: Colors.primary },
 	alarmIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	alarmBody: { flex: 1 },
 	alarmTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },

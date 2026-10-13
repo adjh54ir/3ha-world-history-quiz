@@ -91,7 +91,8 @@ const IconComponent: React.FC<IconProps> = ({ type, name, size = scaledSize(24),
 		return null;
 	}
 
-	return <Icon name={name} size={size} color={color} style={style} />;
+	// 아이콘 글리프는 Text 로 그려져 시스템 글꼴 배율을 따라 커진다 → 옆 텍스트·고정 박스와 높이가 어긋나므로 배율을 끈다
+	return <Icon name={name} size={size} color={color} style={style} allowFontScaling={false} />;
 };
 
 export default IconComponent;

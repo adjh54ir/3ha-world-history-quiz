@@ -1442,7 +1442,8 @@ const flowStyles = themed(() => ({
 }));
 
 const styles = themed(() => StyleSheet.create({
-	showAllBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xxs, paddingVertical: SpacingV.lg, marginTop: SpacingV.md },
+	// 위 섹션이 이미 sectionGap 만큼 띄워 두므로 별도 marginTop 은 두지 않는다
+	showAllBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xxs, paddingVertical: SpacingV.lg },
 	showAllText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.primary },
 	...flowStyles,
 	safe: { flex: 1, backgroundColor: Colors.background },
@@ -1499,10 +1500,10 @@ const styles = themed(() => StyleSheet.create({
 	unlockLottie: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(180) },
 	unlockImg: { width: scaleArt(96), height: scaleArt(96), borderRadius: Radius.xxl },
 	// 완주 후 추천 카드
-	recCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	recCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	recClose: { position: 'absolute' as const, top: SpacingV.sm, right: Spacing.sm, padding: Spacing.xs, zIndex: 1 },
-	recTop: { flexDirection: 'row' as const, alignItems: 'center' as const },
-	recIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, alignItems: 'center' as const, justifyContent: 'center' as const, marginRight: Spacing.md },
+	recTop: { flexDirection: 'row' as const, alignItems: 'center' as const, gap: Spacing.md },
+	recIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, alignItems: 'center' as const, justifyContent: 'center' as const },
 	recBody: { flex: 1, paddingRight: Spacing.xl },
 	recEyebrow: { fontSize: Typography.footnote, fontWeight: '800' as const, color: Colors.primary },
 	recTitle: { fontSize: Typography.callout, fontWeight: '900' as const, color: Colors.textStrong, marginTop: SpacingV.xxs },
@@ -1518,12 +1519,13 @@ const styles = themed(() => StyleSheet.create({
 	curDoneDesc: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center' as const, lineHeight: scaleHeight(20), marginTop: SpacingV.sm },
 	unlockEyebrow: { fontSize: Typography.body, fontWeight: '800', color: Colors.primary, marginTop: SpacingV.md },
 	unlockTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.xs, textAlign: 'center' },
-	unlockBtn: { alignSelf: 'stretch', marginTop: SpacingV.xl, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.primary, alignItems: 'center' },
+	// 하단 주 버튼 — 다른 팝업(온보딩·알림·출석)과 같은 높이·라운드
+	unlockBtn: { alignSelf: 'stretch', marginTop: SpacingV.xl, paddingVertical: SpacingV.lg, borderRadius: Radius.md, backgroundColor: Colors.primary, alignItems: 'center' },
 	unlockBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	streakChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 
 	// 오늘의 상식
-	dailyCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },
+	dailyCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	dailyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	dailyHeadRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 	dailyTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
@@ -1550,12 +1552,12 @@ const styles = themed(() => StyleSheet.create({
 	// 캐러셀
 	carousel: { marginBottom: Layout.sectionGap, marginHorizontal: -Layout.screenH },
 	carouselList: { paddingHorizontal: Layout.screenH, gap: Spacing.md },
-	topicCard: { ...CardSurface, borderRadius: Radius.lg, width: scaleWidth(248), padding: Spacing.lg },
+	topicCard: { ...CardSurface, borderRadius: Radius.lg, width: scaleWidth(248), paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
 	topicTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	topicIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center' },
 	topicTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
 	topicDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs, lineHeight: scaleHeight(18), minHeight: scaleHeight(36) },
-	topicExampleBox: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, padding: Spacing.sm, marginTop: SpacingV.md, minHeight: scaleHeight(58) },
+	topicExampleBox: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm, marginTop: SpacingV.md, minHeight: scaleHeight(58) },
 	topicExampleTag: { fontSize: Typography.footnote, fontWeight: '900', marginBottom: SpacingV.xs },
 	topicExampleText: { fontSize: Typography.footnote, color: Colors.text, lineHeight: scaleHeight(17), fontWeight: '600' },
 	topicBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, borderRadius: Radius.md, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },
@@ -1597,8 +1599,8 @@ const styles = themed(() => StyleSheet.create({
 
 	// 특별 콘텐츠 — 액션 버튼 리스트 (좌 아이콘 / 우 제목+서브설명)
 	featureList: { marginBottom: Layout.sectionGap, gap: Layout.itemGap },
-	featureRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
-	featureIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
+	featureRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md },
+	featureIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center' },
 	featureBody: { flex: 1 },
 	featureTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	featureDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
@@ -1609,7 +1611,7 @@ const styles = themed(() => StyleSheet.create({
 	modalTitle: { flex: 1, fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
 	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm },
 	modalScroll: { marginTop: SpacingV.lg, flexGrow: 0, flexShrink: 1 },
-	modalGroup: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, padding: Spacing.lg },
+	modalGroup: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
 	modalGroupDivider: { height: 1, backgroundColor: Colors.border, marginVertical: SpacingV.lg },
 	modalLabel: { fontSize: Typography.footnote, fontWeight: '900', marginBottom: SpacingV.sm },
 	modalText: { fontSize: Typography.callout, color: Colors.textStrong, fontWeight: '700', lineHeight: scaleHeight(25) },
@@ -1620,7 +1622,7 @@ const styles = themed(() => StyleSheet.create({
 	charTabBar: { marginTop: SpacingV.md, height: scaleHeight(44), flexGrow: 0, flexShrink: 0 },
 	charTabRow: { gap: Spacing.sm, alignItems: 'center' },
 	charTab: { flexDirection: 'row', gap: Spacing.xs, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, borderRadius: Radius.xl, backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
-	charApplyBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md, paddingVertical: SpacingV.md, borderRadius: Radius.lg, backgroundColor: Colors.primary },
+	charApplyBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md, paddingVertical: SpacingV.lg, borderRadius: Radius.md, backgroundColor: Colors.primary },
 	charApplyText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	charTabOn: { backgroundColor: Colors.primaryBg, borderColor: Colors.primarySoft },
 	charTabAppIcon: { width: scaleWidth(16), height: scaleWidth(16), borderRadius: scaleWidth(4) },

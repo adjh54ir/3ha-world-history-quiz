@@ -54,11 +54,11 @@ const STREAK_REMINDER_ID = 'streak-reminder';
 
 /**
  * 스트릭 끊김 방지 리마인더 예약 (오늘 미출석 시)
- * - 지정 시각(기본 20:00)에 1회성 알림. 이미 시각이 지났으면 예약하지 않음.
+ * - 지정 시각(기본 21:00)에 1회성 알림. 이미 시각이 지났으면 예약하지 않음.
  * - 같은 id로 기존 예약을 먼저 취소해 중복을 방지합니다.
  * @param streak 현재 연속 출석일
  */
-const ScheduleStreakReminder = async (streak: number, hour = 20, minute = 0) => {
+const ScheduleStreakReminder = async (streak: number, hour = 21, minute = 0) => {
     try {
         // 기존 예약 취소 (중복 방지)
         if (await isScheduledAt(STREAK_REMINDER_ID, hour, minute)) return;
@@ -177,6 +177,58 @@ const CancelDailyWordReminder = async () => {
     }
 };
 
+/** 오늘의 퀴즈 알림 시각 저장 키 (켜짐 여부는 TODAY_QUIZ_ALARM_ON) */
+const TODAY_QUIZ_TIME_KEY = 'TODAY_QUIZ_ALARM_TIME';
+const TODAY_QUIZ_DEFAULT_TIME = { hour: 9, minute: 0 };
+
+/** 사용자가 고른 오늘의 퀴즈 알림 시각 (없거나 깨졌으면 09:00) */
+const GetTodayQuizReminderTime = async (): Promise<{ hour: number; minute: number }> => {
+    try {
+        const raw = await AsyncStorage.getItem(TODAY_QUIZ_TIME_KEY);
+        const v = raw ? (JSON.parse(raw) as { hour: number; minute: number }) : null;
+        const valid = !!v && Number.isInteger(v.hour) && Number.isInteger(v.minute) && v.hour >= 0 && v.hour < 24 && v.minute >= 0 && v.minute < 60;
+        return valid ? v! : TODAY_QUIZ_DEFAULT_TIME;
+    } catch {
+        return TODAY_QUIZ_DEFAULT_TIME;
+    }
+};
+
+const SetTodayQuizReminderTime = async (time: { hour: number; minute: number }) => {
+    await AsyncStorage.setItem(TODAY_QUIZ_TIME_KEY, JSON.stringify(time));
+};
+
+/**
+ * 알림 미리 받아보기 — 지금 바로 한 번 띄워 알림이 제대로 오는지 확인한다.
+ * @return 권한이 없거나 실패하면 false
+ */
+const SendTestNotification = async (): Promise<boolean> => {
+    try {
+        if (!(await RequestNotificationPermission())) return false;
+        const channelId = await notifee.createChannel({
+            id: 'daily-word-notification',
+            name: 'Daily Word',
+            importance: AndroidImportance.HIGH,
+        });
+        await notifee.displayNotification({
+            id: 'test-notification',
+            title: i18n.t('svc.notification.testTitle'),
+            body: i18n.t('svc.notification.testBody'),
+            android: {
+                channelId,
+                importance: AndroidImportance.HIGH,
+                pressAction: { id: 'default' },
+                smallIcon: 'ic_notification',
+                visibility: AndroidVisibility.PUBLIC,
+            },
+            ios: { sound: 'default', foregroundPresentationOptions: { banner: true, list: true, sound: true } },
+        });
+        return true;
+    } catch (error) {
+        console.error('Failed to send test notification:', error);
+        return false;
+    }
+};
+
 /** 오늘의 퀴즈 매일 알림(기본 09:00) */
 const ScheduleTodayQuizReminder = async (hour = 9, minute = 0) => {
     try {
@@ -240,14 +292,21 @@ const ReconcileNotificationSchedules = async () => {
         }
 
         const todayQuizEnabled = (await AsyncStorage.getItem('TODAY_QUIZ_ALARM_ON')) === '1';
-        if (todayQuizEnabled) await ScheduleTodayQuizReminder(9, 0);
+        if (todayQuizEnabled) {
+            const { hour, minute } = await GetTodayQuizReminderTime();
+            await ScheduleTodayQuizReminder(hour, minute);
+        }
         else await CancelTodayQuizReminder();
 
         // 출석 스트릭 리마인더 — 오늘 아직 출석 안 했을 때만 21시에 알린다(끊기기 직전)
         const attendance = await AttendanceService.getState();
         const checkedToday = await AttendanceService.isCheckedToday();
         if (checkedToday) await CancelStreakReminder();
-        else await ScheduleStreakReminder(attendance.streak, 21, 0);
+        else {
+            await ScheduleStreakReminder(attendance.streak, 21, 0);
+            // 예약하는 사이 홈 진입 자동 출석이 끝났을 수 있다 — 그쪽 취소가 먼저 돌았으면 방금 만든 예약이 살아남는다
+            if (await AttendanceService.isCheckedToday()) await CancelStreakReminder();
+        }
     } catch (error) {
         console.error('Failed to reconcile notification schedules:', error);
     }
@@ -260,12 +319,27 @@ const WRONG_REVIEW_REMINDER_ID = 'wrong-review-reminder';
  * 오답 복습 리마인더 예약 — 다음 날 지정 시각(기본 09:00) 1회 알림
  * - 오답이 쌓였을 때 호출. 같은 id로 기존 예약을 취소해 중복을 방지합니다.
  * - 알림 권한이 없으면 조용히 무시됩니다(가드).
+ * @param count 문구에 넣을 개수. 함수를 넘기면 실제 알림 시각을 받아 '그 시각까지 복습할 차례가 되는 수'를 센다.
  */
-const ScheduleWrongReviewReminder = async (count: number, hour = 9) => {
+const ScheduleWrongReviewReminder = async (count: number | ((at: number) => Promise<number>), hour = 9) => {
     try {
-        if (count > 0 && (await isScheduledAt(WRONG_REVIEW_REMINDER_ID, hour, 0))) return;
+        // 이미 앞으로 울릴 예약이 있으면 그 시각은 그대로 두고 문구의 개수만 갱신한다
+        // (아침에 퀴즈를 풀었다고 오늘 9시 알림이 내일로 밀리면 안 된다)
+        let existingAt: number | undefined;
+        if (await isScheduledAt(WRONG_REVIEW_REMINDER_ID, hour, 0)) {
+            const found = (await notifee.getTriggerNotifications()).find((t) => t.notification?.id === WRONG_REVIEW_REMINDER_ID);
+            existingAt = (found?.trigger as { timestamp?: number } | undefined)?.timestamp;
+        }
+        const countAt = (at: number) => (typeof count === 'function' ? count(at) : Promise.resolve(count));
+        let targetAt = existingAt ?? DateUtils.getLocalTimeAfterDays(1, hour).getTime();
+        let n = await countAt(targetAt);
+        // 오늘 예약분은 이미 다 복습했고 새로 틀린 문제만 남았다면(내일 차례) 내일 같은 시각으로 넘긴다
+        if (n <= 0 && existingAt !== undefined) {
+            targetAt = DateUtils.getLocalTimeAfterDays(1, hour).getTime();
+            n = await countAt(targetAt);
+        }
         await notifee.cancelTriggerNotification(WRONG_REVIEW_REMINDER_ID);
-        if (count <= 0) return;
+        if (n <= 0) return;
 
         const channelId = await notifee.createChannel({
             id: 'wrong-review-notification',
@@ -273,13 +347,13 @@ const ScheduleWrongReviewReminder = async (count: number, hour = 9) => {
             importance: AndroidImportance.HIGH,
         });
 
-        const target = DateUtils.getLocalTimeAfterDays(1, hour);
-
         await notifee.createTriggerNotification(
             {
                 id: WRONG_REVIEW_REMINDER_ID,
                 title: i18n.t('svc.notification.wrongReviewTitle'),
-                body: i18n.t('svc.notification.wrongReviewBody', { n: count }),
+                body: i18n.t('svc.notification.wrongReviewBody', { n }),
+                // 누르면 바로 오답 복습으로
+                data: { moveToScreen: 'quiz/wrong-review' },
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,
@@ -291,7 +365,7 @@ const ScheduleWrongReviewReminder = async (count: number, hour = 9) => {
             },
             {
                 type: TriggerType.TIMESTAMP,
-                timestamp: target.getTime(),
+                timestamp: targetAt,
                 alarmManager: ALARM_MANAGER,
             },
         );
@@ -317,6 +391,9 @@ export {
     CancelDailyWordReminder,
 	ScheduleTodayQuizReminder,
 	CancelTodayQuizReminder,
+	GetTodayQuizReminderTime,
+	SetTodayQuizReminderTime,
+	SendTestNotification,
 	ReconcileNotificationSchedules,
     ScheduleWrongReviewReminder,
     CancelWrongReviewReminder,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, StyleSheet, TouchableOpacity, View, type StyleProp, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -50,8 +50,8 @@ const BottomSheet: React.FC<Props> = ({ visible, onClose, children, maxHeightRat
 
 	return (
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-			{/* 시트 안에 입력창이 있으면 키보드에 가려지므로 공통으로 밀어 올린다 */}
-			<KeyboardAvoidingView style={styles.overlay} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+			{/* 시트 안에 입력창이 있으면 키보드에 가려지므로 공통으로 밀어 올린다 (edge-to-edge 라 안드로이드도 padding) */}
+			<KeyboardAvoidingView style={styles.overlay} behavior="padding">
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} accessibilityLabel={t('common.close')} onPress={onClose} />
 				<SheetIn visible={visible} style={sizeStyle}>
 					<View accessibilityViewIsModal onStartShouldSetResponder={dismissKeyboard} style={[styles.sheet, heightRatio ? styles.sheetFill : null, { paddingBottom: SpacingV.lg + insets.bottom }, contentStyle]}>
