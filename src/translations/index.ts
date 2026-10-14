@@ -26,13 +26,13 @@ export const resources = {
 } as const satisfies Record<Language, unknown>;
 
 /** 설정 화면 언어 목록 — 이름은 그 언어로 적는다(어느 언어로 보고 있든 자기 언어를 찾을 수 있게) */
-export const LANGUAGE_OPTIONS: readonly { code: Language; label: string }[] = [
-  { code: SupportedLanguages.KR_KR, label: '한국어' },
-  { code: SupportedLanguages.EN_EN, label: 'English' },
-  { code: SupportedLanguages.ZH_CN, label: '简体中文' },
-  { code: SupportedLanguages.JA_JP, label: '日本語' },
-  { code: SupportedLanguages.FR_FR, label: 'Français' },
-  { code: SupportedLanguages.ES_ES, label: 'Español' },
+export const LANGUAGE_OPTIONS: readonly { code: Language; label: string; badge: string }[] = [
+  { code: SupportedLanguages.KR_KR, label: '한국어', badge: 'KO' },
+  { code: SupportedLanguages.EN_EN, label: 'English', badge: 'EN' },
+  { code: SupportedLanguages.ZH_CN, label: '简体中文', badge: '中' },
+  { code: SupportedLanguages.JA_JP, label: '日本語', badge: 'あ' },
+  { code: SupportedLanguages.FR_FR, label: 'Français', badge: 'FR' },
+  { code: SupportedLanguages.ES_ES, label: 'Español', badge: 'ES' },
 ];
 
 /** Expo가 보고하는 시스템의 최우선 언어 코드 ('ko', 'en' …) */

@@ -424,7 +424,7 @@ const Setting = () => {
 							return (
 								<TouchableOpacity key={o.code} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => setAppLanguage(o.code)}>
 									<View style={[styles.rowIcon, { backgroundColor: on ? Colors.primarySoft : Colors.surfaceAlt }]}>
-										<IconComponent type="materialIcons" name="translate" size={scaledSize(20)} color={on ? Colors.primary : Colors.textSecondary} />
+										<Text style={[styles.langBadge, { color: on ? Colors.primary : Colors.textSecondary }]} numberOfLines={1}>{o.badge}</Text>
 									</View>
 									<View style={styles.rowBody}>
 										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{o.label}</Text>
@@ -694,6 +694,8 @@ const styles = themed(() => StyleSheet.create({
 	rowBorder: { borderTopWidth: 1, borderTopColor: Colors.border },
 	rowIcon: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowBody: { flex: 1 },
+	// 언어 행 머리 글자 — 아이콘 칸(38) 안에 아이콘과 같은 무게로 앉힌다
+	langBadge: { fontSize: Typography.footnote, fontWeight: '800', letterSpacing: 0.5 },
 	rowLabel: { fontSize: Typography.callout, fontWeight: '700', color: Colors.textStrong },
 	rowDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	// 효과음 미리듣기 버튼
