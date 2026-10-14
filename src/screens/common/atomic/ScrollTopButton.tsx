@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
-import { Layout, Radius, Shadow, SpacingV } from '@/src/const/ConstDesign';
+import { Layout, Radius, SpacingV } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useToastShown } from '@/src/context/ToastContext';
@@ -200,5 +200,5 @@ const styles = themed(() => StyleSheet.create({
 	// 버튼 테두리(1)까지 덮도록 바깥 모서리에 맞춘다
 	ringWrap: { position: 'absolute', top: -1, left: -1 },
 	ring: { transform: [{ rotate: '-90deg' }] },
-	btn: { width: BTN, height: BTN, borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, ...Shadow.floating },
+	btn: { width: BTN, height: BTN, borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 }));

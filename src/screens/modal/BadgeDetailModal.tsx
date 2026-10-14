@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { RARITY_META } from '@/src/const/ConstAchievements';
@@ -71,7 +71,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 					<View style={styles.progressBox}>
 						<View style={styles.progressTop}>
 							<Text style={styles.progressLabel}>{t('modal.badgeDetail.progress')}</Text>
-							<Text style={[styles.progressValue, { color: badge.def.color }]}>
+							<Text style={[styles.progressValue, { color: accentInk(badge.def.color) }]}>
 								{badge.current}/{badge.def.target}{badge.def.unit ?? ''}
 							</Text>
 						</View>

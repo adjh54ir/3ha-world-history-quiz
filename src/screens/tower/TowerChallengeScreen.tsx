@@ -14,7 +14,7 @@ import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { useDispatch } from 'react-redux';
 import { addTowerAttemptByAd, devResetTower, ensureTowerDay, recordTower, spendTowerAttempt, TOWER_AD_REWARD_MAX, TOWER_DAILY_ATTEMPTS, useTower } from '@/src/store/slice/TowerSlice';
 import { Colors, LIGHT_COLORS, readableOn, withAlpha } from '@/src/const/ConstColors';
-import { FontWeight, Layout, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { Border, FontWeight, Layout, Radius, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { themed } from '@/src/utils/ThemedStyles';
 
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -321,29 +321,34 @@ const TowerChallengeScreen = () => {
 				</View>
 
 				<ScrollView ref={scrollRef} style={styles.body} contentContainerStyle={styles.bodyContent} showsVerticalScrollIndicator={false}>
-					<FadeInUp delay={0}>
-						<View style={styles.heroBanner}>
-							<Image
-								source={require('@/src/assets/tower/tower-challenge-hero.webp')}
-								style={styles.heroBannerImage}
-								contentFit="cover"
-							/>
-							<View style={styles.heroBannerShade} />
-							<View style={styles.heroBannerCopy}>
-								<Text style={styles.heroBannerEyebrow}>CLIMB TO THE TOP</Text>
-								<Text style={styles.heroBannerTitle}>{t('tower.challenge.heroTitle')}</Text>
+					{/* 위 카드 세 장은 한 덩어리(촘촘히), 층 목록·안내는 섹션 간격(sectionGap)으로 띄운다 — 예전엔 전부 12 로 붙어 섹션 경계가 안 보였다 */}
+					<View style={styles.cardStack}>
+						<FadeInUp delay={0}>
+							<View style={styles.heroBanner}>
+								<Image
+									source={require('@/src/assets/tower/tower-challenge-hero.webp')}
+									style={styles.heroBannerImage}
+									contentFit="cover"
+								/>
+								<View style={styles.heroBannerShade} />
+								<View style={styles.heroBannerCopy}>
+									<Text style={styles.heroBannerEyebrow}>CLIMB TO THE TOP</Text>
+									<Text style={styles.heroBannerTitle}>{t('tower.challenge.heroTitle')}</Text>
+								</View>
 							</View>
-						</View>
-					</FadeInUp>
+						</FadeInUp>
 
-					<FadeInUp delay={30}>{renderProgressCard()}</FadeInUp>
+						<FadeInUp delay={30}>{renderProgressCard()}</FadeInUp>
 
-					<FadeInUp delay={60}>
-						{isAllCleared || !currentTower ? renderAllClearedCard() : renderChallengeCard(currentTower)}
-					</FadeInUp>
+						<FadeInUp delay={60}>
+							{isAllCleared || !currentTower ? renderAllClearedCard() : renderChallengeCard(currentTower)}
+						</FadeInUp>
+					</View>
 
-					<Text style={styles.sectionTitle}>{t('tower.challenge.floorsTitle')}</Text>
-					{TOWER_LEVELS.map((tower, index) => renderFloorRow(tower, index + 3))}
+					<View style={styles.floorList}>
+						<Text style={styles.sectionTitle}>{t('tower.challenge.floorsTitle')}</Text>
+						{TOWER_LEVELS.map((tower, index) => renderFloorRow(tower, index + 3))}
+					</View>
 
 					<View style={styles.noticeBox}>
 						<Text style={styles.noticeLine}>{t('tower.challenge.notice.clear')}</Text>
@@ -446,7 +451,10 @@ const makeStyles = () =>
 
 		body: { flex: 1 },
 		// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭이라 제목과 카드 왼쪽 선이 맞는다)
-		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: SpacingV.md },
+		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: Layout.sectionGap },
+		cardStack: { gap: SpacingV.md },
+		// 층 줄 사이는 목록 아이템 간격 — 카드 사이(12)보다 좁혀 한 목록으로 읽히게
+		floorList: { gap: Layout.itemGap },
 		heroBanner: {
 			// 태블릿 넓은 기둥에서 고정 높이면 2.9:1 띠가 되어 그림이 크게 잘린다 — 폰 비율 유지
 			...(isTablet ? { aspectRatio: 343 / 176 } : { height: scaleHeight(176) }),
@@ -528,7 +536,7 @@ const makeStyles = () =>
 		adSub: { fontSize: Typography.micro, color: Colors.onBrandText, marginTop: SpacingV.xxs },
 
 		// ===== 도전 카드 =====
-		challengePanel: { borderWidth: 1.5, gap: SpacingV.md },
+		challengePanel: { borderWidth: Border.thin, gap: SpacingV.md },
 		challengeHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 		levelBadge: { paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xxs, borderRadius: Radius.pill },
 		levelBadgeText: { fontSize: Typography.micro, fontWeight: FontWeight.heavy, color: Colors.textInverse },
@@ -540,7 +548,7 @@ const makeStyles = () =>
 			width: scaleArt(96),
 			height: scaleArt(96),
 			borderRadius: scaleArt(48),
-			borderWidth: 2,
+			borderWidth: Border.thick,
 			alignItems: 'center',
 			justifyContent: 'center',
 		},
@@ -570,7 +578,8 @@ const makeStyles = () =>
 			alignItems: 'center',
 			justifyContent: 'center',
 			gap: Spacing.sm,
-			minHeight: scaleHeight(48),
+			// 퀴즈 '다음 문제'·결과 팝업 버튼과 같은 주요 버튼 높이
+			minHeight: Layout.ctaMinH,
 			borderRadius: Radius.md,
 		},
 		// 타임 챌린지의 '챌린지 시작하기' 버튼과 같은 글자 크기 — 두 챌린지의 주요 버튼을 한 언어로 맞춘다
@@ -596,7 +605,6 @@ const makeStyles = () =>
 			fontSize: Typography.footnote,
 			fontWeight: FontWeight.bold,
 			color: Colors.onBrandTextSoft,
-			marginTop: SpacingV.xs,
 			marginLeft: Spacing.xs,
 		},
 		floorRow: {
@@ -609,7 +617,7 @@ const makeStyles = () =>
 			borderWidth: 1,
 			borderColor: Colors.onBrandSurface,
 			backgroundColor: Colors.onBrandWatermark,
-			// 줄 간격은 bodyContent 의 gap 하나로만 준다 — marginBottom 을 더하면 층 목록만 카드보다 벌어졌다
+			// 줄 간격은 floorList 의 gap 하나로만 준다 — marginBottom 을 더하면 간격이 두 번 들어간다
 		},
 		floorBadge: {
 			width: scaleWidth(26),

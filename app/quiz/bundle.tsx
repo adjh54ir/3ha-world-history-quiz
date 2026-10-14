@@ -175,6 +175,8 @@ const QuizBundle = () => {
 			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
 			<View style={{ flex: 1 }}>
 			<ScrollView onScroll={scrollTop.onScroll} scrollEventThrottle={16} ref={listRef} contentContainerStyle={styles.list} showsVerticalScrollIndicator={false}>
+				{/* 학습 묶음 화면과 같은 등장 연출 */}
+				<FadeInUp>
 				<View style={styles.heroCard}>
 					<Image
 						source={topicTab === 'main'
@@ -195,6 +197,7 @@ const QuizBundle = () => {
 						<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 					</TouchableOpacity>
 				</View>
+				</FadeInUp>
 
 				<SectionHead
 					title={t('quiz.common.selectTopics')}
@@ -266,7 +269,8 @@ const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	// 세그먼트 컨트롤 — 회색 트랙 위에서 선택된 칸만 브랜드색으로 채운다
 	tabRow: { flexDirection: 'row', gap: Spacing.xxs, marginHorizontal: Layout.screenH, marginTop: SpacingV.lg, padding: Spacing.xxs, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt },
-	tabBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
+	// 세그먼트 칸 높이 36 → 터치 최소 44 로 맞춘다
+	tabBtn: { flex: 1, minHeight: Layout.touch, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
 	tabBtnOn: { backgroundColor: Colors.primary },
 	tabText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textSecondary },
 	tabTextOn: { color: Colors.onFill },

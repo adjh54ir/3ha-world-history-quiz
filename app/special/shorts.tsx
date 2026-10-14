@@ -7,7 +7,7 @@ import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
-import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { mixHex, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt, contentWidth, screenWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -51,7 +51,8 @@ const Shorts = () => {
 	// 진행 표시 강조색 — 카드 모드와 동일하게(주제 색, 믹스면 브랜드 색)
 	const accent = isCategoryMode ? LearnHubService.getDomain(category).meta.color : Colors.primary;
 	// 이 화면은 테마와 무관하게 늘 어둡다 — 라이트 primary(#0E7C66)는 어두운 무대 위 글자로 2.9:1 이라 믹스 모드는 무대용 밝은 비취를 쓴다
-	const stageAccent = isCategoryMode ? accent : Colors.infoBright;
+	// 주제색 중 진한 것(#15803D·#B45309 등)도 어두운 무대 위 글자로 2.9:1 이다 — 무대 글자색 쪽으로 절반 섞어 4.3:1 이상으로 올린다
+	const stageAccent = isCategoryMode ? mixHex(accent, Colors.darkText, 0.5) : Colors.infoBright;
 
 	// 학습 완료 집계 대상 도메인
 	const activeDomains = useMemo(() => {
@@ -322,7 +323,7 @@ const Shorts = () => {
 			)}
 
 			{/* 상단 탭 (전체/학습중/완료) */}
-			<View style={[styles.tabBar, { top: insets.top + scaleHeight(8) }]}>
+			<View style={[styles.tabBar, { top: insets.top + SpacingV.sm }]}>
 				{TABS.map((item) => {
 					const on = tab === item.key;
 					return (
@@ -371,11 +372,11 @@ const Shorts = () => {
 			/>
 
 			{/* 조작법 다시 보기 */}
-			<View style={[styles.helpBtn, { top: insets.top + scaleHeight(8) }]}>
+			<View style={[styles.helpBtn, { top: insets.top + SpacingV.sm }]}>
 				<CharacterGuideButton onPress={coach.open} color={Colors.darkText} size={scaledSize(22)} />
 			</View>
 
-			<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('special.shorts.exitA11y')} style={[styles.close, { top: insets.top + scaleHeight(8) }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={Layout.hitSlop}>
+			<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('special.shorts.exitA11y')} style={[styles.close, { top: insets.top + SpacingV.sm }]} activeOpacity={0.8} onPress={() => setShowExit(true)} hitSlop={Layout.hitSlop}>
 				<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.darkText} />
 			</TouchableOpacity>
 		</View>

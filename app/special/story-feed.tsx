@@ -11,10 +11,10 @@ import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import CategoryScopeChips, { ALL_SCOPE } from '@/src/screens/common/atomic/CategoryScopeChips';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import DetailSheet, { DetailItem } from '@/src/screens/modal/DetailSheet';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaledSize, scaleHeight } from '@/src/utils';
+import { isTablet, scaledSize, scaleHeight } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { categoryIcon } from '@/src/const/ConstQuizMeta';
@@ -116,7 +116,7 @@ const StoryFeed = () => {
 									<View style={styles.cardTopLeft}>
 										<View style={[styles.domainChip, { backgroundColor: withAlpha(color, '14') }]}>
 											<DomainIcon mainIcon={meta.mainIcon} icon={meta.icon} iconType={meta.iconType} size={scaledSize(16)} color={color} radius={scaledSize(5)} />
-											<Text style={[styles.domainText, { color }]}>{meta.title}</Text>
+											<Text style={[styles.domainText, { color: accentInk(color) }]}>{meta.title}</Text>
 										</View>
 										{!!c.categoryLabel && c.categoryLabel !== meta.title && (
 											<View style={styles.catChip}>
@@ -192,7 +192,8 @@ const styles = themed(() => StyleSheet.create({
 	// 공용 칩바의 좌우 내부 여백(Spacing.xl)을 리스트 패딩과 정렬시키기 위해 음수 마진으로 상쇄
 	filterBar: { marginHorizontal: -Layout.screenH, backgroundColor: 'transparent', marginBottom: SpacingV.md },
 	listFill: { flexGrow: 1 },
-	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
+	// 태블릿 2단 — 같은 줄 두 카드의 아래 끝이 들쭉날쭉하지 않게 셀 높이까지 늘린다 (폰은 그대로)
+	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, ...(isTablet && { flexGrow: 1 }) },
 	cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	cardTopLeft: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, flexWrap: 'wrap' },
 	cardTopRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },

@@ -271,9 +271,7 @@ const Ranking = () => {
 						</FadeInUp>
 					}
 					renderItem={({ item, index }) => (
-						<FadeInUp delay={Math.min(index * 40, 320)} duration={340} distance={12}>
-							<RankRowItem item={item} index={index} unit={unit} />
-						</FadeInUp>
+						<RankRowItem item={item} index={index} unit={unit} />
 					)}
 				/>
 				{/* 긴 목록 — 우하단 맨 위로 버튼 (목록 영역 기준이라 아래 내 순위 바와 겹치지 않는다) */}

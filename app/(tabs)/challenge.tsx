@@ -9,7 +9,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Tag from '@/src/screens/common/atomic/Tag';
 import Colors, { HEAT_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, contentWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
 import { FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import RankingService from '@/src/services/RankingService';
 import LearnProgressService, { TimePlayRecord } from '@/src/services/LearnProgressService';
@@ -274,7 +274,7 @@ const Challenge = () => {
 									<Text style={styles.rankDesc}>{t('challenge.time.rankDesc')}</Text>
 								</View>
 							</View>
-							<TouchableOpacity style={styles.moreBtn} activeOpacity={0.85} onPress={() => router.push({ pathname: '/special/ranking', params: { board: 'time' } } as never)}>
+							<TouchableOpacity style={styles.moreBtn} activeOpacity={0.85} hitSlop={Layout.hitSlop} onPress={() => router.push({ pathname: '/special/ranking', params: { board: 'time' } } as never)}>
 								<Text style={styles.moreText}>{t('challenge.time.viewAll')}</Text>
 								<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.primary} />
 							</TouchableOpacity>
@@ -304,7 +304,7 @@ const Challenge = () => {
 									<Text style={styles.bestPillText} numberOfLines={1}>{myRank ? t('challenge.time.rankValue', { rank: myRank.rank }) : t('challenge.time.notJoined')}</Text>
 								</View>
 							</View>
-							{nickname && <Text style={styles.bestHint}>{t('challenge.time.bestHint')}</Text>}
+							{!!nickname && <Text style={styles.bestHint}>{t('challenge.time.bestHint')}</Text>}
 						</View>
 
 						{/* 랭킹 미참여 — 닉네임 발급 후 참여 */}
@@ -315,7 +315,7 @@ const Challenge = () => {
 										<Text style={styles.joinTitle}>{t('challenge.time.joinTitle')}</Text>
 										<View style={styles.nickCard}>
 											<Text style={styles.nickValue} numberOfLines={1}>{nickInput}</Text>
-											<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} onPress={rollNickname} accessibilityRole="button" accessibilityLabel={t('challenge.time.rollA11y')}>
+											<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} hitSlop={Layout.hitSlop} onPress={rollNickname} accessibilityRole="button" accessibilityLabel={t('challenge.time.rollA11y')}>
 												<Animated.View style={{ transform: [{ rotate: diceSpin.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] }) }] }}>
 													<IconComponent type="materialIcons" name="casino" size={scaledSize(22)} color={Colors.primary} />
 												</Animated.View>
@@ -536,12 +536,13 @@ const styles = themed(() => StyleSheet.create({
 	statDivider: { width: 1, height: scaleHeight(32), backgroundColor: Colors.border },
 	// 플레이별 점수 아코디언
 	// 타임챌린지 시작 — 기록 목록 아래 인라인 pill 버튼
-	startBtn: { alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, minHeight: scaleHeight(46), paddingHorizontal: Spacing.xxl, borderRadius: Radius.xl, backgroundColor: Colors.primary, marginTop: SpacingV.md },
+	startBtn: { alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, minHeight: Layout.ctaMinH, paddingHorizontal: Spacing.xxl, borderRadius: Radius.xl, backgroundColor: Colors.primary, marginTop: SpacingV.md },
 	startBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 	// 타워챌린지 탭
 	timeHeroCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg, marginBottom: Layout.sectionGap },
 	towerCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg },
-	towerHero: { width: '100%', aspectRatio: 16 / 9 },
+	// 태블릿은 본문 폭이 넓어 16:9 면 히어로가 화면 3분의 1을 차지한다 — 2:1 로 눌러 아래 내용이 첫 화면에 들어오게
+	towerHero: { width: '100%', aspectRatio: isTablet ? 2 : 16 / 9 },
 	towerBody: { paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, gap: SpacingV.xs },
 	towerProgressRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: SpacingV.sm },
 	towerMeta: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },

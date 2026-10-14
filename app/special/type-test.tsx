@@ -17,7 +17,7 @@ import Colors, { TYPE_RESULT_GRADIENTS, BRAND_GRADIENT, withAlpha, isDark } from
 import { AnimatedProgress, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
 import { useToast } from '@/src/context/ToastContext';
 import { playFinish, playPop } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
@@ -385,8 +385,9 @@ const styles = themed(() => StyleSheet.create({
 	optionIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, justifyContent: 'center', alignItems: 'center' },
 	optionIndexText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textSecondary },
 	optionText: { flex: 1, fontSize: Typography.callout, color: Colors.text, fontWeight: '600' },
-	resultScroll: { paddingBottom: Layout.screenBottom },
-	resultHero: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxxl, paddingHorizontal: Spacing.xxl, marginHorizontal: Layout.screenH },
+	// 태블릿은 세로가 길어 짧은 결과가 위에 몰리고 아래가 텅 빈다 — 남는 높이 안에서 가운데로 (폰은 그대로)
+	resultScroll: { paddingBottom: Layout.screenBottom, ...(isTablet && { flexGrow: 1, justifyContent: 'center' as const }) },
+	resultHero: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xxl, marginHorizontal: Layout.screenH },
 	resultIconWrap: { justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: SpacingV.lg },
 	resultStar: { position: 'absolute', width: scaleArt(150), height: scaleArt(150) },
 	resultIcon: { width: scaleWidth(92), height: scaleWidth(92), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: SpacingV.lg },
@@ -394,7 +395,7 @@ const styles = themed(() => StyleSheet.create({
 	resultName: { color: Colors.textStrong, fontSize: Typography.h1, fontWeight: '900', marginTop: SpacingV.xs },
 	msgCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	msgText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), textAlign: 'center', fontWeight: '600' },
-	recBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.lg, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
+	recBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
 	recBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.text, fontSize: Typography.callout, fontWeight: '700' },

@@ -414,7 +414,7 @@ const TowerQuizScreen = () => {
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.notFound')}</Text>
 					{/* 어두운 패널 위 링크 — primary 는 라이트 테마에서 1.8:1 로 묻혀 패널 전용 글씨색을 쓴다 */}
-					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }}>
+					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }} hitSlop={Layout.hitSlop}>
 						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>{t('tower.quiz.back')}</Text>
 					</TouchableOpacity>
 				</SafeAreaView>
@@ -429,7 +429,7 @@ const TowerQuizScreen = () => {
 				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.noQuestions', { level })}</Text>
-					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }}>
+					<TouchableOpacity onPress={() => router.back()} style={{ marginTop: SpacingV.xl }} hitSlop={Layout.hitSlop}>
 						<Text style={{ color: Colors.onBrandText, fontSize: Typography.body, fontWeight: FontWeight.bold }}>{t('tower.quiz.back')}</Text>
 					</TouchableOpacity>
 				</SafeAreaView>
@@ -562,9 +562,10 @@ const TowerQuizScreen = () => {
 							style={StyleSheet.absoluteFillObject}
 						/>
 						<View style={styles.questionCardGradient}>
+							{/* 층 색 면 위 층 색 글씨는 2.3~3.2:1 로 흐렸다(1층 파랑 최저) — 면만 층 색, 글씨는 어두운 무대용 흰색(5.3:1 이상) */}
 							<View style={[styles.questionBadge, { backgroundColor: withAlpha(towerLevel.color, '33') }]}>
-								<IconComponent type="materialCommunityIcons" name="help-circle-outline" size={scaledSize(14)} color={towerLevel.color} />
-								<Text style={[styles.questionBadgeText, { color: towerLevel.color }]}>{t('tower.quiz.badge')}</Text>
+								<IconComponent type="materialCommunityIcons" name="help-circle-outline" size={scaledSize(14)} color={Colors.textInverse} />
+								<Text style={styles.questionBadgeText}>{t('tower.quiz.badge')}</Text>
 							</View>
 							{/*
 							 * 묻는 대상과 묻는 말을 두 줄로 나눈다 — 윗줄은 대상(나라·인물 이름)을 크게, 아랫줄은 "이곳의 수도는?".
@@ -703,7 +704,6 @@ const makeStyles = () => StyleSheet.create({
 	// 타워 챌린지 헤더(h3 heavy + 작은 보조줄)와 같은 위계로 맞춘다
 	levelTitle: { fontSize: Typography.h3, fontWeight: FontWeight.heavy, color: Colors.textInverse },
 	questionCount: { fontSize: Typography.footnote, color: Colors.onBrandTextSoft, marginTop: SpacingV.xxs },
-	scoreText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse },
 	progressBarContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.lg },
 	progressLabelRow: {
 		flexDirection: 'row',
@@ -736,7 +736,7 @@ const makeStyles = () => StyleSheet.create({
 	// 면은 층 색 그라데이션이 채운다 — 밑에 darkCard 를 한 겹 깔아 색이 옅은 층에서도 둥근 모서리가 보이게 한다
 	questionCard: { marginBottom: SpacingV.xxl, borderRadius: Radius.lg, borderWidth: Border.thin, overflow: 'hidden', backgroundColor: Colors.onBrandWatermark },
 	questionCardGradient: { alignItems: 'center', gap: SpacingV.sm, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.lg },
-	// '문제' 머리표 — 칸 맨 위 가운데. 층 색 글씨라 흰 문장보다 한 단 낮게 읽힌다
+	// '문제' 머리표 — 칸 맨 위 가운데. 층 색 면 + 작은 글씨라 아래 대상·문장보다 한 단 낮게 읽힌다
 	questionBadge: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -746,7 +746,7 @@ const makeStyles = () => StyleSheet.create({
 		minHeight: scaleHeight(26),
 		borderRadius: Radius.pill,
 	},
-	questionBadgeText: { fontSize: Typography.footnote, fontWeight: FontWeight.bold },
+	questionBadgeText: { fontSize: Typography.footnote, fontWeight: FontWeight.bold, color: Colors.textInverse },
 	// 두 줄은 한 덩어리로 읽혀야 한다 — 머리표와의 간격(md)보다 좁게 붙인다
 	questionTextWrap: { alignSelf: 'stretch', alignItems: 'center', gap: SpacingV.xxs },
 	// 묻는 대상 — 문제 칸의 주인공. 금빛으로 가장 크게 둬 보기보다 먼저 읽힌다
@@ -786,6 +786,7 @@ const makeStyles = () => StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		gap: Spacing.sm,
+		minHeight: Layout.ctaMinH,
 		paddingVertical: SpacingV.lg,
 	},
 	nextButtonText: { flexShrink: 1, fontSize: Typography.title, fontWeight: FontWeight.bold, color: Colors.textInverse },

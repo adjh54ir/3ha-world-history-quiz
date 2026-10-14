@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from './atomic/IconComponent';
 import { Colors } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, FontWeight, Layout, DisplayText } from '@/src/const/ConstDesign';
-import { scaledSize, scaleWidth } from '@/src/utils/DementionUtils';
+import { scaledSize, scaleHeight } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 interface CommonHeaderProps {
@@ -88,7 +88,7 @@ const styles = themed(() => StyleSheet.create({
 		backgroundColor: Colors.surface,
 		paddingHorizontal: Spacing.sm, // 뒤로가기 아이콘 좌측선을 본문(Layout.screenH)과 맞춘다
 		paddingVertical: SpacingV.sm,
-		minHeight: scaleWidth(56),
+		minHeight: scaleHeight(56), // 높이는 세로 스케일 (TabHeader 와 같은 기준)
 	},
 	bordered: {
 		borderBottomWidth: 1,

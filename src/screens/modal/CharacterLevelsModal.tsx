@@ -138,7 +138,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 				<View>
 					<View style={styles.titleRow}>
 						<Text style={styles.title}>{t('modal.characterLevels.title')}</Text>
-						<TouchableOpacity onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.characterLevels.closeA11y')}>
+						<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.characterLevels.closeA11y')}>
 							<IconComponent type="materialIcons" name="close" size={scaledSize(24)} color={Colors.textMuted} />
 						</TouchableOpacity>
 					</View>
@@ -215,8 +215,10 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 export default CharacterLevelsModal;
 
 const styles = themed(() => StyleSheet.create({
-	titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-	title: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong },
+	titleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
+	title: { flex: 1, fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong },
+	// 뱃지 도감 시트와 같은 44 닫기 영역 — 제목 줄 높이가 두 시트에서 같아진다
+	closeBtn: { width: Layout.touch, height: Layout.touch, alignItems: 'center', justifyContent: 'center' },
 	sub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	tabBar: { marginTop: SpacingV.md, height: scaleHeight(44), flexGrow: 0, flexShrink: 0 },
 	tabRow: { gap: Spacing.sm, alignItems: 'center' },
@@ -229,7 +231,8 @@ const styles = themed(() => StyleSheet.create({
 	previewImg: { width: scaleArt(84), height: scaleArt(84), borderRadius: Radius.xl },
 	previewTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.sm },
 	previewReq: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
-	gridScroll: { marginTop: SpacingV.md, maxHeight: scaleHeight(240) },
+	// 태블릿은 시트 높이가 넉넉한데 240×1.25 로 묶으면 그리드가 두 줄만 보여 스크롤만 길어진다 (폰은 그대로)
+	gridScroll: { marginTop: SpacingV.md, maxHeight: scaleHeight(isTablet ? 400 : 240) },
 	grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: Spacing.sm, paddingBottom: SpacingV.sm },
 	cell: { width: isTablet ? '23%' : '30%', alignItems: 'center', borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingVertical: SpacingV.md, paddingHorizontal: Spacing.xs },
 	cellSelected: { borderColor: Colors.primary, backgroundColor: Colors.primaryBg },

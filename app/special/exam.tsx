@@ -8,7 +8,7 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
-import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -122,7 +122,7 @@ const ExamPacks = () => {
 							<View style={[styles.recordCard, { borderColor: withAlpha(selected.color, '33') }]}>
 								<View style={styles.recordItem}>
 									<Text style={styles.recordLabel}>{t('special.exam.bestScore')}</Text>
-									<Text style={[styles.recordValue, { color: selected.color }]}>{record.best}/{record.total}</Text>
+									<Text style={[styles.recordValue, { color: accentInk(selected.color) }]}>{record.best}/{record.total}</Text>
 								</View>
 								<View style={styles.recordDivider} />
 								<View style={styles.recordItem}>
@@ -155,7 +155,7 @@ const ExamPacks = () => {
 						<View style={styles.chipRow}>
 							{selected.domains.map((k) => (
 								<View key={k} style={[styles.chip, { backgroundColor: withAlpha(selected.color, '14') }]}>
-									<Text style={[styles.chipText, { color: selected.color }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(k)}</Text>
+									<Text style={[styles.chipText, { color: accentInk(selected.color) }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(k)}</Text>
 								</View>
 							))}
 						</View>
@@ -210,7 +210,7 @@ const ExamPacks = () => {
 									)}
 								</View>
 								<View style={[styles.countPill, { backgroundColor: withAlpha(p.color, '14') }]}>
-									<Text style={[styles.countText, { color: p.color }]}>{t('common.questions', { count: p.count })}</Text>
+									<Text style={[styles.countText, { color: accentInk(p.color) }]}>{t('common.questions', { count: p.count })}</Text>
 								</View>
 							</TouchableOpacity>
 						);

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
-import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { readableOn, withAlpha, accentInk as inkOf } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp } from '@/src/screens/common/anim/Motion';
 import { scaledSize, scaleHeight, scaleWidth, contentWidth, scaleArt } from '@/src/utils';
@@ -49,6 +49,7 @@ const LearnStudy = () => {
 	const domain = LearnHubService.getDomain(isBundle ? catList[0] : category);
 	const accent = isBundle ? Colors.primary : domain.meta.color;
 	const onAccent = readableOn(accent);
+	const accentInk = inkOf(accent);
 	const title = t('learn.titleOf', {
 		title: isBundle
 			? catList.length > 2
@@ -216,15 +217,15 @@ const LearnStudy = () => {
 				<View style={styles.learnStatus}>
 					<View style={styles.learnStatusLeft}>
 						<View style={[styles.learnStatusIcon, { backgroundColor: withAlpha(accent, '14') }]}>
-							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={accent} />
+							<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={accentInk} />
 						</View>
 						<Text style={styles.learnStatusText}>
-							{t('learn.study.done')} <Text style={[styles.learnStatusStrong, { color: accent }]}>{doneCount}</Text>
+							{t('learn.study.done')} <Text style={[styles.learnStatusStrong, { color: accentInk }]}>{doneCount}</Text>
 							<Text style={styles.learnStatusMuted}> / {cards.length}</Text>
 						</Text>
 					</View>
 					<View style={[styles.learnStatusPctChip, { backgroundColor: withAlpha(accent, '14') }]}>
-						<Text style={[styles.learnStatusPct, { color: accent }]}>{t('learn.study.pctDone', { value: donePct })}</Text>
+						<Text style={[styles.learnStatusPct, { color: accentInk }]}>{t('learn.study.pctDone', { value: donePct })}</Text>
 					</View>
 				</View>
 
@@ -337,6 +338,8 @@ interface CardItemProps {
 const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domainTitle, isDone, isLast, onComplete, onReview, onToast }) => {
 	const { t } = useTranslation();
 	const domainMeta = LearnHubService.getDomain(card.domain).meta;
+	const accentInk = inkOf(accent);
+	const domainInk = inkOf(domainMeta.color);
 	const [revealed, setRevealed] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
 	const flip = useRef(new Animated.Value(0)).current;
@@ -432,13 +435,13 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 					<View style={styles.cardHeader}>
 						<View style={styles.labelRow}>
 							<View style={[styles.chip, { backgroundColor: withAlpha(domainMeta.color, '14') }]}>
-								<DomainIcon mainIcon={domainMeta.mainIcon} icon={domainMeta.icon} iconType={domainMeta.iconType} size={scaledSize(13)} color={domainMeta.color} />
-								<Text style={[styles.chipText, { color: domainMeta.color }]} numberOfLines={1} ellipsizeMode="tail">{domainTitle}</Text>
+								<DomainIcon mainIcon={domainMeta.mainIcon} icon={domainMeta.icon} iconType={domainMeta.iconType} size={scaledSize(13)} color={domainInk} />
+								<Text style={[styles.chipText, { color: domainInk }]} numberOfLines={1} ellipsizeMode="tail">{domainTitle}</Text>
 							</View>
 							{!!card.categoryLabel && card.categoryLabel !== domainTitle && (
 							<View style={[styles.chip, { backgroundColor: withAlpha(accent, '1A') }]}>
-								<IconComponent type="materialIcons" name={categoryIcon(card.categoryLabel)} size={scaledSize(12)} color={accent} />
-									<Text style={[styles.chipText, { color: accent }]} numberOfLines={1} ellipsizeMode="tail">{card.categoryLabel}</Text>
+								<IconComponent type="materialIcons" name={categoryIcon(card.categoryLabel)} size={scaledSize(12)} color={accentInk} />
+									<Text style={[styles.chipText, { color: accentInk }]} numberOfLines={1} ellipsizeMode="tail">{card.categoryLabel}</Text>
 							</View>
 						)}
 						{!!card.levelLabel && (
@@ -462,8 +465,8 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							<Text style={styles.cardTitle} numberOfLines={1} ellipsizeMode="tail">{card.title}</Text>
 							{!!card.subTitle && <Text style={styles.cardSubTitle} numberOfLines={2} ellipsizeMode="tail">{card.subTitle}</Text>}
 							<View style={[styles.tapHint, { backgroundColor: withAlpha(accent, '0F') }]}>
-								<IconComponent type="materialIcons" name="flip" size={scaledSize(20)} color={accent} />
-								<Text style={[styles.tapHintText, { color: accent }]}>{t('learn.study.tapToFlip')}</Text>
+								<IconComponent type="materialIcons" name="flip" size={scaledSize(20)} color={accentInk} />
+								<Text style={[styles.tapHintText, { color: accentInk }]}>{t('learn.study.tapToFlip')}</Text>
 							</View>
 						</TouchableOpacity>
 					</Animated.View>
@@ -473,7 +476,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 						<ScrollView showsVerticalScrollIndicator contentContainerStyle={styles.backScroll} nestedScrollEnabled scrollEventThrottle={16}>
 						<TouchableOpacity activeOpacity={1} style={styles.flipBackTap} onPress={() => { hapticLight(); playFlip(); setRevealed(false); }}>
 							<View style={styles.meaningPlainBox}>
-								<IconComponent type="materialIcons" name="format-quote" size={scaledSize(30)} color={accent} style={styles.meaningQuote} />
+								<IconComponent type="materialIcons" name="format-quote" size={scaledSize(30)} color={accentInk} style={styles.meaningQuote} />
 								<Text style={styles.meaningText}>{card.description || card.meaning}</Text>
 							</View>
 
@@ -481,14 +484,14 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 							{!!card.stories && card.stories.length > 0 && (
 								<View style={[styles.sectionBox, styles.storyBox, { backgroundColor: withAlpha(accent, '0D'), borderColor: withAlpha(accent, '33') }]}>
 									<View style={styles.storyHead}>
-										<IconComponent type="materialIcons" name="auto-stories" size={scaledSize(15)} color={accent} />
-										<Text style={[styles.meaningLabel, styles.storyLabel, { color: accent }]}>{t('learn.study.story')}</Text>
+										<IconComponent type="materialIcons" name="auto-stories" size={scaledSize(15)} color={accentInk} />
+										<Text style={[styles.meaningLabel, styles.storyLabel, { color: accentInk }]}>{t('learn.study.story')}</Text>
 									</View>
 									{card.stories.map((story, i) => (
 										<FadeInUp key={`${revealed ? 'shown' : 'hidden'}-${i}`} delay={160 + i * 120} duration={420} style={[styles.storyItem, i > 0 && [styles.storyItemDivider, { borderTopColor: withAlpha(accent, '26') }]]}>
 											{card.stories!.length > 1 && (
 												<View style={[styles.storyNum, { backgroundColor: withAlpha(accent, '1A') }]}>
-													<Text style={[styles.storyNumText, { color: accent }]}>{i + 1}</Text>
+													<Text style={[styles.storyNumText, { color: accentInk }]}>{i + 1}</Text>
 												</View>
 											)}
 											<Text lineBreakStrategyIOS="hangul-word" style={styles.storyText}>{story}</Text>
@@ -519,7 +522,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 
 							{!!card.examples && card.examples.length > 0 && (
 								<View style={styles.sectionBox}>
-									<Text style={[styles.meaningLabel, { color: accent }]}>{t('learn.study.more')}</Text>
+									<Text style={[styles.meaningLabel, { color: accentInk }]}>{t('learn.study.more')}</Text>
 									{card.examples.map((ex, i) => (
 										<View key={i} style={styles.exampleBox}>
 											<Text style={styles.exampleText}>{ex}</Text>
@@ -551,8 +554,8 @@ const CardItem: React.FC<CardItemProps> = ({ card, index, scrollX, accent, domai
 			<View style={styles.cardActions}>
 				{isDone ? (
 					<TouchableOpacity style={[styles.completeBtn, { backgroundColor: Colors.surface, borderWidth: 1, borderColor: accent }]} activeOpacity={0.9} onPress={onReview}>
-						<IconComponent type="materialIcons" name="refresh" size={scaledSize(18)} color={accent} />
-						<Text style={[styles.completeBtnText, { color: accent }]}>{t('learn.study.review')}</Text>
+						<IconComponent type="materialIcons" name="refresh" size={scaledSize(18)} color={accentInk} />
+						<Text style={[styles.completeBtnText, { color: accentInk }]}>{t('learn.study.review')}</Text>
 					</TouchableOpacity>
 				) : (
 					<TouchableOpacity

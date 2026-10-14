@@ -8,7 +8,7 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService, { BookmarkItem } from '@/src/services/LearnProgressService';
@@ -104,6 +104,7 @@ const styles = themed(() => StyleSheet.create({
 	center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxxxl },
 	emptyTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
 	emptySub: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.sm, lineHeight: scaleHeight(20) },
-	cta: { marginTop: SpacingV.xxl, backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
+	// 빈 상태 버튼 — 높이 41 → 터치 최소 44
+	cta: { marginTop: SpacingV.xxl, minHeight: Layout.touch, justifyContent: 'center', backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
 	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 }));

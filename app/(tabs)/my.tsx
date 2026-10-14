@@ -363,7 +363,7 @@ const Setting = () => {
 								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.test')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.testDesc')}</Text>
 							</View>
-							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} disabled={testSending} onPress={sendTestNotification} accessibilityRole="button" accessibilityLabel={t('settings.notification.test')}>
+							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} hitSlop={TEST_BTN_HIT_SLOP} disabled={testSending} onPress={sendTestNotification} accessibilityRole="button" accessibilityLabel={t('settings.notification.test')}>
 								<IconComponent type="materialIcons" name="notifications-active" size={scaledSize(16)} color={Colors.primary} />
 								<Text style={styles.soundTestText}>{t('settings.notification.testSend')}</Text>
 							</TouchableOpacity>
@@ -377,7 +377,7 @@ const Setting = () => {
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.notification.soundDesc')}</Text>
 							</View>
 							{/* 효과음이 실제로 나는지 즉시 확인 (무음 이슈 자가 진단) */}
-							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} disabled={!soundOn} onPress={testSound}>
+							<TouchableOpacity style={styles.soundTestBtn} activeOpacity={0.8} hitSlop={TEST_BTN_HIT_SLOP} disabled={!soundOn} onPress={testSound}>
 								<IconComponent type="materialIcons" name="play-arrow" size={scaledSize(16)} color={soundOn ? Colors.primary : Colors.textMuted} />
 								<Text style={[styles.soundTestText, !soundOn && { color: Colors.textMuted }]}>{t('settings.notification.soundTest')}</Text>
 							</TouchableOpacity>
@@ -626,6 +626,9 @@ const Setting = () => {
 };
 
 export default withRemountOnFocus(Setting);
+
+/** 미리듣기·테스트 버튼 터치 여유 — 오른쪽 스위치와 겹치지 않게 위아래·왼쪽만 넓힌다 */
+const TEST_BTN_HIT_SLOP = { ...Layout.hitSlop, right: 0 };
 
 /** 제작자(EcodeLab) 공식 홈페이지 */
 const HOMEPAGE_URL = 'https://ecodelab.im/main';

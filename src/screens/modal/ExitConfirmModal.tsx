@@ -38,7 +38,7 @@ const ExitConfirmModal: React.FC<Props> = ({
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onCancel} />
-				<SheetIn visible={visible} style={styles.card}>
+				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.card}>
 					<View style={styles.iconWrap}>
 						<IconComponent type="materialIcons" name="logout" size={scaledSize(26)} color={Colors.primary} />
 					</View>

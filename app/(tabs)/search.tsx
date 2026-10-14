@@ -375,7 +375,7 @@ const SearchTab = () => {
 				<View style={styles.countRight}>
 					{/* 검색어·주제·필터 중 하나라도 걸려 있으면 초기화 버튼 노출 */}
 					{canReset && (
-						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.resetA11y')} style={styles.resetBtn} activeOpacity={0.8} onPress={resetFilters}>
+						<TouchableOpacity accessibilityRole="button" accessibilityLabel={t('search.resetA11y')} style={styles.resetBtn} activeOpacity={0.8} onPress={resetFilters} hitSlop={Layout.hitSlop}>
 							<IconComponent type="materialIcons" name="refresh" size={scaledSize(14)} color={Colors.textSecondary} />
 							<Text style={styles.resetText}>{t('common.reset')}</Text>
 						</TouchableOpacity>

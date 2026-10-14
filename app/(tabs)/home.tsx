@@ -8,7 +8,7 @@ import { router, useFocusEffect } from 'expo-router';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import Colors, { accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border, DisplayText } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet} from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -578,7 +578,7 @@ const Hub = () => {
 										{!!topicPreview[d.key] && <Text style={styles.topicRowExample} numberOfLines={2} ellipsizeMode="tail">{topicPreview[d.key]?.example}</Text>}
 									</View>
 									<View style={[styles.countPill, { backgroundColor: withAlpha(d.color, '14') }]}>
-										<Text style={[styles.countPillText, { color: d.color }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
+										<Text style={[styles.countPillText, { color: accentInk(d.color) }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
 									</View>
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
 								</TouchableOpacity>
@@ -603,14 +603,14 @@ const Hub = () => {
 											<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 32 : 24)} color={d.color} />
 										</View>
 										<View style={[styles.countPill, { backgroundColor: withAlpha(d.color, '14') }]}>
-											<Text style={[styles.countPillText, { color: d.color }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
+											<Text style={[styles.countPillText, { color: accentInk(d.color) }]}>{t('home.countItems', { value: d.total.toLocaleString() })}</Text>
 										</View>
 									</View>
 									<Text style={styles.topicTitle} numberOfLines={1} ellipsizeMode="tail">{d.title}</Text>
 									<Text style={styles.topicDesc} numberOfLines={2}>{d.subtitle}</Text>
 									{!!topicPreview[d.key] && (
 										<View style={styles.topicExampleBox}>
-											<Text style={[styles.topicExampleTag, { color: d.color }]}>{topicPreview[d.key]?.tag}</Text>
+											<Text style={[styles.topicExampleTag, { color: accentInk(d.color) }]}>{topicPreview[d.key]?.tag}</Text>
 											<Text style={styles.topicExampleText} numberOfLines={2}>{topicPreview[d.key]?.example}</Text>
 										</View>
 									)}
@@ -788,7 +788,7 @@ const Hub = () => {
 
 						{/* 오늘의 목표 — 하루 10문제 진행 */}
 						<View style={styles.goalTop}>
-							<TouchableOpacity style={styles.goalTitleRow} activeOpacity={0.7} onPress={() => setShowGoalPicker(true)} accessibilityRole="button" accessibilityLabel={t('home.hero.goalA11y')}>
+							<TouchableOpacity style={styles.goalTitleRow} activeOpacity={0.7} hitSlop={Layout.hitSlop} onPress={() => setShowGoalPicker(true)} accessibilityRole="button" accessibilityLabel={t('home.hero.goalA11y')}>
 								<IconComponent type="materialIcons" name="flag" size={scaledSize(15)} color={Colors.primary} />
 								<Text style={styles.goalTitle}>{t('home.hero.goalTitle')}</Text>
 								<IconComponent type="materialIcons" name="edit" size={scaledSize(13)} color={Colors.textMuted} />
@@ -869,6 +869,7 @@ const Hub = () => {
 									<TouchableOpacity
 										style={styles.badgeAllChip}
 										activeOpacity={0.85}
+										hitSlop={Layout.hitSlop}
 										accessibilityRole="button"
 										accessibilityLabel={t('home.summary.badgeAllA11y')}
 										onPress={() => setShowBadgeSheet(true)}>
@@ -1480,7 +1481,8 @@ const styles = themed(() => StyleSheet.create({
 
 	// 빠른 시작
 	quickScroll: { marginHorizontal: -Layout.screenH, marginBottom: Layout.sectionGap },
-	quickRow: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, gap: Spacing.lg },
+	// 태블릿은 7개가 한 줄에 다 들어가 오른쪽이 비었다 — 본문 폭에 고르게 펼친다 (폰은 넘쳐서 스크롤하므로 무관)
+	quickRow: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, gap: Spacing.lg, ...(isTablet && { flexGrow: 1, justifyContent: 'space-between' as const }) },
 	quickItem: { alignItems: 'center', minWidth: scaleWidth(56), paddingHorizontal: Spacing.xxs },
 	quickCircle: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.sm },
 	quickLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.text, textAlign: 'center' },

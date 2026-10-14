@@ -9,7 +9,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import { useReducedMotion } from '@/src/screens/common/anim/Motion';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Typography, Radius, Tracking, Shadow, Layout } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Typography, Radius, Tracking, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenWidth } from '@/src/utils';
 import { AchievementDef, RARITY_META } from '@/src/const/ConstAchievements';
 import { playComplete } from '@/src/utils/SoundUtils';
@@ -122,7 +122,7 @@ const styles = themed(() => StyleSheet.create({
 	medalWrap: { width: scaleWidth(150), height: scaleWidth(150), justifyContent: 'center', alignItems: 'center', marginTop: SpacingV.lg },
 	medalStar: { position: 'absolute', width: scaleWidth(150), height: scaleWidth(150) },
 	rays: { position: 'absolute', width: scaleWidth(150), height: scaleWidth(150), borderRadius: Radius.pill, overflow: 'hidden' },
-	medal: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center', ...Shadow.floating },
+	medal: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.pill, justifyContent: 'center', alignItems: 'center' },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg, textAlign: 'center' },
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
 	extra: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary, marginTop: SpacingV.sm },

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '../atomic/IconComponent';
 import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
-import { Radius, Shadow, Spacing, SpacingV, Typography, Tracking, Layout } from '@/src/const/ConstDesign';
+import { Radius, Spacing, SpacingV, Typography, Tracking, Layout } from '@/src/const/ConstDesign';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
@@ -91,7 +91,7 @@ const VersionCheckModal = () => {
 		<AppModal visible={showUpdateModal} transparent animationType="fade" statusBarTranslucent presentationStyle="overFullScreen" onRequestClose={() => {}}>
 			<View style={styles.backdrop}>
 				{/* 카드가 아래에서 떠오르고, 아이콘은 은은하게 숨쉬듯 움직여 시선을 '업데이트'로 모은다 */}
-				<FadeInUp distance={24} duration={420} style={styles.cardWrap}>
+				<FadeInUp distance={scaleHeight(24)} duration={420} style={styles.cardWrap}>
 				<View style={styles.card}>
 					{/* 헤더 — 브랜드 그라디언트 위 아이콘 */}
 					<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
@@ -170,7 +170,6 @@ const styles = themed(() => StyleSheet.create({
 		borderColor: Colors.border,
 		borderRadius: Radius.xl,
 		overflow: 'hidden',
-		...Shadow.floating,
 	},
 	hero: {
 		alignItems: 'center',

@@ -82,7 +82,7 @@ export const ConfirmModalHost: React.FC = () => {
 								</TouchableOpacity>
 							)}
 							<TouchableOpacity style={[styles.btn, { backgroundColor: pending?.destructive ? Colors.errorDark : Colors.primary }]} activeOpacity={0.9} onPress={() => close(true)}>
-								<Text style={[styles.confirmText, !pending?.destructive && { color: Colors.onFill }]}>{pending.confirmText ?? t('common.confirm')}</Text>
+								<Text style={styles.confirmText}>{pending.confirmText ?? t('common.confirm')}</Text>
 							</TouchableOpacity>
 						</View>
 					</SheetIn>
@@ -104,5 +104,6 @@ const styles = themed(() => StyleSheet.create({
 	btn: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.lg, borderRadius: Radius.md },
 	cancelBtn: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	cancelText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.text },
-	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	// errorDark·primary 채움 위 — 다크에선 채움이 밝아져 흰 글자가 3.8:1 이하라 onFill 로 뒤집는다 (라이트는 흰색 그대로)
+	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 }));

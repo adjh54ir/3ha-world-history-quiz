@@ -143,7 +143,7 @@ const StudyBundle = () => {
 						<FadeInUp key={d.key} delay={40 + i * 45} duration={340} distance={12}>
 						<TouchableOpacity style={[styles.row, on && { borderColor: d.color, backgroundColor: withAlpha(d.color, '0F') }]} activeOpacity={0.85} onPress={() => toggle(d.key)}>
 							<View style={[styles.rowIcon, { backgroundColor: d.mainIcon ? Colors.surfaceAlt : withAlpha(d.color, '14') }]}>
-								<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 30 : 22)} color={d.color} />
+								<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 32 : 22)} color={d.color} />
 							</View>
 							<View style={styles.rowBody}>
 								<Text style={styles.rowTitle} numberOfLines={1} ellipsizeMode="tail">{d.title}</Text>
@@ -215,7 +215,8 @@ const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	// 세그먼트 컨트롤 — 퀴즈 선택 화면과 같은 형태
 	tabRow: { flexDirection: 'row', gap: Spacing.xxs, marginHorizontal: Layout.screenH, marginTop: SpacingV.lg, padding: Spacing.xxs, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt },
-	tabBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
+	// 세그먼트 칸 높이 36 → 터치 최소 44 로 맞춘다
+	tabBtn: { flex: 1, minHeight: Layout.touch, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
 	tabBtnOn: { backgroundColor: Colors.primary },
 	tabText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textSecondary },
 	tabTextOn: { color: Colors.onFill },

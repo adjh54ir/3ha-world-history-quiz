@@ -47,6 +47,8 @@ interface Props {
 
 /** 직접 선택 기간 상한(일) — 넘어가면 막대 개수가 수천 개가 되어 화면이 멈춘다 */
 const RANGE_MAX_DAYS = 180;
+/** 선택일 정답률 도넛 — 태블릿은 카드가 넓어 고정 92 가 왜소하고 안쪽 숫자(1.25배)가 링에 붙는다 */
+const DONUT = isTablet ? scaleWidth(92) : 92;
 
 /**
  * 학습 리포트 카드 (기간 필터 + 일별 막대 + 선택 일자 스코어 상세)
@@ -293,7 +295,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 						{isQuiz ? (
 						<View style={styles.dayScoreMain}>
 							{/* 카드 배경(surfaceAlt)과 트랙 색이 같으면 테두리만 남아 링이 안 보인다 → 밝은 트랙으로 전체 링을 드러낸다 */}
-							<DonutChart size={92} strokeWidth={10} percent={dayRate} color={Colors.primary} trackColor={Colors.borderStrong}>
+							<DonutChart size={DONUT} strokeWidth={isTablet ? scaleWidth(10) : 10} percent={dayRate} color={Colors.primary} trackColor={Colors.borderStrong}>
 								<Text style={styles.dayScoreDonutNum}>{dayRate}%</Text>
 								<Text style={styles.dayScoreDonutLabel}>{t('report.tile.accuracy')}</Text>
 							</DonutChart>
@@ -374,8 +376,8 @@ export default LearningReportCard;
 
 const styles = themed(() => StyleSheet.create({
 	card: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
-	cardTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
-	weekHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+	cardTitle: { flexShrink: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
+	weekHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
 	weekActivePill: { backgroundColor: Colors.primaryBg, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
 	weekActiveText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	periodRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.md },
@@ -406,11 +408,11 @@ const styles = themed(() => StyleSheet.create({
 	weekBarLabel: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.sm },
 	weekBarSubLabel: { fontSize: Typography.micro, color: Colors.textMuted, fontWeight: '700', marginTop: SpacingV.xxs },
 	weekBarLabelOn: { color: Colors.primary, fontWeight: '900' },
-	weekBarsScroll: { flexGrow: 1, justifyContent: 'space-between', alignItems: 'flex-end', height: scaleHeight(100), paddingRight: Spacing.xs },
+	weekBarsScroll: { flexGrow: 1, justifyContent: 'space-between', alignItems: 'flex-end', minHeight: scaleHeight(100), paddingRight: Spacing.xs },
 	chartHintText: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600' },
 	dayScoreCard: { marginTop: SpacingV.lg, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
-	dayScoreHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-	dayScoreDate: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
+	dayScoreHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
+	dayScoreDate: { flexShrink: 1, fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	dayScoreTrend: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, borderRadius: Radius.pill },
 	dayScoreTrendText: { fontSize: Typography.footnote, fontWeight: '800' },
 	dayScoreMain: { flexDirection: 'row', alignItems: 'center', gap: Spacing.lg, marginTop: SpacingV.lg },

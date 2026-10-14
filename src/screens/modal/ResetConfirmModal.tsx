@@ -52,7 +52,7 @@ const ResetConfirmModal: React.FC<Props> = ({ visible, label, desc, icon = 'dele
 							<Text style={styles.cancelText}>{t('common.cancel')}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={[styles.btn, styles.confirmBtn, busy && styles.btnDisabled]} activeOpacity={0.9} disabled={busy} onPress={onConfirm}>
-							{busy ? <ActivityIndicator color={Colors.textInverse} /> : <Text style={styles.confirmText}>{t('common.reset')}</Text>}
+							{busy ? <ActivityIndicator color={Colors.onFill} /> : <Text style={styles.confirmText}>{t('common.reset')}</Text>}
 						</TouchableOpacity>
 					</View>
 				</SheetIn>
@@ -78,5 +78,6 @@ const styles = themed(() => StyleSheet.create({
 	cancelBtn: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	confirmBtn: { backgroundColor: Colors.errorDark },
 	cancelText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.text },
-	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
+	// errorDark 채움 — 다크에선 흰 글자 3.8:1 이라 onFill 로 뒤집는다 (라이트는 흰색 그대로)
+	confirmText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 }));

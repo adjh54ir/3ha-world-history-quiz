@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import Colors, { withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -94,7 +94,7 @@ const WeakFocus = () => {
 					<View style={styles.chipRow}>
 						{weakKeys.map((k) => (
 							<View key={k} style={[styles.chip, { backgroundColor: withAlpha(LearnHubService.getDomain(k).meta.color, '14') }]}>
-								<Text style={[styles.chipText, { color: LearnHubService.getDomain(k).meta.color }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(k)}</Text>
+								<Text style={[styles.chipText, { color: accentInk(LearnHubService.getDomain(k).meta.color) }]} numberOfLines={1} ellipsizeMode="tail">{LearnHubService.getDomainTitle(k)}</Text>
 							</View>
 						))}
 					</View>

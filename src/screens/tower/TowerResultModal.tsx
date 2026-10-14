@@ -417,7 +417,8 @@ export default TowerResultModal;
 const makeStyles = () => StyleSheet.create({
 	overlay: {
 		flex: 1,
-		backgroundColor: Colors.overlayStrong,
+		// 무대는 늘 어둡다 — 다크의 overlayStrong 은 토스트용으로 밝힌 회녹색이라 어두운 창이 뜨지 않는다. 카운트다운과 같은 이유로 라이트 원값 고정
+		backgroundColor: LIGHT_COLORS.overlayStrong,
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
@@ -444,9 +445,7 @@ const makeStyles = () => StyleSheet.create({
 		fontWeight: FontWeight.heavy, // 디자인 토큰 최대 굵기(heavy)로 통일 — 900은 스케일 밖
 		color: Colors.textInverse,
 		letterSpacing: 3,
-		textShadowColor: Colors.backdrop,
-		textShadowOffset: { width: 0, height: scaleHeight(2) },
-		textShadowRadius: 4,
+		// 띠 면 밝기에 맞춘 글씨색(readableOn)이라 대비가 이미 확보된다 — 그림자 금지 규칙대로 글자 그림자를 뺐다
 	},
 	bossContainer: {
 		alignItems: 'center',
@@ -460,7 +459,7 @@ const makeStyles = () => StyleSheet.create({
 		width: scaleWidth(110),
 		height: scaleWidth(110),
 		borderRadius: scaleWidth(55),
-		borderWidth: 2,
+		borderWidth: Border.thick,
 	},
 	bossImageWrapper: {
 		width: scaleWidth(90),
@@ -508,9 +507,12 @@ const makeStyles = () => StyleSheet.create({
 	scrollArea: {
 		flex: 1,
 	},
+	// 섹션(점수·별·보상·종합 결과·패배 문구) 사이를 gap 하나로 — 예전엔 칸마다 marginTop 이 md/lg 로 달랐다.
+	// 아래 여백도 버튼 띠 구분선에 붙지 않게 띠 안쪽 여백(lg)과 맞춘다
 	scrollContent: {
 		paddingHorizontal: Spacing.xl,
-		paddingBottom: SpacingV.sm,
+		paddingBottom: SpacingV.lg,
+		gap: SpacingV.lg,
 	},
 	scoreMainBox: {
 		backgroundColor: Colors.backdrop,
@@ -579,10 +581,8 @@ const makeStyles = () => StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		gap: Spacing.md,
-		marginTop: SpacingV.md,
 	},
 	rewardSection: {
-		marginTop: SpacingV.md,
 		borderRadius: Radius.lg,
 		overflow: 'hidden',
 		borderWidth: 1,
@@ -610,7 +610,7 @@ const makeStyles = () => StyleSheet.create({
 		width: scaleWidth(52),
 		height: scaleWidth(52),
 		borderRadius: scaleWidth(26),
-		borderWidth: 2,
+		borderWidth: Border.thick,
 		borderColor: withAlpha(Colors.gold, '66'),
 	},
 	rewardInfo: {
@@ -630,7 +630,7 @@ const makeStyles = () => StyleSheet.create({
 	// 지속 효과 한 줄 — 보상 칸 아래에 붙는다
 
 	// 종합 결과 — 문제 하나가 카드 한 장
-	reviewSection: { marginTop: SpacingV.lg, gap: SpacingV.sm },
+	reviewSection: { gap: SpacingV.sm },
 	reviewHeadRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm },
 	reviewHeader: { fontSize: Typography.footnote, fontWeight: FontWeight.heavy, color: Colors.textInverse, letterSpacing: 1 },
 	reviewHeadHint: { fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.onBrandTextSoft },
@@ -669,7 +669,6 @@ const makeStyles = () => StyleSheet.create({
 	reviewGoText: { flex: 1, fontSize: Typography.caption, fontWeight: FontWeight.bold, color: Colors.gold },
 
 	failSection: {
-		marginTop: SpacingV.md,
 		backgroundColor: Colors.backdrop,
 		borderRadius: Radius.lg,
 		padding: Spacing.lg,

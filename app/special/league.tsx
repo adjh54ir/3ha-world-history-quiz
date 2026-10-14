@@ -127,7 +127,7 @@ const styles = themed(() => StyleSheet.create({
 	myXpText: { fontSize: Typography.callout, fontWeight: '900' },
 	legendRow: { flexDirection: 'row', gap: Spacing.lg, marginBottom: SpacingV.md },
 	legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-	legendDot: { width: scaleWidth(9), height: scaleWidth(9), borderRadius: scaleWidth(5) },
+	legendDot: { width: scaleWidth(9), height: scaleWidth(9), borderRadius: Radius.pill },
 	legendText: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: '700' },
 	board: { ...CardSurface, borderRadius: Radius.lg, paddingVertical: SpacingV.xs },
 	row: { flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.md, paddingHorizontal: Spacing.lg },

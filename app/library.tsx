@@ -206,17 +206,17 @@ const Library = () => {
 			<View style={styles.segment}>
 				<TouchableOpacity style={[styles.segBtn, isBookmark && styles.segBtnActive]} activeOpacity={0.85} onPress={() => changeTab('bookmark')}>
 					<IconComponent type="materialIcons" name="bookmark" size={scaledSize(17)} color={isBookmark ? Colors.primary : Colors.textMuted} />
-					<Text style={[styles.segText, isBookmark && styles.segTextActive]}>{t('library.tabBookmark', { n: bookmarks.length })}</Text>
+					<Text style={[styles.segText, isBookmark && styles.segTextActive]} numberOfLines={1}>{t('library.tabBookmark', { n: bookmarks.length })}</Text>
 				</TouchableOpacity>
 				<TouchableOpacity style={[styles.segBtn, !isBookmark && styles.segBtnActive]} activeOpacity={0.85} onPress={() => changeTab('wrong')}>
 					<IconComponent type="materialIcons" name="error-outline" size={scaledSize(17)} color={!isBookmark ? Colors.error : Colors.textMuted} />
-					<Text style={[styles.segText, !isBookmark && styles.segTextActive]}>{t('library.tabWrong', { n: wrongs.length })}</Text>
+					<Text style={[styles.segText, !isBookmark && styles.segTextActive]} numberOfLines={1}>{t('library.tabWrong', { n: wrongs.length })}</Text>
 				</TouchableOpacity>
 			</View>
 
 			{/* 주제별 필터 — 검색과 동일한 공용 칩 (위 간격 확보) */}
-			<View style={{ marginTop: SpacingV.xl }}>
-				<CategoryScopeChips value={scope} onChange={setScope} showCount={false} style={{ backgroundColor: Colors.background }} />
+			<View style={styles.chipsWrap}>
+				<CategoryScopeChips value={scope} onChange={setScope} showCount={false} style={styles.chipsBg} />
 			</View>
 
 			{/* 빈 상태는 남은 화면 높이를 다 써서 정중앙에 온다 (위쪽에 붙어 보이지 않게) */}
@@ -268,12 +268,12 @@ const Library = () => {
 							<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.reviewCtaText}>{t('library.review', { n: wrongs.length })}</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.clearBtn} activeOpacity={0.8} onPress={clearWrong}>
+						<TouchableOpacity style={styles.clearBtn} activeOpacity={0.8} onPress={clearWrong} hitSlop={Layout.hitSlop}>
 							<IconComponent type="materialIcons" name="delete-sweep" size={scaledSize(16)} color={Colors.textSecondary} />
 							<Text style={styles.clearText}>{scope === ALL_SCOPE ? t('library.clearAll') : t('library.clearDomain', { domain: LearnHubService.getDomainTitle(scope) })}</Text>
 						</TouchableOpacity>
 						<AdaptiveGrid>
-							{wrongs.map((w) => {
+							{wrongs.map((w, i) => {
 								const c = findCard(w.domain, w.uid);
 								const fields = learnListFields({
 									domain: w.domain,
@@ -283,8 +283,8 @@ const Library = () => {
 									explanation: w.explanation || (c ? c.meaning : ''),
 								});
 								return (
+									<FadeInUp key={w.uid} delay={Math.min(i * 45, 300)} duration={340} distance={14}>
 									<LearnItemCard
-										key={w.uid}
 										domain={w.domain}
 										categoryLabel={w.categoryLabel}
 										levelLabel={w.level}
@@ -295,6 +295,7 @@ const Library = () => {
 										onToggleBookmark={() => toggleWrongBookmark(w)}
 										onPress={() => setDetail(w)}
 									/>
+									</FadeInUp>
 								);
 							})}
 						</AdaptiveGrid>
@@ -375,10 +376,12 @@ const styles = themed(() => StyleSheet.create({
 	},
 	segText: { fontSize: Typography.body, fontWeight: '700', color: Colors.textMuted },
 	segTextActive: { color: Colors.textStrong },
+	chipsWrap: { marginTop: SpacingV.xl },
+	chipsBg: { backgroundColor: Colors.background },
 	scroll: { flex: 1 },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	listFill: { flexGrow: 1 },
-	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
+	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
 	reviewCta: {
 		flexDirection: 'row',
 		alignItems: 'center',

@@ -145,7 +145,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
-				<SheetIn visible={visible} style={styles.sheet}>
+				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
 					{/* 헤더 행: 좌측 여백(밸런서) · 태그(정중앙) · X(우측) — 모두 세로 중앙 정렬 */}
 					<View style={styles.headerRow}>
 						<View style={styles.headerSide} />

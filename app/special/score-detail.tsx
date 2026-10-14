@@ -443,7 +443,7 @@ const styles = themed(() => StyleSheet.create({
 	sortChipOn: { backgroundColor: Colors.surface },
 	sortText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },
 	sortTextOn: { color: Colors.primary },
-	row: { ...CardSurface, flexDirection: 'row', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.sm },
+	row: { ...CardSurface, flexDirection: 'row', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
 	rowCharWrap: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowCharImg: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: scaleWidth(11) },
 	rowLvBadge: { position: 'absolute', bottom: scaleWidth(-4), right: scaleWidth(-4), backgroundColor: Colors.primary, paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xs, borderRadius: Radius.sm, borderWidth: Border.thin, borderColor: Colors.surface },

@@ -301,7 +301,6 @@ const styles = themed(() => StyleSheet.create({
 	list: { gap: SpacingV.sm, paddingBottom: SpacingV.sm },
 	row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, borderWidth: 1, borderColor: 'transparent', paddingLeft: Spacing.lg, paddingRight: Spacing.md, paddingVertical: SpacingV.md, overflow: 'hidden' },
 	rowLocked: { backgroundColor: Colors.surface, borderColor: Colors.border },
-	// 왼쪽 희귀도 띠 — 획득한 뱃지만
 	rowIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.lg, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
 	rowIconSpark: { position: 'absolute', right: -scaleWidth(3), bottom: -scaleHeight(3), width: scaleWidth(16), height: scaleWidth(16), borderRadius: Radius.pill, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: Colors.surface },
 	rowBody: { flex: 1 },

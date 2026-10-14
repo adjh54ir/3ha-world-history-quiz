@@ -13,7 +13,7 @@ import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/Char
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
 import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -389,8 +389,9 @@ const TodayChallenge = () => {
 									<>
 										<FadeInUp delay={220} duration={420} distance={10} style={styles.heroDonut}>
 											<DonutChart
-												size={124}
-												strokeWidth={12}
+												// 태블릿은 안쪽 글자(h2)가 1.25배로 커지므로 도넛도 같은 배율로 키운다 (폰은 기존 값)
+												size={isTablet ? scaleWidth(124) : 124}
+												strokeWidth={isTablet ? scaleWidth(12) : 12}
 												percent={pct}
 												color={doneColor}
 												trackColor={Colors.border}>
@@ -591,7 +592,8 @@ const styles = themed(() => StyleSheet.create({
 	// 좌우 안쪽 여백은 같은 화면의 알림 카드(padding: Spacing.lg)와 맞춘다 — 문구가 길면 카드 테두리에 붙었다
 	infoCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, marginBottom: SpacingV.md },
 	infoRow: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
-	infoText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
+	// 아이콘 옆 긴 문구가 카드 밖으로 밀리지 않게 줄어들며 줄바꿈한다
+	infoText: { flexShrink: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	infoDivider: { width: 1, height: scaleHeight(28), backgroundColor: Colors.border },
 	alarmCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg },
 	alarmTop: { flexDirection: 'row', alignItems: 'center' },

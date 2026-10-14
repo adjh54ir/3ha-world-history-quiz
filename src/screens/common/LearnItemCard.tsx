@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import HighlightText from '@/src/screens/common/atomic/HighlightText';
-import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -129,7 +129,7 @@ const LearnItemCard: React.FC<LearnItemCardProps> = ({
 					)}
 					<View style={[styles.domainChip, { backgroundColor: withAlpha(meta.color, '14') }]}>
 						<DomainIcon mainIcon={meta.mainIcon} icon={meta.icon} iconType={meta.iconType} size={scaledSize(13)} color={meta.color} />
-						<Text style={[styles.domainChipText, { color: meta.color }]} numberOfLines={1} ellipsizeMode="tail">{meta.title}</Text>
+						<Text style={[styles.domainChipText, { color: accentInk(meta.color) }]} numberOfLines={1} ellipsizeMode="tail">{meta.title}</Text>
 					</View>
 					{showCategory && (
 						<View style={styles.metaChip}>
@@ -212,7 +212,8 @@ const styles = themed(() => StyleSheet.create({
 		borderWidth: 1,
 		borderColor: Colors.border,
 		borderRadius: Radius.lg,
-		padding: Spacing.lg,
+		paddingHorizontal: Spacing.lg,
+		paddingVertical: SpacingV.lg,
 		marginBottom: Layout.itemGap,
 	},
 	tagRow: { flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', gap: Spacing.sm },

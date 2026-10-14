@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, Border, Tracking } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Border, Tracking, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { RankRow } from '@/src/services/RankingService';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -106,7 +106,7 @@ export const RankRowItem: React.FC<{ item: RankRow; index: number; unit?: string
 
 const styles = themed(() => StyleSheet.create({
 	// 시상대
-	podiumCard: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.md, paddingBottom: 0, paddingHorizontal: Spacing.lg, marginBottom: SpacingV.xl, overflow: 'hidden' },
+	podiumCard: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.md, paddingBottom: 0, paddingHorizontal: Spacing.lg, marginBottom: Layout.sectionGap, overflow: 'hidden' },
 	podiumHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, marginBottom: SpacingV.md },
 	podiumHeadText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textStrong, letterSpacing: 1 },
 	podiumWrap: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: Spacing.sm },
@@ -119,7 +119,7 @@ const styles = themed(() => StyleSheet.create({
 	podiumPlace: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textInverse },
 	podiumPlaceSub: { fontSize: Typography.micro, fontWeight: '900', color: Colors.onBrandText, letterSpacing: Tracking.normal, marginTop: SpacingV.xxs },
 	// 순위 행
-	row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: SpacingV.md, paddingHorizontal: Spacing.lg, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, marginBottom: SpacingV.sm, overflow: 'hidden' },
+	row: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: SpacingV.md, paddingHorizontal: Spacing.lg, backgroundColor: Colors.surface, borderRadius: Radius.lg, borderWidth: 1, borderColor: Colors.border, marginBottom: Layout.itemGap, overflow: 'hidden' },
 	rowMe: { borderWidth: Border.heavy, borderColor: Colors.primary, backgroundColor: Colors.primaryBg },
 	rankBadge: { width: scaleWidth(34), height: scaleWidth(34), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' },
 	rankText: { fontSize: Typography.body, fontWeight: '900', color: Colors.textSecondary },

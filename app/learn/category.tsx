@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
-import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
+import Colors, { withAlpha, readableOn, accentInk as inkOf } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -39,6 +39,8 @@ const LearnCategory = () => {
 	const category = stringParam(params.category, 'capital');
 	const domain = LearnHubService.getDomain(category);
 	const accent = domain.meta.color;
+	// 다크 표면 위 주제색 글자·아이콘 — 진한 주제색(#B45309·#15803D 등)은 3.3:1 로 묻혀 밝은 쪽으로 섞는다. 채움·테두리는 accent 그대로
+	const accentInk = inkOf(accent);
 	// 광고·상태바 배경을 히어로(주제색 틴트)와 같은 색으로 이어 붙인다
 	useTopBarAccent(withAlpha(accent, '12'));
 	const categoryIllustration = getDomainIllustration(domain.meta.key);
@@ -144,7 +146,7 @@ const LearnCategory = () => {
 	};
 
 	const actions = [
-		{ key: 'study', title: t('learn.category.actions.studyTitle'), desc: t('learn.category.actions.studyDesc'), icon: 'school', color: accent, onPress: () => setShowModeModal(true), badge: 0, illustration: undefined },
+		{ key: 'study', title: t('learn.category.actions.studyTitle'), desc: t('learn.category.actions.studyDesc'), icon: 'school', color: accentInk, onPress: () => setShowModeModal(true), badge: 0, illustration: undefined },
 		{ key: 'quiz', title: t('learn.category.actions.quizTitle'), desc: selectableLevels.length > 0 ? t('learn.category.actions.quizDesc') : t('learn.category.actions.quizDescNoLevel'), icon: 'quiz', color: Colors.primary, onPress: () => (selectableLevels.length > 0 ? setShowLevelModal(true) : startQuizWithLevel('전체')), badge: 0, illustration: undefined },
 		{ key: 'wrong', title: t('learn.category.actions.wrongTitle'), desc: wrongCount > 0 ? t('learn.category.actions.wrongDesc') : t('learn.category.actions.wrongDescEmpty'), icon: 'history-edu', color: Colors.error, onPress: () => go('/quiz/wrong-review'), badge: wrongCount, illustration: undefined },
 		{ key: 'browse', title: t('learn.category.actions.browseTitle'), desc: t('learn.category.actions.browseDesc'), icon: 'filter-list', color: Colors.textSecondary, onPress: () => router.push({ pathname: '/search', params: { scope: category } } as never), badge: 0, illustration: undefined },
@@ -182,7 +184,7 @@ const LearnCategory = () => {
 									</View>
 								</>
 							) : (
-								<DomainIcon mainIcon={domain.meta.mainIcon} icon={domain.meta.icon} iconType={domain.meta.iconType} size={scaledSize(domain.meta.mainIcon ? 48 : 34)} color={accent} />
+								<DomainIcon mainIcon={domain.meta.mainIcon} icon={domain.meta.icon} iconType={domain.meta.iconType} size={scaledSize(domain.meta.mainIcon ? 48 : 34)} color={accentInk} />
 							)}
 						</TouchableOpacity>
 						<Text style={styles.heroTitle} numberOfLines={1} ellipsizeMode="tail">{domain.meta.title}</Text>
@@ -205,12 +207,12 @@ const LearnCategory = () => {
 						)}
 						<View style={styles.heroChips}>
 							<View style={[styles.heroCountPill, { backgroundColor: withAlpha(accent, '1F') }]}>
-								<Text style={[styles.heroCountText, { color: accent }]}>{t('learn.category.totalCount', { value: total.toLocaleString() })}</Text>
+								<Text style={[styles.heroCountText, { color: accentInk }]}>{t('learn.category.totalCount', { value: total.toLocaleString() })}</Text>
 							</View>
 							{hasChar && (
 								<TouchableOpacity style={styles.charViewBtn} activeOpacity={0.85} onPress={() => setShowCharModal(true)}>
-									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(14)} color={accent} />
-									<Text style={[styles.charViewText, { color: accent }]}>{t('learn.category.charLevels')}</Text>
+									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(14)} color={accentInk} />
+									<Text style={[styles.charViewText, { color: accentInk }]}>{t('learn.category.charLevels')}</Text>
 								</TouchableOpacity>
 							)}
 						</View>
@@ -242,9 +244,9 @@ const LearnCategory = () => {
 					<View style={styles.progressCard}>
 						<View>
 							<View style={styles.progressTop}>
-								<IconComponent type="materialIcons" name="school" size={scaledSize(15)} color={accent} />
+								<IconComponent type="materialIcons" name="school" size={scaledSize(15)} color={accentInk} />
 								<Text style={styles.progressTitle}>{t('learn.category.studyProgress')}</Text>
-								<Text style={[styles.progressPct, { color: accent }]}>{studyProgress}%</Text>
+								<Text style={[styles.progressPct, { color: accentInk }]}>{studyProgress}%</Text>
 							</View>
 							<AnimatedProgress ratio={studyProgress / 100} color={accent} trackColor={Colors.border} height={scaleHeight(8)} />
 						</View>
@@ -262,13 +264,13 @@ const LearnCategory = () => {
 						<TouchableOpacity style={[styles.sampleCard, { borderColor: withAlpha(accent, '33') }]} activeOpacity={0.9} onPress={() => go('/learn/quiz')}>
 							<View style={styles.sampleTop}>
 								<View style={[styles.sampleIcon, { backgroundColor: withAlpha(accent, '14') }]}>
-									<IconComponent type="materialIcons" name="psychology" size={scaledSize(22)} color={accent} />
+									<IconComponent type="materialIcons" name="psychology" size={scaledSize(22)} color={accentInk} />
 								</View>
 								<View style={styles.sampleHeadBody}>
 									<Text style={styles.sampleEyebrow}>{t('learn.category.sampleEyebrow')}</Text>
 									<Text style={styles.sampleTitle}>{t('learn.category.sampleTitle')}</Text>
 								</View>
-								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={accent} />
+								<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(20)} color={accentInk} />
 							</View>
 							<Text style={styles.sampleGuide}>{sampleQuestion.guide}</Text>
 							{sampleQuestion.imageRef ? (
@@ -343,7 +345,7 @@ const LearnCategory = () => {
 
 						<TouchableOpacity style={styles.modeCard} activeOpacity={0.9} onPress={startCardMode}>
 							<View style={[styles.modeIcon, { backgroundColor: withAlpha(accent, '14') }]}>
-								<IconComponent type="materialIcons" name="style" size={scaledSize(26)} color={accent} />
+								<IconComponent type="materialIcons" name="style" size={scaledSize(26)} color={accentInk} />
 							</View>
 							<View style={styles.modeBody}>
 								<Text style={styles.modeTitle}>{t('learn.category.cardsTitle')}</Text>
@@ -416,8 +418,6 @@ const styles = themed(() => StyleSheet.create({
 	progressTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
 	progressTitle: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	progressPct: { fontSize: Typography.body, fontWeight: '900' },
-	progressTrack: { height: scaleHeight(8), borderRadius: scaleWidth(4), backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
-	progressFill: { height: '100%', borderRadius: scaleWidth(4) },
 
 	// 샘플 문제
 	sampleCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.sectionGap },

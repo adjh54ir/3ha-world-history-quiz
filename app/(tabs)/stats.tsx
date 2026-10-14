@@ -9,7 +9,7 @@ import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
-import Colors, { accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Tracking, Border } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
 import DateUtils from '@/src/utils/DateUtils';
@@ -487,9 +487,7 @@ const Stats = () => {
 						) : (
 							<View style={styles.rankRowsWrap}>
 								{rankRows.slice(0, 5).map((r, i) => (
-									<FadeInUp key={`${r.rank}-${r.nickname}-${i}`} delay={Math.min(i * 70, 350)} duration={340} distance={12}>
-										<RankRowItem item={r} index={i} unit={t('stats.rank.unit')} />
-									</FadeInUp>
+									<RankRowItem key={`${r.rank}-${r.nickname}-${i}`} item={r} index={i} unit={t('stats.rank.unit')} />
 								))}
 							</View>
 						)}
@@ -626,6 +624,7 @@ const Stats = () => {
 								{timeHistory.length > 3 && (
 									<TouchableOpacity
 										activeOpacity={0.7}
+										hitSlop={Layout.hitSlop}
 										onPress={() => {
 											LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 											setTimeHistOpen((v) => !v);
@@ -853,7 +852,7 @@ const Stats = () => {
 											<View style={[styles.pastMark, { backgroundColor: it.correct ? Colors.successDeep : Colors.errorDark }]}>
 												<IconComponent type="materialIcons" name={it.correct ? 'check' : 'close'} size={scaledSize(11)} color={Colors.textInverse} />
 											</View>
-											<Text style={[styles.pastDomain, { color: meta.color }]} numberOfLines={1}>{meta.title}</Text>
+											<Text style={[styles.pastDomain, { color: accentInk(meta.color) }]} numberOfLines={1}>{meta.title}</Text>
 											<View style={[styles.pastResultChip, { backgroundColor: it.correct ? withAlpha(Colors.success, '14') : withAlpha(Colors.error, '14') }]}>
 												<Text style={[styles.pastResult, { color: it.correct ? Colors.success : Colors.error }]}>{it.correct ? t('stats.daily.correct') : t('stats.daily.wrong')}</Text>
 											</View>

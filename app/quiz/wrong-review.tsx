@@ -109,14 +109,15 @@ const QuizWrongReview = () => {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
 				<CommonHeader title={headerTitle} onBack={() => router.back()} />
-				<View style={styles.center}>
+				{/* 즐겨찾기 퀴즈 빈 상태와 같은 등장 연출 */}
+				<FadeInUp style={styles.center}>
 					<ExpoImage source={SHARED_STATE_ILLUSTRATIONS.allComplete} style={styles.emptyIllustration} contentFit="contain" />
 					<Text style={styles.emptyTitle}>{t('quiz.wrong.emptyTitle')}</Text>
 					<Text style={styles.emptySub}>{t('quiz.wrong.emptySub')}</Text>
 					<TouchableOpacity style={styles.cta} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
 						<Text style={styles.ctaText}>{t('quiz.wrong.cta')}</Text>
 					</TouchableOpacity>
-				</View>
+				</FadeInUp>
 			</SafeAreaView>
 		);
 	}
@@ -249,7 +250,8 @@ const styles = themed(() => StyleSheet.create({
 	emptyIllustration: { width: scaleArt(156), height: scaleArt(156) },
 	emptyTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
 	emptySub: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.sm, lineHeight: scaleHeight(20) },
-	cta: { marginTop: SpacingV.xxl, backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
+	// 빈 상태 버튼 — 높이 41 → 터치 최소 44
+	cta: { marginTop: SpacingV.xxl, minHeight: Layout.touch, justifyContent: 'center', backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
 	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 	introList: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	gridRow: { justifyContent: 'space-between' },

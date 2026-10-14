@@ -26,7 +26,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
-import Colors, { isDark, withAlpha, readableOn, EMBER_GRADIENT, HEAT_GRADIENT, LIGHT_COLORS, NIGHT_GRADIENT } from '@/src/const/ConstColors';
+import Colors, { accentInk, isDark, withAlpha, readableOn, EMBER_GRADIENT, HEAT_GRADIENT, LIGHT_COLORS, NIGHT_GRADIENT } from '@/src/const/ConstColors';
 import { BODY_FONTS, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenHeight, contentWidth, scaleArt, isTablet } from '@/src/utils';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -200,6 +200,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	// 상단 인셋(상태바)도 헤더와 같은 accent 로 이어 붙인다 — 시작 안내·풀이·결과 모두 헤더가 accent 색이다
 	// 타임 챌린지 결과는 히어로가 heat 그라디언트라 상태바도 heat 로 맞춘다
 	useTopBarAccent(finished && timed ? Colors.heat : accent);
+	// accent 채움 위 글자색 — 다크 onFill(어두운 잉크)은 주제색(#15803D·#B45309·#DC2626·#64748B) 위에서 3.7:1 로 흐려진다.
+	// 다크만 명도로 흰/검을 고른다(라이트는 기존 onFill 흰 글자 유지 — 폰 라이트 화면 변화 없음)
+	const onAccent = isDark() ? readableOn(accent) : Colors.onFill;
 	const [timeLeft, setTimeLeft] = useState(timeSec);
 			const [displayResultScore, setDisplayResultScore] = useState(0);
 	const resultScoreAnim = useRef(new Animated.Value(0)).current;
@@ -898,8 +901,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		const timeScore = correctCount * POINT_PER_CORRECT;
 		const isNewTimeRecord = timed && trackProgress && prevTimeBest !== null && prevTimeBest > 0 && timeScore > prevTimeBest;
 		// 타임 히어로는 어두운 heat 그라디언트라 흰 글자, 일반 히어로는 accent 단색이라 onFill
-		const heroInk = timed ? Colors.textInverse : Colors.onFill;
-		const heroSubInk = timed ? Colors.onBrandText : withAlpha(Colors.onFill, 'E6');
+		const heroInk = timed ? Colors.textInverse : onAccent;
+		const heroSubInk = timed ? Colors.onBrandText : withAlpha(onAccent, 'E6');
 
 		return withSharedModals(
 			<SafeAreaView style={styles.safe} edges={[]}>
@@ -923,12 +926,12 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={styles.resultScoreChip}>
 							{mode === 'daily' || !trackProgress ? (
 								<>
-									<Text style={[styles.resultScoreNum, styles.resultScoreNumGreen]}>{correctCount}</Text>
+									<Text style={[styles.resultScoreNum, styles.resultScoreNumGreen, isDark() && { color: onAccent }]}>{correctCount}</Text>
 									<Text style={[styles.resultScoreUnit, { color: heroSubInk }]}>{t('player.result.unitCount')}</Text>
 								</>
 							) : (
 								<>
-									<Animated.Text style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen]}>{displayResultScore}</Animated.Text>
+									<Animated.Text style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen, !timed && isDark() && { color: onAccent }]}>{displayResultScore}</Animated.Text>
 									<Text style={[styles.resultScoreUnit, { color: heroSubInk }]}>{t('player.result.unitPoint')}</Text>
 								</>
 							)}
@@ -1105,7 +1108,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				<View style={[styles.header, { backgroundColor: accent, paddingTop: SpacingV.sm }]}>
 					<View style={styles.headerRow}>
 						<View style={styles.backBtn} />
-						<Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
+						<Text style={[styles.headerTitle, { color: onAccent }]} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
 						<View style={styles.backBtn} />
 					</View>
 				</View>
@@ -1167,7 +1170,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											<Text style={styles.soundToggleLabel}>{t('player.start.sound')}</Text>
 										</View>
 										<View style={[styles.soundPill, { backgroundColor: soundOn ? accent : Colors.surfaceAlt }]}>
-											<Text style={[styles.soundPillText, { color: soundOn ? Colors.onFill : Colors.textSecondary }]} numberOfLines={1} ellipsizeMode="tail">{soundOn ? 'ON' : 'OFF'}</Text>
+											<Text style={[styles.soundPillText, { color: soundOn ? onAccent : Colors.textSecondary }]} numberOfLines={1} ellipsizeMode="tail">{soundOn ? 'ON' : 'OFF'}</Text>
 										</View>
 									</TouchableOpacity>
 									<View style={styles.startBtns}>
@@ -1175,7 +1178,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											<Text style={styles.startCancelText}>{t('common.cancel')}</Text>
 										</TouchableOpacity>
 										<TouchableOpacity style={[styles.startGoBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={beginQuiz}>
-											<Text style={styles.startGoText}>{t('common.start')}</Text>
+											<Text style={[styles.startGoText, { color: onAccent }]}>{t('common.start')}</Text>
 										</TouchableOpacity>
 									</View>
 								</>
@@ -1245,7 +1248,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					{/* 상단 모드 뱃지 */}
 					<View style={styles.countBadge}>
 						<IconComponent type="materialIcons" name="bolt" size={scaledSize(14)} color={Colors.textInverse} />
-						<Text style={styles.countBadgeText}>{title}</Text>
+						<Text style={styles.countBadgeText} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
 					</View>
 
 					{/* 숫자 링 — 프레임마다 반 바퀴 회전하며 게이지가 도는 느낌 */}
@@ -1285,7 +1288,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			<SafeAreaView style={styles.safe} edges={['bottom']}>
 				<View style={[styles.header, { backgroundColor: accent }]}>
 					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={() => router.back()} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('common.close')}>
-						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.onFill} />
+						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={onAccent} />
 					</TouchableOpacity>
 				</View>
 				<EmptyState icon="quiz" text={t('player.empty')} />
@@ -1298,7 +1301,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const lowTime = timed && timeLeft <= 10;
 	const activeTime = timed ? timeLeft : qTimeLeft;
 	const activeLimit = timed ? timeSec : qLimit;
-	const timeBarColor = activeTime >= activeLimit / 2 ? Colors.onFill : activeTime > Math.min(10, activeLimit / 4) ? Colors.goldSoft : Colors.errorPale;
+	const timeBarColor = activeTime >= activeLimit / 2 ? onAccent : activeTime > Math.min(10, activeLimit / 4) ? Colors.goldSoft : Colors.errorPale;
 	const timeProgress = activeLimit > 0 ? Math.max(0, Math.min(100, (activeTime / activeLimit) * 100)) : 0;
 	const presentation = getQuestionPresentation(current);
 	const currentDomainMeta = LearnHubService.getDomain(current.domain).meta;
@@ -1318,9 +1321,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			<View style={[styles.header, { backgroundColor: accent, paddingTop: SpacingV.sm }]}>
 				<View style={styles.headerRow}>
 					<View style={styles.backBtn} />
-					<Text style={styles.headerTitle} numberOfLines={1} ellipsizeMode="tail">{displayTitle}</Text>
+					<Text style={[styles.headerTitle, { color: onAccent }]} numberOfLines={1} ellipsizeMode="tail">{displayTitle}</Text>
 					<View style={styles.headerRight}>
-						<Text style={styles.headerCount}>{timed ? t('player.play.nth', { n: answeredCount + 1 }) : `${index + 1}/${total}`}</Text>
+						<Text style={[styles.headerCount, { color: withAlpha(onAccent, 'E6') }]}>{timed ? t('player.play.nth', { n: answeredCount + 1 }) : `${index + 1}/${total}`}</Text>
 					</View>
 				</View>
 				{/* 문항 진행 — 칸 농도로 난이도(초급→특급)를 보여준다 */}
@@ -1331,7 +1334,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								key={q.uid}
 								style={[
 									styles.levelSeg,
-									{ backgroundColor: withAlpha(Colors.onFill, LEVEL_ALPHA[q.level ?? ''] ?? '59') },
+									{ backgroundColor: withAlpha(onAccent, LEVEL_ALPHA[q.level ?? ''] ?? '59') },
 									i > index && styles.levelSegTodo,
 									i === index && styles.levelSegCurrent,
 								]}
@@ -1342,21 +1345,21 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				{/* 상단 스코어 영역: 점수 / 정답 / 콤보 */}
 				<View style={styles.scoreStrip}>
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={Colors.onFill} />
-						<Animated.Text style={[styles.scoreValue, { transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
-						<Text style={styles.scoreLabel}>{t('player.play.score')}</Text>
+						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={onAccent} />
+						<Animated.Text style={[styles.scoreValue, { color: onAccent, transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
+						<Text style={[styles.scoreLabel, { color: withAlpha(onAccent, 'E6') }]}>{t('player.play.score')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="check-circle" size={scaledSize(15)} color={Colors.onFill} />
-						<Text style={styles.scoreValue}>{correctCount}</Text>
-						<Text style={styles.scoreLabel}>{t('player.play.correct')}</Text>
+						<IconComponent type="materialIcons" name="check-circle" size={scaledSize(15)} color={onAccent} />
+						<Text style={[styles.scoreValue, { color: onAccent }]}>{correctCount}</Text>
+						<Text style={[styles.scoreLabel, { color: withAlpha(onAccent, 'E6') }]}>{t('player.play.correct')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
 					<View style={styles.scoreItem}>
-						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={Colors.onFill} />
-						<Text style={styles.scoreValue}>{combo}</Text>
-						<Text style={styles.scoreLabel}>{t('player.play.combo')}</Text>
+						<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(15)} color={onAccent} />
+						<Text style={[styles.scoreValue, { color: onAccent }]}>{combo}</Text>
+						<Text style={[styles.scoreLabel, { color: withAlpha(onAccent, 'E6') }]}>{t('player.play.combo')}</Text>
 					</View>
 				</View>
 				{/* 남은 시간 — 스코어 바로 아래 (헤더 내 반투명 바) */}
@@ -1369,12 +1372,12 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={styles.headerTimerHead}>
 							<View style={styles.headerTimerLabelRow}>
 								<Reanimated.View style={timed ? challengeBoltMotionStyle : undefined}>
-									<IconComponent type="materialIcons" name={timed ? 'bolt' : 'timer'} size={scaledSize(14)} color={Colors.onFill} />
+									<IconComponent type="materialIcons" name={timed ? 'bolt' : 'timer'} size={scaledSize(14)} color={onAccent} />
 								</Reanimated.View>
-								<Text style={styles.headerTimerLabel} numberOfLines={1} ellipsizeMode="tail">{timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')}</Text>
+								<Text style={[styles.headerTimerLabel, { color: onAccent }]} numberOfLines={1} ellipsizeMode="tail">{timed ? t('player.play.challengeTimeLeft') : t('player.play.timeLeft')}</Text>
 							</View>
 							{/* 다크는 헤더(accent)가 밝아 금빛·분홍 숫자가 묻힌다 — 색 신호는 막대가 맡고 숫자는 채움 글자색으로 */}
-							<Text style={[styles.headerTimerValue, { color: isDark() ? Colors.onFill : timeBarColor }]}>{t('common.seconds', { count: activeTime })}</Text>
+							<Text style={[styles.headerTimerValue, { color: isDark() ? onAccent : timeBarColor }]}>{t('common.seconds', { count: activeTime })}</Text>
 						</View>
 						<View style={styles.headerTimerTrack}>
 							<View style={[styles.headerTimerFill, { width: `${timeProgress}%`, backgroundColor: timeBarColor }]}>
@@ -1421,6 +1424,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						styles.scoreFloat,
 						{
 							top: scaleHeight(70),
+							...(isDark() && { color: onAccent }),
 							opacity: scoreFloat.interpolate({ inputRange: [0, 0.15, 1], outputRange: [0, 1, 0] }),
 							transform: [{ translateY: scoreFloat.interpolate({ inputRange: [0, 1], outputRange: [0, -scaleHeight(38)] }) }],
 						},
@@ -1441,7 +1445,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							<View style={styles.chipRow}>
 								<View style={[styles.metaChip, { backgroundColor: withAlpha(currentDomainMeta.color, '14') }]}>
 									<DomainIcon mainIcon={currentDomainMeta.mainIcon} icon={currentDomainMeta.icon} iconType={currentDomainMeta.iconType} size={scaledSize(13)} color={currentDomainMeta.color} />
-									<Text style={[styles.metaChipText, { color: currentDomainMeta.color }]} numberOfLines={1} ellipsizeMode="tail">{currentDomainMeta.title}</Text>
+									<Text style={[styles.metaChipText, { color: accentInk(currentDomainMeta.color) }]} numberOfLines={1} ellipsizeMode="tail">{currentDomainMeta.title}</Text>
 								</View>
 									{!!current.categoryLabel && current.categoryLabel !== currentDomainMeta.title && (
 									<View style={[styles.metaChip, { backgroundColor: withAlpha(accent, '14') }]}>
@@ -1577,7 +1581,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									<View style={styles.explainMetaRow}>
 										<View style={[styles.explainMetaChip, { backgroundColor: withAlpha(currentDomainMeta.color, '14') }]}>
 											<DomainIcon mainIcon={currentDomainMeta.mainIcon} icon={currentDomainMeta.icon} iconType={currentDomainMeta.iconType} size={scaledSize(13)} color={currentDomainMeta.color} />
-											<Text style={[styles.explainMetaText, { color: currentDomainMeta.color }]}>{currentDomainMeta.title}</Text>
+											<Text style={[styles.explainMetaText, { color: accentInk(currentDomainMeta.color) }]}>{currentDomainMeta.title}</Text>
 										</View>
 										{!!current.categoryLabel && current.categoryLabel !== currentDomainMeta.title && (
 										<View style={styles.explainMetaChip}>
@@ -1654,8 +1658,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								</ScrollView>
 
 								<TouchableOpacity style={[styles.explainNextBtn, { backgroundColor: accent }]} activeOpacity={0.9} onPress={onNext}>
-									<Text style={styles.explainNextText}>{isLast ? t('player.explain.result') : t('player.explain.next')}</Text>
-									<IconComponent type="materialIcons" name={isLast ? 'flag' : 'arrow-forward'} size={scaledSize(20)} color={Colors.onFill} />
+									<Text style={[styles.explainNextText, { color: onAccent }]}>{isLast ? t('player.explain.result') : t('player.explain.next')}</Text>
+									<IconComponent type="materialIcons" name={isLast ? 'flag' : 'arrow-forward'} size={scaledSize(20)} color={onAccent} />
 								</TouchableOpacity>
 							</Animated.View>
 						);
@@ -1684,9 +1688,10 @@ const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 
 	// 타임 챌린지 시작 카운트다운
-	countWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+	// 좌우 여백 — 힌트·팁 문구가 화면 끝에 붙지 않게 (원·파동은 가운데 정렬이라 영향 없음)
+	countWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', overflow: 'hidden', paddingHorizontal: Layout.screenH },
 	countBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.onBrandSurface, borderWidth: 1, borderColor: Colors.onBrandBorderSoft, borderRadius: Radius.pill, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.xs, marginBottom: SpacingV.xxl },
-	countBadgeText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textInverse, letterSpacing: 1 },
+	countBadgeText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.textInverse, letterSpacing: 1 },
 	countFlash: { backgroundColor: Colors.textInverse },
 	countSpeedLines: { position: 'absolute', alignItems: 'center', gap: SpacingV.sm },
 	countSpeedLine: { height: scaleHeight(3), borderRadius: scaleHeight(2), opacity: 0.8 },
@@ -1701,9 +1706,9 @@ const styles = themed(() => StyleSheet.create({
 	countDots: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.xl },
 	countDot: { width: scaleWidth(8), height: scaleWidth(8), borderRadius: Radius.pill, backgroundColor: Colors.onBrandSurfaceStrong },
 	countDotOn: { backgroundColor: Colors.heatSoft, width: scaleWidth(20) },
-	countHint: { fontSize: Typography.body, fontWeight: '800', color: Colors.onBrandText, marginTop: SpacingV.xl },
+	countHint: { fontSize: Typography.body, fontWeight: '800', color: Colors.onBrandText, marginTop: SpacingV.xl, textAlign: 'center' },
 	countTipRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginTop: SpacingV.sm },
-	countTipText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.onBrandTextSoft },
+	countTipText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.onBrandTextSoft },
 	header: {
 		paddingHorizontal: Layout.screenH,
 		paddingTop: SpacingV.sm,
@@ -1762,7 +1767,7 @@ const styles = themed(() => StyleSheet.create({
 	explainMetaChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
 	explainMetaText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	explainScroll: { alignSelf: 'stretch', flexShrink: 1 },
-	explainSection: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.sm },
+	explainSection: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.sm },
 	explainExample: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(21), marginTop: SpacingV.xs },
 	reportBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginTop: SpacingV.xs, marginBottom: SpacingV.sm, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt },
 	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted },
@@ -1895,7 +1900,7 @@ const styles = themed(() => StyleSheet.create({
 	resultIconWrap: { width: scaleWidth(88), height: scaleWidth(88), borderRadius: Radius.pill, backgroundColor: Colors.onBrandSurfaceStrong, justifyContent: 'center', alignItems: 'center' },
 	resultIllustration: { width: scaleArt(76), height: scaleArt(76) },
 	resultTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textInverse },
-	resultSub: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.sm },
+	resultSub: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.sm, textAlign: 'center' },
 	resultScoreChip: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.sm, marginTop: SpacingV.lg },
 	resultScoreNum: { fontSize: Typography.displayXl, ...DisplayText, lineHeight: scaleHeight(56), color: Colors.textInverse },
 	// 비취 히어로 위 — 초록은 배경에 묻혀 보물 금빛으로 띄운다. 다크는 히어로가 밝아져 금빛이 1.6:1 로 묻혀 채움 글자색으로
@@ -1903,7 +1908,7 @@ const styles = themed(() => StyleSheet.create({
 	resultScoreUnit: { fontSize: Typography.h3, fontWeight: '900', color: Colors.onBrandText, marginLeft: Spacing.xs, marginBottom: SpacingV.sm },
 	recordBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, alignSelf: 'center', backgroundColor: Colors.bookmarkSoft, borderWidth: 1, borderColor: Colors.goldDark, borderRadius: Radius.pill, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.xs, marginTop: SpacingV.md },
 	recordBadgeText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.heatDeep },
-	resultScoreDetail: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.md },
+	resultScoreDetail: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.md, textAlign: 'center' },
 	resultProfile: { alignSelf: 'stretch', backgroundColor: Colors.onBrandSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },
 	resultProfileTitle: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900', textAlign: 'center' },
 	resultProfileDesc: { color: Colors.onBrandText, fontSize: Typography.footnote, fontWeight: '600', textAlign: 'center', lineHeight: scaleHeight(19), marginTop: SpacingV.xs },
@@ -1921,8 +1926,8 @@ const styles = themed(() => StyleSheet.create({
 	statNum: { fontSize: Typography.h2, fontWeight: '900' },
 	statLabel: { fontSize: Typography.footnote, color: Colors.textSecondary, fontWeight: '600', marginTop: SpacingV.xs },
 	wrongSection: { paddingHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
-	wrongSectionHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.md },
-	wrongSectionTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
+	wrongSectionHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, marginBottom: SpacingV.md },
+	wrongSectionTitle: { flexShrink: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	wrongSectionCount: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted },
 	wrongDetailHint: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: Spacing.xxs, marginTop: SpacingV.sm },
 	wrongDetailHintText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },
@@ -1933,7 +1938,8 @@ const styles = themed(() => StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: Colors.surface,
 		borderRadius: Radius.lg,
-		padding: Spacing.lg,
+		paddingHorizontal: Spacing.lg,
+		paddingVertical: SpacingV.lg,
 		borderWidth: 1,
 		borderColor: Colors.border,
 	},

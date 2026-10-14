@@ -185,7 +185,7 @@ const MatchGame = () => {
 								<IconComponent type="materialIcons" name="replay" size={scaledSize(20)} color={Colors.text} />
 								<Text style={styles.outlineBtnText}>{t('quiz.match.again')}</Text>
 							</TouchableOpacity>
-							<TouchableOpacity style={[styles.filledBtn, { backgroundColor: Colors.primary }]} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
+							<TouchableOpacity style={styles.filledBtn} activeOpacity={0.85} onPress={() => router.replace('/home' as never)}>
 								<IconComponent type="materialIcons" name="home" size={scaledSize(20)} color={Colors.onFill} />
 								<Text style={styles.filledBtnText}>{t('quiz.common.home')}</Text>
 							</TouchableOpacity>
@@ -270,6 +270,6 @@ const styles = themed(() => StyleSheet.create({
 	resultBtns: { flexDirection: 'row', gap: Spacing.md, marginTop: SpacingV.lg, alignSelf: 'stretch' },
 	outlineBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
 	outlineBtnText: { fontSize: Typography.callout, fontWeight: '700', color: Colors.text },
-	filledBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg },
+	filledBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
 	filledBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
 }));

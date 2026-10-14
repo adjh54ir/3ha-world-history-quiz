@@ -149,7 +149,7 @@ export const WORLD_TOPICS: WorldType.Topic[] = [
 		modes: [
 			{ key: 'city', ask: 'name', answer: 'city' },
 			{ key: 'host', ask: 'name', answer: 'host', answerAs: 'flag' },
-			// 1948·2014·2026 은 종합 1위를 비워 뒀다 (ConstWorldEntries 참고) — 그 세 회차는 이 문항이 안 나온다
+			// 1948·2014 는 종합 1위를 비워 뒀다 (ConstWorldEntries 참고) — 그 두 회차는 이 문항이 안 나온다
 			{ key: 'top', ask: 'name', answer: 'top', answerAs: 'flag' },
 		],
 	},

@@ -108,7 +108,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 	return (
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
-				<SheetIn visible={visible} style={styles.sheet}>
+				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
@@ -171,9 +171,10 @@ const styles = themed(() => StyleSheet.create({
 	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.onFill },
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
-	closeBtn: { position: 'absolute', top: SpacingV.md, right: Spacing.md, zIndex: 2, padding: Spacing.xs },
+	// 닫기 터치 영역 44 — 다른 팝업(난이도·도감) 닫기와 같은 크기
+	closeBtn: { position: 'absolute', top: SpacingV.sm, right: Spacing.sm, zIndex: 2, width: Layout.touch, height: Layout.touch, alignItems: 'center', justifyContent: 'center' },
 	headIcon: { width: scaleWidth(56), height: scaleWidth(56), borderRadius: Radius.lg, backgroundColor: Colors.primarySoft, justifyContent: 'center', alignItems: 'center' },
-	title: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md },
+	title: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md, textAlign: 'center' },
 	sub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, textAlign: 'center' },
 	toggleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', alignSelf: 'stretch', marginTop: SpacingV.xl, paddingVertical: SpacingV.sm },
 	toggleLabel: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },

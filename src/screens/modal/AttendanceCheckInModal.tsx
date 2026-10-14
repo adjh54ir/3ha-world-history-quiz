@@ -138,7 +138,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	return (
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
-				<SheetIn visible={visible} style={styles.sheet}>
+				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.attendance.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textInverse} />
 					</TouchableOpacity>
@@ -260,7 +260,8 @@ const styles = themed(() => StyleSheet.create({
 	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, overflow: 'hidden', paddingHorizontal: 0, paddingTop: 0, paddingBottom: SpacingV.xxl, maxHeight: isTablet ? scaleHeight(620) : '76%' },
 	body: { alignSelf: 'stretch', flexGrow: 0, flexShrink: 1 },
 	sheetBody: { alignItems: 'center', paddingHorizontal: Spacing.xl },
-	closeBtn: { position: 'absolute', top: SpacingV.md, right: Spacing.md, zIndex: 2, padding: Spacing.xs },
+	// 닫기 터치 영역 44 — 다른 팝업(난이도·도감) 닫기와 같은 크기
+	closeBtn: { position: 'absolute', top: SpacingV.sm, right: Spacing.sm, zIndex: 2, width: Layout.touch, height: Layout.touch, alignItems: 'center', justifyContent: 'center' },
 	// 시트 상단 가로 전체를 채운다 (좌우 패딩은 아래 스크롤 영역이 가진다)
 	hero: { alignSelf: 'stretch', overflow: 'hidden', paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xl, paddingBottom: SpacingV.md, alignItems: 'center' },
 	legendDotShield: { backgroundColor: Colors.goldBg, borderWidth: Border.thin, borderColor: Colors.goldDark },
