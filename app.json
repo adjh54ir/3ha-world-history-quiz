@@ -154,8 +154,8 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-1996095472780376~3451831828",
-          "iosAppId": "ca-app-pub-1996095472780376~9825668482"
+          "androidAppId": "ca-app-pub-1996095472780376~2106159208",
+          "iosAppId": "ca-app-pub-1996095472780376~2074369616"
         }
       ],
       "@react-native-community/datetimepicker",
@@ -178,7 +178,7 @@
     "version": "1.1.0"
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-1996095472780376~3451831828",
-    "ios_app_id": "ca-app-pub-1996095472780376~9825668482"
+    "android_app_id": "ca-app-pub-1996095472780376~2106159208",
+    "ios_app_id": "ca-app-pub-1996095472780376~2074369616"
   }
 }

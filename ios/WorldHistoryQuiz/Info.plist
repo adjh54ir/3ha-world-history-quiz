@@ -39,7 +39,7 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-1996095472780376~9825668482</string>
+	<string>ca-app-pub-1996095472780376~2074369616</string>
 	<key>GADDelayAppMeasurementInit</key>
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>

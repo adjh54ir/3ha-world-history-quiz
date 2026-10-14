@@ -32,7 +32,7 @@
 | Firebase 설정 파일 | ❌ 옛 앱 값 | `google-services.json` 의 package, `GoogleService-Info.plist` 의 BUNDLE_ID 가 `com.tha.lifehanja`. Firebase 콘솔에 `com.tha.worldhistoryquiz` 를 등록해 두 파일 교체 (Android 릴리스 빌드가 여기서 멈춤) |
 | App Store Connect App ID | ❌ 다른 앱 값 | `eas.json` `submit.production.ios.ascAppId = 6785401301` 은 한픽 값. 신규 앱 생성 후 새 ID 로 교체 |
 | EAS 프로젝트 ID · OTA URL | ⚠️ 다른 앱과 공유 | `app.json` `extra.eas.projectId` · `updates.url` 이 `4125cad1-…`. OTA 를 쓸 거라면 `eas init` 으로 분리 |
-| AdMob App ID | ⚠️ 다른 앱 값 | `app.json` 의 `~3451831828`(Android) / `~9825668482`(iOS) 가 다른 앱 등록 값. AdMob 에 세계 상식 퀴즈를 등록하고 App ID · 광고 단위 교체 |
+| AdMob App ID · 광고 단위 | ✅ 교체 완료 (2026-10-14) | App ID `~2106159208`(Android) / `~2074369616`(iOS), 배너·전면·보상형·오프닝 단위 `.env`·`.env.production` 반영. 보상형 전면·네이티브 고급 단위는 아직 비어 있어 테스트 광고로 폴백 |
 | Play 그래픽 이미지 (1024x500) | ❌ 옛 앱 디자인 | `scripts/store/feature-graphic.html` 이 "한자 급수 퀴즈" 디자인 그대로. 문구·그림 교체 후 촬영 (언어별로 따로 만들면 전환율이 오릅니다) |
 | 스크린샷 | ❌ 없음 | iPhone 6.9" · iPad 13" · Play 폰 각 최소 2장, **언어별로 그 언어 화면** (§7) |
 | fastlane 메타데이터 | ⚠️ 낡음 | `fastlane/metadata/ko/*` 는 683개 · 8주제 기준 문구. 이 문서 값으로 덮어써야 `deliver` 업로드와 어긋나지 않음 |

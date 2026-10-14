@@ -14,7 +14,7 @@
 |---|---|---|---|
 | 1 | **EAS 프로젝트 ID·OTA URL 이 다른 앱(한픽)과 동일** — `4125cad1-b423-4398-9683-d676ee94bbf0` 은 `3ha-hanpick/app.json` 과 같은 값입니다. 이대로 OTA 를 올리면 두 앱이 같은 채널을 공유합니다 | `app.json` `extra.eas.projectId`, `updates.url` | `eas init` 으로 생활한자 전용 프로젝트를 만들고 두 값 교체 |
 | 2 | **App Store Connect App ID 가 한픽 값** — `6785401301` 은 한픽의 앱 ID | `eas.json` `submit.production.ios.ascAppId` | App Store Connect 에 생활한자 앱 생성 후 새 ID 로 교체 |
-| 3 | **AdMob App ID 가 한픽과 동일** — `~3451831828`(Android) / `~9825668482`(iOS) 가 `3ha-hanpick/app.json` 과 같은 값 | `app.json` plugins + 최하단 `react-native-google-mobile-ads` 블록, iOS `Info.plist` `GADApplicationIdentifier` | AdMob 콘솔에서 생활한자 앱을 등록하고 App ID·광고 단위 ID 전부 교체 |
+| 3 | ~~AdMob App ID 가 한픽과 동일~~ ✅ 2026-10-14 세계 상식 퀴즈 전용 App ID·광고 단위로 교체 | | |
 | 4 | **키스토어·서비스 계정 키가 git 에 커밋되어 있음** | `android/app/release.keystore`, `android/gradle.properties`(비밀번호 평문), `credentials/google-service-account.json`, `.env`, `.env.production`, `GoogleService-Info.plist` | §5.3 보안 경고 참고 |
 | 5 | **개인정보처리방침 URL 없음** — 두 스토어 모두 필수 | 문서 원문은 `term/LifeHanja.tsx` 에 있으나 웹에 게시되지 않음 | 웹에 게시 후 §9·§10 에 기입 |
 | 6 | 스토어 리뷰 링크 무동작 — `.env` 의 스토어 URL 이 빈 값이고 `.env.production` 에는 키 자체가 없음 | `.env:8-9`, `.env.production`, `src/const/EnvCompat.ts:20-21`, `src/screens/life/LifeSettingScreen.tsx:365` | 스토어 등록 후 `EXPO_PUBLIC_APP_STORE_URL`, `EXPO_PUBLIC_GOOGLE_PLAY_STORE_URL` 채우기 |
@@ -382,13 +382,13 @@ ios/LifeHanja/GoogleService-Info.plist
 
 | 항목 | 값 |
 |---|---|
-| Android App ID | `ca-app-pub-1996095472780376~3451831828` ⚠️ 한픽과 동일 (`app.json` plugins + 최하단 블록) |
-| iOS App ID | `ca-app-pub-1996095472780376~9825668482` ⚠️ 한픽과 동일 (`app.json` plugins, Info.plist `GADApplicationIdentifier`) |
+| Android App ID | `ca-app-pub-1996095472780376~2106159208` (`app.json` plugins + 최하단 블록) |
+| iOS App ID | `ca-app-pub-1996095472780376~2074369616` (`app.json` plugins, Info.plist `GADApplicationIdentifier`) |
 | 광고 단위 ID | `.env` / `.env.production` 의 `EXPO_PUBLIC_GOOGLE_ADMOV_{ANDROID,IOS}_{BANNER,FRONT,REWARD,APP_OPEN}` |
 | 포맷 | 배너 · 전면 · 앱오프닝 · 리워드 |
 | 노출 정책 | `src/services/ads/AdGuardService.ts` — 형식별 1일 클릭 5회 초과 시 24시간 해당 형식만 숨김, 전면·앱오프닝은 하루 5회 노출 상한 |
 
-출시 전: AdMob 콘솔에 **생활한자 앱을 별도 등록**하고 App ID·단위 ID 를 교체하세요(§0-3). 한픽 ID 로 출시하면 두 앱 수익·리포트가 섞입니다.
+App ID·단위 ID 는 세계 상식 퀴즈 전용 값으로 교체 완료(2026-10-14).
 
 > `EXPO_PUBLIC_IAP_REMOVE_AD_KEY` 가 `src/const/EnvCompat.ts:32` 에 정의되어 있으나 인앱 결제 라이브러리는 설치되어 있지 않습니다. 광고 제거 상품을 출시하지 않는다면 스토어의 "인앱 구매" 항목은 **없음**으로 신고하세요.
 
