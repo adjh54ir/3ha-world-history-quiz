@@ -6,6 +6,7 @@
  *
  * 원본은 수도 퀴즈 앱에서 가져온 REST Countries 국기 PNG 로, 무손실 WebP 로 바꿔 넣었다 (427KB -> 347KB).
  */
+import { koTerm } from './ConstWorldEntries';
 import capital from './capital.json';
 import { buildCountryCodes, selectCountryCodes } from './ConstCountryCodes';
 
@@ -265,6 +266,7 @@ const COUNTRY_CODES = buildCountryCodes(capital as { name: string; fields: Recor
  * '미국·캐나다·멕시코' 같은 공동 개최는 국기도 셋을 준다. 국기가 없는 이름(소련·잉글랜드)은 빈 목록이다.
  */
 export const selectFlagsByName = (name: string): { code: string; source: number }[] =>
-	selectCountryCodes(name, COUNTRY_CODES)
+	// 표는 한국어 이름으로 만들어져 있다 — 번역된 이름은 한국어로 되돌려 찾는다
+	selectCountryCodes(koTerm(name), COUNTRY_CODES)
 		.map((code) => ({ code, source: FLAG_IMAGES[code] }))
 		.filter((flag) => !!flag.source);

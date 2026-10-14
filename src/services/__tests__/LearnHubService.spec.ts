@@ -1,4 +1,4 @@
-import LearnHubService from '@/src/services/LearnHubService';
+import LearnHubService, { fold, toInitialHint } from '@/src/services/LearnHubService';
 import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
 
 /**
@@ -66,6 +66,14 @@ describe('LearnHubService — 세계 상식 도메인', () => {
 		expect(LearnHubService.generateMixedQuiz(10, '특급')).toHaveLength(10);
 	});
 
+	it('이름 힌트: 한국어는 초성, 다른 언어는 첫 글자만 남기고 가린다', () => {
+		expect(toInitialHint('카트만두', 'ko-KR')).toBe('ㅋㅌㅁㄷ');
+		expect(toInitialHint('New York', 'en-EN')).toBe('N _ _   Y _ _ _');
+		expect(toInitialHint('Saint-Denis', 'fr-FR')).toBe('S _ _ _ _ - _ _ _ _ _');
+		expect(toInitialHint('巴黎', 'zh-CN')).toBe('巴○');
+		expect(toInitialHint('レオナルド・ダ・ヴィンチ', 'ja-JP')).toBe('レ○○○○・○・○○○○');
+	});
+
 	it('오답 복습의 오답 보기는 정답과 같은 자리 값에서 뽑는다 (수도 문제에 대륙이 섞이지 않는다)', () => {
 		const nepal = WORLD_ENTRIES.capital.find((e) => e.name === '네팔')!;
 		const [q] = LearnHubService.generateReviewQuiz([
@@ -105,5 +113,13 @@ describe('LearnHubService — 세계 상식 도메인', () => {
 		const card = LearnHubService.getStudyCardByUid('landmark', entry.id);
 		expect(card?.title).toBe(entry.name);
 		expect(card?.imageRef?.startsWith('landmark:')).toBe(true);
+	});
+});
+
+describe('검색 악센트 무시', () => {
+	it('악센트 없이 쳐도 악센트 있는 글자를 찾고, 한글은 그대로 찾는다', () => {
+		expect(LearnHubService.searchCards('카트만두').length).toBeGreaterThan(0);
+		expect(fold('Pékin')).toBe('pekin');
+		expect(fold('카트만두')).toBe('카트만두');
 	});
 });

@@ -40,6 +40,7 @@ import TabHeader from '@/src/screens/common/TabHeader';
 import { TAB_ILLUSTRATIONS } from '@/src/const/ConstTabIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
+import { LANGUAGE_OPTIONS, appLanguage, setAppLanguage } from '@/src/translations';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 interface ResetRow {
@@ -408,6 +409,25 @@ const Setting = () => {
 									<View style={styles.rowBody}>
 										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t(o.labelKey)}</Text>
 										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t(o.descKey)}</Text>
+									</View>
+									{on && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(20)} color={Colors.primary} />}
+								</TouchableOpacity>
+							);
+						})}
+					</View>
+
+					{/* 언어 — 고르면 저장하고 앱을 다시 읽는다 (주제·뱃지·세계 데이터가 켤 때 한 번 번역된다) */}
+					<SubHead label={t('settings.section.language')} icon="translate" />
+					<View style={styles.card}>
+						{LANGUAGE_OPTIONS.map((o, i) => {
+							const on = appLanguage() === o.code;
+							return (
+								<TouchableOpacity key={o.code} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => setAppLanguage(o.code)}>
+									<View style={[styles.rowIcon, { backgroundColor: on ? Colors.primarySoft : Colors.surfaceAlt }]}>
+										<IconComponent type="materialIcons" name="translate" size={scaledSize(20)} color={on ? Colors.primary : Colors.textSecondary} />
+									</View>
+									<View style={styles.rowBody}>
+										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{o.label}</Text>
 									</View>
 									{on && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(20)} color={Colors.primary} />}
 								</TouchableOpacity>

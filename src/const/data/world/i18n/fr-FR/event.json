@@ -1,0 +1,835 @@
+{
+	"event-001": {
+		"summary": "En 490 av. J.-C., combat où l'armée athénienne repoussa, dans une plaine du bord de mer, les troupes perses débarquées.",
+		"facts": [
+			"La légende du messager courant jusqu'à Athènes pour annoncer la victoire inspira la première course de marathon, en 1896.",
+			"Selon Hérodote, 6 400 Perses et 192 Athéniens y trouvèrent la mort."
+		]
+	},
+	"event-002": {
+		"summary": "En 334 av. J.-C., guerre de conquête par laquelle le jeune roi de Macédoine abattit l'Empire perse et poussa jusqu'aux portes de l'Inde.",
+		"facts": [
+			"Il fonda plusieurs villes nommées Alexandrie, dont celle d'Égypte subsiste encore aujourd'hui.",
+			"C'est de là qu'est née la civilisation hellénistique, mêlant cultures grecque et orientale."
+		]
+	},
+	"event-003": {
+		"summary": "Pendant près de 120 ans à partir de 264 av. J.-C., Rome et Carthage s'affrontent à trois reprises pour la maîtrise de la Méditerranée.",
+		"facts": [
+			"En 218 av. J.-C., Hannibal Barca franchit les Alpes avec 37 éléphants.",
+			"En 146 av. J.-C., Carthage est réduite en cendres et Rome devient maîtresse de la Méditerranée."
+		]
+	},
+	"event-004": {
+		"summary": "En 476, Odoacre, chef de mercenaires germaniques, dépose le dernier empereur, encore adolescent.",
+		"facts": [
+			"Cette date marque traditionnellement la fin de l'Antiquité et le début du Moyen Âge européen.",
+			"À l'est, l'Empire romain tient encore près de mille ans, jusqu'à sa chute en 1453."
+		]
+	},
+	"event-005": {
+		"summary": "Vers 610, une religion née des révélations reçues par Mahomet, marchand de La Mecque, qui unifie l'Arabie.",
+		"facts": [
+			"L'année 622, celle du départ de La Mecque pour Médine, marque le début du calendrier musulman.",
+			"En un siècle, elle s'étend jusqu'à l'Afrique du Nord et à la péninsule Ibérique."
+		]
+	},
+	"event-006": {
+		"summary": "Pendant près de 200 ans à partir de 1096, des chevaliers européens partent au Moyen-Orient pour reprendre la Terre sainte.",
+		"facts": [
+			"Prise en 1099, Jérusalem est reconquise par Saladin en 1187.",
+			"Elles ouvrent une voie par laquelle les marchandises et les savoirs de l'Orient affluent vers l'Europe."
+		]
+	},
+	"event-007": {
+		"summary": "En 1215, un texte arraché au roi Jean sans Terre par les barons anglais, qui soumet le roi lui-même à la loi.",
+		"facts": [
+			"Trois de ses articles sont encore en vigueur en Angleterre et au pays de Galles.",
+			"Il en reste quatre exemplaires originaux : deux à la British Library, un au château de Lincoln et un à la cathédrale de Salisbury."
+		]
+	},
+	"event-008": {
+		"summary": "Au XIIIe siècle, Gengis Khan et ses descendants déferlent à cheval de la Chine jusqu'à l'Europe de l'Est.",
+		"facts": [
+			"Après l'avènement de Gengis Khan en 1206, l'empire atteint sa plus grande extension sous son petit-fils Kubilai.",
+			"À son apogée, il couvre 23,5 millions de km², le plus vaste empire d'un seul tenant de l'histoire."
+		]
+	},
+	"event-009": {
+		"summary": "En 1347, une épidémie arrivée par des navires venus de la mer Noire emporte plus d'un tiers de la population européenne.",
+		"facts": [
+			"Le mot « quarantaine » vient de Venise, où l'on immobilisait les navires pendant 40 jours.",
+			"La main-d'œuvre devenant rare, le servage est ébranlé."
+		]
+	},
+	"event-010": {
+		"summary": "À partir de 1337, l'Angleterre et la France se disputent la couronne et des territoires lors d'un conflit intermittent de 116 ans.",
+		"facts": [
+			"En 1429, Jeanne d'Arc lève le siège d'Orléans et renverse le cours de la guerre.",
+			"À la fin de la guerre, l'Angleterre a perdu toutes ses terres sur le continent, sauf Calais."
+		]
+	},
+	"event-011": {
+		"summary": "À partir du XIVe siècle, un mouvement culturel parti des villes italiennes qui fait revivre l'Antiquité gréco-romaine et place l'homme au centre.",
+		"facts": [
+			"Les Médicis, banquiers de Florence, deviennent les protecteurs des artistes.",
+			"Il atteint son apogée vers 1500 avec Léonard de Vinci et Michel-Ange."
+		]
+	},
+	"event-012": {
+		"summary": "Vers 1450, un orfèvre de Mayence coule des caractères en métal pour reproduire des livres en série.",
+		"facts": [
+			"Son œuvre emblématique est la Bible à 42 lignes, achevée vers 1455.",
+			"Le Jikji, imprimé en Corée sous Goryeo, la précède de plus de 70 ans."
+		]
+	},
+	"event-013": {
+		"summary": "En 1453, l'armée ottomane abat les remparts à coups de canons géants et s'empare de la capitale byzantine, vieille de mille ans.",
+		"facts": [
+			"Le 29 mai, après 53 jours de siège, les murailles cèdent.",
+			"C'est aujourd'hui Istanbul, la plus grande ville de Turquie."
+		]
+	},
+	"event-014": {
+		"summary": "En 1492, un capitaine qui voulait gagner les Indes par l'ouest aborde une île de la mer des Caraïbes.",
+		"facts": [
+			"Comme il se croyait arrivé en Inde, les îles des Caraïbes s'appellent encore les Antilles ou « Indes occidentales ».",
+			"Pomme de terre, maïs et piment traversent ensuite l'océan, tandis que la variole gagne l'Amérique."
+		]
+	},
+	"event-015": {
+		"summary": "En 1517, le moine allemand Luther dénonce la vente des indulgences et coupe l'Église en deux.",
+		"facts": [
+			"Selon la tradition, Luther a placardé ses thèses sur la porte d'une église de Wittenberg.",
+			"Le 31 octobre, jour de cet affichage, est toujours férié dans neuf Länder allemands."
+		]
+	},
+	"event-016": {
+		"summary": "En 1519, une flotte espagnole baptise le Pacifique pour ses eaux calmes et accomplit la première circumnavigation de la Terre.",
+		"facts": [
+			"Partis avec cinq navires et environ 270 hommes, ils ne reviennent qu'avec un seul bateau et 18 survivants.",
+			"Le capitaine lui-même, tué aux Philippines, n'en voit pas la fin."
+		]
+	},
+	"event-017": {
+		"summary": "En 1588, l'Espagne lance près de 130 navires contre l'Angleterre et se fait battre dans le pas de Calais.",
+		"facts": [
+			"Ancrée au large de Calais, la flotte est dispersée par les brûlots anglais.",
+			"Sur le chemin du retour, les tempêtes au large de l'Écosse et de l'Irlande lui coûtent plus de navires que les combats."
+		]
+	},
+	"event-018": {
+		"summary": "En 1618, un conflit né de la querelle entre protestants et catholiques, qui entraîne la majeure partie de l'Europe.",
+		"facts": [
+			"Dans les terres allemandes devenues champ de bataille, certaines régions perdent plus de la moitié de leur population.",
+			"L'étincelle : des officiers de l'empereur jetés par une fenêtre du château de Prague."
+		]
+	},
+	"event-019": {
+		"summary": "En 1648, des accords qui mettent fin à la Guerre de Trente Ans et posent le principe de non-ingérence dans les affaires des autres États.",
+		"facts": [
+			"Ils sont signés séparément dans deux villes, Münster et Osnabrück.",
+			"La Suisse y obtient la reconnaissance juridique de son indépendance vis-à-vis du Saint-Empire romain germanique."
+		]
+	},
+	"event-020": {
+		"summary": "En 1688, le Parlement anglais remplace le roi presque sans verser de sang.",
+		"facts": [
+			"Jacques II s'enfuit, et sa fille Marie monte sur le trône avec son époux Guillaume.",
+			"L'année suivante, le Bill of Rights interdit de lever l'impôt sans l'accord du Parlement."
+		]
+	},
+	"event-021": {
+		"summary": "À la fin du XVIIIe siècle, au Royaume-Uni, la machine à vapeur et les usines remplacent le travail manuel et bouleversent la vie quotidienne.",
+		"facts": [
+			"Tout commence dans les filatures de coton équipées de machines à filer.",
+			"Le watt (W) inscrit sur les ampoules doit son nom à James Watt, qui perfectionna la machine à vapeur."
+		]
+	},
+	"event-022": {
+		"summary": "En 1776, le texte par lequel treize colonies annoncent au monde leur séparation d'avec la Couronne britannique.",
+		"facts": [
+			"Le 4 juillet, jour de son adoption, est aujourd'hui la fête nationale américaine.",
+			"Rédigé par Thomas Jefferson, il affirme que « tous les hommes sont créés égaux »."
+		]
+	},
+	"event-023": {
+		"summary": "En 1789, le peuple de Paris se soulève, abolit la société d'ordres et s'empare de la souveraineté.",
+		"facts": [
+			"Tout commence le 14 juillet avec la prise de la Bastille, devenu la fête nationale en France.",
+			"La devise actuelle de la France, « Liberté, Égalité, Fraternité », apparaît à cette époque."
+		]
+	},
+	"event-024": {
+		"summary": "En 1814, après la chute de Napoléon Bonaparte, les représentants des monarchies européennes se réunissent pour redessiner les frontières.",
+		"facts": [
+			"Le chancelier autrichien Metternich l'oriente vers un retour à l'ordre d'avant la Révolution.",
+			"Entre deux bals, les négociations traînent neuf mois, d'où le surnom de « congrès qui danse »."
+		]
+	},
+	"event-025": {
+		"summary": "En 1839, la Chine des Qing saisit et détruit la drogue des marchands britanniques, et le Royaume-Uni part en guerre.",
+		"facts": [
+			"Vaincue, la Chine cède l'île de Hong Kong par le traité de Nankin en 1842.",
+			"Hong Kong reste britannique plus de 150 ans, avant sa rétrocession à la Chine en 1997."
+		]
+	},
+	"event-026": {
+		"summary": "En 1861, les États du Sud, attachés à l'esclavage, quittent l'Union et affrontent le Nord pendant quatre ans.",
+		"facts": [
+			"En 1863, en pleine guerre, Abraham Lincoln proclame l'émancipation des esclaves.",
+			"Avec plus de 620 000 morts, elle reste la guerre la plus meurtrière de l'histoire des États-Unis."
+		]
+	},
+	"event-027": {
+		"summary": "En 1914, un conflit déclenché par l'assassinat de l'héritier du trône austro-hongrois à Sarajevo, qui s'enlise quatre ans dans les tranchées sous le feu des mitrailleuses.",
+		"facts": [
+			"Le 11 novembre, date de l'armistice de 1918, est aujourd'hui férié en France et jour du souvenir au Royaume-Uni.",
+			"Quatre empires s'effondrent à son issue : allemand, austro-hongrois, russe et ottoman."
+		]
+	},
+	"event-028": {
+		"summary": "En 1917, ouvriers et soldats renversent le tsar et fondent le premier régime socialiste au monde.",
+		"facts": [
+			"La révolution de Février chasse le tsar, puis celle d'Octobre porte au pouvoir les bolcheviks de Lénine.",
+			"Le pays changeant de calendrier l'année suivante, l'anniversaire d'Octobre tombe désormais le 7 novembre."
+		]
+	},
+	"event-029": {
+		"summary": "En 1929, une crise née du krach de la Bourse de New York, qui gagne le monde entier pendant près de dix ans.",
+		"facts": [
+			"L'effondrement des cours du « jeudi noir », le 24 octobre, en est le déclencheur.",
+			"Face à un chômage proche de 25 %, les États-Unis lancent le New Deal et construisent barrages et routes."
+		]
+	},
+	"event-030": {
+		"summary": "En 1939, un conflit déclenché par l'invasion de la Pologne par l'Allemagne, qui embrase tous les continents pendant six ans.",
+		"facts": [
+			"Avec plus de 60 millions de morts, c'est la guerre la plus meurtrière de l'histoire.",
+			"Le Japon capitule en août 1945, après les bombes atomiques d'Hiroshima et de Nagasaki."
+		]
+	},
+	"event-031": {
+		"summary": "En 1969, des astronautes américains posent pour la première fois le pied sur un autre corps céleste.",
+		"facts": [
+			"Le 20 juillet, après l'atterrissage, Armstrong et Aldrin marchent environ deux heures et demie sur la Lune.",
+			"Quelque 600 millions de personnes suivent l'événement en direct à la télévision."
+		]
+	},
+	"event-032": {
+		"summary": "Le 9 novembre 1989, la frontière de béton qui séparait l'Allemagne de l'Est de l'Allemagne de l'Ouest est abattue par les citoyens.",
+		"facts": [
+			"Tout part d'un porte-parole est-allemand annonçant par erreur en conférence de presse l'ouverture de la frontière « immédiatement ».",
+			"Les deux Allemagnes se réunifient le 3 octobre de l'année suivante, aujourd'hui fête nationale."
+		]
+	},
+	"event-033": {
+		"summary": "Vers 3500 av. J.-C., dans la plaine entre deux fleuves, les Sumériens bâtissent les premières villes et inventent l'écriture cunéiforme.",
+		"facts": [
+			"On y gravait les signes dans des tablettes d'argile avec un calame en roseau.",
+			"Le système sexagésimal, qui divise l'heure en 60 minutes et le cercle en 360 degrés, y est né."
+		]
+	},
+	"event-034": {
+		"summary": "Vers 3000 av. J.-C., les peuples du Nil bâtissent, grâce aux crues annuelles du fleuve, une civilisation qui dure 3000 ans.",
+		"facts": [
+			"Haute de 146 m, la grande pyramide de Gizeh reste le plus haut édifice du monde pendant plus de 3700 ans.",
+			"On y utilise un calendrier de 365 jours : douze mois de 30 jours, plus cinq jours."
+		]
+	},
+	"event-035": {
+		"summary": "Vers 2500 av. J.-C., une civilisation du bassin d'un grand fleuve, aux villes tracées en damier et équipées d'égouts.",
+		"facts": [
+			"Sa cité emblématique, Mohenjo-daro, conserve un grand bain de briques de 12 m de long.",
+			"Des milliers d'inscriptions gravées notamment sur des sceaux ont été retrouvées, mais personne ne sait encore les lire."
+		]
+	},
+	"event-036": {
+		"summary": "Vers 2000 av. J.-C., la première civilisation d'Asie de l'Est, née au bord d'un fleuve aux eaux limoneuses, qui laisse bronzes et inscriptions oraculaires.",
+		"facts": [
+			"Les inscriptions divinatoires gravées sur des carapaces de tortue sont à l'origine des caractères chinois.",
+			"Les fouilles de Yinxu, dernière capitale des Shang, commencent en 1928."
+		]
+	},
+	"event-037": {
+		"summary": "Vers 1750 av. J.-C., un roi de Babylone fait graver sur une stèle des lois comme « œil pour œil ».",
+		"facts": [
+			"Qui crève l'œil d'un noble perd le sien, mais s'il s'agit d'un homme du peuple, il suffit de payer en argent.",
+			"La stèle de 2,25 m couverte d'articles de loi est aujourd'hui au Musée du Louvre, à Paris."
+		]
+	},
+	"event-038": {
+		"summary": "Vers le VIe siècle av. J.-C., l'enseignement de Siddhartha, un prince qui renonça au trône et atteignit l'Éveil.",
+		"facts": [
+			"L'anniversaire de Bouddha, le 8e jour du 4e mois lunaire, est un jour férié en Corée du Sud.",
+			"Selon la tradition, il atteint l'Éveil sous l'arbre de la Bodhi, à Bodh-Gaya."
+		]
+	},
+	"event-039": {
+		"summary": "En 221 av. J.-C., le roi d'un État de l'ouest vainc les six autres royaumes et prend pour la première fois le titre d'empereur.",
+		"facts": [
+			"Il uniformise l'écriture, les poids et mesures et l'écartement des essieux.",
+			"En reliant les murailles du nord, il pose les bases de la Grande Muraille de Chine."
+		]
+	},
+	"event-040": {
+		"summary": "Au IIe siècle av. J.-C., la route commerciale entre Orient et Occident, ouverte quand l'empereur Wu des Han envoie un émissaire vers les « Contrées occidentales ».",
+		"facts": [
+			"Zhang Qian revient au bout de 13 ans et rapporte des nouvelles des Contrées occidentales.",
+			"Le nom de « route de la soie » lui a été donné en 1877 par le géographe allemand Richthofen."
+		]
+	},
+	"event-041": {
+		"summary": "À la fin du VIe siècle, la dynastie Sui commence à recruter ses fonctionnaires par concours plutôt que selon la naissance.",
+		"facts": [
+			"Ce système, maintenu plus de 1300 ans, n'est aboli qu'en 1905, à la fin des Qing.",
+			"Le royaume coréen de Goryeo l'adopte en 958, sous le roi Gwangjong."
+		]
+	},
+	"event-042": {
+		"summary": "À partir de 1405, la grande flotte des Ming effectue sept voyages, par l'Asie du Sud-Est jusqu'aux côtes orientales de l'Afrique.",
+		"facts": [
+			"Le premier voyage mobilise 317 navires et près de 28 000 hommes, près de 90 ans avant Christophe Colomb.",
+			"Les voyages cessent avec le changement d'empereur, et la cour aurait détruit une partie des archives."
+		]
+	},
+	"event-043": {
+		"summary": "En 1592, le Japon envahit le royaume coréen de Joseon, entraînant Joseon, les Ming et le Japon dans sept ans de guerre.",
+		"facts": [
+			"Au large de Hansando, la flotte de Yi Sun-sin écrase la marine japonaise grâce à sa formation en « aile de grue ».",
+			"Le visage qui orne la pièce sud-coréenne de 100 wons est celui de Yi Sun-sin, l'amiral de cette guerre."
+		]
+	},
+	"event-044": {
+		"summary": "En 1868, le Japon renverse le shogunat et adopte des institutions occidentales sous l'autorité de l'empereur.",
+		"facts": [
+			"Il abolit la société d'ordres et instaure la conscription et l'instruction obligatoire.",
+			"En 1872, la première ligne de chemin de fer relie Shinbashi, à Tokyo, à Yokohama."
+		]
+	},
+	"event-045": {
+		"summary": "Un soulèvement parti des soldats de Wuchang, qui met fin à plus de 2000 ans de régime impérial.",
+		"facts": [
+			"Le 10 octobre 1911, jour du soulèvement, est aujourd'hui la fête nationale de Taïwan ; la République de Chine naît en janvier suivant.",
+			"En 1912, Puyi, le dernier empereur, abdique à l'âge de six ans."
+		]
+	},
+	"event-046": {
+		"summary": "Au IIIe siècle av. J.-C., un roi maurya, pris de remords devant les horreurs de sa conquête du Kalinga, répand largement l'enseignement du Bouddha.",
+		"facts": [
+			"Les quatre lions sculptés au sommet d'un de ses piliers ont inspiré l'emblème national de l'Inde.",
+			"Il envoie des émissaires porter cet enseignement jusqu'au Sri Lanka."
+		]
+	},
+	"event-047": {
+		"summary": "Au IVe siècle, sous une dynastie qui unifie le nord de l'Inde, le zéro et la culture classique sanskrite s'épanouissent.",
+		"facts": [
+			"Les chiffres de 0 à 9 que nous utilisons y sont nés, avant de gagner l'Europe en passant par le monde arabe.",
+			"L'hindouisme y prend sa forme actuelle."
+		]
+	},
+	"event-048": {
+		"summary": "Vers 1299, un État né d'une petite tribu turque d'Anatolie, qui dure plus de 600 ans.",
+		"facts": [
+			"Il porte le nom de son fondateur, Osman Ier, et subsiste jusqu'en 1922.",
+			"Il gouverne les différentes religions en les reconnaissant comme des communautés à part entière."
+		]
+	},
+	"event-049": {
+		"summary": "En 1526, Babur, venu d'Asie centrale, fonde dans le nord de l'Inde un État où se mêlent cultures musulmane et hindoue.",
+		"facts": [
+			"Le Taj Mahal est le mausolée que Shah Jahan fit bâtir pendant plus de 20 ans à la mémoire de son épouse disparue.",
+			"L'empereur Akbar abolit l'impôt prélevé sur les non-musulmans."
+		]
+	},
+	"event-050": {
+		"summary": "En 1532, un grand empire des Andes s'effondre face aux 168 hommes de l'expédition de Pizarro.",
+		"facts": [
+			"Armes à feu et chevaux comptent, mais surtout la variole, arrivée avant les conquérants, qui tue l'empereur et déclenche une guerre civile.",
+			"Faute d'écriture, on y notait les nombres sur des cordelettes à nœuds appelées quipus."
+		]
+	},
+	"event-051": {
+		"summary": "Du XVIe au XIXe siècle, le commerce par lequel des marchands européens vendent des Africains aux plantations d'Amérique.",
+		"facts": [
+			"Il forme l'un des côtés du commerce triangulaire entre l'Europe, l'Afrique et l'Amérique.",
+			"On estime à plus de 12 millions le nombre de personnes embarquées de force sur les navires négriers."
+		]
+	},
+	"event-052": {
+		"summary": "En 1857, un soulèvement lancé par les soldats indiens de la Compagnie britannique des Indes orientales, qui gagne tout le nord de l'Inde.",
+		"facts": [
+			"L'étincelle : la rumeur selon laquelle les cartouches étaient enduites de graisse de vache et de porc.",
+			"L'année suivant la répression, la Compagnie perd son pouvoir et la Couronne britannique gouverne directement l'Inde."
+		]
+	},
+	"event-053": {
+		"summary": "En 1884, les puissances européennes se réunissent pour fixer les règles du découpage d'un continent entre elles.",
+		"facts": [
+			"Aucun habitant des territoires concernés n'y est invité.",
+			"Vers 1914, l'Éthiopie et le Liberia sont les seuls États indépendants d'Afrique."
+		]
+	},
+	"event-054": {
+		"summary": "En 1904, deux puissances s'affrontent pour la domination de la Mandchourie et de la péninsule coréenne.",
+		"facts": [
+			"En 1905, la flotte russe de la Baltique est presque anéantie à la bataille de Tsushima.",
+			"La même année, le Japon prive l'Empire coréen de sa souveraineté diplomatique par le traité d'Eulsa."
+		]
+	},
+	"event-055": {
+		"summary": "Pendant la Seconde Guerre mondiale, l'extermination systématique des Juifs et d'autres minorités par l'Allemagne nazie.",
+		"facts": [
+			"On estime à environ 6 millions le nombre de Juifs assassinés.",
+			"Le 27 janvier, jour de la libération d'Auschwitz, est aujourd'hui la Journée internationale de commémoration des victimes."
+		]
+	},
+	"event-056": {
+		"summary": "En 1945, l'organisation fondée par les pays sortis de deux guerres mondiales pour préserver ensemble la paix.",
+		"facts": [
+			"Sa charte est adoptée à San Francisco, et elle naît le 24 octobre, devenu la Journée des Nations unies.",
+			"Les cinq membres permanents du Conseil de sécurité y disposent d'un droit de veto."
+		]
+	},
+	"event-057": {
+		"summary": "En 1947, au terme d'une résistance non violente menée par Mahatma Gandhi, la fin de près de 200 ans de domination britannique.",
+		"facts": [
+			"En 1930, Mahatma Gandhi mène la marche du sel, 24 jours de marche jusqu'à la mer.",
+			"Le 15 août, le pays se sépare en Inde et Pakistan ; c'est aussi la date de la fête de la Libération en Corée du Sud."
+		]
+	},
+	"event-058": {
+		"summary": "En 1950, la première guerre « chaude » de la guerre froide, déclenchée par l'invasion du Sud par le Nord, où 16 pays envoient des troupes sous la bannière de l'ONU.",
+		"facts": [
+			"Les armes se taisent le 27 juillet 1953 avec l'armistice signé à Panmunjom.",
+			"Faute de traité de paix, le conflit n'est toujours que suspendu, et la ligne de démarcation militaire demeure."
+		]
+	},
+	"event-059": {
+		"summary": "En octobre 1962, treize jours où les États-Unis et l'Union soviétique frôlent la guerre à propos d'armes nucléaires soviétiques installées sur une île des Caraïbes.",
+		"facts": [
+			"L'Union soviétique retire ses missiles, et les États-Unis acceptent de retirer discrètement les leurs de Turquie.",
+			"Une ligne directe est ensuite installée entre les dirigeants des deux pays."
+		]
+	},
+	"event-060": {
+		"summary": "En 1994, les lois qui séparaient les gens selon leur couleur de peau tombent, et toutes les communautés votent ensemble pour la première fois.",
+		"facts": [
+			"Ce scrutin porte à la présidence Nelson Mandela, qui a passé 27 ans en prison.",
+			"Une Commission de la vérité et de la réconciliation est créée pour affronter le passé."
+		]
+	},
+	"event-061": {
+		"summary": "En 1991, une fédération socialiste vieille de près de 70 ans éclate en quinze pays.",
+		"facts": [
+			"Le 25 décembre, le drapeau rouge est descendu au Kremlin et Gorbatchev démissionne.",
+			"La Russie reprend tel quel le siège de membre permanent au Conseil de sécurité de l'ONU."
+		]
+	},
+	"event-062": {
+		"summary": "En 508 av. J.-C., un régime où les citoyens se réunissent en assemblée pour décider des affaires publiques et où les charges sont tirées au sort.",
+		"facts": [
+			"Clisthène réorganise les tribus selon le lieu de résidence plutôt que selon les liens du sang.",
+			"Avec ensuite le tirage au sort et une indemnité, même les citoyens pauvres peuvent exercer des charges publiques."
+		]
+	},
+	"event-063": {
+		"summary": "En 480 av. J.-C., la flotte grecque coalisée attire la flotte perse dans un détroit resserré et renverse le cours de la guerre.",
+		"facts": [
+			"Thémistocle attire l'ennemi dans un détroit où les grands navires ne peuvent pas manœuvrer.",
+			"Cette victoire met définitivement fin au projet perse de conquête de la Grèce."
+		]
+	},
+	"event-064": {
+		"summary": "En 431 av. J.-C., Athènes et Sparte se disputent l'hégémonie pendant 27 ans, dans un conflit qui déchire la Grèce.",
+		"facts": [
+			"Une épidémie emporte Périclès, qui dirigeait Athènes.",
+			"Thucydide en fait le récit, modèle de l'écriture de l'histoire."
+		]
+	},
+	"event-065": {
+		"summary": "En 550 av. J.-C., Cyrus le Grand unifie l'Orient ancien et laisse les peuples conquis libres de leur foi.",
+		"facts": [
+			"En 539 av. J.-C., il entre à Babylone et renvoie chez eux les Juifs qui y étaient captifs.",
+			"L'inscription de la poste de New York, « ni la neige ni la pluie n'arrêtent les messagers », évoque les courriers de cet empire."
+		]
+	},
+	"event-066": {
+		"summary": "En 509 av. J.-C., une cité au bord du Tibre chasse son roi et confie l'État à deux magistrats élus chaque année.",
+		"facts": [
+			"Les deux consuls se partagent le pouvoir à parts égales pour se tenir mutuellement en échec.",
+			"SPQR, gravé jusque sur les plaques d'égout de Rome, signifie « le Sénat et le peuple romain »."
+		]
+	},
+	"event-067": {
+		"summary": "En 27 av. J.-C., Octave, vainqueur des guerres civiles, reçoit le titre de « vénérable » et devient de fait le premier empereur.",
+		"facts": [
+			"Ce titre, Auguste, a donné son nom au mois d'août.",
+			"S'ouvrent ensuite un peu plus de 200 ans d'une paix relative."
+		]
+	},
+	"event-068": {
+		"summary": "En 202 av. J.-C., sur les ruines des Qin, Liu Bang, d'origine paysanne, fonde une nouvelle dynastie.",
+		"facts": [
+			"Il devient empereur en battant Xiang Yu, du royaume de Chu : ce sont les deux camps des échecs chinois et coréens.",
+			"Les mots désignant les caractères chinois et l'ethnie majoritaire de Chine viennent de son nom."
+		]
+	},
+	"event-069": {
+		"summary": "Vers le XIe siècle av. J.-C., les Phéniciens réduisent l'écriture imagée à vingt-deux signes notant des sons.",
+		"facts": [
+			"Ses deux premières lettres, aleph (le bœuf) et beth (la maison), devenues alpha et bêta en grec, lui ont donné son nom.",
+			"Passé par la Grèce et Rome, il est à l'origine des écritures européennes actuelles."
+		]
+	},
+	"event-070": {
+		"summary": "À partir de 2000 av. J.-C. environ, une civilisation d'Amérique centrale qui élève des pyramides à degrés dans la jungle et connaît le zéro.",
+		"facts": [
+			"Elle consigne l'histoire de ses rois en glyphes gravés dans la pierre.",
+			"Ses calendriers très précis calculent les mouvements du Soleil et de Vénus."
+		]
+	},
+	"event-071": {
+		"summary": "En 776 av. J.-C., les Grecs commencent à célébrer tous les quatre ans une fête de compétitions sportives dédiée à Zeus.",
+		"facts": [
+			"Pendant une cinquantaine d'années, la seule épreuve est une course de moins de 200 m.",
+			"Les premiers Jeux olympiques modernes, organisés à Athènes en 1896, en reprennent le nom."
+		]
+	},
+	"event-072": {
+		"summary": "En 313, à Milan, l'empereur Constantin accorde la liberté de culte à une religion jusque-là persécutée.",
+		"facts": [
+			"En 321, il impose le repos du dimanche, avec marchés et administrations fermés.",
+			"En 380, sous l'empereur Théodose, elle devient religion d'État de l'Empire."
+		]
+	},
+	"event-073": {
+		"summary": "En 376, poussés par les Huns, des peuples du Nord franchissent la frontière romaine et redessinent la carte de l'Europe.",
+		"facts": [
+			"Les Wisigoths traversent le Danube, puis pillent Rome en 410.",
+			"Le mot « vandalisme » vient des Vandales, qui pillèrent eux aussi Rome."
+		]
+	},
+	"event-074": {
+		"summary": "En 618, après la chute des Sui, une dynastie installe sa capitale à Chang'an et devient le centre de l'Asie de l'Est.",
+		"facts": [
+			"Des Perses et des gens de Silla vivent côte à côte à Chang'an.",
+			"Li Bai et Du Fu y composent leurs poèmes."
+		]
+	},
+	"event-075": {
+		"summary": "En 750, un État musulman né du renversement des Omeyyades, qui réunit les savants dans sa capitale circulaire, Bagdad.",
+		"facts": [
+			"À la Maison de la sagesse de Bagdad, on traduit les livres grecs en arabe.",
+			"Le mot « algorithme » vient du nom d'al-Khwârizmî, savant de la Maison de la sagesse."
+		]
+	},
+	"event-076": {
+		"summary": "En 751, les armées des Tang et des Abbassides s'affrontent au bord d'une rivière d'Asie centrale, et les Tang subissent une lourde défaite.",
+		"facts": [
+			"L'armée des Tang est commandée par Gao Xianzhi, issu d'une famille de réfugiés du royaume coréen de Goguryeo.",
+			"Selon la tradition, des artisans des Tang faits prisonniers transmettent le secret de la fabrication du papier."
+		]
+	},
+	"event-077": {
+		"summary": "En 800, le pape couronne empereur le roi des Francs, et un nouvel empire naît en Europe occidentale.",
+		"facts": [
+			"Il reçoit la couronne lors de la messe de Noël, en la Basilique Saint-Pierre de Rome.",
+			"La France, l'Allemagne et l'Italie actuelles sont issues de ses terres."
+		]
+	},
+	"event-078": {
+		"summary": "À partir de 793, des marins venus des mers du Nord remontent les fleuves et sèment le trouble dans toute l'Europe.",
+		"facts": [
+			"La technologie Bluetooth tire son nom du surnom de Harald à la Dent bleue, roi du Xe siècle qui unifia le Danemark.",
+			"Ils ne font pas que piller : ils s'installent aussi à Novgorod et en Normandie."
+		]
+	},
+	"event-079": {
+		"summary": "En 755, une rébellion de huit ans lancée par un gouverneur militaire des frontières, qui fait vaciller les Tang.",
+		"facts": [
+			"Menée par An Lushan et Shi Siming, elle fait tomber les deux capitales, Luoyang et Chang'an.",
+			"Les Tang ne parviennent plus jamais à reprendre en main les pouvoirs régionaux."
+		]
+	},
+	"event-080": {
+		"summary": "En 1066, un duc venu du nord de la France l'emporte à Hastings, et l'île change de maître.",
+		"facts": [
+			"À Noël de la même année, le duc Guillaume est couronné à l'abbaye de Westminster.",
+			"Les mots anglais « beef » et « pork » viennent du français parlé par la noblesse normande (bœuf, porc)."
+		]
+	},
+	"event-081": {
+		"summary": "Au XIe siècle, la papauté romaine et le patriarche de Constantinople s'excommunient mutuellement et rompent leurs liens.",
+		"facts": [
+			"Les deux Églises calculant toujours la date de Pâques différemment, elles la fêtent souvent à des dates distinctes.",
+			"Cette rupture de 1054 se prolonge aujourd'hui dans la séparation entre catholiques et orthodoxes."
+		]
+	},
+	"event-082": {
+		"summary": "Sous les Tang et les Song, en Chine, une substance découverte en cherchant l'élixir d'immortalité et une aiguille qui indique le sud.",
+		"facts": [
+			"En 1044, le traité militaire des Song « Wujing Zongyao » consigne pour la première fois la recette de la poudre.",
+			"À la fin de Goryeo, le Coréen Choe Mu-seon fabrique poudre et canons, et incendie les navires des pirates japonais à Jinpo."
+		]
+	},
+	"event-083": {
+		"summary": "Pendant près de 800 ans, jusqu'en 1492, les royaumes chrétiens de la péninsule Ibérique reprennent leurs terres aux pouvoirs musulmans.",
+		"facts": [
+			"Elle s'achève avec la chute de Grenade, dernier royaume musulman, dont le palais est l'Alhambra.",
+			"La même année, la couronne d'Espagne soutient le voyage de Christophe Colomb."
+		]
+	},
+	"event-084": {
+		"summary": "Au XIIe siècle, des rois bâtissent au cœur de la jungle d'immenses temples et réseaux de canaux, et dominent l'Asie du Sud-Est.",
+		"facts": [
+			"Angkor Vat est érigé sous le règne de Suryavarman II.",
+			"Angkor Vat figure au centre du drapeau du Cambodge."
+		]
+	},
+	"event-085": {
+		"summary": "Au XIIIe siècle, une alliance de villes marchandes de la Baltique et de la mer du Nord, qui contrôlent ensemble routes maritimes et prix.",
+		"facts": [
+			"Autour de Lübeck, elle réunit à son apogée près de 200 villes.",
+			"Hambourg et Brême portent encore officiellement le titre de « ville libre et hanséatique »."
+		]
+	},
+	"event-086": {
+		"summary": "Vers 1325, les Mexicas fondent leur capitale sur une île au milieu d'un lac et étendent leur domination sur le centre du Mexique.",
+		"facts": [
+			"La ville de Mexico s'élève aujourd'hui sur les ruines de leur capitale, Tenochtitlan.",
+			"L'aigle perché sur un cactus du drapeau mexicain vient de la légende de la fondation de cette capitale."
+		]
+	},
+	"event-087": {
+		"summary": "En 1368, Zhu Yuanzhang, ancien moine errant, repousse les Mongols vers le nord et fonde une dynastie.",
+		"facts": [
+			"La Cité interdite de Pékin est achevée sous cette dynastie, en 1420.",
+			"La plupart des tronçons actuels de la Grande Muraille de Chine datent de cette époque."
+		]
+	},
+	"event-088": {
+		"summary": "En 1498, une flotte portugaise contourne la pointe sud de l'Afrique et atteint pour la première fois les mers d'Asie, pays du poivre.",
+		"facts": [
+			"Partie de Lisbonne, elle atteint Calicut, sur la côte sud-ouest de l'Inde, au bout de dix mois.",
+			"Le poivre et la cannelle ramenés valent des dizaines de fois le coût de l'expédition."
+		]
+	},
+	"event-089": {
+		"summary": "En 1494, l'Espagne et le Portugal déplacent vers l'ouest la ligne tracée par le pape et se partagent le reste du monde.",
+		"facts": [
+			"La ligne est fixée à 370 lieues à l'ouest des îles du Cap-Vert.",
+			"C'est à cause de cette ligne que le Brésil est le seul pays d'Amérique du Sud à parler portugais."
+		]
+	},
+	"event-090": {
+		"summary": "En 1521, l'expédition espagnole de Cortés, aidée par la variole, fait tomber une capitale bâtie sur un lac.",
+		"facts": [
+			"Les mots « tomate » et « avocat » viennent du nahuatl, la langue de ce peuple.",
+			"Des peuples voisins pleins de rancœur se rangent du côté des conquérants."
+		]
+	},
+	"event-091": {
+		"summary": "En 1603, un seigneur de guerre s'installe dans un petit château près des marais et fonde un régime militaire qui dure plus de 260 ans.",
+		"facts": [
+			"Edo, fief de Tokugawa Ieyasu et de sa famille, est l'actuelle Tokyo.",
+			"Les daimyos doivent résider à Edo une année sur deux, ce qui affaiblit leur pouvoir."
+		]
+	},
+	"event-092": {
+		"summary": "En 1644, une puissance venue de Mandchourie franchit la passe de Shanhai et entre à Pékin, ouvrant la dernière dynastie impériale.",
+		"facts": [
+			"Selon l'opinion courante, le qipao dérive de la robe des femmes mandchoues qui fondèrent cette dynastie.",
+			"En 1636, elle envahit le royaume coréen de Joseon et obtient l'année suivante la reddition du roi Injo à Samjeondo."
+		]
+	},
+	"event-093": {
+		"summary": "Au XVIIe siècle, le tournant où des savants comme Galilée et Isaac Newton étudient la nature par l'observation et l'expérience plutôt que par les livres anciens.",
+		"facts": [
+			"Le télescope et le microscope révèlent des mondes jusque-là invisibles.",
+			"En 1687, dans ses « Principia », Isaac Newton unit sous une même loi les mouvements du ciel et de la Terre."
+		]
+	},
+	"event-094": {
+		"summary": "Au XVIIIe siècle, un mouvement de penseurs français qui entendent soumettre les autorités établies au crible de la raison.",
+		"facts": [
+			"Voltaire, Jean-Jacques Rousseau et Montesquieu en sont les figures centrales.",
+			"La séparation des pouvoirs, défendue par Montesquieu en 1748 dans « De l'esprit des lois », est inscrite dans la Constitution américaine."
+		]
+	},
+	"event-095": {
+		"summary": "En 1756, un conflit né en Amérique du Nord qui s'étend à l'Europe et jusqu'en Inde, à l'échelle du monde.",
+		"facts": [
+			"Le Royaume-Uni l'emporte sur la France et prend le contrôle de l'Amérique du Nord et de l'Inde.",
+			"Pour payer les dettes de guerre, il taxe ses colonies, ce qui allume la mèche de l'indépendance américaine."
+		]
+	},
+	"event-096": {
+		"summary": "En 1697, un tsar de Russie parcourt incognito l'Europe de l'Ouest, puis transforme son pays de fond en comble.",
+		"facts": [
+			"Pour apprendre à construire des navires, il travaille de ses mains sur un chantier naval des Pays-Bas.",
+			"En 1703, il fonde sur des marais une nouvelle capitale, Saint-Pétersbourg."
+		]
+	},
+	"event-097": {
+		"summary": "À partir de 1803, douze ans de guerres où les armées de l'empereur des Français balaient presque toute l'Europe avant d'être repoussées.",
+		"facts": [
+			"En 1812, plus de 450 000 hommes partent pour la campagne de Russie ; environ 120 000 seulement en reviennent vivants.",
+			"Après sa première abdication, le Congrès de Vienne se réunit pour redessiner les frontières de l'Europe."
+		]
+	},
+	"event-098": {
+		"summary": "À partir des années 1810, une vague au cours de laquelle les colonies espagnoles et portugaises se détachent l'une après l'autre pour fonder leurs propres États.",
+		"facts": [
+			"La Bolivie doit son nom à Simón Bolívar.",
+			"Seul le Brésil, dont le prince proclame lui-même l'indépendance, verse moins de sang."
+		]
+	},
+	"event-099": {
+		"summary": "Au XIXe siècle, le mouvement long de près d'un siècle par lequel les pays interdisent un à un l'achat et la vente d'êtres humains.",
+		"facts": [
+			"Le Royaume-Uni interdit la traite négrière en 1807, puis l'esclavage en 1833.",
+			"Les États-Unis l'abolissent en 1865, après la guerre civile, par le 13e amendement de leur Constitution."
+		]
+	},
+	"event-100": {
+		"summary": "En 1861, une péninsule morcelée en plusieurs États devient un royaume rassemblé autour du roi de Sardaigne.",
+		"facts": [
+			"Giuseppe Garibaldi remonte le Sud avec ses Chemises rouges.",
+			"Rome, dernière à rejoindre le royaume, n'y entre qu'en 1870."
+		]
+	},
+	"event-101": {
+		"summary": "En 1871, sous la conduite de la Prusse, des États dispersés se fondent en un seul empire.",
+		"facts": [
+			"La proclamation a lieu dans la galerie des Glaces du château de Versailles, sur le sol d'une France tout juste battue.",
+			"Vaincue, la France cède l'Alsace-Lorraine, une rancœur qui pèsera jusqu'à la Première Guerre mondiale."
+		]
+	},
+	"event-102": {
+		"summary": "En 1853, une escadre américaine menée par ses « navires noirs » vient sommer un archipel fermé d'ouvrir ses portes.",
+		"facts": [
+			"Apparue dans la baie d'Edo, elle obtient l'année suivante le traité de Kanagawa entre les États-Unis et le Japon.",
+			"Ce choc ébranle le shogunat et mène à la Restauration de Meiji."
+		]
+	},
+	"event-103": {
+		"summary": "Fin 1850, un soulèvement de 14 ans lancé au nom d'une nouvelle foi par Hong Xiuquan, plusieurs fois recalé aux examens impériaux.",
+		"facts": [
+			"Se disant le frère cadet de Jésus, il s'empare de Nankin et en fait sa capitale.",
+			"On estime qu'il a fait plus de 20 millions de morts."
+		]
+	},
+	"event-104": {
+		"summary": "En 1869, une voie maritime qui relie la Méditerranée à la mer Rouge et permet de gagner l'Asie sans contourner l'Afrique.",
+		"facts": [
+			"En 2021, un porte-conteneurs géant la bloque pendant six jours, perturbant le commerce mondial.",
+			"Sans écluses, les navires y passent au niveau de la mer."
+		]
+	},
+	"event-105": {
+		"summary": "En 1859, le livre où Charles Darwin montre que les êtres vivants se sont diversifiés au fil des âges.",
+		"facts": [
+			"Les 1250 exemplaires de la première édition s'arrachent aussitôt, rien qu'avec les commandes des libraires.",
+			"L'année suivante, à Oxford, Huxley et l'évêque Wilberforce s'affrontent au sujet de l'évolution."
+		]
+	},
+	"event-106": {
+		"summary": "En 1851, à Londres, la première grande foire internationale, qui rassemble des objets du monde entier dans un immense bâtiment de verre et de fer.",
+		"facts": [
+			"En cinq mois et demi, 6 millions de visiteurs se pressent dans le bâtiment surnommé le Crystal Palace.",
+			"Dans la lignée de cet événement, la Tour Eiffel est érigée pour l'Exposition de Paris."
+		]
+	},
+	"event-107": {
+		"summary": "En 1903, les 12 secondes pendant lesquelles deux Américains, marchands de vélos, s'élèvent pour la première fois dans les airs à bord d'un avion à moteur.",
+		"facts": [
+			"Le 17 décembre, sur les dunes près de Kitty Hawk, ils volent quatre fois dans la journée.",
+			"Ils mettent au point eux-mêmes le gauchissement des ailes pour garder l'équilibre."
+		]
+	},
+	"event-108": {
+		"summary": "En 1949, le Parti communiste, vainqueur de la guerre civile, annonce la naissance d'un nouvel État devant la porte Tian'anmen.",
+		"facts": [
+			"Le 1er octobre, jour où Mao Zedong annonce sa fondation, est aujourd'hui la fête nationale de la Chine.",
+			"Chassé, le Kuomintang se replie à Taïwan."
+		]
+	},
+	"event-109": {
+		"summary": "En 1948, un État juif naît selon le plan de partage de l'ONU, et la guerre éclate aussitôt.",
+		"facts": [
+			"Le lendemain de la proclamation d'indépendance, le 14 mai, les pays arabes voisins attaquent.",
+			"Le sort des Palestiniens qui ont alors quitté leur terre reste une question ouverte aujourd'hui."
+		]
+	},
+	"event-110": {
+		"summary": "En 1948, le texte de l'Assemblée générale de l'ONU qui affirme que chaque être humain naît avec les mêmes droits.",
+		"facts": [
+			"Le 10 décembre, jour de son adoption, est aujourd'hui la Journée des droits de l'homme.",
+			"Traduit en plus de 570 langues, c'est le document le plus traduit au monde."
+		]
+	},
+	"event-111": {
+		"summary": "Pendant 20 ans à partir de 1955, dans un pays coupé entre Nord et Sud, les États-Unis affrontent les forces communistes en pleine guerre froide.",
+		"facts": [
+			"Après le retrait américain en 1973, la chute de Saigon en 1975 réunifie le pays.",
+			"La Corée du Sud y envoie aussi plus de 320 000 soldats à partir de 1964."
+		]
+	},
+	"event-112": {
+		"summary": "En 1960, l'année où dix-sept pays d'un même continent se libèrent d'un coup de la domination coloniale.",
+		"facts": [
+			"Quatorze d'entre eux étaient des colonies françaises, et le nombre d'États indépendants passe de 9 à 26.",
+			"Le Nigeria, la République du Congo et Madagascar accèdent tous à l'indépendance cette année-là."
+		]
+	},
+	"event-113": {
+		"summary": "Pendant dix ans à partir de 1966, un mouvement qui, pour balayer les « vieilleries », s'en prend aux écoles, aux monuments et aux personnes.",
+		"facts": [
+			"Lancé par Mao Zedong, il ne prend fin qu'après sa mort, en 1976.",
+			"Les gardes rouges, des groupes d'étudiants, humilient publiquement professeurs et aînés."
+		]
+	},
+	"event-114": {
+		"summary": "En 1979, le peuple renverse la monarchie et instaure un régime dirigé par un chef religieux.",
+		"facts": [
+			"Le shah Pahlavi est chassé, et Khomeini, rentré d'exil, devient Guide suprême.",
+			"La flambée du prix du pétrole ébranle l'économie mondiale."
+		]
+	},
+	"event-115": {
+		"summary": "En 1986, un réacteur explose lors d'un essai à la centrale, et la radioactivité se répand dans le ciel européen.",
+		"facts": [
+			"Dans un rayon de 30 km, une zone d'exclusion reste aujourd'hui interdite d'accès sans autorisation.",
+			"La ville voisine de Pripiat est entièrement évacuée dès le lendemain."
+		]
+	},
+	"event-116": {
+		"summary": "En 1993, les pays d'un continent marqué par deux grandes guerres s'engagent à ouvrir leurs frontières et à partager une même monnaie.",
+		"facts": [
+			"Elle voit le jour avec l'entrée en vigueur du traité signé à Maastricht, aux Pays-Bas.",
+			"L'euro, monnaie commune, est introduit en 1999 ; billets et pièces arrivent en 2002."
+		]
+	},
+	"event-117": {
+		"summary": "Technologie née en 1969 d'un réseau de recherche financé par le département de la Défense des États-Unis, qui finit par relier les ordinateurs du monde entier.",
+		"facts": [
+			"Le tout premier message devait être LOGIN, mais l'ordinateur planta après les deux lettres LO.",
+			"En 1989, au CERN de Genève, en Suisse, Tim Berners-Lee imagina le World Wide Web."
+		]
+	},
+	"event-118": {
+		"summary": "En 2001, attaque au cours de laquelle al-Qaïda détourna quatre avions de ligne pour les lancer contre les tours jumelles de New York et le Pentagone.",
+		"facts": [
+			"Elle fit 2 977 morts, davantage que les 2 403 victimes de l'attaque de Pearl Harbor.",
+			"Deux mois plus tard, les États-Unis créèrent la TSA, l'agence de sécurité des transports, confiant ainsi à l'État le contrôle des aéroports."
+		]
+	},
+	"event-119": {
+		"summary": "Fin 2019, une nouvelle maladie infectieuse signalée d'abord à Wuhan, en Chine, se propage au monde entier et met frontières et écoles à l'arrêt.",
+		"facts": [
+			"Le 11 mars 2020, l'Organisation mondiale de la santé déclara l'état de pandémie.",
+			"Le 8 décembre 2020, au Royaume-Uni, une femme de 90 ans fut la première à recevoir le vaccin en dehors des essais cliniques."
+		]
+	}
+}

@@ -1,0 +1,205 @@
+{
+	"space-001": {
+		"summary": "Estrella con un diámetro 109 veces el de la Tierra que brilla con luz propia y retiene con su gravedad a los planetas que la rodean.",
+		"facts": [
+			"El carácter 日 de 日曜日, nombre coreano del domingo escrito en caracteres chinos, se refiere precisamente a esta estrella.",
+			"Su luz tarda unos 8 minutos y 20 segundos en llegar a la Tierra."
+		]
+	},
+	"space-002": {
+		"summary": "El planeta más pequeño, que recorre la órbita más interior y da una vuelta en 88 días.",
+		"facts": [
+			"Casi no tiene atmósfera, por lo que la diferencia de temperatura entre el día y la noche supera los 600 grados.",
+			"El carácter 水 de 水曜日, nombre coreano del miércoles escrito en caracteres chinos, se refiere precisamente a este planeta."
+		]
+	},
+	"space-003": {
+		"summary": "El planeta más caliente: el calor atrapado en su atmósfera de dióxido de carbono eleva su superficie por encima de los 460 grados.",
+		"facts": [
+			"Tarda 243 días en girar sobre sí mismo, así que su día dura más que su año (225 días).",
+			"Al amanecer se le llama «lucero del alba», y al anochecer, «lucero de la tarde»."
+		]
+	},
+	"space-004": {
+		"summary": "El único planeta con agua líquida en su superficie y en el que se ha comprobado que existe vida.",
+		"facts": [
+			"Alrededor del 70 % de su superficie es océano.",
+			"Su campo magnético y su atmósfera lo protegen de los dañinos rayos cósmicos."
+		]
+	},
+	"space-005": {
+		"summary": "Planeta de aspecto rojizo por el polvo de óxido de hierro, cuyo día dura unas 24 horas y 40 minutos.",
+		"facts": [
+			"Alberga el Olympus Mons, el volcán más alto del sistema solar.",
+			"Lo acompañan dos pequeños satélites, Fobos y Deimos."
+		]
+	},
+	"space-006": {
+		"summary": "El mayor de los planetas, un gigante gaseoso tan grande que, si estuviera hueco, cabrían en él más de 1000 Tierras.",
+		"facts": [
+			"Tiene la Gran Mancha Roja, una enorme tormenta que se observa sin interrupción desde 1878.",
+			"Se le conocen 115 satélites, y los cuatro mayores los descubrió Galileo Galilei."
+		]
+	},
+	"space-007": {
+		"summary": "Planeta rodeado de unos anillos muy visibles de hielo y roca.",
+		"facts": [
+			"Su densidad es menor que la del agua, así que suele decirse que flotaría en ella.",
+			"Se le conocen 293 satélites, más que a ningún otro planeta."
+		]
+	},
+	"space-008": {
+		"summary": "Planeta verdeazulado que gira casi tumbado, como si rodara.",
+		"facts": [
+			"Fue el primer planeta descubierto con telescopio, por William Herschel en 1781.",
+			"El metano de su atmósfera absorbe la luz roja, y por eso se ve verdeazulado."
+		]
+	},
+	"space-009": {
+		"summary": "El planeta más alejado del Sol, azotado por vientos de más de 500 metros por segundo.",
+		"facts": [
+			"Su existencia se dedujo mediante cálculos antes de que se observara con telescopio.",
+			"Tarda 165 años en dar una vuelta: descubierto en 1846, no completó su primera órbita hasta 2011."
+		]
+	},
+	"space-010": {
+		"summary": "El único satélite natural de la Tierra, que gira a su alrededor a 380 000 kilómetros y provoca las mareas.",
+		"facts": [
+			"En diciembre de 2022, Danuri, la primera sonda de exploración de Corea del Sur, entró en órbita a su alrededor.",
+			"En 1969, el Apolo 11 llevó por primera vez a seres humanos a su superficie."
+		]
+	},
+	"space-011": {
+		"summary": "El satélite de Júpiter con la actividad volcánica más intensa del sistema solar.",
+		"facts": [
+			"Las fuerzas de marea de Júpiter calientan su interior y mantienen sus volcanes en actividad constante.",
+			"El azufre tiñe su superficie de amarillo y rojo."
+		]
+	},
+	"space-012": {
+		"summary": "Satélite de Júpiter que, según se cree, esconde un océano bajo su corteza de hielo.",
+		"facts": [
+			"Su superficie está cubierta de placas de hielo agrietadas.",
+			"La sonda Europa Clipper, lanzada en 2024, llegará en 2030."
+		]
+	},
+	"space-013": {
+		"summary": "El mayor satélite de Saturno, con una atmósfera densa y lagos de metano.",
+		"facts": [
+			"Dragonfly, la sonda-dron de la NASA, despegará en 2028 y aterrizará aquí en 2034.",
+			"En 2005, la sonda Huygens se posó en su superficie."
+		]
+	},
+	"space-014": {
+		"summary": "Pequeño satélite de Saturno que lanza al espacio chorros de agua desde su polo sur.",
+		"facts": [
+			"En 2005, la sonda Cassini descubrió por primera vez sus chorros de agua.",
+			"Las partículas que expulsa forman parte de los anillos de Saturno."
+		]
+	},
+	"space-015": {
+		"summary": "Cuerpo helado descubierto en 1930 que fue planeta durante 76 años, hasta que en 2006 pasó a ser planeta enano.",
+		"facts": [
+			"En 2015, la sonda New Horizons fue la primera en pasar cerca de él.",
+			"En su superficie hay una llanura helada con forma de corazón."
+		]
+	},
+	"space-016": {
+		"summary": "Planeta enano descubierto en 2005 al que llegó a llamarse «décimo planeta» y que obligó a redefinir qué es un planeta.",
+		"facts": [
+			"Su diámetro es algo menor que el de Plutón, pero su masa es mayor.",
+			"Su nombre procede de la diosa de la discordia."
+		]
+	},
+	"space-017": {
+		"summary": "El cuerpo más grande de la franja entre Marte y Júpiter y el único planeta enano del sistema solar interior.",
+		"facts": [
+			"Descubierta en 1801, fue el primer asteroide conocido; lleva el nombre de la diosa de las cosechas, de ahí que comparta raíz con la palabra «cereal».",
+			"En 2015, la sonda Dawn fotografió manchas brillantes de sal en el interior de un cráter."
+		]
+	},
+	"space-018": {
+		"summary": "Franja entre Marte y Júpiter en la que giran rocas dispersas.",
+		"facts": [
+			"Su masa total ronda el 3 % de la de la Luna.",
+			"Está tan poco poblado que las sondas lo atraviesan sin problemas."
+		]
+	},
+	"space-019": {
+		"summary": "Región más allá de Neptuno donde los cuerpos helados se extienden en forma de rosquilla.",
+		"facts": [
+			"Su existencia se confirmó en 1992, al descubrirse el primer objeto más allá de Plutón.",
+			"De aquí proceden los cometas de periodo corto."
+		]
+	},
+	"space-020": {
+		"summary": "Lejanísimo hogar de los cometas que, según se cree, envuelve el sistema solar como una esfera.",
+		"facts": [
+			"En 1950, el astrónomo neerlandés Jan Oort propuso su existencia.",
+			"Es una región hipotética que aún no se ha observado directamente."
+		]
+	},
+	"space-021": {
+		"summary": "El mayor satélite de Júpiter y de todo el sistema solar, más grande incluso que Mercurio.",
+		"facts": [
+			"Es el único satélite que genera su propio campo magnético.",
+			"Bajo su hielo podría haber un océano con más agua que toda la de la superficie terrestre."
+		]
+	},
+	"space-022": {
+		"summary": "Segundo satélite más grande de Júpiter, cuya superficie es la más acribillada de cráteres del sistema solar.",
+		"facts": [
+			"Galileo Galilei lo descubrió en 1610 junto con los otros tres grandes satélites.",
+			"La sonda Galileo detectó indicios de un océano salado bajo su superficie."
+		]
+	},
+	"space-023": {
+		"summary": "El mayor satélite de Neptuno, que orbita en sentido contrario al de la rotación del planeta.",
+		"facts": [
+			"Se cree que es un objeto del Cinturón de Kuiper capturado por la gravedad de Neptuno.",
+			"En 1989, la Voyager 2 descubrió géiseres que brotaban de su superficie."
+		]
+	},
+	"space-024": {
+		"summary": "El mayor satélite de Plutón, con un diámetro de casi la mitad del de su compañero.",
+		"facts": [
+			"Plutón y él giran mostrándose siempre la misma cara, con un periodo de 6,4 días.",
+			"Se descubrió en 1978, al notar que una foto de Plutón salía alargada."
+		]
+	},
+	"space-025": {
+		"summary": "La gran luna de Marte, que da tres vueltas al planeta cada día y se le acerca poco a poco.",
+		"facts": [
+			"Se aproxima 1,8 metros cada siglo y podría desintegrarse en menos de 50 millones de años.",
+			"Su nombre significa «miedo» en griego, la misma palabra de la que viene «fobia»."
+		]
+	},
+	"space-026": {
+		"summary": "El único cometa de periodo corto visible a simple vista, que vuelve cada 76 años aproximadamente.",
+		"facts": [
+			"Pasó por última vez en 1986 y regresará en 2061.",
+			"Los restos que va dejando dan lugar a lluvias de estrellas en mayo y octubre."
+		]
+	},
+	"space-027": {
+		"summary": "Planeta enano que gira tan deprisa, una vuelta cada 4 horas, que se ha estirado como un balón de rugby.",
+		"facts": [
+			"Fue el primer objeto del Cinturón de Kuiper en el que se confirmaron anillos.",
+			"Su nombre procede de la diosa hawaiana de la fertilidad."
+		]
+	},
+	"space-028": {
+		"summary": "Planeta enano descubierto en 2005, justo después de Semana Santa, por lo que se ganó el apodo de «Conejo de Pascua».",
+		"facts": [
+			"Mide unos 1400 kilómetros de diámetro, alrededor de tres quintas partes de Plutón.",
+			"Su nombre viene del dios que creó a la humanidad en la mitología rapanui."
+		]
+	},
+	"space-029": {
+		"summary": "El segundo asteroide más masivo del Cinturón de asteroides, con corteza, manto y núcleo diferenciados, como la Tierra.",
+		"facts": [
+			"En su polo sur tiene un cráter de impacto de unos 500 kilómetros de ancho.",
+			"Algunos de los meteoritos caídos en la Tierra se desprendieron de él."
+		]
+	}
+}

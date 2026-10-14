@@ -27,7 +27,7 @@ import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { accentInk, isDark, withAlpha, readableOn, EMBER_GRADIENT, HEAT_GRADIENT, LIGHT_COLORS, NIGHT_GRADIENT } from '@/src/const/ConstColors';
-import { BODY_FONTS, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
+import { bodyFont, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenHeight, contentWidth, scaleArt, isTablet } from '@/src/utils';
 import { LearnType } from '@/src/types/data/LearnType';
 import { setQuizInProgress } from '@/src/utils/ThemeReload';
@@ -54,7 +54,7 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import { playCorrect, playWrong, playFinish, playTimeout, playCombo, playTick, playWhoosh, playPop, isSoundEnabled, setSoundEnabled } from '@/src/utils/SoundUtils';
 import { useToast } from '@/src/context/ToastContext';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
-import { categoryIcon, compareDifficultyLabels, difficultyIcon, sortByLevelAsc } from '@/src/const/ConstQuizMeta';
+import { categoryIcon, compareDifficultyLabels, difficultyIcon, sortByLevelAsc, DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
 import { QuizCardSkeleton } from '@/src/screens/common/atomic/Skeleton';
@@ -77,7 +77,7 @@ const ADAPTIVE_COMBO = 3;
 /** 진행바 세그먼트가 너무 잘게 쪼개지지 않는 최대 문항 수 (타임 챌린지 같은 대량 출제는 표시하지 않음) */
 const LEVEL_STRIP_MAX = 20;
 /** 난이도별 진행바 농도 — 헤더(accent 배경) 위 흰색 알파로 표현해 새 색을 만들지 않는다 */
-const LEVEL_ALPHA: Record<string, string> = { 초급: '59', 중급: '8C', 고급: 'BF', 특급: 'FF' };
+const LEVEL_ALPHA: Record<string, string> = { [DIFFICULTY_LABELS[1]]: '59', [DIFFICULTY_LABELS[2]]: '8C', [DIFFICULTY_LABELS[3]]: 'BF', [DIFFICULTY_LABELS[4]]: 'FF' };
 
 /**
  * 문제 카드 표현 — 한국어 퀴즈는 도메인마다(맞춤법=문장, 관용구=대화…) 틀을 바꿨다.
@@ -1784,7 +1784,7 @@ const styles = themed(() => StyleSheet.create({
 	headerCount: { fontSize: Typography.body, fontWeight: '800', color: withAlpha(Colors.onFill, 'E6') },
 	scoreStrip: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.onBrandSurface, borderRadius: Radius.lg, paddingVertical: SpacingV.sm, marginTop: SpacingV.md },
 	scoreItem: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs },
-	scoreValue: { color: Colors.onFill, fontSize: Typography.callout, fontFamily: BODY_FONTS.heavy }, // Animated.Text 는 앱 Text 를 거치지 않아 서체를 직접 준다
+	scoreValue: { color: Colors.onFill, fontSize: Typography.callout, ...bodyFont('heavy') }, // Animated.Text 는 앱 Text 를 거치지 않아 서체를 직접 준다
 	scoreLabel: { color: withAlpha(Colors.onFill, 'E6'), fontSize: Typography.footnote, fontWeight: '700', marginLeft: Spacing.xs },
 	scoreDivider: { width: 1, height: scaleHeight(18), backgroundColor: Colors.onBrandSurfaceStrong },
 

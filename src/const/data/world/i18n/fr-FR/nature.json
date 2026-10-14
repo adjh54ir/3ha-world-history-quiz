@@ -1,0 +1,338 @@
+{
+	"nature-001": {
+		"summary": "Fleuve de 6 650 kilomètres, souvent présenté comme le plus long du monde, qui traverse le Soudan et l'Égypte avant de se jeter dans la Méditerranée.",
+		"facts": [
+			"Avant le haut barrage d'Assouan, ses crues annuelles fertilisaient les terres d'Égypte.",
+			"Ses deux branches, le Nil Blanc et le Nil Bleu, se rejoignent à Khartoum, au Soudan."
+		]
+	},
+	"nature-002": {
+		"summary": "Fleuve au plus fort débit du monde, qui déverse à lui seul environ un cinquième de toute l'eau douce rejetée dans les océans.",
+		"facts": [
+			"Il charrie plus d'eau que les sept plus grands fleuves suivants réunis.",
+			"Aucun pont ne franchit encore son cours principal."
+		]
+	},
+	"nature-003": {
+		"summary": "Plus long fleuve d'Asie, qui coule sur 6 300 kilomètres depuis le plateau tibétain jusqu'à la mer, au large de Shanghai.",
+		"facts": [
+			"En Chine, on l'appelle Chang Jiang, « le long fleuve ».",
+			"Le barrage des Trois-Gorges qui le barre est le plus puissant du monde en capacité de production électrique."
+		]
+	},
+	"nature-004": {
+		"summary": "Fleuve vénéré comme une déesse mère par les hindous, qui s'y baignent, et qui se jette dans le golfe du Bengale.",
+		"facts": [
+			"Né du glacier de Gangotri dans l'Himalaya, il traverse le Bangladesh avant d'atteindre la mer.",
+			"À Bénarès, la tradition des crémations sur ses rives se perpétue."
+		]
+	},
+	"nature-005": {
+		"summary": "Fleuve qui coupe le continent du nord au sud sur plus de 3 700 kilomètres et rejoint le golfe du Mexique après La Nouvelle-Orléans.",
+		"facts": [
+			"Son nom signifie « grand fleuve » dans une langue amérindienne.",
+			"« Les Aventures de Huckleberry Finn » de Mark Twain se déroulent au fil de ses eaux."
+		]
+	},
+	"nature-006": {
+		"summary": "Fleuve né dans les forêts du sud-ouest de l'Allemagne, qui traverse ou borde dix pays avant de se jeter dans la mer Noire.",
+		"facts": [
+			"Quatre capitales se trouvent sur ses rives : Vienne, Bratislava, Budapest et Belgrade.",
+			"La valse de Strauss « Le Beau Danube bleu » le célèbre."
+		]
+	},
+	"nature-008": {
+		"summary": "Plus haute chaîne de montagnes de la Terre, qui compte dix sommets de plus de 8 000 mètres.",
+		"facts": [
+			"Née de la collision de la plaque indienne avec la plaque eurasienne, elle s'élève encore de quelques millimètres chaque année.",
+			"Son point culminant, l'Everest, a été remesuré en 2020 à 8 848,86 mètres."
+		]
+	},
+	"nature-009": {
+		"summary": "Chaîne qui traverse le cœur de l'Europe en un arc de 1 200 kilomètres, à cheval sur 8 pays.",
+		"facts": [
+			"Son point culminant, le Mont Blanc, dépasse 4 800 mètres.",
+			"Les premiers Jeux olympiques d'hiver se sont tenus en 1924 à Chamonix, à son pied."
+		]
+	},
+	"nature-010": {
+		"summary": "Plus longue chaîne de montagnes terrestre, qui s'étire du nord au sud sur 8 900 kilomètres le long de la bordure ouest du continent.",
+		"facts": [
+			"Les Incas y ont bâti le Machu Picchu sur une crête, à 2 400 mètres d'altitude.",
+			"La pomme de terre y fut cultivée pour la première fois avant de gagner les tables du monde entier."
+		]
+	},
+	"nature-011": {
+		"summary": "Chaîne qui s'étend sur 4 800 kilomètres, du Canada au Nouveau-Mexique, et partage les eaux du continent entre ses deux versants.",
+		"facts": [
+			"Située à leur pied, à 1 600 mètres d'altitude, Denver est surnommée « Mile High City ».",
+			"Des parcs nationaux comme Yellowstone et Banff s'y trouvent."
+		]
+	},
+	"nature-013": {
+		"summary": "Volcan dominant la baie de Naples, dont l'éruption de 79 ensevelit des cités romaines sous les cendres.",
+		"facts": [
+			"Pompéi, ensevelie sous ses cendres, est fouillée depuis 1748, et les fouilles se poursuivent encore.",
+			"Sa dernière éruption remonte à 1944."
+		]
+	},
+	"nature-014": {
+		"summary": "Plus vaste désert chaud du monde, qui recouvre tout le nord du continent.",
+		"facts": [
+			"Avec environ 9,2 millions de kilomètres carrés, il est plus étendu que les États-Unis continentaux sans l'Alaska.",
+			"C'était autrefois une terre de prairies et de lacs."
+		]
+	},
+	"nature-015": {
+		"summary": "Désert froid semé de graviers et de rochers, à cheval sur la Mongolie et la Chine.",
+		"facts": [
+			"En 1923, une expédition américaine y découvrit des œufs de dinosaures fossilisés en grand nombre.",
+			"La poussière jaune qui recouvre la péninsule coréenne au printemps provient de ce désert et des déserts voisins."
+		]
+	},
+	"nature-016": {
+		"summary": "Désert du nord du Chili, sur la côte pacifique, le plus aride de la planète en dehors des régions polaires.",
+		"facts": [
+			"Certaines stations météo n'y ont pas enregistré une goutte de pluie depuis des décennies.",
+			"Son ciel limpide attire de grands observatoires, comme le radiotélescope ALMA."
+		]
+	},
+	"nature-017": {
+		"summary": "Lac de Sibérie, le plus profond du monde avec 1 642 mètres, qui renferme un cinquième de l'eau douce de surface de la planète.",
+		"facts": [
+			"Le phoque du Baïkal, l'un des rares phoques d'eau douce, ne vit nulle part ailleurs au monde.",
+			"En hiver, sa glace devient si épaisse que des voitures circulent dessus."
+		]
+	},
+	"nature-018": {
+		"summary": "Ensemble de trois chutes à la frontière des États-Unis et du Canada, où les eaux du lac Érié se déversent vers le lac Ontario.",
+		"facts": [
+			"En 1901, une femme fut la première à survivre à la chute, enfermée dans un tonneau.",
+			"La plus grande, celle du Fer-à-Cheval, se trouve côté canadien ; en bateau, on s'approche jusque dans ses embruns."
+		]
+	},
+	"nature-019": {
+		"summary": "Plus long fleuve du continent, qui parcourt 2 500 kilomètres à travers le sud-est avant de rejoindre l'océan au sud.",
+		"facts": [
+			"Le bassin Murray-Darling est la principale région d'agriculture irriguée d'Australie.",
+			"Depuis 2002, on drague le sable de son embouchure pour éviter qu'elle ne s'obstrue, tant on prélève d'eau en amont."
+		]
+	},
+	"nature-020": {
+		"summary": "Chaîne de montagnes basse et ancienne, considérée comme la frontière entre l'Europe et l'Asie.",
+		"facts": [
+			"Riche en fer et en cuivre, elle a vu naître des villes industrielles comme Iekaterinbourg.",
+			"Peu élevée, elle s'étire pourtant sur 2 500 kilomètres du nord au sud."
+		]
+	},
+	"nature-021": {
+		"summary": "Chutes où le Zambèze plonge d'une falaise large de 1,7 kilomètre et haute de 108 mètres, à la frontière entre la Zambie et le Zimbabwe.",
+		"facts": [
+			"Leur nom local, Mosi-oa-Tunya, signifie « la fumée qui gronde ».",
+			"En 1855, David Livingstone, premier Européen à les voir, leur donna le nom de la reine britannique."
+		]
+	},
+	"nature-022": {
+		"summary": "Lac d'où sort le Nil, le plus vaste d'Afrique et le deuxième lac d'eau douce du monde par sa superficie.",
+		"facts": [
+			"Environ la moitié de sa surface appartient à la Tanzanie, 45 % à l'Ouganda et 6 % au Kenya.",
+			"La perche du Nil, introduite dans les années 1950, a supplanté les poissons indigènes."
+		]
+	},
+	"nature-023": {
+		"summary": "Région semi-aride de l'intérieur de l'Afrique australe, où herbes et arbres poussent sur un sable rouge.",
+		"facts": [
+			"Il couvre l'essentiel du Botswana, et les San y vivent depuis 20 000 ans.",
+			"Après la pluie, l'herbe repousse brièvement comme dans une prairie."
+		]
+	},
+	"nature-024": {
+		"summary": "Fleuve qui franchit deux fois l'équateur avant de se jeter dans l'Atlantique, troisième du monde par son débit.",
+		"facts": [
+			"Certains tronçons dépassent 220 mètres de profondeur, ce qui en fait le fleuve le plus profond du monde.",
+			"Deux capitales, Kinshasa et Brazzaville, se font face de part et d'autre du fleuve."
+		]
+	},
+	"nature-025": {
+		"summary": "Chaîne d'Afrique du Nord qui sépare le Sahara des côtes méditerranéenne et atlantique.",
+		"facts": [
+			"Elle s'étend sur environ 2 500 kilomètres à travers le Maroc, l'Algérie et la Tunisie, et culmine au Toubkal, à 4 167 mètres.",
+			"Selon la légende, le titan Atlas de la mythologie grecque, qui soutenait le ciel, se serait changé en pierre pour former ces montagnes."
+		]
+	},
+	"nature-026": {
+		"summary": "Désert qui longe la côte atlantique, aride depuis plus de 55 millions d'années et souvent considéré comme le plus ancien du monde.",
+		"facts": [
+			"À Sossusvlei se dressent en rangs des dunes rouges de plus de 300 mètres.",
+			"Un scarabée y vit en recueillant sur son dos le brouillard matinal pour s'abreuver."
+		]
+	},
+	"nature-027": {
+		"summary": "Lac le plus bas des terres émergées, près de dix fois plus salé que l'océan, où l'on flotte sans effort.",
+		"facts": [
+			"Sa surface se trouve à environ 440 mètres sous le niveau de la mer.",
+			"Parce qu'on détourne l'eau des cours d'eau qui l'alimentent, son niveau baisse d'environ un mètre par an."
+		]
+	},
+	"nature-028": {
+		"summary": "Plus grand lac du monde par sa superficie, entièrement entouré de terres bien qu'on l'appelle une mer.",
+		"facts": [
+			"Environ 1,7 fois plus étendue que la péninsule coréenne, elle est bordée par cinq pays, dont la Russie et l'Iran.",
+			"On y produit du caviar, à partir des œufs d'esturgeon."
+		]
+	},
+	"nature-029": {
+		"summary": "Fleuve qui naît sur le plateau tibétain, traverse six pays et se jette en mer de Chine méridionale, dans le sud du Viêt Nam.",
+		"facts": [
+			"Au Viêt Nam, où son embouchure se divise en multiples bras, on l'appelle Cửu Long, « les Neuf Dragons ».",
+			"Plus de la moitié du riz vietnamien provient du delta formé à son embouchure."
+		]
+	},
+	"nature-030": {
+		"summary": "Fleuve qui court sur 5 464 kilomètres du Qinghai à la mer de Bohai, ses eaux prenant une teinte ocre à cause du lœss qu'il charrie.",
+		"facts": [
+			"Son cours a changé radicalement à plusieurs reprises au fil de l'histoire.",
+			"Ses crues fréquentes lui ont aussi valu le surnom de « chagrin de la Chine »."
+		]
+	},
+	"nature-031": {
+		"summary": "Deuxième sommet du monde avec 8 611 mètres, mais bien plus redoutable, surnommé « la montagne sauvage ».",
+		"facts": [
+			"Ce nom lui a été donné en 1856 par des géomètres britanniques : il désigne le deuxième sommet relevé dans le Karakoram.",
+			"Sa première ascension hivernale n'a réussi qu'en 2021."
+		]
+	},
+	"nature-032": {
+		"summary": "Sommet de plus de 4 800 mètres à la frontière entre la France et l'Italie, le plus haut des Alpes.",
+		"facts": [
+			"Son nom renvoie à sa blancheur, et le logo de la marque de stylos homonyme reprend son sommet enneigé.",
+			"Depuis 1965, un tunnel de 11,6 kilomètres creusé sous la montagne relie les deux pays."
+		]
+	},
+	"nature-033": {
+		"summary": "Fleuve qui coule sur plus de 1 200 kilomètres des Alpes à la mer du Nord, grand axe du transport de marchandises en Europe.",
+		"facts": [
+			"Sa vallée moyenne, bordée de châteaux, est inscrite au patrimoine mondial depuis 2002.",
+			"La Lorelei, rocher rendu célèbre par un poème de Heine, se dresse sur ses rives."
+		]
+	},
+	"nature-034": {
+		"summary": "Volcan dressé sur la Sicile et encore souvent en éruption, le plus actif d'Europe.",
+		"facts": [
+			"Ses éruptions sont documentées depuis plus de 3 000 ans.",
+			"Sur ses pentes, les sols volcaniques font pousser vignes et agrumes."
+		]
+	},
+	"nature-035": {
+		"summary": "Plus long fleuve d'Europe, il coule sur 3 530 kilomètres sans jamais quitter la Russie, avant de se jeter dans la mer Caspienne.",
+		"facts": [
+			"La chanson populaire « Les Bateliers de la Volga » était chantée par les haleurs qui tiraient les bateaux.",
+			"La bataille de Stalingrad s'est déroulée sur ses rives."
+		]
+	},
+	"nature-036": {
+		"summary": "Mer chaude parsemée de milliers d'îles, entre l'Amérique centrale et les Antilles.",
+		"facts": [
+			"Repaire des pirates aux XVIIe et XVIIIe siècles, elle a aussi donné son titre au film « Pirates des Caraïbes ».",
+			"Son nom vient des Caraïbes, le peuple qui vivait dans la région à l'arrivée de Christophe Colomb."
+		]
+	},
+	"nature-037": {
+		"summary": "Fleuve qui descend des montagnes Rocheuses sur 2 330 kilomètres et a creusé la roche jusqu'à former le Grand Canyon.",
+		"facts": [
+			"On y prélève tant d'eau que, depuis les années 1960, il n'atteint que rarement la mer.",
+			"Sept États et 40 millions de personnes en tirent leur eau et leur électricité."
+		]
+	},
+	"nature-038": {
+		"summary": "Le plus septentrional des Grands Lacs, et le plus vaste lac d'eau douce du monde par sa superficie.",
+		"facts": [
+			"Environ deux tiers de sa surface appartiennent aux États-Unis, le reste au Canada.",
+			"En 1975, le cargo Edmund Fitzgerald y a sombré dans une tempête."
+		]
+	},
+	"nature-039": {
+		"summary": "Haut de 6 190 mètres, ce sommet de l'Alaska est le plus élevé d'Amérique du Nord.",
+		"facts": [
+			"Il a retrouvé en 2015 son nom autochtone de Denali, mais le gouvernement des États-Unis lui a rendu en 2025 celui de mont McKinley.",
+			"Sa dénivelée entre le pied et le sommet dépasse celle de l'Everest."
+		]
+	},
+	"nature-040": {
+		"summary": "Volcan situé à 70 kilomètres de Mexico, qui crache encore de la fumée.",
+		"facts": [
+			"Son nom signifie « montagne qui fume » en nahuatl.",
+			"Lors des fortes éruptions, les aéroports voisins doivent parfois fermer."
+		]
+	},
+	"nature-041": {
+		"summary": "Quelque 270 cascades s'y déversent le long d'une falaise de 2,7 kilomètres.",
+		"facts": [
+			"Elles s'étendent sur la frontière entre le Brésil et l'Argentine.",
+			"Leur partie la plus profonde est surnommée la « Gorge du Diable »."
+		]
+	},
+	"nature-042": {
+		"summary": "Partagée entre le Brésil et huit autres pays et territoires, c'est la plus vaste forêt tropicale du monde et la plus riche en espèces.",
+		"facts": [
+			"Un dixième des espèces connues y vivent.",
+			"Environ 60 % de cette forêt se trouve sur le territoire brésilien."
+		]
+	},
+	"nature-043": {
+		"summary": "Perché à 3 812 mètres sur les hauts plateaux des Andes, c'est le plus haut lac navigable par de grands bateaux.",
+		"facts": [
+			"Le Pérou et la Bolivie se le partagent.",
+			"Des habitants vivent sur des îles faites de roseaux tressés."
+		]
+	},
+	"nature-044": {
+		"summary": "Né dans le sud du Brésil, ce fleuve coule vers le sud ; c'est le plus long d'Amérique du Sud après l'Amazone.",
+		"facts": [
+			"Le barrage d'Itaipu, construit en commun par le Brésil et le Paraguay, le retient, et les deux pays s'en partagent l'électricité.",
+			"Il rejoint le fleuve Uruguay pour former l'estuaire du Río de la Plata."
+		]
+	},
+	"nature-045": {
+		"summary": "Le fond marin le plus profond de la Terre, dont le point le plus bas, le Challenger Deep, dépasse 10 900 mètres.",
+		"facts": [
+			"On pourrait y plonger l'Everest la tête en bas : il resterait encore 2 000 mètres d'eau au-dessus.",
+			"Le bathyscaphe Trieste en 1960, puis James Cameron en 2012, sont descendus jusqu'au fond."
+		]
+	},
+	"nature-046": {
+		"summary": "Chaîne de montagnes qui longe la côte est sur 3 500 kilomètres et arrête les nuages de pluie.",
+		"facts": [
+			"Même son point culminant, le mont Kosciuszko, ne dépasse pas 2 228 mètres.",
+			"Les Blue Mountains, près de Sydney, en font partie."
+		]
+	},
+	"nature-047": {
+		"summary": "Deuxième plus grande île du monde après le Groenland, partagée à peu près pour moitié entre deux pays.",
+		"facts": [
+			"Plus de 800 langues y sont parlées.",
+			"Bien qu'elle soit proche de l'équateur, quelques glaciers subsistent sur ses hauts sommets, mais ils sont en passe de disparaître."
+		]
+	},
+	"nature-048": {
+		"summary": "Île isolée à 240 kilomètres au sud du continent, ce qui a permis à une faune unique d'y survivre.",
+		"facts": [
+			"Le diable de Tasmanie, carnivore à poche, ne vit pratiquement plus à l'état sauvage que sur cette île.",
+			"Il y a environ 11 700 ans, la montée des eaux a ouvert le détroit de Bass et l'a séparée du continent."
+		]
+	},
+	"nature-049": {
+		"summary": "Point culminant des Alpes du Sud, sur l'île du Sud, haut de 3 724 mètres et appelé Aoraki en maori.",
+		"facts": [
+			"Un éboulement survenu en 1991 a abaissé son sommet de 10 mètres.",
+			"Avant l'Everest, Edmund Hillary avait gravi son arête sud en 1948."
+		]
+	},
+	"nature-050": {
+		"summary": "Plus vaste désert d'Australie, où dunes rouges et plaines caillouteuses s'étendent sur plus de 700 kilomètres d'est en ouest.",
+		"facts": [
+			"Dans les années 1950, le Royaume-Uni y a mené des essais nucléaires, à Maralinga.",
+			"L'explorateur Ernest Giles, le premier à le traverser en 1875, lui a donné le nom de la reine Victoria."
+		]
+	}
+}

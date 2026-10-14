@@ -7,7 +7,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Tag from '@/src/screens/common/atomic/Tag';
 import Colors, { BRAND_GRADIENT, withAlpha, isDark, readableOn } from '@/src/const/ConstColors';
-import { BODY_FONTS, Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
+import { bodyFont, Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { AchievementStatus } from '@/src/services/AchievementService';
 import { AchievementRarity, RARITY_META, RARITY_ORDER } from '@/src/const/ConstAchievements';
@@ -284,7 +284,7 @@ const styles = themed(() => StyleSheet.create({
 	// 히어로→검색→필터→목록 간격을 같은 리듬(≈16)으로 — 필터 줄 marginTop(md) + 내부 paddingVertical(xs)
 	searchRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.lg },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
-	searchInput: { flex: 1, fontSize: Typography.body, fontFamily: BODY_FONTS.bold, color: Colors.textStrong, paddingVertical: 0, includeFontPadding: false, textAlignVertical: 'center' },
+	searchInput: { flex: 1, fontSize: Typography.body, ...bodyFont('bold'), color: Colors.textStrong, paddingVertical: 0, includeFontPadding: false, textAlignVertical: 'center' },
 	lockedChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surface, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	lockedChipOn: { backgroundColor: Colors.primary, borderColor: Colors.primary },
 	lockedChipText: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textSecondary },

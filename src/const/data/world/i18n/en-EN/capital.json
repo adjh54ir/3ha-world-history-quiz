@@ -1,0 +1,1696 @@
+{
+	"capital-npl": {
+		"summary": "A landlocked country on the southern slopes of the Himalayas, home to Lumbini, the birthplace of the Buddha. The capital is Kathmandu.",
+		"facts": [
+			"Mount Everest, the world's highest peak, sits on its border with China.",
+			"It is the only country whose flag is not a rectangle."
+		]
+	},
+	"capital-twn": {
+		"summary": "An island between the East China Sea and the South China Sea where bubble tea was invented. Its main city is Taipei.",
+		"facts": [
+			"Taipei 101 was the world's tallest building from 2004 to 2010.",
+			"On the Lantern Festival, people in Pingxi release sky lanterns inscribed with their wishes."
+		]
+	},
+	"capital-tls": {
+		"summary": "A mostly Catholic nation that occupies the eastern half of the island of Timor. The capital is Dili.",
+		"facts": [
+			"After rule by Portugal and then Indonesia, it became independent in 2002.",
+			"Tetum and Portuguese are both official languages."
+		]
+	},
+	"capital-lao": {
+		"summary": "Southeast Asia's only landlocked country, where sticky rice is the staple food. The capital is Vientiane.",
+		"facts": [
+			"The old town of Luang Prabang is a UNESCO World Heritage Site.",
+			"The Mekong flows north to south along its western border."
+		]
+	},
+	"capital-lbn": {
+		"summary": "A country on the eastern shore of the Mediterranean where power is shared among several Christian and Muslim sects. The capital is Beirut.",
+		"facts": [
+			"A Lebanon cedar sits in the center of its flag.",
+			"It is the land where the ancient Phoenicians built their port cities."
+		]
+	},
+	"capital-mys": {
+		"summary": "A country on the Malay Peninsula and Borneo whose favorite dish is nasi lemak, rice cooked in coconut milk. The capital is Kuala Lumpur.",
+		"facts": [
+			"Government functions have moved to Putrajaya, but Kuala Lumpur remains the capital by law.",
+			"The Petronas Towers were the world's tallest buildings from 1998 to 2004."
+		]
+	},
+	"capital-mdv": {
+		"summary": "An Indian Ocean nation of coral islands, where honeymooners flock to overwater bungalow resorts. The capital is Malé.",
+		"facts": [
+			"It is made up of more than 1,000 coral islands.",
+			"With an average elevation of about 1.5 meters (5 feet), it is the lowest-lying country in the world."
+		]
+	},
+	"capital-mng": {
+		"summary": "A landlocked country of grassy steppes where many nomads still herd livestock and live in portable felt tents called gers. The capital is Ulaanbaatar.",
+		"facts": [
+			"Ulaanbaatar is the world's coldest capital, with an average annual temperature of around 0°C (32°F).",
+			"Karakorum, the capital of the Mongol Empire, stood in the Orkhon River valley to the west."
+		]
+	},
+	"capital-mmr": {
+		"summary": "A Buddhist country on the western side of Indochina, where the golden Shwedagon Pagoda rises. The capital is Naypyidaw.",
+		"facts": [
+			"In 2005 the capital moved from Yangon to Naypyidaw.",
+			"Thousands of Buddhist temples and stupas still stand on the plain of Bagan."
+		]
+	},
+	"capital-bhr": {
+		"summary": "A small island nation in the Persian Gulf that hosts a Formula One race every year. The capital is Manama.",
+		"facts": [
+			"A causeway links it to Saudi Arabia.",
+			"Its historic pearling trail is a UNESCO World Heritage Site."
+		]
+	},
+	"capital-bgd": {
+		"summary": "A country on the Ganges delta and a garment-export giant whose name often shows up on clothing labels. The capital is Dhaka.",
+		"facts": [
+			"It split from Pakistan in 1971 after a nine-month war of independence.",
+			"International Mother Language Day on February 21 grew out of the 1952 protests in Dhaka to defend the Bengali language."
+		]
+	},
+	"capital-vnm": {
+		"summary": "A long, narrow country in Indochina stretching north to south, home of pho noodle soup and banh mi sandwiches. The capital is Hanoi.",
+		"facts": [
+			"The largest city is Ho Chi Minh City in the south, but the capital is Hanoi in the north.",
+			"The limestone islands of Ha Long Bay are a UNESCO World Natural Heritage Site."
+		]
+	},
+	"capital-btn": {
+		"summary": "A kingdom in the eastern Himalayas that limits tourist numbers by charging visitors a daily fee. The capital is Thimphu.",
+		"facts": [
+			"In 1972 its fourth king put Gross National Happiness ahead of Gross National Product.",
+			"In Thimphu, police officers direct traffic with hand signals instead of traffic lights."
+		]
+	},
+	"capital-prk": {
+		"summary": "A country on the northern half of the Korean Peninsula, ruled by three generations of one family since its regime was founded in 1948. The capital is Pyongyang.",
+		"facts": [
+			"At the 2018 inter-Korean summit dinner, naengmyeon cold noodles from Pyongyang's Okryu-gwan restaurant were brought all the way to Panmunjom.",
+			"It joined the United Nations together with South Korea in September 1991."
+		]
+	},
+	"capital-brn": {
+		"summary": "A kingdom on the north coast of Borneo whose oil and gas wealth means it levies no income tax. The capital is Bandar Seri Begawan.",
+		"facts": [
+			"In the water village of Kampong Ayer, houses linked by wooden walkways line the river.",
+			"The Limbang district of Malaysia's Sarawak state splits the country into two pieces."
+		]
+	},
+	"capital-sau": {
+		"summary": "A kingdom covering most of the Arabian Peninsula, chosen to host the 2034 World Cup. The capital is Riyadh.",
+		"facts": [
+			"It is home to Mecca and Medina, the holy cities of Islam.",
+			"Oil first gushed out in 1938 at Dammam in the east."
+		]
+	},
+	"capital-lka": {
+		"summary": "An island nation south of India, nicknamed the \"Tear of the Indian Ocean\" for its shape. The capital is Sri Jayawardenepura Kotte.",
+		"facts": [
+			"Sri Jayawardenepura Kotte is the legislative capital, while Colombo is the executive and judicial capital.",
+			"The \"Ceylon\" in Ceylon tea was the island nation's name until 1972."
+		]
+	},
+	"capital-syr": {
+		"summary": "A country on the eastern Mediterranean whose capital gave its name to damask, a patterned silk. The capital is Damascus.",
+		"facts": [
+			"Damascus is often counted among the oldest continuously inhabited cities.",
+			"In 2025 it officially adopted its current flag of green, white, and black stripes with three red stars."
+		]
+	},
+	"capital-sgp": {
+		"summary": "A city-state at the tip of the Malay Peninsula, with rules so strict that chewing gum can't be sold freely. The city-state is its own capital.",
+		"facts": [
+			"It became independent in 1965 after separating from the Federation of Malaysia.",
+			"Sitting on the Strait of Malacca, it runs one of the world's largest transshipment ports."
+		]
+	},
+	"capital-are": {
+		"summary": "A federation of seven sheikhdoms that reclaimed land from the sea to build Palm Jumeirah, a palm-shaped artificial island. The capital is Abu Dhabi.",
+		"facts": [
+			"Dubai is the largest city, but Abu Dhabi is the capital.",
+			"Dubai's Burj Khalifa is the tallest building in the world."
+		]
+	},
+	"capital-arm": {
+		"summary": "A landlocked country in the South Caucasus that still uses its own alphabet, created in the early 5th century. The capital is Yerevan.",
+		"facts": [
+			"In 301 it became the first country in the world to adopt Christianity as its state religion.",
+			"Mount Ararat, which its people regard as sacred, now lies in Turkey."
+		]
+	},
+	"capital-aze": {
+		"summary": "A country on the western shore of the Caspian Sea, home to Yanar Dag, a hillside where underground gas keeps a fire burning nonstop. The capital is Baku.",
+		"facts": [
+			"Lying 28 meters (92 feet) below sea level, Baku is the lowest capital in the world.",
+			"In 1901 the Baku oil fields produced more than half of the world's oil."
+		]
+	},
+	"capital-afg": {
+		"summary": "A landlocked country between Central and South Asia, the setting of the novel “The Kite Runner.” The capital is Kabul.",
+		"facts": [
+			"The Hindu Kush mountains divide the country into north and south.",
+			"In 2001 the Taliban destroyed the giant Buddhas of the Bamiyan Valley, a stop on the Silk Road."
+		]
+	},
+	"capital-yem": {
+		"summary": "A country at the southern tip of the Arabian Peninsula; mocha coffee is named after its Red Sea port of Mocha. The capital is Sanaa.",
+		"facts": [
+			"The tower houses of Sanaa's Old City, built of mud and fired brick, are a UNESCO World Heritage Site.",
+			"The Kingdom of Saba, said to be the land of the Queen of Sheba, grew rich on the frankincense trade."
+		]
+	},
+	"capital-omn": {
+		"summary": "A country at the eastern tip of the Arabian Peninsula, where frankincense trees grow in the southern Dhofar region. The capital is Muscat.",
+		"facts": [
+			"It faces Iran across the Strait of Hormuz.",
+			"In the 19th century it ruled as far as Zanzibar in East Africa."
+		]
+	},
+	"capital-jor": {
+		"summary": "A country on the Dead Sea and the river it shares its name with, whose red desert of Wadi Rum served as a filming location for “The Martian.” The capital is Amman.",
+		"facts": [
+			"It is home to Petra, an ancient city carved out of rock.",
+			"The Dead Sea's surface is the lowest point on land on Earth."
+		]
+	},
+	"capital-uzb": {
+		"summary": "A landlocked Central Asian country home to many descendants of ethnic Koreans who were forcibly deported there. The capital is Tashkent.",
+		"facts": [
+			"Samarkand and Bukhara were famous cities on the Silk Road.",
+			"It is one of the rare countries where you must cross two borders to reach the sea."
+		]
+	},
+	"capital-irq": {
+		"summary": "The land between two rivers, where the base-60 system that splits an hour into 60 minutes was born. The capital is Baghdad.",
+		"facts": [
+			"In Mesopotamia, between the two rivers, the Sumerians wrote in cuneiform.",
+			"Harun al-Rashid, the caliph of “One Thousand and One Nights,” ruled Abbasid Baghdad."
+		]
+	},
+	"capital-irn": {
+		"summary": "The ancient land of Persia, a major producer of hand-woven carpets and saffron. The capital is Tehran.",
+		"facts": [
+			"Persepolis is the site of the old capital of the Achaemenid dynasty.",
+			"The new year begins on the spring equinox, and the holiday is called Nowruz."
+		]
+	},
+	"capital-isr": {
+		"summary": "A country on the eastern Mediterranean where buses mostly stop running on Saturday, the Sabbath. Its self-declared capital is Jerusalem.",
+		"facts": [
+			"Jerusalem is a holy city for Judaism, Christianity, and Islam alike.",
+			"Of 97 embassies, 88 are located in the Tel Aviv area."
+		]
+	},
+	"capital-ind": {
+		"summary": "A large South Asian country known for yoga, curry, and the Bollywood film industry. The capital is New Delhi.",
+		"facts": [
+			"New Delhi is an administrative city planned and built under British rule.",
+			"The Taj Mahal, a Mughal mausoleum, is in Agra."
+		]
+	},
+	"capital-idn": {
+		"summary": "A country made up of more than 17,000 islands. The capital is Jakarta.",
+		"facts": [
+			"Jakarta remains the capital until a presidential decree is issued, and the move to Nusantara is underway.",
+			"Borobudur, on the island of Java, is the largest Buddhist monument in the world."
+		]
+	},
+	"capital-jpn": {
+		"summary": "An island nation across the East Sea from Korea, known for anime and sushi. The capital is Tokyo.",
+		"facts": [
+			"Tokyo grew after the shogunate set up there, back when the city was called Edo.",
+			"At 3,776 meters (12,388 feet), Mount Fuji is the country's highest mountain."
+		]
+	},
+	"capital-geo": {
+		"summary": "A Caucasus country on the eastern shore of the Black Sea with a tradition of polyphonic choral singing. The capital is Tbilisi.",
+		"facts": [
+			"Traces of winemaking from about 8,000 years ago have been found here.",
+			"A favorite dish is khachapuri, boat-shaped bread topped with cheese and egg."
+		]
+	},
+	"capital-chn": {
+		"summary": "An East Asian country with a population of more than 1.4 billion. The capital is Beijing.",
+		"facts": [
+			"Beijing is home to the Forbidden City, where the Ming and Qing emperors lived.",
+			"The Great Wall of China runs along the mountain ridges north of Beijing."
+		]
+	},
+	"capital-kaz": {
+		"summary": "The world's largest landlocked country, where the nomadic tradition of hunting with golden eagles lives on. The capital is Astana.",
+		"facts": [
+			"The capital moved from Almaty in 1997 and, after several name changes, is once again called Astana.",
+			"The Baikonur Cosmodrome is on its territory."
+		]
+	},
+	"capital-qat": {
+		"summary": "A peninsula nation jutting into the Persian Gulf, home to the Arab broadcaster Al Jazeera. The capital is Doha.",
+		"facts": [
+			"In 2022 it hosted the first World Cup in the Middle East, held in November and December to avoid the heat.",
+			"The gas field beneath its waters, shared with a neighboring country, is the largest in the world."
+		]
+	},
+	"capital-khm": {
+		"summary": "A country in Indochina where, in the rainy season, a river reverses its flow and a lake swells to several times its size. The capital is Phnom Penh.",
+		"facts": [
+			"Angkor Wat is a temple built by the Khmer Empire in the 12th century.",
+			"Angkor Wat appears in the center of its flag."
+		]
+	},
+	"capital-kwt": {
+		"summary": "An oil-producing country at the northern end of the Persian Gulf whose dinar is the world's highest-valued currency. The capital is the city that shares the country's name.",
+		"facts": [
+			"The Gulf War broke out after Iraq invaded in 1990.",
+			"As Iraqi forces retreated in 1991, they set fire to more than 600 oil wells."
+		]
+	},
+	"capital-kgz": {
+		"summary": "A landlocked country in the Tian Shan whose flag shows the round roof frame of a nomad's yurt. The capital is Bishkek.",
+		"facts": [
+			"The Tian Shan mountains cover more than 80 percent of the country.",
+			"Issyk-Kul is the second-largest mountain lake after South America's Lake Titicaca."
+		]
+	},
+	"capital-tjk": {
+		"summary": "A landlocked country in the Pamir Mountains that, unlike its Turkic neighbors, speaks a Persian language. The capital is Dushanbe.",
+		"facts": [
+			"More than 90 percent of the country is mountainous.",
+			"Its highest peak, Ismoil Somoni Peak, rises to 7,495 meters (24,590 feet)."
+		]
+	},
+	"capital-tha": {
+		"summary": "The land of tom yum soup and its famous kickboxing, and the only kingdom in Southeast Asia never colonized. The capital is Bangkok.",
+		"facts": [
+			"Bangkok's full ceremonial name has 168 letters, earning it a Guinness record as the world's longest place name.",
+			"The Grand Palace and the Temple of the Emerald Buddha stand in the heart of the city."
+		]
+	},
+	"capital-tkm": {
+		"summary": "A landlocked country east of the Caspian Sea whose capital, packed with white marble buildings, made it into Guinness World Records. The capital is Ashgabat.",
+		"facts": [
+			"Most of the country is covered by the Karakum Desert.",
+			"The burning gas crater at Darvaza is known as the \"Gates of Hell.\""
+		]
+	},
+	"capital-tur": {
+		"summary": "A country spanning Asia and Europe that draws travelers with the hot-air balloons of Cappadocia and its kebabs. The capital is Ankara.",
+		"facts": [
+			"Its largest city, Istanbul, was once Constantinople.",
+			"The Bosporus Strait separates the two continents."
+		]
+	},
+	"capital-pak": {
+		"summary": "A country in the Indus River basin where pink Himalayan salt is mined. The capital is Islamabad.",
+		"facts": [
+			"The capital moved from Karachi to Rawalpindi and then to this newly built city in the 1960s.",
+			"K2, the world's second-highest peak, stands in the Karakoram range in the north."
+		]
+	},
+	"capital-pse": {
+		"summary": "A nation on the West Bank of the Jordan River that includes Bethlehem, said to be the birthplace of Jesus. Its administrative center is Ramallah.",
+		"facts": [
+			"It claims East Jerusalem as its capital, but its government is based in Ramallah.",
+			"It became a UN non-member observer state in 2012 but is not yet a full member."
+		]
+	},
+	"capital-phl": {
+		"summary": "A nation of more than 7,000 islands that draws many language students because English is an official language. The capital is Manila.",
+		"facts": [
+			"Under Spanish rule, Manila was a hub of Asian trade.",
+			"Intramuros is the old walled city that survives in Manila."
+		]
+	},
+	"capital-kor": {
+		"summary": "A country on the southern half of the Korean Peninsula that made its name worldwide with K-pop, TV dramas, and semiconductors. The capital is Seoul.",
+		"facts": [
+			"Seoul, on the Han River, has been the capital for more than 600 years, since the Joseon dynasty.",
+			"Hangul Day on October 9 commemorates the proclamation of the Korean alphabet, Hunminjeongeum, in 1446."
+		]
+	},
+	"capital-hkg": {
+		"summary": "A special administrative region ruled by Britain from 1842 until it was handed back to China in 1997.",
+		"facts": [
+			"After the handover, \"one country, two systems\" was guaranteed for 50 years, until 2047.",
+			"It has more skyscrapers than any other city in the world."
+		]
+	},
+	"capital-ggy": {
+		"summary": "A British Crown Dependency island in the western Channel Islands. The capital is St. Peter Port.",
+		"facts": [
+			"It belongs to the British Crown but does not follow the laws of mainland Britain.",
+			"Victor Hugo finished “Les Misérables” in his house on the island while in exile."
+		]
+	},
+	"capital-grc": {
+		"summary": "A country at the southern tip of the Balkan Peninsula with thousands of islands, including Santorini and its whitewashed houses. The capital is Athens.",
+		"facts": [
+			"The Parthenon stands on the Acropolis hill.",
+			"The first modern Olympic Games were held in Athens in 1896."
+		]
+	},
+	"capital-nld": {
+		"summary": "A low-lying land on the North Sea that brings to mind windmills, tulips, and bicycles. The capital is Amsterdam.",
+		"facts": [
+			"Amsterdam is the constitutional capital, but the government and parliament sit in The Hague.",
+			"In 1653 one of its sailors, Hendrick Hamel, was shipwrecked on Jeju Island and later wrote an account of his years in Korea."
+		]
+	},
+	"capital-nor": {
+		"summary": "A country in western Scandinavia that grew rich from salmon farming and North Sea oil. The capital is Oslo.",
+		"facts": [
+			"The Sognefjord, more than 200 kilometers (124 miles) long, is the country's longest fjord.",
+			"The Nobel Peace Prize is the only Nobel Prize awarded in Oslo."
+		]
+	},
+	"capital-dnk": {
+		"summary": "A country of the Jutland Peninsula and many islands, the homeland of Hans Christian Andersen's fairy tales. The capital is Copenhagen.",
+		"facts": [
+			"LEGO toys got their start in the town of Billund in 1932.",
+			"Greenland is one of its autonomous territories."
+		]
+	},
+	"capital-deu": {
+		"summary": "The home of the Oktoberfest beer festival and the Autobahn, with stretches that have no speed limit. The capital is Berlin.",
+		"facts": [
+			"Berlin became the capital with reunification in 1990, and the government moved there from Bonn in 1999.",
+			"The Berlin Wall went up in 1961 and fell in 1989."
+		]
+	},
+	"capital-lva": {
+		"summary": "The middle of the three Baltic states, with a tradition of song festivals where tens of thousands sing together. The capital is Riga.",
+		"facts": [
+			"The old town of Riga, a Hanseatic city founded in 1201, is a UNESCO World Heritage Site.",
+			"One in three buildings in central Riga is Art Nouveau."
+		]
+	},
+	"capital-rus": {
+		"summary": "The home of the ballet “Swan Lake” and matryoshka dolls, and the largest country in the world by area. The capital is Moscow.",
+		"facts": [
+			"It spans Europe and Asia and has eleven time zones.",
+			"The Trans-Siberian Railway runs 9,289 kilometers (5,772 miles) from Moscow to Vladivostok."
+		]
+	},
+	"capital-rou": {
+		"summary": "An Eastern European country ringed by the Carpathian Mountains, whose language descends from Latin. The capital is Bucharest.",
+		"facts": [
+			"The region of Transylvania is the setting of the Dracula story.",
+			"It has the delta where the Danube flows into the Black Sea."
+		]
+	},
+	"capital-lux": {
+		"summary": "A Western European grand duchy that in 2020 became the first country to make all public transportation free nationwide. Its capital shares the country's name.",
+		"facts": [
+			"The country and its capital share the same name, and Luxembourgish, French, and German are all used.",
+			"The Court of Justice of the European Union and the European Investment Bank are headquartered in its capital."
+		]
+	},
+	"capital-ltu": {
+		"summary": "The southernmost of the three Baltic states, so crazy about basketball that its men's team has won Olympic bronze three times. The capital is Vilnius.",
+		"facts": [
+			"In the 15th century, as a grand duchy, its lands stretched from the Baltic Sea to the Black Sea.",
+			"Countless crosses are planted on the Hill of Crosses."
+		]
+	},
+	"capital-lie": {
+		"summary": "An Alpine principality on the Rhine that has won all 10 of its Olympic medals in alpine skiing. The capital is Vaduz.",
+		"facts": [
+			"Along with Uzbekistan, it is one of only two doubly landlocked countries.",
+			"It abolished its army in 1868 and has had no military since."
+		]
+	},
+	"capital-imn": {
+		"summary": "A British Crown Dependency between Great Britain and Ireland. The capital is Douglas.",
+		"facts": [
+			"Its flag features a symbol of three interlocking legs.",
+			"Since 1907, the island has closed its public roads to host the TT motorcycle races."
+		]
+	},
+	"capital-mco": {
+		"summary": "A city-state on the Mediterranean coast, home to the Monte Carlo casino. The whole country is a single city.",
+		"facts": [
+			"At about 2 square kilometers (0.8 square miles), it is the second-smallest country after Vatican City and the most densely populated.",
+			"Every year a car race is held right through its city streets."
+		]
+	},
+	"capital-mne": {
+		"summary": "A small Adriatic country where the medieval walled town of Kotor sits deep inside a bay. The capital is Podgorica.",
+		"facts": [
+			"Its name means \"black mountain,\" after Mount Lovćen, thickly covered with evergreen forest.",
+			"It became independent in 2006 after splitting from Serbia."
+		]
+	},
+	"capital-mda": {
+		"summary": "A small landlocked Eastern European country whose territory east of the Dniester River has broken away. The capital is Chișinău.",
+		"facts": [
+			"In 2023 it changed the official name of its language from Moldovan to Romanian.",
+			"In 2005 the Milestii Mici wine cellars entered Guinness World Records as the world's largest wine collection."
+		]
+	},
+	"capital-mlt": {
+		"summary": "An island nation in the middle of the Mediterranean whose official languages are English and a native tongue with Arabic roots. The capital is Valletta.",
+		"facts": [
+			"In 1565 the Knights of Malta held off the Great Siege by the Ottoman Empire.",
+			"In 1980 the entire city of Valletta was named a UNESCO World Heritage Site."
+		]
+	},
+	"capital-vat": {
+		"summary": "The center of the Catholic Church, surrounded by the city of Rome. It is a city-state where the pope resides.",
+		"facts": [
+			"Michelangelo's Genesis frescoes cover the ceiling of the Sistine Chapel.",
+			"The Swiss Guard has protected the pope for more than 500 years."
+		]
+	},
+	"capital-bel": {
+		"summary": "A small Western European country lined with shops selling fries, waffles, and chocolate. The capital is Brussels.",
+		"facts": [
+			"Many of the European Union's main institutions are based in Brussels.",
+			"Hergé, creator of the comic “The Adventures of Tintin,” was born in Brussels."
+		]
+	},
+	"capital-blr": {
+		"summary": "A landlocked Eastern European country that builds BelAZ, giant dump trucks for mining. The capital is Minsk.",
+		"facts": [
+			"Its name means \"White Rus',\" and before independence in 1991 it was known as Byelorussia.",
+			"European bison live in the primeval Białowieża Forest, which extends into Poland."
+		]
+	},
+	"capital-bih": {
+		"summary": "A Balkan country with a tradition of diving into the river from the old stone bridge in Mostar. The capital is Sarajevo.",
+		"facts": [
+			"The 1914 assassination in Sarajevo triggered World War I.",
+			"Sarajevo hosted the 1984 Winter Olympics."
+		]
+	},
+	"capital-mkd": {
+		"summary": "A landlocked Balkan country where Mother Teresa was born, in the city that is now its capital. The capital is Skopje.",
+		"facts": [
+			"In 2019 it changed its name by adding \"North.\"",
+			"Lake Ohrid, millions of years old and one of the oldest lakes in Europe, is a UNESCO World Heritage Site."
+		]
+	},
+	"capital-bgr": {
+		"summary": "A country in the eastern Balkans whose name appears in the scientific name of a yogurt bacterium. The capital is Sofia.",
+		"facts": [
+			"Rose oil for perfume is distilled in the Rose Valley of Kazanlak.",
+			"The Cyrillic alphabet spread outward from this land."
+		]
+	},
+	"capital-smr": {
+		"summary": "A tiny republic atop Mount Titano, surrounded on all sides by a neighboring country. It issues commemorative stamps and coins for sale.",
+		"facts": [
+			"It is often considered the oldest surviving republic in the world.",
+			"Each peak of Mount Titano is crowned by an old tower."
+		]
+	},
+	"capital-srb": {
+		"summary": "A landlocked country in the central Balkans that produced tennis star Novak Djokovic. The capital is Belgrade.",
+		"facts": [
+			"The city grew up where the Sava River meets the Danube.",
+			"Belgrade was the capital of the former Yugoslavia and is home to the House of Flowers, where Tito is buried."
+		]
+	},
+	"capital-sjm": {
+		"summary": "An Arctic Ocean archipelago where you can't leave town without gear to fend off polar bears. The main settlement is Longyearbyen.",
+		"facts": [
+			"In 2002 South Korea opened its Dasan Arctic research station at Ny-Ålesund.",
+			"A vault storing seeds from around the world is located here."
+		]
+	},
+	"capital-swe": {
+		"summary": "A country in eastern Scandinavia that gave the world IKEA, Volvo, and the pop group ABBA. The capital is Stockholm.",
+		"facts": [
+			"Spread across fourteen islands, the city is known as a city on the water.",
+			"Every Nobel Prize ceremony except the Peace Prize is held in Stockholm."
+		]
+	},
+	"capital-che": {
+		"summary": "A landlocked Alpine country that holds national referendums four times a year. The city that serves as its capital is Bern.",
+		"facts": [
+			"Its constitution names no capital; Bern is designated the \"federal city.\"",
+			"Geneva hosts the UN's European headquarters and the headquarters of the International Committee of the Red Cross."
+		]
+	},
+	"capital-esp": {
+		"summary": "An Iberian country of paella, flamenco, and the soccer powerhouse Real Madrid. The capital is Madrid.",
+		"facts": [
+			"Madrid sits on a plateau in the very center of the peninsula.",
+			"In 2025 Barcelona's Sagrada Família became the tallest church in the world."
+		]
+	},
+	"capital-svk": {
+		"summary": "A landlocked Central European country that makes more cars per person than any other nation. The capital is Bratislava.",
+		"facts": [
+			"Bratislava is the only capital that borders two other countries.",
+			"From 1536 to 1783 it was the capital of the Kingdom of Hungary."
+		]
+	},
+	"capital-svn": {
+		"summary": "A small country at the southern edge of the Alps where a little train runs through the limestone Postojna Cave. The capital is Ljubljana.",
+		"facts": [
+			"A small island with a church sits in the middle of Lake Bled.",
+			"Forests cover 58 percent of the country, the most in the EU after Finland and Sweden."
+		]
+	},
+	"capital-isl": {
+		"summary": "A volcanic island nation in the North Atlantic, home to Geysir, the hot spring that gave English the word \"geyser.\" The capital is Reykjavík.",
+		"facts": [
+			"Reykjavík is the northernmost capital of any sovereign state.",
+			"Geothermal energy heats 90 percent of homes, and all electricity comes from hydropower and geothermal sources."
+		]
+	},
+	"capital-irl": {
+		"summary": "The home of Guinness stout and Celtic music, covering most of the southern part of its island. The capital is Dublin.",
+		"facts": [
+			"The northeast of the island is Northern Ireland, part of the United Kingdom.",
+			"On St. Patrick's Day, March 17, people dress in green and march in parades."
+		]
+	},
+	"capital-and": {
+		"summary": "A tiny principality in the high valleys of the Pyrenees. Catalan is its only official language.",
+		"facts": [
+			"The President of France and the Bishop of Urgell in Spain jointly serve as heads of state.",
+			"Low taxes draw many tourists for duty-free shopping and skiing."
+		]
+	},
+	"capital-alb": {
+		"summary": "A country on the eastern shore of the Adriatic whose flag bears a black double-headed eagle. The capital is Tirana.",
+		"facts": [
+			"In 1967 it became the first country in the world to declare itself an atheist state.",
+			"Under Hoxha's regime, more than 170,000 concrete bunkers were built by 1983."
+		]
+	},
+	"capital-est": {
+		"summary": "A country on the eastern Baltic Sea whose developers created the internet calling service Skype. The capital is Tallinn.",
+		"facts": [
+			"Tallinn's old town preserves its medieval look remarkably well.",
+			"In 2005 it became the first country to use online voting in a legally binding election."
+		]
+	},
+	"capital-gbr": {
+		"summary": "A kingdom on the island of Great Britain and the northern part of the island of Ireland, where the rules of modern soccer were first written. The capital is London.",
+		"facts": [
+			"England, Scotland, Wales, and Northern Ireland together make up one country.",
+			"Big Ben is the name of the great bell inside the clock tower of the Houses of Parliament."
+		]
+	},
+	"capital-aut": {
+		"summary": "A landlocked country in the eastern Alps, home to Salzburg, the setting of “The Sound of Music.” The capital is Vienna.",
+		"facts": [
+			"Vienna is a city of music where Wolfgang Amadeus Mozart and Ludwig van Beethoven worked.",
+			"The cream-topped coffee known in Korea as \"Vienna coffee\" is Vienna's Einspänner."
+		]
+	},
+	"capital-ala": {
+		"summary": "A cluster of islands at the mouth of the Gulf of Bothnia in the Baltic Sea. The capital is Mariehamn.",
+		"facts": [
+			"It is an autonomous region of Finland where Swedish is spoken.",
+			"It is a neutral zone where a treaty prohibits military forces."
+		]
+	},
+	"capital-ukr": {
+		"summary": "An Eastern European country that brings to mind endless sunflower fields and red borscht soup. The capital is Kyiv.",
+		"facts": [
+			"Its vast black-soil lands earned it the name \"breadbasket of Europe.\"",
+			"The Dnipro River divides the country into east and west."
+		]
+	},
+	"capital-ita": {
+		"summary": "A boot-shaped peninsula nation, home of pizza, pasta, and Renaissance art. The capital is Rome.",
+		"facts": [
+			"Vatican City is a separate state in the middle of Rome.",
+			"The Colosseum is an amphitheater of ancient Rome."
+		]
+	},
+	"capital-jey": {
+		"summary": "The largest of the Channel Islands, a British Crown Dependency. The capital is St. Helier.",
+		"facts": [
+			"As a Crown Dependency, it issues its own money and stamps.",
+			"The Jersey cow, a breed that gives rich, yellowish milk, originated on this island."
+		]
+	},
+	"capital-gib": {
+		"summary": "A British Overseas Territory on a rocky headland at the southern tip of the Iberian Peninsula. The whole territory is a single city.",
+		"facts": [
+			"It guards the strait where Europe and Africa come closest together.",
+			"The Rock is home to the only wild monkeys in Europe."
+		]
+	},
+	"capital-cze": {
+		"summary": "A landlocked Central European country where golden Pilsner lager was first brewed. The capital is Prague.",
+		"facts": [
+			"In 1993 it split peacefully from Slovakia.",
+			"Prague Castle and the Charles Bridge stand along the Vltava River."
+		]
+	},
+	"capital-unk": {
+		"summary": "A landlocked country in the central Balkans that uses the euro despite being outside the European Union. The capital is Pristina.",
+		"facts": [
+			"It declared independence from Serbia in 2008, and South Korea recognized it that March.",
+			"Not every country recognizes it as a state yet."
+		]
+	},
+	"capital-hrv": {
+		"summary": "An Adriatic coastal country where the cravat, the forerunner of the necktie, originated. The capital is Zagreb.",
+		"facts": [
+			"The Walls of Dubrovnik were a filming location for the TV series “Game of Thrones.”",
+			"It gained independence from Yugoslavia in the early 1990s."
+		]
+	},
+	"capital-cyp": {
+		"summary": "An island nation in the eastern Mediterranean where Aphrodite, goddess of love, is said to have been born from the waves. The capital is Nicosia.",
+		"facts": [
+			"The island is divided into north and south, and the dividing line runs through Nicosia itself.",
+			"Geographically it is closer to Asia, but it is a member of the European Union."
+		]
+	},
+	"capital-fro": {
+		"summary": "A North Atlantic archipelago where sheep outnumber people. The capital is Tórshavn.",
+		"facts": [
+			"An autonomous territory of Denmark, it is made up of eighteen islands.",
+			"With almost no trees, grass-covered roofs are common."
+		]
+	},
+	"capital-prt": {
+		"summary": "A country at the western edge of the Iberian Peninsula, home of the egg tart pastel de nata. The capital is Lisbon.",
+		"facts": [
+			"The Korean word for bread, ppang, came from the Portuguese word pão by way of Japan.",
+			"Lisbon had to be rebuilt after the great earthquake of 1755."
+		]
+	},
+	"capital-pol": {
+		"summary": "A Central European country where the site of Auschwitz, the camp built by the Nazis, still stands. The capital is Warsaw.",
+		"facts": [
+			"Warsaw's Old Town, destroyed in World War II, was rebuilt just as it had been.",
+			"In 2022 it bought large numbers of South Korean K2 tanks and K9 self-propelled howitzers."
+		]
+	},
+	"capital-fra": {
+		"summary": "The land of baguettes, cheese, and wine, where a bicycle race circles the country every July. The capital is Paris.",
+		"facts": [
+			"The Eiffel Tower was built for the 1889 World's Fair.",
+			"The Mona Lisa hangs in the Louvre."
+		]
+	},
+	"capital-fin": {
+		"summary": "A Northern European country, the home of the sauna and the phone maker Nokia. The capital is Helsinki.",
+		"facts": [
+			"With more than 180,000 lakes, it is called the land of a thousand lakes.",
+			"Xylitol chewing gum was first made here in 1975."
+		]
+	},
+	"capital-hun": {
+		"summary": "A landlocked Central European country, birthplace of Ernő Rubik, inventor of the Rubik's Cube. The capital is Budapest.",
+		"facts": [
+			"In 1873 the three towns of Buda, Óbuda, and Pest merged to form today's capital.",
+			"Goulash, a stew of meat seasoned with paprika, began as a herdsmen's soup."
+		]
+	},
+	"capital-gha": {
+		"summary": "A West African nation on the Gulf of Guinea that was called the Gold Coast in colonial times. The capital is Accra.",
+		"facts": [
+			"Gaining independence in 1957, it was the first colony in sub-Saharan Africa to become a nation.",
+			"Lotte's Ghana chocolate, a popular Korean brand, is said to be named after this cocoa-producing country."
+		]
+	},
+	"capital-gab": {
+		"summary": "An equatorial country with more than 85 percent of its land covered by forest. The capital is Libreville.",
+		"facts": [
+			"Albert Schweitzer opened a hospital in Lambaréné in 1913.",
+			"In 2002 it set aside about one-tenth of its territory as 13 national parks."
+		]
+	},
+	"capital-gmb": {
+		"summary": "A West African riverside country depicted in the novel “Roots” as the homeland of its hero, Kunta Kinte. The capital is Banjul.",
+		"facts": [
+			"It stretches long and narrow along the Gambia River and is surrounded by Senegal.",
+			"It is the smallest country on the African mainland."
+		]
+	},
+	"capital-gin": {
+		"summary": "A West African country on the Atlantic coast that voted for immediate independence in a 1958 referendum. The capital is Conakry.",
+		"facts": [
+			"The Niger River rises in its highlands.",
+			"It has the world's largest reserves of bauxite, the raw material for aluminum, about a quarter of the global total."
+		]
+	},
+	"capital-gnb": {
+		"summary": "A West African country on the Atlantic coast where cashew nuts make up about 90 percent of exports. The capital is Bissau.",
+		"facts": [
+			"It declared independence in 1973, and Portugal recognized it in 1974.",
+			"Dozens of islands of the Bijagós Archipelago are scattered off its coast."
+		]
+	},
+	"capital-nam": {
+		"summary": "A country where the Namib Desert stretches along the Atlantic coast. The capital is Windhoek.",
+		"facts": [
+			"It gained independence from South African rule in 1990.",
+			"It is the second most sparsely populated country after Mongolia."
+		]
+	},
+	"capital-nga": {
+		"summary": "Africa's most populous country, which built the Nollywood film industry. The capital is Abuja.",
+		"facts": [
+			"In 1991 the capital moved from Lagos to Abuja.",
+			"At the 2010 World Cup it drew 2–2 with South Korea, sending South Korea to its first-ever Round of 16 on foreign soil."
+		]
+	},
+	"capital-ssd": {
+		"summary": "The world's newest country, where the vast Sudd wetlands of the Nile spread out. The capital is Juba.",
+		"facts": [
+			"It became independent from Sudan in 2011.",
+			"The White Nile runs through the country from south to north, and the capital, Juba, sits on its banks."
+		]
+	},
+	"capital-zaf": {
+		"summary": "A country at the southern tip of Africa, where Mandela ended apartheid and became president. The executive capital is Pretoria.",
+		"facts": [
+			"Pretoria is the executive capital, Cape Town the legislative capital, and Bloemfontein the judicial capital.",
+			"In 2010 it hosted the first World Cup held in Africa."
+		]
+	},
+	"capital-ner": {
+		"summary": "A landlocked country south of the Sahara where the mud-brick minaret of the Agadez Mosque rises. The capital is Niamey.",
+		"facts": [
+			"The Niger River passes through the southwest, and the capital, Niamey, lies on its banks.",
+			"Nigersaurus, a dinosaur with a broad, vacuum-cleaner-like snout, is named after this country."
+		]
+	},
+	"capital-lbr": {
+		"summary": "A West African country on the Atlantic coast where many of the world's cargo ships are registered on paper. The capital is Monrovia.",
+		"facts": [
+			"It was founded by freed American slaves who crossed the ocean.",
+			"The capital is named after U.S. President James Monroe."
+		]
+	},
+	"capital-lso": {
+		"summary": "A mountain kingdom in the interior of southern Africa, where people wrap themselves in Basotho blankets and ride ponies. The capital is Maseru.",
+		"facts": [
+			"It is completely surrounded by South Africa.",
+			"Even its lowest point is 1,400 meters (4,593 feet) above sea level, the highest low point of any country."
+		]
+	},
+	"capital-reu": {
+		"summary": "A volcanic island in the Indian Ocean east of Madagascar. Its main town is Saint-Denis.",
+		"facts": [
+			"As an overseas region of France, it uses the euro.",
+			"Piton de la Fournaise is one of the most frequently erupting volcanoes."
+		]
+	},
+	"capital-rwa": {
+		"summary": "A small landlocked East African country whose streets are spotless thanks to a plastic bag ban since 2008. The capital is Kigali.",
+		"facts": [
+			"Its many hills have earned it the name \"land of a thousand hills.\"",
+			"It has a volcanoes national park where mountain gorillas live."
+		]
+	},
+	"capital-lby": {
+		"summary": "A North African desert country with the ruins of Leptis Magna, a city of the Roman era. The capital is Tripoli.",
+		"facts": [
+			"It built the Great Man-Made River, a network of pipes that carries water from beneath the Sahara to coastal cities.",
+			"Most of its people live in a narrow strip along the Mediterranean."
+		]
+	},
+	"capital-mdg": {
+		"summary": "A large island nation in the Indian Ocean off the east coast of Africa, and a leading producer of vanilla. The capital is Antananarivo.",
+		"facts": [
+			"Six of the eight species of baobab tree grow only on this island.",
+			"It is the world's fourth-largest island, after Greenland, New Guinea, and Borneo."
+		]
+	},
+	"capital-myt": {
+		"summary": "An island in the Mozambique Channel nicknamed the \"perfume island\" for its ylang-ylang flowers. Its main town is Mamoudzou.",
+		"facts": [
+			"In a 1974 vote, unlike the other islands of the Comoros, it chose to remain with France.",
+			"The lagoon inside the coral reef encircling the island is exceptionally large."
+		]
+	},
+	"capital-mwi": {
+		"summary": "A landlocked country in southeastern Africa whose lake's colorful cichlids are sold worldwide as aquarium fish. The capital is Lilongwe.",
+		"facts": [
+			"Lake Malawi covers a fifth of the country.",
+			"Lake Malawi is about 365 miles long, earning it the nickname “Calendar Lake.”"
+		]
+	},
+	"capital-mli": {
+		"summary": "A landlocked West African country home to the Great Mosque of Djenné, built of mud brick. The capital is Bamako.",
+		"facts": [
+			"In the 14th century, King Mansa Musa handed out so much gold on his pilgrimage to Mecca that gold prices in Cairo fell.",
+			"Timbuktu was a center of trans-Saharan trade and learning."
+		]
+	},
+	"capital-mar": {
+		"summary": "A kingdom at Africa's northwestern tip that greets travelers with spice markets, mint tea and tagines. The capital is Rabat.",
+		"facts": [
+			"It faces Spain across the Strait of Gibraltar.",
+			"The old medinas of Marrakesh and Fez are World Heritage Sites."
+		]
+	},
+	"capital-mus": {
+		"summary": "An Indian Ocean resort island nation of sugarcane fields and coral-reef lagoons. The capital is Port Louis.",
+		"facts": [
+			"It was home to the dodo, a flightless bird.",
+			"It was uninhabited until the Dutch settled there in 1638."
+		]
+	},
+	"capital-mrt": {
+		"summary": "A desert country in northwestern Africa on the Atlantic coast. The capital is Nouakchott.",
+		"facts": [
+			"Much of the octopus imported into South Korea comes from here.",
+			"Iron-ore trains up to 3 kilometers long travel 704 kilometers across the desert."
+		]
+	},
+	"capital-moz": {
+		"summary": "A Portuguese-speaking country on the Indian Ocean coast of southeastern Africa. The capital is Maputo.",
+		"facts": [
+			"The Mozambique Channel separates it from Madagascar.",
+			"Its flag features an AK-47 rifle alongside a book and a hoe."
+		]
+	},
+	"capital-ben": {
+		"summary": "A long, narrow West African country on the Gulf of Guinea. The capital is Porto-Novo.",
+		"facts": [
+			"Porto-Novo is the official capital, but Cotonou is the real center of the country.",
+			"Vodun, the root of Voodoo, is an officially recognized religion, and January 10 is Vodun Day."
+		]
+	},
+	"capital-bwa": {
+		"summary": "A landlocked southern African country with more elephants than anywhere else in Africa. The capital is Gaborone.",
+		"facts": [
+			"The Okavango Delta never reaches the sea; its waters dry up in the desert instead.",
+			"The Orapa mine, discovered in 1967, is the world's largest diamond mine by area."
+		]
+	},
+	"capital-bdi": {
+		"summary": "A small landlocked East African country whose royal drum dance is recognized by UNESCO as Intangible Cultural Heritage. The capital is Gitega.",
+		"facts": [
+			"In 2019 the capital moved from Bujumbura to Gitega.",
+			"The former capital, Bujumbura, lies on the shore of Lake Tanganyika, the world's second-deepest lake."
+		]
+	},
+	"capital-bfa": {
+		"summary": "A landlocked West African country that hosts FESPACO, Africa's biennial film festival. The capital is Ouagadougou.",
+		"facts": [
+			"Its name means “land of upright people.”",
+			"In 1984 it changed its name from Upper Volta."
+		]
+	},
+	"capital-stp": {
+		"summary": "A tiny island nation in the Gulf of Guinea once known as the “Chocolate Islands.” The capital shares its name with the larger of its two main islands.",
+		"facts": [
+			"The equator passes over Rolas Islet in the south.",
+			"From 1905 to 1911 it was the world's largest cocoa producer."
+		]
+	},
+	"capital-esh": {
+		"summary": "A desert territory on Africa's northwestern Atlantic coast whose sovereignty has been disputed for more than 50 years. The capital is Laayoune.",
+		"facts": [
+			"A 2,700-kilometer sand berm built by Morocco splits the territory in two.",
+			"In 2025 the UN Security Council endorsed Morocco's autonomy plan as the basis for negotiations for the first time."
+		]
+	},
+	"capital-sen": {
+		"summary": "The westernmost country of mainland Africa, whose capital gave its name to the Dakar Rally. The capital is Dakar.",
+		"facts": [
+			"Gorée Island preserves the painful history of the slave trade.",
+			"In the opening match of the 2002 World Cup, co-hosted by South Korea and Japan, it beat defending champion France 1–0."
+		]
+	},
+	"capital-syc": {
+		"summary": "An Indian Ocean nation of 115 scattered islands. The capital is Victoria.",
+		"facts": [
+			"With just over 100,000 people, it is Africa's least populous country.",
+			"The coco de mer seed can weigh up to 18 kilograms, making it the largest seed of any plant."
+		]
+	},
+	"capital-shn": {
+		"summary": "A remote British Overseas Territory in the middle of the South Atlantic. The capital is Jamestown.",
+		"facts": [
+			"Napoleon was exiled to this island and died there.",
+			"Lying in the middle of the Atlantic, it didn't get regular flights until 2017."
+		]
+	},
+	"capital-som": {
+		"summary": "A Horn of Africa country whose waters South Korea's Cheonghae Unit was deployed to protect from pirates. The capital is Mogadishu.",
+		"facts": [
+			"It has the longest coastline in mainland Africa.",
+			"It borders both the Indian Ocean and the Gulf of Aden, and the shipping lane to the Suez Canal passes just offshore."
+		]
+	},
+	"capital-sdn": {
+		"summary": "A country on the upper Nile that produces much of the gum arabic used in colas and candy. The capital is Khartoum.",
+		"facts": [
+			"The Blue Nile and the White Nile meet at Khartoum.",
+			"More than 200 Nubian pyramids survive at Meroë and other sites, more than in Egypt."
+		]
+	},
+	"capital-sle": {
+		"summary": "A West African country on the Atlantic that early navigators named the “Lion Mountains.” The capital is Freetown.",
+		"facts": [
+			"Freed slaves settled here, so the capital was named the “city of freedom.”",
+			"From 1991 to 2002 it suffered a civil war fought over diamonds."
+		]
+	},
+	"capital-dza": {
+		"summary": "The land of raï music and couscous, and the largest country in Africa by area. The capital is Algiers.",
+		"facts": [
+			"More than 80 percent of the country is Sahara.",
+			"After nearly eight years of war, it won independence from France in 1962."
+		]
+	},
+	"capital-ago": {
+		"summary": "A country on Africa's southwestern Atlantic coast where oil makes up most exports. The capital is Luanda.",
+		"facts": [
+			"Right after gaining independence from Portugal in 1975, it plunged into a 27-year civil war that lasted until 2002.",
+			"The partner dance kizomba emerged here around 1980 and spread around the world."
+		]
+	},
+	"capital-eri": {
+		"summary": "A Red Sea country where espresso and pasta, introduced in colonial times, are still part of daily life. The capital is Asmara.",
+		"facts": [
+			"It won independence from Ethiopia in 1993.",
+			"Asmara's 1930s modernist buildings became a World Heritage Site in 2017."
+		]
+	},
+	"capital-swz": {
+		"summary": "A landlocked southern African kingdom where tens of thousands gather every year for Umhlanga, the Reed Dance festival. The capital is Mbabane.",
+		"facts": [
+			"In 2018 it changed its name from Swaziland.",
+			"It is Africa's last remaining absolute monarchy."
+		]
+	},
+	"capital-eth": {
+		"summary": "A highland country in eastern Africa that uses its own calendar with 13 months in a year. The capital is Addis Ababa.",
+		"facts": [
+			"The arabica coffee plant originated in its southwestern highlands.",
+			"The African Union is headquartered in Addis Ababa."
+		]
+	},
+	"capital-uga": {
+		"summary": "A landlocked country on Lake Victoria that Winston Churchill called the “Pearl of Africa.” The capital is Kampala.",
+		"facts": [
+			"The Nile flows out of Lake Victoria.",
+			"The equator crosses the south of the country, and an equator marker stands beside the road from Kampala to Masaka."
+		]
+	},
+	"capital-egy": {
+		"summary": "The country where an ancient civilization of pharaohs, mummies and hieroglyphs flourished along the Nile. The capital is Cairo.",
+		"facts": [
+			"In November 2025 the Grand Egyptian Museum opened next to the pyramids.",
+			"The Suez Canal links the Mediterranean and the Red Sea."
+		]
+	},
+	"capital-zmb": {
+		"summary": "A landlocked southern African country that lives off the Copperbelt, its cluster of copper mines. The capital is Lusaka.",
+		"facts": [
+			"Victoria Falls lies on its border with Zimbabwe.",
+			"Its name comes from the Zambezi River."
+		]
+	},
+	"capital-gnq": {
+		"summary": "A west-central African country split between the volcanic island of Bioko and a mainland territory. The capital is Ciudad de la Paz.",
+		"facts": [
+			"In January 2026 the capital moved from Malabo, on the island, to the mainland.",
+			"It is one of the few countries in Africa with Spanish as an official language."
+		]
+	},
+	"capital-caf": {
+		"summary": "A landlocked African country north of the equator, home to the Dzanga-Sangha reserve where forest elephants gather. The capital is Bangui.",
+		"facts": [
+			"In 1977 Bokassa crowned himself emperor in a stadium in Bangui.",
+			"It has diamonds and gold but has been torn by long civil wars."
+		]
+	},
+	"capital-dji": {
+		"summary": "A small country at the mouth of the Red Sea in the northern Horn of Africa. Its capital shares the country's name.",
+		"facts": [
+			"U.S., French, Chinese and Japanese military bases are all near the capital.",
+			"Lake Assal is the lowest point in Africa."
+		]
+	},
+	"capital-zwe": {
+		"summary": "A landlocked southern African country where inflation once soared so high it printed a 100-trillion-dollar banknote. The capital is Harare.",
+		"facts": [
+			"It is named after Great Zimbabwe, an ancient city built of stone.",
+			"It shares Victoria Falls with Zambia."
+		]
+	},
+	"capital-tcd": {
+		"summary": "A landlocked country in the heart of Africa, where the volcanic Tibesti Mountains rise from the Sahara in the north. The capital is N'Djamena.",
+		"facts": [
+			"Drought and irrigation that draws on its rivers have shrunk Lake Chad dramatically since the 1960s.",
+			"Emi Koussi in the Tibesti Mountains is the highest peak in the Sahara."
+		]
+	},
+	"capital-cmr": {
+		"summary": "A country at the inner corner of the Gulf of Guinea that produced soccer star Samuel Eto'o. The capital is Yaoundé.",
+		"facts": [
+			"With desert, savanna and rainforest, it is called “Africa in miniature.”",
+			"Both French and English are official languages."
+		]
+	},
+	"capital-cpv": {
+		"summary": "An island nation off West Africa that was once a way station in the Atlantic slave trade. The capital is Praia.",
+		"facts": [
+			"It is made up of ten volcanic islands in the Atlantic.",
+			"The “Barefoot Diva,” Cesária Évora, brought morna music to the world."
+		]
+	},
+	"capital-ken": {
+		"summary": "An East African country on the equator that exports large amounts of tea and flowers to Europe. The capital is Nairobi.",
+		"facts": [
+			"The Great Migration of wildlife can be seen on the Maasai Mara plains.",
+			"In 2019 Eliud Kipchoge broke the two-hour marathon barrier in an unofficial race."
+		]
+	},
+	"capital-com": {
+		"summary": "An island nation at the northern entrance to the Mozambique Channel whose Arabic name means “islands of the moon.” The capital is Moroni.",
+		"facts": [
+			"The country is made up of three islands in the Indian Ocean.",
+			"It is the world's top producer of ylang-ylang, a flower used in Chanel No. 5."
+		]
+	},
+	"capital-civ": {
+		"summary": "A Gulf of Guinea country home to the Basilica of Our Lady of Peace, a vast church modeled on St. Peter's Basilica. The capital is Yamoussoukro.",
+		"facts": [
+			"Yamoussoukro is the official capital, but Abidjan is the de facto center.",
+			"It is considered the world's largest cocoa producer."
+		]
+	},
+	"capital-cog": {
+		"summary": "A west-central African country straddling the equator, with rainforest covering nearly two-thirds of its land. The capital is Brazzaville.",
+		"facts": [
+			"Its capital faces Kinshasa across the river, making them the world's two closest capitals.",
+			"In 2021 it had Congolese rumba inscribed as UNESCO Intangible Cultural Heritage together with its neighbor across the river."
+		]
+	},
+	"capital-cod": {
+		"summary": "A huge country in the middle of Africa that mines much of the cobalt used in phone batteries. The capital is Kinshasa.",
+		"facts": [
+			"With depths of more than 220 meters, the Congo River is the deepest river in the world.",
+			"It is Africa's second-largest country, after Algeria."
+		]
+	},
+	"capital-tza": {
+		"summary": "A country formed in 1964 when Tanganyika and Zanzibar merged. The capital is Dodoma.",
+		"facts": [
+			"It is home to Kilimanjaro, Africa's highest peak.",
+			"Freddie Mercury, the lead singer of Queen, was born on Zanzibar."
+		]
+	},
+	"capital-tgo": {
+		"summary": "A Gulf of Guinea country that South Korea beat at the 2006 World Cup for its first-ever World Cup win on foreign soil. The capital is Lomé.",
+		"facts": [
+			"Its coastline is only 56 kilometers long, yet the country stretches more than 500 kilometers from north to south.",
+			"Mining and exporting phosphate is a major industry."
+		]
+	},
+	"capital-tun": {
+		"summary": "A North African country where a village used for the desert-planet scenes in “Star Wars” still stands. The capital is Tunis.",
+		"facts": [
+			"It was home to ancient Carthage, birthplace of Hannibal, which fell to Rome in 146 BC.",
+			"Both the Sahara and the Mediterranean lie within its borders."
+		]
+	},
+	"capital-guy": {
+		"summary": "A country in northeastern South America whose economy has boomed since a huge offshore oil discovery in 2015. The capital is Georgetown.",
+		"facts": [
+			"It is the only country on the South American mainland with English as an official language.",
+			"Kaieteur Falls drops 226 meters in a single plunge, about four times the height of Niagara Falls."
+		]
+	},
+	"capital-glp": {
+		"summary": "A Caribbean island in the Lesser Antilles that produces bananas and rum. The capital is Basseterre.",
+		"facts": [
+			"It consists of two islands shaped like butterfly wings, joined by a narrow channel.",
+			"It is an overseas department of France in the Caribbean."
+		]
+	},
+	"capital-gtm": {
+		"summary": "A Central American country where descendants of the Maya make up a large share of the population. Its capital shares the country's name.",
+		"facts": [
+			"Tikal is a Maya ruin deep in the rainforest.",
+			"Volcanoes make earthquakes common, and after the great earthquake of 1773 the capital was moved away from the old capital, Antigua."
+		]
+	},
+	"capital-grd": {
+		"summary": "An island nation at the southern end of the Lesser Antilles in the Caribbean. The capital is St. George's.",
+		"facts": [
+			"Nutmeg grows so abundantly that it appears on the flag, earning the country the nickname “Spice Isle.”",
+			"In 2006 the world's first underwater sculpture park opened off its west coast."
+		]
+	},
+	"capital-grl": {
+		"summary": "A vast island of ice between the Arctic Ocean and the North Atlantic. The capital is Nuuk.",
+		"facts": [
+			"It is the world's largest island and an autonomous territory of Denmark.",
+			"More than 80 percent of its land is covered by ice."
+		]
+	},
+	"capital-nic": {
+		"summary": "The largest country in Central America by area. The capital is Managua.",
+		"facts": [
+			"Lake Nicaragua is the largest lake in Central America.",
+			"The volcanic island of Ometepe sits in the middle of the lake."
+		]
+	},
+	"capital-dom": {
+		"summary": "The country on the eastern side of Hispaniola, where merengue and bachata were born. The capital is Santo Domingo.",
+		"facts": [
+			"Santo Domingo is one of the oldest European-founded cities in the Americas.",
+			"It sends more players to Major League Baseball than any country except the United States."
+		]
+	},
+	"capital-dma": {
+		"summary": "A volcanic island nation between Guadeloupe and Martinique. The capital is Roseau.",
+		"facts": [
+			"Thick with volcanoes and forests, it is known as the “Nature Island of the Caribbean.”",
+			"Boiling Lake, in its mountains, is the second-largest boiling lake in the world."
+		]
+	},
+	"capital-mtq": {
+		"summary": "An overseas department of France in the Lesser Antilles of the Caribbean. The capital is Fort-de-France.",
+		"facts": [
+			"In 1902 Mount Pelée erupted and wiped out Saint-Pierre, then the island's main city.",
+			"Napoleon's first empress, Joséphine, was born on this island."
+		]
+	},
+	"capital-mex": {
+		"summary": "A country in southern North America known for tacos, tequila and the Day of the Dead. Its capital shares the country's name.",
+		"facts": [
+			"The capital was built on the site of Tenochtitlan, the Aztec capital.",
+			"At the 2026 World Cup, South Korea played its group-stage matches in Guadalajara and Monterrey."
+		]
+	},
+	"capital-msr": {
+		"summary": "A small volcanic British Overseas Territory in the Caribbean. The capital is Plymouth.",
+		"facts": [
+			"The volcano awoke in 1995, and in 1997 the capital, Plymouth, was abandoned.",
+			"Today Brades in the north serves as the interim capital, and a new capital is being built at Little Bay."
+		]
+	},
+	"capital-usa": {
+		"summary": "A federal nation of 50 states in North America. The capital is Washington, D.C.",
+		"facts": [
+			"The capital is a special district that belongs to no state.",
+			"The $1 bill features George Washington, the first president and the capital's namesake."
+		]
+	},
+	"capital-vir": {
+		"summary": "American-owned islands in the Caribbean at the eastern end of the Greater Antilles. The capital is Charlotte Amalie.",
+		"facts": [
+			"In 1917 the United States bought them from Denmark for $25 million in gold.",
+			"Although they are U.S. territory, cars drive on the left."
+		]
+	},
+	"capital-brb": {
+		"summary": "An island nation sitting alone at the eastern edge of the Caribbean. The capital is Bridgetown.",
+		"facts": [
+			"In 2021 it removed the British monarch as head of state and became a republic.",
+			"It is the island where singer Rihanna was born and raised."
+		]
+	},
+	"capital-bhs": {
+		"summary": "A northern Caribbean island nation that includes the island where Christopher Columbus first landed in 1492. The capital is Nassau.",
+		"facts": [
+			"It is made up of more than 700 islands and cays.",
+			"Big Major Cay, home to swimming pigs, is a popular attraction."
+		]
+	},
+	"capital-bmu": {
+		"summary": "An isolated British Overseas Territory in the western North Atlantic. The capital is Hamilton.",
+		"facts": [
+			"Knee-length shorts are named after the island, and here they count as business attire.",
+			"White stepped roofs collect rainwater for drinking."
+		]
+	},
+	"capital-ven": {
+		"summary": "A northern South American country named “Little Venice” after houses built over the water. The capital is Caracas.",
+		"facts": [
+			"It is home to Angel Falls, the world's highest waterfall.",
+			"It has the largest proven oil reserves in the world."
+		]
+	},
+	"capital-blz": {
+		"summary": "A Central American country on the Caribbean coast, home to Maya ruins and coral reefs. The capital is Belmopan.",
+		"facts": [
+			"It is the only country in Central America with English as an official language.",
+			"Offshore lies the Great Blue Hole, a deep-blue sinkhole in the sea."
+		]
+	},
+	"capital-bol": {
+		"summary": "A landlocked Andean country with a large Indigenous population, on the shores of Lake Titicaca. The constitutional capital is Sucre.",
+		"facts": [
+			"La Paz, the seat of government, sits more than 3,600 meters above sea level.",
+			"The Uyuni salt flat is known as a mirror that reflects the sky."
+		]
+	},
+	"capital-bra": {
+		"summary": "The largest country in South America, famous for its samba carnival. The capital is Brasília.",
+		"facts": [
+			"In 1960 the capital moved from Rio de Janeiro to Brasília.",
+			"Rainforest in the Amazon River basin covers the north of the country."
+		]
+	},
+	"capital-maf": {
+		"summary": "A French overseas collectivity on the northern part of a Caribbean island. The capital is Marigot.",
+		"facts": [
+			"It is the northern side of an island shared by France and the Netherlands.",
+			"There are almost no border checks, so people simply walk across."
+		]
+	},
+	"capital-blm": {
+		"summary": "A small French overseas collectivity in the Caribbean. The capital is Gustavia.",
+		"facts": [
+			"It belonged to Sweden for 94 years starting in 1784, which is why the capital is named after a Swedish king.",
+			"It is one of the Caribbean's most exclusive luxury destinations."
+		]
+	},
+	"capital-spm": {
+		"summary": "A group of French islands south of Newfoundland, Canada. The capital shares its name with the main island.",
+		"facts": [
+			"It is the only part of the former New France still under French rule.",
+			"It is one of the few places in North America that uses the euro."
+		]
+	},
+	"capital-lca": {
+		"summary": "A volcanic island nation in the Lesser Antilles of the Caribbean. The capital is Castries.",
+		"facts": [
+			"The two Pitons, rising straight out of the sea, are the island's symbol.",
+			"It has produced two Nobel laureates, earning a Guinness record for the most per capita."
+		]
+	},
+	"capital-vct": {
+		"summary": "An island nation in the southern Lesser Antilles of the Caribbean. The capital is Kingstown.",
+		"facts": [
+			"It consists of a main island and just over 30 smaller islands.",
+			"The first “Pirates of the Caribbean” film was shot at Wallilabou Bay on the main island."
+		]
+	},
+	"capital-kna": {
+		"summary": "An independent nation made up of two Caribbean islands. The capital is Basseterre.",
+		"facts": [
+			"It is the smallest country in the Americas.",
+			"In 1623 the first English colony in the Caribbean was founded here."
+		]
+	},
+	"capital-sur": {
+		"summary": "A small country in northeastern South America where descendants of many Asian and African peoples live side by side. The capital is Paramaribo.",
+		"facts": [
+			"It is the only country in South America with Dutch as an official language.",
+			"More than 90 percent of the country is covered by forest."
+		]
+	},
+	"capital-sxm": {
+		"summary": "A constituent country of the Kingdom of the Netherlands on the southern part of a Caribbean island. The capital is Philipsburg.",
+		"facts": [
+			"It is the Dutch side of an island shared with France.",
+			"At Maho Beach, airliners come in so low they seem to skim the heads of beachgoers."
+		]
+	},
+	"capital-abw": {
+		"summary": "A southern Caribbean island where white-sand beaches line a dry, cactus-dotted landscape. The capital is Oranjestad.",
+		"facts": [
+			"It lies outside the hurricane belt, so the weather is almost always fine.",
+			"In 1986 it split from the Netherlands Antilles to become a separate constituent country."
+		]
+	},
+	"capital-arg": {
+		"summary": "A country in southern South America that produced soccer stars Diego Maradona and Lionel Messi. The capital is Buenos Aires.",
+		"facts": [
+			"Asado, beef raised on the Pampas and grilled over charcoal, is the national dish.",
+			"The tango was born in the port neighborhoods of Buenos Aires."
+		]
+	},
+	"capital-hti": {
+		"summary": "A Creole-speaking country on western Hispaniola with deep Vodou traditions. The capital is Port-au-Prince.",
+		"facts": [
+			"In 1804 an uprising of enslaved people made it the first country in Latin America to win independence.",
+			"After the 2010 earthquake, South Korea's Danbi Unit went there to help with reconstruction."
+		]
+	},
+	"capital-atg": {
+		"summary": "A two-island nation in the northern Lesser Antilles of the Caribbean. The capital is St. John's.",
+		"facts": [
+			"It is said to have 365 beaches, one for every day of the year.",
+			"Cricket is the national sport, and West Indies batting legend Viv Richards comes from here."
+		]
+	},
+	"capital-aia": {
+		"summary": "A British Overseas Territory in the northern Lesser Antilles of the Caribbean. The capital is The Valley.",
+		"facts": [
+			"Its name comes from its long, eel-like shape.",
+			"Sales of .ai internet domains brought in nearly half of government revenue in 2025."
+		]
+	},
+	"capital-ecu": {
+		"summary": "A country straddling the equator that exports large amounts of roses and bananas. The capital is Quito.",
+		"facts": [
+			"Its name is Spanish for “equator.”",
+			"The Galápagos Islands belong to it."
+		]
+	},
+	"capital-slv": {
+		"summary": "The smallest country in Central America. The capital is San Salvador.",
+		"facts": [
+			"It is the only Central American country with a coastline solely on the Pacific.",
+			"In 2021 it became the first country to make Bitcoin legal tender, then dropped it in 2025."
+		]
+	},
+	"capital-vgb": {
+		"summary": "A British Overseas Territory in the northern Lesser Antilles where hundreds of thousands of companies have their registered addresses. The capital is Road Town.",
+		"facts": [
+			"It is made up of some 60 islands and cays.",
+			"It is famous for chartering yachts to sail between its islands."
+		]
+	},
+	"capital-hnd": {
+		"summary": "The Central American country that gave rise to the term “banana republic.” The capital is Tegucigalpa.",
+		"facts": [
+			"The ruins of Copán mark the southeastern edge of the Maya civilization.",
+			"It has coastlines on both the Caribbean and the Pacific."
+		]
+	},
+	"capital-ury": {
+		"summary": "A small country in southeastern South America where people commonly carry thermoses for their mate tea. The capital is Montevideo.",
+		"facts": [
+			"It hosted and won the first World Cup in 1930.",
+			"Most of the country is gently rolling grassland."
+		]
+	},
+	"capital-jam": {
+		"summary": "A Caribbean island nation that grows Blue Mountain, a premium coffee. The capital is Kingston.",
+		"facts": [
+			"Reggae was born on this island.",
+			"Usain Bolt set the 100-meter world record of 9.58 seconds in 2009."
+		]
+	},
+	"capital-chl": {
+		"summary": "An extremely long country running north to south that exports large amounts of wine and salmon. The capital is Santiago.",
+		"facts": [
+			"The Atacama in the north is the driest desert outside the polar regions.",
+			"It was the first country to sign a free trade agreement (FTA) with South Korea."
+		]
+	},
+	"capital-bes": {
+		"summary": "Three Dutch islands scattered across the Caribbean. The capital is Kralendijk.",
+		"facts": [
+			"The name covers the three islands of Bonaire, Sint Eustatius and Saba.",
+			"They are special municipalities of the Netherlands, yet they use the U.S. dollar instead of the euro."
+		]
+	},
+	"capital-can": {
+		"summary": "The land of maple syrup and ice hockey, spanning much of northern North America. The capital is Ottawa.",
+		"facts": [
+			"It is the second-largest country by area, after Russia.",
+			"The $1 coin shows a loon, a water bird, so it is called the “loonie.”"
+		]
+	},
+	"capital-cym": {
+		"summary": "A Caribbean British Overseas Territory with the white sands of Seven Mile Beach and world-class dive sites. The capital is Georgetown.",
+		"facts": [
+			"With no income or corporate tax, it is a financial center that draws money from around the world.",
+			"At Stingray City, a shallow sandbar, you can swim with stingrays."
+		]
+	},
+	"capital-cri": {
+		"summary": "A Central American country that draws ecotourists to see sloths and tropical forests. The capital is San José.",
+		"facts": [
+			"It abolished its army in 1948 and redirected the defense budget to education and health care.",
+			"More than a quarter of its land is protected."
+		]
+	},
+	"capital-col": {
+		"summary": "A country in northwestern South America that produces large amounts of emeralds and coffee. The capital is Bogotá.",
+		"facts": [
+			"It was the only Latin American country to send combat troops to the Korean War.",
+			"Gabriel García Márquez, author of “One Hundred Years of Solitude,” was from here."
+		]
+	},
+	"capital-cub": {
+		"summary": "A Caribbean island nation where 1950s classic cars cruise the streets and salsa music fills the air. The capital is Havana.",
+		"facts": [
+			"Old Havana is a World Heritage Site.",
+			"Ernest Hemingway lived outside Havana and wrote “The Old Man and the Sea” there."
+		]
+	},
+	"capital-cuw": {
+		"summary": "A constituent country of the Kingdom of the Netherlands in the Caribbean, off the northern coast of South America. The capital is Willemstad.",
+		"facts": [
+			"Colorful Dutch-style buildings line its harbor.",
+			"The blue liqueur of the same name is made from the peels of the island's oranges."
+		]
+	},
+	"capital-tca": {
+		"summary": "A British Overseas Territory in the Atlantic at the southeastern end of the Lucayan Archipelago. The capital is Cockburn Town.",
+		"facts": [
+			"The islands have long produced salt by evaporating seawater.",
+			"Grace Bay Beach is often ranked among the best beaches in the world."
+		]
+	},
+	"capital-tto": {
+		"summary": "A two-island nation in the Caribbean just off the South American mainland. The capital is Port of Spain.",
+		"facts": [
+			"The steelpan, made from oil drums, was born here.",
+			"It has a natural asphalt lake that is dug up to pave roads."
+		]
+	},
+	"capital-pan": {
+		"summary": "A country on the narrow isthmus that links the two American continents. Its capital shares the country's name.",
+		"facts": [
+			"The Panama Canal links the Pacific and the Atlantic.",
+			"Control of the canal passed from the United States to Panama in 1999."
+		]
+	},
+	"capital-pry": {
+		"summary": "A landlocked South American country whose flag has different designs on the front and back. The capital is Asunción.",
+		"facts": [
+			"Spanish and Guaraní are both official languages.",
+			"It runs the Itaipu Dam jointly with Brazil."
+		]
+	},
+	"capital-per": {
+		"summary": "An Andean country known for ceviche, a raw-fish dish, and alpacas. The capital is Lima.",
+		"facts": [
+			"Machu Picchu is a mountaintop city built by the Inca Empire.",
+			"Giant geoglyphs are etched into the Nazca plains."
+		]
+	},
+	"capital-flk": {
+		"summary": "A British Overseas Territory in the South Atlantic, off the southern tip of South America. The capital is Stanley.",
+		"facts": [
+			"In 1982 the United Kingdom and Argentina went to war over these islands.",
+			"Sheep and penguins far outnumber people."
+		]
+	},
+	"capital-pri": {
+		"summary": "A self-governing U.S. territory at the eastern end of the Greater Antilles. The capital is San Juan.",
+		"facts": [
+			"Residents are U.S. citizens but cannot vote in the presidential general election.",
+			"El Yunque is the only tropical rainforest in the U.S. National Forest System."
+		]
+	},
+	"capital-guf": {
+		"summary": "An overseas department of France in northeastern South America. The capital is Cayenne.",
+		"facts": [
+			"Europe's space rockets launch from Kourou.",
+			"Devil's Island, the penal colony where Dreyfus was imprisoned, lies offshore."
+		]
+	},
+	"capital-gum": {
+		"summary": "A U.S. island at the southern end of the Mariana Islands. The capital is Hagåtña.",
+		"facts": [
+			"It is nicknamed “Where America's Day Begins.”",
+			"The language and culture of the Indigenous Chamorro people live on here."
+		]
+	},
+	"capital-nru": {
+		"summary": "A coral island nation in the Pacific just south of the equator. The de facto capital is Yaren.",
+		"facts": [
+			"At 21 square kilometers, it is the third-smallest country in the world, after Vatican City and Monaco.",
+			"It once grew very rich mining and selling phosphate formed from hardened bird droppings."
+		]
+	},
+	"capital-nfk": {
+		"summary": "An Australian island in the Pacific whose flag shows the pine tree named after it. The capital is Kingston.",
+		"facts": [
+			"It was a British penal colony.",
+			"Descendants of the Bounty mutineers moved here and still live on the island."
+		]
+	},
+	"capital-ncl": {
+		"summary": "A French overseas territory in Melanesia in the South Pacific, ringed by a World Heritage–listed lagoon. The capital is Nouméa.",
+		"facts": [
+			"Rich in nickel, it is one of the world's leading producers.",
+			"It has held several referendums on whether to remain part of France."
+		]
+	},
+	"capital-nzl": {
+		"summary": "A South Pacific nation made up of two main islands. The capital is Wellington.",
+		"facts": [
+			"In 1893 it became the first country in the world where women voted in parliamentary elections.",
+			"Before matches, the All Blacks rugby team performs the haka, a Māori dance."
+		]
+	},
+	"capital-niu": {
+		"summary": "A remote South Pacific island that has issued Pokémon coins as legal tender. The capital is Alofi.",
+		"facts": [
+			"It is a single rock island formed by uplifted coral.",
+			"It governs itself in free association with New Zealand."
+		]
+	},
+	"capital-mhl": {
+		"summary": "A coral island nation north of the equator whose land is at risk of disappearing under rising seas. The capital is Majuro.",
+		"facts": [
+			"The bikini swimsuit is named after Bikini Atoll, where the U.S. carried out nuclear tests.",
+			"Traditional navigation charts made of sticks lashed together to map ocean swells have been handed down."
+		]
+	},
+	"capital-fsm": {
+		"summary": "A western Pacific island federation that includes Yap, known for its giant stone money. The capital is Palikir.",
+		"facts": [
+			"It is a federation of four states with more than 600 islands.",
+			"The ruins of Nan Madol are built from stacked stone columns on the sea."
+		]
+	},
+	"capital-vut": {
+		"summary": "A volcanic South Pacific island nation with an underwater post office where you can mail waterproof postcards. The capital is Port Vila.",
+		"facts": [
+			"The active volcano Mount Yasur is constantly belching smoke.",
+			"It has a traditional ritual that inspired bungee jumping."
+		]
+	},
+	"capital-mnp": {
+		"summary": "U.S. islands in the western Pacific with resorts popular among honeymooners. The capital is Saipan.",
+		"facts": [
+			"It includes the island where the Battle of Saipan was fought in World War II.",
+			"As a self-governing U.S. territory, its residents hold U.S. citizenship."
+		]
+	},
+	"capital-wsm": {
+		"summary": "A South Pacific island nation where “Treasure Island” author Robert Louis Stevenson spent his last years and is buried. The capital is Apia.",
+		"facts": [
+			"In 2011 it moved to the west side of the International Date Line, skipping December 30 entirely.",
+			"The English word “tattoo” comes from “tatau,” a Polynesian word used here, in Tahiti and elsewhere."
+		]
+	},
+	"capital-slb": {
+		"summary": "A South Pacific island nation where traditional money made of strung shells is still in use. The capital is Honiara.",
+		"facts": [
+			"It includes the island where the Battle of Guadalcanal was fought in World War II.",
+			"It is made up of six large islands and more than 900 smaller ones."
+		]
+	},
+	"capital-asm": {
+		"summary": "A U.S. territory in South Pacific Polynesia, home to the only U.S. national park south of the equator. The capital is Pago Pago.",
+		"facts": [
+			"Lying east of the International Date Line, it is a day behind neighboring Samoa.",
+			"It produces an unusually large number of American football players for a U.S. territory."
+		]
+	},
+	"capital-wlf": {
+		"summary": "Remote French islands at the western edge of Polynesia in the South Pacific. The capital is Mata-Utu.",
+		"facts": [
+			"Although it is French territory, it still has three traditional kings.",
+			"Isolated in the South Pacific, it is served by few boats."
+		]
+	},
+	"capital-cck": {
+		"summary": "Australian islands in the eastern Indian Ocean made up of two coral atolls. The capital is West Island.",
+		"facts": [
+			"Charles Darwin studied how coral islands form here.",
+			"It is Australian territory, but most residents are of Malay descent."
+		]
+	},
+	"capital-cok": {
+		"summary": "Islands in the heart of South Pacific Polynesia that include Aitutaki Lagoon. The capital is Avarua.",
+		"facts": [
+			"It consists of 15 islands, and residents also hold New Zealand citizenship.",
+			"It is named after the explorer James Cook."
+		]
+	},
+	"capital-cxr": {
+		"summary": "An Australian island in the Indian Ocean south of Java. The capital is Flying Fish Cove.",
+		"facts": [
+			"Every year tens of millions of red crabs march to the sea.",
+			"It got its name because it was discovered on Christmas Day."
+		]
+	},
+	"capital-kir": {
+		"summary": "A nation of coral islands scattered along the equator in the Pacific. The capital is South Tarawa.",
+		"facts": [
+			"Thanks to the International Date Line, it is the first place on Earth to welcome the New Year.",
+			"Both the equator and the 180th meridian pass through it, so it spans all four hemispheres."
+		]
+	},
+	"capital-tkl": {
+		"summary": "Three New Zealand atolls in South Pacific Polynesia. There is no official capital.",
+		"facts": [
+			"With no airport, it can only be reached by a boat trip of more than a day from Samoa.",
+			"Almost all of its electricity comes from solar power."
+		]
+	},
+	"capital-ton": {
+		"summary": "A South Pacific island kingdom whose constitution bans doing business on Sundays. The capital is Nuku'alofa.",
+		"facts": [
+			"It was a British protectorate for 70 years from 1900 but never gave up its sovereignty.",
+			"Only 45 of its 171 islands are inhabited."
+		]
+	},
+	"capital-tuv": {
+		"summary": "The world's fourth-smallest country, made up of nine low-lying coral islands in the South Pacific. The capital is Funafuti.",
+		"facts": [
+			"Its highest point is less than 5 meters above sea level, leaving it vulnerable to rising seas.",
+			"Leasing out its .tv internet domain is a major source of income."
+		]
+	},
+	"capital-png": {
+		"summary": "A country covering the eastern half of a large South Pacific island, with its national bird, the bird-of-paradise, on its flag. The capital is Port Moresby.",
+		"facts": [
+			"With around 840 languages spoken, it has more languages than any other country.",
+			"The western half of the island belongs to Indonesia, so a straight border cuts across the island from north to south."
+		]
+	},
+	"capital-plw": {
+		"summary": "A small western Pacific island nation that declared the world's first shark sanctuary in 2009. The capital is Ngerulmud.",
+		"facts": [
+			"In 2006 the capital moved from Koror to Ngerulmud.",
+			"Scuba diving is banned at Jellyfish Lake, so visitors can only snorkel."
+		]
+	},
+	"capital-pyf": {
+		"summary": "A French overseas territory of 118 South Pacific islands, where the first overwater bungalows were built in 1967. The capital is Papeete.",
+		"facts": [
+			"It includes Tahiti, where Paul Gauguin went to paint.",
+			"Tahitian black pearls are its signature export."
+		]
+	},
+	"capital-fji": {
+		"summary": "A South Pacific island nation whose name is familiar from a bottled-water brand. The capital is Suva.",
+		"facts": [
+			"It is made up of more than 300 islands.",
+			"Its gold medal in rugby sevens in 2016 was the country's first-ever Olympic medal."
+		]
+	},
+	"capital-pcn": {
+		"summary": "A remote British Overseas Territory in the middle of the South Pacific. The capital is Adamstown.",
+		"facts": [
+			"The Bounty mutineers hid on this island and settled there.",
+			"It is often cited as the least populous inhabited territory in the world."
+		]
+	},
+	"capital-aus": {
+		"summary": "Home to kangaroos and koalas, a country that takes up an entire continent. The capital is Canberra.",
+		"facts": [
+			"When Sydney and Melbourne competed to be the capital, Canberra was built from scratch as a compromise.",
+			"The Great Barrier Reef is the largest coral reef in the world."
+		]
+	}
+}

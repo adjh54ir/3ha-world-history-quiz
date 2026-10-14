@@ -1,11 +1,11 @@
 /**
- * 세계 상식 주제의 보이는 글자 (한국어)
+ * 세계 상식 주제의 보이는 글자 (번역 파일 main.world)
  * -------------------------------------------------
- * 한국어 퀴즈 화면을 옮겨 오면서 다국어 키 대신 한국어를 그대로 쓴다 (화면 문구가 모두 한국어다).
- * 주제 키·모드 키는 ConstWorldTopics 와 같다 — 모드를 더하면 여기에도 이름·발문을 넣는다.
- * 원문은 옛 번역 파일(ko-KR.json 의 main.topic)이다.
+ * 언어는 번들이 살아 있는 동안 고정이라(바꾸면 번들을 다시 읽는다) 모듈을 읽을 때 한 번 번역한다.
+ * 주제 키·모드 키는 ConstWorldTopics 와 같다 — 모드를 더하면 여기와 번역 파일에 이름·발문을 넣는다.
  */
 import type { WorldType } from '@/src/types/data/WorldType';
+import i18n from '@/src/translations';
 
 export interface TopicText {
 	label: string;
@@ -16,110 +16,110 @@ export interface TopicText {
 
 export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
 	capital: {
-		label: '세계 수도',
-		description: '나라와 수도, 국기, 그리고 대륙',
+		label: i18n.t('world.topic.capital.label'),
+		description: i18n.t('world.topic.capital.description'),
 		modes: {
-			capital: { label: '수도 맞히기', question: '이곳의 수도는?' },
-			continent: { label: '대륙 맞히기', question: '이곳이 속한 대륙은?' },
-			country: { label: '나라 맞히기', question: '이 도시가 수도인 곳은?' },
-			flag: { label: '국기 맞히기', question: '이 국기는 어디의 것일까?' },
+			capital: { label: i18n.t('world.topic.capital.modes.capital.label'), question: i18n.t('world.topic.capital.modes.capital.question') },
+			continent: { label: i18n.t('world.topic.capital.modes.continent.label'), question: i18n.t('world.topic.capital.modes.continent.question') },
+			country: { label: i18n.t('world.topic.capital.modes.country.label'), question: i18n.t('world.topic.capital.modes.country.question') },
+			flag: { label: i18n.t('world.topic.capital.modes.flag.label'), question: i18n.t('world.topic.capital.modes.flag.question') },
 		},
 	},
 	constellation: {
-		label: '별자리와 천체',
-		description: '밤하늘에서 찾아보는 이름들',
+		label: i18n.t('world.topic.constellation.label'),
+		description: i18n.t('world.topic.constellation.description'),
 		modes: {
-			image: { label: '그림 맞히기', question: '그림 속 별자리는?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 별자리는?' },
-			season: { label: '언제 보이나', question: '밤하늘에서 언제 잘 보일까?' },
-			star: { label: '대표 별', question: '이 별자리의 대표 별은?' },
+			image: { label: i18n.t('world.topic.constellation.modes.image.label'), question: i18n.t('world.topic.constellation.modes.image.question') },
+			name: { label: i18n.t('world.topic.constellation.modes.name.label'), question: i18n.t('world.topic.constellation.modes.name.question') },
+			season: { label: i18n.t('world.topic.constellation.modes.season.label'), question: i18n.t('world.topic.constellation.modes.season.question') },
+			star: { label: i18n.t('world.topic.constellation.modes.star.label'), question: i18n.t('world.topic.constellation.modes.star.question') },
 		},
 	},
 	event: {
-		label: '세계사 사건',
-		description: '세상을 바꾼 그날, 언제 어디서',
+		label: i18n.t('world.topic.event.label'),
+		description: i18n.t('world.topic.event.description'),
 		modes: {
-			century: { label: '언제 일어났나', question: '이 일이 일어난 때는?' },
-			country: { label: '어느 나라 일', question: '이 일과 가장 가까운 나라는?' },
-			kind: { label: '무슨 일인가', question: '이 일은 무엇으로 분류될까?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 사건은?' },
+			century: { label: i18n.t('world.topic.event.modes.century.label'), question: i18n.t('world.topic.event.modes.century.question') },
+			country: { label: i18n.t('world.topic.event.modes.country.label'), question: i18n.t('world.topic.event.modes.country.question') },
+			kind: { label: i18n.t('world.topic.event.modes.kind.label'), question: i18n.t('world.topic.event.modes.kind.question') },
+			name: { label: i18n.t('world.topic.event.modes.name.label'), question: i18n.t('world.topic.event.modes.name.question') },
 		},
 	},
 	figure: {
-		label: '세계 위인',
-		description: '세상을 바꾼 사람들, 언제 어디서 무엇을',
+		label: i18n.t('world.topic.figure.label'),
+		description: i18n.t('world.topic.figure.description'),
 		modes: {
-			country: { label: '어느 나라 사람', question: '이 인물은 어느 나라 사람일까?' },
-			era: { label: '언제 살았나', question: '이 인물이 주로 활동한 때는?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 인물은?' },
-			portrait: { label: '초상 맞히기', question: '초상 속 인물은?' },
-			role: { label: '무엇을 한 사람', question: '이 인물이 한 일은?' },
+			country: { label: i18n.t('world.topic.figure.modes.country.label'), question: i18n.t('world.topic.figure.modes.country.question') },
+			era: { label: i18n.t('world.topic.figure.modes.era.label'), question: i18n.t('world.topic.figure.modes.era.question') },
+			name: { label: i18n.t('world.topic.figure.modes.name.label'), question: i18n.t('world.topic.figure.modes.name.question') },
+			portrait: { label: i18n.t('world.topic.figure.modes.portrait.label'), question: i18n.t('world.topic.figure.modes.portrait.question') },
+			role: { label: i18n.t('world.topic.figure.modes.role.label'), question: i18n.t('world.topic.figure.modes.role.question') },
 		},
 	},
 	landmark: {
-		label: '세계 랜드마크',
-		description: '사진으로 익숙한 그곳은 어디에',
+		label: i18n.t('world.topic.landmark.label'),
+		description: i18n.t('world.topic.landmark.description'),
 		modes: {
-			city: { label: '어디에 있나', question: '이 랜드마크가 있는 곳은?' },
-			country: { label: '나라 맞히기', question: '이 랜드마크가 있는 나라는?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 랜드마크는?' },
-			photo: { label: '사진 맞히기', question: '사진 속 랜드마크는?' },
+			city: { label: i18n.t('world.topic.landmark.modes.city.label'), question: i18n.t('world.topic.landmark.modes.city.question') },
+			country: { label: i18n.t('world.topic.landmark.modes.country.label'), question: i18n.t('world.topic.landmark.modes.country.question') },
+			name: { label: i18n.t('world.topic.landmark.modes.name.label'), question: i18n.t('world.topic.landmark.modes.name.question') },
+			photo: { label: i18n.t('world.topic.landmark.modes.photo.label'), question: i18n.t('world.topic.landmark.modes.photo.question') },
 		},
 	},
 	myth: {
-		label: '그리스 로마 신화',
-		description: '신과 영웅, 그리고 괴물',
+		label: i18n.t('world.topic.myth.label'),
+		description: i18n.t('world.topic.myth.description'),
 		modes: {
-			domain: { label: '무엇을 맡았나', question: '이 인물이 맡은 자리는?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 인물은?' },
-			portrait: { label: '그림 맞히기', question: '그림 속 인물은?' },
-			roman: { label: '로마 이름', question: '이 신의 로마식 이름은?' },
+			domain: { label: i18n.t('world.topic.myth.modes.domain.label'), question: i18n.t('world.topic.myth.modes.domain.question') },
+			name: { label: i18n.t('world.topic.myth.modes.name.label'), question: i18n.t('world.topic.myth.modes.name.question') },
+			portrait: { label: i18n.t('world.topic.myth.modes.portrait.label'), question: i18n.t('world.topic.myth.modes.portrait.question') },
+			roman: { label: i18n.t('world.topic.myth.modes.roman.label'), question: i18n.t('world.topic.myth.modes.roman.question') },
 		},
 	},
 	nature: {
-		label: '세계 지형',
-		description: '지도에서 찾는 강과 산, 사막과 호수',
+		label: i18n.t('world.topic.nature.label'),
+		description: i18n.t('world.topic.nature.description'),
 		modes: {
-			continent: { label: '어느 대륙', question: '이곳이 있는 대륙은?' },
-			country: { label: '어느 나라', question: '이곳이 있는 나라는?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 곳은?' },
+			continent: { label: i18n.t('world.topic.nature.modes.continent.label'), question: i18n.t('world.topic.nature.modes.continent.question') },
+			country: { label: i18n.t('world.topic.nature.modes.country.label'), question: i18n.t('world.topic.nature.modes.country.question') },
+			name: { label: i18n.t('world.topic.nature.modes.name.label'), question: i18n.t('world.topic.nature.modes.name.question') },
 		},
 	},
 	olympic: {
-		label: '하계 올림픽',
-		description: '개최 도시와 종합 1위',
+		label: i18n.t('world.topic.olympic.label'),
+		description: i18n.t('world.topic.olympic.description'),
 		modes: {
-			city: { label: '개최 도시', question: '이 대회가 열린 도시는?' },
-			host: { label: '개최국', question: '이 대회를 연 나라는?' },
-			top: { label: '종합 1위', question: '이 대회 메달 순위 1위 나라는? (금메달 수 우선)' },
+			city: { label: i18n.t('world.topic.olympic.modes.city.label'), question: i18n.t('world.topic.olympic.modes.city.question') },
+			host: { label: i18n.t('world.topic.olympic.modes.host.label'), question: i18n.t('world.topic.olympic.modes.host.question') },
+			top: { label: i18n.t('world.topic.olympic.modes.top.label'), question: i18n.t('world.topic.olympic.modes.top.question') },
 		},
 	},
 	space: {
-		label: '태양계',
-		description: '행성과 위성, 그 바깥까지',
+		label: i18n.t('world.topic.space.label'),
+		description: i18n.t('world.topic.space.description'),
 		modes: {
-			image: { label: '그림 맞히기', question: '그림 속 천체는?' },
-			kind: { label: '천체 갈래', question: '이 천체는 무엇으로 분류될까?' },
-			name: { label: '설명 보고 맞히기', question: '설명에 맞는 천체는?' },
-			order: { label: '몇 번째 행성', question: '태양에서 몇 번째 행성일까?' },
+			image: { label: i18n.t('world.topic.space.modes.image.label'), question: i18n.t('world.topic.space.modes.image.question') },
+			kind: { label: i18n.t('world.topic.space.modes.kind.label'), question: i18n.t('world.topic.space.modes.kind.question') },
+			name: { label: i18n.t('world.topic.space.modes.name.label'), question: i18n.t('world.topic.space.modes.name.question') },
+			order: { label: i18n.t('world.topic.space.modes.order.label'), question: i18n.t('world.topic.space.modes.order.question') },
 		},
 	},
 	winter: {
-		label: '동계 올림픽',
-		description: '눈과 얼음 위의 개최지와 1위',
+		label: i18n.t('world.topic.winter.label'),
+		description: i18n.t('world.topic.winter.description'),
 		modes: {
-			city: { label: '개최 도시', question: '이 대회가 열린 도시는?' },
-			host: { label: '개최국', question: '이 대회를 연 나라는?' },
-			top: { label: '종합 1위', question: '이 대회 메달 순위 1위 나라는? (금메달 수 우선)' },
+			city: { label: i18n.t('world.topic.winter.modes.city.label'), question: i18n.t('world.topic.winter.modes.city.question') },
+			host: { label: i18n.t('world.topic.winter.modes.host.label'), question: i18n.t('world.topic.winter.modes.host.question') },
+			top: { label: i18n.t('world.topic.winter.modes.top.label'), question: i18n.t('world.topic.winter.modes.top.question') },
 		},
 	},
 	worldcup: {
-		label: '월드컵',
-		description: '개최국과 우승국의 역사',
+		label: i18n.t('world.topic.worldcup.label'),
+		description: i18n.t('world.topic.worldcup.description'),
 		modes: {
-			host: { label: '개최국', question: '이 대회를 연 나라는?' },
-			runnerUp: { label: '준우승국', question: '이 대회의 준우승국은?' },
-			winner: { label: '우승국', question: '이 대회의 우승국은?' },
+			host: { label: i18n.t('world.topic.worldcup.modes.host.label'), question: i18n.t('world.topic.worldcup.modes.host.question') },
+			runnerUp: { label: i18n.t('world.topic.worldcup.modes.runnerUp.label'), question: i18n.t('world.topic.worldcup.modes.runnerUp.question') },
+			winner: { label: i18n.t('world.topic.worldcup.modes.winner.label'), question: i18n.t('world.topic.worldcup.modes.winner.question') },
 		},
 	},
 };
@@ -129,30 +129,30 @@ export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
  * 여기 없는 필드(code·image·hemisphere 처럼 그림 열쇠이거나 다른 값과 겹치는 것)는 표에 나오지 않는다.
  */
 export const WORLD_FIELD_LABELS: Record<string, string> = {
-	capital: '수도',
-	continent: '대륙',
-	country: '나라',
-	city: '도시',
-	era: '시대',
-	role: '분야',
-	century: '시기',
-	kind: '갈래',
-	roman: '로마 이름',
-	domain: '맡은 일',
-	symbol: '상징',
-	order: '태양에서',
-	host: '개최국',
-	feature: '특징',
-	star: '대표 별',
-	season: '보이는 때',
-	winner: '우승국',
-	runnerUp: '준우승국',
-	top: '종합 1위',
+	capital: i18n.t('world.field.capital'),
+	continent: i18n.t('world.field.continent'),
+	country: i18n.t('world.field.country'),
+	city: i18n.t('world.field.city'),
+	era: i18n.t('world.field.era'),
+	role: i18n.t('world.field.role'),
+	century: i18n.t('world.field.century'),
+	kind: i18n.t('world.field.kind'),
+	roman: i18n.t('world.field.roman'),
+	domain: i18n.t('world.field.domain'),
+	symbol: i18n.t('world.field.symbol'),
+	order: i18n.t('world.field.order'),
+	host: i18n.t('world.field.host'),
+	feature: i18n.t('world.field.feature'),
+	star: i18n.t('world.field.star'),
+	season: i18n.t('world.field.season'),
+	winner: i18n.t('world.field.winner'),
+	runnerUp: i18n.t('world.field.runnerUp'),
+	top: i18n.t('world.field.top'),
 };
 
 /** 주제마다 뜻이 다른 필드 — 태양계의 host 는 개최국이 아니라 그 천체가 도는 중심이다 */
 const TOPIC_FIELD_LABELS: Partial<Record<WorldType.TopicKey, Record<string, string>>> = {
-	space: { host: '도는 곳' },
+	space: { host: i18n.t('world.topicField.space.host') },
 };
 
 export const fieldLabel = (topic: WorldType.TopicKey, field: string): string | undefined => TOPIC_FIELD_LABELS[topic]?.[field] ?? WORLD_FIELD_LABELS[field];

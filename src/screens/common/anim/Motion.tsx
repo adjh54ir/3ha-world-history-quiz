@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, Animated, Easing, Pressable, StyleProp, StyleSheet, TextStyle, ViewStyle, GestureResponderEvent } from 'react-native';
-import { bodyFontFor } from '@/src/const/ConstDesign';
+import { APP_FONTS_ON, bodyFontFor } from '@/src/const/ConstDesign';
 
 /**
  * 공통 애니메이션 프리미티브
@@ -154,7 +154,7 @@ export const CountUp: React.FC<CountUpProps> = ({ value, duration = 900, format 
 
 	// Animated.Text 는 앱 전역 Text 를 거치지 않는다 — 서체를 직접 정하지 않았으면 굵기에 맞는 본문 서체를 준다
 	const flat = StyleSheet.flatten(style) ?? {};
-	const font = flat.fontFamily ? null : { fontFamily: bodyFontFor(flat.fontWeight), fontWeight: 'normal' as const };
+	const font = flat.fontFamily || !APP_FONTS_ON ? null : { fontFamily: bodyFontFor(flat.fontWeight), fontWeight: 'normal' as const };
 	return <Animated.Text style={[style, font, pop && { transform: [{ scale }] }]}>{format(display)}</Animated.Text>;
 };
 

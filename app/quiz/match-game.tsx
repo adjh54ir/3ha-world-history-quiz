@@ -20,6 +20,7 @@ import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAsset
 import { themed } from '@/src/utils/ThemedStyles';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import { stringParam } from '@/src/navigation/expoRouterUtils';
+import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 
 const PAIRS = 5;
 
@@ -48,7 +49,7 @@ const buildTiles = (mode: MatchMode): Tile[] => {
 		// 국기 짝 맞추기 — 초급·중급 나라만 (토켈라우 국기를 처음 보는 사람에게 메모리 게임은 운이다)
 		const flags = LearnHubService.getDomain('capital')
 			.getStudyCards()
-			.filter((c) => !!c.imageRef && (c.levelLabel === '초급' || c.levelLabel === '중급'))
+			.filter((c) => !!c.imageRef && (c.levelLabel === DIFFICULTY_LABELS[1] || c.levelLabel === DIFFICULTY_LABELS[2]))
 			.slice(0, PAIRS);
 		return shuffle(
 			flags.flatMap((c) => [

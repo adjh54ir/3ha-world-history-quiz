@@ -18,6 +18,7 @@ import LearnHubService from '@/src/services/LearnHubService';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
 import DifficultyPickerModal, { DifficultyOption } from '@/src/screens/modal/DifficultyPickerModal';
 import { themed } from '@/src/utils/ThemedStyles';
+import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 /** 시작 시 즉시 생성할 첫 묶음 문항 수 (나머지는 백그라운드로 이어붙임) */
@@ -107,10 +108,10 @@ const QuizBundle = () => {
 			} catch {}
 		});
 		const ORDER: { key: string; icon: string }[] = [
-			{ key: '초급', icon: 'signal-cellular-alt' },
-			{ key: '중급', icon: 'bar-chart' },
-			{ key: '고급', icon: 'trending-up' },
-			{ key: '특급', icon: 'whatshot' },
+			{ key: DIFFICULTY_LABELS[1], icon: 'signal-cellular-alt' },
+			{ key: DIFFICULTY_LABELS[2], icon: 'bar-chart' },
+			{ key: DIFFICULTY_LABELS[3], icon: 'trending-up' },
+			{ key: DIFFICULTY_LABELS[4], icon: 'whatshot' },
 		];
 		return [
 			{ key: '', label: t('common.all'), icon: 'apps', count: totalC },

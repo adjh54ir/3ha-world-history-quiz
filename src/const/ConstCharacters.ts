@@ -5,6 +5,7 @@
  * - "전체 점수"는 역사 사자 마스코트(src/assets/illustrations/lion/lion-stage-N.webp) 사용 → getOverallCharacter
  * - 단계 임계값은 "주제별 총 문항 수 × 레벨 수"에 맞춰 분배(저레벨 빠름/고레벨 느림)
  */
+import i18n from '@/src/translations';
 
 /**
  * 주제 키 → 단계별 캐릭터 이미지 배열 (주제별로 고정, 섞이지 않음)
@@ -33,12 +34,12 @@ const OVERALL_TIERS = [0, 400, 900, 1600, 2400, 3400];
  * (새싹 → 견습 → 여행가 → 탐구가 → 대탐험가 → 황금 대탐험가)
  */
 const OVERALL_TITLES = [
-	'탐험 새싹 사자',
-	'견습 탐험가 사자',
-	'노련한 여행가 사자',
-	'세계 탐구가 사자',
-	'대탐험가 사자',
-	'황금 대탐험가 사자',
+	i18n.t('level.overall.1.label'),
+	i18n.t('level.overall.2.label'),
+	i18n.t('level.overall.3.label'),
+	i18n.t('level.overall.4.label'),
+	i18n.t('level.overall.5.label'),
+	i18n.t('level.overall.6.label'),
 ];
 
 export interface OverallCharacter {

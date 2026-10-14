@@ -2,7 +2,7 @@ import { createElement, useContext, type ComponentType } from 'react';
 import { Platform, StyleSheet, unstable_TextAncestorContext as TextAncestorContext, type TextProps, type TextStyle } from 'react-native';
 
 import Colors from '@/src/const/ConstColors';
-import { bodyFontFor, Typography } from '@/src/const/ConstDesign';
+import { APP_FONTS_ON, bodyFontFor, Typography } from '@/src/const/ConstDesign';
 
 /**
  * OS 큰 글씨 설정에서 글자가 커지는 배율 상한.
@@ -51,6 +51,7 @@ const fitProps = (props: TextProps): Partial<TextProps> => {
  * 중첩 Text 는 부모 서체를 물려받으므로 굵기를 따로 준 경우에만 바꾼다.
  */
 const appFont = (style: TextProps['style'], nested: boolean): TextStyle | null => {
+	if (!APP_FONTS_ON) return null;
 	const flat = StyleSheet.flatten(style) ?? {};
 	if (flat.fontFamily) return null;
 	if (nested && flat.fontWeight == null) return null;

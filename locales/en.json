@@ -1,0 +1,11 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "World Trivia Quiz",
+    "NSUserTrackingUsageDescription": "Your device’s advertising identifier is used to show you more relevant ads.",
+    "NSPhotoLibraryAddUsageDescription": "Allow access so the badge card images you share can be saved to Photos.",
+    "NSPhotoLibraryUsageDescription": "Your photo library is accessed only when you share a badge card image. Your photos are never read or uploaded."
+  },
+  "android": {
+    "app_name": "World Trivia Quiz"
+  }
+}

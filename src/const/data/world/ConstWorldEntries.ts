@@ -1,4 +1,6 @@
 import type { WorldType } from '@/src/types/data/WorldType';
+import { appLanguage } from '@/src/translations';
+import { WORLD_I18N } from './i18n';
 import capital from './capital.json';
 import landmark from './landmark.json';
 import nature from './nature.json';
@@ -67,7 +69,7 @@ import winter from './winter.json';
  *
  * 그림은 여기 없다. ConstFlagImages·ConstMythImages·ConstPlanetImages·ConstFigureImages 가 `fields` 의 열쇠로 건다.
  */
-export const WORLD_ENTRIES: Record<WorldType.TopicKey, WorldType.Entry[]> = {
+const SOURCE: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 	capital: capital as WorldType.Entry[],
 	landmark: landmark as WorldType.Entry[],
 	nature: nature as WorldType.Entry[],
@@ -80,6 +82,35 @@ export const WORLD_ENTRIES: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 	olympic: olympic as WorldType.Entry[],
 	winter: winter as WorldType.Entry[],
 };
+
+/**
+ * 앱 언어로 옮긴 항목 — 언어는 앱을 켤 때 정해지고 바꾸면 번들을 다시 읽으므로 한 번만 만든다.
+ * id·등급·그림 열쇠는 그대로 두고 글자만 바꾼다 (저장된 즐겨찾기·오답노트는 id 로 찾아온다).
+ * 필드 값은 terms 한 표로 옮긴다 — 같은 '아시아' 가 어느 항목에서나 같은 말이어야 보기 묶음·오답 갈래가 흩어지지 않는다.
+ */
+const pack = WORLD_I18N[appLanguage()];
+const term = (value: string): string => pack?.terms[value] ?? value;
+
+const localize = (topic: WorldType.TopicKey, entry: WorldType.Entry): WorldType.Entry => {
+	if (!pack) return entry;
+	const text = pack.topics[topic]?.[entry.id];
+	return {
+		...entry,
+		name: term(entry.name),
+		summary: text?.summary ?? entry.summary,
+		facts: text?.facts ?? entry.facts,
+		stories: text?.stories ?? entry.stories,
+		fields: Object.fromEntries(Object.entries(entry.fields).map(([k, v]) => [k, typeof v === 'string' ? term(v) : v])) as WorldType.Entry['fields'],
+	};
+};
+
+export const WORLD_ENTRIES = Object.fromEntries(
+	(Object.keys(SOURCE) as WorldType.TopicKey[]).map((topic) => [topic, SOURCE[topic].map((entry) => localize(topic, entry))]),
+) as Record<WorldType.TopicKey, WorldType.Entry[]>;
+
+/** 번역된 값 → 한국어 원래 값. 대륙·시대 이름으로 아이콘을 고르는 것처럼 한국어 낱말에 기대는 코드가 쓴다 */
+const KO_TERMS: Record<string, string> = Object.fromEntries(Object.entries(pack?.terms ?? {}).map(([ko, tr]) => [tr, ko]));
+export const koTerm = (value: string): string => KO_TERMS[value] ?? value;
 
 export const ALL_WORLD_ENTRIES: WorldType.Entry[] = Object.values(WORLD_ENTRIES).flat();
 

@@ -1,0 +1,11 @@
+{
+  "ios": {
+    "CFBundleDisplayName": "Quiz de Cultura Mundial",
+    "NSUserTrackingUsageDescription": "Usamos el identificador de publicidad de tu dispositivo para mostrarte anuncios más relevantes.",
+    "NSPhotoLibraryAddUsageDescription": "Permite el acceso para guardar en Fotos las tarjetas de insignias que compartes.",
+    "NSPhotoLibraryUsageDescription": "Solo accedemos a la fototeca cuando compartes una tarjeta de insignia. Nunca leemos tus fotos ni las enviamos a terceros."
+  },
+  "android": {
+    "app_name": "Quiz de Cultura Mundial"
+  }
+}

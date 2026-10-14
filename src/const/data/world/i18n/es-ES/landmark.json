@@ -1,0 +1,674 @@
+{
+	"landmark-001": {
+		"summary": "Estructura de hierro levantada en París para la Exposición Universal de 1889.",
+		"facts": [
+			"En origen era una construcción provisional que solo iba a mantenerse en pie 20 años.",
+			"Al anochecer, a cada hora en punto, sus 20 000 bombillas centellean durante 5 minutos."
+		]
+	},
+	"landmark-002": {
+		"summary": "Monumento que Napoleón Bonaparte mandó levantar al final de los Campos Elíseos de París para celebrar su victoria en Austerlitz.",
+		"facts": [
+			"Se empezó en 1806 y se terminó en 1836, así que Napoleón Bonaparte no llegó a verlo acabado.",
+			"Tras subir sus 284 escalones se ven doce grandes avenidas que parten en forma de estrella."
+		]
+	},
+	"landmark-003": {
+		"summary": "Gran pinacoteca que el gobierno revolucionario abrió en 1793 tras acondicionar un antiguo palacio real de París.",
+		"facts": [
+			"Aquí se exhiben «La Gioconda» y la «Venus de Milo».",
+			"La entrada de la pirámide de cristal, inaugurada en 1989, la diseñó el arquitecto I. M. Pei."
+		]
+	},
+	"landmark-004": {
+		"summary": "Abadía que el obispo Aubert fundó en el año 708 sobre un islote rocoso frente a la costa de Normandía.",
+		"facts": [
+			"Durante la guerra de los Cien Años resistió hasta el final el asedio de las tropas de Inglaterra.",
+			"Se retiró el antiguo dique y se construyó una pasarela, de modo que con las grandes mareas vuelve a ser una isla."
+		]
+	},
+	"landmark-005": {
+		"summary": "Gran campana que desde 1859 da la hora en la torre del reloj del Parlamento de Londres.",
+		"facts": [
+			"Pesa 13,7 toneladas y apenas sonó durante los cinco años de restauración que comenzaron en 2017.",
+			"La torre se llama oficialmente Torre Elizabeth, nombre que recibió en 2012 en honor a los 60 años de reinado de la reina."
+		]
+	},
+	"landmark-006": {
+		"summary": "Paso sobre el Támesis inaugurado en Londres en 1894, cuya parte central se abre para dejar pasar los barcos.",
+		"facts": [
+			"Debe su nombre a que se alza junto a la Torre de Londres.",
+			"Desde 2014, el suelo de cristal de las pasarelas superiores deja ver el río 42 metros más abajo."
+		]
+	},
+	"landmark-007": {
+		"summary": "Círculo de grandes piedras levantado hacia el 2500 a. C. en la llanura de Salisbury.",
+		"facts": [
+			"Normalmente se contempla desde fuera de la valla, pero al amanecer del solsticio de verano se puede entrar entre las piedras para recibir la salida del sol.",
+			"Muchas de las piedras azules, las más pequeñas, se trajeron desde Gales, a más de 200 kilómetros."
+		]
+	},
+	"landmark-008": {
+		"summary": "Residencia de los monarcas británicos en Londres desde 1837, fruto de la ampliación de una mansión aristocrática.",
+		"facts": [
+			"En verano, el cambio de guardia ante la verja principal se celebra casi a diario a las 11 de la mañana.",
+			"Cuando el monarca está dentro, ondea el estandarte real."
+		]
+	},
+	"landmark-009": {
+		"summary": "Anfiteatro levantado en Roma hacia el año 80 d. C., donde más de 50.000 espectadores asistían a combates de gladiadores.",
+		"facts": [
+			"Aparece en la moneda de 5 céntimos de euro que acuña Italia.",
+			"El emperador Tito lo inauguró con 100 días de juegos."
+		]
+	},
+	"landmark-010": {
+		"summary": "Campanario de una catedral, empezado en 1173, que acabó inclinado hacia un lado por lo blando del terreno.",
+		"facts": [
+			"Hoy se puede subir por sus 296 escalones inclinados hasta la sala de campanas de lo alto.",
+			"Cerró en 1990 y, tras 11 años de refuerzos, su inclinación pasó de 5,5 a 4 grados."
+		]
+	},
+	"landmark-011": {
+		"summary": "Obra barroca de Roma que se empezó en 1732 según el diseño de Nicola Salvi y se terminó en 1762.",
+		"facts": [
+			"Dicen que quien lanza una moneda de espaldas volverá a Roma; lo recaudado se destina a Cáritas.",
+			"Aún recibe el agua del Aqua Virgo, un acueducto construido en el 19 a. C."
+		]
+	},
+	"landmark-012": {
+		"summary": "Gran explanada en el corazón de Venecia, rodeada por una basílica de mosaicos dorados y un alto campanario.",
+		"facts": [
+			"Se cuenta que Napoleón Bonaparte la llamó «el salón más bello de Europa».",
+			"Entre otoño y primavera, cuando llega la marea alta conocida como acqua alta, la plaza se inunda."
+		]
+	},
+	"landmark-013": {
+		"summary": "Templo gótico del norte de Italia del que brotan 135 agujas como si fueran un bosque.",
+		"facts": [
+			"Empezó a construirse en 1386 y no se dio oficialmente por terminado hasta 1965.",
+			"Con entrada se puede subir a las terrazas del tejado y pasear entre las agujas."
+		]
+	},
+	"landmark-014": {
+		"summary": "Ciudad romana cercana a Nápoles que quedó sepultada por completo bajo las cenizas del Vesubio en el año 79 d. C.",
+		"facts": [
+			"En sus calles se conservan mostradores de piedra con tinajas empotradas para la comida.",
+			"Las excavaciones sistemáticas empezaron en 1748."
+		]
+	},
+	"landmark-015": {
+		"summary": "Templo de Barcelona diseñado por Antoni Gaudí, empezado en 1882 y todavía en obras.",
+		"facts": [
+			"Antoni Gaudí murió en 1926 atropellado por un tranvía y no llegó a verla terminada.",
+			"En febrero de 2026, la torre central de Jesús alcanzó los 172,5 metros y la convirtió en la iglesia más alta del mundo."
+		]
+	},
+	"landmark-016": {
+		"summary": "Fortaleza rojiza que la dinastía nazarí empezó a levantar en 1238 sobre una colina de Granada.",
+		"facts": [
+			"Francisco Tárrega compuso la pieza para guitarra «Recuerdos de la Alhambra» después de visitarla.",
+			"En 1492 la dinastía musulmana la entregó, y con ello terminó la Reconquista."
+		]
+	},
+	"landmark-017": {
+		"summary": "Jardín cubierto de mosaicos de colores que Antoni Gaudí diseñó entre 1900 y 1914 en una colina de Barcelona.",
+		"facts": [
+			"En origen se proyectó como una urbanización de lujo, pero acabó convertido en parque.",
+			"Ante la salamandra de mosaico de la escalinata de entrada, «El Drac», siempre hay gente haciéndose fotos."
+		]
+	},
+	"landmark-018": {
+		"summary": "Pinacoteca que abrió sus puertas en Madrid en 1819 con las colecciones de la Corona española.",
+		"facts": [
+			"Cuelgan aquí «Las meninas», de Diego Velázquez, y «El 3 de mayo en Madrid», de Goya.",
+			"Durante las dos últimas horas antes del cierre, la colección permanente puede verse gratis."
+		]
+	},
+	"landmark-019": {
+		"summary": "Fortaleza que Manuel I levantó hacia 1519 en la desembocadura del Tajo, en Lisboa.",
+		"facts": [
+			"Ante ella pasaban los barcos que zarpaban por la ruta de la India.",
+			"En 1983 fue declarada Patrimonio de la Humanidad junto con el monasterio de los Jerónimos."
+		]
+	},
+	"landmark-020": {
+		"summary": "Gran pórtico que un rey de Prusia levantó en Berlín en 1791 inspirándose en la entrada de un templo de Atenas.",
+		"facts": [
+			"Aparece en las monedas de 10, 20 y 50 céntimos de euro que acuña Alemania.",
+			"En diciembre de 1989 volvió a abrirse tras pasar 28 años bloqueada por el Muro."
+		]
+	},
+	"landmark-021": {
+		"summary": "Castillo que Luis II empezó a construir en 1869 sobre un risco de los Alpes, cerca de Füssen.",
+		"facts": [
+			"El rey murió en 1886 sin verlo terminado, y siete semanas después se abrió al público.",
+			"A menudo se dice que inspiró el castillo de Disney."
+		]
+	},
+	"landmark-022": {
+		"summary": "Templo gótico empezado en 1248 y terminado 632 años después, que en su día fue el más alto del mundo.",
+		"facts": [
+			"En la Segunda Guerra Mundial recibió 14 bombas y aun así no se derrumbó.",
+			"Sin ascensor, se suben 533 escalones hasta el mirador de la torre sur, a unos 100 metros de altura."
+		]
+	},
+	"landmark-023": {
+		"summary": "Residencia barroca a las afueras de Viena donde los Habsburgo pasaban el verano.",
+		"facts": [
+			"Tiene 1441 habitaciones, y en sus jardines está el zoológico más antiguo del mundo, abierto en 1752.",
+			"En 1762, con seis años, Wolfgang Amadeus Mozart tocó ante la emperatriz en su Salón de los Espejos."
+		]
+	},
+	"landmark-024": {
+		"summary": "Fortaleza que empezó a levantarse hacia el año 880 en una colina junto al Moldava y llegó a ser una de las más grandes del mundo.",
+		"facts": [
+			"Cada día a mediodía se celebra un vistoso cambio de guardia en el primer patio, junto a la entrada principal.",
+			"Fue residencia de los antiguos reyes de Bohemia y hoy alberga el despacho del presidente de Chequia."
+		]
+	},
+	"landmark-025": {
+		"summary": "Paso de piedra que empezó a tenderse sobre el Moldava en 1357 y que flanquean treinta estatuas de santos.",
+		"facts": [
+			"Se dice que tocar el relieve de san Juan Nepomuceno que hay en él hace que se cumplan los deseos.",
+			"Hasta 1841 fue el único puente para cruzar el Moldava en Praga."
+		]
+	},
+	"landmark-026": {
+		"summary": "Templo de Atenea que los atenienses levantaron en la Acrópolis a partir del 447 a. C.",
+		"facts": [
+			"A comienzos del siglo XIX, el diplomático británico lord Elgin se llevó cerca de la mitad de sus esculturas, que hoy están en el Museo Británico.",
+			"Sus columnas se ensanchan ligeramente para que, a la vista, parezcan rectas."
+		]
+	},
+	"landmark-027": {
+		"summary": "Isla volcánica del Egeo con casas de paredes blancas y tejados azules alineadas sobre los acantilados.",
+		"facts": [
+			"Hacia el 1600 a. C., una gran erupción hundió el centro de la isla y le dio su forma de arco.",
+			"Cada tarde se agolpa la gente en los acantilados de Oia para ver la puesta de sol."
+		]
+	},
+	"landmark-028": {
+		"summary": "Templo que Iván IV levantó en 1561 en la Plaza Roja de Moscú para celebrar la conquista de Kazán.",
+		"facts": [
+			"Según la leyenda, cegaron a sus arquitectos para que no pudieran construir otro igual, pero no hay pruebas de ello.",
+			"Sus vivos colores actuales son fruto de varias capas de pintura aplicadas entre la década de 1680 y 1848."
+		]
+	},
+	"landmark-029": {
+		"summary": "Museo de arte de San Petersburgo instalado en el antiguo Palacio de Invierno de los zares.",
+		"facts": [
+			"Nació en 1764 con 225 cuadros que compró Catalina II.",
+			"Decenas de gatos, traídos para cazar ratones, siguen viviendo en sus sótanos."
+		]
+	},
+	"landmark-030": {
+		"summary": "Edificio coronado por una cúpula que el emperador Justiniano levantó en Estambul en 537 y que hoy funciona como mezquita.",
+		"facts": [
+			"Se convirtió en mezquita en 1453 y en museo en 1935, y en 2020 volvió a ser mezquita.",
+			"Desde enero de 2024, los turistas extranjeros pagan 25 euros de entrada."
+		]
+	},
+	"landmark-031": {
+		"summary": "Meseta salpicada de rocas en forma de hongo y de viviendas excavadas en cuevas.",
+		"facts": [
+			"En la roca de ceniza volcánica endurecida se excavaron ciudades subterráneas.",
+			"Cada amanecer despegan a la vez decenas de globos aerostáticos llenos de turistas."
+		]
+	},
+	"landmark-032": {
+		"summary": "Pico piramidal de 4478 metros en la frontera entre Suiza e Italia, con cuatro caras afiladas como cuchillas.",
+		"facts": [
+			"Hasta 2023 aparecía dibujado en el envoltorio del chocolate Toblerone.",
+			"En 1865, la cordada de siete alpinistas de Edward Whymper lo coronó por primera vez, pero cuatro murieron en el descenso."
+		]
+	},
+	"landmark-033": {
+		"summary": "Cumbre nevada de los Alpes a la que sube un tren cremallera por túneles excavados en la montaña hasta un collado.",
+		"facts": [
+			"La estación del collado, inaugurada en 1912 a 3454 metros de altitud, es la estación de tren más alta de Europa.",
+			"A su lado se extiende el glaciar Aletsch, el más largo de los Alpes."
+		]
+	},
+	"landmark-034": {
+		"summary": "Gran templo del catolicismo, consagrado en el Vaticano en 1626 tras 120 años de obras.",
+		"facts": [
+			"Miguel Ángel diseñó la cúpula, y Bernini, la plaza ovalada que se abre ante ella.",
+			"En Pascua y Navidad, el papa imparte la bendición a la plaza desde el balcón central."
+		]
+	},
+	"landmark-035": {
+		"summary": "Lugar de culto que el papa Sixto IV mandó construir en 1481 dentro del palacio del Vaticano.",
+		"facts": [
+			"A partir de 1508, Miguel Ángel pasó cuatro años pintando los frescos de su techo con escenas del Génesis.",
+			"Durante el cónclave, si sale humo blanco de su chimenea, significa que ya hay nuevo papa."
+		]
+	},
+	"landmark-036": {
+		"summary": "Figura de bronce colocada en 1913 sobre una roca de la costa de Copenhague en homenaje a un cuento de Hans Christian Andersen.",
+		"facts": [
+			"Carl Jacobsen, hijo del fundador de Carlsberg, la encargó tras quedar prendado de un ballet.",
+			"Mide solo 1,25 metros, y su pequeño tamaño sorprende a quien la ve por primera vez."
+		]
+	},
+	"landmark-037": {
+		"summary": "Brazo de mar profundo y estrecho por cuyas paredes caen las cascadas de las Siete Hermanas.",
+		"facts": [
+			"En la pared de enfrente se alza la cascada del Pretendiente.",
+			"En 2005 fue declarado Patrimonio Natural de la Humanidad."
+		]
+	},
+	"landmark-038": {
+		"summary": "Baño termal al aire libre de aguas lechosas, en una isla volcánica, alimentado con el agua de una central geotérmica.",
+		"facts": [
+			"Desde 2023, las repetidas erupciones de un volcán cercano lo han obligado a cerrar varias veces.",
+			"Su agua se ve azulada por el sílice que contiene."
+		]
+	},
+	"landmark-039": {
+		"summary": "Recinto defensivo levantado entre los siglos XIII y XVII alrededor de una antigua ciudad portuaria del Adriático.",
+		"facts": [
+			"Se puede recorrer a pie todo su perímetro, de unos 1940 metros.",
+			"En la serie «Juego de tronos» sirvieron de escenario para Desembarco del Rey, la capital del reino."
+		]
+	},
+	"landmark-040": {
+		"summary": "Memorial que conserva el campo de concentración construido en 1940 por la Alemania nazi en el sur de Polonia.",
+		"facts": [
+			"Al menos 1,1 millones de personas murieron aquí.",
+			"Las tropas de la Unión Soviética lo liberaron el 27 de enero de 1945, fecha que hoy es el Día Internacional en Memoria de las Víctimas del Holocausto."
+		]
+	},
+	"landmark-041": {
+		"summary": "Larga línea de fortificaciones que sigue las crestas de las montañas para frenar a los pueblos nómadas del norte.",
+		"facts": [
+			"La levantaron sucesivas dinastías, y la mayor parte de lo que se ve hoy es de la dinastía Ming.",
+			"Se suele considerar que el tramo Ming va de Shanhaiguan, al este, a Jiayuguan, al oeste."
+		]
+	},
+	"landmark-042": {
+		"summary": "Palacio imperial que el emperador Yongle, de la dinastía Ming, terminó en 1420 en pleno centro de Pekín.",
+		"facts": [
+			"Desde 1925 alberga el Museo del Palacio, y cualquiera que compre una entrada puede recorrerlo por dentro.",
+			"Conserva 980 edificios; lo de las 9999 estancias es una exageración."
+		]
+	},
+	"landmark-043": {
+		"summary": "Ejército de soldados y caballos modelados en barro que Qin Shi Huang enterró junto a su tumba, cerca de Xi'an.",
+		"facts": [
+			"Lo descubrió en 1974 un campesino que cavaba un pozo.",
+			"Cada soldado tiene un rostro distinto."
+		]
+	},
+	"landmark-044": {
+		"summary": "Palacio escalonado que el quinto dalái lama construyó en 1645 sobre la colina Roja de Lhasa.",
+		"facts": [
+			"Se encuentra a unos 3700 metros de altitud.",
+			"Hasta el exilio de 1959, los sucesivos dalái lamas lo usaron como palacio de invierno."
+		]
+	},
+	"landmark-045": {
+		"summary": "Mausoleo de mármol blanco que un emperador mogol levantó en Agra en memoria de su esposa fallecida.",
+		"facts": [
+			"Sha Jahan lo mandó construir a partir de 1632 con unos 20.000 artesanos, y se terminó en 1653.",
+			"Los viernes permanece cerrado a los turistas."
+		]
+	},
+	"landmark-046": {
+		"summary": "Templo que Suryavarman II dedicó al dios Visnú en el siglo XII, cerca de Siem Reap.",
+		"facts": [
+			"Se construyó como templo hindú y más tarde pasó a ser budista.",
+			"Figura en la bandera de Camboya."
+		]
+	},
+	"landmark-047": {
+		"summary": "El mayor templo budista del mundo, construido hacia el siglo IX por la dinastía Sailendra en el centro de Java.",
+		"facts": [
+			"Estuvo mucho tiempo olvidado hasta que en 1814 el gobernador británico Raffles tuvo noticia de él y lo dio a conocer al mundo.",
+			"A la cima suben como máximo 1200 personas al día, acompañadas de un guía y calzadas con sandalias de bambú."
+		]
+	},
+	"landmark-048": {
+		"summary": "Rascacielos gemelos de 452 metros unidos por una pasarela aérea, levantados en Kuala Lumpur en 1998.",
+		"facts": [
+			"De 1998 a 2004 fueron los edificios más altos del mundo.",
+			"Su planta imita una estrella islámica de ocho puntas, y se puede subir a la pasarela del piso 41."
+		]
+	},
+	"landmark-049": {
+		"summary": "Complejo turístico inaugurado en 2010 junto al mar en Singapur, con tres torres de hotel coronadas por un jardín en forma de barco.",
+		"facts": [
+			"La piscina de la azotea está a unos 190 metros del suelo y solo pueden usarla los huéspedes.",
+			"Cada noche, sobre las aguas de enfrente, se celebra Spectra, un espectáculo de luces y chorros de agua."
+		]
+	},
+	"landmark-050": {
+		"summary": "Templo que Rama I construyó a finales del siglo XVIII dentro del palacio real de Bangkok para albergar el Buda de Esmeralda.",
+		"facts": [
+			"Pese a su nombre, la imagen no es de esmeralda, sino de jade verde o jaspe.",
+			"El rey cambia la vestimenta del Buda tres veces al año, con cada cambio de estación."
+		]
+	},
+	"landmark-051": {
+		"summary": "Aguas de las que emergen casi 2000 islas y peñascos de caliza.",
+		"facts": [
+			"Su nombre significa «donde descendió el dragón».",
+			"En 1994 fue declarada Patrimonio Natural de la Humanidad."
+		]
+	},
+	"landmark-052": {
+		"summary": "Volcán de suave silueta cónica, el más alto de Japón.",
+		"facts": [
+			"Mide 3776 metros y en 2013 fue declarado Patrimonio de la Humanidad como lugar sagrado y fuente de inspiración artística.",
+			"Tal como lo retrató Hokusai, aparece desde 2024 en el reverso del nuevo billete de 1000 yenes."
+		]
+	},
+	"landmark-053": {
+		"summary": "Templo de Kioto, antigua villa de un sogún, cuyo pabellón cubierto de pan de oro se refleja en un estanque.",
+		"facts": [
+			"Era una villa que el sogún Ashikaga Yoshimitsu adquirió en 1397; su nombre oficial es Rokuon-ji.",
+			"En 1950 un joven monje le prendió fuego; se reconstruyó en 1955, y Yukio Mishima lo convirtió en novela."
+		]
+	},
+	"landmark-054": {
+		"summary": "Torre de radiodifusión de 634 metros inaugurada en 2012, la más alta del mundo.",
+		"facts": [
+			"La cifra 634 se lee «mu-sa-shi» en japonés: un juego de palabras con Musashi, el antiguo nombre de la región.",
+			"Tiene miradores a 350 y 450 metros, y desde 2013 emite la señal de televisión en lugar de la Torre de Tokio."
+		]
+	},
+	"landmark-055": {
+		"summary": "Palacio principal que la dinastía Joseon construyó en 1395, el primero que levantó en Hanyang, la actual Seúl.",
+		"facts": [
+			"Quien va vestido con hanbok, el traje tradicional coreano, entra gratis.",
+			"Ardió en 1592 durante la Guerra Imjin, quedó abandonado más de 270 años y se reconstruyó en tiempos del rey Gojong."
+		]
+	},
+	"landmark-056": {
+		"summary": "Monasterio budista en la ladera del monte Toham, en Gyeongju, que según la tradición Kim Dae-seong amplió en 751.",
+		"facts": [
+			"La pagoda grabada en el anverso de la moneda surcoreana de 10 wones es la Dabotap de este templo.",
+			"En 1995 fue declarado Patrimonio de la Humanidad junto con la gruta de Seokguram."
+		]
+	},
+	"landmark-057": {
+		"summary": "Mirador y antena de transmisión que se alza sobre una montaña en pleno centro de la ciudad.",
+		"facts": [
+			"Se terminó en 1975 como torre de transmisión, pero por motivos de seguridad no se abrió al público hasta 1980.",
+			"Los candados colgados en las barandillas del mirador se han convertido en todo un símbolo."
+		]
+	},
+	"landmark-058": {
+		"summary": "El edificio más alto del mundo, con 828 metros, inaugurado en Dubái en 2010.",
+		"facts": [
+			"El día de su inauguración cambió su nombre de Burj Dubai por el del presidente de los Emiratos Árabes Unidos.",
+			"Tiene 163 plantas, y Tom Cruise escaló en persona su fachada en «Misión imposible»."
+		]
+	},
+	"landmark-059": {
+		"summary": "Antigua ciudad de los nabateos excavada en acantilados de arenisca roja.",
+		"facts": [
+			"Tras cruzar un estrecho desfiladero aparece Al Khazneh, el edificio que sale en «Indiana Jones».",
+			"Se enriqueció cobrando peaje a las caravanas que transportaban incienso y especias."
+		]
+	},
+	"landmark-060": {
+		"summary": "Restos del palacio real persa que Darío I empezó a construir hacia el 518 a. C.",
+		"facts": [
+			"Ardió tras ser tomada por Alejandro Magno en el 330 a. C.",
+			"Se conservan relieves que representan procesiones de pueblos portando tributos."
+		]
+	},
+	"landmark-061": {
+		"summary": "Rascacielos de 508 metros inaugurado en 2004, cuya silueta imita los nudos del bambú.",
+		"facts": [
+			"Sus ascensores suben a más de 1000 metros por minuto.",
+			"Los visitantes pueden ver de cerca la esfera de acero de 660 toneladas que cuelga entre los pisos 88 y 92."
+		]
+	},
+	"landmark-062": {
+		"summary": "La cumbre más alta del mundo, de 8848,86 metros, en la frontera entre Nepal y China.",
+		"facts": [
+			"En 1977, Ko Sang-don fue el primer alpinista de Corea del Sur en alcanzar la cima.",
+			"Edmund Hillary y Tenzing Norgay fueron los primeros en coronarla, en 1953."
+		]
+	},
+	"landmark-063": {
+		"summary": "Conjunto de colosales moles de piedra de base cuadrada levantadas como tumbas de los faraones Keops, Kefrén y Micerino.",
+		"facts": [
+			"Son la única de las siete maravillas del mundo antiguo que sigue en pie.",
+			"Se calcula que solo en la de Keops se emplearon más de 2 millones de bloques de piedra."
+		]
+	},
+	"landmark-064": {
+		"summary": "Estatua de piedra con cuerpo de león y cabeza humana cuyo rostro, según una teoría, es el del faraón Kefrén.",
+		"facts": [
+			"Está junto a las pirámides, mirando hacia el este.",
+			"La nariz ya había desaparecido siglos antes de que llegara el ejército de Napoleón Bonaparte."
+		]
+	},
+	"landmark-065": {
+		"summary": "Santuario que Ramsés II mandó excavar en una montaña rocosa a orillas del río Nilo en el siglo XIII a. C.",
+		"facts": [
+			"En los años sesenta, la construcción de la presa alta de Asuán amenazó con sumergirlo, y se trasladó entero a otro lugar.",
+			"Cada año, hacia el 22 de febrero y el 22 de octubre, la luz del sol llega hasta las estatuas del fondo del santuario."
+		]
+	},
+	"landmark-066": {
+		"summary": "Santuario de la orilla oriental del río Nilo construido por Amenhotep III y Ramsés II.",
+		"facts": [
+			"Uno de sus dos obeliscos se alza hoy en París.",
+			"Estaba unido al templo de Karnak por una avenida de esfinges de 2,7 kilómetros."
+		]
+	},
+	"landmark-067": {
+		"summary": "La montaña más alta de África, de 5895 metros, con nieves perpetuas muy cerca del ecuador.",
+		"facts": [
+			"Tiene rutas que se recorren a pie sin técnicas de escalada, así que cada año lo intentan decenas de miles de personas.",
+			"De todas las montañas que se alzan aisladas sobre una llanura, es la más alta del mundo."
+		]
+	},
+	"landmark-068": {
+		"summary": "Vasta llanura de pastos que cada año recorren las manadas de ñus en busca de agua y hierba.",
+		"facts": [
+			"Su nombre significa «llanura sin fin».",
+			"Forma un único ecosistema con el Masái Mara de Kenia."
+		]
+	},
+	"landmark-069": {
+		"summary": "Reserva nacional de safaris de Kenia, contigua al Serengeti.",
+		"facts": [
+			"«Mara» significa «moteado» en lengua masái.",
+			"Entre julio y octubre, los vehículos de safari se agolpan para ver a los ñus cruzar el río Mara."
+		]
+	},
+	"landmark-070": {
+		"summary": "Restos de una ciudad marítima fundada por los fenicios que libró tres guerras contra Roma.",
+		"facts": [
+			"Cayó ante Roma en el 146 a. C., al final de la tercera de las Guerras púnicas.",
+			"La fundaron fenicios de Tiro, y su nombre significa «ciudad nueva»."
+		]
+	},
+	"landmark-071": {
+		"summary": "Explanada de la ciudad vieja que, al caer el sol, se llena de puestos callejeros y espectáculos.",
+		"facts": [
+			"Es la plaza central de la medina, el casco antiguo de Marrakech.",
+			"En 2001, la Unesco la proclamó Obra Maestra del Patrimonio Oral e Inmaterial de la Humanidad."
+		]
+	},
+	"landmark-072": {
+		"summary": "Macizo rocoso que se alza tras Ciudad del Cabo con una cima llana como un tablero.",
+		"facts": [
+			"Su cumbre está a 1085 metros y se puede subir en teleférico.",
+			"La nube blanca que cubre su cima se conoce como «el mantel»."
+		]
+	},
+	"landmark-073": {
+		"summary": "Promontorio del suroeste de África que, en la era de los descubrimientos, marcaba el paso de la ruta hacia la India.",
+		"facts": [
+			"Bartolomeu Dias llegó a él por primera vez en 1488 y lo llamó «cabo de las Tormentas».",
+			"El extremo sur de África es, en realidad, el cabo Agulhas."
+		]
+	},
+	"landmark-074": {
+		"summary": "Antigua ciudad de piedra del sur de África que levantaron los antepasados del pueblo shona entre los siglos XI y XV.",
+		"facts": [
+			"El nombre del país y el pájaro de su bandera proceden de estas ruinas.",
+			"Se construyó encajando las piedras sin argamasa."
+		]
+	},
+	"landmark-075": {
+		"summary": "Escultura frente a la costa de Nueva York que Francia regaló para celebrar el centenario de la independencia.",
+		"facts": [
+			"Se inauguró en 1886, y la estructura de hierro que la sostiene por dentro la diseñó Gustave Eiffel.",
+			"La tablilla que sostiene en la mano izquierda lleva grabada la fecha de la Declaración de Independencia."
+		]
+	},
+	"landmark-076": {
+		"summary": "Inmensa garganta rojiza que el río Colorado ha ido excavando a lo largo de eras geológicas.",
+		"facts": [
+			"En algunos puntos supera los 1800 metros de profundidad.",
+			"Sus estratos muestran casi 2000 millones de años de historia de la Tierra."
+		]
+	},
+	"landmark-077": {
+		"summary": "Estructura colgante pintada de naranja rojizo que cruza la entrada de la bahía de San Francisco.",
+		"facts": [
+			"Se abrió en 1937, y su color, el «naranja internacional», era en principio solo la imprimación antióxido.",
+			"Con 1280 metros de vano central, fue el puente colgante más largo del mundo hasta 1964."
+		]
+	},
+	"landmark-078": {
+		"summary": "Mansión de fachada encalada terminada en 1800 en Washington D. C., donde vive y trabaja el presidente de Estados Unidos.",
+		"facts": [
+			"En 1901, Theodore Roosevelt hizo oficial el nombre de Casa Blanca.",
+			"El Despacho Oval está en el Ala Oeste."
+		]
+	},
+	"landmark-079": {
+		"summary": "Relieve con los rostros de cuatro presidentes tallado entre 1927 y 1941 en un acantilado de granito de las Black Hills.",
+		"facts": [
+			"Aparece en la persecución final de «Con la muerte en los talones», de Hitchcock.",
+			"Trabajaron en él unas 400 personas, y la mayor parte de la roca se retiró con dinamita."
+		]
+	},
+	"landmark-080": {
+		"summary": "El primer parque nacional del mundo, donde brotan géiseres y aguas termales.",
+		"facts": [
+			"Fue declarado parque nacional en 1872.",
+			"El géiser Old Faithful lanza agua a más de 40 metros cada 90 minutos aproximadamente."
+		]
+	},
+	"landmark-081": {
+		"summary": "Mirador de 553 metros de altura que domina el lago Ontario.",
+		"facts": [
+			"Tiene una zona de observación con suelo de cristal.",
+			"Tras abrir en 1976, fue la estructura autoportante más alta del mundo hasta 2007."
+		]
+	},
+	"landmark-082": {
+		"summary": "El primer parque nacional de Canadá, famoso por sus lagos color jade en plenas Montañas Rocosas.",
+		"facts": [
+			"El agua del lago Louise debe su color turquesa al polvo de los glaciares.",
+			"En 1883 unos obreros del ferrocarril encontraron aguas termales y, ante las disputas por ellas, en 1885 se declararon zona protegida."
+		]
+	},
+	"landmark-083": {
+		"summary": "Yacimiento maya presidido por El Castillo, una pirámide escalonada.",
+		"facts": [
+			"En los equinoccios de primavera y otoño se proyecta sobre su escalinata una sombra con forma de serpiente.",
+			"Sus cuatro escalinatas de 91 peldaños, más la plataforma de la cima, suman 365."
+		]
+	},
+	"landmark-084": {
+		"summary": "Antigua ciudad en la que la pirámide del Sol y la pirámide de la Luna se alinean a lo largo de una gran avenida.",
+		"facts": [
+			"Cuando los aztecas la encontraron, ya estaba abandonada.",
+			"Su avenida central se conoce como la Calzada de los Muertos."
+		]
+	},
+	"landmark-085": {
+		"summary": "Vía navegable artificial con esclusas que une el océano Pacífico con el Atlántico.",
+		"facts": [
+			"Se abrió en 1914 y ahorró a los barcos el largo rodeo por el cabo de Hornos, en el extremo de América del Sur.",
+			"En 2016 se inauguraron nuevas esclusas para que pudieran pasar barcos más grandes."
+		]
+	},
+	"landmark-086": {
+		"summary": "Ciudadela de piedra que los incas construyeron a mediados del siglo XV en una cresta de los Andes.",
+		"facts": [
+			"Está a unos 2430 metros de altitud y el número de visitantes diarios está limitado.",
+			"Se dio a conocer al mundo en 1911 gracias a Hiram Bingham."
+		]
+	},
+	"landmark-087": {
+		"summary": "Gigantescos dibujos de animales y figuras geométricas trazados sobre el suelo del desierto.",
+		"facts": [
+			"Desde tierra apenas se distinguen; se dieron a conocer en los años veinte y treinta, cuando empezaron a sobrevolarlos aviones.",
+			"Se han conservado tanto tiempo porque casi nunca llueve."
+		]
+	},
+	"landmark-088": {
+		"summary": "Enorme estatua de Jesús que, con los brazos abiertos, contempla Río de Janeiro desde lo alto.",
+		"facts": [
+			"Se alza en la cima del cerro del Corcovado.",
+			"Se terminó en 1931 y en 2007 fue elegido una de las siete nuevas maravillas del mundo."
+		]
+	},
+	"landmark-089": {
+		"summary": "Inmensa llanura blanca de sal en la que, cuando se forma una fina lámina de agua, el cielo se refleja como en un espejo.",
+		"facts": [
+			"Es la mayor llanura salina del mundo.",
+			"Bajo su superficie se encuentra el mayor yacimiento de litio del mundo, el metal de las baterías de coches eléctricos y teléfonos móviles."
+		]
+	},
+	"landmark-090": {
+		"summary": "Gigantescas figuras de piedra con rostro humano que, de espaldas al mar, se alinean en una remota isla del Pacífico Sur.",
+		"facts": [
+			"Hasta ahora se han hallado en la isla más de 900.",
+			"La mayoría se tallaron en toba volcánica del Rano Raraku."
+		]
+	},
+	"landmark-091": {
+		"summary": "Archipiélago volcánico del Pacífico donde Charles Darwin encontró pistas para su teoría de la evolución.",
+		"facts": [
+			"La forma del pico de los pinzones cambia de una isla a otra.",
+			"Allí viven tortugas gigantes e iguanas marinas."
+		]
+	},
+	"landmark-092": {
+		"summary": "La cascada más alta del mundo, que se precipita desde la cima de una montaña en forma de mesa.",
+		"facts": [
+			"Tiene 979 metros de caída, y las Cataratas Paraíso de la película «Up» se inspiraron en ella.",
+			"Lleva el nombre del aviador Jimmie Angel, el primero que la sobrevoló, en 1933."
+		]
+	},
+	"landmark-093": {
+		"summary": "Centro de artes escénicas abierto en 1973 en la punta de un cabo del puerto, con cubiertas blancas que parecen velas desplegadas.",
+		"facts": [
+			"Lo diseñó el arquitecto danés Jørn Utzon, que dimitió en 1966 y no llegó a verlo terminado.",
+			"Los más de 1,05 millones de azulejos que revisten sus cubiertas blancas los fabricó una empresa de Suecia."
+		]
+	},
+	"landmark-094": {
+		"summary": "Enorme roca que se alza solitaria en medio de un desierto rojo.",
+		"facts": [
+			"Es lugar sagrado del pueblo aborigen anangu, y también se la conoce como Ayers Rock, nombre que le puso un explorador en 1873.",
+			"Desde octubre de 2019 está prohibido escalarla."
+		]
+	},
+	"landmark-095": {
+		"summary": "El mayor sistema de arrecifes coralinos del mundo, visible incluso desde el espacio.",
+		"facts": [
+			"Se extiende a lo largo de 2300 kilómetros.",
+			"Cuando sube la temperatura del agua, los corales se blanquean y mueren."
+		]
+	},
+	"landmark-096": {
+		"summary": "Fiordo de la Isla Sur rodeado de acantilados y cascadas.",
+		"facts": [
+			"Como llueve a menudo, en cada acantilado se forman cascadas.",
+			"Rudyard Kipling lo llamó la octava maravilla del mundo."
+		]
+	}
+}

@@ -1,0 +1,205 @@
+{
+	"space-001": {
+		"summary": "Étoile 109 fois plus large que la Terre, qui brille par elle-même et retient par sa gravité les planètes qui gravitent autour d'elle.",
+		"facts": [
+			"En coréen, le nom du dimanche, « iryoil », signifie littéralement « jour du Soleil ».",
+			"Sa lumière met environ 8 minutes 20 secondes à atteindre la Terre."
+		]
+	},
+	"space-002": {
+		"summary": "La plus petite des planètes, qui suit l'orbite la plus intérieure et boucle son tour en 88 jours.",
+		"facts": [
+			"Presque dépourvue d'atmosphère, elle connaît entre le jour et la nuit des écarts de température de plus de 600 degrés.",
+			"En coréen, le mercredi, « suyoil », est le jour de l'« astre de l'eau », c'est-à-dire de cette planète."
+		]
+	},
+	"space-003": {
+		"summary": "La planète la plus chaude : son atmosphère de dioxyde de carbone piège la chaleur et sa surface dépasse 460 °C.",
+		"facts": [
+			"Elle met 243 jours à tourner sur elle-même, si bien que son jour est plus long que son année (225 jours).",
+			"On l'appelle l'étoile du matin à l'aube et l'étoile du soir au crépuscule."
+		]
+	},
+	"space-004": {
+		"summary": "La seule planète où de l'eau liquide s'étend en surface et où la présence de la vie est confirmée.",
+		"facts": [
+			"Les océans couvrent environ 70 % de sa surface.",
+			"Son champ magnétique et son atmosphère la protègent des rayons cosmiques nocifs."
+		]
+	},
+	"space-005": {
+		"summary": "Planète qui paraît rouge à cause de sa poussière d'oxyde de fer, et dont la journée dure environ 24 h 40 min.",
+		"facts": [
+			"Elle abrite Olympus Mons, le plus haut volcan du Système solaire.",
+			"Deux petits satellites l'accompagnent : Phobos et Déimos."
+		]
+	},
+	"space-006": {
+		"summary": "La plus grande des planètes, une géante gazeuse si vaste qu'on pourrait y loger plus de 1 000 Terres.",
+		"facts": [
+			"Elle abrite la Grande Tache rouge, une tempête géante observée sans interruption depuis 1878.",
+			"On lui connaît 115 satellites, dont les quatre plus grands ont été découverts par Galilée."
+		]
+	},
+	"space-007": {
+		"summary": "Planète ceinte d'anneaux bien visibles, faits de glace et de roche.",
+		"facts": [
+			"Moins dense que l'eau, elle flotterait, dit-on, si on la plongeait dans l'eau.",
+			"Avec 293 satellites connus, c'est la planète qui en compte le plus."
+		]
+	},
+	"space-008": {
+		"summary": "Planète bleu-vert à l'axe de rotation presque couché, qui semble rouler sur son orbite.",
+		"facts": [
+			"Découverte en 1781 par Herschel, c'est la première planète trouvée à l'aide d'un télescope.",
+			"Le méthane de son atmosphère absorbe la lumière rouge, d'où sa teinte bleu-vert."
+		]
+	},
+	"space-009": {
+		"summary": "La planète la plus éloignée du Soleil, balayée par des vents de plus de 500 mètres par seconde.",
+		"facts": [
+			"Son existence a été déduite par le calcul avant d'être confirmée au télescope.",
+			"Il lui faut 165 ans pour faire le tour du Soleil : découverte en 1846, elle n'a bouclé sa première orbite qu'en 2011."
+		]
+	},
+	"space-010": {
+		"summary": "Unique satellite naturel de la Terre, qui gravite à 380 000 kilomètres d'elle et provoque les marées.",
+		"facts": [
+			"En décembre 2022, Danuri, la première sonde d'exploration de la Corée du Sud, s'est placée en orbite autour d'elle.",
+			"En 1969, Apollo 11 y a déposé des hommes pour la première fois."
+		]
+	},
+	"space-011": {
+		"summary": "Satellite de Jupiter dont l'activité volcanique est la plus intense de tout le Système solaire.",
+		"facts": [
+			"Les forces de marée de Jupiter chauffent son intérieur, si bien que ses volcans ne s'éteignent jamais.",
+			"Le soufre colore sa surface de jaune et de rouge."
+		]
+	},
+	"space-012": {
+		"summary": "Satellite de Jupiter qui cacherait un océan sous sa croûte de glace.",
+		"facts": [
+			"Sa surface est couverte de plaques de glace fissurées.",
+			"Lancée en 2024, la sonde Europa Clipper doit y arriver en 2030."
+		]
+	},
+	"space-013": {
+		"summary": "Le plus grand satellite de Saturne, doté d'une atmosphère épaisse et de lacs de méthane.",
+		"facts": [
+			"Dragonfly, le drone d'exploration de la NASA, doit être lancé en 2028 et s'y poser en 2034.",
+			"En 2005, la sonde Huygens s'est posée à sa surface."
+		]
+	},
+	"space-014": {
+		"summary": "Petit satellite de Saturne qui projette dans l'espace des panaches d'eau depuis son pôle Sud.",
+		"facts": [
+			"La sonde Cassini a découvert ces panaches d'eau en 2005.",
+			"Les particules qu'il éjecte forment une partie des anneaux de Saturne."
+		]
+	},
+	"space-015": {
+		"summary": "Astre glacé découvert en 1930, considéré comme une planète pendant 76 ans avant d'être reclassé planète naine en 2006.",
+		"facts": [
+			"En 2015, la sonde New Horizons a été la première à le survoler de près.",
+			"Sa surface présente une plaine glacée en forme de cœur."
+		]
+	},
+	"space-016": {
+		"summary": "Planète naine découverte en 2005, un temps présentée comme la dixième planète, qui a obligé à redéfinir ce qu'est une planète.",
+		"facts": [
+			"Son diamètre est légèrement inférieur à celui de Pluton, mais sa masse est plus élevée.",
+			"Elle doit son nom à la déesse de la Discorde."
+		]
+	},
+	"space-017": {
+		"summary": "Le plus gros corps de la ceinture située entre Mars et Jupiter, et la seule planète naine du Système solaire interne.",
+		"facts": [
+			"Premier astéroïde découvert, en 1801, il porte le nom de la déesse des moissons, d'où vient aussi le mot « céréale ».",
+			"En 2015, la sonde Dawn a photographié de brillants dépôts de sel au fond d'un cratère."
+		]
+	},
+	"space-018": {
+		"summary": "Anneau de blocs rocheux épars qui tournent entre Mars et Jupiter.",
+		"facts": [
+			"Sa masse totale ne représente qu'environ 3 % de celle de la Lune.",
+			"Ses objets sont si espacés que les sondes la traversent sans encombre."
+		]
+	},
+	"space-019": {
+		"summary": "Région au-delà de Neptune où des corps glacés s'étalent en forme de beignet.",
+		"facts": [
+			"Son existence a été confirmée en 1992 avec la découverte du premier objet au-delà de Pluton.",
+			"C'est de là que viennent les comètes à courte période."
+		]
+	},
+	"space-020": {
+		"summary": "Lointain berceau des comètes, qui envelopperait le Système solaire comme une sphère.",
+		"facts": [
+			"En 1950, Jan Oort, astronome des Pays-Bas, en a proposé l'existence.",
+			"Cette région reste hypothétique : personne ne l'a encore observée directement."
+		]
+	},
+	"space-021": {
+		"summary": "Le plus grand satellite du Système solaire, plus gros même que Mercure, en orbite autour de Jupiter.",
+		"facts": [
+			"C'est le seul satellite à produire son propre champ magnétique.",
+			"L'océan caché sous sa glace pourrait contenir plus d'eau que toute celle de la surface de la Terre."
+		]
+	},
+	"space-022": {
+		"summary": "Deuxième plus grand satellite de Jupiter, à la surface la plus criblée de cratères du Système solaire.",
+		"facts": [
+			"Galilée l'a découvert en 1610, en même temps que les trois autres grands satellites.",
+			"La sonde Galileo a détecté des indices d'un océan salé sous sa surface."
+		]
+	},
+	"space-023": {
+		"summary": "Le plus grand satellite de Neptune, qui tourne en sens inverse de la rotation de sa planète.",
+		"facts": [
+			"On pense qu'il s'agit d'un objet de la Ceinture de Kuiper capturé par la gravité de Neptune.",
+			"En 1989, Voyager 2 a repéré des geysers jaillissant de sa surface."
+		]
+	},
+	"space-024": {
+		"summary": "Le plus grand satellite de Pluton, dont le diamètre atteint environ la moitié de celui de son compagnon.",
+		"facts": [
+			"Lui et Pluton se présentent toujours la même face et tournent l'un autour de l'autre en 6,4 jours.",
+			"Il a été découvert en 1978 grâce à une photo de Pluton qui paraissait allongée."
+		]
+	},
+	"space-025": {
+		"summary": "Grand satellite de Mars qui fait trois fois le tour de sa planète chaque jour, en s'en rapprochant peu à peu.",
+		"facts": [
+			"Il se rapproche de 1,8 mètre par siècle et pourrait se disloquer d'ici 50 millions d'années.",
+			"Son nom vient du mot grec signifiant « peur », le même que dans « phobie »."
+		]
+	},
+	"space-026": {
+		"summary": "La seule comète à courte période visible à l'œil nu à chacun de ses retours, tous les 76 ans environ.",
+		"facts": [
+			"Elle est passée en 1986 et reviendra en 2061.",
+			"Les débris qu'elle sème donnent les pluies d'étoiles filantes de mai et d'octobre."
+		]
+	},
+	"space-027": {
+		"summary": "Planète naine qui tourne sur elle-même en 4 heures, si vite qu'elle s'est allongée comme un ballon de rugby.",
+		"facts": [
+			"C'est le premier objet de la ceinture de Kuiper autour duquel on a découvert un anneau.",
+			"Son nom vient de la déesse de la fertilité de la mythologie hawaïenne."
+		]
+	},
+	"space-028": {
+		"summary": "Planète naine découverte juste après Pâques 2005, d'où son surnom d'« Easterbunny » (lapin de Pâques).",
+		"facts": [
+			"Son diamètre d'environ 1 400 km représente à peu près les trois cinquièmes de celui de Pluton.",
+			"Son nom vient du dieu qui a créé les hommes dans la mythologie rapanui."
+		]
+	},
+	"space-029": {
+		"summary": "Deuxième astéroïde le plus massif de la ceinture d'astéroïdes, structuré comme la Terre en croûte, manteau et noyau.",
+		"facts": [
+			"Son pôle Sud porte un cratère d'impact d'environ 500 km de large.",
+			"Une partie des météorites tombées sur Terre en proviennent."
+		]
+	}
+}

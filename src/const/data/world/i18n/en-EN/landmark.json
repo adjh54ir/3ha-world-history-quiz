@@ -1,0 +1,674 @@
+{
+	"landmark-001": {
+		"summary": "An iron lattice structure built in Paris for the 1889 World's Fair.",
+		"facts": [
+			"It was originally meant to be a temporary structure standing for only 20 years.",
+			"After dark, 20,000 lights sparkle for five minutes at the top of every hour."
+		]
+	},
+	"landmark-002": {
+		"summary": "A monumental arch that Napoleon commissioned at the end of the Champs-Élysées in Paris to celebrate his victory at Austerlitz.",
+		"facts": [
+			"Construction began in 1806 and finished in 1836, so Napoleon never saw it completed.",
+			"Climb its 284 steps and you'll see twelve grand avenues radiating out like a star."
+		]
+	},
+	"landmark-003": {
+		"summary": "An art museum opened in 1793 by the revolutionary government in a converted former royal palace in Paris.",
+		"facts": [
+			"It is home to the “Mona Lisa” and the Venus de Milo.",
+			"Its glass pyramid entrance, opened in 1989, was designed by architect I. M. Pei."
+		]
+	},
+	"landmark-004": {
+		"summary": "An abbey founded in 708 by Bishop Aubert on a rocky tidal island off the coast of Normandy.",
+		"facts": [
+			"During the Hundred Years' War, it held out against an English siege to the very end.",
+			"The old causeway was removed and replaced with a bridge, so it becomes an island again at high spring tides."
+		]
+	},
+	"landmark-005": {
+		"summary": "The great bell that has rung out the hours from the clock tower of London's Houses of Parliament since 1859.",
+		"facts": [
+			"It weighs 13.7 tons and fell almost silent during a five-year restoration that began in 2017.",
+			"The tower's official name, Elizabeth Tower, was given in 2012 to mark the Queen's Diamond Jubilee."
+		]
+	},
+	"landmark-006": {
+		"summary": "A bridge across the Thames in London, completed in 1894, whose center opens to let ships pass.",
+		"facts": [
+			"It takes its name from the Tower of London, which stands right beside it.",
+			"Glass floors added to the upper walkways in 2014 let you look down at the river 42 meters below."
+		]
+	},
+	"landmark-007": {
+		"summary": "A prehistoric ring of huge standing stones raised on Salisbury Plain c. 2500 BC.",
+		"facts": [
+			"Visitors normally view it from behind a fence, but at dawn on the summer solstice they can walk among the stones to greet the sunrise.",
+			"Many of the smaller bluestones were hauled from Wales, more than 200 kilometers away."
+		]
+	},
+	"landmark-008": {
+		"summary": "An aristocrat's mansion in London, enlarged into a palace that has been the British monarch's residence since 1837.",
+		"facts": [
+			"The Changing of the Guard takes place in front of the main gates at 11 a.m., almost daily in summer.",
+			"When the monarch is in residence, the Royal Standard flies overhead."
+		]
+	},
+	"landmark-009": {
+		"summary": "An arena built in Rome around AD 80, where more than 50,000 spectators watched gladiator fights.",
+		"facts": [
+			"It appears on Italy's 5-cent euro coin.",
+			"Emperor Titus opened it with 100 days of games."
+		]
+	},
+	"landmark-010": {
+		"summary": "A cathedral campanile, begun in 1173, that tilts to one side because of the soft ground beneath it.",
+		"facts": [
+			"Today you can climb 296 slanting steps up to the belfry at the top.",
+			"It closed in 1990 for 11 years of stabilization work that reduced its tilt from 5.5 to 4 degrees."
+		]
+	},
+	"landmark-011": {
+		"summary": "A Baroque fountain in Rome designed by Nicola Salvi, begun in 1732 and completed in 1762.",
+		"facts": [
+			"Legend says tossing a coin over your shoulder ensures you'll return to Rome; the money collected goes to the charity Caritas.",
+			"It is still fed by the Aqua Virgo, an aqueduct built in 19 BC."
+		]
+	},
+	"landmark-012": {
+		"summary": "The main square of Venice, framed by a basilica glittering with gold mosaics and a tall bell tower.",
+		"facts": [
+			"Napoleon is said to have called it “the most beautiful drawing room in Europe.”",
+			"Between fall and spring, high tides known as acqua alta flood the square."
+		]
+	},
+	"landmark-013": {
+		"summary": "A Gothic cathedral in northern Italy with 135 spires rising like a forest.",
+		"facts": [
+			"Construction began in 1386, and it was not officially completed until 1965.",
+			"With a ticket, you can go up to the rooftop terraces and stroll among the spires."
+		]
+	},
+	"landmark-014": {
+		"summary": "A Roman city near Naples buried whole under ash from Mount Vesuvius in AD 79.",
+		"facts": [
+			"Stone shop counters with built-in food jars still line its streets.",
+			"Systematic excavation began in 1748."
+		]
+	},
+	"landmark-015": {
+		"summary": "A Barcelona basilica designed by Antoni Gaudí, begun in 1882 and still under construction today.",
+		"facts": [
+			"Antoni Gaudí was struck by a tram and killed in 1926, never seeing it finished.",
+			"In February 2026, its central Tower of Jesus reached 172.5 meters, making it the tallest church in the world."
+		]
+	},
+	"landmark-016": {
+		"summary": "A red fortress that the Nasrid dynasty began building on a hill in Granada in 1238.",
+		"facts": [
+			"After visiting, Francisco Tárrega composed the guitar piece “Recuerdos de la Alhambra.”",
+			"Its surrender by the last Muslim dynasty in 1492 marked the end of the Reconquista."
+		]
+	},
+	"landmark-017": {
+		"summary": "A park covered in colorful tiles, laid out by Antoni Gaudí on a Barcelona hillside between 1900 and 1914.",
+		"facts": [
+			"It was originally planned as an upscale housing estate before becoming a park.",
+			"The tiled lizard on the entrance stairway, El Drac, is always crowded with people taking photos."
+		]
+	},
+	"landmark-018": {
+		"summary": "An art museum opened in Madrid in 1819 to house the Spanish royal collection.",
+		"facts": [
+			"Its walls hold Diego Velázquez's “Las Meninas” and Goya's “The Third of May 1808.”",
+			"During the last two hours before closing, the permanent collection is free to visit."
+		]
+	},
+	"landmark-019": {
+		"summary": "A fortress built around 1519 by Manuel I at the mouth of the Tagus River in Lisbon.",
+		"facts": [
+			"Ships setting out on the sea route to India sailed right past it.",
+			"In 1983, it became a World Heritage Site together with the Jerónimos Monastery."
+		]
+	},
+	"landmark-020": {
+		"summary": "A city gate erected in Berlin in 1791 by the Prussian king, modeled on the monumental gateway of a temple in Athens.",
+		"facts": [
+			"It appears on Germany's 10-, 20- and 50-cent euro coins.",
+			"In December 1989, the gate, long blocked by the Berlin Wall, reopened after 28 years."
+		]
+	},
+	"landmark-021": {
+		"summary": "A castle that Ludwig II began building in 1869 on a rocky Alpine hill near Füssen.",
+		"facts": [
+			"It was still unfinished when the king died in 1886, and it opened to visitors just seven weeks later.",
+			"It is often cited as the model for the Disney castle."
+		]
+	},
+	"landmark-022": {
+		"summary": "A Gothic cathedral, begun in 1248 and finished 632 years later, that was once the tallest building in the world.",
+		"facts": [
+			"It took 14 bomb hits during World War II and still did not collapse.",
+			"With no elevator, visitors climb 533 steps to the south tower's viewing platform, about 100 meters up."
+		]
+	},
+	"landmark-023": {
+		"summary": "The Baroque summer palace of the Habsburgs on the outskirts of Vienna.",
+		"facts": [
+			"It has 1,441 rooms, and its grounds hold the world's oldest zoo, opened in 1752.",
+			"In 1762, a six-year-old Wolfgang Amadeus Mozart performed for the empress in its Hall of Mirrors."
+		]
+	},
+	"landmark-024": {
+		"summary": "A castle begun around 880 on a hill above the Vltava River that grew into one of the largest in the world.",
+		"facts": [
+			"Every day at noon, a grand Changing of the Guard takes place in the first courtyard by the main gate.",
+			"Once the seat of the kings of Bohemia, it now houses the office of the Czech president."
+		]
+	},
+	"landmark-025": {
+		"summary": "A stone bridge over the Vltava, begun in 1357 and lined with thirty statues of saints.",
+		"facts": [
+			"Legend says touching the relief of St. John of Nepomuk on the bridge will make your wish come true.",
+			"Until 1841, it was the only bridge across the Vltava in Prague."
+		]
+	},
+	"landmark-026": {
+		"summary": "A temple to Athena that the people of Athens began building on the Acropolis in 447 BC.",
+		"facts": [
+			"About half of its sculptures were removed in the early 19th century by the British diplomat Lord Elgin and are now in the British Museum.",
+			"Its columns bulge slightly in the middle so that they appear perfectly straight."
+		]
+	},
+	"landmark-027": {
+		"summary": "A volcanic island in the Aegean Sea, its clifftops lined with white walls and blue domes.",
+		"facts": [
+			"Around 1600 BC, a massive eruption collapsed the center of the island, leaving it crescent-shaped.",
+			"Every evening, crowds gather on the cliffs of Oia to watch the sunset."
+		]
+	},
+	"landmark-028": {
+		"summary": "A cathedral built in 1561 on Red Square in Moscow by Ivan IV to commemorate the conquest of Kazan.",
+		"facts": [
+			"Legend says the architect was blinded so he could never build anything like it again, but there is no evidence for this.",
+			"Its vivid colors are the result of repeated repainting from the 1680s to 1848."
+		]
+	},
+	"landmark-029": {
+		"summary": "An art museum in Saint Petersburg whose galleries fill the tsars' former Winter Palace.",
+		"facts": [
+			"It began in 1764 with 225 paintings purchased by Catherine II.",
+			"Dozens of cats, first brought in to catch mice, still live in its basements."
+		]
+	},
+	"landmark-030": {
+		"summary": "A domed building in Istanbul built in 537 by Emperor Justinian and now used as a mosque.",
+		"facts": [
+			"It became a mosque in 1453 and a museum in 1935, then was converted back into a mosque in 2020.",
+			"Since January 2024, foreign tourists pay a 25-euro admission fee."
+		]
+	},
+	"landmark-031": {
+		"summary": "A high plateau dotted with mushroom-shaped rock formations and cave dwellings.",
+		"facts": [
+			"People carved underground cities out of rock formed from hardened volcanic ash.",
+			"Every morning at dawn, dozens of hot-air balloons rise into the sky together."
+		]
+	},
+	"landmark-032": {
+		"summary": "A 4,478-meter pyramid-shaped peak with four knife-edged faces on the border of Switzerland and Italy.",
+		"facts": [
+			"Until 2023, it was pictured on the packaging of Toblerone chocolate.",
+			"Edward Whymper's party of seven made the first ascent in 1865, but four of them died on the way down."
+		]
+	},
+	"landmark-033": {
+		"summary": "A snowy Alpine peak where a cogwheel railway tunnels through the mountain up to a high saddle.",
+		"facts": [
+			"Opened in 1912, the station on the saddle sits at 3,454 meters, the highest railway station in Europe.",
+			"The Aletsch Glacier, the longest in the Alps, stretches out beside it."
+		]
+	},
+	"landmark-034": {
+		"summary": "The heart of the Catholic Church, consecrated in Vatican City in 1626 after 120 years of construction.",
+		"facts": [
+			"Michelangelo designed its dome, and Bernini designed the oval square in front of it.",
+			"At Easter and Christmas, the pope blesses the crowds in the square from the central balcony."
+		]
+	},
+	"landmark-035": {
+		"summary": "A chapel inside the Vatican's Apostolic Palace, built in 1481 by Pope Sixtus IV.",
+		"facts": [
+			"Starting in 1508, Michelangelo spent four years painting its ceiling frescoes of the Creation.",
+			"During a conclave, white smoke rising from its chimney means a new pope has been elected."
+		]
+	},
+	"landmark-036": {
+		"summary": "A bronze figure placed on a rock by the Copenhagen waterfront in 1913 to honor a fairy tale by Hans Christian Andersen.",
+		"facts": [
+			"Carl Jacobsen, son of the founder of Carlsberg, commissioned it after falling in love with a ballet based on the story.",
+			"Standing just 1.25 meters tall, it surprises many first-time visitors with its small size."
+		]
+	},
+	"landmark-037": {
+		"summary": "A deep, narrow fjord where the Seven Sisters waterfall tumbles down the cliffs.",
+		"facts": [
+			"On the opposite cliff stands the Suitor waterfall, facing the Sisters.",
+			"It was designated a World Natural Heritage Site in 2005."
+		]
+	},
+	"landmark-038": {
+		"summary": "A milky open-air geothermal spa on a volcanic island, filled with water from a geothermal power plant.",
+		"facts": [
+			"Since 2023, repeated eruptions from nearby volcanoes have forced it to close several times.",
+			"Its water looks blue because of the silica it contains."
+		]
+	},
+	"landmark-039": {
+		"summary": "Fortifications encircling an old Adriatic port city, built between the 13th and 17th centuries.",
+		"facts": [
+			"You can walk a full loop along the top of the roughly 1,940-meter circuit.",
+			"It served as a filming location for King's Landing, the capital in the TV series “Game of Thrones.”"
+		]
+	},
+	"landmark-040": {
+		"summary": "A memorial preserving the concentration camp that Nazi Germany set up in southern Poland in 1940.",
+		"facts": [
+			"At least 1.1 million people lost their lives here.",
+			"It was liberated by Soviet troops on January 27, 1945, a date now marked as International Holocaust Remembrance Day."
+		]
+	},
+	"landmark-041": {
+		"summary": "A long line of fortifications built along mountain ridges to keep out nomadic peoples from the north.",
+		"facts": [
+			"Successive dynasties added to it, and most of what stands today dates from the Ming dynasty.",
+			"The Ming-era sections are usually said to run from Shanhai Pass in the east to Jiayu Pass in the west."
+		]
+	},
+	"landmark-042": {
+		"summary": "The imperial palace completed in the heart of Beijing in 1420 by the Ming dynasty's Yongle Emperor.",
+		"facts": [
+			"The Palace Museum was established here in 1925, so anyone with a ticket can walk through the palace.",
+			"Some 980 buildings survive; the claim that it has 9,999 rooms is an exaggeration."
+		]
+	},
+	"landmark-043": {
+		"summary": "A host of clay soldiers and horses that Qin Shi Huang had buried beside his tomb near Xi'an.",
+		"facts": [
+			"It was discovered in 1974 by farmers digging a well.",
+			"Every soldier has a different face."
+		]
+	},
+	"landmark-044": {
+		"summary": "A palace built in tiers on the Red Hill in Lhasa by the Fifth Dalai Lama in 1645.",
+		"facts": [
+			"It stands at an altitude of about 3,700 meters.",
+			"It served as the winter palace of the Dalai Lamas until the 1959 exile."
+		]
+	},
+	"landmark-045": {
+		"summary": "A white marble mausoleum in Agra built by a Mughal emperor in memory of his late wife.",
+		"facts": [
+			"Shah Jahan began it in 1632 and, with some 20,000 artisans, completed it in 1653.",
+			"It is closed to tourists on Fridays."
+		]
+	},
+	"landmark-046": {
+		"summary": "A temple near Siem Reap dedicated to Vishnu by Suryavarman II in the 12th century.",
+		"facts": [
+			"It was built as a Hindu temple and later became a Buddhist one.",
+			"It appears on the flag of Cambodia."
+		]
+	},
+	"landmark-047": {
+		"summary": "The world's largest Buddhist temple, built in central Java by the Sailendra dynasty around the 9th century.",
+		"facts": [
+			"Long forgotten, it was brought to the world's attention in 1814 by the British governor Raffles after he heard reports of it.",
+			"Up to 1,200 visitors a day may climb to the top, accompanied by a guide and wearing bamboo sandals."
+		]
+	},
+	"landmark-048": {
+		"summary": "A pair of 452-meter twin skyscrapers in Kuala Lumpur, completed in 1998 and linked by a skybridge.",
+		"facts": [
+			"They were the tallest buildings in the world from 1998 to 2004.",
+			"Their floor plan is based on an eight-pointed Islamic star, and visitors can go up to the skybridge on the 41st floor."
+		]
+	},
+	"landmark-049": {
+		"summary": "A resort opened on the Singapore waterfront in 2010, with three hotel towers topped by a ship-shaped garden.",
+		"facts": [
+			"Its rooftop pool is about 190 meters above the ground and open only to hotel guests.",
+			"Every night, a light-and-water show called Spectra is staged on the bay in front."
+		]
+	},
+	"landmark-050": {
+		"summary": "A temple built within Bangkok's Grand Palace by Rama I in the late 18th century to enshrine the Emerald Buddha.",
+		"facts": [
+			"Despite its name, the Buddha is carved not from emerald but from green jade or jasper.",
+			"Three times a year, at each change of season, the king changes the statue's robes."
+		]
+	},
+	"landmark-051": {
+		"summary": "A bay where nearly 2,000 limestone islands and rock pillars rise from the sea.",
+		"facts": [
+			"Its name means “where the dragon descended.”",
+			"It became a World Natural Heritage Site in 1994."
+		]
+	},
+	"landmark-052": {
+		"summary": "Japan's highest volcano, rising in a gently sloping cone.",
+		"facts": [
+			"It stands 3,776 meters tall and was named a World Heritage Site in 2013 as a source of faith and artistic inspiration.",
+			"Hokusai's print of the mountain appears on the back of the new 1,000-yen note issued in 2024."
+		]
+	},
+	"landmark-053": {
+		"summary": "A Kyoto temple, converted from a shogun's villa, whose gold-leaf pavilion is mirrored in a pond.",
+		"facts": [
+			"The villa was acquired in 1397 by the shogun Ashikaga Yoshimitsu; the temple's official name is Rokuon-ji.",
+			"A young monk burned it down in 1950; it was rebuilt in 1955, and Yukio Mishima turned the story into a novel."
+		]
+	},
+	"landmark-054": {
+		"summary": "Opened in 2012 and standing 634 meters, the tallest broadcasting tower in the world.",
+		"facts": [
+			"The height of 634 is a pun on Musashi, the area's old province name.",
+			"It has observation decks at 350 and 450 meters and took over TV broadcasting from Tokyo Tower in 2013."
+		]
+	},
+	"landmark-055": {
+		"summary": "The main royal palace and the first one Joseon built in its capital, Hanyang, in 1395.",
+		"facts": [
+			"Visitors wearing hanbok get in free.",
+			"Burned during the Imjin War in 1592, it lay empty for more than 270 years until it was rebuilt under King Gojong."
+		]
+	},
+	"landmark-056": {
+		"summary": "A temple at the foot of Mount Toham in Gyeongju, said to have been greatly expanded by Kim Dae-seong in 751.",
+		"facts": [
+			"The pagoda on the front of South Korea's 10-won coin is this temple's Dabotap.",
+			"In 1995, it became a World Heritage Site together with Seokguram Grotto."
+		]
+	},
+	"landmark-057": {
+		"summary": "An observation and broadcasting tower on a mountain in the middle of the city.",
+		"facts": [
+			"It was completed as a transmission tower in 1975, but security concerns kept it closed to the public until 1980.",
+			"The love locks on the observation deck railings have become a famous sight."
+		]
+	},
+	"landmark-058": {
+		"summary": "The world's tallest building at 828 meters, opened in Dubai in 2010.",
+		"facts": [
+			"On opening day, it was renamed from Burj Dubai in honor of the President of the United Arab Emirates.",
+			"The 163-story tower is where Tom Cruise scaled the outside wall himself in “Mission: Impossible.”"
+		]
+	},
+	"landmark-059": {
+		"summary": "An ancient Nabataean city carved out of red sandstone cliffs.",
+		"facts": [
+			"At the end of a narrow gorge, Al-Khazneh, featured in “Indiana Jones,” comes into view.",
+			"It grew rich by charging tolls on caravans carrying frankincense and spices."
+		]
+	},
+	"landmark-060": {
+		"summary": "The remains of a Persian royal palace that Darius I began building around 518 BC.",
+		"facts": [
+			"It was burned after Alexander the Great captured it in 330 BC.",
+			"Reliefs depicting processions of tribute bearers still survive."
+		]
+	},
+	"landmark-061": {
+		"summary": "A 508-meter skyscraper modeled on the segments of a bamboo stalk, opened in 2004.",
+		"facts": [
+			"Its elevators climb more than 1,000 meters per minute.",
+			"Visitors can see the 660-ton steel damper ball suspended between the 88th and 92nd floors."
+		]
+	},
+	"landmark-062": {
+		"summary": "The world's highest peak, rising 8,848.86 meters above sea level on the border of Nepal and China.",
+		"facts": [
+			"In 1977, Ko Sang-don became the first South Korean to stand on the summit.",
+			"Edmund Hillary and Tenzing Norgay made the first ascent in 1953."
+		]
+	},
+	"landmark-063": {
+		"summary": "A group of colossal four-sided stone monuments built as tombs for three pharaohs: Khufu, Khafre and Menkaure.",
+		"facts": [
+			"They are the only one of the Seven Wonders of the Ancient World still standing.",
+			"Khufu's alone is thought to contain more than 2 million stone blocks."
+		]
+	},
+	"landmark-064": {
+		"summary": "A stone statue with a lion's body and a human head, thought by some to bear the face of King Khafre.",
+		"facts": [
+			"It sits beside the pyramids, gazing east.",
+			"Its nose had already fallen off centuries before Napoleon's army arrived."
+		]
+	},
+	"landmark-065": {
+		"summary": "A temple carved into a rocky mountainside by the Nile by Ramesses II in the 13th century BC.",
+		"facts": [
+			"Threatened with flooding by the construction of the Aswan High Dam in the 1960s, it was moved in its entirety and rebuilt.",
+			"Every year around February 22 and October 22, sunlight reaches the statues in its innermost sanctuary."
+		]
+	},
+	"landmark-066": {
+		"summary": "A temple on the east bank of the Nile built by Amenhotep III and Ramesses II.",
+		"facts": [
+			"One of its pair of obelisks now stands in Paris.",
+			"A 2.7-kilometer avenue of sphinxes once linked it to the Karnak Temple."
+		]
+	},
+	"landmark-067": {
+		"summary": "Africa's highest peak, 5,895 meters tall and capped with snow despite lying near the equator.",
+		"facts": [
+			"Trails lead to the top without technical climbing skills, so tens of thousands attempt it every year.",
+			"It is the tallest free-standing mountain in the world."
+		]
+	},
+	"landmark-068": {
+		"summary": "A vast grassland where herds of wildebeest migrate every year in search of water and grass.",
+		"facts": [
+			"Its name means “endless plains.”",
+			"It forms a single ecosystem with Kenya's Maasai Mara."
+		]
+	},
+	"landmark-069": {
+		"summary": "A Kenyan national safari reserve bordering the Serengeti.",
+		"facts": [
+			"“Mara” means “spotted” in the Maasai language.",
+			"From July to October, safari vehicles flock to watch herds of wildebeest cross the Mara River."
+		]
+	},
+	"landmark-070": {
+		"summary": "The site of a seafaring city founded by the Phoenicians that fought three wars against Rome.",
+		"facts": [
+			"It fell to Rome in 146 BC, at the end of the third of the Punic Wars.",
+			"Founded by Phoenicians from Tyre, its name means “New City.”"
+		]
+	},
+	"landmark-071": {
+		"summary": "An old-town square that fills with food stalls and performers after sunset.",
+		"facts": [
+			"It is the central square of the medina, the old quarter of Marrakesh.",
+			"In 2001, UNESCO proclaimed it a Masterpiece of the Oral and Intangible Heritage of Humanity."
+		]
+	},
+	"landmark-072": {
+		"summary": "A rocky massif rising behind Cape Town, its long summit stretching out perfectly flat.",
+		"facts": [
+			"The summit stands 1,085 meters high and can be reached by cable car.",
+			"The white cloud that spills over the top is called the “tablecloth.”"
+		]
+	},
+	"landmark-073": {
+		"summary": "A rocky headland on the southwestern coast of Africa that became a key waypoint on the sea route to India during the Age of Discovery.",
+		"facts": [
+			"Bartolomeu Dias first reached it in 1488 and named it the Cape of Storms.",
+			"Africa's southernmost point is actually Cape Agulhas."
+		]
+	},
+	"landmark-074": {
+		"summary": "An ancient city in southern Africa built of stone by the ancestors of the Shona people between the 11th and 15th centuries.",
+		"facts": [
+			"The country's name and the bird emblem on its flag both come from these ruins.",
+			"Its walls were built of fitted stones without any mortar."
+		]
+	},
+	"landmark-075": {
+		"summary": "A statue in New York Harbor, a gift from France to mark the centennial of American independence.",
+		"facts": [
+			"It was unveiled in 1886, and its internal iron framework was designed by Gustave Eiffel.",
+			"The tablet in its left hand is inscribed with the date of the Declaration of Independence."
+		]
+	},
+	"landmark-076": {
+		"summary": "A vast red gorge carved by the Colorado River over countless ages.",
+		"facts": [
+			"In places, it is more than 1,800 meters deep.",
+			"Its rock layers record nearly 2 billion years of Earth's history."
+		]
+	},
+	"landmark-077": {
+		"summary": "A suspension bridge painted a reddish orange, spanning the entrance to San Francisco Bay.",
+		"facts": [
+			"It opened in 1937, and its anti-rust primer, “International Orange,” was kept as its final color.",
+			"With a 1,280-meter main span, it was the world's longest suspension bridge until 1964."
+		]
+	},
+	"landmark-078": {
+		"summary": "The residence in Washington, D.C., completed in 1800, where the President of the United States lives and works.",
+		"facts": [
+			"In 1901, Theodore Roosevelt made “White House” its official name.",
+			"The president's office, the Oval Office, is in the West Wing."
+		]
+	},
+	"landmark-079": {
+		"summary": "A sculpture of four presidents' faces carved into a granite cliff in the Black Hills between 1927 and 1941.",
+		"facts": [
+			"It is the setting of the final chase scene in Hitchcock's “North by Northwest.”",
+			"About 400 people worked on it, and most of the rock was removed with dynamite."
+		]
+	},
+	"landmark-080": {
+		"summary": "The world's first national park, where geysers and hot springs bubble up from the ground.",
+		"facts": [
+			"It was designated a national park in 1872.",
+			"Old Faithful geyser shoots water more than 40 meters into the air roughly every 90 minutes."
+		]
+	},
+	"landmark-081": {
+		"summary": "A 553-meter observation tower overlooking Lake Ontario.",
+		"facts": [
+			"It has an observation level with a glass floor.",
+			"After opening in 1976, it was the world's tallest free-standing structure until 2007."
+		]
+	},
+	"landmark-082": {
+		"summary": "Canada's first national park, in the Rocky Mountains, famous for its jade-colored lakes.",
+		"facts": [
+			"Lake Louise gets its turquoise color from glacial rock flour.",
+			"Railway workers found hot springs here in 1883, and after disputes over who owned them, the area became a protected reserve in 1885."
+		]
+	},
+	"landmark-083": {
+		"summary": "A Maya site dominated by the step pyramid known as El Castillo.",
+		"facts": [
+			"At the spring and fall equinoxes, a serpent-shaped shadow appears on its stairway.",
+			"Its four stairways of 91 steps each, plus the top platform, add up to 365."
+		]
+	},
+	"landmark-084": {
+		"summary": "An ancient city where the Pyramid of the Sun and the Pyramid of the Moon line a grand avenue.",
+		"facts": [
+			"It had already been abandoned by the time the Aztecs discovered it.",
+			"Its central avenue is called the Avenue of the Dead."
+		]
+	},
+	"landmark-085": {
+		"summary": "A man-made waterway with locks that links the Pacific and Atlantic oceans.",
+		"facts": [
+			"Opened in 1914, it spared ships the long voyage around Cape Horn at the tip of South America.",
+			"New locks opened in 2016 to let larger ships through."
+		]
+	},
+	"landmark-086": {
+		"summary": "The remains of a stone city built by the Inca on a ridge in the Andes in the mid-15th century.",
+		"facts": [
+			"It sits at about 2,430 meters above sea level, and the number of visitors allowed each day is capped.",
+			"It became widely known to the outside world in 1911 through Hiram Bingham."
+		]
+	},
+	"landmark-087": {
+		"summary": "Giant drawings of animals and geometric shapes etched into the desert floor.",
+		"facts": [
+			"Hard to make out from the ground, they became known to the world in the 1920s and '30s when planes flew over them.",
+			"They have survived so long because it almost never rains there."
+		]
+	},
+	"landmark-088": {
+		"summary": "A giant statue of Jesus with outstretched arms, looking down over Rio de Janeiro.",
+		"facts": [
+			"It stands on the summit of Corcovado mountain.",
+			"Completed in 1931, it was named one of the New Seven Wonders of the World in 2007."
+		]
+	},
+	"landmark-089": {
+		"summary": "A white expanse of salt that mirrors the sky perfectly when covered by a thin layer of water.",
+		"facts": [
+			"It is the largest salt flat in the world.",
+			"It holds the world's largest deposits of lithium, used in batteries for electric cars and smartphones."
+		]
+	},
+	"landmark-090": {
+		"summary": "Giant stone statues with human faces, lined up with their backs to the sea on a remote island in the South Pacific.",
+		"facts": [
+			"More than 900 statues have been found on the island so far.",
+			"Most were carved from volcanic tuff at Rano Raraku."
+		]
+	},
+	"landmark-091": {
+		"summary": "A volcanic archipelago in the Pacific where Charles Darwin found clues that led to his theory of evolution.",
+		"facts": [
+			"The finches on each island have differently shaped beaks.",
+			"Giant tortoises and marine iguanas live here."
+		]
+	},
+	"landmark-092": {
+		"summary": "The world's highest waterfall, plunging from the top of a flat-topped mountain.",
+		"facts": [
+			"It drops 979 meters and inspired Paradise Falls in the movie “Up.”",
+			"It is named after aviator Jimmie Angel, who first flew over it in 1933."
+		]
+	},
+	"landmark-093": {
+		"summary": "A performing arts center opened in 1973 at the tip of a harbor point, with white roofs that look like billowing sails.",
+		"facts": [
+			"It was designed by Danish architect Jørn Utzon, who resigned in 1966 and never saw it completed.",
+			"The more than 1.05 million tiles covering its white roofs were made by a Swedish company."
+		]
+	},
+	"landmark-094": {
+		"summary": "A massive rock rising alone from the middle of the red desert.",
+		"facts": [
+			"It is sacred to the Aboriginal Anangu people and is also known as Ayers Rock, a name given by an explorer in 1873.",
+			"Climbing it has been banned since October 2019."
+		]
+	},
+	"landmark-095": {
+		"summary": "The world's largest coral system, visible even from space.",
+		"facts": [
+			"It stretches for 2,300 kilometers.",
+			"When water temperatures rise, the corals turn white and die in a process called bleaching."
+		]
+	},
+	"landmark-096": {
+		"summary": "A fjord on the South Island, enclosed by sheer cliffs and waterfalls.",
+		"facts": [
+			"It rains so often that waterfalls form on every cliff face.",
+			"Rudyard Kipling called it the eighth wonder of the world."
+		]
+	}
+}

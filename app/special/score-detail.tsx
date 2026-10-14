@@ -24,6 +24,7 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import Tag from '@/src/screens/common/atomic/Tag';
 import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
 import { themed } from '@/src/utils/ThemedStyles';
+import { appLanguage } from '@/src/translations';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 
 // 전체(종합) 히어로·목록 아이콘용 앱 메인 아이콘 이미지
@@ -89,12 +90,12 @@ const ScoreDetail = () => {
 				char,
 			};
 		})
-		// 기본은 이름 가나다순(목록 위치가 항상 같아 찾기 쉬움), 토글로 점수순
+		// 기본은 이름순(앱 언어 기준 — 한국어는 가나다순)(목록 위치가 항상 같아 찾기 쉬움), 토글로 점수순
 		// 정답률순은 '푼 적 있는 주제'가 먼저 — 0문제 주제가 100%처럼 위로 올라오지 않게 한다
 		.sort((a, b) => {
 			if (sortBy === 'score') return b.score - a.score;
 			if (sortBy === 'rate') return (b.solved > 0 ? b.rate : -1) - (a.solved > 0 ? a.rate : -1);
-			return a.title.localeCompare(b.title, 'ko');
+			return a.title.localeCompare(b.title, appLanguage().slice(0, 2));
 		});
 
 	const selectedRow = selectedKey ? rows.find((r) => r.key === selectedKey) ?? null : null;

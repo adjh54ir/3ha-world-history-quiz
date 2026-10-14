@@ -1,0 +1,1696 @@
+{
+	"capital-npl": {
+		"summary": "País sin litoral en la ladera sur del Himalaya, donde se encuentra Lumbini, lugar de nacimiento de Buda. La capital es Katmandú.",
+		"facts": [
+			"El Monte Everest, la cima más alta del mundo, está en su frontera con China.",
+			"Es el único país cuya bandera no es rectangular."
+		]
+	},
+	"capital-twn": {
+		"summary": "Isla situada entre el mar de China Oriental y el mar de China Meridional, cuna del té de burbujas. Su ciudad principal es Taipéi.",
+		"facts": [
+			"El Taipei 101 fue el edificio más alto del mundo de 2004 a 2010.",
+			"En la primera luna llena del año lunar, en Pingxi se sueltan al cielo farolillos de papel con deseos escritos."
+		]
+	},
+	"capital-tls": {
+		"summary": "País que ocupa la mitad oriental de la isla de Timor y cuya población es mayoritariamente católica. La capital es Dili.",
+		"facts": [
+			"Tras el dominio portugués y luego el indonesio, se independizó en 2002.",
+			"Tiene dos lenguas oficiales: el tetun y el portugués."
+		]
+	},
+	"capital-lao": {
+		"summary": "Único país sin litoral del sudeste asiático, donde el arroz glutinoso es el alimento básico. La capital es Vientián.",
+		"facts": [
+			"El casco antiguo de Luang Prabang es Patrimonio de la Humanidad.",
+			"El Río Mekong recorre de norte a sur su frontera occidental."
+		]
+	},
+	"capital-lbn": {
+		"summary": "País de la costa oriental del Mediterráneo donde el poder se reparte entre varias confesiones cristianas y musulmanas. La capital es Beirut.",
+		"facts": [
+			"En el centro de su bandera aparece un cedro del Líbano.",
+			"Fue la tierra de las ciudades portuarias de los antiguos fenicios."
+		]
+	},
+	"capital-mys": {
+		"summary": "País repartido entre la península malaya y la isla de Borneo, donde se come con gusto el nasi lemak, un arroz cocido con coco. La capital es Kuala Lumpur.",
+		"facts": [
+			"Aunque las funciones administrativas se trasladaron a Putrajaya, la capital fijada por ley sigue siendo Kuala Lumpur.",
+			"Las Torres Petronas fueron los edificios más altos del mundo entre 1998 y 2004."
+		]
+	},
+	"capital-mdv": {
+		"summary": "País de islas de coral en el océano Índico, imán para los recién casados por sus bungalós construidos sobre el agua. La capital es Malé.",
+		"facts": [
+			"Está formado por más de mil islas de coral.",
+			"Con una altitud media de unos 1,5 metros, es el país más bajo del mundo."
+		]
+	},
+	"capital-mng": {
+		"summary": "País de estepas sin litoral donde aún hay muchos nómadas que crían ganado y viven en ger, tiendas desmontables. La capital es Ulán Bator.",
+		"facts": [
+			"Ulán Bator, con una temperatura media anual de unos 0 °C, es la capital más fría del mundo.",
+			"Karakórum, la capital del Imperio mongol, estaba al oeste, en el valle del río Orjón."
+		]
+	},
+	"capital-mmr": {
+		"summary": "País budista del oeste de Indochina, donde se alza la dorada pagoda de Shwedagon. La capital es Naipyidó.",
+		"facts": [
+			"En 2005 trasladó la capital de Rangún a Naipyidó.",
+			"En la llanura de Bagan aún quedan miles de estupas."
+		]
+	},
+	"capital-bhr": {
+		"summary": "Pequeño país insular del golfo Pérsico que acoge cada año un Gran Premio de Fórmula 1. La capital es Manama.",
+		"facts": [
+			"Un puente lo une con Arabia Saudita.",
+			"Su antigua ruta de la pesca de perlas figura en la lista del Patrimonio Mundial."
+		]
+	},
+	"capital-bgd": {
+		"summary": "País del delta del Río Ganges y gran exportador de ropa, cuyo nombre aparece a menudo en las etiquetas de las prendas. La capital es Daca.",
+		"facts": [
+			"En 1971 se separó de Pakistán tras nueve meses de guerra de independencia.",
+			"El Día Internacional de la Lengua Materna, el 21 de febrero, nació de las protestas de 1952 en Daca en defensa del bengalí."
+		]
+	},
+	"capital-vnm": {
+		"summary": "Alargado país de Indochina que se extiende de norte a sur, cuna del pho y del bocadillo bánh mì. La capital es Hanói.",
+		"facts": [
+			"La ciudad más grande es Ciudad Ho Chi Minh, en el sur, pero la capital es Hanói, en el norte.",
+			"Los islotes rocosos de la bahía de Ha Long son Patrimonio Natural de la Humanidad."
+		]
+	},
+	"capital-btn": {
+		"summary": "Reino del Himalaya oriental que cobra a los turistas una tasa diaria de estancia para regular su número. La capital es Timbu.",
+		"facts": [
+			"En 1972 el cuarto rey antepuso la felicidad nacional bruta al producto nacional bruto.",
+			"En Timbu no hay semáforos: los policías dirigen el tráfico con gestos."
+		]
+	},
+	"capital-prk": {
+		"summary": "País del norte de una península de Asia oriental, gobernado por la misma familia durante tres generaciones desde la fundación del régimen en 1948. La capital es Pionyang.",
+		"facts": [
+			"En la cena de la cumbre intercoreana de 2018 se sirvieron en Panmunjom fideos fríos traídos del restaurante Okryugwan de Pionyang.",
+			"En septiembre de 1991 ingresó en la ONU al mismo tiempo que Corea del Sur."
+		]
+	},
+	"capital-brn": {
+		"summary": "Reino del norte de la isla de Borneo que, gracias al petróleo y el gas, no cobra impuesto sobre la renta. La capital es Bandar Seri Begawan.",
+		"facts": [
+			"En la aldea flotante de Kampong Ayer, las casas se alinean sobre el río unidas por pasarelas de madera.",
+			"El distrito de Limbang, del estado malasio de Sarawak, parte su territorio en dos."
+		]
+	},
+	"capital-sau": {
+		"summary": "Reino que ocupa la mayor parte de la península arábiga y que ya tiene asignado el Mundial de fútbol de 2034. La capital es Riad.",
+		"facts": [
+			"Allí están La Meca y Medina, las ciudades santas del islam.",
+			"En 1938 brotó por primera vez petróleo en Dammam, en el este del país."
+		]
+	},
+	"capital-lka": {
+		"summary": "País insular al sur de la India al que, por su forma, llaman la lágrima del océano Índico. La capital es Sri Jayawardenepura Kotte.",
+		"facts": [
+			"La capital legislativa es Sri Jayawardenepura Kotte, y la administrativa y judicial, Colombo.",
+			"El «Ceilán» del té de Ceilán es el nombre que tuvo el país hasta 1972."
+		]
+	},
+	"capital-syr": {
+		"summary": "País del Mediterráneo oriental cuya capital dio nombre al damasco, un tejido de seda labrado. La capital es Damasco.",
+		"facts": [
+			"Damasco está considerada la ciudad habitada de forma continua más antigua.",
+			"En 2025 adoptó oficialmente su bandera actual, de franjas verde, blanca y negra con tres estrellas rojas."
+		]
+	},
+	"capital-sgp": {
+		"summary": "Ciudad-Estado en el extremo de la península malaya, con normas tan estrictas que no se puede vender chicle libremente. La capital es la propia ciudad, que da nombre al país.",
+		"facts": [
+			"En 1965 se separó de la Federación de Malasia y se independizó.",
+			"Junto al estrecho de Malaca, opera uno de los mayores puertos de transbordo del mundo."
+		]
+	},
+	"capital-are": {
+		"summary": "Federación de siete territorios gobernados por emires que ganó terreno al mar para crear Palm Jumeirah, una isla artificial con forma de palmera. La capital es Abu Dabi.",
+		"facts": [
+			"La ciudad más grande es Dubái, pero la capital es Abu Dabi.",
+			"El Burj Khalifa de Dubái es el edificio más alto del mundo."
+		]
+	},
+	"capital-arm": {
+		"summary": "País sin litoral del sur del Cáucaso que sigue usando el alfabeto propio creado a principios del siglo V. La capital es Ereván.",
+		"facts": [
+			"En el año 301 fue el primer país del mundo en adoptar el cristianismo como religión oficial.",
+			"El monte Ararat, que su pueblo considera sagrado, está hoy en territorio de Turquía."
+		]
+	},
+	"capital-aze": {
+		"summary": "País al oeste del Mar Caspio donde está Yanar Dag, una colina cuyas llamas, alimentadas por gas subterráneo, nunca se apagan. La capital es Bakú.",
+		"facts": [
+			"Bakú está 28 metros por debajo del nivel del mar: es la capital más baja del mundo.",
+			"En 1901 los yacimientos de Bakú producían más de la mitad del petróleo mundial."
+		]
+	},
+	"capital-afg": {
+		"summary": "País sin litoral entre Asia central y Asia meridional, escenario de la novela «Cometas en el cielo». La capital es Kabul.",
+		"facts": [
+			"La cordillera del Hindu Kush divide el país en norte y sur.",
+			"En 2001 los talibanes destruyeron los budas gigantes del valle de Bamiyán, encrucijada de la Ruta de la Seda."
+		]
+	},
+	"capital-yem": {
+		"summary": "País del extremo sur de la península arábiga cuyo puerto de Moca, en el mar Rojo, dio nombre al café moca. La capital es Saná.",
+		"facts": [
+			"Las casas torre de barro y ladrillo cocido del casco antiguo de Saná son Patrimonio de la Humanidad.",
+			"El reino de Saba, tierra de la célebre reina de Saba según la tradición, prosperó gracias al comercio del incienso."
+		]
+	},
+	"capital-omn": {
+		"summary": "País del extremo oriental de la península arábiga en cuya región sureña de Dhofar crece el árbol del incienso. La capital es Mascate.",
+		"facts": [
+			"Está frente a Irán, al otro lado del estrecho de Ormuz.",
+			"En el siglo XIX llegó a gobernar Zanzíbar, en África oriental."
+		]
+	},
+	"capital-jor": {
+		"summary": "País bañado por el Mar Muerto y el río Jordán, cuyo desierto rojo de Wadi Rum sirvió de escenario a la película «The Martian». La capital es Amán.",
+		"facts": [
+			"Allí está Petra, una antigua ciudad tallada en la roca.",
+			"El Mar Muerto tiene la superficie de agua más baja de toda la tierra firme."
+		]
+	},
+	"capital-uzb": {
+		"summary": "País sin litoral de Asia central donde viven muchos descendientes de los coreanos deportados allí a la fuerza. La capital es Taskent.",
+		"facts": [
+			"Samarcanda y Bujará fueron célebres ciudades de la Ruta de la Seda.",
+			"Es uno de los raros países que deben cruzar dos fronteras para llegar al mar."
+		]
+	},
+	"capital-irq": {
+		"summary": "País entre dos ríos donde nació el sistema sexagesimal, el que divide la hora en 60 minutos. La capital es Bagdad.",
+		"facts": [
+			"En Mesopotamia, la tierra entre los dos ríos, los sumerios escribieron en escritura cuneiforme.",
+			"El califa Harún al-Rashid de «Las mil y una noches» gobernó la Bagdad de los abasíes."
+		]
+	},
+	"capital-irn": {
+		"summary": "Antigua tierra de Persia, gran productora de alfombras tejidas a mano y de azafrán. La capital es Teherán.",
+		"facts": [
+			"Persépolis es el emplazamiento de la antigua capital de los aqueménidas.",
+			"El año nuevo empieza en el equinoccio de primavera, y esta fiesta se llama Nouruz."
+		]
+	},
+	"capital-isr": {
+		"summary": "País de la costa oriental del Mediterráneo donde los autobuses casi dejan de circular el sábado, día del sabbat. La capital que ha proclamado es Jerusalén.",
+		"facts": [
+			"Jerusalén es ciudad santa para el judaísmo, el cristianismo y el islam.",
+			"De sus 97 embajadas extranjeras, 88 están en Tel Aviv y alrededores."
+		]
+	},
+	"capital-ind": {
+		"summary": "Gran país del sur de Asia, conocido por el yoga, el curry y la industria cinematográfica de Bollywood. La capital es Nueva Delhi.",
+		"facts": [
+			"Nueva Delhi es una ciudad administrativa planificada y construida durante el dominio británico.",
+			"El Taj Mahal, en Agra, es un mausoleo del Imperio mogol."
+		]
+	},
+	"capital-idn": {
+		"summary": "País formado por unas 17 000 islas. La capital es Yakarta.",
+		"facts": [
+			"Yakarta seguirá siendo la capital hasta que se publique un decreto presidencial; se prepara el traslado a Nusantara.",
+			"Borobudur, en la isla de Java, es el mayor monumento budista del mundo."
+		]
+	},
+	"capital-jpn": {
+		"summary": "Archipiélago situado al otro lado del mar del Este, visto desde Corea, conocido por el anime y el sushi. La capital es Tokio.",
+		"facts": [
+			"Tokio creció cuando, con el nombre de Edo, se convirtió en sede del shogunato.",
+			"El Monte Fuji, de 3776 metros, es el más alto de Japón."
+		]
+	},
+	"capital-geo": {
+		"summary": "País del Cáucaso, al este del mar Negro, con una tradición de canto coral a varias voces. La capital es Tiflis.",
+		"facts": [
+			"En su suelo se hallaron restos de vino elaborado hace unos 8000 años.",
+			"Es muy popular el jachapuri, un pan en forma de barca cubierto de queso y huevo."
+		]
+	},
+	"capital-chn": {
+		"summary": "País de Asia oriental con más de 1400 millones de habitantes. La capital es Pekín.",
+		"facts": [
+			"En Pekín está la Ciudad Prohibida, donde vivían los emperadores de las dinastías Ming y Qing.",
+			"La Gran Muralla China recorre las montañas al norte de Pekín."
+		]
+	},
+	"capital-kaz": {
+		"summary": "El país sin litoral más extenso del mundo, donde pervive la tradición nómada de cazar con águilas reales. La capital es Astaná.",
+		"facts": [
+			"En 1997 la capital se trasladó desde Almaty; tras varios cambios de nombre, volvió a llamarse Astaná.",
+			"En su territorio se encuentra el cosmódromo de Baikonur."
+		]
+	},
+	"capital-qat": {
+		"summary": "País peninsular que se adentra en el golfo Pérsico y sede de la cadena árabe Al Jazeera. La capital es Doha.",
+		"facts": [
+			"La Copa Mundial de 2022, la primera en Oriente Medio, se jugó en noviembre y diciembre para evitar el calor.",
+			"Bajo sus aguas está el mayor yacimiento de gas del mundo, que comparte con un país vecino."
+		]
+	},
+	"capital-khm": {
+		"summary": "País de Indochina donde, en la estación de lluvias, un río invierte su curso y un lago multiplica su tamaño. La capital es Nom Pen.",
+		"facts": [
+			"Angkor Wat es un templo construido en el siglo XII por el Imperio jemer.",
+			"En el centro de su bandera aparece Angkor Wat."
+		]
+	},
+	"capital-kwt": {
+		"summary": "País petrolero del norte del golfo Pérsico cuya moneda, el dinar, es la de mayor valor del mundo. Su capital lleva el mismo nombre que el país.",
+		"facts": [
+			"La invasión iraquí de 1990 desencadenó la guerra del Golfo.",
+			"En 1991, al retirarse, las tropas iraquíes incendiaron más de 600 pozos de petróleo."
+		]
+	},
+	"capital-kgz": {
+		"summary": "País sin litoral de las montañas del Tian Shan, cuya bandera muestra el armazón circular del techo de la yurta nómada. La capital es Biskek.",
+		"facts": [
+			"Las montañas del Tian Shan cubren más del 80 % de su territorio.",
+			"El lago Issyk-Kul es el segundo lago de montaña más grande, después del Lago Titicaca, en Sudamérica."
+		]
+	},
+	"capital-tjk": {
+		"summary": "País sin litoral de la meseta del Pamir que, a diferencia de sus vecinos túrquicos, habla una lengua persa. La capital es Dusambé.",
+		"facts": [
+			"Más del 90 % de su territorio es montañoso.",
+			"Su pico más alto, el Ismoil Somoni, mide 7495 metros."
+		]
+	},
+	"capital-tha": {
+		"summary": "Reino del tom yum y el muay thai, el único país del sudeste asiático que nunca fue colonizado. La capital es Bangkok.",
+		"facts": [
+			"El nombre oficial de Bangkok tiene 168 letras y figura en el Libro Guinness como el topónimo más largo del mundo.",
+			"El Gran Palacio y el templo del Buda de Esmeralda están en pleno centro de la ciudad."
+		]
+	},
+	"capital-tkm": {
+		"summary": "País sin litoral al este del Mar Caspio, cuya capital entró en el Libro Guinness por la gran cantidad de edificios de mármol blanco. La capital es Asjabad.",
+		"facts": [
+			"La mayor parte de su territorio es el desierto de Karakum.",
+			"El cráter de gas en llamas de Darvaza se conoce como la Puerta del Infierno."
+		]
+	},
+	"capital-tur": {
+		"summary": "País a caballo entre Asia y Europa que atrae a los viajeros con los globos de Capadocia y el kebab. La capital es Ankara.",
+		"facts": [
+			"Su mayor ciudad, Estambul, es la antigua Constantinopla.",
+			"El estrecho del Bósforo separa los dos continentes."
+		]
+	},
+	"capital-pak": {
+		"summary": "País de la cuenca del Indo donde se extrae la rosada sal del Himalaya. La capital es Islamabad.",
+		"facts": [
+			"La capital pasó de Karachi a Rawalpindi y, después, a esta ciudad construida en la década de 1960.",
+			"En la cordillera del Karakórum, al norte, está el K2, la segunda cumbre más alta del mundo."
+		]
+	},
+	"capital-pse": {
+		"summary": "País de Cisjordania donde se encuentra Belén, lugar de nacimiento de Jesús según la tradición. Su centro administrativo es Ramala.",
+		"facts": [
+			"Reivindica Jerusalén Este como capital, pero su gobierno está en Ramala.",
+			"En 2012 se convirtió en Estado observador no miembro de la ONU; aún no es miembro de pleno derecho."
+		]
+	},
+	"capital-phl": {
+		"summary": "País de más de 7000 islas al que acuden muchos estudiantes de idiomas porque el inglés es lengua oficial. La capital es Manila.",
+		"facts": [
+			"Durante el dominio español, Manila fue un centro del comercio asiático.",
+			"Intramuros es la antigua ciudad amurallada que se conserva en Manila."
+		]
+	},
+	"capital-kor": {
+		"summary": "País del sur de una península de Asia oriental que se ha dado a conocer en el mundo por el K-pop, sus series y sus semiconductores. La capital es Seúl.",
+		"facts": [
+			"Seúl, a orillas del río Han, es capital desde la dinastía Joseon, hace más de 600 años.",
+			"El Día del Hangul, el 9 de octubre, conmemora la promulgación en 1446 del alfabeto coreano, el Hunminjeongeum."
+		]
+	},
+	"capital-hkg": {
+		"summary": "Región administrativa especial gobernada por los británicos desde 1842 y devuelta a China en 1997.",
+		"facts": [
+			"Tras la devolución se le garantizó el principio de «un país, dos sistemas» durante 50 años, hasta 2047.",
+			"Tiene más rascacielos que cualquier otra ciudad del mundo."
+		]
+	},
+	"capital-ggy": {
+		"summary": "Isla del oeste del archipiélago del Canal, dependencia de la Corona británica. La capital es Saint Peter Port.",
+		"facts": [
+			"Pertenece a la Corona británica, pero no se rige por las leyes de Gran Bretaña.",
+			"Victor Hugo terminó «Los miserables» en su casa de esta isla durante su exilio."
+		]
+	},
+	"capital-grc": {
+		"summary": "País del extremo sur de los Balcanes, con miles de islas y las casas blancas de Santorini. La capital es Atenas.",
+		"facts": [
+			"El Partenón se alza en la colina de la Acrópolis.",
+			"Los Juegos Olímpicos de 1896, los primeros de la era moderna, se celebraron en Atenas."
+		]
+	},
+	"capital-nld": {
+		"summary": "Tierra baja a orillas del mar del Norte que evoca molinos, tulipanes y bicicletas. La capital es Ámsterdam.",
+		"facts": [
+			"Según la Constitución la capital es Ámsterdam, pero el gobierno y el parlamento están en La Haya.",
+			"En 1653 Hendrick Hamel, un marinero de este país, naufragó en la isla coreana de Jeju y lo contó en el «Diario de Hamel»."
+		]
+	},
+	"capital-nor": {
+		"summary": "País del oeste de Escandinavia que se enriqueció con la cría de salmón y el petróleo del mar del Norte. La capital es Oslo.",
+		"facts": [
+			"El Sognefjord, de más de 200 kilómetros, es el fiordo más largo del país.",
+			"El Nobel de la Paz es el único de los premios Nobel que se entrega en Oslo."
+		]
+	},
+	"capital-dnk": {
+		"summary": "País de la península de Jutlandia y sus islas, tierra natal de los cuentos de Hans Christian Andersen. La capital es Copenhague.",
+		"facts": [
+			"Los juguetes LEGO nacieron en 1932 en Billund, en este país.",
+			"Groenlandia es un territorio autónomo de este país."
+		]
+	},
+	"capital-deu": {
+		"summary": "País del Oktoberfest, la fiesta de la cerveza, y de las autopistas con tramos sin límite de velocidad. La capital es Berlín.",
+		"facts": [
+			"Con la reunificación de 1990, Berlín pasó a ser la capital, y en 1999 el gobierno se trasladó allí desde Bonn.",
+			"El Muro de Berlín se levantó en 1961 y cayó en 1989."
+		]
+	},
+	"capital-lva": {
+		"summary": "País situado en el centro de los tres países bálticos, con una tradición de festivales corales en los que cantan juntas decenas de miles de personas. La capital es Riga.",
+		"facts": [
+			"El casco antiguo de Riga, ciudad hanseática fundada en 1201, es Patrimonio de la Humanidad.",
+			"Uno de cada tres edificios del centro de Riga es de estilo art nouveau."
+		]
+	},
+	"capital-rus": {
+		"summary": "Cuna del ballet «El lago de los cisnes» y de las muñecas matrioska, es el país más extenso del mundo. La capital es Moscú.",
+		"facts": [
+			"Se extiende por Europa y Asia y tiene once husos horarios.",
+			"El Transiberiano recorre 9289 kilómetros entre Moscú y Vladivostok."
+		]
+	},
+	"capital-rou": {
+		"summary": "País de Europa del Este abrazado por el arco de los Cárpatos, cuya lengua procede del latín. La capital es Bucarest.",
+		"facts": [
+			"La región de Transilvania es el escenario de la historia de Drácula.",
+			"Allí está el delta por el que el Danubio desemboca en el mar Negro."
+		]
+	},
+	"capital-lux": {
+		"summary": "Gran ducado de Europa occidental que en 2020 se convirtió en el primer país del mundo con transporte público gratuito en todo su territorio. La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"El país y su capital se llaman igual, y se hablan luxemburgués, francés y alemán.",
+			"El Tribunal de Justicia de la Unión Europea y el Banco Europeo de Inversiones tienen su sede en la capital del país."
+		]
+	},
+	"capital-ltu": {
+		"summary": "El más meridional de los tres países bálticos, tan apasionado por el baloncesto que ha ganado tres bronces olímpicos en la competición masculina. La capital es Vilna.",
+		"facts": [
+			"En el siglo XV, como gran ducado, se extendía del mar Báltico al mar Negro.",
+			"En la Colina de las Cruces se clavan incontables cruces."
+		]
+	},
+	"capital-lie": {
+		"summary": "Principado alpino a orillas del Río Rin que ha ganado sus 10 medallas olímpicas, todas en esquí alpino. La capital es Vaduz.",
+		"facts": [
+			"Junto con Uzbekistán, es uno de los dos únicos países doblemente sin litoral.",
+			"Abolió su ejército en 1868 y desde entonces no ha vuelto a tenerlo."
+		]
+	},
+	"capital-imn": {
+		"summary": "Dependencia de la Corona británica situada entre las islas de Gran Bretaña e Irlanda. La capital es Douglas.",
+		"facts": [
+			"Su bandera lleva un símbolo de tres piernas unidas.",
+			"Desde 1907, las carreteras de la isla se cierran para celebrar el TT, una carrera de motos."
+		]
+	},
+	"capital-mco": {
+		"summary": "Ciudad-Estado de la costa mediterránea donde se encuentra el casino de Montecarlo. Todo el país es una sola ciudad.",
+		"facts": [
+			"Con unos 2 kilómetros cuadrados, es el país más pequeño después del Vaticano y el más densamente poblado.",
+			"Cada año se disputa una carrera de automóviles por las propias calles de la ciudad."
+		]
+	},
+	"capital-mne": {
+		"summary": "Pequeño país del Adriático donde la ciudad medieval amurallada de Kotor se asienta al fondo de una profunda bahía. La capital es Podgorica.",
+		"facts": [
+			"Su nombre significa «montaña negra» y procede del monte Lovćen, cubierto de densos bosques de hoja perenne.",
+			"En 2006 se separó de Serbia y se independizó."
+		]
+	},
+	"capital-mda": {
+		"summary": "Pequeño país sin litoral de Europa del Este del que se ha desgajado la región situada al este del río Dniéster. La capital es Chisináu.",
+		"facts": [
+			"En 2023 cambió el nombre oficial de su lengua de moldavo a rumano.",
+			"La bodega Mileştii Mici entró en 2005 en el Libro Guinness como la mayor colección de vinos del mundo."
+		]
+	},
+	"capital-mlt": {
+		"summary": "País insular en pleno Mediterráneo que tiene como lenguas oficiales el inglés y un idioma propio de raíz árabe. La capital es La Valeta.",
+		"facts": [
+			"En 1565 la Orden de Malta resistió el Gran Sitio del Imperio otomano.",
+			"En 1980 toda la ciudad de La Valeta fue declarada Patrimonio de la Humanidad."
+		]
+	},
+	"capital-vat": {
+		"summary": "Centro de la Iglesia católica, rodeado por la ciudad de Roma. Es la ciudad-Estado donde reside el papa.",
+		"facts": [
+			"El techo de la Capilla Sixtina alberga los frescos de la Creación de Miguel Ángel.",
+			"La Guardia Suiza protege al papa desde hace más de 500 años."
+		]
+	},
+	"capital-bel": {
+		"summary": "Pequeño país de Europa occidental lleno de tiendas de patatas fritas, gofres y chocolate. La capital es Bruselas.",
+		"facts": [
+			"Las principales instituciones de la Unión Europea están en Bruselas.",
+			"Hergé, autor del cómic «Las aventuras de Tintín», nació en Bruselas."
+		]
+	},
+	"capital-blr": {
+		"summary": "País sin litoral de Europa del Este que fabrica BelAZ, gigantescos camiones volquete para minería. La capital es Minsk.",
+		"facts": [
+			"Su nombre significa «Rus Blanca»; hasta su independencia en 1991 se le conocía por la forma rusa Belorrusia.",
+			"En el bosque primigenio de Belavezha (Białowieża), que se prolonga hasta Polonia, vive el bisonte europeo."
+		]
+	},
+	"capital-bih": {
+		"summary": "País de los Balcanes con la tradición de lanzarse al río desde el viejo puente de piedra de Mostar. La capital es Sarajevo.",
+		"facts": [
+			"El atentado de Sarajevo de 1914 desencadenó la Primera Guerra Mundial.",
+			"Sarajevo acogió los Juegos Olímpicos de Invierno de 1984."
+		]
+	},
+	"capital-mkd": {
+		"summary": "País balcánico sin litoral cuya capital vio nacer a la Madre Teresa. Esa capital es Skopie.",
+		"facts": [
+			"En 2019 cambió de nombre añadiéndole «del Norte».",
+			"El lago Ohrid, de varios millones de años y uno de los más antiguos de Europa, es Patrimonio de la Humanidad."
+		]
+	},
+	"capital-bgr": {
+		"summary": "País del este de los Balcanes cuyo nombre aparece en el nombre científico de una bacteria del yogur. La capital es Sofía.",
+		"facts": [
+			"En el valle de las Rosas de Kazanlak se extrae aceite de rosa para perfumería.",
+			"El alfabeto cirílico se difundió desde estas tierras."
+		]
+	},
+	"capital-smr": {
+		"summary": "Pequeña república en lo alto del monte Titano, rodeada por todos lados por un país vecino. Acuña monedas y emite sellos conmemorativos para venderlos.",
+		"facts": [
+			"Se considera la república más antigua de las que existen hoy.",
+			"En cada cumbre del monte Titano se alza una antigua torre."
+		]
+	},
+	"capital-srb": {
+		"summary": "País sin litoral del centro de los Balcanes, cuna de la estrella del tenis Novak Djokovic. La capital es Belgrado.",
+		"facts": [
+			"La ciudad nació donde confluyen el río Sava y el Danubio.",
+			"Belgrado fue la capital de la antigua Yugoslavia y alberga la Casa de las Flores, donde está enterrado Tito."
+		]
+	},
+	"capital-sjm": {
+		"summary": "Archipiélago del océano Ártico donde no se puede salir de los pueblos sin equipo para ahuyentar a los osos polares. Su centro es Longyearbyen.",
+		"facts": [
+			"Corea del Sur abrió en 2002 su estación ártica Dasan en Ny-Ålesund.",
+			"Aquí está la bóveda que guarda semillas de todo el mundo."
+		]
+	},
+	"capital-swe": {
+		"summary": "País del este de Escandinavia que dio al mundo IKEA, Volvo y el grupo ABBA. La capital es Estocolmo.",
+		"facts": [
+			"La ciudad se extiende sobre catorce islas, por lo que la llaman la ciudad del agua.",
+			"En Estocolmo se entregan todos los premios Nobel salvo el de la Paz."
+		]
+	},
+	"capital-che": {
+		"summary": "País alpino sin litoral que celebra cuatro consultas populares al año. La ciudad que hace de capital es Berna.",
+		"facts": [
+			"Su Constitución no fija una capital: Berna es la «ciudad federal».",
+			"En Ginebra están la sede europea de la ONU y la del Comité Internacional de la Cruz Roja."
+		]
+	},
+	"capital-esp": {
+		"summary": "País de la península ibérica, tierra de la paella, el flamenco y el histórico club de fútbol Real Madrid. La capital es Madrid.",
+		"facts": [
+			"Madrid se asienta en una meseta en el centro de la península.",
+			"En 2025 la Sagrada Familia de Barcelona se convirtió en la iglesia más alta del mundo."
+		]
+	},
+	"capital-svk": {
+		"summary": "País sin litoral de Europa central que fabrica más coches por habitante que ningún otro. La capital es Bratislava.",
+		"facts": [
+			"Bratislava es la única capital que limita con dos países.",
+			"Fue la capital del Reino de Hungría de 1536 a 1783."
+		]
+	},
+	"capital-svn": {
+		"summary": "Pequeño país en el extremo sur de los Alpes, donde un trenecito recorre la cueva caliza de Postojna. La capital es Liubliana.",
+		"facts": [
+			"En medio del lago Bled hay un islote con una iglesia.",
+			"El 58 % de su territorio es bosque, solo por detrás de Finlandia y Suecia en la Unión Europea."
+		]
+	},
+	"capital-isl": {
+		"summary": "País insular volcánico del Atlántico Norte, donde está Geysir, la fuente termal que dio origen a la palabra inglesa geyser. La capital es Reikiavik.",
+		"facts": [
+			"Reikiavik es la capital de Estado soberano más septentrional del mundo.",
+			"El 90 % de las viviendas se calienta con energía geotérmica, y toda la electricidad se produce con energía hidráulica y geotérmica."
+		]
+	},
+	"capital-irl": {
+		"summary": "Tierra de la cerveza negra Guinness y de la música celta, que ocupa la mayor parte del sur de la isla. La capital es Dublín.",
+		"facts": [
+			"El noreste de la isla es Irlanda del Norte, que forma parte del Reino Unido.",
+			"El 17 de marzo, día de San Patricio, la gente se viste de verde y desfila por las calles."
+		]
+	},
+	"capital-and": {
+		"summary": "Pequeño principado en los altos valles de los Pirineos, cuya única lengua oficial es el catalán.",
+		"facts": [
+			"El presidente de Francia y el obispo de Urgel comparten la jefatura del Estado.",
+			"Gracias a sus bajos impuestos, recibe a muchos turistas que vienen a comprar libres de impuestos y a esquiar."
+		]
+	},
+	"capital-alb": {
+		"summary": "País al este del Adriático con un águila negra de dos cabezas en la bandera. La capital es Tirana.",
+		"facts": [
+			"En 1967 se proclamó el primer Estado ateo del mundo.",
+			"Hasta 1983, el régimen de Hoxha construyó más de 170 000 búnkeres de hormigón."
+		]
+	},
+	"capital-est": {
+		"summary": "País de la orilla oriental del Báltico de donde salió el equipo que desarrolló Skype. La capital es Tallin.",
+		"facts": [
+			"El casco antiguo de Tallin conserva muy bien su aspecto medieval.",
+			"En 2005 fue el primer país del mundo en usar el voto por internet en unas elecciones con validez legal."
+		]
+	},
+	"capital-gbr": {
+		"summary": "Reino formado por la isla de Gran Bretaña y el norte de la de Irlanda, donde nacieron las reglas del fútbol moderno. La capital es Londres.",
+		"facts": [
+			"Inglaterra, Escocia, Gales e Irlanda del Norte forman un solo país.",
+			"El Big Ben es el nombre de la gran campana de la torre del reloj del Parlamento."
+		]
+	},
+	"capital-aut": {
+		"summary": "País alpino sin litoral del este, donde está Salzburgo, escenario de la película «Sonrisas y lágrimas» («The Sound of Music»). La capital es Viena.",
+		"facts": [
+			"Viena es la ciudad de la música donde trabajaron Wolfgang Amadeus Mozart y Ludwig van Beethoven.",
+			"Lo que en Corea se llama «café vienés», un café con nata por encima, es el Einspänner de Viena."
+		]
+	},
+	"capital-ala": {
+		"summary": "Grupo de islas a la entrada del golfo de Botnia, en el mar Báltico. La capital es Mariehamn.",
+		"facts": [
+			"Es una región autónoma de Finlandia donde se habla sueco.",
+			"Es una zona neutral, desmilitarizada por tratado."
+		]
+	},
+	"capital-ukr": {
+		"summary": "País de Europa del Este que evoca interminables campos de girasoles y el borsch, una sopa roja. La capital es Kiev.",
+		"facts": [
+			"Sus extensas tierras negras le valieron el nombre de granero de Europa.",
+			"El río Dniéper divide el país en este y oeste."
+		]
+	},
+	"capital-ita": {
+		"summary": "País de la península en forma de bota, cuna de la pizza, la pasta y el arte del Renacimiento. La capital es Roma.",
+		"facts": [
+			"En pleno corazón de Roma se encuentra la Ciudad del Vaticano.",
+			"El Coliseo es el anfiteatro de la antigua Roma."
+		]
+	},
+	"capital-jey": {
+		"summary": "La isla más grande del archipiélago del Canal, dependencia de la Corona británica. La capital es Saint Helier.",
+		"facts": [
+			"Como dependencia de la Corona, emite su propia moneda y sus propios sellos.",
+			"De esta isla procede la raza de vacas Jersey, que da una leche amarillenta y espesa."
+		]
+	},
+	"capital-gib": {
+		"summary": "Territorio británico de ultramar sobre un peñón en el extremo sur de la península ibérica. Todo el territorio es una sola ciudad.",
+		"facts": [
+			"Vigila el estrecho donde Europa y África están más cerca.",
+			"En el peñón viven los únicos monos salvajes de Europa."
+		]
+	},
+	"capital-cze": {
+		"summary": "País sin litoral de Europa central donde nació la pilsner, una lager rubia de tono dorado. La capital es Praga.",
+		"facts": [
+			"En 1993 se separó pacíficamente de Eslovaquia.",
+			"El Castillo de Praga y el Puente de Carlos se asoman al río Moldava."
+		]
+	},
+	"capital-unk": {
+		"summary": "País sin litoral del centro de los Balcanes que usa el euro sin pertenecer a la Unión Europea. La capital es Pristina.",
+		"facts": [
+			"En 2008 declaró su independencia de Serbia, y Corea del Sur la reconoció en marzo de ese año.",
+			"Todavía no todos los países lo reconocen como Estado."
+		]
+	},
+	"capital-hrv": {
+		"summary": "País de la costa del Adriático donde nació el «cravat», antepasado de la corbata. La capital es Zagreb.",
+		"facts": [
+			"Las Murallas de Dubrovnik fueron escenario de la serie «Juego de tronos».",
+			"Se independizó de Yugoslavia a principios de los años noventa."
+		]
+	},
+	"capital-cyp": {
+		"summary": "País insular del Mediterráneo oriental donde, según la leyenda, Afrodita, diosa del amor, nació de las olas. La capital es Nicosia.",
+		"facts": [
+			"La isla está dividida en norte y sur, y la línea divisoria atraviesa Nicosia.",
+			"Geográficamente está más cerca de Asia, pero es miembro de la Unión Europea."
+		]
+	},
+	"capital-fro": {
+		"summary": "Archipiélago del Atlántico Norte donde hay más ovejas que personas. La capital es Tórshavn.",
+		"facts": [
+			"Es un territorio autónomo de Dinamarca formado por dieciocho islas.",
+			"Como casi no hay árboles, abundan los tejados cubiertos de césped."
+		]
+	},
+	"capital-prt": {
+		"summary": "País del extremo occidental de la península ibérica, cuna del pastel de nata, una tartaleta de crema. La capital es Lisboa.",
+		"facts": [
+			"La palabra coreana para «pan», ppang, viene del portugués pão, que llegó a Corea a través de Japón.",
+			"Tras el gran terremoto de 1755, Lisboa tuvo que reconstruirse."
+		]
+	},
+	"capital-pol": {
+		"summary": "País de Europa central donde se conservan los restos del Campo de concentración de Auschwitz, levantado por los nazis. La capital es Varsovia.",
+		"facts": [
+			"El casco antiguo de Varsovia, destruido en la Segunda Guerra Mundial, se reconstruyó tal como era.",
+			"En 2022 compró en gran cantidad carros de combate K2 y obuses autopropulsados K9 surcoreanos."
+		]
+	},
+	"capital-fra": {
+		"summary": "País de la baguette, el queso y el vino, donde cada julio se disputa una carrera ciclista que recorre todo su territorio. La capital es París.",
+		"facts": [
+			"La Torre Eiffel se construyó para la Exposición Universal de 1889.",
+			"La Gioconda se expone en el Museo del Louvre."
+		]
+	},
+	"capital-fin": {
+		"summary": "País nórdico cuna de la sauna y de Nokia, la empresa de telefonía móvil. La capital es Helsinki.",
+		"facts": [
+			"Tiene más de 180 000 lagos, por lo que lo llaman el país de los lagos.",
+			"El chicle de xilitol salió por primera vez al mercado en este país en 1975."
+		]
+	},
+	"capital-hun": {
+		"summary": "País sin litoral de Europa central donde nació Ernő Rubik, creador del cubo de Rubik. La capital es Budapest.",
+		"facts": [
+			"En 1873 las ciudades de Buda, Óbuda y Pest se unieron para formar la capital actual.",
+			"El gulash, un guiso de carne con pimentón, nació de la sopa de los pastores."
+		]
+	},
+	"capital-gha": {
+		"summary": "País del golfo de Guinea, en África occidental, que en la época colonial se llamaba Costa de Oro. La capital es Acra.",
+		"facts": [
+			"Al independizarse en 1957, fue la primera colonia del África subsahariana en convertirse en un Estado.",
+			"Se dice que el chocolate Ghana de la marca coreana Lotte toma su nombre de este país productor de cacao."
+		]
+	},
+	"capital-gab": {
+		"summary": "País ecuatorial con más del 85 % de su territorio cubierto de selva. La capital es Libreville.",
+		"facts": [
+			"Albert Schweitzer abrió un hospital en Lambaréné en 1913.",
+			"En 2002 agrupó cerca de una décima parte de su territorio en 13 parques nacionales."
+		]
+	},
+	"capital-gmb": {
+		"summary": "País ribereño de África occidental que la novela «Raíces» presenta como la tierra natal de su protagonista, Kunta Kinte. La capital es Banjul.",
+		"facts": [
+			"Se extiende, largo y estrecho, a lo largo del río Gambia y está rodeado por Senegal.",
+			"Es el país más pequeño del África continental."
+		]
+	},
+	"capital-gin": {
+		"summary": "País de la costa atlántica de África occidental que en el referéndum de 1958 eligió la independencia inmediata. La capital es Conakri.",
+		"facts": [
+			"El río Níger nace en las mesetas de este país.",
+			"Tiene las mayores reservas del mundo de bauxita, la materia prima del aluminio: alrededor de una cuarta parte del total."
+		]
+	},
+	"capital-gnb": {
+		"summary": "País de la costa atlántica de África occidental donde los anacardos suponen cerca del 90 % de las exportaciones. La capital es Bisáu.",
+		"facts": [
+			"Declaró su independencia en 1973 y Portugal la reconoció en 1974.",
+			"Frente a su costa se dispersan decenas de islas del archipiélago de los Bijagós."
+		]
+	},
+	"capital-nam": {
+		"summary": "País a lo largo de cuya costa atlántica se extiende el Desierto de Namib. La capital es Windhoek.",
+		"facts": [
+			"En 1990 se liberó del dominio de Sudáfrica y se independizó.",
+			"Después de Mongolia, es el país con menor densidad de población."
+		]
+	},
+	"capital-nga": {
+		"summary": "País más poblado de África, que ha impulsado la industria cinematográfica de Nollywood. La capital es Abuya.",
+		"facts": [
+			"En 1991 trasladó la capital de Lagos a Abuya.",
+			"En la Copa Mundial de 2010 empató 2-2 con Corea del Sur, que así pasó a octavos de final por primera vez fuera de casa."
+		]
+	},
+	"capital-ssd": {
+		"summary": "El país que se independizó más recientemente en el mundo, con el Sudd, un vasto humedal del Río Nilo. La capital es Yuba.",
+		"facts": [
+			"Se independizó de Sudán en 2011.",
+			"El Nilo Blanco atraviesa el país de sur a norte, y la capital, Yuba, está a su orilla."
+		]
+	},
+	"capital-zaf": {
+		"summary": "País del extremo sur de África donde Mandela acabó con el apartheid y llegó a presidente. La capital administrativa es Pretoria.",
+		"facts": [
+			"El poder ejecutivo reside en Pretoria; el legislativo, en Ciudad del Cabo; y el judicial, en Bloemfontein.",
+			"Organizó la Copa Mundial de 2010, la primera celebrada en África."
+		]
+	},
+	"capital-ner": {
+		"summary": "País sin litoral al sur del Desierto del Sahara donde se alza el alminar de adobe de la mezquita de Agadez. La capital es Niamey.",
+		"facts": [
+			"El río Níger cruza el suroeste del país, y a su orilla se encuentra la capital, Niamey.",
+			"El dinosaurio Nigersaurus, de hocico ancho como una aspiradora, debe su nombre a este país."
+		]
+	},
+	"capital-lbr": {
+		"summary": "País de la costa atlántica de África occidental donde muchos buques de carga del mundo inscriben su bandera. La capital es Monrovia.",
+		"facts": [
+			"Lo fundaron esclavos liberados de Estados Unidos que cruzaron el océano.",
+			"El nombre de la capital procede del presidente estadounidense James Monroe."
+		]
+	},
+	"capital-lso": {
+		"summary": "Reino montañoso sin litoral del sur de África, donde la gente se envuelve en mantas basotho y monta ponis. La capital es Maseru.",
+		"facts": [
+			"Todo su territorio está rodeado por Sudáfrica.",
+			"Incluso su punto más bajo está a 1400 metros de altitud: es el país con el punto más bajo más alto del mundo."
+		]
+	},
+	"capital-reu": {
+		"summary": "Isla volcánica del océano Índico, al este de Madagascar. Su centro es Saint-Denis.",
+		"facts": [
+			"Al ser una región de ultramar de Francia, usa el euro.",
+			"El Piton de la Fournaise es uno de los volcanes que entran en erupción con más frecuencia."
+		]
+	},
+	"capital-rwa": {
+		"summary": "Pequeño país sin litoral de África oriental cuyas calles están limpias gracias a la prohibición de las bolsas de plástico desde 2008. La capital es Kigali.",
+		"facts": [
+			"Por sus numerosas colinas, lo llaman el país de las mil colinas.",
+			"Tiene un parque nacional de volcanes donde viven gorilas de montaña."
+		]
+	},
+	"capital-lby": {
+		"summary": "País desértico del norte de África donde se conservan las ruinas de Leptis Magna, ciudad de época romana. La capital es Trípoli.",
+		"facts": [
+			"Construyó el Gran Río Artificial, una red de tuberías que lleva agua del subsuelo del Desierto del Sahara hasta las ciudades costeras.",
+			"La población se concentra en una estrecha franja junto al Mediterráneo."
+		]
+	},
+	"capital-mdg": {
+		"summary": "Gran país insular del océano Índico, al este de África, principal productor de vainilla. La capital es Antananarivo.",
+		"facts": [
+			"De las 8 especies de baobab, 6 solo crecen en esta isla.",
+			"Es la cuarta isla más grande del mundo, después de Groenlandia, Nueva Guinea y Borneo."
+		]
+	},
+	"capital-myt": {
+		"summary": "Isla del canal de Mozambique a la que llaman la isla del perfume por sus cultivos de ylang-ylang. Su centro es Mamoudzou.",
+		"facts": [
+			"En el referéndum de 1974, a diferencia de las demás islas de las Comoras, decidió seguir siendo francesa.",
+			"La laguna que encierra el arrecife de coral que rodea la isla es muy extensa."
+		]
+	},
+	"capital-mwi": {
+		"summary": "País sin litoral del sudeste de África cuyo lago exporta coloridos cíclidos como peces ornamentales. La capital es Lilongüe.",
+		"facts": [
+			"El lago Malaui ocupa una quinta parte del territorio.",
+			"El lago Malaui mide unas 365 millas de largo, por eso también lo llaman «el lago calendario»."
+		]
+	},
+	"capital-mli": {
+		"summary": "País sin litoral de África occidental donde se alza la Gran Mezquita de Djenné, construida con adobe. La capital es Bamako.",
+		"facts": [
+			"En el siglo XIV, el rey Mansa Musa repartió tanto oro durante su peregrinación a La Meca que hizo caer su precio en El Cairo.",
+			"Tombuctú fue un gran centro del comercio transahariano y del saber."
+		]
+	},
+	"capital-mar": {
+		"summary": "Reino del extremo noroeste de África que recibe a los viajeros con zocos de especias, té con menta y tajín. La capital es Rabat.",
+		"facts": [
+			"Está frente a España, al otro lado del estrecho de Gibraltar.",
+			"Las medinas, los cascos antiguos de Marrakech y Fez, son Patrimonio de la Humanidad."
+		]
+	},
+	"capital-mus": {
+		"summary": "País insular de vacaciones en el océano Índico, donde los cañaverales se combinan con lagunas de arrecife de coral. La capital es Port Louis.",
+		"facts": [
+			"Era la isla del dodo, un ave que no podía volar.",
+			"Estuvo deshabitada hasta que los neerlandeses se asentaron en 1638."
+		]
+	},
+	"capital-mrt": {
+		"summary": "País desértico del noroeste de África, bañado por el Atlántico. La capital es Nuakchot.",
+		"facts": [
+			"Buena parte del pulpo importado que se vende en los mercados de Corea del Sur procede de este país.",
+			"Un tren de mineral de hierro de hasta 3 kilómetros de largo recorre 704 kilómetros de desierto."
+		]
+	},
+	"capital-moz": {
+		"summary": "País lusófono de la costa sudoriental de África, a orillas del océano Índico. La capital es Maputo.",
+		"facts": [
+			"El canal de Mozambique lo separa de Madagascar.",
+			"Su bandera muestra un fusil AK-47 junto a un libro y una azada."
+		]
+	},
+	"capital-ben": {
+		"summary": "País largo y estrecho de África occidental que se asoma al golfo de Guinea. La capital es Porto Novo.",
+		"facts": [
+			"Porto Novo es la capital oficial, pero el verdadero centro del país es Cotonú.",
+			"El vodún, raíz del vudú, es una religión reconocida oficialmente, y el 10 de enero se celebra el Día del Vodún."
+		]
+	},
+	"capital-bwa": {
+		"summary": "País sin litoral del sur de África con la mayor población de elefantes del continente. La capital es Gaborone.",
+		"facts": [
+			"El delta del Okavango lo forma un río que nunca llega al mar y se seca en pleno desierto.",
+			"La mina de Orapa, descubierta en 1967, es la mayor mina de diamantes del mundo por superficie."
+		]
+	},
+	"capital-bdi": {
+		"summary": "Pequeño país sin litoral de África oriental cuya danza ritual del tambor real es Patrimonio Cultural Inmaterial de la Humanidad. La capital es Gitega.",
+		"facts": [
+			"En 2019 trasladó la capitalidad de Buyumbura a Gitega.",
+			"La antigua capital, Buyumbura, está a orillas del lago Tanganica, el segundo más profundo del mundo."
+		]
+	},
+	"capital-bfa": {
+		"summary": "País sin litoral de África occidental que acoge cada dos años el FESPACO, el festival de cine africano. La capital es Uagadugú.",
+		"facts": [
+			"Su nombre significa “la tierra de los hombres íntegros”.",
+			"En 1984 dejó de llamarse Alto Volta y adoptó su nombre actual."
+		]
+	},
+	"capital-stp": {
+		"summary": "Pequeño país insular del golfo de Guinea al que llamaban «la isla del chocolate». La capital comparte nombre con la isla principal.",
+		"facts": [
+			"La línea ecuatorial pasa sobre el islote de las Rolas, al sur.",
+			"Entre 1905 y 1911 fue el mayor productor de cacao del mundo."
+		]
+	},
+	"capital-esh": {
+		"summary": "Territorio desértico de la costa atlántica del noroeste de África, cuya soberanía lleva más de 50 años en disputa. La capital es El Aaiún.",
+		"facts": [
+			"Un muro de arena de 2700 kilómetros levantado por Marruecos divide el territorio en dos.",
+			"En 2025 el Consejo de Seguridad de la ONU respaldó por primera vez el plan de autonomía marroquí como base de negociación."
+		]
+	},
+	"capital-sen": {
+		"summary": "País del extremo occidental del continente africano cuya capital da nombre a un famoso rally automovilístico. La capital es Dakar.",
+		"facts": [
+			"La isla de Gorea guarda la dolorosa memoria de la trata de esclavos.",
+			"En el partido inaugural del Mundial de Corea y Japón 2002 venció 1-0 a Francia, vigente campeona."
+		]
+	},
+	"capital-syc": {
+		"summary": "País insular del océano Índico formado por 115 islas dispersas. La capital es Victoria.",
+		"facts": [
+			"Con algo más de 100 000 habitantes, es el país menos poblado de África.",
+			"La semilla del coco de mar llega a pesar 18 kilos: es la más grande del reino vegetal."
+		]
+	},
+	"capital-shn": {
+		"summary": "Remoto territorio británico de ultramar en pleno Atlántico Sur. La capital es Jamestown.",
+		"facts": [
+			"Napoleón Bonaparte pasó aquí su cautiverio hasta el final de sus días.",
+			"Al estar en medio del Atlántico, no tuvo vuelos regulares hasta 2017."
+		]
+	},
+	"capital-som": {
+		"summary": "País del Cuerno de África a cuyas aguas Corea del Sur envió la unidad naval Cheonghae para combatir la piratería. La capital es Mogadiscio.",
+		"facts": [
+			"Tiene la costa más larga del continente africano.",
+			"Se asoma a la vez al océano Índico y al golfo de Adén, y frente a sus costas pasa la ruta marítima hacia el canal de Suez."
+		]
+	},
+	"capital-sdn": {
+		"summary": "País del curso alto del Río Nilo, gran productor de goma arábiga, presente en refrescos de cola y golosinas. La capital es Jartum.",
+		"facts": [
+			"El Nilo Azul y el Nilo Blanco confluyen en Jartum.",
+			"En Meroe y otros lugares quedan más de 200 pirámides nubias, más que en Egipto."
+		]
+	},
+	"capital-sle": {
+		"summary": "País de la costa atlántica de África occidental al que los antiguos navegantes llamaron “montaña de los leones”. La capital es Freetown.",
+		"facts": [
+			"Los esclavos liberados que se asentaron allí dieron a la capital su nombre: “ciudad libre”.",
+			"Entre 1991 y 2002 sufrió una guerra civil por el control de los diamantes."
+		]
+	},
+	"capital-dza": {
+		"summary": "Tierra del raï y del cuscús, es el país más extenso de África. La capital es Argel.",
+		"facts": [
+			"El Desierto del Sahara ocupa más del 80 % del territorio.",
+			"Tras casi ocho años de guerra de independencia, se independizó de Francia en 1962."
+		]
+	},
+	"capital-ago": {
+		"summary": "País de la costa atlántica del suroeste de África, donde el petróleo supone la mayor parte de las exportaciones. La capital es Luanda.",
+		"facts": [
+			"Nada más independizarse de Portugal en 1975, se sumió en una guerra civil de 27 años que duró hasta 2002.",
+			"La kizomba, un baile en pareja, nació aquí hacia 1980 y se extendió por todo el mundo."
+		]
+	},
+	"capital-eri": {
+		"summary": "País a orillas del mar Rojo donde el espresso y la pasta llegados en la época colonial siguen formando parte de la vida diaria. La capital es Asmara.",
+		"facts": [
+			"Se independizó de Etiopía en 1993.",
+			"Los edificios modernistas de los años treinta de Asmara son Patrimonio de la Humanidad desde 2017."
+		]
+	},
+	"capital-swz": {
+		"summary": "Reino sin litoral del sur de África cuya fiesta de la danza de las cañas, el Umhlanga, reúne cada año a decenas de miles de personas. La capital es Mbabane.",
+		"facts": [
+			"En 2018 dejó el nombre de Suazilandia y adoptó el actual.",
+			"Es la última monarquía absoluta que queda en África."
+		]
+	},
+	"capital-eth": {
+		"summary": "País de las tierras altas de África oriental que usa su propio calendario, con años de trece meses. La capital es Adís Abeba.",
+		"facts": [
+			"El cafeto arábica es originario de las tierras altas del suroeste.",
+			"La sede de la Unión Africana está en Adís Abeba."
+		]
+	},
+	"capital-uga": {
+		"summary": "País sin litoral a orillas del Lago Victoria, al que Winston Churchill llamó “la perla de África”. La capital es Kampala.",
+		"facts": [
+			"El Río Nilo sale del Lago Victoria.",
+			"La línea ecuatorial cruza el sur del país, y en la carretera de Kampala a Masaka hay un monumento que la señala."
+		]
+	},
+	"capital-egy": {
+		"summary": "País donde la civilización antigua de los faraones, las momias y los jeroglíficos floreció a orillas del Río Nilo. La capital es El Cairo.",
+		"facts": [
+			"En noviembre de 2025 abrió sus puertas el Gran Museo Egipcio, junto a las pirámides.",
+			"El canal de Suez une el Mediterráneo con el mar Rojo."
+		]
+	},
+	"capital-zmb": {
+		"summary": "País sin litoral del sur de África que vive de las minas de cobre del Copperbelt. La capital es Lusaka.",
+		"facts": [
+			"Las Cataratas Victoria están en la frontera con Zimbabue.",
+			"Su nombre viene del río Zambeze."
+		]
+	},
+	"capital-gnq": {
+		"summary": "País de África centro-occidental repartido entre la isla volcánica de Bioko y un territorio continental. La capital es Ciudad de la Paz.",
+		"facts": [
+			"En enero de 2026 trasladó la capitalidad de Malabo, en la isla, al continente.",
+			"Es uno de los pocos países de África con el español como lengua oficial."
+		]
+	},
+	"capital-caf": {
+		"summary": "País sin litoral al norte de la línea ecuatorial, con la reserva de Dzanga-Sangha, donde se congregan los elefantes de bosque. La capital es Bangui.",
+		"facts": [
+			"En 1977 Bokassa se coronó a sí mismo emperador en un estadio de Bangui.",
+			"Tiene diamantes y oro, pero ha sufrido largas guerras civiles."
+		]
+	},
+	"capital-dji": {
+		"summary": "Pequeño país del norte del Cuerno de África, a la entrada del mar Rojo. La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"Estados Unidos, Francia, China y Japón tienen bases militares cerca de la capital.",
+			"El lago Assal es el punto más bajo de África."
+		]
+	},
+	"capital-zwe": {
+		"summary": "País sin litoral del sur de África donde la inflación se disparó tanto que llegaron a imprimirse billetes de 100 billones de dólares. La capital es Harare.",
+		"facts": [
+			"Su nombre procede de Gran Zimbabue, una antigua ciudad de piedra.",
+			"Comparte las Cataratas Victoria con Zambia."
+		]
+	},
+	"capital-tcd": {
+		"summary": "País sin litoral del corazón de África, con el macizo volcánico del Tibesti en el norte del Sahara. La capital es Yamena.",
+		"facts": [
+			"Por la sequía y el riego que desvía el agua de los ríos, el lago Chad es mucho más pequeño que en los años sesenta.",
+			"El Emi Koussi, en el Tibesti, es la montaña más alta del Sahara."
+		]
+	},
+	"capital-cmr": {
+		"summary": "País del fondo del golfo de Guinea, cuna de la estrella del fútbol Samuel Eto'o. La capital es Yaundé.",
+		"facts": [
+			"Como reúne desierto, sabana y selva tropical, lo llaman “África en miniatura”.",
+			"Tiene dos lenguas oficiales: el francés y el inglés."
+		]
+	},
+	"capital-cpv": {
+		"summary": "País insular frente a la costa occidental de África, antigua escala de la trata atlántica de esclavos. La capital es Praia.",
+		"facts": [
+			"Lo forman diez islas volcánicas en pleno Atlántico.",
+			"Cesária Évora, “la diva de los pies descalzos”, dio a conocer la morna al mundo."
+		]
+	},
+	"capital-ken": {
+		"summary": "País de África oriental atravesado por la línea ecuatorial, gran exportador de té y flores a Europa. La capital es Nairobi.",
+		"facts": [
+			"En las praderas del Masái Mara se puede ver la gran migración de los animales.",
+			"Eliud Kipchoge bajó de las dos horas en un maratón no oficial en 2019."
+		]
+	},
+	"capital-com": {
+		"summary": "País insular a la entrada norte del canal de Mozambique, cuyo nombre árabe significa “islas de la Luna”. La capital es Moroni.",
+		"facts": [
+			"Es un país formado por tres islas del océano Índico.",
+			"Es el mayor productor mundial de ylang-ylang, flor que lleva el perfume Chanel n.º 5."
+		]
+	},
+	"capital-civ": {
+		"summary": "País del golfo de Guinea donde se alza la enorme Basílica de Nuestra Señora de la Paz, inspirada en la Basílica de San Pedro. La capital es Yamusukro.",
+		"facts": [
+			"La capital oficial es Yamusukro, pero el verdadero centro del país es Abiyán.",
+			"Se le considera el mayor productor de cacao del mundo."
+		]
+	},
+	"capital-cog": {
+		"summary": "País de África centro-occidental atravesado por la línea ecuatorial, con casi dos tercios del territorio cubiertos de selva. La capital es Brazzaville.",
+		"facts": [
+			"Su capital mira a Kinsasa desde la otra orilla del río: se consideran las dos capitales más cercanas del mundo.",
+			"En 2021 inscribió la rumba congoleña en el Patrimonio Cultural Inmaterial junto con su vecino de la otra orilla."
+		]
+	},
+	"capital-cod": {
+		"summary": "Gran país del centro de África, gran productor de cobalto, materia prima de las baterías de los móviles. La capital es Kinsasa.",
+		"facts": [
+			"Con más de 220 metros en su punto más hondo, el Río Congo es el río más profundo del mundo.",
+			"Es el segundo país más extenso de África, después de Argelia."
+		]
+	},
+	"capital-tza": {
+		"summary": "País nacido en 1964 de la unión de Tanganica y Zanzíbar. La capital es Dodoma.",
+		"facts": [
+			"Aquí está el Kilimanjaro, el pico más alto de África.",
+			"Freddie Mercury, cantante de Queen, nació en la isla de Zanzíbar."
+		]
+	},
+	"capital-tgo": {
+		"summary": "País del golfo de Guinea ante el que Corea del Sur logró, en la Copa Mundial de 2006, su primera victoria mundialista lejos de casa. La capital es Lomé.",
+		"facts": [
+			"Su costa mide solo 56 kilómetros, pero el país se extiende más de 500 kilómetros de norte a sur.",
+			"Su principal industria es la extracción y exportación de fosfatos."
+		]
+	},
+	"capital-tun": {
+		"summary": "País del norte de África donde se conserva el pueblo en el que se rodaron las escenas del planeta desértico de «Star Wars». La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"Aquí estuvo la antigua Cartago, patria de Aníbal, que cayó ante Roma en el 146 a. C.",
+			"El Desierto del Sahara y el Mediterráneo conviven en un mismo país."
+		]
+	},
+	"capital-guy": {
+		"summary": "País del noreste de América del Sur cuya economía crece a toda velocidad desde que en 2015 se descubrió un gran yacimiento petrolífero frente a su costa. La capital es Georgetown.",
+		"facts": [
+			"Es el único país de la parte continental de América del Sur con el inglés como lengua oficial.",
+			"La cascada Kaieteur cae 226 metros de un solo salto, unas cuatro veces más que las del Niágara."
+		]
+	},
+	"capital-glp": {
+		"summary": "Isla de las Antillas Menores, en el Mar Caribe, productora de bananas y ron. La capital es Basseterre.",
+		"facts": [
+			"Está formada por dos islas con forma de alas de mariposa, unidas por un estrecho brazo de mar.",
+			"Es un departamento francés de ultramar en el Mar Caribe."
+		]
+	},
+	"capital-gtm": {
+		"summary": "País de América Central donde los descendientes de los mayas son una parte importante de la población. La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"Tikal es una ciudad maya en plena selva tropical.",
+			"Tiene muchos volcanes y frecuentes terremotos; tras el gran terremoto de 1773, la capital se trasladó y se abandonó la antigua sede, Antigua."
+		]
+	},
+	"capital-grd": {
+		"summary": "País insular del extremo sur de las Antillas Menores, en el Mar Caribe. La capital es Saint George's.",
+		"facts": [
+			"La nuez moscada abunda tanto que figura en su bandera, y por eso la llaman “la isla de las especias”.",
+			"En 2006 abrió frente a su costa oeste el primer parque de esculturas submarinas del mundo."
+		]
+	},
+	"capital-grl": {
+		"summary": "Enorme isla helada entre el océano Ártico y el Atlántico Norte. La capital es Nuuk.",
+		"facts": [
+			"Es la isla más grande del mundo y un territorio autónomo de Dinamarca.",
+			"Más del 80 % de su superficie está cubierta de hielo."
+		]
+	},
+	"capital-nic": {
+		"summary": "El país más extenso de América Central. La capital es Managua.",
+		"facts": [
+			"El lago de Nicaragua es el mayor de América Central.",
+			"En medio del lago se encuentra la isla volcánica de Ometepe."
+		]
+	},
+	"capital-dom": {
+		"summary": "País del este de La Española, cuna del merengue y la bachata. La capital es Santo Domingo.",
+		"facts": [
+			"Santo Domingo es una de las ciudades de fundación europea más antiguas de América.",
+			"Después de Estados Unidos, es el país que más jugadores aporta a las Grandes Ligas."
+		]
+	},
+	"capital-dma": {
+		"summary": "País insular volcánico situado entre Guadalupe y Martinica. La capital es Roseau.",
+		"facts": [
+			"Por sus volcanes y su densa selva la llaman “la isla natural del Caribe”.",
+			"El Boiling Lake, en las montañas, es el segundo lago hirviente más grande del mundo."
+		]
+	},
+	"capital-mtq": {
+		"summary": "Departamento francés de ultramar en las Antillas Menores, en el Mar Caribe. La capital es Fort-de-France.",
+		"facts": [
+			"En 1902 la erupción del monte Pelée borró del mapa Saint-Pierre, entonces la ciudad principal.",
+			"Aquí nació Josefina, la primera emperatriz de Napoleón Bonaparte."
+		]
+	},
+	"capital-mex": {
+		"summary": "País del sur de América del Norte, famoso por los tacos, el tequila y el Día de Muertos. La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"La capital se levantó sobre Tenochtitlan, la antigua capital azteca.",
+			"En la Copa Mundial de 2026, Corea del Sur jugó la fase de grupos en Guadalajara y Monterrey."
+		]
+	},
+	"capital-msr": {
+		"summary": "Pequeña isla volcánica del Mar Caribe, territorio británico de ultramar. La capital es Plymouth.",
+		"facts": [
+			"El volcán despertó en 1995 y en 1997 hubo que abandonar la capital, Plymouth.",
+			"Hoy Brades, en el norte, hace de capital provisional, y en Little Bay se construye una nueva capital."
+		]
+	},
+	"capital-usa": {
+		"summary": "República federal de América del Norte formada por 50 estados. La capital es Washington D. C.",
+		"facts": [
+			"La capital es un distrito especial que no pertenece a ningún estado.",
+			"El billete de un dólar lleva el retrato de George Washington, primer presidente del país, de quien la capital toma el nombre."
+		]
+	},
+	"capital-vir": {
+		"summary": "Islas estadounidenses del Mar Caribe, en el extremo oriental de las Antillas Mayores. La capital es Charlotte Amalie.",
+		"facts": [
+			"En 1917 Estados Unidos se las compró a Dinamarca por 25 millones de dólares en oro.",
+			"Aunque son territorio estadounidense, allí se circula por la izquierda."
+		]
+	},
+	"capital-brb": {
+		"summary": "País insular aislado en el extremo oriental del Mar Caribe. La capital es Bridgetown.",
+		"facts": [
+			"En 2021 dejó de tener al monarca británico como jefe de Estado y se convirtió en república.",
+			"Es la isla donde nació y creció la cantante Rihanna."
+		]
+	},
+	"capital-bhs": {
+		"summary": "País insular del norte del Mar Caribe donde está la isla a la que llegó Cristóbal Colón en 1492. La capital es Nasáu.",
+		"facts": [
+			"Lo forman más de 700 islas y cayos.",
+			"Big Major Cay, donde viven cerdos que nadan, es una gran atracción turística."
+		]
+	},
+	"capital-bmu": {
+		"summary": "Territorio británico de ultramar aislado en el Atlántico Norte occidental. La capital es Hamilton.",
+		"facts": [
+			"Los pantalones cortos hasta la rodilla llevan el nombre de la isla, y allí se usan incluso como traje formal.",
+			"Sus tejados blancos escalonados recogen el agua de lluvia para el consumo."
+		]
+	},
+	"capital-ven": {
+		"summary": "País del norte de América del Sur cuyo nombre, “pequeña Venecia”, nació al ver sus casas sobre el agua. La capital es Caracas.",
+		"facts": [
+			"Aquí está el salto Ángel, la cascada más alta del mundo.",
+			"Tiene las mayores reservas probadas de petróleo del mundo."
+		]
+	},
+	"capital-blz": {
+		"summary": "País de América Central bañado por el Mar Caribe, con ruinas mayas y arrecifes de coral. La capital es Belmopán.",
+		"facts": [
+			"Es el único país de América Central con el inglés como lengua oficial.",
+			"Frente a su costa se abre el Gran Agujero Azul, una sima de un azul intenso."
+		]
+	},
+	"capital-bol": {
+		"summary": "País andino sin litoral, con una alta proporción de población indígena y a orillas del Lago Titicaca. Según la Constitución, la capital es Sucre.",
+		"facts": [
+			"La Paz, sede del Gobierno, está a más de 3600 metros sobre el nivel del mar.",
+			"Al salar de Uyuni lo llaman “el espejo del cielo”."
+		]
+	},
+	"capital-bra": {
+		"summary": "El país más grande de América del Sur, donde se celebra el carnaval de la samba. La capital toma su nombre del propio país.",
+		"facts": [
+			"En 1960 trasladó la capitalidad de Río de Janeiro a Brasilia.",
+			"La selva tropical de la cuenca del Río Amazonas cubre el norte del país."
+		]
+	},
+	"capital-maf": {
+		"summary": "Colectividad francesa de ultramar en el norte de una isla del Mar Caribe. La capital es Marigot.",
+		"facts": [
+			"Es la parte norte de una isla que se reparten Francia y los Países Bajos.",
+			"Apenas hay controles fronterizos, así que se pasa de un lado a otro a pie."
+		]
+	},
+	"capital-blm": {
+		"summary": "Pequeña colectividad francesa de ultramar en el Mar Caribe. La capital es Gustavia.",
+		"facts": [
+			"Fue sueca durante 94 años a partir de 1784, y por eso la capital lleva el nombre de un rey de Suecia.",
+			"Es uno de los destinos de lujo más destacados del Caribe."
+		]
+	},
+	"capital-spm": {
+		"summary": "Islas francesas al sur de Terranova, en Canadá. La capital lleva el nombre de una de sus islas.",
+		"facts": [
+			"Es el único territorio de la antigua Nueva Francia que sigue siendo francés.",
+			"Es uno de los pocos lugares de América del Norte donde se usa el euro."
+		]
+	},
+	"capital-lca": {
+		"summary": "País insular volcánico de las Antillas Menores, en el Mar Caribe. La capital es Castries.",
+		"facts": [
+			"Los dos picos de los Pitons, que se alzan directamente desde el mar, son el símbolo de la isla.",
+			"Ha dado dos premios Nobel, lo que le valió un récord Guinness por número de galardonados en proporción a su población."
+		]
+	},
+	"capital-vct": {
+		"summary": "País insular del sur de las Antillas Menores, en el Mar Caribe. La capital es Kingstown.",
+		"facts": [
+			"Lo forman la isla principal y una treintena de islas pequeñas.",
+			"La primera película de «Piratas del Caribe» se rodó en la bahía de Wallilabou, en la isla principal."
+		]
+	},
+	"capital-kna": {
+		"summary": "País independiente formado por dos islas del Mar Caribe. La capital es Basseterre.",
+		"facts": [
+			"Es el país más pequeño del continente americano.",
+			"En 1623 se fundó en esta isla la primera colonia inglesa del Caribe."
+		]
+	},
+	"capital-sur": {
+		"summary": "Pequeño país del noreste de América del Sur donde conviven descendientes de diversos orígenes asiáticos y africanos. La capital es Paramaribo.",
+		"facts": [
+			"Es el único país de América del Sur con el neerlandés como lengua oficial.",
+			"Más del 90 % del territorio está cubierto de bosque."
+		]
+	},
+	"capital-sxm": {
+		"summary": "País constituyente del Reino de los Países Bajos en el sur de una isla del Mar Caribe. La capital es Philipsburg.",
+		"facts": [
+			"Es la mitad neerlandesa de una isla que comparte con Francia.",
+			"En la playa de Maho, los aviones de pasajeros aterrizan tan bajo que parecen rozar las cabezas de los bañistas."
+		]
+	},
+	"capital-abw": {
+		"summary": "Isla del sur del Mar Caribe, de tierra árida con cactus y largas playas de arena blanca. La capital es Oranjestad.",
+		"facts": [
+			"Está fuera de la ruta de los huracanes, así que casi siempre hace buen tiempo.",
+			"En 1986 se separó de las Antillas Neerlandesas y pasó a ser un país constituyente propio."
+		]
+	},
+	"capital-arg": {
+		"summary": "País del sur de América del Sur, cuna de las estrellas del fútbol Maradona y Messi. La capital es Buenos Aires.",
+		"facts": [
+			"El asado, carne de ganado criado en la pampa y cocinada a las brasas, es el plato nacional.",
+			"El tango nació en los barrios portuarios de Buenos Aires."
+		]
+	},
+	"capital-hti": {
+		"summary": "País del oeste de La Española, de lengua criolla y con una fuerte tradición vudú. La capital es Puerto Príncipe.",
+		"facts": [
+			"En 1804 una rebelión de esclavos lo convirtió en el primer país independiente de América Latina.",
+			"Tras el gran terremoto de 2010, la unidad Danbi del ejército de Corea del Sur viajó allí para ayudar en la reconstrucción."
+		]
+	},
+	"capital-atg": {
+		"summary": "País de dos islas del norte de las Antillas Menores, en el Mar Caribe. La capital es Saint John's.",
+		"facts": [
+			"Se dice que tiene 365 playas, una para cada día del año.",
+			"El críquet es el deporte nacional, y de aquí es Viv Richards, legendario bateador de las Indias Occidentales."
+		]
+	},
+	"capital-aia": {
+		"summary": "Territorio británico de ultramar del norte de las Antillas Menores, en el Mar Caribe. La capital es El Valle.",
+		"facts": [
+			"Su nombre viene de su forma alargada, parecida a la de una anguila.",
+			"Con la venta de dominios de internet .ai obtuvo en 2025 casi la mitad de los ingresos del Gobierno."
+		]
+	},
+	"capital-ecu": {
+		"summary": "País atravesado por la línea ecuatorial y gran exportador de rosas y bananas. La capital es Quito.",
+		"facts": [
+			"El nombre del país significa “ecuador” en español.",
+			"Las Islas Galápagos pertenecen a este país."
+		]
+	},
+	"capital-slv": {
+		"summary": "El país más pequeño de América Central. La capital lleva casi el mismo nombre que el país.",
+		"facts": [
+			"Es el único país de América Central bañado solo por el Pacífico.",
+			"En 2021 fue el primer país del mundo en adoptar el bitcóin como moneda de curso legal, y en 2025 dio marcha atrás."
+		]
+	},
+	"capital-vgb": {
+		"summary": "Territorio británico de ultramar del norte de las Antillas Menores, en el Mar Caribe, donde cientos de miles de empresas tienen su domicilio sobre el papel. La capital es Road Town.",
+		"facts": [
+			"Lo forman unas sesenta islas y cayos.",
+			"Es famoso por las travesías en velero de alquiler de isla en isla."
+		]
+	},
+	"capital-hnd": {
+		"summary": "País de América Central que dio origen a la expresión “república bananera”. La capital es Tegucigalpa.",
+		"facts": [
+			"Las ruinas de Copán marcan el extremo sureste de la Civilización maya.",
+			"Se asoma a la vez al Mar Caribe y al Pacífico."
+		]
+	},
+	"capital-ury": {
+		"summary": "Pequeño país del sureste de América del Sur donde es habitual ver a la gente con el termo del mate bajo el brazo. La capital es Montevideo.",
+		"facts": [
+			"En 1930 organizó y ganó la primera Copa Mundial.",
+			"Casi todo su territorio son praderas suavemente onduladas."
+		]
+	},
+	"capital-jam": {
+		"summary": "País insular del Mar Caribe donde se cultiva el exclusivo café Blue Mountain. La capital es Kingston.",
+		"facts": [
+			"El reggae nació en esta isla.",
+			"Usain Bolt fijó en 2009 el récord mundial de los 100 metros: 9,58 segundos."
+		]
+	},
+	"capital-chl": {
+		"summary": "País larguísimo de norte a sur, gran exportador de vino y salmón. La capital es Santiago.",
+		"facts": [
+			"El desierto de Atacama, en el norte, es el más árido del mundo si se excluyen las regiones polares.",
+			"Fue el primer país con el que Corea del Sur firmó un tratado de libre comercio (TLC)."
+		]
+	},
+	"capital-bes": {
+		"summary": "Tres islas de los Países Bajos repartidas por las Antillas. La capital es Kralendijk.",
+		"facts": [
+			"Es el nombre conjunto de Bonaire, San Eustaquio y Saba.",
+			"Son municipios especiales de los Países Bajos, pero usan el dólar en lugar del euro."
+		]
+	},
+	"capital-can": {
+		"summary": "País del sirope de arce y el hockey sobre hielo, que ocupa buena parte del norte de América del Norte. La capital es Ottawa.",
+		"facts": [
+			"Es el segundo país más extenso del mundo, después de Rusia.",
+			"La moneda de un dólar lleva grabado un colimbo, un ave acuática, por eso la llaman “loonie”."
+		]
+	},
+	"capital-cym": {
+		"summary": "Territorio británico de ultramar en el Mar Caribe, con la arena blanca de Seven Mile Beach y célebres lugares de buceo. La capital es Georgetown.",
+		"facts": [
+			"Sin impuestos sobre la renta ni sobre sociedades, es un centro financiero que atrae dinero de todo el mundo.",
+			"En Stingray City, un banco de arena poco profundo, se nada junto a las rayas."
+		]
+	},
+	"capital-cri": {
+		"summary": "País de América Central al que acuden los ecoturistas para ver perezosos y bosques tropicales. La capital es San José.",
+		"facts": [
+			"En 1948 abolió el ejército y destinó el presupuesto de defensa a la educación y la sanidad.",
+			"Más de una cuarta parte del territorio está protegida."
+		]
+	},
+	"capital-col": {
+		"summary": "País del noroeste de América del Sur, gran productor de esmeraldas y café. La capital es Bogotá.",
+		"facts": [
+			"Fue el único país latinoamericano que envió tropas de combate a la Guerra de Corea.",
+			"Gabriel García Márquez, autor de «Cien años de soledad», era de este país."
+		]
+	},
+	"capital-cub": {
+		"summary": "País insular del Mar Caribe por cuyas calles circulan coches de los años cincuenta al ritmo de la salsa. La capital es La Habana.",
+		"facts": [
+			"La Habana Vieja es Patrimonio de la Humanidad.",
+			"Ernest Hemingway vivió en las afueras de La Habana y allí escribió «El viejo y el mar»."
+		]
+	},
+	"capital-cuw": {
+		"summary": "País constituyente del Reino de los Países Bajos en el Mar Caribe, al norte de América del Sur. La capital es Willemstad.",
+		"facts": [
+			"Coloridos edificios de estilo neerlandés bordean el puerto.",
+			"El licor azul del mismo nombre se elabora con la cáscara de las naranjas de esta isla."
+		]
+	},
+	"capital-tca": {
+		"summary": "Territorio británico de ultramar en el Atlántico, en el extremo sureste del archipiélago de las Lucayas. La capital es Cockburn Town.",
+		"facts": [
+			"Desde antiguo se obtenía sal secando el agua del mar.",
+			"La playa de Grace Bay figura a menudo entre las mejores del mundo."
+		]
+	},
+	"capital-tto": {
+		"summary": "País de dos islas del Mar Caribe, a un paso del continente sudamericano. La capital es Puerto España.",
+		"facts": [
+			"El steelpan, que se toca golpeando bidones de metal, nació en esta isla.",
+			"Tiene un lago natural de asfalto del que se extrae material para pavimentar carreteras."
+		]
+	},
+	"capital-pan": {
+		"summary": "País del estrecho istmo que une las dos Américas. La capital lleva el mismo nombre que el país.",
+		"facts": [
+			"El Canal de Panamá une el océano Pacífico con el Atlántico.",
+			"Estados Unidos traspasó el canal a Panamá en 1999."
+		]
+	},
+	"capital-pry": {
+		"summary": "País sin litoral de América del Sur cuya bandera tiene un diseño distinto en cada cara. La capital es Asunción.",
+		"facts": [
+			"El español y el guaraní son lenguas oficiales.",
+			"Gestiona la represa de Itaipú junto con Brasil."
+		]
+	},
+	"capital-per": {
+		"summary": "País andino famoso por el ceviche, plato de pescado crudo, y por las alpacas. La capital es Lima.",
+		"facts": [
+			"Machu Picchu es la ciudad en lo alto de una montaña que dejó el Imperio inca.",
+			"En la pampa de Nazca hay enormes geoglifos."
+		]
+	},
+	"capital-flk": {
+		"summary": "Territorio británico de ultramar en el Atlántico Sur, frente al extremo meridional de América del Sur. La capital es Stanley.",
+		"facts": [
+			"En 1982 el Reino Unido y Argentina libraron una guerra por estas islas.",
+			"Hay muchísimas más ovejas y pingüinos que personas."
+		]
+	},
+	"capital-pri": {
+		"summary": "Territorio autónomo de Estados Unidos en el este de las Antillas Mayores. La capital es San Juan.",
+		"facts": [
+			"Sus habitantes son ciudadanos estadounidenses, pero no pueden votar en las elecciones presidenciales.",
+			"El Yunque es el único bosque tropical del sistema de bosques nacionales de Estados Unidos."
+		]
+	},
+	"capital-guf": {
+		"summary": "Departamento francés de ultramar en el noreste de América del Sur. La capital es Cayena.",
+		"facts": [
+			"Desde Kourou se lanzan los cohetes espaciales europeos.",
+			"Frente a su costa está la isla del Diablo, el penal donde estuvo preso Dreyfus."
+		]
+	},
+	"capital-gum": {
+		"summary": "Isla estadounidense en el extremo sur de las islas Marianas. La capital es Agaña.",
+		"facts": [
+			"La apodan “el lugar donde empieza el día de Estados Unidos”.",
+			"Conserva la lengua y la cultura del pueblo indígena chamorro."
+		]
+	},
+	"capital-nru": {
+		"summary": "País insular de coral en el Pacífico, justo al sur de la línea ecuatorial. La capital de facto es Yaren.",
+		"facts": [
+			"Con 21 kilómetros cuadrados, es el tercer país más pequeño del mundo, después del Vaticano y Mónaco.",
+			"La extracción y venta de fosfato, formado por excrementos de aves endurecidos, lo hizo muy rico durante un tiempo."
+		]
+	},
+	"capital-nfk": {
+		"summary": "Isla australiana del Pacífico cuya bandera muestra un pino que lleva el nombre de la propia isla. La capital es Kingston.",
+		"facts": [
+			"Fue una colonia penal a la que el Reino Unido enviaba presos.",
+			"Allí viven descendientes de los amotinados del Bounty."
+		]
+	},
+	"capital-ncl": {
+		"summary": "Territorio francés de ultramar en la Melanesia del Pacífico Sur, rodeado por una laguna que es Patrimonio de la Humanidad. La capital es Numea.",
+		"facts": [
+			"Es uno de los mayores productores de níquel del mundo.",
+			"Ha celebrado varios referéndums sobre si seguir formando parte de Francia."
+		]
+	},
+	"capital-nzl": {
+		"summary": "País del Pacífico Sur formado por dos grandes islas. La capital es Wellington.",
+		"facts": [
+			"En 1893 fue el primer país del mundo en el que las mujeres votaron en unas elecciones parlamentarias.",
+			"Antes de cada partido, la selección de rugby, los All Blacks, baila el haka, una danza maorí."
+		]
+	},
+	"capital-niu": {
+		"summary": "Remota isla del Pacífico Sur que ha emitido monedas de curso legal con dibujos de Pokémon. La capital es Alofi.",
+		"facts": [
+			"Es una única isla rocosa formada por coral que emergió del mar.",
+			"Se gobierna a sí misma en libre asociación con Nueva Zelanda."
+		]
+	},
+	"capital-mhl": {
+		"summary": "País insular de atolones coralinos al norte de la línea ecuatorial, amenazado con quedar sumergido por la subida del nivel del mar. La capital es Majuro.",
+		"facts": [
+			"El biquini debe su nombre al atolón de Bikini, escenario de pruebas nucleares estadounidenses.",
+			"Se conservan antiguas cartas de navegación hechas con varillas que representan el oleaje."
+		]
+	},
+	"capital-fsm": {
+		"summary": "Federación insular del Pacífico occidental a la que pertenece Yap, famosa por su enorme moneda de piedra. La capital es Palikir.",
+		"facts": [
+			"Es una federación de cuatro estados con más de 600 islas.",
+			"Las ruinas de Nan Madol son columnas de piedra apiladas sobre el mar."
+		]
+	},
+	"capital-vut": {
+		"summary": "País insular volcánico del Pacífico Sur con una oficina de correos submarina desde la que se envían postales impermeables. La capital es Port Vila.",
+		"facts": [
+			"El volcán activo Yasur no deja de echar humo.",
+			"Conserva un ritual tradicional que dio origen al salto bungee."
+		]
+	},
+	"capital-mnp": {
+		"summary": "Islas estadounidenses del Pacífico occidental con destinos de playa muy populares entre los recién casados. La capital es Saipán.",
+		"facts": [
+			"En una de sus islas se libró la batalla de Saipán, durante la Segunda Guerra Mundial.",
+			"Al ser un territorio autónomo de Estados Unidos, sus habitantes tienen la ciudadanía estadounidense."
+		]
+	},
+	"capital-wsm": {
+		"summary": "País insular del Pacífico Sur donde Stevenson, autor de «La isla del tesoro», pasó sus últimos años y está enterrado. La capital es Apia.",
+		"facts": [
+			"En 2011 se pasó al oeste de la línea internacional de cambio de fecha y se saltó el 30 de diciembre.",
+			"La palabra inglesa tattoo viene de tatau, término de lenguas polinesias como la de este país o la de Tahití."
+		]
+	},
+	"capital-slb": {
+		"summary": "País insular del Pacífico Sur donde aún se usa una moneda tradicional hecha de conchas ensartadas. La capital es Honiara.",
+		"facts": [
+			"En una de sus islas se libró la batalla de Guadalcanal, durante la Segunda Guerra Mundial.",
+			"Lo forman seis islas grandes y más de 900 pequeñas."
+		]
+	},
+	"capital-asm": {
+		"summary": "Territorio estadounidense de la Polinesia, en el Pacífico Sur, con el único parque nacional de Estados Unidos al sur de la línea ecuatorial. La capital es Pago Pago.",
+		"facts": [
+			"Al estar al este de la línea de cambio de fecha, tiene un día de diferencia con su vecina Samoa.",
+			"Entre los territorios de Estados Unidos, destaca por la cantidad de jugadores de fútbol americano que produce."
+		]
+	},
+	"capital-wlf": {
+		"summary": "Islas francesas aisladas en el extremo occidental de la Polinesia, en el Pacífico Sur. La capital es Mata-Utu.",
+		"facts": [
+			"Aunque es territorio francés, aún conserva tres reyes tradicionales.",
+			"Por su aislamiento en el Pacífico Sur, los barcos que llegan son escasos."
+		]
+	},
+	"capital-cck": {
+		"summary": "Islas australianas del este del océano Índico formadas por dos atolones de coral. La capital es West Island.",
+		"facts": [
+			"Charles Darwin estudió aquí cómo se forman las islas de coral.",
+			"Son territorio australiano, pero la mayoría de sus habitantes son de origen malayo."
+		]
+	},
+	"capital-cok": {
+		"summary": "Islas en el corazón de la Polinesia, en el Pacífico Sur, que incluyen la laguna de Aitutaki. La capital es Avarua.",
+		"facts": [
+			"Son quince islas, y sus habitantes tienen también la ciudadanía neozelandesa.",
+			"Llevan el nombre del explorador James Cook."
+		]
+	},
+	"capital-cxr": {
+		"summary": "Isla australiana del océano Índico, al sur de Java. La capital es Flying Fish Cove.",
+		"facts": [
+			"Cada año, decenas de millones de cangrejos rojos migran en masa hacia el mar.",
+			"Recibió este nombre porque fue descubierta el día de Navidad."
+		]
+	},
+	"capital-kir": {
+		"summary": "País de islas de coral repartidas por el Pacífico a lo largo de la línea ecuatorial. La capital es Tarawa Sur.",
+		"facts": [
+			"Gracias a la línea de cambio de fecha, es el primer lugar de la Tierra que recibe el Año Nuevo.",
+			"Lo cruzan a la vez la línea ecuatorial y el meridiano 180, así que se extiende por los cuatro hemisferios."
+		]
+	},
+	"capital-tkl": {
+		"summary": "Tres atolones de Nueva Zelanda en la Polinesia, en el Pacífico Sur. No tiene una capital oficial.",
+		"facts": [
+			"No tiene aeropuerto: para llegar hay que navegar más de un día desde Samoa.",
+			"Obtiene casi toda su electricidad de la energía solar."
+		]
+	},
+	"capital-ton": {
+		"summary": "Reino insular del Pacífico Sur cuya Constitución prohíbe abrir los comercios en domingo. La capital es Nukualofa.",
+		"facts": [
+			"Fue protectorado británico durante 70 años a partir de 1900, pero nunca cedió su soberanía.",
+			"Solo 45 de sus 171 islas están habitadas."
+		]
+	},
+	"capital-tuv": {
+		"summary": "Cuarto país más pequeño del mundo: nueve islas de coral que apenas sobresalen del Pacífico Sur. La capital es Funafuti.",
+		"facts": [
+			"Su punto más alto no llega a 5 metros sobre el nivel del mar, lo que lo hace muy vulnerable a la subida del nivel del mar.",
+			"El alquiler de su dominio de internet .tv le reporta grandes ingresos."
+		]
+	},
+	"capital-png": {
+		"summary": "País que ocupa la mitad oriental de una gran isla del Pacífico Sur, con su ave nacional, el ave del paraíso, en la bandera. La capital es Port Moresby.",
+		"facts": [
+			"Se hablan unas 840 lenguas: es el país con más idiomas del mundo.",
+			"La mitad occidental de la isla pertenece a Indonesia, por lo que la frontera la divide en línea recta de norte a sur."
+		]
+	},
+	"capital-plw": {
+		"summary": "Pequeño país insular del Pacífico occidental que en 2009 declaró el primer santuario de tiburones del mundo. La capital es Ngerulmud.",
+		"facts": [
+			"En 2006 trasladó la capitalidad de Koror a Ngerulmud.",
+			"En el lago de las Medusas está prohibido el buceo con botella: solo se puede entrar haciendo esnórquel."
+		]
+	},
+	"capital-pyf": {
+		"summary": "Territorio francés de ultramar con 118 islas en el Pacífico Sur, donde en 1967 se construyeron los primeros bungalós sobre el agua. La capital es Papeete.",
+		"facts": [
+			"Aquí está Tahití, adonde se fue Paul Gauguin a pintar.",
+			"La perla negra de Tahití es su principal producto de exportación."
+		]
+	},
+	"capital-fji": {
+		"summary": "País insular del Pacífico Sur cuyo nombre resulta familiar por una marca de agua embotellada. La capital es Suva.",
+		"facts": [
+			"Lo forman más de 300 islas.",
+			"El oro en rugby a siete en 2016 fue la primera medalla olímpica del país."
+		]
+	},
+	"capital-pcn": {
+		"summary": "Remoto territorio británico de ultramar en pleno Pacífico Sur. La capital es Adamstown.",
+		"facts": [
+			"Aquí se escondieron y se establecieron los amotinados del Bounty.",
+			"Se considera el territorio habitado con menos población del mundo."
+		]
+	},
+	"capital-aus": {
+		"summary": "País que ocupa todo un continente, hogar de canguros y koalas. La capital es Canberra.",
+		"facts": [
+			"Como Sídney y Melbourne se disputaban la capitalidad, se construyó Canberra desde cero como solución de compromiso.",
+			"La Gran Barrera de Coral es el mayor arrecife de coral del mundo."
+		]
+	}
+}

@@ -1,0 +1,2714 @@
+{
+    "main": {
+        "navigation": {
+            "home": "首页",
+            "challenge": "挑战",
+            "search": "搜索",
+            "stats": "我的动态",
+            "my": "设置"
+        },
+        "common_appName": {
+            "full": "React Native 样板项目",
+            "initials": "RNB"
+        },
+        "common_error": "抱歉，出了点问题。",
+        "screen_example": {
+            "hello_user": "你好，我叫{{name}}",
+            "title": "欢迎使用$t(common_appName.full)",
+            "description": "想看看都有哪些功能吗？点击屏幕底部三个按钮中的任意一个吧。第一个按钮调用 REST API，第二个按钮切换主题颜色，第三个按钮切换语言。"
+        },
+        "error_boundary": {
+            "title": "抱歉，出了点问题。",
+            "description": "给你带来不便，非常抱歉。请稍后再试。",
+            "cta": "刷新页面"
+        },
+        "common": {
+            "cancel": "取消",
+            "undo": "撤销",
+            "confirm": "确定",
+            "delete": "删除",
+            "close": "关闭",
+            "all": "全部",
+            "save": "保存",
+            "retry": "重试",
+            "start": "开始",
+            "next": "下一步",
+            "prev": "上一步",
+            "done": "完成",
+            "continue": "继续",
+            "exit": "退出",
+            "on": "开",
+            "off": "关",
+            "reset": "重置",
+            "more": "更多",
+            "loading": "加载中…",
+            "count": "{{count}}个",
+            "questions": "{{count}}题",
+            "points": "{{count}}分",
+            "seconds": "{{count}}秒",
+            "days": "{{count}}天",
+            "percent": "{{value}}%",
+            "bookmarkAdd": "加入收藏",
+            "bookmarkRemove": "取消收藏",
+            "bookmarkSaved": "已加入收藏",
+            "bookmarkUnsaved": "已取消收藏",
+            "guideReopen": "重新查看本页使用说明",
+            "toTop": "回到顶部"
+        },
+        "home": {
+            "appTitle": "世界常识问答",
+            "greet": {
+                "g1": "今天也向世界\n迈进一步吧",
+                "g2": "很高兴见到你！\n今天也一起学习吧",
+                "g3": "小小的习惯\n成就大大的实力",
+                "g4": "今日世界常识，\n现在就开始",
+                "g5": "坚持\n就是正确答案",
+                "g6": "一题一题\n慢慢积累"
+            },
+            "toast": {
+                "characterChanged": "角色已更换",
+                "goalChanged": "每日目标已改为{{count}}题",
+                "recommendHidden": "今日推荐明天再为你展示"
+            },
+            "countItems": "{{value}}个",
+            "hero": {
+                "characterA11y": "更换首页角色",
+                "alarmA11y": "学习提醒设置",
+                "streak": "连续{{count}}天",
+                "goalA11y": "修改每日目标题数",
+                "goalTitle": "今日目标",
+                "goalDone": "目标达成！",
+                "goalProgress": "{{done}}/{{goal}} 题"
+            },
+            "summary": {
+                "scoreLabel": "总分",
+                "unit": "分",
+                "accuracy": "正确率",
+                "solved": "已答题",
+                "streak": "连续签到",
+                "badge": "徽章",
+                "badgeAllA11y": "查看全部徽章",
+                "dex": "图鉴",
+                "badgeA11y": "{{title}}徽章详情"
+            },
+            "curriculum": {
+                "title": "世界常识学习路线",
+                "subOpen": "按顺序完成，实力稳步提升",
+                "next": "下一步 · {{label}}",
+                "allDone": "所有阶段都完成啦",
+                "steps": {
+                    "level": {
+                        "label": "水平测试",
+                        "desc": "10道题测出你的世界常识等级"
+                    },
+                    "study": {
+                        "label": "学习",
+                        "desc": "翻卡片轻松掌握世界常识"
+                    },
+                    "quiz": {
+                        "label": "答题",
+                        "desc": "用题目检验学过的内容"
+                    },
+                    "wrong": {
+                        "label": "错题本",
+                        "desc": "只把错题集中起来再复习"
+                    },
+                    "time": {
+                        "label": "限时挑战",
+                        "desc": "180秒专注对决，完美收尾"
+                    }
+                },
+                "celebrate": {
+                    "eyebrow": "学习路线完成！",
+                    "title": "5个阶段全部完成",
+                    "desc": "首页会变得更清爽。\n自由选择想学的内容吧！",
+                    "ok": "好的"
+                }
+            },
+            "recommend": {
+                "closeA11y": "关闭今日推荐（今天不再显示）",
+                "eyebrow": "今日推荐",
+                "unseen": "还没做过这个主题哦",
+                "rateLabel": "正确率",
+                "rateHint": "再加把劲就更好了",
+                "study": "去学习",
+                "quiz": "去答题"
+            },
+            "quick": {
+                "title": "快速开始",
+                "sub": "常用功能一键直达",
+                "attend": "签到",
+                "todayQuiz": "今日一测",
+                "study": "学习",
+                "quiz": "答题",
+                "wrongNote": "错题本",
+                "timeChallenge": "限时挑战",
+                "library": "收藏夹"
+            },
+            "daily": {
+                "title": "今日常识",
+                "sub": "每天一个世界常识",
+                "meaning": "含义",
+                "summary": "概要",
+                "more": "了解更多",
+                "cta": "学习这个主题"
+            },
+            "topics": {
+                "title": "选择主题",
+                "subExpanded": "点击主题即可开始",
+                "subCollapsed": "左右滑动选择，开始学习或答题",
+                "collapse": "收起",
+                "expand": "展开",
+                "preview": {
+                    "capital": {
+                        "tag": "世界地理",
+                        "example": "看国家猜首都、国旗和所在大洲"
+                    },
+                    "landmark": {
+                        "tag": "旅行常识",
+                        "example": "找出照片中地标所在的地方"
+                    },
+                    "nature": {
+                        "tag": "地图感",
+                        "example": "选出河流、山脉、沙漠所在的大洲和国家"
+                    },
+                    "figure": {
+                        "tag": "人物探索",
+                        "example": "通过肖像和成就认识世界名人"
+                    },
+                    "event": {
+                        "tag": "世界史脉络",
+                        "example": "把事件与发生的年代和国家连起来"
+                    },
+                    "myth": {
+                        "tag": "神话故事",
+                        "example": "猜出希腊罗马众神的名字和职能"
+                    },
+                    "space": {
+                        "tag": "宇宙常识",
+                        "example": "了解行星和卫星的顺序与特点"
+                    },
+                    "constellation": {
+                        "tag": "夜空",
+                        "example": "把星座图案和代表恒星连起来"
+                    }
+                }
+            },
+            "subQuiz": {
+                "title": "附加答题",
+                "subExpanded": "点击主题即可开始（不计入主分数）",
+                "subCollapsed": "左右滑动选择 · 世界杯·奥运会（不计入主分数）",
+                "best": "最佳 {{correct}}/{{total}}",
+                "bestCorrect": "最佳 答对{{correct}}/{{total}}",
+                "new": "NEW",
+                "bonus": "{{value}}题 · 加分",
+                "note": "轻松小题，不计入主分数"
+            },
+            "showAll": "查看全部功能",
+            "features": {
+                "title": "特别内容",
+                "sub": "更深入的学习工具",
+                "exam": {
+                    "title": "主题课程",
+                    "desc": "地理·世界史·通识定制课程"
+                },
+                "levelTest": {
+                    "title": "水平测试",
+                    "desc": "测测你的世界常识等级"
+                },
+                "typeTest": {
+                    "title": "类型测试",
+                    "desc": "你是哪种常识探险家？"
+                },
+                "storyFeed": {
+                    "title": "故事动态",
+                    "desc": "边读边轻松掌握"
+                },
+                "subQuiz": {
+                    "title": "附加答题",
+                    "desc": "世界杯·奥运会加分题"
+                }
+            },
+            "picker": {
+                "title": "选择首页角色",
+                "sub": "挑选各主题获得的角色，展示在首页",
+                "apply": "设为当前角色",
+                "locked": "该角色尚未解锁",
+                "start": "开始",
+                "reqQuestions": "{{value}}题",
+                "reqPoints": "{{value}}分",
+                "unlockedReq": "已获得 · {{req}}",
+                "lockedReq": "未解锁 · {{req}}"
+            },
+            "goal": {
+                "title": "每日目标",
+                "closeA11y": "关闭每日目标设置",
+                "sub": "每天想答几道题？",
+                "unit": "题",
+                "light": "轻松",
+                "normal": "适中",
+                "focus": "专注"
+            },
+            "unlock": {
+                "eyebrow": "解锁新角色！"
+            },
+            "guide": {
+                "title": "首页使用指南",
+                "line1": "点击你的角色，就能换成其他角色。",
+                "line2": "选主题学习，答对的题越多，分数越高。",
+                "line3": "进入首页自动签到！每天坚持还能收集徽章。"
+            }
+        },
+        "challenge": {
+            "header": {
+                "title": "挑战",
+                "sub": "多种玩法检验实力，结果自动保存到统计和收藏夹。"
+            },
+            "tabs": {
+                "time": "限时挑战",
+                "tower": "爬塔挑战",
+                "mode": "选择模式"
+            },
+            "time": {
+                "heroTitle": "与历史小狮子一起，180秒冲刺",
+                "heroDesc": "时间结束前答对更多题，冲击最高纪录",
+                "rankTitle": "限时挑战排行榜",
+                "rankDesc": "180秒瞬间专注力对决",
+                "viewAll": "查看全部",
+                "bestWithNick": "{{nickname}} · 最高分",
+                "myBest": "我的最高分",
+                "scoreValue": "{{value}}分",
+                "myRank": "我的排名",
+                "rankValue": "第{{rank}}名",
+                "notJoined": "未参与",
+                "bestHint": "排行榜按单局最高分计算，不累计",
+                "joinTitle": "参与排行榜，和所有人一较高下",
+                "joining": "正在加入…",
+                "join": "加入限时挑战排行榜",
+                "joinHint": "为防止不当用语，昵称只能随机生成",
+                "rollA11y": "重新随机昵称",
+                "notReady": "排行榜还在准备中",
+                "joinedToast": "已加入排行榜！",
+                "joinFailedToast": "加入排行榜失败，请稍后再试",
+                "plays": "局数",
+                "bestCombo": "最高连击",
+                "historyTitle": "每局得分",
+                "historyCount": "{{count}}局",
+                "unit": "分",
+                "start": "开始180秒限时挑战"
+            },
+            "tower": {
+                "allCleared": "已征服所有层",
+                "desc": "逐层击败首领，一路登顶",
+                "cleared": "已征服 {{cleared}} / {{total}} 层",
+                "attempts": "今日剩余挑战 {{count}} 次",
+                "enter": "进入爬塔挑战"
+            },
+            "modes": {
+                "mix": {
+                    "title": "每日混合",
+                    "desc": "全主题随机混合10题，每天检验实力",
+                    "tag": "四选一"
+                },
+                "bundle": {
+                    "title": "组合答题",
+                    "desc": "只挑想要的主题，组合起来一次答完",
+                    "tag": "自选主题"
+                },
+                "ox": {
+                    "title": "判断题",
+                    "desc": "快速判断给出的答案是 O 还是 X",
+                    "tag": "极速判断"
+                },
+                "blank": {
+                    "title": "填空题",
+                    "desc": "从选项中选出说明里被遮住的名称",
+                    "tag": "语境推理"
+                },
+                "initial": {
+                    "title": "首字母答题",
+                    "desc": "看说明和首字母提示，猜出名称",
+                    "tag": "首字母提示"
+                },
+                "picture": {
+                    "title": "看图答题",
+                    "desc": "只看国旗、肖像或地标照片猜名称",
+                    "tag": "用眼答题"
+                },
+                "flagMatch": {
+                    "title": "国旗配对",
+                    "desc": "翻牌配对国旗与国名的记忆游戏",
+                    "tag": "记忆游戏"
+                },
+                "match": {
+                    "title": "翻牌配对",
+                    "desc": "翻牌配对名称与说明的记忆游戏",
+                    "tag": "记忆游戏"
+                },
+                "bookmark": {
+                    "title": "收藏答题",
+                    "desc": "用你收藏的内容打造专属题库",
+                    "tag": "专属题库"
+                },
+                "wrongReview": {
+                    "title": "错题复习",
+                    "desc": "只做错题，补齐短板",
+                    "tag": "补齐短板"
+                },
+                "weakFocus": {
+                    "title": "弱项集中",
+                    "desc": "集中攻克薄弱主题",
+                    "tag": "攻克弱项"
+                },
+                "exam": {
+                    "title": "主题课程",
+                    "desc": "按地理·世界史·通识主题，一次做完一套",
+                    "tag": "主题课程"
+                },
+                "league": {
+                    "title": "每周联赛",
+                    "desc": "积累 XP，每周冲击晋级",
+                    "tag": "XP 晋级"
+                }
+            },
+            "guide": {
+                "title": "限时挑战玩法",
+                "line1": "在180秒内尽可能多地答对题目。",
+                "line2": "每答对1题得{{point}}分，连续答对记为最高连击。",
+                "line3": "加入排行榜，用单局最高分一争排名。"
+            }
+        },
+        "stats": {
+            "header": {
+                "title": "我的动态",
+                "sub": "学习记录和成就一目了然"
+            },
+            "summary": {
+                "streak": "连续学习{{days}}天",
+                "best": "最高纪录{{days}}天",
+                "quiz": "答题",
+                "study": "学习",
+                "solved": "已答题",
+                "accuracy": "正确率",
+                "quizCount": "答题次数",
+                "learnDone": "已学完",
+                "learnRate": "总进度",
+                "studiedToday": "今日学习"
+            },
+            "group": {
+                "ranking": "排行榜",
+                "studyRecord": "学习记录",
+                "quizRecord": "答题记录",
+                "timeRecord": "限时挑战记录",
+                "dailyRecord": "今日一测记录",
+                "achievement": "成就"
+            },
+            "rank": {
+                "title": "总排行榜",
+                "desc": "用答题分数一较高下的名人堂",
+                "more": "查看全部",
+                "myRank": "我的排名",
+                "rankValue": "第{{rank}}名",
+                "myScore": "我的分数",
+                "scoreValue": "{{score}}分",
+                "join": "加入排行榜，查看我的排名",
+                "empty": "还没有记录。答题就能积累分数！",
+                "unit": "分"
+            },
+            "tabs": {
+                "study": "学习",
+                "quiz": "答题",
+                "time": "限时挑战",
+                "daily": "今日一测"
+            },
+            "time": {
+                "emptyTitle": "还没有限时挑战记录",
+                "emptySub": "来180秒挑战里攒连击分吧",
+                "start": "开始限时挑战",
+                "plays": "局数",
+                "bestCombo": "最高连击",
+                "historyTitle": "每局得分",
+                "playCount": "{{n}}局",
+                "collapse": "收起",
+                "showAll": "查看全部记录（{{n}}局）",
+                "scoreUnit": "分"
+            },
+            "daily": {
+                "emptyTitle": "还没有今日一测记录",
+                "emptySub": "每天做今日一测，记录就会累积",
+                "start": "去做今日一测",
+                "month": "{{month}}月",
+                "rowTitle": "答对 {{correct}} / {{total}} 题",
+                "rateLabel": "正确率 ",
+                "modalTitle": "今日一测",
+                "scoreUnit": " / {{total}} 题答对",
+                "correct": "正确",
+                "wrong": "错误"
+            },
+            "topic": {
+                "quizTitle": "各主题答题进度",
+                "studyTitle": "各主题学习进度",
+                "quizSub": "各主题答题数与正确率",
+                "studySub": "各主题已学卡片数",
+                "sortQuiz": "正确率从低到高",
+                "sortStudy": "进度从低到高",
+                "main": "主要主题",
+                "sub": "附加答题",
+                "pillQuiz": "{{rate}}% · 已答 {{done}}/{{total}}",
+                "pillStudy": "{{rate}}% · 完成 {{done}}/{{total}}",
+                "totalAccuracy": "总正确率",
+                "totalProgress": "总进度",
+                "totalQuiz": "{{done}} / {{total}}题",
+                "totalStudy": "{{done}} / {{total}}张",
+                "stateAttempted": "已答题",
+                "stateNotAttempted": "未答题",
+                "stateDone": "已完成",
+                "stateInProgress": "进行中",
+                "stateNotStarted": "未开始",
+                "solved": "已答{{n}}题",
+                "correct": "答对 {{n}}",
+                "wrong": "答错 {{n}}",
+                "cards": "{{done}}/{{total}}张",
+                "accuracy": "正确率 {{rate}}%"
+            },
+            "ach": {
+                "title": "徽章",
+                "obtained": "已获得 {{unlocked}} / {{total}} 枚",
+                "filterProgress": "进行中",
+                "filterDone": "已达成",
+                "emptyDone": "还没有达成的徽章",
+                "emptyProgress": "所有徽章都集齐啦！",
+                "emptyLoading": "正在加载徽章",
+                "unlocked": "已达成"
+            },
+            "guide": {
+                "title": "我的动态使用指南",
+                "line1": "学习和答题记录会自动汇总到这里。",
+                "line2": "用中间的标签切换学习、答题、限时挑战记录。",
+                "line3": "点击底部徽章，查看获得条件。"
+            }
+        },
+        "settings": {
+            "header": {
+                "title": "设置",
+                "sub": "按你的习惯设置提醒和学习环境"
+            },
+            "share": {
+                "title": "喜欢这个应用吗？",
+                "sub": "把好用的应用分享给家人和朋友吧！",
+                "button": "分享"
+            },
+            "section": {
+                "notification": "通知",
+                "theme": "显示主题",
+                "language": "语言",
+                "interest": "感兴趣的主题",
+                "reset": "重置数据",
+                "permission": "权限管理",
+                "relatedApps": "推荐问答应用",
+                "info": "关于",
+                "dev": "开发者 (DEV)",
+                "moreApps": "开发者的更多应用"
+            },
+            "notification": {
+                "reminder": "今日常识提醒",
+                "reminderDesc": "每天在设定时间推送今日常识",
+                "sound": "音效",
+                "soundDesc": "播放答对、答错、完成音效",
+                "soundTest": "试听",
+                "test": "发送测试通知",
+                "testDesc": "立即检查通知能否正常收到",
+                "testSend": "发送",
+                "bgm": "背景音乐",
+                "bgmDesc": "答题、游戏、学习时播放丛林背景音乐"
+            },
+            "toast": {
+                "soundOn": "音效已开启",
+                "soundOff": "音效已关闭",
+                "soundTest": "已播放音效。如果听不到，请检查设备音量或静音模式",
+                "bgmOn": "背景音乐已开启",
+                "bgmOff": "背景音乐已关闭",
+                "interestApplied": "将立即应用到首页",
+                "rankingResetFail": "排行榜服务器分数未能清除，请稍后再试",
+                "notOnThisStore": "该应用尚未在此商店上架",
+                "themeLight": "已切换为浅色模式",
+                "themeDark": "已切换为深色模式",
+                "notifGranted": "已允许通知",
+                "testSent": "通知已发送，请查看通知栏",
+                "testFail": "通知权限已关闭，请在设置中允许",
+                "trackingGranted": "已允许个性化广告",
+                "trackingDenied": "未允许个性化广告"
+            },
+            "theme": {
+                "light": "浅色",
+                "lightDesc": "明亮背景（默认）",
+                "dark": "深色",
+                "darkDesc": "暗色背景，减少刺眼"
+            },
+            "reset": {
+                "learn": "学习",
+                "learnDesc": "重置卡片和短视频的学习完成记录",
+                "quiz": "答题",
+                "quizDesc": "重置分数、正确率、连续记录、错题本和今日一测",
+                "time": "限时挑战",
+                "timeDesc": "重置限时挑战最高分、对局记录和排行榜分数",
+                "all": "全部",
+                "allDesc": "收藏、错题本、统计、分数、签到、宠物、联赛、测试记录等所有学习数据",
+                "allButton": "全部重置",
+                "doneTitle": "重置完成",
+                "doneMessage": "{{label}}已重置。",
+                "failTitle": "重置失败",
+                "failMessage": "重置{{label}}时出了点问题，请稍后再试。"
+            },
+            "permission": {
+                "notification": "通知",
+                "notificationDesc": "用于今日常识和错题复习提醒",
+                "tracking": "允许跟踪 (ATT)",
+                "trackingDesc": "用于提供个性化广告的可选权限",
+                "checking": "检查中",
+                "granted": "已允许",
+                "request": "去设置"
+            },
+            "info": {
+                "version": "应用版本",
+                "share": "分享应用",
+                "contact": "联系我们",
+                "openSource": "开源库",
+                "openSourceDesc": "查看使用的开源项目及许可证",
+                "homepage": "官方网站",
+                "homepageDesc": "ecodelab.im"
+            },
+            "dev": {
+                "completeQuizzes": "完成全部答题",
+                "completeLearning": "完成全部学习",
+                "completedQuizzes": "已将全部答题标记为完成",
+                "completedLearning": "已将全部学习标记为完成"
+            }
+        },
+        "search": {
+            "allScopes": "全部主题",
+            "placeholder": "在{{scope}}中搜索",
+            "clearQuery": "清除搜索词",
+            "recent": {
+                "title": "最近搜索",
+                "clearAll": "全部删除",
+                "clearAllA11y": "删除全部最近搜索",
+                "removeA11y": "删除搜索词{{term}}",
+                "confirmTitle": "删除最近搜索",
+                "confirmMessage": "要清除所有最近搜索吗？",
+                "cleared": "已清除最近搜索",
+                "removed": "已删除搜索词",
+                "restored": "已恢复搜索词"
+            },
+            "filter": {
+                "scope": "主题",
+                "category": "分类",
+                "level": "难度",
+                "a11y": "选择{{label}}，当前为{{value}}",
+                "pickScope": "选择主题",
+                "pickCategory": "选择分类",
+                "pickLevel": "选择难度"
+            },
+            "resultsFor": "“{{query}}”的搜索结果",
+            "resetA11y": "重置搜索条件",
+            "countUnit": "个",
+            "emptySearch": "没有找到“{{query}}”的相关结果。",
+            "emptyFilter": "没有符合条件的内容。",
+            "guide": {
+                "title": "搜索使用指南",
+                "line1": "输入想查的词或含义，马上为你找到。",
+                "line2": "选好主题后，还能按分类和难度进一步筛选。",
+                "line3": "点击星标即可保存到收藏夹。"
+            }
+        },
+        "library": {
+            "title": "收藏夹",
+            "tabBookmark": "收藏 {{n}}",
+            "tabWrong": "错题本 {{n}}",
+            "emptyBookmark": "还没有收藏的内容。",
+            "emptyBookmarkSub": "在学习卡片上点击星标即可收藏。",
+            "emptyWrong": "没有错题！",
+            "emptyWrongSub": "答题时做错的题会汇总到这里。",
+            "review": "复习 {{n}} 道错题",
+            "clearAll": "全部清空",
+            "clearDomain": "清空{{domain}}错题",
+            "clearTitle": "清空错题本",
+            "clearAllMessage": "要删除全部 {{n}} 道错题吗？",
+            "clearDomainMessage": "要删除{{domain}}的 {{n}} 道错题吗？",
+            "wrongRemoved": "已从错题本删除",
+            "wrongCleared": "已删除 {{n}} 道错题",
+            "wrongRestored": "已恢复错题",
+            "goStudy": "去学习{{domain}}"
+        },
+        "opensource": {
+            "title": "开源库",
+            "noRepo": "没有公开的仓库地址",
+            "linkError": "无法打开链接",
+            "summary": "本应用使用了 {{n}} 个开源项目",
+            "creditTitle": "地标照片来源",
+            "creditSub": "依照各自许可证使用维基共享资源的照片。点击即可查看原始文件信息。",
+            "thanks": "感谢开源社区和各位摄影师。"
+        },
+        "player": {
+            "domainQuiz": "{{domain}}测验",
+            "empty": "暂无可出的题目。",
+            "profile": {
+                "precise": {
+                    "title": "精准判断型",
+                    "desc": "能迅速抓住关键线索，稳稳选出正确答案。"
+                },
+                "growth": {
+                    "title": "直觉成长型",
+                    "descWrong": "基础常识很扎实。再看看易混的题，会更稳。",
+                    "descClean": "知识面很广，可以挑战更难的题目了。"
+                },
+                "review": {
+                    "title": "高效复习型",
+                    "desc": "错题就是学习重点。用错题本反复短练同类题吧。"
+                },
+                "basic": {
+                    "title": "夯实基础型",
+                    "desc": "现在读解析比答对更重要。从简单题开始慢慢积累吧。"
+                }
+            },
+            "result": {
+                "head": {
+                    "perfect": "太完美了！",
+                    "good": "做得好！",
+                    "cheer": "再加把劲！"
+                },
+                "sub": "{{title}}结果",
+                "unitCount": "题",
+                "unitPoint": "分",
+                "detail": "共{{solved}}题，答对{{correct}}题 · 正确率{{rate}}%",
+                "newRecord": "新纪录！比之前最高{{prev}}分 +{{diff}}分",
+                "stat": {
+                    "correct": "答对",
+                    "wrong": "答错",
+                    "bestCombo": "最高连击"
+                },
+                "list": {
+                    "wrongNote": "错题本",
+                    "wrongCheck": "查看错题",
+                    "correctCheck": "查看对题",
+                    "countSaved": "{{count}}题 · 已存入收藏夹",
+                    "countSaved_one": "{{count}}题 · 已存入收藏夹",
+                    "countSaved_other": "{{count}}题 · 已存入收藏夹",
+                    "detailHint": "点击查看详情"
+                },
+                "timed": {
+                    "wrongTitle": "错题解析",
+                    "correctTitle": "答对解析",
+                    "noWrong": "没有答错的题！",
+                    "noCorrect": "没有答对的题。"
+                },
+                "next": {
+                    "title": "下一步",
+                    "wrongReviewTitle": "错题本复习",
+                    "wrongReviewDesc": "只把错题挑出来再做一遍",
+                    "timeTitle": "限时挑战",
+                    "timeDesc": "180秒内尽可能多答对"
+                },
+                "loading": "正在加载题目",
+                "home": "回首页",
+                "retry": "再做一次"
+            },
+            "start": {
+                "preparing": "正在准备题目……",
+                "sub": "准备好就开始吧，规则如下。",
+                "timed": "共{{sec}}秒，尽可能多答题。",
+                "perQuestion": "每题限时{{sec}}秒。",
+                "noTimer": "不限时间，慢慢作答。",
+                "noTrack": "结果不计入分数和错题本。",
+                "daily": "答错的题会存入错题本。",
+                "points": "每答对1题得{{points}}分，答错的题存入错题本。",
+                "pointsReview": "每答对1题得{{points}}分，答对的题会移出错题本。",
+                "endScore": "中途退出也会按已答题目计分。",
+                "endResult": "中途退出也能查看已答部分的结果。",
+                "sound": "音效"
+            },
+            "count": {
+                "go": "开始！",
+                "hint": "{{sec}}秒内尽可能多答对吧！",
+                "tip": "连续答对，打出连击吧"
+            },
+            "combo": {
+                "fire": "火力全开！",
+                "streak": "连续答对！"
+            },
+            "play": {
+                "nth": "第{{n}}题",
+                "levelA11y": "共{{total}}题，第{{n}}题，难度{{level}}",
+                "levelUnknown": "未标注",
+                "score": "分数",
+                "correct": "答对",
+                "combo": "连击",
+                "timeLeft": "剩余时间",
+                "challengeTimeLeft": "挑战剩余时间",
+                "plusPoints": "+{{points}}分",
+                "end": "结束测验"
+            },
+            "explain": {
+                "correct": "答对了！",
+                "timeout": "可惜！超时了",
+                "wrong": "可惜！答错了",
+                "answer": "答案",
+                "question": "题目",
+                "explanation": "解析",
+                "result": "查看结果",
+                "next": "下一题",
+                "report": "题目有问题"
+            },
+            "exit": {
+                "title": "确定要退出吗？",
+                "message": "将保存当前结果并跳转到报告页面。",
+                "confirm": "退出"
+            }
+        },
+        "learnCard": {
+            "more": "了解更多"
+        },
+        "report": {
+            "title": {
+                "quiz": "测验报告",
+                "study": "学习报告"
+            },
+            "activeDays": "活跃{{count}}天",
+            "activeDays_one": "活跃{{count}}天",
+            "activeDays_other": "活跃{{count}}天",
+            "period": {
+                "recent": "最近{{days}}天",
+                "custom": "选择时段"
+            },
+            "rangeMax": "一次最多可查看{{max}}天",
+            "tile": {
+                "solved": "已答题",
+                "correct": "答对",
+                "accuracy": "正确率",
+                "studied": "学习(张)",
+                "activeDays": "活跃天数",
+                "dailyAvg": "日均(张)"
+            },
+            "weak": "薄弱主题 · {{title}} {{accuracy}}%",
+            "legend": {
+                "studied": "已学卡片"
+            },
+            "chartHint": "点击日期查看详情",
+            "dayTitle": "{{month}}月{{day}}日（{{dow}}）",
+            "dayAvg": "平均{{accuracy}}%",
+            "day": {
+                "correctItems": "答对的题",
+                "cardUnit": " 张",
+                "studiedCards": "当天学习的卡片",
+                "wrong": "错题"
+            },
+            "picker": {
+                "pickStart": "请选择开始日期",
+                "pickEnd": "{{start}} ~ 请选择结束日期",
+                "confirm": "查看此时段"
+            },
+            "dow": {
+                "sun": "日",
+                "mon": "一",
+                "tue": "二",
+                "wed": "三",
+                "thu": "四",
+                "fri": "五",
+                "sat": "六"
+            },
+            "calendar": {
+                "month": "{{month}}月",
+                "dayName": "星期{{dow}}",
+                "today": "今天"
+            }
+        },
+        "rankBoard": {
+            "unit": "分",
+            "meSuffix": " (我)",
+            "empty": "虚位以待",
+            "tierLabel": "第{{rank}}名 · TOP 3"
+        },
+        "header": {
+            "back": "返回"
+        },
+        "guide": {
+            "title": "这样用就对了",
+            "confirm": "知道了",
+            "nextA11y": "下一条提示",
+            "nextLineA11y": "查看下一条提示"
+        },
+        "learn": {
+            "titleOf": "{{title}}学习",
+            "mode": {
+                "title": "选择学习方式"
+            },
+            "bundle": {
+                "title": "选择学习",
+                "randomTitle": "随机学习",
+                "randomDesc": "混合本分类的所有主题一起学",
+                "startWith": "学习{{count}}个主题",
+                "startWith_one": "学习{{count}}个主题",
+                "startWith_other": "学习{{count}}个主题",
+                "pickTopic": "请选择主题",
+                "modeSubRandom": "从全部主题中随机学习，请选择方式。",
+                "modeSubSelected": "已选{{count}}个主题，想怎么学？",
+                "shortsTitle": "短视频式学习",
+                "shortsDesc": "上滑快速浏览",
+                "cardsTitle": "卡片学习",
+                "cardsDesc": "左右翻页，一张张细看"
+            },
+            "category": {
+                "search": "搜索",
+                "actions": {
+                    "studyTitle": "开始学习",
+                    "studyDesc": "选择短视频或卡片模式来记忆",
+                    "quizTitle": "开始测验",
+                    "quizDesc": "选择难度，用四选一检验实力",
+                    "quizDescNoLevel": "用四选一检验实力",
+                    "wrongTitle": "错题本",
+                    "wrongDesc": "只复习本主题的错题",
+                    "wrongDescEmpty": "还没有错题",
+                    "browseTitle": "浏览完整列表",
+                    "browseDesc": "按分类、难度筛选细读",
+                    "favoriteTitle": "收藏",
+                    "favoriteDesc": "查看本主题收藏的条目",
+                    "favoriteDescEmpty": "还没有收藏的条目"
+                },
+                "nextLevelSolved": "距下一级还差{{value}}题",
+                "nextLevelScore": "距下一级还差{{value}}分",
+                "maxLevel": "已达最高等级",
+                "nextGrade": "下一段位 · {{label}}",
+                "totalCount": "共{{value}}条",
+                "charLevels": "各等级角色",
+                "solved": "已答题",
+                "studyProgress": "学习进度",
+                "quizProgress": "测验进度",
+                "sampleEyebrow": "抢先体验",
+                "sampleTitle": "会出这样的题",
+                "sectionActions": "想做什么？",
+                "modeSub": "想怎么学{{title}}？",
+                "shortsTitle": "短视频模式",
+                "shortsDesc": "上滑轻松看，完成后自动下一条",
+                "cardsTitle": "卡片模式",
+                "cardsDesc": "正面名称 → 点击看背面说明，标记学完继续",
+                "levelSubtitle": "请选择{{title}}测验的难度"
+            },
+            "study": {
+                "exit": "结束学习",
+                "learning": "学习中",
+                "done": "已学完",
+                "pctDone": "已完成{{value}}%",
+                "emptyDone": "还没有学完的卡片。",
+                "emptyLearning": "没有学习中的卡片，从全部开始吧。",
+                "emptyAll": "暂无可学习的内容。",
+                "swipeHint": "← 左右滑动查看卡片 →",
+                "toastDone": "学完了！进入下一张",
+                "toastReview": "已移回待学习列表",
+                "tapToFlip": "点击翻转卡片",
+                "tapToFront": "点击回到正面",
+                "reportIssue": "内容有问题",
+                "info": "信息",
+                "summary": "摘要",
+                "story": "神话故事",
+                "more": "了解更多",
+                "review": "复习",
+                "completeLast": "学完 · 去答题",
+                "guideTitle": "卡片学习这样用",
+                "guide": {
+                    "swipe": "左右滑动可以查看下一张卡片。",
+                    "flip": "点击卡片即可翻面查看说明。",
+                    "complete": "所有卡片都标记“学完”后，就会进入测验。"
+                }
+            }
+        },
+        "quiz": {
+            "common": {
+                "titleOf": "{{title}}测验",
+                "resultOf": "{{title}}结果",
+                "topicCount": "{{count}}个主题",
+                "topicCount_one": "{{count}}个主题",
+                "topicCount_other": "{{count}}个主题",
+                "tabMain": "主要主题",
+                "tabSub": "趣味测验",
+                "selectTopics": "选择主题",
+                "selectAll": "全选",
+                "clearAll": "全部取消",
+                "accuracy": "正确率",
+                "correct": "答对",
+                "wrong": "答错",
+                "home": "回首页"
+            },
+            "modes": {
+                "blank": "填空题",
+                "initial": "首字母提示题",
+                "mix": "每日混合",
+                "ox": "判断题",
+                "picture": "看图答题",
+                "speed": "限时挑战",
+                "bookmark": "收藏测验",
+                "today": "今日测验",
+                "random": "随机测验"
+            },
+            "bookmark": {
+                "emptyTitle": "还没有收藏的条目",
+                "emptySub": "在学习卡片或故事流中点星标即可收藏。",
+                "cta": "查看故事流"
+            },
+            "bundle": {
+                "title": "选择测验",
+                "randomDesc": "从所有主题中随机出题",
+                "startWith": "用{{count}}个主题开始",
+                "startWith_one": "用{{count}}个主题开始",
+                "startWith_other": "用{{count}}个主题开始",
+                "startAll": "从全部{{tab}}开始",
+                "subtitleAll": "从全部{{tab}}中均衡出题",
+                "subtitleSelected": "按难度从所选主题中出题"
+            },
+            "match": {
+                "title": "连连看",
+                "titleFlag": "国旗连连看",
+                "shuffle": "重新洗牌",
+                "moves": "尝试 {{count}}",
+                "matched": "配对 {{value}}/{{total}}",
+                "done": "完成！",
+                "resultSub": "尝试{{count}}次 · {{time}}",
+                "again": "再来",
+                "guide": "把名称和说明配成对",
+                "guideFlag": "把国旗和国名配成对"
+            },
+            "sub": {
+                "introTitle": "轻松挑战世界杯与奥运会的历史",
+                "introText": "每个主题随机出10题，不计入主分数和统计。",
+                "section": "选择测验"
+            },
+            "today": {
+                "weekday": {
+                    "sun": "日",
+                    "mon": "一",
+                    "tue": "二",
+                    "wed": "三",
+                    "thu": "四",
+                    "fri": "五",
+                    "sat": "六"
+                },
+                "dateLabel": "{{month}}月{{day}}日（{{dow}}）",
+                "perfect": "太完美了！",
+                "doneTitle": "今日已完成！",
+                "statItems": "题",
+                "descPerfect": "一道题都没错！",
+                "descDone": "今日测验已全部完成，明天见",
+                "nextIn": "距下次测验 {{time}}",
+                "resultTitle": "今日结果",
+                "collapse": "收起",
+                "moreCount": "再看{{count}}条",
+                "reviewWrong": "复习{{count}}道错题",
+                "heroTitle": "今日{{count}}题",
+                "heroDesc": "每天从全部主题中重新出题。\n轻松{{count}}题，测测今天的手感。",
+                "infoCount": "今日题目{{count}}道",
+                "infoExplain": "查看结果和解析",
+                "alarmTitle": "今日测验提醒",
+                "alarmDesc": "每天{{time}}提醒你",
+                "alarmTime": "提醒时间",
+                "alarmTimeChanged": "提醒时间已更改 · {{time}}",
+                "permTitle": "需要通知权限",
+                "permMsg": "请在设置中允许通知权限。",
+                "alarmOn": "已开启今日测验提醒",
+                "alarmOff": "已关闭今日测验提醒",
+                "start": "开始今日测验",
+                "guideTitle": "今日测验这样用",
+                "guide": {
+                    "count": "从全部主题中出{{count}}题，还会混入待复习的错题。",
+                    "once": "每天一次，不限时，慢慢答。",
+                    "result": "答完即可查看结果和解析！"
+                }
+            },
+            "wrong": {
+                "title": "错题复习",
+                "titleScoped": "{{title}}错题复习",
+                "emptyTitle": "没有要复习的错题！",
+                "emptySub": "做测验时答错的题会汇总到这里，方便复习。",
+                "cta": "去学习主题",
+                "introTitle": "复习{{count}}道错题",
+                "introDesc": "先浏览一遍解析，准备好就开始。答对后会自动从错题本中移除。",
+                "recent": "最近答错 {{date}}",
+                "missCount": "答错{{count}}次",
+                "start": "开始复习（{{count}}题）",
+                "guideTitle": "错题复习这样用",
+                "guide": {
+                    "intro": "把错题集中起来再做一遍，就是错题复习。",
+                    "start": "浏览解析后，点击“开始复习”。",
+                    "remove": "答对的题会自动从错题本中移除！"
+                }
+            }
+        },
+        "special": {
+            "home": "回首页",
+            "test": {
+                "history": "历史结果",
+                "historyCount": "已测 {{count}} 次",
+                "start": "开始测试",
+                "share": "分享结果"
+            },
+            "exam": {
+                "title": "主题课程",
+                "sectionTitle": "主题课程",
+                "sectionSub": "完成一轮，分数和统计都会同步记录。",
+                "retryTitle": "{{title}} 错题",
+                "resultLabel": "{{title}} 结果",
+                "noRetryTitle": "没有可重做的错题",
+                "noRetryMsg": "错题记录与最新题目不匹配，请重新做整轮。",
+                "introDesc": "从本题包主题中抽取 {{count}} 题，一轮做完。",
+                "bestScore": "最高分",
+                "plays": "次数",
+                "playsValue": "{{count}} 次",
+                "lastWrong": "上轮错题",
+                "covers": "出题范围",
+                "questionCount": "题数",
+                "level": "难度",
+                "startCount": "开始 {{count}} 题",
+                "retryWrong": "只重做上轮 {{count}} 道错题",
+                "bestShort": "最高 {{best}}/{{total}}",
+                "playsShort": "已做 {{count}} 次"
+            },
+            "league": {
+                "title": "每周联赛",
+                "leagueName": "{{name}}联赛",
+                "badgeSub": "{{days}} 天后结算 · 我的排名第 {{rank}} 名",
+                "promote": "前 {{count}} 名晋级",
+                "demote": "后 {{count}} 名降级",
+                "me": "我",
+                "promoteLine": "晋级线",
+                "demoteLine": "降级线",
+                "cta": "答题赚 XP",
+                "note": "每答对 1 题得 10 XP · 每周日结算"
+            },
+            "levelTest": {
+                "title": "世界常识等级测试",
+                "heroTitle": "我的世界常识等级是？",
+                "heroDesc": "从全部主题抽取 {{count}} 题\n马上测出你的真实水平",
+                "chipTime": "约 2 分钟",
+                "chipSteps": "6 级诊断",
+                "gradePreview": "你可能获得这些等级",
+                "startHint": "结果会保存为记录，见证你的成长",
+                "shareMessage": "我的世界常识等级是「{{title}}（{{tier}}）」——{{total}} 题答对 {{correct}} 题（{{rate}} 分）！你也来测测吧。",
+                "resultDetail": "{{total}} 题答对 {{correct}} 题",
+                "wrongNote": "错题本",
+                "correctNote": "答对的题",
+                "retry": "再测一次",
+                "qTitle": "等级测试",
+                "seeResult": "查看结果",
+                "gradeMsg": {
+                    "master": "顶尖水平！几乎所有题都答对了。",
+                    "expert": "实力相当强，细节也很扎实。",
+                    "advanced": "水平很稳定，再加把劲就是高手！",
+                    "intermediate": "基础正在打牢，坚持下去吧。",
+                    "beginner": "正在打基础！每天积累一点点。",
+                    "novice": "刚刚出发！先从学习卡片慢慢开始吧。"
+                },
+                "grades": {
+                    "master": {
+                        "title": "顶级",
+                        "tier": "世界常识大师"
+                    },
+                    "expert": {
+                        "title": "特级",
+                        "tier": "高手境界"
+                    },
+                    "advanced": {
+                        "title": "高级",
+                        "tier": "实力扎实"
+                    },
+                    "intermediate": {
+                        "title": "中级",
+                        "tier": "基础达成"
+                    },
+                    "beginner": {
+                        "title": "初级",
+                        "tier": "成长中"
+                    },
+                    "novice": {
+                        "title": "入门",
+                        "tier": "环球旅行第一步"
+                    }
+                }
+            },
+            "ranking": {
+                "title": "排行榜",
+                "boardTitle": "{{label}}排行榜",
+                "tabTime": "限时挑战",
+                "descTotal": "用答题分数一较高下的名人堂",
+                "descTime": "180 秒专注力对决",
+                "unit": "分",
+                "shownCount": "显示人数",
+                "myRank": "我的排名",
+                "myScore": "我的分数",
+                "rankValue": "第 {{rank}} 名",
+                "nickChanged": "昵称已修改",
+                "nickChangeFailed": "昵称修改失败",
+                "joined": "已加入排行榜！",
+                "nickSaveFailed": "昵称保存失败",
+                "notReady": "排行榜还在准备中。",
+                "joinTitle": "加入排行榜",
+                "joinSub": "掷骰子，抽一个喜欢的昵称吧。",
+                "nickHint": "为防止不文明用语，昵称只能随机生成。",
+                "joinBtn": "用这个昵称加入",
+                "empty": "还没有记录。\n来当第一名吧！",
+                "listHead": "全部排名",
+                "editTitle": "修改昵称",
+                "editSub": "掷骰子，抽一个新昵称吧。",
+                "currentNick": "当前昵称：{{name}}",
+                "changing": "修改中…",
+                "changeBtn": "改用这个昵称"
+            },
+            "scoreDetail": {
+                "title": "分数详情",
+                "overallTitle": "总完成度",
+                "nextGradeSolved": "距下一等级还差 {{value}} 题",
+                "nextGradeScore": "距下一等级还差 {{value}} 分",
+                "maxGrade": "已达最高等级",
+                "unitPoint": "分",
+                "totalQuestions": "总题数",
+                "accuracy": "正确率",
+                "charView": "查看各等级角色",
+                "showAll": "查看全部",
+                "sectionTitle": "各主题分数",
+                "sectionSub": "点击主题，上方概览会切换到该主题",
+                "sortName": "按名称",
+                "sortScore": "按分数",
+                "sortRate": "按正确率",
+                "scoreValue": "{{value}} 分",
+                "questionsValue": "{{value}} 题",
+                "tagCorrect": "答对 {{value}} 题",
+                "tagRate": "正确率 {{value}}%",
+                "tagSolved": "已做 {{value}} 题",
+                "tagTotal": "共 {{value}} 题",
+                "tagProgress": "共 {{solved}}/{{total}} 题",
+                "studyProgress": "学习进度",
+                "remain": "还剩 {{value}} 个",
+                "next": "下一级",
+                "gradeFallback": "等级",
+                "toTop": "回到顶部",
+                "guideTitle": "分数详情这样看",
+                "guide1": "各主题的分数和正确率一目了然。",
+                "guide2": "点击主题，上方概览会切换为该主题等级。",
+                "guide3": "多做题就能升级，角色也会跟着长大！"
+            },
+            "shorts": {
+                "swipeHint": "上下滑动",
+                "toastNext": "学完啦！进入下一张",
+                "toastAllDone": "所有卡片都学完了！",
+                "toastDone": "学完啦！",
+                "toastReview": "已移回学习列表",
+                "shareMessage": "[{{domain}}] {{title}}\n→ {{meaning}}\n\n一起用世界常识测验来学习吧。",
+                "review": "复习",
+                "complete": "学完了",
+                "bookmark": "收藏",
+                "share": "分享",
+                "tabLearning": "学习中",
+                "tabLabel": "{{label}}（{{count}}）",
+                "emptyDone": "还没有学完的卡片。",
+                "emptyLearning": "没有学习中的卡片。",
+                "emptyAll": "没有可显示的卡片。",
+                "pct": "已完成 {{value}}%",
+                "exitA11y": "退出短视频学习",
+                "guideTitle": "短视频学习这样用",
+                "guide1": "上下滑动即可切换卡片。",
+                "guide2": "点右侧星星收藏，点分享发给好友。",
+                "guide3": "掌握后点「学完了」，移到已完成标签！"
+            },
+            "storyFeed": {
+                "sectionTitle": "今日阅读",
+                "sectionSub": "汇集全部主题的世界常识，轻松翻看就能记住。",
+                "empty": "该主题的阅读内容准备中。",
+                "examples": "示例",
+                "more": "看更多新故事"
+            },
+            "typeTest": {
+                "title": "世界常识类型测试",
+                "heroTitle": "我是哪种世界常识类型？",
+                "heroDesc": "用 {{count}} 个问题测出你的偏好\n还会推荐适合你的主题",
+                "chipCount": "{{count}} 题",
+                "chipTime": "约 1 分钟",
+                "chipTypes": "4 种类型",
+                "typePreview": "可能出现这些类型",
+                "startHint": "结果会保存为记录，看看你的偏好变化",
+                "historyDeleted": "记录已删除",
+                "shareMessage": "我的世界常识类型是「{{name}}（{{sub}}）」！🌏 你也来测测吧。",
+                "recommend": "推荐主题：学习{{label}}",
+                "again": "重测",
+                "qTitle": "类型测试",
+                "types": {
+                    "A": {
+                        "desc": "你喜欢追问原因和来龙去脉，最适合改变世界的事件与人物。",
+                        "domainLabel": "世界历史事件",
+                        "name": "爱思考的历史学家",
+                        "sub": "历史型"
+                    },
+                    "B": {
+                        "desc": "你总被陌生的地方吸引，最适合国家、首都和地标。",
+                        "domainLabel": "世界首都",
+                        "name": "说走就走的旅行家",
+                        "sub": "地理型"
+                    },
+                    "C": {
+                        "desc": "爱想象远方的感性派，最适合太阳系和星座。",
+                        "domainLabel": "星座与天体",
+                        "name": "仰望星空的梦想家",
+                        "sub": "宇宙型"
+                    },
+                    "D": {
+                        "desc": "你热爱精彩的故事，最适合神与英雄的神话。",
+                        "domainLabel": "希腊罗马神话",
+                        "name": "故事收藏家",
+                        "sub": "神话型"
+                    }
+                },
+                "questions": {
+                    "q1": {
+                        "title": "和朋友聊天时，我会？",
+                        "A": "追问为什么",
+                        "B": "聊去过的地方",
+                        "C": "分享天马行空的想象",
+                        "D": "讲有趣的段子"
+                    },
+                    "q2": {
+                        "title": "看到没听过的国家名时？",
+                        "A": "好奇它的历史",
+                        "B": "在地图上找它在哪",
+                        "C": "想象那里的夜空",
+                        "D": "好奇那里的传说"
+                    },
+                    "q3": {
+                        "title": "我喜欢的内容是？",
+                        "A": "历史纪录片",
+                        "B": "旅行 Vlog",
+                        "C": "宇宙纪录片",
+                        "D": "奇幻电影"
+                    },
+                    "q4": {
+                        "title": "我的学习风格是？",
+                        "A": "钻研原理和脉络",
+                        "B": "亲眼看、亲手学",
+                        "C": "先营造氛围再学",
+                        "D": "靠故事来记忆"
+                    },
+                    "q5": {
+                        "title": "旅行时我会去？",
+                        "A": "历史古迹·博物馆",
+                        "B": "逛小巷和市场",
+                        "C": "看风景·赏夜空",
+                        "D": "有传说的名胜"
+                    },
+                    "q6": {
+                        "title": "最想听到的夸奖是？",
+                        "A": "真聪明",
+                        "B": "人脉广",
+                        "C": "有品味",
+                        "D": "真有趣"
+                    },
+                    "q7": {
+                        "title": "在博物馆待最久的地方是？",
+                        "A": "年表与文物馆",
+                        "B": "世界文化展厅",
+                        "C": "天象馆",
+                        "D": "神话雕像区"
+                    },
+                    "q8": {
+                        "title": "世界常识最大的魅力是？",
+                        "A": "历史的脉络",
+                        "B": "广阔的世界",
+                        "C": "无尽的宇宙",
+                        "D": "有趣的故事"
+                    }
+                }
+            },
+            "weakFocus": {
+                "title": "弱项突破课程",
+                "playerTitle": "弱项突破",
+                "resultLabel": "弱项突破结果",
+                "weakTitle": "集中攻克薄弱主题！",
+                "emptyTitle": "先来积累实力吧？",
+                "weakDesc": "汇集你正确率低的主题，用 {{count}} 题补强弱项。",
+                "emptyDesc": "数据还不够，先从全主题混合题开始吧。",
+                "start": "开始突破"
+            }
+        },
+        "tower": {
+            "dev": {
+                "title": "开发者模式",
+                "chooseAction": "请选择操作",
+                "clearLevel": "通关第 {{level}} 关",
+                "reset": "重置为初始状态",
+                "autoPass": "要将所有题目判为正确吗？"
+            },
+            "homeButton": {
+                "confirmTitle": "要退出测验吗？",
+                "confirmMessage": "当前进度不会保存。",
+                "a11y": "回首页"
+            },
+            "countdown": {
+                "go": "开始！",
+                "step3": "深呼吸",
+                "step2": "准备好！",
+                "step1": "马上开始！",
+                "step0": "加油！"
+            },
+            "challenge": {
+                "title": "爬塔挑战",
+                "subtitle": "向塔顶进发",
+                "heroTitle": "一层一层，登上塔顶",
+                "progressTitle": "已征服楼层",
+                "attemptsLeft": "今日剩余挑战",
+                "attemptCount": "{{count}} 次",
+                "adButton": "看广告 +1 次",
+                "adA11y": "看广告增加 1 次挑战机会",
+                "adAllUsed": "今日已用完",
+                "adUsed": "今日已用 {{used}}/{{max}}",
+                "rewardLabel": "通关奖励",
+                "startA11y": "挑战第 {{level}} 层",
+                "start": "挑战（爱心 -1）",
+                "watchAdToStart": "看广告挑战",
+                "allClearedTitle": "所有楼层都已征服！",
+                "allClearedSub": "已登顶 · 奖励全部到手",
+                "lockedHint": "通关上一层后解锁",
+                "currentTag": "挑战中",
+                "floorsTitle": "全部楼层",
+                "exitConfirm": "要退出爬塔挑战吗？",
+                "notice": {
+                    "clear": "• 每层 5 题全部答对才算通关",
+                    "reward": "• 通关即可领取该层奖励",
+                    "daily": "• 每天可挑战 {{daily}} 次，每晚零点重置",
+                    "ad": "• 看广告每天最多可多挑战 {{max}} 次"
+                },
+                "noAttempts": {
+                    "title": "挑战次数不足",
+                    "message": "要观看广告获取挑战机会吗？",
+                    "confirm": "看广告"
+                },
+                "toast": {
+                    "adLimit": "今天不能再看广告了",
+                    "adRewarded": "已增加 1 次挑战机会",
+                    "adClosed": "看完广告才能领取奖励",
+                    "adFailed": "广告加载失败，请稍后再试"
+                },
+                "guide": {
+                    "title": "爬塔挑战这样玩",
+                    "line1": "每层 5 题全部答对，即可解锁下一层。",
+                    "line2": "通关一层就能领取该层奖励！",
+                    "line3": "每天可挑战 {{daily}} 次，看广告还能多挑战 {{max}} 次！"
+                }
+            },
+            "quiz": {
+                "loading": "正在生成题目...",
+                "notFound": "找不到爬塔信息。",
+                "noQuestions": "没有等级 {{level}} 的题目。",
+                "back": "返回",
+                "exitA11y": "退出爬塔",
+                "questionCount": "第 {{current}} / {{total}} 题",
+                "progress": "进度",
+                "badge": "题目",
+                "next": "下一题",
+                "showResult": "查看结果",
+                "exitConfirm": {
+                    "title": "退出爬塔挑战",
+                    "message": "要退出爬塔挑战吗？\n挑战次数将被扣除。",
+                    "confirm": "退出"
+                }
+            },
+            "result": {
+                "home": "首页",
+                "reviewTitle": "📋 回顾题目",
+                "wrongCount": "错 {{count}} 题",
+                "reviewA11y": "第 {{no}} 题 {{word}} {{result}}，点击{{action}}解析",
+                "correct": "正确",
+                "wrong": "错误",
+                "collapse": "收起",
+                "expand": "展开",
+                "myAnswer": "我的答案 · {{answer}}",
+                "notPicked": "未作答",
+                "answer": "正确答案 · {{answer}}",
+                "goReview": "去复习 {{count}} 道错题",
+                "failText": "全部答对才能通关。\n别放弃，再挑战一次吧！"
+            },
+            "data": {
+                "floor1": {
+                    "name": "初级塔",
+                    "bossName": "贪吃野猪噜噜",
+                    "bossTitle": "第 1 关 Boss",
+                    "bossDescription": "想偷吃鬼怪荞麦凉粉的森林捣蛋鬼野猪",
+                    "clearCondition": "通关全部初级题",
+                    "rewardName": "初级帽子",
+                    "rewardDescription": "教训了偷凉粉的噜噜后得到的第一顶帽子，是迈向塔顶第一步的证明。"
+                },
+                "floor2": {
+                    "name": "中级塔",
+                    "bossName": "岩石巨人老顽固",
+                    "bossTitle": "第 2 关 Boss",
+                    "bossDescription": "挡在石山入口的倔强巨人，只有答对题才肯让路",
+                    "clearCondition": "通关全部中级题",
+                    "rewardName": "中级披风",
+                    "rewardDescription": "老顽固让路时送上的石山披风，再大的风也能稳稳护住你。"
+                },
+                "floor3": {
+                    "name": "高级塔",
+                    "bossName": "千年九尾狐魅惑",
+                    "bossTitle": "第 3 关 Boss",
+                    "bossDescription": "从山谷迷雾中现身、神秘又狡黠的狐妖",
+                    "clearCondition": "通关全部高级题",
+                    "rewardName": "传说守护者",
+                    "rewardDescription": "驱散九尾狐的迷雾后现身的古老守护者，从此决定守护在你身边。"
+                },
+                "floor4": {
+                    "name": "终极塔",
+                    "bossName": "鬼怪之王阎罗",
+                    "bossTitle": "第 4 关 最终 Boss",
+                    "bossDescription": "头戴巨大御赐花、手持黄金棒槌，威风凛凛的鬼怪君主",
+                    "clearCondition": "通关全部特级题",
+                    "rewardName": "黄金鬼怪棒槌",
+                    "rewardDescription": "鬼怪之王阎罗只交给认可之人的黄金棒槌，是征服高塔的真正强者的象征。"
+                }
+            }
+        },
+        "modal": {
+            "achievement": {
+                "kicker": "获得新徽章！",
+                "extra": "还一起获得了 {{count}} 枚徽章！"
+            },
+            "attendance": {
+                "closeA11y": "关闭签到",
+                "eyebrow": "每日签到",
+                "streakUnit": "天连续",
+                "subDone": "今日已签到！明天见",
+                "subTodo": "今天签到，延续你的记录",
+                "milestoneHead": "连续签到徽章",
+                "milestones": {
+                    "first": "首次签到",
+                    "week": "一周",
+                    "twoWeeks": "2 周",
+                    "month": "一个月",
+                    "fifty": "50 天",
+                    "twoMonths": "两个月",
+                    "hundred": "100 天"
+                },
+                "legendAttended": "已签到",
+                "legendToday": "今天",
+                "legendShield": "保护卡",
+                "celebrateShielded": "连续记录保住了！",
+                "celebrateDone": "签到成功！",
+                "celebrateSubShielded": "已用保护卡 · 连续第 {{count}} 天",
+                "celebrateSub": "连续第 {{count}} 天"
+            },
+            "badgeDetail": {
+                "stateUnlocked": "已获得徽章",
+                "stateLocked": "进行中的徽章",
+                "progress": "进度",
+                "unlockedAt": "{{date}} 获得",
+                "shareA11y": "炫耀{{title}}徽章",
+                "share": "炫耀一下"
+            },
+            "badgeDex": {
+                "title": "徽章图鉴",
+                "closeA11y": "关闭徽章图鉴",
+                "rateLabel": "徽章收集率",
+                "countTotal": " / {{total}} 枚已获得",
+                "complete": "所有徽章都集齐了！真正的收藏家！",
+                "remaining": "再集 {{count}} 枚就能集齐图鉴",
+                "searchPlaceholder": "搜索徽章名称·条件",
+                "clearSearch": "清除搜索",
+                "onlyLocked": "仅未获得",
+                "emptyLocked": "没有符合条件的未获得徽章",
+                "emptySearch": "没有搜索结果",
+                "rowA11y": "{{title}}徽章详情"
+            },
+            "characterLevels": {
+                "title": "各等级角色",
+                "sub": "随着学习推进，角色会逐级成长",
+                "closeA11y": "关闭各等级角色",
+                "reqStart": "起步",
+                "reqQuestions": "{{value}} 题",
+                "reqPoints": "{{value}} 分",
+                "unlocked": "已获得 · {{req}}",
+                "locked": "未解锁 · {{req}}"
+            },
+            "dailyAlarm": {
+                "title": "每日常识提醒",
+                "sub": "每天定时推送今日常识",
+                "closeA11y": "关闭提醒设置",
+                "permWarn": "请在设置中允许通知权限。",
+                "openSettings": "打开设置",
+                "toggle": "开启提醒",
+                "time": "提醒时间",
+                "am": "上午",
+                "pm": "下午",
+                "timeLabel": "{{ampm}} {{hour}}:{{minute}}",
+                "toastOn": "已开启每日常识提醒",
+                "toastOff": "已关闭每日常识提醒",
+                "toastFail": "提醒保存失败，请重试"
+            },
+            "difficulty": {
+                "title": "选择难度",
+                "sub": "选个难度开始答题吧",
+                "closeA11y": "关闭难度选择",
+                "count": "{{value}} 题",
+                "desc": {
+                    "all": "各难度均匀出题",
+                    "beginner": "从基础一步步来",
+                    "intermediate": "稳步向上提升",
+                    "advanced": "把实力练扎实",
+                    "expert": "挑战最高难度"
+                }
+            },
+            "exitConfirm": {
+                "title": "要结束学习吗？",
+                "message": "现在离开将退出本次学习页面。",
+                "confirm": "结束"
+            },
+            "reset": {
+                "title": "重置{{label}}",
+                "warn": "重置后将无法恢复。"
+            },
+            "detail": {
+                "descLabel": "摘要",
+                "tagLabel": "相关关键词",
+                "infoChon": "基本信息",
+                "info": "信息",
+                "explanation": "解析",
+                "story": "神话故事",
+                "more": "了解更多",
+                "closeA11y": "关闭详情"
+            },
+            "onboarding": {
+                "greetTitle": "你好！",
+                "greetLine": "欢迎来到世界常识测验。\n从首都、地标到名人、宇宙\n每天一起学一点。",
+                "interestTitle": "你想学些什么？",
+                "interestDesc": "选中的主题会优先显示在首页顶部。",
+                "goalTitle": "每天做几道题？",
+                "goalDesc": "将作为首页的今日目标，之后可随时修改。",
+                "goalLabel": "每天 {{count}} 题",
+                "goalDesc5": "轻松 · 每天 2 分钟",
+                "goalDesc10": "坚持 · 每天 5 分钟",
+                "goalDesc20": "专注 · 每天 10 分钟",
+                "notiTitle": "要接收学习提醒吗？",
+                "notiDesc": "提醒你复习错题、保持连续签到。\n不会推送广告通知。",
+                "notiAllow": "接收提醒",
+                "later": "以后再说",
+                "skip": "跳过"
+            }
+        },
+        "atomic": {
+            "categoryScope": {
+                "allA11y": "全部主题",
+                "chipA11y": "{{title}}，{{value}} 个"
+            },
+            "entryImage": {
+                "broken": "图片加载失败"
+            },
+            "filterSheet": {
+                "closeA11y": "关闭选择窗口",
+                "selected": "{{label}}，已选中"
+            }
+        },
+        "ads": {
+            "preparing": "广告准备中…",
+            "rewardSub": "看完可获得 1 次挑战机会",
+            "rewardFrontButton": "观看激励插屏广告"
+        },
+        "versionCheck": {
+            "badge": "必要更新",
+            "title": "新版本上线啦",
+            "message": "新增了功能，修复了体验问题。\n请更新到最新版本。",
+            "feature": "新增功能",
+            "fix": "修复 Bug，提升稳定性",
+            "current": "当前",
+            "latest": "最新",
+            "update": "立即更新",
+            "notice": "更新后即可继续使用"
+        },
+        "svc": {
+            "notification": {
+                "testTitle": "通知已成功送达 🎉",
+                "testBody": "从此不会错过每日知识和测验提醒啦。",
+                "streakTitle": "别忘了今天签到！",
+                "streakBodyOn": "已连续签到 {{streak}} 天！今天也来签到，延续纪录吧。",
+                "streakBodyOff": "今天签个到，顺便学一个世界知识吧？",
+                "dailyWordTitle": "每日知识",
+                "dailyWordBody": "今天的世界知识已就位，现在看看吧？",
+                "todayQuizTitle": "今日测验",
+                "todayQuizBody": "来挑战今天的 5 道世界知识题吧？",
+                "wrongReviewTitle": "错题复习时间到",
+                "wrongReviewBody": "还有 {{n}} 道错题等你复习，现在再做一遍吧？"
+            },
+            "share": {
+                "appIntro": "最近发现一款超好玩的 App，推荐给你！😊",
+                "appLink": "👇 点击下方链接下载",
+                "badgeHead": "🏅 我获得了「{{title}}」徽章！",
+                "badgeProgress": "已收集徽章 {{unlocked}}/{{total}} 枚"
+            },
+            "report": {
+                "intro": "我发现以下题目有错误。",
+                "ask": "■ 哪里有问题？（请在此填写）",
+                "keepInfo": "※ 以下为核对信息，请勿删除。",
+                "prompt": "题目：{{value}}",
+                "answer": "答案：{{value}}",
+                "explanation": "解析：{{value}}",
+                "uid": "编号：{{value}}",
+                "domain": "主题：{{value}}",
+                "version": "App 版本：{{version}}（{{build}}）",
+                "noMailTitle": "无法打开邮件 App",
+                "noMailMessage": "请发送邮件至 {{mail}}，我们会尽快处理。",
+                "issueSubject": "[世界知识问答] 题目错误反馈",
+                "contactSubject": "世界知识问答 咨询"
+            },
+            "league": {
+                "me": "我",
+                "tier": {
+                    "bronze": "青铜",
+                    "silver": "白银",
+                    "gold": "黄金",
+                    "platinum": "铂金",
+                    "diamond": "钻石",
+                    "master": "大师"
+                }
+            },
+            "onboarding": {
+                "vocabLabel": "世界地理 · 历史",
+                "vocabDesc": "首都 · 地标 · 名人 · 世界史 · 神话 · 宇宙",
+                "knowledgeLabel": "体育知识",
+                "knowledgeDesc": "世界杯 · 夏季奥运会 · 冬季奥运会",
+                "bothLabel": "我全都要",
+                "bothDesc": "地理、历史和体育一起学"
+            },
+            "weekday": {
+                "sun": "日",
+                "mon": "一",
+                "tue": "二",
+                "wed": "三",
+                "thu": "四",
+                "fri": "五",
+                "sat": "六"
+            },
+            "learnHub": {
+                "oxTrue": "O（正确）",
+                "oxFalse": "X（错误）",
+                "oxGuide": "{{guide}} 答案正确选 O，错误选 X",
+                "oxExplanation": "正确答案：{{answer}}\n{{explanation}}",
+                "chosungGuide": "根据首字母提示选出正确名称",
+                "wrongReviewGuide": "错题复习！{{guide}}",
+                "wrongReviewDefault": "请选出正确答案",
+                "blankGuide": "选出填入空格的词"
+            }
+        },
+        "calendar": {
+            "monthNames": [
+                "1月",
+                "2月",
+                "3月",
+                "4月",
+                "5月",
+                "6月",
+                "7月",
+                "8月",
+                "9月",
+                "10月",
+                "11月",
+                "12月"
+            ],
+            "dayNames": [
+                "星期日",
+                "星期一",
+                "星期二",
+                "星期三",
+                "星期四",
+                "星期五",
+                "星期六"
+            ],
+            "dayNamesShort": [
+                "日",
+                "一",
+                "二",
+                "三",
+                "四",
+                "五",
+                "六"
+            ],
+            "today": "今天"
+        },
+        "achievements": {
+            "groups": {
+                "progress": "累计学习",
+                "session": "答题挑战",
+                "streak": "连续学习",
+                "skill": "连击·正确率",
+                "topic": "主题·模式"
+            },
+            "rarity": {
+                "common": "普通",
+                "rare": "稀有",
+                "epic": "史诗",
+                "legend": "传说"
+            },
+            "badges": {
+                "first_quiz": {
+                    "desc": "开启世界知识问答之旅的纪念徽章",
+                    "title": "第一步",
+                    "cond": "完成第一次测验"
+                },
+                "correct_50": {
+                    "desc": "答对的题目开始积累啦",
+                    "title": "答题新芽",
+                    "cond": "累计答对 50 题"
+                },
+                "solve_100": {
+                    "desc": "坚持答题的第一个里程碑",
+                    "title": "百问百答",
+                    "cond": "累计答题 100 道"
+                },
+                "correct_300": {
+                    "desc": "答对已成习惯的证明",
+                    "title": "答题之树",
+                    "cond": "累计答对 300 题"
+                },
+                "solve_500": {
+                    "desc": "答题量突破不容小觑的关口",
+                    "title": "突破五百",
+                    "cond": "累计答题 500 道"
+                },
+                "solve_1000": {
+                    "desc": "答题量达到四位数才能获得",
+                    "title": "征服千题",
+                    "cond": "累计答题 1,000 道"
+                },
+                "correct_1000": {
+                    "desc": "累计答对一千题的实力象征",
+                    "title": "答题森林",
+                    "cond": "累计答对 1,000 题"
+                },
+                "solve_2000": {
+                    "desc": "只为长久陪伴的学习者解锁",
+                    "title": "两千俱乐部",
+                    "cond": "累计答题 2,000 道"
+                },
+                "solve_3000": {
+                    "desc": "征服世界知识问答的荣耀之位",
+                    "title": "三千大师",
+                    "cond": "累计答题 3,000 道"
+                },
+                "quizzes_10": {
+                    "desc": "答题习惯正在养成",
+                    "title": "热身完毕",
+                    "cond": "测验 10 次"
+                },
+                "quizzes_50": {
+                    "desc": "常来挑战的老朋友徽章",
+                    "title": "坚持挑战者",
+                    "cond": "测验 50 次"
+                },
+                "quizzes_100": {
+                    "desc": "身经百战的老将证明",
+                    "title": "百战老将",
+                    "cond": "测验 100 次"
+                },
+                "quizzes_300": {
+                    "desc": "答题次数名列前茅",
+                    "title": "三百战百胜",
+                    "cond": "测验 300 次"
+                },
+                "streak_3": {
+                    "desc": "告别三分钟热度的第一步",
+                    "title": "三日之约",
+                    "cond": "连续学习 3 天"
+                },
+                "streak_7": {
+                    "desc": "一周一天不落",
+                    "title": "一周全勤",
+                    "cond": "连续学习 7 天"
+                },
+                "streak_14": {
+                    "desc": "两周节奏不乱的证明",
+                    "title": "两周全勤",
+                    "cond": "连续学习 14 天"
+                },
+                "streak_30": {
+                    "desc": "整月全勤，学习已成日常",
+                    "title": "一月全勤",
+                    "cond": "连续学习 30 天"
+                },
+                "streak_60": {
+                    "desc": "连续两个月，需要超强毅力",
+                    "title": "两月全勤",
+                    "cond": "连续学习 60 天"
+                },
+                "streak_100": {
+                    "desc": "百日坚持换来的最高级徽章",
+                    "title": "百日之功",
+                    "cond": "连续学习 100 天"
+                },
+                "combo_5": {
+                    "desc": "开始找到连续答对的感觉",
+                    "title": "热身连击",
+                    "cond": "连续答对 5 题"
+                },
+                "combo_10": {
+                    "desc": "专注力稳如泰山",
+                    "title": "专注连击",
+                    "cond": "连续答对 10 题"
+                },
+                "combo_20": {
+                    "desc": "打出长连击的实力证明",
+                    "title": "连击大师",
+                    "cond": "连续答对 20 题"
+                },
+                "combo_30": {
+                    "desc": "一次失误都没有的纪录",
+                    "title": "连击风暴",
+                    "cond": "连续答对 30 题"
+                },
+                "combo_50": {
+                    "desc": "传说级的连击纪录",
+                    "title": "连击传说",
+                    "cond": "连续答对 50 题"
+                },
+                "accuracy_80": {
+                    "desc": "不求多，但求准",
+                    "title": "实力派",
+                    "cond": "正确率 80% 以上（100 题+）"
+                },
+                "accuracy_90": {
+                    "desc": "长期保持高正确率的高手",
+                    "title": "答题王",
+                    "cond": "正确率 90% 以上（100 题+）"
+                },
+                "accuracy_95": {
+                    "desc": "几乎不会答错的境界",
+                    "title": "完美主义者",
+                    "cond": "正确率 95% 以上（100 题+）"
+                },
+                "time_10": {
+                    "desc": "开始享受限时的刺激",
+                    "title": "时间掌控者",
+                    "cond": "限时挑战 10 次"
+                },
+                "time_50": {
+                    "desc": "限时挑战驾轻就熟",
+                    "title": "时间征服者",
+                    "cond": "限时挑战 50 次"
+                },
+                "review_10": {
+                    "desc": "不放过任何一道错题",
+                    "title": "复习之力",
+                    "cond": "错题复习 10 次"
+                },
+                "review_30": {
+                    "desc": "用复习补齐短板的证明",
+                    "title": "复习达人",
+                    "cond": "错题复习 30 次"
+                },
+                "all_domains": {
+                    "desc": "不局限一个主题，样样都看过",
+                    "title": "主题全涉猎",
+                    "cond": "8 个主要主题各答一次"
+                },
+                "all_12": {
+                    "desc": "所有主题一个不落",
+                    "title": "完全涉猎",
+                    "cond": "8 个主要主题各答 10 题以上"
+                },
+                "solve_50": {
+                    "desc": "突破前五十题的起跑信号",
+                    "title": "五十关卡",
+                    "cond": "累计答题 50 道"
+                },
+                "correct_100": {
+                    "desc": "答对满一百题的首个成就",
+                    "title": "答对一百",
+                    "cond": "累计答对 100 题"
+                },
+                "correct_2000": {
+                    "desc": "答对两千题，实力已融入骨子里",
+                    "title": "答对两千",
+                    "cond": "累计答对 2,000 题"
+                },
+                "solve_5000": {
+                    "desc": "五千道题，属于最爱这款 App 的你",
+                    "title": "五千传说",
+                    "cond": "累计答题 5,000 道"
+                },
+                "quizzes_3": {
+                    "desc": "三局下来渐入佳境",
+                    "title": "三局两胜",
+                    "cond": "测验 3 次"
+                },
+                "quizzes_200": {
+                    "desc": "两百局的坚持证明",
+                    "title": "两百战",
+                    "cond": "测验 200 次"
+                },
+                "quizzes_500": {
+                    "desc": "五百局，次数稳居顶尖",
+                    "title": "五百战老将",
+                    "cond": "测验 500 次"
+                },
+                "streak_21": {
+                    "desc": "连续三周，习惯已经养成",
+                    "title": "三周全勤",
+                    "cond": "连续学习 21 天"
+                },
+                "streak_50": {
+                    "desc": "五十天全勤，节奏稳稳的",
+                    "title": "五十天全勤",
+                    "cond": "连续学习 50 天"
+                },
+                "streak_180": {
+                    "desc": "坚持半年才能解锁",
+                    "title": "半年之功",
+                    "cond": "连续学习 180 天"
+                },
+                "combo_15": {
+                    "desc": "一口气答对十五题的专注力",
+                    "title": "连对十五",
+                    "cond": "连续答对 15 题"
+                },
+                "combo_100": {
+                    "desc": "连续答对一百题，神话级别",
+                    "title": "连击神话",
+                    "cond": "连续答对 100 题"
+                },
+                "accuracy_70": {
+                    "desc": "发挥稳定，不起不落",
+                    "title": "稳定发挥",
+                    "cond": "正确率 70% 以上（100 题+）"
+                },
+                "accuracy_99": {
+                    "desc": "几乎一题不错的境界",
+                    "title": "零失误",
+                    "cond": "正确率 99% 以上（100 题+）"
+                },
+                "ox_20": {
+                    "desc": "判断对错的眼力练出来了",
+                    "title": "OX 判官",
+                    "cond": "OX 测验 20 次"
+                },
+                "blank_15": {
+                    "desc": "能根据上下文填出空格",
+                    "title": "填空达人",
+                    "cond": "填空测验 15 次"
+                },
+                "initial_15": {
+                    "desc": "看首字母就能想起名字",
+                    "title": "首字母鉴定师",
+                    "cond": "首字母测验 15 次"
+                },
+                "mix_30": {
+                    "desc": "不挑主题，样样都答",
+                    "title": "每日混搭王",
+                    "cond": "每日混合 30 次"
+                },
+                "bookmark_10": {
+                    "desc": "把收藏内容拿出来温习",
+                    "title": "收藏复习家",
+                    "cond": "收藏测验 10 次"
+                },
+                "day_solve_30": {
+                    "desc": "一天集中答完三十题",
+                    "title": "一天三十题",
+                    "cond": "单日答题 30 道"
+                },
+                "day_solve_100": {
+                    "desc": "一天一百题，下定决心的纪录",
+                    "title": "一天一百题",
+                    "cond": "单日答题 100 道"
+                },
+                "active_days_10": {
+                    "desc": "十天里坚持打开 App 的证明",
+                    "title": "十日纪录",
+                    "cond": "学习天数 10 天"
+                },
+                "active_days_30": {
+                    "desc": "积累三十天学习纪录",
+                    "title": "三十日纪录",
+                    "cond": "学习天数 30 天"
+                },
+                "daily_7": {
+                    "desc": "完成七次今日测验",
+                    "title": "今日测验常客",
+                    "cond": "完成今日测验 7 次"
+                },
+                "daily_30": {
+                    "desc": "三十次今日测验从不缺席",
+                    "title": "今日测验全勤",
+                    "cond": "完成今日测验 30 次"
+                },
+                "exam_5": {
+                    "desc": "用主题课程检验实力",
+                    "title": "课程完赛者",
+                    "cond": "参加主题课程 5 次"
+                },
+                "weak_10": {
+                    "desc": "专挑薄弱点下功夫",
+                    "title": "弱点猎手",
+                    "cond": "弱点强化学习 10 次"
+                },
+                "domain_30": {
+                    "desc": "选定主题深入钻研",
+                    "title": "主题深耕",
+                    "cond": "分主题学习 30 次"
+                },
+                "streak_365": {
+                    "desc": "全年无休，再无更高荣誉",
+                    "title": "一年之约",
+                    "cond": "连续学习 365 天"
+                },
+                "now_streak_5": {
+                    "desc": "当前正保持 5 天节奏",
+                    "title": "当前第 5 天",
+                    "cond": "当前连续学习 5 天"
+                },
+                "now_streak_15": {
+                    "desc": "已经半个月，状态正佳",
+                    "title": "当前第 15 天",
+                    "cond": "当前连续学习 15 天"
+                },
+                "time_correct_15": {
+                    "desc": "限时内答对十五题的反应力",
+                    "title": "连珠炮",
+                    "cond": "限时挑战单局答对 15 题"
+                },
+                "time_correct_30": {
+                    "desc": "单局三十题，限时挑战顶尖",
+                    "title": "读秒主宰",
+                    "cond": "限时挑战单局答对 30 题"
+                },
+                "time_combo_10": {
+                    "desc": "争分夺秒中连续答对十题",
+                    "title": "限时连击",
+                    "cond": "限时挑战单局连对 10 题"
+                },
+                "mode_5": {
+                    "desc": "各种模式都爱玩",
+                    "title": "模式探险家",
+                    "cond": "玩过 5 种不同模式"
+                },
+                "mode_8": {
+                    "desc": "几乎尝遍所有模式",
+                    "title": "模式收藏家",
+                    "cond": "玩过 8 种不同模式"
+                },
+                "deep_domain_3": {
+                    "desc": "深入钻研三个主题",
+                    "title": "深度钻研者",
+                    "cond": "3 个主题各答 100 题以上"
+                },
+                "capital_100": {
+                    "desc": "认识了一百座世界首都",
+                    "title": "首都博士",
+                    "cond": "世界首都答题 100 道"
+                },
+                "capital_240": {
+                    "desc": "地图上的首都了如指掌",
+                    "title": "首都征服者",
+                    "cond": "世界首都答题 240 道"
+                },
+                "landmark_50": {
+                    "desc": "一张照片就能认出地点",
+                    "title": "地标旅行家",
+                    "cond": "世界地标答题 50 道"
+                },
+                "nature_30": {
+                    "desc": "江河山脉开始浮现在地图上",
+                    "title": "读图达人",
+                    "cond": "世界地形答题 30 道"
+                },
+                "figure_100": {
+                    "desc": "和改变世界的人们成了朋友",
+                    "title": "名人探究家",
+                    "cond": "世界名人答题 100 道"
+                },
+                "figure_300": {
+                    "desc": "横跨时代与国家的人物通",
+                    "title": "人物博士",
+                    "cond": "世界名人答题 300 道"
+                },
+                "event_50": {
+                    "desc": "看透世界史的重大场面",
+                    "title": "世界史通",
+                    "cond": "世界史事件答题 50 道"
+                },
+                "myth_50": {
+                    "desc": "对众神与英雄的故事了如指掌",
+                    "title": "神话说书人",
+                    "cond": "希腊罗马神话答题 50 道"
+                },
+                "space_20": {
+                    "desc": "绕太阳系转了一圈的探索者",
+                    "title": "宇宙探险队",
+                    "cond": "太阳系答题 20 道"
+                },
+                "constellation_30": {
+                    "desc": "开始认识夜空中的星座",
+                    "title": "星座守望者",
+                    "cond": "星座与天体答题 30 道"
+                },
+                "sub_worldcup_3": {
+                    "desc": "三度回顾世界杯历史",
+                    "title": "世界杯博士",
+                    "cond": "世界杯测验 3 局"
+                },
+                "sub_olympic_3": {
+                    "desc": "熟知夏奥会举办地与金牌榜",
+                    "title": "奥运通",
+                    "cond": "夏季奥运会测验 3 局"
+                },
+                "sub_winter_3": {
+                    "desc": "冰雪赛场也不放过",
+                    "title": "冬奥通",
+                    "cond": "冬季奥运会测验 3 局"
+                },
+                "sub_sports_all": {
+                    "desc": "体育测验全都玩过的全能王",
+                    "title": "体育全能王",
+                    "cond": "世界杯、夏奥、冬奥测验全玩过"
+                },
+                "picture_10": {
+                    "desc": "看国旗和肖像就能秒认",
+                    "title": "火眼金睛",
+                    "cond": "看图测验 10 次"
+                }
+            },
+            "level": {
+                "unitScore": "{{value}} 分",
+                "unitSolved": "{{value}} 题",
+                "desc": "{{topic}}学习达到「{{level}}」等级的证明",
+                "title": "{{topic}} · {{level}}",
+                "name": "{{topic}} {{level}}",
+                "cond": "达成{{name}}等级（{{unit}}）"
+            }
+        },
+        "apps": {
+            "birthdaylog": {
+                "title": "生日管家",
+                "desc": "生日管家会提前提醒你重要的生日，还能记录每年收送的礼物。"
+            },
+            "jptravel": {
+                "title": "打包去日本",
+                "desc": "只需定好目的地和天数，打包去日本就会为你备好行李清单、预算与日元支出、地图行程和日语会话，是专属你这趟旅程的日本旅行准备 App。"
+            },
+            "noisemeter": {
+                "title": "噪音测量仪",
+                "desc": "噪音测量仪可用分贝测量并录制楼上噪音和生活噪音，将最大声级与 1·5 分钟等效声级对照昼夜标准，生成一页可提交的测量报告。"
+            },
+            "qrmaker": {
+                "title": "QRMaker",
+                "desc": "QRMaker 可轻松生成和扫描二维码与条形码，保存为图片或 PDF，并通过历史记录和备注统一管理。"
+            },
+            "spitogenie": {
+                "title": "刮刮乐精灵",
+                "desc": "刮刮乐精灵根据官方发行数据，用剩余奖金和剩余张数计算每期期望值与返奖率，告诉你现在最值得买的刮刮乐期次。"
+            },
+            "koreaquiz": {
+                "title": "韩语常识问答",
+                "desc": "通过测验学习四字成语、俗语、固有词、名人等韩语常识，错题还能反复复习，是一款韩语学习 App。"
+            },
+            "hanpick": {
+                "title": "汉字等级测验",
+                "desc": "按韩国汉字等级考试分级，用字音字义、部首、总笔画测验掌握 6,182 个汉字的学习 App。"
+            },
+            "vaulty": {
+                "title": "PhotoLock",
+                "desc": "把不想被看到的照片和视频从相册中隐藏，并用 PIN 或指纹上锁的私密保险箱 App。"
+            },
+            "mindCare": {
+                "title": "心灵森林",
+                "desc": "通过情绪记录、培育心灵之树、解压小工具、治愈音效和呼吸冥想，照顾疲惫一天后的心情"
+            },
+            "financeCalc": {
+                "title": "我的生活理财计算器",
+                "desc": "存款、定投、贷款、年薪等生活理财计算，一个 App 快速轻松搞定。"
+            },
+            "infinityOper": {
+                "title": "无限数学测验",
+                "desc": "每天坚持练习提升数感，还能用分数和徽章收获满满成就感的数学测验 App。"
+            },
+            "bloodType": {
+                "title": "血型研究所",
+                "desc": "关于血型的一切——遗传计算、配对、说法、测验到献血，想知道的都在这里！"
+            },
+            "linkManager": {
+                "title": "快链：智能链接管家",
+                "desc": "轻松保存，快速查找。用专属文件夹把链接整理得井井有条！"
+            },
+            "emotionalEmoticon": {
+                "title": "感性颜文字",
+                "desc": "2,000 多个文字表情等你来挑。一键复制，随处粘贴！"
+            },
+            "purekoreanquiz": {
+                "title": "纯韩语词测验",
+                "desc": "轻松有趣地学习优美的韩语固有词，通过多种测验检验词汇量，错词反复练习直到完全掌握。"
+            },
+            "unitCalc": {
+                "title": "我的单位换算器",
+                "desc": "集单位换算与生活计算于一体，可按使用习惯自由组合常用计算器，日常、工作和学习都适用的全能计算器 App。"
+            },
+            "choncalc": {
+                "title": "亲戚称呼计算器 Plus+",
+                "desc": "亲戚称呼计算器 Plus+ 不只是简单的计算器，更能帮你准确直观地理清家族关系。自动计算父系、母系及姻亲的亲等，还能即时查询海量亲属称谓。有趣实用的“家族关系测验”让你在玩中学会，是学习与乐趣兼得的亲属小助手。"
+            },
+            "emotionbutton": {
+                "title": "心情砰：让心情砰一下！",
+                "desc": "用一个按钮表达此刻的心情，再用各种特效轻松解压。用喜欢的图片做专属按钮并自由摆放，打造属于你的情绪空间。"
+            },
+            "agecalc": {
+                "title": "年龄计算器：今日年龄",
+                "desc": "不只是计算年龄，更能告诉你生日背后的意义与人生节奏。农历阳历转换之外，生肖、星座、诞生石、诞生花、诞生树、幸运色、守护星一目了然。"
+            },
+            "spellingquiz": {
+                "title": "韩语拼写测验",
+                "desc": "轻松有趣地学习各种韩语拼写规范的测验 App。通过测验检验所学，错题可用“错题复习”反复练习，离拼写高手更近一步。"
+            },
+            "idiomquiz": {
+                "title": "韩语惯用语测验",
+                "desc": "轻松有趣地学习各种韩语惯用语的测验 App。通过测验检验所学，错题可用“错题复习”反复练习，离惯用语高手更近一步。"
+            },
+            "catquiz": {
+                "title": "喵测验：猫咪问答",
+                "desc": "趣味了解各种猫咪品种，通过测验、反复练习和限时挑战积累知识，还能收集角色和徽章的游戏化学习 App。"
+            },
+            "todaycigarette": {
+                "title": "今日吸烟记录",
+                "desc": "“小记录带来大改变，从今天开始吧！”准确掌握吸烟习惯，陪你迈出戒烟第一步。"
+            },
+            "dogquiz": {
+                "title": "汪测验：狗狗问答",
+                "desc": "学习狗狗品种并通过测验加深记忆的图鉴式学习 App。"
+            },
+            "fouridioms": {
+                "title": "四字成语测验",
+                "desc": "用卡片学习四字成语、用测验检验水平的教育 App。"
+            },
+            "proverb": {
+                "title": "俗语测验",
+                "desc": "学习俗语、用多种测验检验并反复复习的教育 App。"
+            },
+            "country": {
+                "title": "首都测验",
+                "desc": "学习世界各国首都并用测验检验的教育 App。"
+            },
+            "lotto": {
+                "title": "乐透精灵：号码生成器",
+                "desc": "开奖查询、统计分析、号码生成等乐透功能一站集齐。"
+            },
+            "squaremetercalc": {
+                "title": "坪数计算器",
+                "desc": "轻松换算平方米（㎡）与坪，并计算每坪单价的计算器 App。"
+            }
+        },
+        "misc": {
+            "blankPlaceholder": "( ○○ )",
+            "nickname": {
+                "format": "{{adj}}的{{noun}}",
+                "adjectives": [
+                    "勇敢",
+                    "聪明",
+                    "敏捷",
+                    "悠闲",
+                    "可靠",
+                    "温柔",
+                    "元气满满",
+                    "古灵精怪",
+                    "睿智",
+                    "勤快",
+                    "沉稳",
+                    "开朗",
+                    "贴心",
+                    "结实",
+                    "闪亮",
+                    "蔚蓝",
+                    "温暖",
+                    "安静",
+                    "飞快",
+                    "可爱",
+                    "帅气",
+                    "乖巧",
+                    "威风",
+                    "害羞",
+                    "好奇",
+                    "自由",
+                    "正直",
+                    "大方",
+                    "快乐"
+                ],
+                "nouns": [
+                    "老虎",
+                    "喜鹊",
+                    "猫咪",
+                    "松鼠",
+                    "仙鹤",
+                    "兔子",
+                    "乌龟",
+                    "水獭",
+                    "麻雀",
+                    "狐狸",
+                    "小鹿",
+                    "鲸鱼",
+                    "长颈鹿",
+                    "浣熊",
+                    "猫头鹰",
+                    "企鹅",
+                    "金枪鱼",
+                    "黑熊",
+                    "青蛙",
+                    "白鹭",
+                    "杏树",
+                    "杜鹃花",
+                    "蒲公英",
+                    "松树",
+                    "星光",
+                    "月光",
+                    "黎明",
+                    "晚霞",
+                    "红叶",
+                    "大雪"
+                ]
+            }
+        },
+        "world": {
+            "topic": {
+                "capital": {
+                    "modes": {
+                        "capital": {
+                            "label": "猜首都",
+                            "question": "这里的首都是？"
+                        },
+                        "continent": {
+                            "label": "猜大洲",
+                            "question": "这里属于哪个大洲？"
+                        },
+                        "country": {
+                            "label": "猜国家",
+                            "question": "这座城市是哪里的首都？"
+                        },
+                        "flag": {
+                            "label": "猜国旗",
+                            "question": "这是哪里的国旗？"
+                        }
+                    },
+                    "label": "世界首都",
+                    "description": "国家与首都、国旗和大洲"
+                },
+                "constellation": {
+                    "modes": {
+                        "image": {
+                            "label": "看图猜",
+                            "question": "图中是哪个星座？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的星座是？"
+                        },
+                        "season": {
+                            "label": "何时可见",
+                            "question": "夜空中什么时候最容易看到？"
+                        },
+                        "star": {
+                            "label": "代表星",
+                            "question": "这个星座的代表星是？"
+                        }
+                    },
+                    "label": "星座与天体",
+                    "description": "在夜空中寻找的名字"
+                },
+                "event": {
+                    "modes": {
+                        "century": {
+                            "label": "何时发生",
+                            "question": "这件事发生在什么时候？"
+                        },
+                        "country": {
+                            "label": "哪国的事",
+                            "question": "与这件事最相关的国家是？"
+                        },
+                        "kind": {
+                            "label": "什么事件",
+                            "question": "这件事属于哪一类？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的事件是？"
+                        }
+                    },
+                    "label": "世界历史事件",
+                    "description": "改变世界的那天，何时何地"
+                },
+                "figure": {
+                    "modes": {
+                        "country": {
+                            "label": "哪国人",
+                            "question": "这位人物是哪国人？"
+                        },
+                        "era": {
+                            "label": "何时在世",
+                            "question": "这位人物主要活跃于何时？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的人物是？"
+                        },
+                        "portrait": {
+                            "label": "看肖像猜",
+                            "question": "肖像中的人物是？"
+                        },
+                        "role": {
+                            "label": "做过什么",
+                            "question": "这位人物做过什么？"
+                        }
+                    },
+                    "label": "世界名人",
+                    "description": "改变世界的人，何时何地做了什么"
+                },
+                "landmark": {
+                    "modes": {
+                        "city": {
+                            "label": "在哪里",
+                            "question": "这个地标位于哪里？"
+                        },
+                        "country": {
+                            "label": "猜国家",
+                            "question": "这个地标位于哪个国家？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的地标是？"
+                        },
+                        "photo": {
+                            "label": "看照片猜",
+                            "question": "照片中的地标是？"
+                        }
+                    },
+                    "label": "世界地标",
+                    "description": "照片里眼熟的地方在哪儿"
+                },
+                "myth": {
+                    "modes": {
+                        "domain": {
+                            "label": "掌管什么",
+                            "question": "这位人物掌管什么？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的人物是？"
+                        },
+                        "portrait": {
+                            "label": "看图猜",
+                            "question": "图中的人物是？"
+                        },
+                        "roman": {
+                            "label": "罗马名",
+                            "question": "这位神的罗马名是？"
+                        }
+                    },
+                    "label": "希腊罗马神话",
+                    "description": "神祇、英雄与怪物"
+                },
+                "nature": {
+                    "modes": {
+                        "continent": {
+                            "label": "哪个大洲",
+                            "question": "这里位于哪个大洲？"
+                        },
+                        "country": {
+                            "label": "哪个国家",
+                            "question": "这里位于哪个国家？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的地方是？"
+                        }
+                    },
+                    "label": "世界地形",
+                    "description": "在地图上寻找江河山脉、沙漠湖泊"
+                },
+                "olympic": {
+                    "modes": {
+                        "city": {
+                            "label": "举办城市",
+                            "question": "这届赛事在哪座城市举办？"
+                        },
+                        "host": {
+                            "label": "主办国",
+                            "question": "这届赛事的主办国是？"
+                        },
+                        "top": {
+                            "label": "奖牌榜第一",
+                            "question": "这届赛事奖牌榜第一的国家是？（金牌数优先）"
+                        }
+                    },
+                    "label": "夏季奥运会",
+                    "description": "举办城市与奖牌榜第一"
+                },
+                "space": {
+                    "modes": {
+                        "image": {
+                            "label": "看图猜",
+                            "question": "图中的天体是？"
+                        },
+                        "kind": {
+                            "label": "天体类别",
+                            "question": "这个天体属于哪一类？"
+                        },
+                        "name": {
+                            "label": "看描述猜",
+                            "question": "符合描述的天体是？"
+                        },
+                        "order": {
+                            "label": "第几颗行星",
+                            "question": "它是离太阳第几颗行星？"
+                        }
+                    },
+                    "label": "太阳系",
+                    "description": "行星、卫星，以及更远的地方"
+                },
+                "winter": {
+                    "modes": {
+                        "city": {
+                            "label": "举办城市",
+                            "question": "这届赛事在哪座城市举办？"
+                        },
+                        "host": {
+                            "label": "主办国",
+                            "question": "这届赛事的主办国是？"
+                        },
+                        "top": {
+                            "label": "奖牌榜第一",
+                            "question": "这届赛事奖牌榜第一的国家是？（金牌数优先）"
+                        }
+                    },
+                    "label": "冬季奥运会",
+                    "description": "冰雪赛场的举办地与第一名"
+                },
+                "worldcup": {
+                    "modes": {
+                        "host": {
+                            "label": "主办国",
+                            "question": "这届赛事的主办国是？"
+                        },
+                        "runnerUp": {
+                            "label": "亚军",
+                            "question": "这届赛事的亚军是？"
+                        },
+                        "winner": {
+                            "label": "冠军",
+                            "question": "这届赛事的冠军是？"
+                        }
+                    },
+                    "label": "世界杯",
+                    "description": "主办国与冠军的历史"
+                }
+            },
+            "field": {
+                "capital": "首都",
+                "continent": "大洲",
+                "country": "国家",
+                "city": "城市",
+                "era": "时代",
+                "role": "领域",
+                "century": "时期",
+                "kind": "类别",
+                "roman": "罗马名",
+                "domain": "掌管",
+                "symbol": "象征",
+                "order": "离太阳",
+                "host": "主办国",
+                "feature": "特点",
+                "star": "代表星",
+                "season": "可见时节",
+                "winner": "冠军",
+                "runnerUp": "亚军",
+                "top": "奖牌榜第一"
+            },
+            "topicField": {
+                "space": {
+                    "host": "环绕对象"
+                }
+            }
+        },
+        "level": {
+            "step": {
+                "novice": {
+                    "name": "新手",
+                    "encouragement": "迈出第一步啦！\n未来更值得期待！",
+                    "description": "刚刚翻开这个主题。\n从熟悉的名字开始，一个个认识就好。"
+                },
+                "explorer": {
+                    "name": "探险家",
+                    "encouragement": "开局不错！\n你的地图正在一点点变大！",
+                    "description": "常听到的名字开始串联起来了。\n正式踏上探险之路。"
+                },
+                "skilled": {
+                    "name": "熟练者",
+                    "encouragement": "知识在稳稳积累！\n现在熟练多啦！",
+                    "description": "已能分辨容易混淆的选项。\n实力超越基础，更加扎实。"
+                },
+                "expert": {
+                    "name": "高手",
+                    "encouragement": "陌生题也不在话下！\n什么挑战都能从容应对！",
+                    "description": "连特级难度的冷门名字也在逐步拿下。\n已是身边人会来请教的水平。"
+                },
+                "master": {
+                    "name": "大师",
+                    "encouragement": "已走到这个主题的尽头！\n真正的大师！",
+                    "description": "已征服本主题全部条目。\n拥有比谁都广博深厚的知识。"
+                }
+            },
+            "topicLabel": "{{topic}} {{step}}",
+            "overall": {
+                "1": {
+                    "label": "探险萌新小狮",
+                    "encouragement": "迈出了环游世界的第一步！"
+                },
+                "2": {
+                    "label": "见习探险家狮子",
+                    "encouragement": "正在一步步扩大地图！"
+                },
+                "3": {
+                    "label": "老练旅行家狮子",
+                    "encouragement": "各国故事都已渐渐熟悉！"
+                },
+                "4": {
+                    "label": "世界探索家狮子",
+                    "encouragement": "实力突飞猛进！"
+                },
+                "5": {
+                    "label": "大探险家狮子",
+                    "encouragement": "已达到相当高的境界！"
+                },
+                "6": {
+                    "label": "黄金大探险家狮子",
+                    "encouragement": "成为世界常识达人啦！"
+                }
+            },
+            "stepN": "第{{level}}阶"
+        },
+        "examPacks": {
+            "geo": {
+                "title": "世界地理全攻略",
+                "subtitle": "国家 · 首都 · 地标 · 地形一次搞定"
+            },
+            "history": {
+                "title": "世界史精华",
+                "subtitle": "从人物 · 事件 · 神话纵览世界史"
+            },
+            "space": {
+                "title": "宇宙与夜空",
+                "subtitle": "从太阳系到星座"
+            },
+            "expert": {
+                "title": "高阶常识挑战",
+                "subtitle": "只收录高级难度",
+                "covers": "{{level}}难度 · 全部主题"
+            },
+            "sports": {
+                "title": "体育赛事",
+                "subtitle": "世界杯 · 奥运会的历史"
+            }
+        }
+    }
+}

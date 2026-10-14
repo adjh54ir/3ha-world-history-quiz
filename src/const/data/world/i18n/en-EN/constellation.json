@@ -1,0 +1,422 @@
+{
+	"constellation-001": {
+		"summary": "A fall zodiac constellation depicting the owner of the Golden Fleece that Jason set out to find.",
+		"facts": [
+			"Some 2,000 years ago the vernal equinox lay here, which made it the first sign of the zodiac.",
+			"It's the birth sign for late March to mid-April, but at that time of year the Sun actually sits in Pisces."
+		]
+	},
+	"constellation-002": {
+		"summary": "A winter zodiac constellation depicting the form Zeus took to carry Europa across the sea.",
+		"facts": [
+			"The red star set in the bull's eye is an aging giant about 67 light-years away.",
+			"A V-shaped star cluster forms the bull's face, and the Pleiades mark its shoulder."
+		]
+	},
+	"constellation-003": {
+		"summary": "A winter zodiac constellation depicting the brothers Castor and Pollux, sons of Zeus and Leda.",
+		"facts": [
+			"Castor is the alpha star, but Pollux is actually a little brighter.",
+			"Around December 13–14, a meteor shower of more than 100 meteors an hour streams from here."
+		]
+	},
+	"constellation-004": {
+		"summary": "A spring zodiac constellation depicting the creature that bit Heracles' foot while he fought the Hydra, and was killed for it.",
+		"facts": [
+			"Even its brightest star is only magnitude 3.5, so it's hard to spot under city lights.",
+			"The Beehive Cluster at its center is the group that Galileo Galilei's telescope split into some 40 stars."
+		]
+	},
+	"constellation-005": {
+		"summary": "A spring zodiac constellation shaped like the crouching beast of Nemea that Heracles strangled with his bare hands.",
+		"facts": [
+			"The stars of its head form a sickle, like a backward question mark.",
+			"Every mid-November the Leonid meteor shower pours out from here."
+		]
+	},
+	"constellation-006": {
+		"summary": "A spring zodiac constellation depicting a goddess holding an ear of grain.",
+		"facts": [
+			"The blue star at the ear of grain sits at the end of the great Spring Arc.",
+			"It's the second largest of the 88 constellations, and a cluster of some 1,300 galaxies lies in its direction."
+		]
+	},
+	"constellation-007": {
+		"summary": "A summer zodiac constellation depicting the scales held by the goddess of justice.",
+		"facts": [
+			"It's said to be named for the scales because the Sun stood here at the autumn equinox, when day and night are equal.",
+			"In ancient Greece it was seen as the scorpion's claws, and it's the only one of the 12 zodiac signs that is an object rather than a living thing."
+		]
+	},
+	"constellation-008": {
+		"summary": "A summer zodiac constellation with its tail curled into an S and its stinger raised.",
+		"facts": [
+			"The red star at its heart means “rival of Mars,” and it also appears on the flag of Brazil.",
+			"Because it felled Orion with its sting, legend says the two were placed on opposite sides of the sky, so one sets as the other rises."
+		]
+	},
+	"constellation-009": {
+		"summary": "A summer constellation depicting a centaur drawing a bow.",
+		"facts": [
+			"In traditional Korean astronomy, its six dipper-shaped stars were called Namduyukseong, the Southern Dipper.",
+			"In the West these stars are seen as a teapot, and just above its spout lies the center of the Milky Way."
+		]
+	},
+	"constellation-010": {
+		"summary": "A fall zodiac constellation shaped like a horned beast in front with a fish's tail behind.",
+		"facts": [
+			"It's said to be the god Pan, caught halfway through a transformation as he leapt into the water to escape the monster Typhon.",
+			"The Tropic of Capricorn got its name because, in ancient times, the Sun stood here at the winter solstice."
+		]
+	},
+	"constellation-011": {
+		"summary": "A fall zodiac constellation depicting Ganymede, the handsome youth who served as Zeus's cupbearer.",
+		"facts": [
+			"The stream of water it pours flows into Piscis Austrinus.",
+			"In 2017, its star TRAPPIST-1 was found to have seven Earth-sized planets."
+		]
+	},
+	"constellation-012": {
+		"summary": "A fall zodiac constellation depicting two sea creatures whose tails are tied together with a cord.",
+		"facts": [
+			"It's said to be Aphrodite and Eros, who changed shape to escape the monster Typhon.",
+			"Today's vernal equinox lies inside it, not in Aries."
+		]
+	},
+	"constellation-013": {
+		"summary": "A winter constellation shaped like a hunter wearing three stars in a row on his belt.",
+		"facts": [
+			"Betelgeuse at his shoulder is red, while Rigel at his foot is blue.",
+			"Follow the three belt stars down to the left and you reach Sirius, the brightest star in the night sky."
+		]
+	},
+	"constellation-014": {
+		"summary": "A winter constellation depicting the larger of the two hunting animals that follow Orion the hunter.",
+		"facts": [
+			"The brightest star in the night sky, about 8.6 light-years away, is found here.",
+			"Because the hot weather arrived when that star rose with the Sun, Westerners called midsummer the “dog days.”"
+		]
+	},
+	"constellation-015": {
+		"summary": "A winter constellation depicting the smaller of the two hunting animals that follow Orion the hunter.",
+		"facts": [
+			"Its brightest star, Procyon, means “before the dog,” since it rises ahead of Sirius.",
+			"It forms one corner of the Winter Triangle."
+		]
+	},
+	"constellation-016": {
+		"summary": "A winter constellation drawn as a pentagon, showing a man holding the reins with a young goat in his arms.",
+		"facts": [
+			"Its brightest star, the sixth brightest in the night sky, marks the northern corner of the Winter Hexagon.",
+			"One corner star of the pentagon was once shared with neighboring Taurus."
+		]
+	},
+	"constellation-017": {
+		"summary": "A winter constellation depicting a small creature crouched at the hunter's feet, chased by his hounds.",
+		"facts": [
+			"It lies just south of Orion and west of Canis Major, low in the southern winter sky.",
+			"It holds a red star that Hind described in 1845 as looking like “a drop of blood on a black field.”"
+		]
+	},
+	"constellation-018": {
+		"summary": "A long winter constellation depicting the river that Phaethon fell into after losing control of the Sun chariot.",
+		"facts": [
+			"It winds from Orion's feet all the way to the far south and is the sixth largest of the 88 constellations.",
+			"Achernar, at the river's end, never rises north of latitude 33° N, so it's hard to see from South Korea."
+		]
+	},
+	"constellation-019": {
+		"summary": "A large constellation of the northern spring sky that holds seven stars shaped like a dipper.",
+		"facts": [
+			"Extend the line through the two stars at the end of the dipper five times and you reach Polaris.",
+			"It's the third largest of the 88, and its seven dipper stars on their own are called the Big Dipper."
+		]
+	},
+	"constellation-020": {
+		"summary": "A small dipper-shaped constellation with Polaris at the tip of its tail.",
+		"facts": [
+			"Polaris sits at almost the same height as the local latitude, so in Seoul it stands about 37° above the horizon.",
+			"The star at the tip of the tail barely moves, which makes it useful for finding direction."
+		]
+	},
+	"constellation-021": {
+		"summary": "A spring constellation drawn in the shape of a kite, showing a man herding and chasing the bears.",
+		"facts": [
+			"Follow the curve of the Big Dipper's handle down and you reach its orange star.",
+			"The 1933 Chicago World's Fair switched on its opening lights using light captured from its brightest star."
+		]
+	},
+	"constellation-022": {
+		"summary": "A spring constellation depicting the two hunting dogs led by the herdsman.",
+		"facts": [
+			"Its stars are faint, but the Whirlpool Galaxy lies in its direction.",
+			"Its brightest star, Cor Caroli, means “Charles's heart” and honors an English king."
+		]
+	},
+	"constellation-023": {
+		"summary": "A southern spring constellation whose four stars form a small trapezoid.",
+		"facts": [
+			"Legend says that, sent by Apollo to fetch water, it stopped to eat figs, lied about it, and was punished.",
+			"Extend the line joining the trapezoid's two northern stars and you reach Spica in Virgo."
+		]
+	},
+	"constellation-024": {
+		"summary": "A spring constellation depicting the many-headed monster slain by Heracles.",
+		"facts": [
+			"It stretches more than 100° from head to tail, spanning over a quarter of the sky.",
+			"It's the largest of the 88, yet its only bright star is its alpha star, whose name means “the solitary one.”"
+		]
+	},
+	"constellation-025": {
+		"summary": "A summer constellation depicting the stringed instrument Hermes made from a tortoise shell and Orpheus played.",
+		"facts": [
+			"Its brightest star is Vega, the Weaver Girl star who meets the Cowherd on Chilseok, the seventh night of the seventh lunar month.",
+			"It forms the brightest corner of the Summer Triangle."
+		]
+	},
+	"constellation-026": {
+		"summary": "A summer constellation depicting the bird that carried Zeus's thunderbolts, its wings spread beside the Milky Way.",
+		"facts": [
+			"Its brightest star, Altair, the Cowherd star, spins once in under 8 hours, so it bulges at the equator.",
+			"It faces Lyra across the Milky Way."
+		]
+	},
+	"constellation-027": {
+		"summary": "A summer constellation depicting the bird Zeus turned into, its wings spread along the Milky Way.",
+		"facts": [
+			"Its large cross shape also earns it the name Northern Cross.",
+			"The star at its tail is one corner of the Summer Triangle."
+		]
+	},
+	"constellation-028": {
+		"summary": "A summer constellation showing a club-wielding hero kneeling upside down.",
+		"facts": [
+			"Four stars in its middle form a keystone.",
+			"It holds the globular cluster often ranked the finest in the Northern Hemisphere sky."
+		]
+	},
+	"constellation-029": {
+		"summary": "A summer constellation depicting the god of medicine gripping a snake in both hands.",
+		"facts": [
+			"It straddles the ecliptic but isn't one of the 12 zodiac signs.",
+			"The supernova that appeared here in 1604 was recorded in the “Annals of the Joseon Dynasty” four days before Johannes Kepler noted it."
+		]
+	},
+	"constellation-030": {
+		"summary": "A summer constellation depicting the animal said to have rescued the musician Arion by carrying him on its back after he leapt into the sea.",
+		"facts": [
+			"Two of its stars were named in 1814 by an assistant at the Palermo Observatory, who spelled his own Latin name backward.",
+			"In the West its four diamond-shaped stars are called “Job's Coffin.”"
+		]
+	},
+	"constellation-031": {
+		"summary": "A northern constellation depicting a queen punished for boasting that her daughter was lovelier than the sea nymphs.",
+		"facts": [
+			"When the Big Dipper sinks below the horizon, this constellation is used to find Polaris instead.",
+			"Its five stars form a W, which appears upside down when it climbs above Polaris on winter nights."
+		]
+	},
+	"constellation-032": {
+		"summary": "A northern constellation depicting the king, husband of Queen Cassiopeia, drawn in the shape of a pentagonal house.",
+		"facts": [
+			"Its brightest star will take over as the pole star around the year 7500.",
+			"Cepheid variables, named after its Delta star, became a yardstick for measuring distances across the universe."
+		]
+	},
+	"constellation-033": {
+		"summary": "A northern constellation depicting the monster that guarded the golden apples of the Hesperides and was killed by Heracles.",
+		"facts": [
+			"It winds between Ursa Major and Ursa Minor.",
+			"When the pyramids of Egypt were being built, its star Thuban served as the pole star."
+		]
+	},
+	"constellation-034": {
+		"summary": "A fall constellation depicting the winged horse born from Medusa's blood.",
+		"facts": [
+			"In 1995 the first planet found orbiting a Sun-like star was discovered here, a find that won a Nobel Prize in 2019.",
+			"Of the four stars that make up the Great Square of fall, one actually belongs to Andromeda."
+		]
+	},
+	"constellation-035": {
+		"summary": "A fall constellation depicting the princess chained to a rock as an offering to a sea monster.",
+		"facts": [
+			"It looks like two strands of stars streaming out from the Great Square of fall.",
+			"A neighboring galaxy visible to the naked eye lies within it."
+		]
+	},
+	"constellation-036": {
+		"summary": "A fall constellation depicting a hero holding up a monster's head.",
+		"facts": [
+			"Around August 12–13, in the middle of summer vacation, a meteor shower streams from this direction.",
+			"Algol, the star marking Medusa's head, dims and brightens again about every 2.9 days."
+		]
+	},
+	"constellation-037": {
+		"summary": "A fall constellation depicting the sea monster that tried to devour a princess.",
+		"facts": [
+			"Mira, whose name means “wonderful,” fades from naked-eye view and reappears about every 11 months.",
+			"It's the fourth largest of the 88 constellations, but with few bright stars it's hard to find."
+		]
+	},
+	"constellation-038": {
+		"summary": "A fall constellation shown drinking the water that pours from a water pitcher.",
+		"facts": [
+			"A single bright star shines on its own in the southern fall sky.",
+			"That star's name means “mouth of the fish.”"
+		]
+	},
+	"constellation-039": {
+		"summary": "A constellation of the southern sky depicting the keel of the ship Argo.",
+		"facts": [
+			"The second brightest star in the night sky lies here.",
+			"Seen low on the southern horizon from Jeju, that star was known as the “Old Man of the South Pole.”"
+		]
+	},
+	"constellation-040": {
+		"summary": "A large constellation of the southern sky depicting a creature that is half human, half horse.",
+		"facts": [
+			"The star closest to the Sun lies in this direction.",
+			"It wraps around Crux on three sides, and Crux was counted as part of it until the late 16th century."
+		]
+	},
+	"constellation-041": {
+		"summary": "A small constellation whose long axis, extended, points to the south celestial pole, making it a guide across the Southern Hemisphere.",
+		"facts": [
+			"It's the smallest of the 88 constellations, about one-twentieth the size of Hydra.",
+			"It appears on the flags of Australia, New Zealand, Brazil, Papua New Guinea and Samoa."
+		]
+	},
+	"constellation-042": {
+		"summary": "A constellation of the southern sky depicting a peacock with its tail fanned out.",
+		"facts": [
+			"It was created from observations made by navigators from the Netherlands in the 1590s.",
+			"Its brightest star got the name Peacock in the 1930s, when the United Kingdom's Royal Air Force was compiling a navigation almanac."
+		]
+	},
+	"constellation-043": {
+		"summary": "A constellation of the southern sky depicting a firebird that comes back to life.",
+		"facts": [
+			"Its brightest star, Ankaa, takes its name from the Arabic word for the firebird.",
+			"It hangs briefly low in the southern sky in fall."
+		]
+	},
+	"constellation-044": {
+		"summary": "A cloud where new stars are being born, hanging just below the hunter's belt.",
+		"facts": [
+			"Although it's about 1,300 light-years away, it shows up to the naked eye as a hazy patch in Orion's sword.",
+			"At its center, four young stars are grouped in a trapezoid."
+		]
+	},
+	"constellation-045": {
+		"summary": "A nebula where a dark pillar of dust shaped like an animal's head blocks out a bright red cloud behind it.",
+		"facts": [
+			"It gives off no light of its own; its shape stands out because it blocks the light behind it.",
+			"It lies close to the belt stars of Orion."
+		]
+	},
+	"constellation-046": {
+		"summary": "An expanding cloud of debris from a star that exploded in 1054.",
+		"facts": [
+			"Records from Song dynasty China and from Japan describe that year's “guest star.”",
+			"The neutron star at its center spins nearly 30 times a second."
+		]
+	},
+	"constellation-047": {
+		"summary": "A cluster of young stars twinkling like a scatter of millet grains on the bull's shoulder.",
+		"facts": [
+			"As noted in the “Dongguk Sesigi,” Koreans called it Myoseong or Jomsaengi-byeol.",
+			"Subaru, the carmaker from Japan, took both its name and its six-star emblem from this cluster."
+		]
+	},
+	"constellation-048": {
+		"summary": "A loose cluster of stars forming the V of the bull's face.",
+		"facts": [
+			"It's considered the closest open cluster to Earth.",
+			"The red star at the tip of the V isn't actually part of the cluster."
+		]
+	},
+	"constellation-049": {
+		"summary": "A neighboring spiral galaxy that is among the most distant objects visible to the naked eye.",
+		"facts": [
+			"It's about 2.5 million light-years away, so the light we see today set out 2.5 million years ago.",
+			"The odds of it colliding with the Milky Way within the next 10 billion years are put at roughly 50-50."
+		]
+	},
+	"constellation-050": {
+		"summary": "A sky object where two star clusters sit side by side in a single field of view.",
+		"facts": [
+			"It lies within Perseus, close to Cassiopeia.",
+			"Both clusters are faintly visible even to the naked eye."
+		]
+	},
+	"constellation-051": {
+		"summary": "A summer planetary nebula that looks like a donut with a hole in the middle.",
+		"facts": [
+			"It lies between the Beta and Gamma stars of Lyra, south of Vega.",
+			"It's the shell of gas thrown off by a dying star."
+		]
+	},
+	"constellation-052": {
+		"summary": "A red nebula divided into three by dark lanes of dust.",
+		"facts": [
+			"It sits in the Milky Way toward Sagittarius, right next to the Lagoon Nebula.",
+			"Its name means “split into three.”"
+		]
+	},
+	"constellation-053": {
+		"summary": "A ball of hundreds of thousands of old stars packed together in the summer sky.",
+		"facts": [
+			"Through binoculars it looks like a round tuft of cotton, and under very dark skies it's barely visible to the naked eye.",
+			"The Arecibo radio message was beamed toward it in 1974 and will take about 25,000 years to arrive."
+		]
+	},
+	"constellation-054": {
+		"summary": "A red nebula spread out in a shape that resembles a map of a continent.",
+		"facts": [
+			"It lies right beside Deneb in Cygnus but usually can't be seen with the naked eye.",
+			"Its shape only shows clearly in photographs."
+		]
+	},
+	"constellation-055": {
+		"summary": "A spring galaxy with sharply defined, tightly wound spiral arms.",
+		"facts": [
+			"One of its arms can be seen linking it to a smaller galaxy.",
+			"In 1845 it became the first object whose spiral structure was recognized, by the Earl of Rosse."
+		]
+	},
+	"constellation-056": {
+		"summary": "A galaxy seen edge-on that looks like a wide-brimmed hat.",
+		"facts": [
+			"A dark lane of dust across its middle looks like the brim.",
+			"Its center is thought to hold a black hole of about 600 million to 1 billion times the mass of the Sun."
+		]
+	},
+	"constellation-057": {
+		"summary": "The barred spiral galaxy that contains our solar system, seen as a hazy band across the night sky.",
+		"facts": [
+			"Its disk is about 90,000 light-years across and holds an estimated 100 to 400 billion stars.",
+			"The supermassive black hole at its center is about 27,000 light-years away, and its first image was released in 2022."
+		]
+	},
+	"constellation-058": {
+		"summary": "The larger of two neighboring galaxies, hanging like a hazy smudge in the southern sky.",
+		"facts": [
+			"In 1987 a supernova exploded here that could be seen with the naked eye.",
+			"It got its name after being described in the records of a round-the-world voyage."
+		]
+	},
+	"constellation-059": {
+		"summary": "The smaller of two neighboring galaxies hanging in the southern sky.",
+		"facts": [
+			"It's about 200,000 light-years away, yet still visible to the naked eye.",
+			"Leavitt's study of its variable stars opened the way to measuring distances across the universe."
+		]
+	},
+	"constellation-060": {
+		"summary": "One of the largest and brightest star-forming clouds spread across the southern sky.",
+		"facts": [
+			"It contains the extremely massive star Eta Carinae.",
+			"It's about four times the size of the Orion Nebula and lies about 8,500 light-years away."
+		]
+	}
+}

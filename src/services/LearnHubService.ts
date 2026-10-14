@@ -5,7 +5,7 @@ import { WORLD_TOPIC_TEXT } from '@/src/const/data/world/ConstWorldText';
 import { createWorldTopicService, WorldTopicService } from './WorldTopicService';
 import { selectFlagsByName } from '@/src/const/data/world/ConstFlagImages';
 import { shuffle } from './LearnQuizFactory';
-import i18n from '@/src/translations';
+import i18n, { appLanguage } from '@/src/translations';
 
 /**
  * 통합 학습 도메인 인터페이스
@@ -65,6 +65,9 @@ let allCardsCache: LearnType.StudyCard[] | null = null;
 /** 서브 퀴즈 주제까지 포함한 검색 캐시 (검색 탭 전용) */
 let allCardsWithSubCache: LearnType.StudyCard[] | null = null;
 
+/** 검색 비교용 — 대소문자·악센트를 지운다 ('Pekin' 으로 'Pékin' 을 찾는다). 한글은 NFC 로 되돌려 그대로 둔다 */
+export const fold = (text: string): string => text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').normalize('NFC');
+
 /** 한글 초성 추출 (예: "카트만두" → "ㅋㅌㅁㄷ") */
 const CHOSUNG = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
 const toChosung = (text: string): string =>
@@ -75,6 +78,26 @@ const toChosung = (text: string): string =>
 			return ch === ' ' ? ' ' : ch;
 		})
 		.join('');
+
+/** 힌트에서도 그대로 보여 주는 구분 기호 (하이픈·가운뎃점 등) */
+const HINT_KEEP = /[-'’.·・,()&]/;
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uac00-\ud7a3]/;
+
+/**
+ * 이름 맞히기 힌트 — 한국어는 초성, 그 밖의 언어는 첫 글자만 남기고 가린다.
+ * - 띄어 쓰는 이름: 낱말마다 첫 글자 + 나머지 '_' (예: "New York" → "N _ _   Y _ _ _")
+ * - 띄어 쓰지 않는 한자·가나 이름: 첫 글자 + 나머지 '○' (예: "巴黎" → "巴○")
+ */
+export const toInitialHint = (text: string, lang: string = appLanguage()): string => {
+	if (lang === 'ko-KR') return toChosung(text);
+	const hide = (chars: string[], mask: string) => chars.map((ch, i) => (i === 0 || HINT_KEEP.test(ch) ? ch : mask));
+	if (!/\s/.test(text) && CJK.test(text)) return hide([...text], '○').join('');
+	return text
+		.split(/\s+/)
+		.filter(Boolean)
+		.map((word) => hide([...word], '_').join(' '))
+		.join('   ');
+};
 
 /** 빈칸 채우기에 쓰는 도메인 — 설명 문장 안에 수도·나라 같은 값이 들어 있는 주제 (메인 주제 전부) */
 const BLANK_DOMAINS = (): LearnType.Domain[] => MAIN_DOMAIN_KEYS;
@@ -219,9 +242,10 @@ const LearnHubService = {
 		const titlesByDomain: Record<string, string[]> = {};
 		cards.forEach((c) => (titlesByDomain[c.domain] ??= []).push(c.title));
 
+		const hintOf = new Map(cards.map((c) => [c.title, toInitialHint(c.title)]));
 		return shuffle(cards)
-			// 초성으로 바꿔도 글자가 거의 그대로인 이름(영문·숫자 위주)은 힌트가 되지 않는다
-			.filter((card) => /[가-힣]/.test(card.title))
+			// 힌트로 바꿔도 글자가 그대로인 이름(한국어의 영문·숫자 이름, 한 글자 이름 등)은 힌트가 되지 않는다
+			.filter((card) => hintOf.get(card.title) !== card.title)
 			// 설명에 이름이 그대로 들어 있으면 초성 힌트가 필요 없다
 			.filter((card) => !card.meaning.includes(card.title))
 			.slice(0, count)
@@ -235,7 +259,7 @@ const LearnHubService = {
 					kind: 'choice' as LearnType.QuizKind,
 					guide: i18n.t('svc.learnHub.chosungGuide'),
 					prompt: card.meaning,
-					subPrompt: toChosung(card.title),
+					subPrompt: hintOf.get(card.title),
 					options,
 					answerIndex: options.indexOf(card.title),
 					explanation: `${card.title} — ${card.meaning}`,
@@ -252,7 +276,7 @@ const LearnHubService = {
 	 * @param includeSub true 면 서브 퀴즈 주제까지 검색 대상에 넣는다 (캐시를 따로 둔다)
 	 */
 	searchCards(query: string, limit = 40, domain?: string, includeSub = false): LearnType.StudyCard[] {
-		const q = query.trim().toLowerCase();
+		const q = fold(query.trim());
 		if (!q) return [];
 		if (!allCardsCache) {
 			allCardsCache = [];
@@ -265,7 +289,7 @@ const LearnHubService = {
 		const pool = includeSub ? allCardsWithSubCache! : allCardsCache;
 		const base = domain && isCategory(domain) ? pool.filter((c) => c.domain === domain) : pool;
 		return base
-			.filter((c) => c.title.toLowerCase().includes(q) || (c.subTitle ?? '').toLowerCase().includes(q) || c.meaning.toLowerCase().includes(q))
+			.filter((c) => fold(c.title).includes(q) || fold(c.subTitle ?? '').includes(q) || fold(c.meaning).includes(q))
 			.slice(0, limit);
 	},
 
@@ -394,7 +418,7 @@ const LearnHubService = {
 					domain: key,
 					kind: 'choice' as LearnType.QuizKind,
 					guide: i18n.t('svc.learnHub.blankGuide'),
-					prompt: sentence.replace(answer, '( ㅇㅇ )'),
+					prompt: sentence.replace(answer, i18n.t('misc.blankPlaceholder')),
 					subPrompt: slot === 'name' ? undefined : card.title,
 					options,
 					answerIndex: options.indexOf(answer),

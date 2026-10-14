@@ -29,13 +29,14 @@ import { useDispatch } from 'react-redux';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import CountryFlags from '@/src/screens/common/atomic/CountryFlags';
 import { recordTower } from '@/src/store/slice/TowerSlice';
+import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 
 
 const TowerQuizScreen = () => {
 	const { t } = useTranslation();
 	const params = useLocalSearchParams<{ level?: string }>();
 	const level = Number(params.level) || 1;
-	const quizLevel = TOWER_LEVEL_MAP[level] ?? '초급';
+	const quizLevel = TOWER_LEVEL_MAP[level] ?? DIFFICULTY_LABELS[1];
 
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 	const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);

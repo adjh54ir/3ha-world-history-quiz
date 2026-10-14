@@ -1,0 +1,163 @@
+{
+	"worldcup-1930": {
+		"summary": "The very first tournament, timed to mark the 100th anniversary of the host nation's first constitution.",
+		"facts": [
+			"There was no qualifying; only the 13 nations that accepted invitations took part.",
+			"The hosts beat their neighbors 4–2 in the final to claim the first-ever title."
+		]
+	},
+	"worldcup-1934": {
+		"summary": "The first tournament held in Europe, and the first to use regional qualifying to pick its 16 finalists.",
+		"facts": [
+			"It's the only tournament the reigning champions didn't enter.",
+			"In the final, the hosts beat Czechoslovakia 2–1 after extra time."
+		]
+	},
+	"worldcup-1938": {
+		"summary": "Held a year before World War II broke out, it became the last tournament before the war.",
+		"facts": [
+			"Italy beat Hungary 4–2 in the final to win back-to-back titles.",
+			"No World Cup was held for the next 12 years."
+		]
+	},
+	"worldcup-1950": {
+		"summary": "The tournament that returned after a 12-year break caused by the war.",
+		"facts": [
+			"Instead of a knockout final, a final-round league decided the champion.",
+			"The hosts' defeat in the deciding match is remembered as the “Maracanazo,” the tragedy of the Maracanã."
+		]
+	},
+	"worldcup-1954": {
+		"summary": "The tournament where Hungary, unbeaten in 31 straight official matches, led the final 2–0 before collapsing.",
+		"facts": [
+			"West Germany's 3–2 comeback in that final is known as the “Miracle of Bern.”",
+			"South Korea, playing in its first finals, lost 9–0 to Hungary."
+		]
+	},
+	"worldcup-1958": {
+		"summary": "The tournament where a 17-year-old Pelé made his name by scoring twice in the final.",
+		"facts": [
+			"Brazil beat the hosts 5–2 in the final to win its first title.",
+			"It was the first time a team from South America won a tournament held in Europe."
+		]
+	},
+	"worldcup-1962": {
+		"summary": "A tournament in South America where Brazil won its second title in a row.",
+		"facts": [
+			"When Pelé went down injured, Garrincha carried the team.",
+			"A brawl between Chile and Italy went down in history as the “Battle of Santiago.”"
+		]
+	},
+	"worldcup-1966": {
+		"summary": "The tournament where the birthplace of football won its first title, helped by a disputed goal in extra time.",
+		"facts": [
+			"World Cup Willie, a lion, became the tournament's first official mascot.",
+			"It's also remembered for North Korea's run to the quarterfinals."
+		]
+	},
+	"worldcup-1970": {
+		"summary": "The tournament where Brazil's third title let it keep the Jules Rimet Trophy for good.",
+		"facts": [
+			"Matches were broadcast live by satellite, some of them in color for the first time.",
+			"Yellow cards and substitutions were used for the first time."
+		]
+	},
+	"worldcup-1974": {
+		"summary": "The tournament where the Netherlands and its “Total Football” had to settle for second place.",
+		"facts": [
+			"The hosts beat the Netherlands in the final.",
+			"The current FIFA World Cup Trophy was awarded for the first time."
+		]
+	},
+	"worldcup-1978": {
+		"summary": "A South American tournament where the hosts won their first title.",
+		"facts": [
+			"The Netherlands finished runner-up for the second tournament in a row.",
+			"Kempes scored twice in the final and finished as top scorer."
+		]
+	},
+	"worldcup-1982": {
+		"summary": "The first tournament to expand the finals to 24 teams.",
+		"facts": [
+			"Italy beat West Germany 3–1 in the final to win its third title.",
+			"Paolo Rossi finished as top scorer with six goals."
+		]
+	},
+	"worldcup-1986": {
+		"summary": "The tournament where Maradona led Argentina to its second title.",
+		"facts": [
+			"Both the “Hand of God” and the “Goal of the Century” came in the quarterfinal against England.",
+			"South Korea returned to the finals for the first time in 32 years."
+		]
+	},
+	"worldcup-1990": {
+		"summary": "Won by West Germany on the eve of reunification, it was the lowest-scoring tournament ever at 2.21 goals per game.",
+		"facts": [
+			"The final was settled by a single penalty from Brehme.",
+			"Cameroon became the first team from Africa to reach the quarterfinals."
+		]
+	},
+	"worldcup-1994": {
+		"summary": "Held in a country seen as a football backwater, it drew more than 3.5 million spectators.",
+		"facts": [
+			"For the first time, the final went to a penalty shootout, which ended with Baggio's miss.",
+			"Brazil won for the first time in 24 years, becoming the first nation to win four titles."
+		]
+	},
+	"worldcup-1998": {
+		"summary": "The first tournament to expand the finals to 32 teams.",
+		"facts": [
+			"The hosts beat Brazil 3–0 in the final.",
+			"Zidane headed in two goals from corner kicks in the final."
+		]
+	},
+	"worldcup-2002": {
+		"summary": "The first World Cup held in Asia, and the first co-hosted by two countries.",
+		"facts": [
+			"South Korea reached the semifinals under coach Guus Hiddink.",
+			"Ronaldo scored twice in the final as Brazil won its fifth title."
+		]
+	},
+	"worldcup-2006": {
+		"summary": "The tournament remembered for a final that ended with Zidane's headbutt.",
+		"facts": [
+			"The final was decided on penalties after a 1–1 draw.",
+			"Italy won its fourth title."
+		]
+	},
+	"worldcup-2010": {
+		"summary": "The first tournament held on the African continent, with the drone of vuvuzelas filling the stadiums.",
+		"facts": [
+			"Paul the Octopus correctly predicted all seven of Germany's matches as well as the final.",
+			"Spain won its first title thanks to Iniesta's goal in extra time of the final."
+		]
+	},
+	"worldcup-2014": {
+		"summary": "The tournament where the hosts lost 7–1 in the semifinal, a defeat remembered as the “Mineirazo.”",
+		"facts": [
+			"Goal-line technology was used at a World Cup for the first time.",
+			"Germany won its first title since reunification and its fourth overall."
+		]
+	},
+	"worldcup-2018": {
+		"summary": "The first tournament where referees could overturn decisions using video review.",
+		"facts": [
+			"Croatia reached the final for the first time.",
+			"South Korea beat Germany 2–0 in the group stage."
+		]
+	},
+	"worldcup-2022": {
+		"summary": "The first tournament held in the Middle East, kicking off in November to avoid the heat.",
+		"facts": [
+			"The final was decided on penalties after a 3–3 draw.",
+			"Messi lifted the trophy for the first time at his fifth World Cup."
+		]
+	},
+	"worldcup-2026": {
+		"summary": "The first tournament co-hosted by three countries, with the finals expanded to 48 teams.",
+		"facts": [
+			"The number of matches grew from 64 to 104, played across 16 cities.",
+			"Spain beat Argentina 1–0 after extra time in the final to win its second title."
+		]
+	}
+}

@@ -3,6 +3,8 @@
  * - 화면 전반에서 난이도/카테고리 라벨과 함께 일관된 IconComponent 아이콘을 노출하기 위한 공통 상수
  * - 모두 MaterialIcons 이름
  */
+import i18n, { appLanguage } from '@/src/translations';
+import { koTerm } from '@/src/const/data/world/ConstWorldEntries';
 
 /** 카테고리 태그용 아이콘 */
 export const CATEGORY_ICON = 'sell';
@@ -10,24 +12,37 @@ export const CATEGORY_ICON = 'sell';
 /** 난이도 기본 아이콘 */
 export const DIFFICULTY_ICON = 'bar-chart';
 
-/** 숫자 난이도 공통 표기 (데이터 경계에서 한 번만 변환) */
-export const DIFFICULTY_LABELS: Readonly<Record<number, string>> = {
-	1: '초급',
-	2: '중급',
-	3: '고급',
-	4: '특급',
-};
+/**
+ * 필터/드롭다운에서 사용하는 공통 난이도 표시 순서 (초급→특급)
+ * 언어는 번들이 살아 있는 동안 고정이라 정의할 때 번역한다 — 문항·카드·필터가 모두 이 값을 쓰므로 언어 안에서는 서로 맞는다.
+ * 난이도를 가리킬 때는 '초급' 같은 글자 대신 DIFFICULTY_ORDER[i] / DIFFICULTY_LABELS[n] 을 쓴다.
+ */
+export const DIFFICULTY_ORDER: readonly string[] = [
+	i18n.t('special.levelTest.grades.beginner.title'),
+	i18n.t('special.levelTest.grades.intermediate.title'),
+	i18n.t('special.levelTest.grades.advanced.title'),
+	i18n.t('special.levelTest.grades.expert.title'),
+];
 
-/** 필터/드롭다운에서 사용하는 공통 난이도 표시 순서 */
-export const DIFFICULTY_ORDER = ['초급', '중급', '고급', '특급'] as const;
+/** 숫자 난이도 공통 표기 (데이터 경계에서 한 번만 변환) */
+export const DIFFICULTY_LABELS: Readonly<Record<number, string>> = { 1: DIFFICULTY_ORDER[0], 2: DIFFICULTY_ORDER[1], 3: DIFFICULTY_ORDER[2], 4: DIFFICULTY_ORDER[3] };
 
 /** 난이도 라벨 전체 순서 (세계 상식 항목은 1~4단계 = 초급~특급) */
 export const LEVEL_ORDER: readonly string[] = DIFFICULTY_ORDER;
 
+/** 오답노트에 저장된 옛 한국어 라벨도 순서를 찾게 한다 (다른 언어로 저장된 라벨은 '라벨 없음' 취급) */
+const KO_LEVEL_ORDER = ['초급', '중급', '고급', '특급'];
+
+/** 난이도 라벨 → 0~3 (모르는 라벨은 -1) */
+export const difficultyIndex = (label: string): number => {
+	const i = LEVEL_ORDER.indexOf(label);
+	return i !== -1 ? i : KO_LEVEL_ORDER.indexOf(label);
+};
+
 export const compareDifficultyLabels = (a: string, b: string): number => {
-	const ai = LEVEL_ORDER.indexOf(a);
-	const bi = LEVEL_ORDER.indexOf(b);
-	if (ai === -1 && bi === -1) return a.localeCompare(b, 'ko');
+	const ai = difficultyIndex(a);
+	const bi = difficultyIndex(b);
+	if (ai === -1 && bi === -1) return a.localeCompare(b, appLanguage().slice(0, 2));
 	if (ai === -1) return 1;
 	if (bi === -1) return -1;
 	return ai - bi;
@@ -37,7 +52,10 @@ export const compareDifficultyLabels = (a: string, b: string): number => {
 export const sortByLevelAsc = <T extends { level?: string }>(items: T[]): T[] =>
 	[...items].sort((a, b) => compareDifficultyLabels(a.level ?? '', b.level ?? ''));
 
-export const difficultyLabel = (level: number): string => DIFFICULTY_LABELS[level] ?? `${level}단계`;
+export const difficultyLabel = (level: number): string => DIFFICULTY_LABELS[level] ?? i18n.t('level.stepN', { level });
+
+/** 난이도 순서대로의 아이콘 (초급→특급) */
+const DIFFICULTY_ICONS = ['signal-cellular-alt', 'bar-chart', 'trending-up', 'whatshot'];
 
 /**
  * 난이도 라벨 → 아이콘 (초급/중급/고급/특급 및 도메인별 의미 라벨 대응)
@@ -45,9 +63,11 @@ export const difficultyLabel = (level: number): string => DIFFICULTY_LABELS[leve
 export const difficultyIcon = (label?: string): string => {
 	if (!label) return DIFFICULTY_ICON;
 	const t = label.trim();
-	if (t.includes('특급') || t.includes('매우') || t.includes('어려')) return 'whatshot';
-	if (t.includes('고급') || t.includes('생소')) return 'trending-up';
-	if (t.includes('중급') || t.includes('보통')) return 'bar-chart';
+	const i = difficultyIndex(t);
+	if (i !== -1) return DIFFICULTY_ICONS[i];
+	if (t.includes('매우') || t.includes('어려')) return 'whatshot';
+	if (t.includes('생소')) return 'trending-up';
+	if (t.includes('보통')) return 'bar-chart';
 	// 초급 / 쉬움 / 흔함 등
 	return 'signal-cellular-alt';
 };
@@ -58,7 +78,8 @@ export const difficultyIcon = (label?: string): string => {
  */
 export const categoryIcon = (label?: string): string => {
 	if (!label) return CATEGORY_ICON;
-	const t = label.trim();
+	// 카테고리는 세계 데이터 값을 앱 언어로 옮긴 것이라 한국어 원래 값으로 되돌려 낱말을 맞춘다
+	const t = koTerm(label.trim());
 	// 대륙 (수도·랜드마크·지형의 갈래)
 	if (/아시아|유럽|아프리카|아메리카|오세아니아/.test(t)) return 'public';
 	// 시대 (위인)

@@ -1,24 +1,41 @@
 import 'intl-pluralrules';
 
-import { SupportedLanguages, type Language } from '@/src/hooks/language/schema';
+import { SupportedLanguages, languageSchema, type Language } from '@/src/hooks/language/schema';
 
+import { File, Paths } from 'expo-file-system';
 import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import en from './en-EN.json';
+import es from './es-ES.json';
 import fr from './fr-FR.json';
+import ja from './ja-JP.json';
 import ko from './ko-KR.json';
+import zh from './zh-CN.json';
 
 export const defaultNS = 'main' as const;
 
 export const resources = {
-  'en-EN': en,
-  'fr-FR': fr,
   'ko-KR': ko,
+  'en-EN': en,
+  'zh-CN': zh,
+  'ja-JP': ja,
+  'fr-FR': fr,
+  'es-ES': es,
 } as const satisfies Record<Language, unknown>;
 
-/** Expo가 보고하는 시스템의 최우선 언어 — 지금은 쓰지 않는다(아래 resolveSystemLanguage 참고) */
+/** 설정 화면 언어 목록 — 이름은 그 언어로 적는다(어느 언어로 보고 있든 자기 언어를 찾을 수 있게) */
+export const LANGUAGE_OPTIONS: readonly { code: Language; label: string }[] = [
+  { code: SupportedLanguages.KR_KR, label: '한국어' },
+  { code: SupportedLanguages.EN_EN, label: 'English' },
+  { code: SupportedLanguages.ZH_CN, label: '简体中文' },
+  { code: SupportedLanguages.JA_JP, label: '日本語' },
+  { code: SupportedLanguages.FR_FR, label: 'Français' },
+  { code: SupportedLanguages.ES_ES, label: 'Español' },
+];
+
+/** Expo가 보고하는 시스템의 최우선 언어 코드 ('ko', 'en' …) */
 export const getDeviceLanguage = (): string => {
   try {
     const locale = getLocales()[0];
@@ -28,16 +45,39 @@ export const getDeviceLanguage = (): string => {
   }
 };
 
+const DEVICE_MAP: Record<string, Language> = {
+  ko: SupportedLanguages.KR_KR,
+  en: SupportedLanguages.EN_EN,
+  zh: SupportedLanguages.ZH_CN,
+  ja: SupportedLanguages.JA_JP,
+  fr: SupportedLanguages.FR_FR,
+  es: SupportedLanguages.ES_ES,
+};
+
 /**
- * 앱 언어 — 기기 언어를 따르지 않고 한국어로 고정한다.
- * 화면 문구와 세계 상식 데이터가 모두 한국어라, 기기 언어를 따르면 탭 이름만 영어·프랑스어인 반쪽 화면이 된다.
- * 데이터·화면 번역이 갖춰지면 아래 주석 처리한 매핑을 되살린다.
+ * 사용자가 설정에서 고른 언어 — 파일 하나에 적어 둔다.
+ * 화면·데이터 상수가 모듈을 읽는 순간 언어를 정하므로 동기로 읽을 수 있어야 한다 (AsyncStorage 는 못 쓴다).
  */
+const languageFile = (): File => new File(Paths.document, 'app-language.txt');
+
+export const getSavedLanguage = (): Language | null => {
+  try {
+    const file = languageFile();
+    if (!file.exists) return null;
+    const parsed = languageSchema.safeParse(file.textSync().trim());
+    return parsed.success ? parsed.data : null;
+  } catch {
+    return null;
+  }
+};
+
+/** 고른 언어가 있으면 그것, 없으면 기기 언어, 지원하지 않는 기기 언어면 영어 */
 export const resolveSystemLanguage = (): Language => {
-  // const raw = getDeviceLanguage();
-  // if (raw.startsWith('fr')) return SupportedLanguages.FR_FR;
-  // if (raw.startsWith('en')) return SupportedLanguages.EN_EN;
-  return SupportedLanguages.KR_KR;
+  const saved = getSavedLanguage();
+  if (saved) return saved;
+  // ponytail: 테스트는 한국어 데이터를 기준으로 쓰여 있다
+  if (process.env.NODE_ENV === 'test') return SupportedLanguages.KR_KR;
+  return DEVICE_MAP[getDeviceLanguage().slice(0, 2)] ?? SupportedLanguages.EN_EN;
 };
 
 i18n
@@ -60,10 +100,31 @@ i18n
     );
   });
 
-/** 실행 중 시스템 언어가 바뀐 경우 포그라운드 복귀 시 동기화합니다. */
+/** 지금 앱 언어 — 데이터 번역·날짜 형식이 이 값을 본다 */
+export const appLanguage = (): Language => (languageSchema.safeParse(i18n.language).success ? (i18n.language as Language) : SupportedLanguages.KR_KR);
+
+/**
+ * 설정에서 언어 바꾸기 — 저장하고 번들을 다시 읽는다.
+ * 주제 이름·뱃지·세계 데이터가 모듈을 읽을 때 한 번 번역되므로 changeLanguage 만으로는 반쪽만 바뀐다.
+ */
+export const setAppLanguage = async (language: Language): Promise<void> => {
+  if (language === appLanguage()) return;
+  try {
+    const file = languageFile();
+    if (!file.exists) file.create();
+    file.write(language);
+  } catch {
+    return;
+  }
+  const { reload } = require('@/src/utils/ThemeReload');
+  await reload();
+};
+
+/** 기기 언어를 따르는 중에 기기 언어가 바뀌었으면 포그라운드 복귀 시 다시 읽는다 */
 export const syncSystemLanguage = async (): Promise<void> => {
-  const language = resolveSystemLanguage();
-  if (i18n.language !== language) await i18n.changeLanguage(language);
+  if (resolveSystemLanguage() === appLanguage()) return;
+  const { reload } = require('@/src/utils/ThemeReload');
+  await reload();
 };
 
 export default i18n;

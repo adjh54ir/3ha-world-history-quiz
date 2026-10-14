@@ -9,6 +9,7 @@ import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/sr
 import { scaledSize } from '@/src/utils';
 import { OPEN_SOURCE_LIBS, OpenSourceLib } from '@/src/const/ConstOpenSource';
 import { LANDMARK_CREDITS } from '@/src/const/data/world/ConstLandmarkCredits';
+import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
 import { useToast } from '@/src/context/ToastContext';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -95,7 +96,7 @@ const OpenSource = () => {
 								activeOpacity={0.7}
 								onPress={() => Linking.openURL(`https://commons.wikimedia.org/wiki/File:${encodeURIComponent(c.file)}`).catch(() => showToast(t('opensource.linkError'), 'error-outline'))}>
 								<View style={styles.cardBody}>
-									<Text style={styles.libName} numberOfLines={1} ellipsizeMode="tail">{c.name}</Text>
+									<Text style={styles.libName} numberOfLines={1} ellipsizeMode="tail">{WORLD_ENTRIES.landmark.find((e) => e.fields.image === c.file)?.name ?? c.name}</Text>
 									<View style={styles.metaRow}>
 										<View style={styles.licenseChip}>
 											<Text style={styles.licenseText}>{c.license}</Text>

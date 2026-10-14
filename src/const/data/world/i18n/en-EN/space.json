@@ -1,0 +1,205 @@
+{
+	"space-001": {
+		"summary": "A star 109 times wider than Earth that shines by its own light and holds the surrounding planets in place with its gravity.",
+		"facts": [
+			"The “il” in the Korean word for Sunday, iryoil, refers to this very star, just as “Sunday” does in English.",
+			"Its light takes about 8 minutes and 20 seconds to reach Earth."
+		]
+	},
+	"space-002": {
+		"summary": "The smallest planet, racing along the innermost orbit and completing a lap every 88 days.",
+		"facts": [
+			"With almost no atmosphere, it sees temperature swings of more than 600°C between day and night.",
+			"In Korean, Wednesday (suyoil) takes its name from this planet, which East Asian tradition calls the “water star.”"
+		]
+	},
+	"space-003": {
+		"summary": "The hottest planet, where heat trapped by a carbon dioxide atmosphere pushes surface temperatures above 460°C.",
+		"facts": [
+			"It takes 243 days to spin once, so its day is longer than its year (225 days).",
+			"It is known as the morning star at dawn and the evening star at dusk; in Korean, saetbyeol and gaebapbaragi."
+		]
+	},
+	"space-004": {
+		"summary": "The only planet known to have liquid water on its surface and to harbor life.",
+		"facts": [
+			"About 70 percent of its surface is ocean.",
+			"Its magnetic field and atmosphere shield it from harmful cosmic rays."
+		]
+	},
+	"space-005": {
+		"summary": "A planet that looks red because of its iron oxide dust, with a day lasting about 24 hours and 40 minutes.",
+		"facts": [
+			"It is home to Olympus Mons, the tallest volcano in the Solar System.",
+			"It has two small moons, Phobos and Deimos."
+		]
+	},
+	"space-006": {
+		"summary": "The largest planet, a gas giant so big that more than 1,000 Earths could fit inside it.",
+		"facts": [
+			"It has the Great Red Spot, a giant storm observed continuously since 1878.",
+			"It has 115 known moons, and the four largest were discovered by Galileo Galilei."
+		]
+	},
+	"space-007": {
+		"summary": "A planet encircled by distinct rings of ice and rock.",
+		"facts": [
+			"Its density is lower than water's, so it is often said that it would float in water.",
+			"With 293 known moons, it has more than any other planet."
+		]
+	},
+	"space-008": {
+		"summary": "A blue-green planet that spins almost on its side, as if rolling along its orbit.",
+		"facts": [
+			"Discovered by William Herschel in 1781, it was the first planet found with a telescope.",
+			"Methane in its atmosphere absorbs red light, giving it a blue-green color."
+		]
+	},
+	"space-009": {
+		"summary": "The planet farthest from the Sun, swept by winds faster than 500 meters per second.",
+		"facts": [
+			"Its existence was worked out by calculation before it was ever spotted through a telescope.",
+			"One orbit takes 165 years, so after its discovery in 1846, it did not complete its first full lap until 2011."
+		]
+	},
+	"space-010": {
+		"summary": "Earth's one and only natural satellite, orbiting 380,000 kilometers away and raising the tides.",
+		"facts": [
+			"In December 2022, South Korea's first space probe, Danuri, entered orbit around it.",
+			"In 1969, Apollo 11 landed the first humans on it."
+		]
+	},
+	"space-011": {
+		"summary": "The moon of Jupiter with the most active volcanoes in the Solar System.",
+		"facts": [
+			"Tidal forces from Jupiter heat its interior, keeping its volcanoes erupting nonstop.",
+			"Sulfur colors its surface yellow and red."
+		]
+	},
+	"space-012": {
+		"summary": "A moon of Jupiter thought to hide an ocean beneath its icy shell.",
+		"facts": [
+			"Its surface is covered in cracked plates of ice.",
+			"The Europa Clipper probe, launched in 2024, is set to arrive in 2030."
+		]
+	},
+	"space-013": {
+		"summary": "Saturn's largest moon, with a thick atmosphere and lakes of methane.",
+		"facts": [
+			"NASA's Dragonfly drone lander is set to launch in 2028 and touch down here in 2034.",
+			"In 2005, the Huygens probe landed on its surface."
+		]
+	},
+	"space-014": {
+		"summary": "A small moon of Saturn that shoots plumes of water into space from its south pole.",
+		"facts": [
+			"The Cassini spacecraft first detected the plumes in 2005.",
+			"The particles it sprays out make up part of Saturn's rings."
+		]
+	},
+	"space-015": {
+		"summary": "An icy world discovered in 1930 that counted as a planet for 76 years before being reclassified as a dwarf planet in 2006.",
+		"facts": [
+			"In 2015, the New Horizons probe made the first close flyby.",
+			"Its surface features a heart-shaped plain of ice."
+		]
+	},
+	"space-016": {
+		"summary": "A dwarf planet discovered in 2005 that was hailed as a possible tenth planet and ended up forcing a new definition of what a planet is.",
+		"facts": [
+			"Its diameter is slightly smaller than Pluto's, but it has more mass.",
+			"It is named after the goddess of discord."
+		]
+	},
+	"space-017": {
+		"summary": "The largest body in the belt between Mars and Jupiter, and the only dwarf planet in the inner Solar System.",
+		"facts": [
+			"The first asteroid ever found, in 1801, it bears the name of the goddess of grain, which shares a root with the word “cereal.”",
+			"In 2015, the Dawn spacecraft photographed bright salt deposits inside a crater."
+		]
+	},
+	"space-018": {
+		"summary": "A band of rocky bodies scattered in orbit between Mars and Jupiter.",
+		"facts": [
+			"All of it combined adds up to only about 3 percent of the Moon's mass.",
+			"It is so sparse that spacecraft pass through it safely."
+		]
+	},
+	"space-019": {
+		"summary": "A doughnut-shaped region of icy bodies spread out beyond Neptune.",
+		"facts": [
+			"Its existence was confirmed in 1992 with the discovery of the first object beyond Pluto.",
+			"Short-period comets come from here."
+		]
+	},
+	"space-020": {
+		"summary": "A very distant home of comets thought to wrap around the Solar System like a sphere.",
+		"facts": [
+			"In 1950, astronomer Jan Oort of the Netherlands proposed its existence.",
+			"It remains a hypothetical region that has never been directly observed."
+		]
+	},
+	"space-021": {
+		"summary": "A moon of Jupiter even larger than Mercury, making it the biggest moon in the Solar System.",
+		"facts": [
+			"It is the only moon known to generate its own magnetic field.",
+			"The ocean beneath its ice may hold more water than all the water on Earth's surface combined."
+		]
+	},
+	"space-022": {
+		"summary": "Jupiter's second-largest moon, with the most densely cratered surface in the Solar System.",
+		"facts": [
+			"Galileo Galilei discovered it in 1610, along with the other three large moons.",
+			"The Galileo probe detected signs of a salty ocean beneath its surface."
+		]
+	},
+	"space-023": {
+		"summary": "Neptune's largest moon, which orbits in the opposite direction to the planet's rotation.",
+		"facts": [
+			"It is thought to be a Kuiper belt object captured by Neptune's gravity.",
+			"In 1989, Voyager 2 spotted geysers erupting from its surface."
+		]
+	},
+	"space-024": {
+		"summary": "Pluto's largest moon, about half as wide as its partner.",
+		"facts": [
+			"It and Pluto always keep the same face toward each other, circling every 6.4 days.",
+			"It was discovered in 1978 when a photo of Pluto showed an elongated shape."
+		]
+	},
+	"space-025": {
+		"summary": "A large moon of Mars that circles the planet three times a day while slowly creeping closer to it.",
+		"facts": [
+			"It drifts 1.8 meters closer every 100 years and could break apart within 50 million years.",
+			"Its name is Greek for “fear,” the same root as the word “phobia.”"
+		]
+	},
+	"space-026": {
+		"summary": "The only short-period comet visible to the naked eye, coming back roughly once every 76 years.",
+		"facts": [
+			"It last swung by in 1986 and will return in 2061.",
+			"The debris it scatters produces meteor showers in May and October."
+		]
+	},
+	"space-027": {
+		"summary": "A dwarf planet that spins once every 4 hours, so fast it has been stretched into a rugby-ball shape.",
+		"facts": [
+			"It was the first Kuiper belt object found to have a ring.",
+			"It is named after the Hawaiian goddess of fertility."
+		]
+	},
+	"space-028": {
+		"summary": "A dwarf planet discovered just after Easter 2005, which earned it the nickname “Easterbunny.”",
+		"facts": [
+			"It is about 1,400 kilometers across, roughly three-fifths the size of Pluto.",
+			"Its name comes from the god who created humankind in Rapa Nui mythology."
+		]
+	},
+	"space-029": {
+		"summary": "The second most massive body in the asteroid belt, layered like Earth into crust, mantle and core.",
+		"facts": [
+			"Its south pole holds an impact crater about 500 kilometers wide.",
+			"Some of the meteorites that have fallen to Earth broke off from it."
+		]
+	}
+}

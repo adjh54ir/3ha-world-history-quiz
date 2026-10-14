@@ -1,0 +1,835 @@
+{
+	"event-001": {
+		"summary": "Battle in 490 BC in which the army of Athens defeated a Persian landing force on a plain by the sea.",
+		"facts": [
+			"The first marathon race, held in 1896, was inspired by the legend of a messenger who ran to Athens with news of the victory.",
+			"Herodotus wrote that 6,400 Persians and 192 Athenians were killed."
+		]
+	},
+	"event-002": {
+		"summary": "Campaign begun in 334 BC in which the young king of Macedonia toppled Persia and pushed on to the threshold of India.",
+		"facts": [
+			"He founded several cities named Alexandria, and the one in Egypt survives to this day.",
+			"Hellenism, a blend of Greek and Eastern cultures, emerged from it."
+		]
+	},
+	"event-003": {
+		"summary": "Starting in 264 BC, three wars over nearly 120 years in which Rome and Carthage fought for control of the Mediterranean.",
+		"facts": [
+			"In 218 BC, Hannibal led 37 elephants across the Alps.",
+			"In 146 BC, Carthage was burned to the ground and Rome took control of the Mediterranean."
+		]
+	},
+	"event-004": {
+		"summary": "In 476, the Germanic mercenary leader Odoacer deposed the last emperor, a mere boy.",
+		"facts": [
+			"This year is often taken as the end of Antiquity and the start of the European Middle Ages.",
+			"Rome's eastern half held out for nearly another thousand years before falling in 1453."
+		]
+	},
+	"event-005": {
+		"summary": "A religion that began around 610 with revelations received by Muhammad, a merchant of Mecca, and went on to unite Arabia.",
+		"facts": [
+			"The year 622, when he moved from Mecca to Medina, is year one of its calendar.",
+			"Within a century it had spread across North Africa and into the Iberian Peninsula."
+		]
+	},
+	"event-006": {
+		"summary": "Beginning in 1096 and lasting nearly 200 years, a series of campaigns in which European knights invaded the Middle East to retake the Holy Land.",
+		"facts": [
+			"They captured Jerusalem in 1099 but lost it to Saladin in 1187.",
+			"They opened a channel through which goods and knowledge from the East flowed into Europe."
+		]
+	},
+	"event-007": {
+		"summary": "A document that English barons forced King John to accept in 1215, stating that even the king must obey the law.",
+		"facts": [
+			"Three of its clauses are still law in England and Wales today.",
+			"Four original copies survive: two at the British Library and one each at Lincoln Castle and Salisbury Cathedral."
+		]
+	},
+	"event-008": {
+		"summary": "In the 13th century, Genghis Khan and his descendants swept on horseback from China to Eastern Europe.",
+		"facts": [
+			"After Genghis Khan rose to power in 1206, the empire reached its greatest extent under his grandson Kublai.",
+			"At its peak it covered 23.5 million square kilometers, the largest contiguous empire in history."
+		]
+	},
+	"event-009": {
+		"summary": "An epidemic that arrived in 1347 on ships from the Black Sea and killed more than a third of Europe's population.",
+		"facts": [
+			"The English word “quarantine” comes from the Venetian term for holding ships in isolation for 40 days.",
+			"With workers suddenly scarce, serfdom began to crumble."
+		]
+	},
+	"event-010": {
+		"summary": "From 1337, an on-and-off conflict lasting 116 years in which England and France fought over the throne and territory.",
+		"facts": [
+			"In 1429, Joan of Arc lifted the siege of Orléans and turned the tide of the war.",
+			"When the war ended, England had lost all its lands on the Continent except Calais."
+		]
+	},
+	"event-011": {
+		"summary": "From the 14th century, a cultural movement in which Italian cities revived the ideals of ancient Greece and Rome and placed humanity at the center.",
+		"facts": [
+			"The Medici, a banking family of Florence, became leading patrons of artists.",
+			"It reached its height around 1500 with Leonardo da Vinci and Michelangelo."
+		]
+	},
+	"event-012": {
+		"summary": "Around 1450, a goldsmith in Mainz began casting letters in metal so that books could be mass-produced.",
+		"facts": [
+			"Its best-known work is the 42-line Bible, printed around 1455.",
+			"Korea's “Jikji,” printed under the Goryeo dynasty, predates it by more than 70 years."
+		]
+	},
+	"event-013": {
+		"summary": "In 1453, Ottoman forces breached the walls with giant cannons and seized the thousand-year-old capital of the Eastern Roman Empire.",
+		"facts": [
+			"The walls were breached on May 29 after a 53-day siege.",
+			"The city is today's Istanbul, the largest city in Turkey."
+		]
+	},
+	"event-014": {
+		"summary": "In 1492, a captain trying to reach India by sailing west landed instead on an island in the Caribbean.",
+		"facts": [
+			"Because he believed he had reached India, the Caribbean islands are still called the West Indies.",
+			"Afterward potatoes, corn, and chili peppers spread across the ocean, while smallpox crossed over to the Americas."
+		]
+	},
+	"event-015": {
+		"summary": "In 1517, a movement that split the Church in two after the German monk Martin Luther challenged the sale of indulgences.",
+		"facts": [
+			"Luther is said to have posted his theses on the door of a church in Wittenberg.",
+			"October 31, the day he supposedly posted them, is still a public holiday in nine German states."
+		]
+	},
+	"event-016": {
+		"summary": "Setting out in 1519, a Spanish fleet named the Pacific for its calm waters and became the first to sail all the way around the Earth.",
+		"facts": [
+			"About 270 men left on five ships; only one ship and 18 men made it back.",
+			"The captain himself was killed in the Philippines and never saw the voyage's end."
+		]
+	},
+	"event-017": {
+		"summary": "In 1588, Spain sent nearly 130 ships to invade England but was beaten in the Strait of Dover.",
+		"facts": [
+			"Anchored off Calais, the fleet was scattered by English fireships.",
+			"On the way home, storms off Scotland and Ireland sank more ships than the fighting had."
+		]
+	},
+	"event-018": {
+		"summary": "A war that began in 1618 as a clash between Protestants and Catholics and drew in most of Europe.",
+		"facts": [
+			"In parts of Germany, where most of the fighting took place, the population fell by more than half.",
+			"The spark was the defenestration of Prague, when imperial officials were thrown out of a window at Prague Castle."
+		]
+	},
+	"event-019": {
+		"summary": "The 1648 agreement that ended the Thirty Years' War and set the principle that states should not meddle in one another's internal affairs.",
+		"facts": [
+			"It was signed in two cities, Münster and Osnabrück.",
+			"Switzerland won legal recognition of its independence from the Holy Roman Empire."
+		]
+	},
+	"event-020": {
+		"summary": "In 1688, a nearly bloodless coup in which the English Parliament replaced the king.",
+		"facts": [
+			"James II fled, and his daughter Mary and her husband William took the throne together.",
+			"The next year, the Bill of Rights barred the Crown from levying taxes without Parliament's consent."
+		]
+	},
+	"event-021": {
+		"summary": "From the late 18th century, a transformation that began in Britain as steam engines and factories replaced human hands and changed everyday life entirely.",
+		"facts": [
+			"It began in cotton mills that brought in spinning machines.",
+			"The watt (W) printed on light bulbs is named after James Watt, who improved the steam engine."
+		]
+	},
+	"event-022": {
+		"summary": "The 1776 document in which thirteen colonies announced to the world that they were breaking away from Great Britain.",
+		"facts": [
+			"July 4, the day it was adopted, is now Independence Day in the United States.",
+			"Thomas Jefferson wrote the first draft, which includes the words “all men are created equal.”"
+		]
+	},
+	"event-023": {
+		"summary": "In 1789, the people of Paris rose up, toppled the old class system, and claimed sovereignty for the nation.",
+		"facts": [
+			"It began with the storming of the Bastille on July 14, now France's national holiday.",
+			"France's motto, “Liberty, Equality, Fraternity,” was first raised at this time."
+		]
+	},
+	"event-024": {
+		"summary": "In 1814, after Napoleon's fall, representatives of Europe's monarchies met to redraw the continent's borders.",
+		"facts": [
+			"Austrian Chancellor Metternich steered it toward restoring the pre-revolutionary order.",
+			"Amid an endless round of balls, the talks dragged on for nine months, earning the nickname “the dancing congress.”"
+		]
+	},
+	"event-025": {
+		"summary": "In 1839, the United Kingdom went to war after Qing China seized and destroyed drugs belonging to British merchants.",
+		"facts": [
+			"Under the 1842 Treaty of Nanking, the defeated Qing ceded Hong Kong Island.",
+			"Hong Kong remained British for more than 150 years before returning to China in 1997."
+		]
+	},
+	"event-026": {
+		"summary": "Beginning in 1861, a four-year war fought after Southern states seceded to defend slavery and the North fought back.",
+		"facts": [
+			"In 1863, in the middle of the war, Abraham Lincoln issued the Emancipation Proclamation.",
+			"More than 620,000 people died, still the highest death toll of any war in the history of the United States."
+		]
+	},
+	"event-027": {
+		"summary": "Sparked in 1914 by the assassination of an heir to the throne in Sarajevo, a four-year conflict of trenches and machine guns.",
+		"facts": [
+			"November 11, the day of the 1918 armistice, is a national holiday in France and a day of remembrance in the United Kingdom.",
+			"Four empires collapsed in its wake: the German, Austrian, Russian, and Ottoman."
+		]
+	},
+	"event-028": {
+		"summary": "In 1917, an uprising in which workers and soldiers overthrew the tsar and set up the world's first socialist government.",
+		"facts": [
+			"The February Revolution forced the tsar to step down, and in the October Revolution Lenin's Bolsheviks seized power.",
+			"When the country switched calendars the next year, the anniversary of the October Revolution moved to November 7."
+		]
+	},
+	"event-029": {
+		"summary": "An economic slump that began with the 1929 stock market crash in New York City and spread around the world for nearly a decade.",
+		"facts": [
+			"The trigger was the crash of October 24, known as “Black Thursday.”",
+			"With unemployment in the United States approaching 25 percent, the New Deal put people to work building dams and roads."
+		]
+	},
+	"event-030": {
+		"summary": "Beginning in 1939 with Germany's invasion of Poland, a six-year conflict that engulfed every continent.",
+		"facts": [
+			"More than 60 million people died, making it the deadliest war in history.",
+			"Japan surrendered after atomic bombs were dropped on Hiroshima and Nagasaki in August 1945."
+		]
+	},
+	"event-031": {
+		"summary": "In 1969, American astronauts became the first humans to set foot on another world.",
+		"facts": [
+			"After touching down on July 20, Armstrong and Aldrin walked on the lunar surface for about two and a half hours.",
+			"Some 600 million people around the world watched it live on television."
+		]
+	},
+	"event-032": {
+		"summary": "On November 9, 1989, the barrier dividing East Germany and West Germany was torn down by ordinary citizens.",
+		"facts": [
+			"It was set off when an East German spokesman mistakenly told a press conference that the border would open “immediately.”",
+			"East and West reunited the following October 3, now Germany's national holiday."
+		]
+	},
+	"event-033": {
+		"summary": "Around 3500 BC, the Sumerians of the plain between two rivers built the first cities and invented cuneiform writing.",
+		"facts": [
+			"They pressed letters into clay tablets with reed pens.",
+			"The base-60 system that divides an hour into 60 minutes and a circle into 360 degrees came from here."
+		]
+	},
+	"event-034": {
+		"summary": "Beginning around 3000 BC, a civilization along the Nile that relied on the river's yearly floods and endured for 3,000 years.",
+		"facts": [
+			"At 146 meters, the Great Pyramid of Giza was the tallest structure on Earth for more than 3,700 years.",
+			"Its calendar had 365 days: twelve 30-day months plus five extra days."
+		]
+	},
+	"event-035": {
+		"summary": "Around 2500 BC, a civilization in a great river basin with cities laid out in neat grids and equipped with sewers.",
+		"facts": [
+			"Its leading city, Mohenjo-daro, still has a 12-meter-long brick bath known as the Great Bath.",
+			"Thousands of inscriptions have been found on seals and other objects, but no one has yet deciphered them."
+		]
+	},
+	"event-036": {
+		"summary": "Around 2000 BC, East Asia's first civilization arose along a muddy, silt-laden river, leaving behind bronzes and oracle bone script.",
+		"facts": [
+			"Divination records carved on turtle shells became the roots of Chinese characters.",
+			"Excavation of Yinxu, the last capital of the Shang dynasty, began in 1928."
+		]
+	},
+	"event-037": {
+		"summary": "Around 1750 BC, a king of Babylon carved laws such as “an eye for an eye” onto a stone pillar.",
+		"facts": [
+			"Blinding a noble cost you your own eye, but blinding a commoner could be settled with a payment of silver.",
+			"The 2.25-meter stone pillar covered in its laws is now in the Louvre in Paris."
+		]
+	},
+	"event-038": {
+		"summary": "Around the 6th century BC, the teachings of Siddhartha, who gave up his life as a prince and attained enlightenment.",
+		"facts": [
+			"Buddha's Birthday, on the 8th day of the 4th lunar month, is a public holiday in South Korea.",
+			"He is said to have attained enlightenment beneath the Bodhi tree at Bodh Gaya."
+		]
+	},
+	"event-039": {
+		"summary": "In 221 BC, a king from the western frontier conquered six rival states and became the first ruler to call himself emperor.",
+		"facts": [
+			"He standardized writing, weights and measures, and even the width of cart axles.",
+			"By linking up the northern defensive walls, he laid the foundation for the Great Wall of China."
+		]
+	},
+	"event-040": {
+		"summary": "An east–west trade route opened in the 2nd century BC when Emperor Wu of Han sent envoys to the Western Regions.",
+		"facts": [
+			"The envoy Zhang Qian returned after 13 years and reported on the lands to the west.",
+			"The name was coined in 1877 by the German geographer Ferdinand von Richthofen."
+		]
+	},
+	"event-041": {
+		"summary": "From the late 6th century, a system under which the Sui dynasty began choosing officials by competitive tests rather than family background.",
+		"facts": [
+			"It lasted more than 1,300 years until it was abolished in 1905, near the end of the Qing dynasty.",
+			"Korea's Goryeo dynasty adopted the system in 958 under King Gwangjong."
+		]
+	},
+	"event-042": {
+		"summary": "From 1405, seven voyages in which a great Ming fleet sailed through Southeast Asia as far as the east coast of Africa.",
+		"facts": [
+			"The first voyage set out with 317 ships and nearly 28,000 men, almost 90 years before Christopher Columbus.",
+			"The voyages stopped after a new emperor took the throne, and the court is said to have deliberately destroyed the records."
+		]
+	},
+	"event-043": {
+		"summary": "Beginning in 1592 with Japan's invasion of Joseon, a seven-year war that drew in Joseon, Ming China, and Japan.",
+		"facts": [
+			"Off Hansan Island, Yi Sun-sin's navy crushed the Japanese fleet using the crane-wing formation.",
+			"The face on the front of South Korea's 100-won coin is Yi Sun-sin, who led the navy in this war."
+		]
+	},
+	"event-044": {
+		"summary": "In 1868, a reform in which Japan swept away the shogunate and adopted Western-style institutions under the emperor.",
+		"facts": [
+			"It abolished the class system and introduced military conscription and compulsory education.",
+			"In 1872, Japan's first railway opened between Shimbashi in Tokyo and Yokohama."
+		]
+	},
+	"event-045": {
+		"summary": "In 1911, an uprising by soldiers in Wuchang that ended more than 2,000 years of imperial rule.",
+		"facts": [
+			"October 10, the day of the uprising, is now Taiwan's national day, and the Republic of China was founded the following January.",
+			"In 1912, six-year-old Puyi, the last emperor, gave up the throne."
+		]
+	},
+	"event-046": {
+		"summary": "In the 3rd century BC, a Maurya king, horrified by the carnage of his conquest of Kalinga, repented and spread the teachings far and wide.",
+		"facts": [
+			"The four lions carved on one of his stone pillars became the model for India's national emblem.",
+			"He sent envoys to carry the teachings as far as Sri Lanka."
+		]
+	},
+	"event-047": {
+		"summary": "From the 4th century, an era when a dynasty that united northern India saw the number zero and classical Sanskrit culture flourish.",
+		"facts": [
+			"The digits 0 through 9 used today originated here and traveled to Europe by way of the Arab world.",
+			"Hinduism took on its present form during this period."
+		]
+	},
+	"event-048": {
+		"summary": "A state that rose around 1299 from a small Turkic tribe in Anatolia and lasted more than 600 years.",
+		"facts": [
+			"Named after its founder, Osman I, it endured until 1922.",
+			"It governed by recognizing each religious group as its own community."
+		]
+	},
+	"event-049": {
+		"summary": "In 1526, Babur, who came down from Central Asia, founded a state in northern India that blended Islamic and Hindu cultures.",
+		"facts": [
+			"The Taj Mahal is the tomb that Shah Jahan spent more than 20 years building in memory of his late wife.",
+			"Emperor Akbar abolished the tax levied on non-Muslims."
+		]
+	},
+	"event-050": {
+		"summary": "In 1532, a great Andean empire fell to an expedition of just 168 men led by Pizarro.",
+		"facts": [
+			"Guns and horses mattered, but more decisive was smallpox, which spread ahead of the invaders, killed the emperor, and sparked a civil war.",
+			"Instead of writing, it recorded numbers on knotted cords called quipu."
+		]
+	},
+	"event-051": {
+		"summary": "From the 16th to the 19th century, the trade in which European merchants sold Africans to plantations in the Americas.",
+		"facts": [
+			"It formed one leg of the triangular trade linking Europe, Africa, and the Americas.",
+			"An estimated 12 million or more people were carried off on slave ships."
+		]
+	},
+	"event-052": {
+		"summary": "In 1857, an uprising launched by Indian soldiers of the British East India Company that spread across northern India.",
+		"facts": [
+			"It was ignited by rumors that cartridges were greased with cow and pig fat.",
+			"The year after it was crushed, the East India Company lost its power to govern, and the British Crown took direct rule of India."
+		]
+	},
+	"event-053": {
+		"summary": "In 1884, a meeting at which the European powers gathered to set rules for carving up an entire continent.",
+		"facts": [
+			"Not a single person from the lands being divided was invited.",
+			"By 1914, Ethiopia and Liberia were the only independent countries left in Africa."
+		]
+	},
+	"event-054": {
+		"summary": "In 1904, a war between two countries over control of Manchuria and the Korean Peninsula.",
+		"facts": [
+			"At the Battle of Tsushima in 1905, Russia's Baltic Fleet was almost entirely destroyed.",
+			"That same year, Japan used the Eulsa Treaty to strip the Korean Empire of its diplomatic rights."
+		]
+	},
+	"event-055": {
+		"summary": "During World War II, Nazi Germany's systematic murder of Jews and other minorities.",
+		"facts": [
+			"About 6 million Jews alone are estimated to have been killed.",
+			"January 27, the day Auschwitz was liberated, is now International Holocaust Remembrance Day."
+		]
+	},
+	"event-056": {
+		"summary": "An organization created in 1945 by countries that had lived through two world wars, to keep the peace together.",
+		"facts": [
+			"Its charter was adopted in San Francisco, and it came into being on October 24, now celebrated as United Nations Day.",
+			"The five permanent members of the Security Council hold veto power."
+		]
+	},
+	"event-057": {
+		"summary": "In 1947, after nonviolent resistance led by Mahatma Gandhi, the country broke free of nearly 200 years of British rule.",
+		"facts": [
+			"In 1930, Mahatma Gandhi led the Salt March, a 24-day walk to the sea.",
+			"Independence on August 15 split the land into India and Pakistan, and it falls on the same date as South Korea's Liberation Day."
+		]
+	},
+	"event-058": {
+		"summary": "Begun in 1950 by North Korea's invasion of the South, the Cold War's first hot war, to which 16 UN member states sent combat troops.",
+		"facts": [
+			"The guns fell silent on July 27, 1953, when the armistice was signed at Panmunjom.",
+			"Because it ended in an armistice rather than a peace treaty, the Military Demarcation Line remains to this day."
+		]
+	},
+	"event-059": {
+		"summary": "Thirteen days in October 1962 when the United States and the Soviet Union came to the brink of war over Soviet nuclear weapons on a Caribbean island.",
+		"facts": [
+			"The Soviet Union withdrew its missiles, and the United States secretly agreed to remove its missiles from Turkey.",
+			"Afterward, a direct hotline was set up between the two countries' leaders."
+		]
+	},
+	"event-060": {
+		"summary": "In 1994, the laws that separated people by skin color collapsed, and people of all races voted together for the first time.",
+		"facts": [
+			"That election made Nelson Mandela, who had spent 27 years in prison, president.",
+			"A Truth and Reconciliation Commission was set up to confront the past."
+		]
+	},
+	"event-061": {
+		"summary": "In 1991, a socialist federation that had lasted nearly 70 years broke apart into fifteen countries.",
+		"facts": [
+			"On December 25, the red flag was lowered over the Kremlin and Gorbachev stepped down.",
+			"Russia took over its permanent seat on the UN Security Council."
+		]
+	},
+	"event-062": {
+		"summary": "From 508 BC, a system in which citizens gathered in an assembly to decide public affairs and public offices were filled by lot.",
+		"facts": [
+			"Cleisthenes reorganized the tribes by place of residence instead of by kinship.",
+			"Later, selection by lot and pay for public service let even poor citizens hold office."
+		]
+	},
+	"event-063": {
+		"summary": "In 480 BC, a sea battle in which the allied Greek fleet lured the Persian fleet into a narrow strait and turned the tide of the war.",
+		"facts": [
+			"Themistocles tricked the enemy into a strait too tight for their large ships to maneuver.",
+			"The victory put an end to Persia's attempt to conquer Greece."
+		]
+	},
+	"event-064": {
+		"summary": "Starting in 431 BC, a 27-year war within Greece in which Athens and Sparta fought for supremacy.",
+		"facts": [
+			"A plague swept through Athens and killed its leader, Pericles.",
+			"Thucydides' account of the war became a model for historical writing."
+		]
+	},
+	"event-065": {
+		"summary": "In 550 BC, Cyrus the Great united the ancient Near East and let conquered peoples keep their own faiths, launching a new empire.",
+		"facts": [
+			"In 539 BC he entered Babylon and allowed the captive Jews to return home.",
+			"The “Neither snow nor rain…” inscription on a New York City post office describes this empire's mounted couriers."
+		]
+	},
+	"event-066": {
+		"summary": "In 509 BC, a city on the Tiber drove out its king and began electing two men each year to run the state.",
+		"facts": [
+			"Two consuls split power equally so that each could check the other.",
+			"SPQR, stamped even on manhole covers in Rome, stands for “the Senate and People of Rome.”"
+		]
+	},
+	"event-067": {
+		"summary": "In 27 BC, Octavian, who had ended the civil wars, received the title “the revered one” and became the first emperor in all but name.",
+		"facts": [
+			"That title, Augustus, survives in the English name of the month August.",
+			"It was followed by roughly 200 years of relative peace."
+		]
+	},
+	"event-068": {
+		"summary": "The dynasty founded in 202 BC by Liu Bang, a man of peasant origins, after the fall of the Qin.",
+		"facts": [
+			"He defeated Xiang Yu of Chu to become emperor; these are the same Han and Chu that face off in janggi, Korean chess.",
+			"Its name lives on in the term “Han Chinese” and in “hanzi,” the Chinese word for Chinese characters."
+		]
+	},
+	"event-069": {
+		"summary": "Around the 11th century BC, the Phoenicians boiled picture writing down into 22 symbols for sounds.",
+		"facts": [
+			"Its first two letters, aleph (ox) and bet (house), became the Greek alpha and beta, which gave the alphabet its name.",
+			"By way of Greece and Rome, it became the root of the scripts used in Europe today."
+		]
+	},
+	"event-070": {
+		"summary": "From around 2000 BC, a civilization that built stepped pyramids in the jungles of Central America and understood the concept of zero.",
+		"facts": [
+			"Its kings' histories were recorded in hieroglyphs carved in stone.",
+			"Its precise calendars tracked the movements of the Sun and Venus."
+		]
+	},
+	"event-071": {
+		"summary": "In 776 BC, the Greeks began holding a festival of athletic contests in honor of Zeus every four years.",
+		"facts": [
+			"For the first 50 years or so, the only event was a single footrace of less than 200 meters.",
+			"The first modern Olympics, held in Athens in 1896, revived the name."
+		]
+	},
+	"event-072": {
+		"summary": "In 313, Emperor Constantine issued a decision in Milan granting legal tolerance to a persecuted religion.",
+		"facts": [
+			"In 321, he ordered markets and government offices to close on Sundays as a day of rest.",
+			"In 380, under Emperor Theodosius, it became the state religion of the empire."
+		]
+	},
+	"event-073": {
+		"summary": "Beginning in 376, northern tribes driven by the Huns poured across Rome's frontiers and redrew the map of Europe.",
+		"facts": [
+			"The Visigoths crossed the Danube, and in 410 they sacked Rome.",
+			"The word “vandalism” comes from the Vandals, who also sacked Rome."
+		]
+	},
+	"event-074": {
+		"summary": "The dynasty founded in 618 after the fall of the Sui, with its capital at Chang'an, that became the center of East Asia.",
+		"facts": [
+			"People from Persia and Silla lived side by side in Chang'an.",
+			"Li Bai and Du Fu wrote their poetry under this dynasty."
+		]
+	},
+	"event-075": {
+		"summary": "An Islamic state that rose in 750 by overthrowing the Umayyads and gathered scholars in its round capital, Baghdad.",
+		"facts": [
+			"At the House of Wisdom in Baghdad, Greek texts were translated into Arabic.",
+			"The word “algorithm” comes from the name of al-Khwarizmi, a scholar at the House of Wisdom."
+		]
+	},
+	"event-076": {
+		"summary": "In 751, Tang and Abbasid armies clashed by a river in Central Asia, and the Tang suffered a crushing defeat.",
+		"facts": [
+			"The Tang army was led by Go Seonji, a general descended from refugees of Goguryeo.",
+			"Legend has it that captured Tang craftsmen passed on the secret of papermaking."
+		]
+	},
+	"event-077": {
+		"summary": "In 800, the Pope placed a crown on the head of the Frankish king, and a new empire arose in Western Europe.",
+		"facts": [
+			"He was crowned during Christmas Mass at St. Peter's Basilica in Rome.",
+			"Today's France, Germany, and Italy all emerged from his lands."
+		]
+	},
+	"event-078": {
+		"summary": "From 793, seafarers from the northern seas sailed up rivers and raided their way across Europe.",
+		"facts": [
+			"The name Bluetooth comes from the nickname of Harald, the 10th-century Viking king who united Denmark.",
+			"They didn't just raid; they also settled in places like Novgorod and Normandy."
+		]
+	},
+	"event-079": {
+		"summary": "In 755, an eight-year revolt launched by a frontier military governor that sent the Tang into decline.",
+		"facts": [
+			"Led by An Lushan and Shi Siming, it captured both capitals, Luoyang and Chang'an.",
+			"Afterward, the Tang never regained control over regional powers."
+		]
+	},
+	"event-080": {
+		"summary": "In 1066, a duke who crossed from northern France won at Hastings, and the island changed hands.",
+		"facts": [
+			"On Christmas Day that year, Duke William was crowned king at Westminster Abbey.",
+			"Even “beef” and “pork” come from the French spoken by the Norman nobility."
+		]
+	},
+	"event-081": {
+		"summary": "In 1054, the Pope in Rome and the Patriarch of Constantinople excommunicated each other, and the two churches went their separate ways.",
+		"facts": [
+			"The two churches still calculate Easter differently, so in many years they celebrate it on different dates.",
+			"The split lives on today in the Catholic and Orthodox churches."
+		]
+	},
+	"event-082": {
+		"summary": "Two creations of Tang and Song China: a powder discovered while searching for an elixir of immortality, and a needle that points south.",
+		"facts": [
+			"In 1044, the Song military manual “Wujing Zongyao” became the first text to record a formula for gunpowder.",
+			"In late Goryeo, Choe Mu-seon made gunpowder and cannons and used them to burn Japanese pirate ships at Jinpo."
+		]
+	},
+	"event-083": {
+		"summary": "For nearly 800 years until 1492, the Christian kingdoms of Iberia fought to win back land from Muslim rulers.",
+		"facts": [
+			"It ended with the fall of Granada, the last Muslim kingdom, whose palace is the Alhambra.",
+			"That same year, the Spanish crown backed Christopher Columbus's voyage."
+		]
+	},
+	"event-084": {
+		"summary": "The 12th century, when the kings of ancient Cambodia built huge temples and waterways deep in the jungle and dominated Southeast Asia.",
+		"facts": [
+			"Angkor Wat was built under Suryavarman II.",
+			"Angkor Wat appears in the center of the flag of Cambodia."
+		]
+	},
+	"event-085": {
+		"summary": "From the 13th century, an alliance of merchant cities on the Baltic and North Seas that jointly controlled shipping routes and prices.",
+		"facts": [
+			"Centered on Lübeck, it once brought together nearly 200 cities.",
+			"Hamburg and Bremen still include “Free Hanseatic City” in their official names."
+		]
+	},
+	"event-086": {
+		"summary": "Around 1325, the Mexica founded their capital on an island in the middle of a lake and went on to rule central Mexico.",
+		"facts": [
+			"Today's Mexico City stands on the site of their capital, Tenochtitlan.",
+			"The eagle perched on a cactus on Mexico's flag comes from the legend of the city's founding."
+		]
+	},
+	"event-087": {
+		"summary": "The dynasty founded in 1368 by Zhu Yuanzhang, a former wandering monk, after he drove the Mongols back north.",
+		"facts": [
+			"The Forbidden City in Beijing was completed under this dynasty in 1420.",
+			"Most of the Great Wall of China that survives today was built under this dynasty."
+		]
+	},
+	"event-088": {
+		"summary": "In 1498, a Portuguese fleet rounded the southern tip of Africa and became the first to reach the pepper-rich waters of Asia by that route.",
+		"facts": [
+			"Ten months after leaving Lisbon, it arrived at Calicut on India's southwest coast.",
+			"The pepper and cinnamon it brought back paid for the voyage dozens of times over."
+		]
+	},
+	"event-089": {
+		"summary": "In 1494, Spain and Portugal moved a line drawn by the Pope farther west and split the newly discovered world between them.",
+		"facts": [
+			"The line was drawn 370 leagues west of the Cape Verde islands.",
+			"This line is why Brazil is the only country in South America where Portuguese is spoken."
+		]
+	},
+	"event-090": {
+		"summary": "In 1521, Cortés's Spanish expedition, aided by smallpox, destroyed a capital built on a lake.",
+		"facts": [
+			"The words “tomato” and “avocado” come from Nahuatl, the language its people spoke.",
+			"Neighboring peoples who bore grudges against them sided with the Spanish."
+		]
+	},
+	"event-091": {
+		"summary": "In 1603, Ieyasu set up in a small castle beside a marsh and founded a samurai government that lasted more than 260 years.",
+		"facts": [
+			"Edo, the Tokugawa family's base, is today's Tokyo.",
+			"Daimyo were required to live in Edo every other year, which drained their power."
+		]
+	},
+	"event-092": {
+		"summary": "In 1644, a power that rose in Manchuria crossed Shanhai Pass and entered Beijing, founding China's last imperial dynasty.",
+		"facts": [
+			"The qipao is generally believed to have evolved from the dress of Manchu women, the people who founded this dynasty.",
+			"In 1636 it invaded Korea's Joseon kingdom, and the following year King Injo surrendered at Samjeondo."
+		]
+	},
+	"event-093": {
+		"summary": "In the 17th century, a shift in which thinkers like Galileo Galilei and Isaac Newton began studying nature through observation and experiment rather than old books.",
+		"facts": [
+			"Telescopes and microscopes opened up worlds invisible to the naked eye.",
+			"In 1687, Isaac Newton's “Principia” explained the motions of the heavens and the Earth with one set of laws."
+		]
+	},
+	"event-094": {
+		"summary": "In the 18th century, a movement in which French thinkers called on human reason to challenge outdated authority.",
+		"facts": [
+			"Voltaire, Jean-Jacques Rousseau, and Montesquieu were at its heart.",
+			"The separation of powers that Montesquieu set out in “The Spirit of the Laws” in 1748 was written into the U.S. Constitution."
+		]
+	},
+	"event-095": {
+		"summary": "Beginning in 1756, a global conflict that grew out of a dispute in North America and spread to Europe and India.",
+		"facts": [
+			"Britain defeated France and took control of North America and India.",
+			"Its attempt to pay off war debts by taxing the colonies helped spark American independence."
+		]
+	},
+	"event-096": {
+		"summary": "Starting in 1697, a Russian tsar who toured Western Europe incognito came home and overhauled his entire country.",
+		"facts": [
+			"To learn shipbuilding, he worked with his own hands in a Dutch shipyard.",
+			"In 1703, he founded a new capital, Saint Petersburg, on marshland."
+		]
+	},
+	"event-097": {
+		"summary": "From 1803, twelve years of war in which the French emperor's armies swept across most of Europe before being driven back.",
+		"facts": [
+			"Of the more than 450,000 men who set out on the 1812 invasion of Russia, only about 120,000 survived.",
+			"After his first abdication, the Congress of Vienna met to redraw Europe's borders."
+		]
+	},
+	"event-098": {
+		"summary": "From the 1810s, a wave in which the colonies of Spain and Portugal broke away one after another to form their own nations.",
+		"facts": [
+			"Bolivia is named after Simón Bolívar.",
+			"Only in Brazil did a prince declare independence himself, so less blood was shed."
+		]
+	},
+	"event-099": {
+		"summary": "In the 19th century, a nearly century-long trend in which country after country outlawed the buying and selling of human beings.",
+		"facts": [
+			"The United Kingdom banned the slave trade in 1807 and slavery itself in 1833.",
+			"After its civil war, the United States abolished slavery in 1865 with the 13th Amendment."
+		]
+	},
+	"event-100": {
+		"summary": "In 1861, a peninsula long divided into many states became a single kingdom under the King of Sardinia.",
+		"facts": [
+			"Giuseppe Garibaldi and his Redshirts swept up from the south.",
+			"Rome was the last to join, in 1870."
+		]
+	},
+	"event-101": {
+		"summary": "In 1871, scattered states were bound together into a single empire under Prussian leadership.",
+		"facts": [
+			"It was proclaimed in the Hall of Mirrors at the Palace of Versailles, in a France that had just been defeated.",
+			"Defeated France gave up Alsace-Lorraine, and the resentment lingered all the way to World War I."
+		]
+	},
+	"event-102": {
+		"summary": "In 1853, an American fleet led by its “black ships” arrived to demand that Japan open its doors.",
+		"facts": [
+			"It appeared in Edo Bay and secured the Convention of Kanagawa the following year.",
+			"The shock shook the shogunate and led to the Meiji Restoration."
+		]
+	},
+	"event-103": {
+		"summary": "Beginning in late 1850, a 14-year uprising led by Hong Xiuquan, who had failed the civil service exams again and again, under the banner of a new faith.",
+		"facts": [
+			"Calling himself the younger brother of Jesus, he captured Nanjing and made it his capital.",
+			"More than 20 million people are estimated to have died."
+		]
+	},
+	"event-104": {
+		"summary": "Opened in 1869, a waterway linking the Mediterranean and the Red Sea that let ships reach Asia without sailing around Africa.",
+		"facts": [
+			"In 2021, a giant container ship blocked it for six days, disrupting global supply chains.",
+			"Since it has no locks, ships pass through at sea level."
+		]
+	},
+	"event-105": {
+		"summary": "The 1859 book in which Charles Darwin argued that living things have branched apart over immense spans of time.",
+		"facts": [
+			"The first printing of 1,250 copies sold out immediately through bookseller orders alone.",
+			"The following year at Oxford, Huxley and Bishop Wilberforce clashed over evolution."
+		]
+	},
+	"event-106": {
+		"summary": "In 1851, the first international exhibition, held in London in a vast hall of glass and iron filled with goods from around the world.",
+		"facts": [
+			"Over five and a half months, 6 million people visited the hall, known as the Crystal Palace.",
+			"Continuing the tradition, the Eiffel Tower was built for a later exhibition in Paris."
+		]
+	},
+	"event-107": {
+		"summary": "In 1903, two American bicycle-shop owners became the first to fly an airplane with an engine, staying aloft for 12 seconds.",
+		"facts": [
+			"On December 17, they flew four times in a single day from sand dunes near Kitty Hawk.",
+			"They worked out on their own how to keep the plane balanced by twisting its wings."
+		]
+	},
+	"event-108": {
+		"summary": "In 1949, the Communist Party, victorious in the civil war, proclaimed a new state in front of Tiananmen.",
+		"facts": [
+			"October 1, the day Mao Zedong proclaimed its founding, is now China's National Day.",
+			"The defeated Nationalists retreated to Taiwan."
+		]
+	},
+	"event-109": {
+		"summary": "In 1948, a Jewish state was established under a UN partition plan, and war broke out immediately.",
+		"facts": [
+			"The day after it declared independence on May 14, neighboring Arab states invaded.",
+			"The plight of the Palestinians who fled their homes at this time remains unresolved today."
+		]
+	},
+	"event-110": {
+		"summary": "The 1948 document in which the UN General Assembly stated that all people are born with the same rights.",
+		"facts": [
+			"December 10, the day it was adopted, is now Human Rights Day.",
+			"With more than 570 translations, it is the most translated document in the world."
+		]
+	},
+	"event-111": {
+		"summary": "For 20 years from 1955, a Cold War conflict in a country split into north and south, pitting the United States against communist forces.",
+		"facts": [
+			"After the United States pulled out in 1973, Saigon fell in 1975 and the country was reunified.",
+			"South Korea also sent more than 320,000 troops starting in 1964."
+		]
+	},
+	"event-112": {
+		"summary": "1960, the year when seventeen countries on a single continent threw off colonial rule all at once.",
+		"facts": [
+			"Fourteen of them were French colonies, and the number of independent countries on the continent rose from 9 to 26.",
+			"Nigeria, the Republic of the Congo, and Madagascar all gained independence that year."
+		]
+	},
+	"event-113": {
+		"summary": "For ten years from 1966, a campaign to sweep away “the old” that wrecked schools, historic sites, and people alike.",
+		"facts": [
+			"Mao Zedong launched it, and it ended only after his death in 1976.",
+			"Student Red Guards dragged out teachers and elders for public denunciation."
+		]
+	},
+	"event-114": {
+		"summary": "In 1979, citizens overthrew the monarchy and turned the country into a state ruled by religious leaders.",
+		"facts": [
+			"The Shah Pahlavi was driven out, and the exiled Khomeini returned to become Supreme Leader.",
+			"Oil prices soared, shaking the world economy."
+		]
+	},
+	"event-115": {
+		"summary": "In 1986, a reactor exploded during a test at a power plant, sending radiation across the skies of Europe.",
+		"facts": [
+			"The area within a 30-kilometer radius is still a restricted exclusion zone.",
+			"The nearby city of Pripyat was entirely evacuated the next day."
+		]
+	},
+	"event-116": {
+		"summary": "In 1993, the nations of a continent that had fought two great wars agreed to open their borders and share a single currency.",
+		"facts": [
+			"It came into being when a treaty signed in Maastricht, Netherlands, took effect.",
+			"It introduced the euro as a common currency in 1999, with notes and coins following in 2002."
+		]
+	},
+	"event-117": {
+		"summary": "Born in 1969 as a research network funded by the US Department of Defense, this technology grew to link computers all over the world.",
+		"facts": [
+			"The very first message was meant to be LOGIN, but the computer crashed after just two letters: LO.",
+			"In 1989, Tim Berners-Lee devised the World Wide Web at CERN in Geneva, Switzerland."
+		]
+	},
+	"event-118": {
+		"summary": "In 2001, al-Qaeda hijacked four airliners and crashed them into the Twin Towers in New York City and the Pentagon.",
+		"facts": [
+			"The attacks killed 2,977 people, more than the 2,403 who died at Pearl Harbor.",
+			"Two months later, the United States created the Transportation Security Administration, putting airport screening directly under federal control."
+		]
+	},
+	"event-119": {
+		"summary": "In late 2019, a new infectious disease first reported in Wuhan, China, spread across the globe and brought borders and schools to a standstill.",
+		"facts": [
+			"On March 11, 2020, the World Health Organization declared a pandemic.",
+			"On December 8, 2020, a 90-year-old woman in the United Kingdom became the first person to receive a vaccine outside a clinical trial."
+		]
+	}
+}

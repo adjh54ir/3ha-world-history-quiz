@@ -3,6 +3,7 @@
 import type { LearnType } from '@/src/types/data/LearnType';
 import LearnHubService from '@/src/services/LearnHubService';
 import i18n from '@/src/translations';
+import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 
 export interface TowerQuizQuestion {
 	/** 원본 문항 — 오답 노트로 넘길 때 쓴다 */
@@ -21,7 +22,7 @@ export interface TowerQuizQuestion {
 }
 
 /** 타워 층 → 문항 난이도 */
-export const TOWER_LEVEL_MAP: Record<number, string> = { 1: '초급', 2: '중급', 3: '고급', 4: '특급' };
+export const TOWER_LEVEL_MAP: Readonly<Record<number, string>> = DIFFICULTY_LABELS;
 
 /** 층 난이도의 전 주제 믹스 문항 */
 export const generateTowerQuiz = (level: string, questionCount: number = 5): TowerQuizQuestion[] =>

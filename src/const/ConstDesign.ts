@@ -9,6 +9,7 @@
 import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { themed } from '@/src/utils/ThemedStyles';
+import { appLanguage } from '@/src/translations';
 
 /**
  * 타이포그래피 스케일 (반응형) — 2pt 등간격 위계
@@ -60,7 +61,15 @@ export const Typography = {
  * - 서체가 아직 안 올라왔으면 시스템 서체로 그려진다 (app/_layout 에서 스플래시 전에 올린다).
  */
 export const DISPLAY_FONT = 'BlackHanSans';
-export const DisplayText = { fontFamily: DISPLAY_FONT, fontWeight: '400' } as const;
+
+/**
+ * 앱 서체(블랙한산스·나눔스퀘어라운드)는 한국어에서만 쓴다.
+ * 두 서체에는 악센트 라틴 글자(é ñ ç)와 중국어·일본어 글자 대부분이 없어, 다른 언어에서 쓰면
+ * 빠진 글자만 시스템 서체로 그려져 한 낱말 안에서 서체가 섞인다. 다른 언어는 시스템 서체 + 굵기로 그린다.
+ */
+export const APP_FONTS_ON = appLanguage() === 'ko-KR';
+
+export const DisplayText = APP_FONTS_ON ? ({ fontFamily: DISPLAY_FONT, fontWeight: '400' } as const) : ({ fontWeight: '800' } as const);
 
 /**
  * 본문 서체 — 나눔스퀘어라운드 (NAVER, OFL). 둥근 획이 굵은 제목체와 짝을 이룬다.
@@ -72,6 +81,12 @@ export const BODY_FONTS = {
 	bold: 'NanumSquareRoundB',
 	heavy: 'NanumSquareRoundEB',
 } as const;
+
+const BODY_WEIGHTS = { regular: '400', bold: '700', heavy: '800' } as const;
+
+/** 서체를 직접 고를 때 — 한국어는 서체 파일, 다른 언어는 시스템 서체의 굵기 */
+export const bodyFont = (weight: keyof typeof BODY_FONTS): { fontFamily: string } | { fontWeight: (typeof BODY_WEIGHTS)[keyof typeof BODY_WEIGHTS] } =>
+	APP_FONTS_ON ? { fontFamily: BODY_FONTS[weight] } : { fontWeight: BODY_WEIGHTS[weight] };
 
 /** fontWeight → 본문 서체 파일. 300 이하 얇은 굵기는 파일을 두지 않아 regular 로 그린다 */
 export const bodyFontFor = (weight?: string | number): string => {

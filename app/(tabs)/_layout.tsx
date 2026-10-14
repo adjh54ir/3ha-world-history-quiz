@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { scaledSize, scaleWidth } from '@/src/utils';
 import Colors from '@/src/const/ConstColors';
-import { BODY_FONTS, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { bodyFont, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -42,7 +42,7 @@ export default function TabsLayout() {
 					borderTopWidth: 1,
 					borderTopColor: Colors.border,
 				},
-				tabBarLabelStyle: { fontSize: Typography.footnote, fontFamily: BODY_FONTS.bold },
+				tabBarLabelStyle: { fontSize: Typography.footnote, ...bodyFont('bold') },
 			}}>
 			<Tabs.Screen name="search" options={{ title: t('navigation.search'), tabBarIcon: tabIcon('search') }} />
 			<Tabs.Screen name="challenge" options={{ title: t('navigation.challenge'), tabBarIcon: tabIcon('sports-esports') }} />

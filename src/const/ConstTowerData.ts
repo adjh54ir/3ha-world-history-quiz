@@ -1,4 +1,5 @@
 // @/src/const/ConstTowerData.ts
+import i18n from '@/src/translations';
 
 /**
  * 층별 보스 데이터.
@@ -15,56 +16,56 @@ export const TOWER_LEVELS = [
 	{
 		id: 1, // ← 추가
 		level: 1,
-		name: '초급 탑',
-		bossName: '먹보 멧돼지 꿀꿀이',
-		bossTitle: '🐗 레벨 1 보스',
-		bossDescription: '도깨비의 메밀묵을 훔쳐 먹으려는 숲속의 골칫덩이 멧돼지',
+		name: i18n.t('tower.data.floor1.name'),
+		bossName: i18n.t('tower.data.floor1.bossName'),
+		bossTitle: `🐗 ${i18n.t('tower.data.floor1.bossTitle')}`,
+		bossDescription: i18n.t('tower.data.floor1.bossDescription'),
 		bossImage: require('@/src/assets/tower/boss1_character.webp'),
 		questions: [], // ← 추가 (사용하지 않으면 빈 배열)
 		requiredScore: 0,
 		reward: {
 			type: 'costume',
-			name: '초급 모자',
-			description: '메밀묵 도둑 꿀꿀이를 혼내 주고 받은 첫 모자. 정상을 향한 첫걸음의 증표예요.',
+			name: i18n.t('tower.data.floor1.rewardName'),
+			description: i18n.t('tower.data.floor1.rewardDescription'),
 			image: require('@/src/assets/tower/beginner_hat_v2.webp'),
 		},
 		color: '#5B8DEF', // 파랑 (멧돼지)
-		clearCondition: '초급 문제 전체 클리어',
+		clearCondition: i18n.t('tower.data.floor1.clearCondition'),
 	},
 	{
 		id: 2, // ← 추가
 		level: 2,
-		name: '중급 탑',
-		bossName: '바위 거인 옹고집',
-		bossTitle: '🗿 레벨 2 보스',
-		bossDescription: '바위산의 입구를 가로막고 있는 고집불통 거인. 오직 퀴즈로만 길을 비켜줌',
+		name: i18n.t('tower.data.floor2.name'),
+		bossName: i18n.t('tower.data.floor2.bossName'),
+		bossTitle: `🗿 ${i18n.t('tower.data.floor2.bossTitle')}`,
+		bossDescription: i18n.t('tower.data.floor2.bossDescription'),
 		questions: [], // ← 추가 (사용하지 않으면 빈 배열)
 		bossImage: require('@/src/assets/tower/boss2_character.webp'),
 		requiredScore: 100,
 		reward: {
 			type: 'costume',
-			name: '중급 망토',
-			description: '옹고집이 길을 비켜 주며 건넨 바위산의 망토. 거센 바람에도 든든히 감싸 줘요.',
+			name: i18n.t('tower.data.floor2.rewardName'),
+			description: i18n.t('tower.data.floor2.rewardDescription'),
 			image: require('@/src/assets/tower/intermediate_cape_v2.webp'),
 		},
 		color: '#2DD4BF', // 민트 (바위)
-		clearCondition: '중급 문제 전체 클리어',
+		clearCondition: i18n.t('tower.data.floor2.clearCondition'),
 	},
 	{
 		id: 3, // ← 추가
 		level: 3,
-		name: '고급 탑',
-		bossName: '천년 묵은 구미호 매혹',
+		name: i18n.t('tower.data.floor3.name'),
+		bossName: i18n.t('tower.data.floor3.bossName'),
 		questions: [], // ← 추가 (사용하지 않으면 빈 배열)
-		bossTitle: '🦊 레벨 3 보스',
-		bossDescription: '골짜기의 안개 속에서 나타나는 신비롭고 영악한 여우 요괴',
+		bossTitle: `🦊 ${i18n.t('tower.data.floor3.bossTitle')}`,
+		bossDescription: i18n.t('tower.data.floor3.bossDescription'),
 		bossImage: require('@/src/assets/tower/boss3_character.webp'),
 		requiredScore: 300,
-		clearCondition: '고급 문제 전체 클리어',
+		clearCondition: i18n.t('tower.data.floor3.clearCondition'),
 		reward: {
 			type: 'character',
-			name: '전설의 수호자',
-			description: '구미호의 안개를 걷어 내자 모습을 드러낸 옛 수호자. 이제 당신 곁을 지키기로 했어요.',
+			name: i18n.t('tower.data.floor3.rewardName'),
+			description: i18n.t('tower.data.floor3.rewardDescription'),
 			image: require('@/src/assets/tower/legendary_guardian_v2.webp'),
 		},
 		color: '#FBBF24', // 앰버 (신비)
@@ -72,20 +73,20 @@ export const TOWER_LEVELS = [
 	{
 		id: 4, // ← 추가
 		level: 4,
-		name: '최종 탑',
-		bossName: '도깨비 왕 염라',
+		name: i18n.t('tower.data.floor4.name'),
+		bossName: i18n.t('tower.data.floor4.bossName'),
 		questions: [], // ← 추가 (사용하지 않으면 빈 배열)
-		bossTitle: '👹 레벨 4 최종 보스',
-		bossDescription: '거대한 어사화를 쓰고 황금 방망이를 든, 위엄 넘치는 도깨비들의 군주',
+		bossTitle: `👹 ${i18n.t('tower.data.floor4.bossTitle')}`,
+		bossDescription: i18n.t('tower.data.floor4.bossDescription'),
 		bossImage: require('@/src/assets/tower/boss4_character.webp'),
 		requiredScore: 600,
 		reward: {
 			type: 'item',
-			name: '황금 도깨비 방망이',
-			description: '도깨비 왕 염라가 인정한 이에게만 넘겨주는 황금 방망이. 탑을 정복한 진정한 강자의 상징이에요.',
+			name: i18n.t('tower.data.floor4.rewardName'),
+			description: i18n.t('tower.data.floor4.rewardDescription'),
 			image: require('@/src/assets/tower/golden_club_v2.webp'),
 		},
 		color: '#F87171', // 붉은색 (도깨비)
-		clearCondition: '특급 문제 전체 클리어',
+		clearCondition: i18n.t('tower.data.floor4.clearCondition'),
 	},
 ];

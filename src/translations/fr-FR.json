@@ -1,26 +1,2746 @@
 {
-  "main": {
-    "navigation": {
-      "home": "Accueil",
-      "challenge": "Défis",
-      "search": "Recherche",
-      "stats": "Statistiques",
-      "my": "Profil"
-    },
-    "common_appName": {
-      "full": "Boilerplate React Native",
-      "initials": "RNB"
-    },
-    "common_error": "Quelque chose s'est mal passé.",
-    "screen_example": {
-      "hello_user": "Salut, je m'appelle {{name}}",
-      "title": "Bienvenue sur Le $t(common_appName.full)",
-      "description": "Vous voulez découvrir des fonctionnalités ? Cliquez sur l'un des trois boutons en bas de l'écran. Le premier vous permet d'appeler une API REST. Le deuxième de changer la couleur du thème. Et le troisième de changer la langue"
-    },
-    "error_boundary": {
-      "title": "Oups ! Quelque chose s'est mal passé.",
-      "description": "Nous sommes désolés pour le désagrément. Veuillez réessayer plus tard.",
-      "cta": "Recharger l'écran"
+    "main": {
+        "navigation": {
+            "home": "Accueil",
+            "challenge": "Défis",
+            "search": "Recherche",
+            "stats": "Activité",
+            "my": "Réglages"
+        },
+        "common_appName": {
+            "full": "React Native Boilerplate",
+            "initials": "RNB"
+        },
+        "common_error": "Oups ! Un problème est survenu.",
+        "screen_example": {
+            "hello_user": "Bonjour, je m'appelle {{name}}",
+            "title": "Bienvenue sur $t(common_appName.full)",
+            "description": "Envie de découvrir les fonctionnalités ? Appuyez sur l'un des trois boutons en bas de l'écran. Le premier appelle une API REST, le deuxième change la couleur du thème et le troisième change la langue."
+        },
+        "error_boundary": {
+            "title": "Oups ! Un problème est survenu.",
+            "description": "Désolé pour la gêne occasionnée. Veuillez réessayer plus tard.",
+            "cta": "Actualiser l'écran"
+        },
+        "common": {
+            "cancel": "Annuler",
+            "undo": "Annuler",
+            "confirm": "OK",
+            "delete": "Supprimer",
+            "close": "Fermer",
+            "all": "Tout",
+            "save": "Enregistrer",
+            "retry": "Réessayer",
+            "start": "Commencer",
+            "next": "Suivant",
+            "prev": "Précédent",
+            "done": "Terminé",
+            "continue": "Continuer",
+            "exit": "Quitter",
+            "on": "Activé",
+            "off": "Désactivé",
+            "reset": "Réinitialiser",
+            "more": "Plus",
+            "loading": "Chargement…",
+            "count": "{{count}}",
+            "questions": "{{count}} questions",
+            "questions_one": "{{count}} question",
+            "questions_other": "{{count}} questions",
+            "points": "{{count}} pts",
+            "points_one": "{{count}} pt",
+            "points_other": "{{count}} pts",
+            "seconds": "{{count}} s",
+            "days": "{{count}} jours",
+            "days_one": "{{count}} jour",
+            "days_other": "{{count}} jours",
+            "percent": "{{value}} %",
+            "bookmarkAdd": "Ajouter aux favoris",
+            "bookmarkRemove": "Retirer des favoris",
+            "bookmarkSaved": "Ajouté aux favoris",
+            "bookmarkUnsaved": "Retiré des favoris",
+            "guideReopen": "Revoir le mode d'emploi",
+            "toTop": "Remonter en haut"
+        },
+        "home": {
+            "appTitle": "Quiz Culture du Monde",
+            "greet": {
+                "g1": "Aujourd'hui encore,\nun pas de plus vers le monde",
+                "g2": "Bonjour !\nOn apprend ensemble aujourd'hui",
+                "g3": "Les petites habitudes\nfont les grands talents",
+                "g4": "La culture du jour,\nc'est parti !",
+                "g5": "La régularité,\nc'est la bonne réponse",
+                "g6": "Une question à la fois,\npas à pas"
+            },
+            "toast": {
+                "characterChanged": "Personnage modifié",
+                "goalChanged": "Objectif du jour : {{count}} questions",
+                "recommendHidden": "La suggestion du jour reviendra demain"
+            },
+            "countItems": "{{value}}",
+            "hero": {
+                "characterA11y": "Changer le personnage d'accueil",
+                "alarmA11y": "Régler les rappels",
+                "streak": "{{count}} jours d'affilée",
+                "streak_one": "{{count}} jour d'affilée",
+                "streak_other": "{{count}} jours d'affilée",
+                "goalA11y": "Modifier l'objectif du jour",
+                "goalTitle": "Objectif du jour",
+                "goalDone": "Objectif atteint !",
+                "goalProgress": "{{done}}/{{goal}} questions"
+            },
+            "summary": {
+                "scoreLabel": "Score total",
+                "unit": "pts",
+                "accuracy": "Réussite",
+                "solved": "Répondues",
+                "streak": "Série",
+                "badge": "Badges",
+                "badgeAllA11y": "Voir tous les badges",
+                "dex": "Collection",
+                "badgeA11y": "Détail du badge {{title}}"
+            },
+            "curriculum": {
+                "title": "Parcours Culture du Monde",
+                "subOpen": "Suivez les étapes pour progresser",
+                "next": "Étape suivante · {{label}}",
+                "allDone": "Toutes les étapes sont terminées",
+                "steps": {
+                    "level": {
+                        "label": "Test de niveau",
+                        "desc": "10 questions pour évaluer votre niveau"
+                    },
+                    "study": {
+                        "label": "Apprendre",
+                        "desc": "Faites défiler les cartes pour apprendre"
+                    },
+                    "quiz": {
+                        "label": "Quiz",
+                        "desc": "Vérifiez vos acquis en répondant"
+                    },
+                    "wrong": {
+                        "label": "Erreurs",
+                        "desc": "Révisez uniquement vos erreurs"
+                    },
+                    "time": {
+                        "label": "Contre-la-montre",
+                        "desc": "Finissez par un sprint de 180 s"
+                    }
+                },
+                "celebrate": {
+                    "eyebrow": "Parcours terminé !",
+                    "title": "Les 5 étapes sont terminées",
+                    "desc": "L'accueil sera désormais plus épuré.\nContinuez librement comme vous le souhaitez !",
+                    "ok": "Super"
+                }
+            },
+            "recommend": {
+                "closeA11y": "Fermer la suggestion du jour (masquée aujourd'hui)",
+                "eyebrow": "Suggestion du jour",
+                "unseen": "Thème encore jamais essayé",
+                "rateLabel": "Réussite",
+                "rateHint": "Encore un petit effort",
+                "study": "Apprendre",
+                "quiz": "Faire le quiz"
+            },
+            "quick": {
+                "title": "Accès rapide",
+                "sub": "Vos fonctions favorites en un geste",
+                "attend": "Présence",
+                "todayQuiz": "Quiz du jour",
+                "study": "Apprendre",
+                "quiz": "Quiz",
+                "wrongNote": "Erreurs",
+                "timeChallenge": "Chrono",
+                "library": "Collection"
+            },
+            "daily": {
+                "title": "Le savoir du jour",
+                "sub": "Chaque jour, une notion sur le monde",
+                "meaning": "Sens",
+                "summary": "Résumé",
+                "more": "En savoir plus",
+                "cta": "Apprendre ce thème"
+            },
+            "topics": {
+                "title": "Choisir un thème",
+                "subExpanded": "Touchez un thème pour commencer",
+                "subCollapsed": "Faites défiler, choisissez, puis apprenez ou jouez",
+                "collapse": "Réduire",
+                "expand": "Afficher",
+                "preview": {
+                    "capital": {
+                        "tag": "Géographie",
+                        "example": "Trouver capitale, drapeau et continent d'un pays"
+                    },
+                    "landmark": {
+                        "tag": "Voyage",
+                        "example": "Situer le monument de la photo"
+                    },
+                    "nature": {
+                        "tag": "Cartes",
+                        "example": "Situer fleuves, montagnes et déserts"
+                    },
+                    "figure": {
+                        "tag": "Personnages",
+                        "example": "Découvrir les grands noms par portrait et œuvre"
+                    },
+                    "event": {
+                        "tag": "Histoire",
+                        "example": "Relier événements, époques et pays"
+                    },
+                    "myth": {
+                        "tag": "Mythologie",
+                        "example": "Nommer les dieux grecs et romains et leur rôle"
+                    },
+                    "space": {
+                        "tag": "Espace",
+                        "example": "Ordre et traits des planètes et lunes"
+                    },
+                    "constellation": {
+                        "tag": "Ciel nocturne",
+                        "example": "Relier constellations et étoiles phares"
+                    }
+                }
+            },
+            "subQuiz": {
+                "title": "Quiz bonus",
+                "subExpanded": "Touchez un thème (hors score principal)",
+                "subCollapsed": "Coupe du monde · JO (hors score principal)",
+                "best": "Record {{correct}}/{{total}}",
+                "bestCorrect": "Record {{correct}}/{{total}} bonnes",
+                "new": "NEW",
+                "bonus": "{{value}} questions · Bonus",
+                "note": "Questions légères, hors score principal"
+            },
+            "showAll": "Toutes les fonctions",
+            "features": {
+                "title": "Contenus spéciaux",
+                "sub": "Des outils pour aller plus loin",
+                "exam": {
+                    "title": "Parcours à thème",
+                    "desc": "Géo, histoire et culture générale"
+                },
+                "levelTest": {
+                    "title": "Test de niveau",
+                    "desc": "Évaluez votre culture du monde"
+                },
+                "typeTest": {
+                    "title": "Test de profil",
+                    "desc": "Quel explorateur êtes-vous ?"
+                },
+                "storyFeed": {
+                    "title": "Fil d'histoires",
+                    "desc": "Apprendre en lisant"
+                },
+                "subQuiz": {
+                    "title": "Quiz bonus",
+                    "desc": "Coupe du monde et JO en bonus"
+                }
+            },
+            "picker": {
+                "title": "Personnage d'accueil",
+                "sub": "Affichez à l'accueil un personnage gagné dans un thème",
+                "apply": "Choisir ce personnage",
+                "locked": "Personnage verrouillé",
+                "start": "Départ",
+                "reqQuestions": "{{value}} questions",
+                "reqPoints": "{{value}} pts",
+                "unlockedReq": "Obtenu · {{req}}",
+                "lockedReq": "Verrouillé · {{req}}"
+            },
+            "goal": {
+                "title": "Objectif du jour",
+                "closeA11y": "Fermer l'objectif du jour",
+                "sub": "Combien de questions par jour ?",
+                "unit": "questions",
+                "light": "Tranquille",
+                "normal": "Modéré",
+                "focus": "Intense"
+            },
+            "unlock": {
+                "eyebrow": "Nouveau personnage !"
+            },
+            "guide": {
+                "title": "L'accueil, mode d'emploi",
+                "line1": "Touchez votre personnage pour en changer.",
+                "line2": "Choisissez un thème, apprenez, et gagnez des points au quiz.",
+                "line3": "Ouvrir l'accueil valide votre présence ! Revenez chaque jour pour gagner des badges."
+            }
+        },
+        "challenge": {
+            "header": {
+                "title": "Défis",
+                "sub": "Testez-vous de mille façons. Résultats enregistrés dans Activité et Collection."
+            },
+            "tabs": {
+                "time": "Chrono",
+                "tower": "Tour",
+                "mode": "Modes"
+            },
+            "time": {
+                "heroTitle": "180 s de course avec le lion",
+                "heroDesc": "Répondez juste un maximum avant la fin du temps et battez votre record",
+                "rankTitle": "Classement Chrono",
+                "rankDesc": "180 s de concentration pure",
+                "viewAll": "Tout voir",
+                "bestWithNick": "{{nickname}} · Meilleur score",
+                "myBest": "Mon record",
+                "scoreValue": "{{value}} pts",
+                "myRank": "Mon rang",
+                "rankValue": "{{rank}}e",
+                "notJoined": "Non inscrit",
+                "bestHint": "Le classement retient votre meilleure partie, pas le cumul",
+                "joinTitle": "Rejoignez le classement pour vous mesurer à tous",
+                "joining": "Inscription…",
+                "join": "Rejoindre le classement Chrono",
+                "joinHint": "Pour éviter les grossièretés, les pseudos sont aléatoires",
+                "rollA11y": "Tirer un autre pseudo",
+                "notReady": "Le classement n'est pas encore prêt",
+                "joinedToast": "Vous avez rejoint le classement !",
+                "joinFailedToast": "Inscription impossible. Réessayez dans un instant",
+                "plays": "Parties",
+                "bestCombo": "Meilleur combo",
+                "historyTitle": "Scores par partie",
+                "historyCount": "{{count}} parties",
+                "historyCount_one": "{{count}} partie",
+                "historyCount_other": "{{count}} parties",
+                "unit": "pts",
+                "start": "Lancer le chrono de 180 s"
+            },
+            "tower": {
+                "allCleared": "Tous les étages conquis",
+                "desc": "Battez le boss de chaque étage jusqu'au sommet",
+                "cleared": "Étages conquis {{cleared}} / {{total}}",
+                "attempts": "Encore {{count}} essais aujourd'hui",
+                "attempts_one": "Encore {{count}} essai aujourd'hui",
+                "attempts_other": "Encore {{count}} essais aujourd'hui",
+                "enter": "Entrer dans la tour"
+            },
+            "modes": {
+                "mix": {
+                    "title": "Mix du jour",
+                    "desc": "10 questions variées sur tous les thèmes, chaque jour",
+                    "tag": "4 choix"
+                },
+                "bundle": {
+                    "title": "Quiz groupé",
+                    "desc": "Combinez les thèmes de votre choix en une série",
+                    "tag": "Au choix"
+                },
+                "ox": {
+                    "title": "Vrai ou faux",
+                    "desc": "La réponse proposée est-elle juste ? O ou X, vite !",
+                    "tag": "Rapidité"
+                },
+                "blank": {
+                    "title": "Texte à trous",
+                    "desc": "Retrouvez le nom caché dans la description",
+                    "tag": "Contexte"
+                },
+                "initial": {
+                    "title": "Quiz initiales",
+                    "desc": "Trouvez le nom grâce à la description et à ses initiales",
+                    "tag": "Initiales"
+                },
+                "picture": {
+                    "title": "Quiz images",
+                    "desc": "Nommez drapeaux, portraits et monuments en photo",
+                    "tag": "Visuel"
+                },
+                "flagMatch": {
+                    "title": "Paires de drapeaux",
+                    "desc": "Retournez les cartes pour associer drapeaux et pays",
+                    "tag": "Mémoire"
+                },
+                "match": {
+                    "title": "Paires",
+                    "desc": "Retournez les cartes pour associer noms et descriptions",
+                    "tag": "Mémoire"
+                },
+                "bookmark": {
+                    "title": "Quiz favoris",
+                    "desc": "Votre quiz perso à partir de vos favoris",
+                    "tag": "Perso"
+                },
+                "wrongReview": {
+                    "title": "Révision des erreurs",
+                    "desc": "Refaites vos erreurs pour combler vos lacunes",
+                    "tag": "Lacunes"
+                },
+                "weakFocus": {
+                    "title": "Points faibles",
+                    "desc": "Ciblez vos thèmes les plus faibles",
+                    "tag": "Ciblé"
+                },
+                "exam": {
+                    "title": "Parcours à thème",
+                    "desc": "Une série par thème : géo, histoire, culture générale",
+                    "tag": "Thématique"
+                },
+                "league": {
+                    "title": "Ligue hebdo",
+                    "desc": "Gagnez de l'XP et montez chaque semaine",
+                    "tag": "Promotion XP"
+                }
+            },
+            "guide": {
+                "title": "Le Chrono, mode d'emploi",
+                "line1": "Un maximum de bonnes réponses en 180 secondes.",
+                "line2": "{{point}} pts par bonne réponse, votre meilleure série devient votre combo record.",
+                "line3": "Au classement, c'est votre meilleure partie qui compte."
+            }
+        },
+        "stats": {
+            "header": {
+                "title": "Mon activité",
+                "sub": "Votre progression et vos succès en un coup d'œil"
+            },
+            "summary": {
+                "streak": "{{days}} jours d'affilée",
+                "best": "Record : {{days}} jours",
+                "quiz": "Quiz",
+                "study": "Apprendre",
+                "solved": "Répondues",
+                "accuracy": "Réussite",
+                "quizCount": "Quiz joués",
+                "learnDone": "Cartes vues",
+                "learnRate": "Progression",
+                "studiedToday": "Aujourd'hui"
+            },
+            "group": {
+                "ranking": "Classement",
+                "studyRecord": "Apprentissage",
+                "quizRecord": "Quiz",
+                "timeRecord": "Chrono",
+                "dailyRecord": "Quiz du jour",
+                "achievement": "Succès"
+            },
+            "rank": {
+                "title": "Classement général",
+                "desc": "Le panthéon des meilleurs scores au quiz",
+                "more": "Tout voir",
+                "myRank": "Mon rang",
+                "rankValue": "{{rank}}e",
+                "myScore": "Mon score",
+                "scoreValue": "{{score}} pts",
+                "join": "Rejoindre le classement et voir mon rang",
+                "empty": "Aucun score pour l'instant. Jouez pour marquer des points !",
+                "unit": "pts"
+            },
+            "tabs": {
+                "study": "Apprendre",
+                "quiz": "Quiz",
+                "time": "Chrono",
+                "daily": "Du jour"
+            },
+            "time": {
+                "emptyTitle": "Aucune partie de Chrono pour l'instant",
+                "emptySub": "Enchaînez les combos en 180 secondes",
+                "start": "Lancer le Chrono",
+                "plays": "Parties",
+                "bestCombo": "Meilleur combo",
+                "historyTitle": "Scores par partie",
+                "playCount": "{{n}} parties",
+                "collapse": "Réduire",
+                "showAll": "Tout l'historique ({{n}} parties)",
+                "scoreUnit": "pts"
+            },
+            "daily": {
+                "emptyTitle": "Aucun quiz du jour pour l'instant",
+                "emptySub": "Faites le quiz du jour pour garder une trace",
+                "start": "Faire le quiz du jour",
+                "month": "Mois {{month}}",
+                "rowTitle": "{{correct}} / {{total}} bonnes réponses",
+                "rateLabel": "Réussite ",
+                "modalTitle": "Quiz du jour",
+                "scoreUnit": " / {{total}} bonnes réponses",
+                "correct": "Juste",
+                "wrong": "Faux"
+            },
+            "topic": {
+                "quizTitle": "Quiz par thème",
+                "studyTitle": "Apprentissage par thème",
+                "quizSub": "Questions répondues et réussite par thème",
+                "studySub": "Cartes apprises par thème",
+                "sortQuiz": "Réussite croissante",
+                "sortStudy": "Progression croissante",
+                "main": "Thèmes principaux",
+                "sub": "Quiz bonus",
+                "pillQuiz": "{{rate}} % · joué {{done}}/{{total}}",
+                "pillStudy": "{{rate}} % · vu {{done}}/{{total}}",
+                "totalAccuracy": "Réussite globale",
+                "totalProgress": "Progression globale",
+                "totalQuiz": "{{done}} / {{total}} questions",
+                "totalStudy": "{{done}} / {{total}} cartes",
+                "stateAttempted": "Joué",
+                "stateNotAttempted": "Non joué",
+                "stateDone": "Terminé",
+                "stateInProgress": "En cours",
+                "stateNotStarted": "À faire",
+                "solved": "{{n}} répondues",
+                "correct": "Justes {{n}}",
+                "wrong": "Fausses {{n}}",
+                "cards": "{{done}}/{{total}} cartes",
+                "accuracy": "Réussite {{rate}} %"
+            },
+            "ach": {
+                "title": "Badges",
+                "obtained": "{{unlocked}} / {{total}} obtenus",
+                "filterProgress": "En cours",
+                "filterDone": "Obtenus",
+                "emptyDone": "Aucun badge obtenu pour l'instant",
+                "emptyProgress": "Vous avez tous les badges !",
+                "emptyLoading": "Chargement des badges",
+                "unlocked": "Obtenu"
+            },
+            "guide": {
+                "title": "Mon activité, mode d'emploi",
+                "line1": "Vos parties et apprentissages s'enregistrent ici automatiquement.",
+                "line2": "Les onglets du milieu affichent Apprendre, Quiz ou Chrono.",
+                "line3": "Touchez un badge en bas pour voir comment l'obtenir."
+            }
+        },
+        "settings": {
+            "header": {
+                "title": "Réglages",
+                "sub": "Adaptez notifications et apprentissage à vos envies"
+            },
+            "share": {
+                "title": "Vous aimez l'application ?",
+                "sub": "Partagez-la avec votre famille, vos amis et vos proches !",
+                "button": "Partager"
+            },
+            "section": {
+                "notification": "Notifications",
+                "theme": "Thème",
+                "language": "Langue",
+                "interest": "Thèmes favoris",
+                "reset": "Réinitialisation",
+                "permission": "Autorisations",
+                "relatedApps": "Autres quiz à découvrir",
+                "info": "Infos",
+                "dev": "Développeur (DEV)",
+                "moreApps": "Plus d'applis du créateur"
+            },
+            "notification": {
+                "reminder": "Rappel du savoir du jour",
+                "reminderDesc": "Recevez le savoir du jour à l'heure choisie",
+                "sound": "Effets sonores",
+                "soundDesc": "Sons de bonne réponse, d'erreur et de fin",
+                "soundTest": "Écouter",
+                "test": "Tester les notifications",
+                "testDesc": "Vérifiez tout de suite que les notifications arrivent",
+                "testSend": "Envoyer",
+                "bgm": "Musique de fond",
+                "bgmDesc": "Musique de jungle pendant quiz, jeux et révisions"
+            },
+            "toast": {
+                "soundOn": "Effets sonores activés",
+                "soundOff": "Effets sonores désactivés",
+                "soundTest": "Son lu. Rien entendu ? Vérifiez le volume et le mode silencieux",
+                "bgmOn": "Musique de fond activée",
+                "bgmOff": "Musique de fond désactivée",
+                "interestApplied": "Appliqué tout de suite à l'accueil",
+                "rankingResetFail": "Impossible d'effacer le score du classement. Réessayez dans un instant",
+                "notOnThisStore": "Cette appli n'est pas encore disponible sur ce store",
+                "themeLight": "Mode clair activé",
+                "themeDark": "Mode sombre activé",
+                "notifGranted": "Notifications autorisées",
+                "testSent": "Notification envoyée. Regardez vos notifications",
+                "testFail": "Les notifications sont désactivées. Autorisez-les dans les réglages",
+                "trackingGranted": "Publicités personnalisées autorisées",
+                "trackingDenied": "Publicités personnalisées refusées"
+            },
+            "theme": {
+                "light": "Clair",
+                "lightDesc": "Fond clair (par défaut)",
+                "dark": "Sombre",
+                "darkDesc": "Fond sombre, moins d'éblouissement"
+            },
+            "reset": {
+                "learn": "Apprentissage",
+                "learnDesc": "Efface les cartes et vidéos courtes déjà vues",
+                "quiz": "Quiz",
+                "quizDesc": "Efface scores, réussite, séries, erreurs et quiz du jour",
+                "time": "Chrono",
+                "timeDesc": "Efface record, parties et score de classement du Chrono",
+                "all": "Tout",
+                "allDesc": "Toutes les données : favoris, erreurs, stats, scores, présence, compagnon, ligue, tests…",
+                "allButton": "Tout réinitialiser",
+                "doneTitle": "Réinitialisation terminée",
+                "doneMessage": "{{label}} : réinitialisé.",
+                "failTitle": "Échec de la réinitialisation",
+                "failMessage": "Problème lors de la réinitialisation de {{label}}. Réessayez dans un instant."
+            },
+            "permission": {
+                "notification": "Notifications",
+                "notificationDesc": "Pour les rappels du savoir du jour et des révisions",
+                "tracking": "Suivi (ATT)",
+                "trackingDesc": "Facultatif, pour des publicités personnalisées",
+                "checking": "Vérification",
+                "granted": "Autorisé",
+                "request": "Régler"
+            },
+            "info": {
+                "version": "Version",
+                "share": "Partager l'appli",
+                "contact": "Nous contacter",
+                "openSource": "Bibliothèques open source",
+                "openSourceDesc": "Logiciels open source utilisés et licences",
+                "homepage": "Site officiel",
+                "homepageDesc": "ecodelab.im"
+            },
+            "dev": {
+                "completeQuizzes": "Terminer tous les quiz",
+                "completeLearning": "Terminer tout l'apprentissage",
+                "completedQuizzes": "Tous les quiz marqués terminés",
+                "completedLearning": "Tout l'apprentissage marqué terminé"
+            }
+        },
+        "search": {
+            "allScopes": "Tous les thèmes",
+            "placeholder": "Rechercher dans {{scope}}",
+            "clearQuery": "Effacer la recherche",
+            "recent": {
+                "title": "Recherches récentes",
+                "clearAll": "Tout effacer",
+                "clearAllA11y": "Effacer toutes les recherches récentes",
+                "removeA11y": "Supprimer la recherche {{term}}",
+                "confirmTitle": "Effacer l'historique",
+                "confirmMessage": "Effacer toutes les recherches récentes ?",
+                "cleared": "Recherches récentes effacées",
+                "removed": "Recherche supprimée",
+                "restored": "Recherche restaurée"
+            },
+            "filter": {
+                "scope": "Thème",
+                "category": "Catégorie",
+                "level": "Difficulté",
+                "a11y": "Choisir {{label}}, actuellement {{value}}",
+                "pickScope": "Choisir un thème",
+                "pickCategory": "Choisir une catégorie",
+                "pickLevel": "Choisir la difficulté"
+            },
+            "resultsFor": "Résultats pour « {{query}} »",
+            "resetA11y": "Réinitialiser les filtres",
+            "countUnit": "résultats",
+            "emptySearch": "Aucun résultat pour « {{query}} ».",
+            "emptyFilter": "Aucun élément ne correspond.",
+            "guide": {
+                "title": "La recherche, mode d'emploi",
+                "line1": "Tapez un mot ou une définition pour le trouver aussitôt.",
+                "line2": "Choisissez un thème pour filtrer par catégorie et difficulté.",
+                "line3": "Touchez l'étoile pour l'ajouter aux favoris de la Collection."
+            }
+        },
+        "library": {
+            "title": "Collection",
+            "tabBookmark": "Favoris {{n}}",
+            "tabWrong": "Erreurs {{n}}",
+            "emptyBookmark": "Aucun favori pour l'instant.",
+            "emptyBookmarkSub": "Touchez l'étoile d'une carte pour l'enregistrer.",
+            "emptyWrong": "Aucune erreur !",
+            "emptyWrongSub": "Vos erreurs aux quiz s'afficheront ici.",
+            "review": "Réviser {{n}} erreurs",
+            "clearAll": "Tout vider",
+            "clearDomain": "Vider les erreurs {{domain}}",
+            "clearTitle": "Vider les erreurs",
+            "clearAllMessage": "Supprimer les {{n}} erreurs ?",
+            "clearDomainMessage": "Supprimer les {{n}} erreurs de {{domain}} ?",
+            "wrongRemoved": "Retiré des erreurs",
+            "wrongCleared": "{{n}} erreurs supprimées",
+            "wrongRestored": "Erreur restaurée",
+            "goStudy": "Apprendre {{domain}}"
+        },
+        "opensource": {
+            "title": "Bibliothèques open source",
+            "noRepo": "Aucun dépôt public disponible",
+            "linkError": "Impossible d'ouvrir le lien",
+            "summary": "Cette appli repose sur {{n}} projets open source",
+            "creditTitle": "Crédits photo des monuments",
+            "creditSub": "Photos de Wikimedia Commons utilisées selon leur licence. Touchez pour voir le fichier d'origine.",
+            "thanks": "Merci à la communauté open source et aux photographes."
+        },
+        "player": {
+            "domainQuiz": "Quiz {{domain}}",
+            "empty": "Aucune question disponible.",
+            "profile": {
+                "precise": {
+                    "title": "Esprit précis",
+                    "desc": "Vous repérez vite les indices clés et choisissez la bonne réponse avec assurance."
+                },
+                "growth": {
+                    "title": "Intuition en progrès",
+                    "descWrong": "Vos bases sont solides. Revoyez les questions piégeuses pour aller plus loin.",
+                    "descClean": "Votre culture est vaste. Osez des questions plus difficiles !"
+                },
+                "review": {
+                    "title": "As de la révision",
+                    "desc": "Vos erreurs sont vos meilleures leçons. Révisez-les souvent dans le carnet d'erreurs."
+                },
+                "basic": {
+                    "title": "Bases à consolider",
+                    "desc": "Pour l'instant, lire les explications compte plus que la réponse. Reprenez par les questions faciles."
+                }
+            },
+            "result": {
+                "head": {
+                    "perfect": "Parfait !",
+                    "good": "Bien joué !",
+                    "cheer": "Encore un effort !"
+                },
+                "sub": "Résultat · {{title}}",
+                "unitCount": "bonnes",
+                "unitPoint": "pts",
+                "detail": "{{correct}} bonnes sur {{solved}} · {{rate}} % de réussite",
+                "newRecord": "Record ! +{{diff}} pts vs ancien record ({{prev}} pts)",
+                "stat": {
+                    "correct": "Bonnes",
+                    "wrong": "Erreurs",
+                    "bestCombo": "Meilleur combo"
+                },
+                "list": {
+                    "wrongNote": "Carnet d'erreurs",
+                    "wrongCheck": "Voir les erreurs",
+                    "correctCheck": "Voir les réussites",
+                    "countSaved": "{{count}} · enregistré(s)",
+                    "detailHint": "Touchez pour les détails"
+                },
+                "timed": {
+                    "wrongTitle": "Explications des erreurs",
+                    "correctTitle": "Explications des réussites",
+                    "noWrong": "Aucune erreur !",
+                    "noCorrect": "Aucune bonne réponse."
+                },
+                "next": {
+                    "title": "Et ensuite ?",
+                    "wrongReviewTitle": "Revoir mes erreurs",
+                    "wrongReviewDesc": "Rejouez seulement les questions ratées",
+                    "timeTitle": "Contre-la-montre",
+                    "timeDesc": "Un max de bonnes réponses en 180 s"
+                },
+                "loading": "Chargement des questions",
+                "home": "Accueil",
+                "retry": "Rejouer"
+            },
+            "start": {
+                "preparing": "Préparation des questions...",
+                "sub": "Lancez-vous quand vous êtes prêt. Voici les règles.",
+                "timed": "{{sec}} s au total pour répondre au maximum.",
+                "perQuestion": "{{sec}} s par question.",
+                "noTimer": "Sans limite de temps.",
+                "noTrack": "Ni score ni carnet d'erreurs pour cette partie.",
+                "daily": "Les erreurs vont dans le carnet d'erreurs.",
+                "points": "{{points}} pts par bonne réponse, les erreurs vont dans le carnet.",
+                "pointsReview": "{{points}} pts par bonne réponse, les questions réussies quittent le carnet.",
+                "endScore": "Si vous arrêtez en cours, vos points sont conservés.",
+                "endResult": "Si vous arrêtez en cours, vous verrez quand même vos résultats.",
+                "sound": "Effets sonores"
+            },
+            "count": {
+                "go": "C'est parti !",
+                "hint": "Un max de bonnes réponses en {{sec}} s !",
+                "tip": "Enchaînez les bonnes réponses pour faire des combos"
+            },
+            "combo": {
+                "fire": "En feu !",
+                "streak": "Série en cours !"
+            },
+            "play": {
+                "nth": "N° {{n}}",
+                "levelA11y": "Question {{n}} sur {{total}}, niveau {{level}}",
+                "levelUnknown": "Non indiqué",
+                "score": "Score",
+                "correct": "Bonnes",
+                "combo": "Combo",
+                "timeLeft": "Temps restant",
+                "challengeTimeLeft": "Temps restant du défi",
+                "plusPoints": "+{{points}} pts",
+                "end": "Fin du quiz"
+            },
+            "explain": {
+                "correct": "Bonne réponse !",
+                "timeout": "Dommage ! Temps écoulé",
+                "wrong": "Dommage ! Mauvaise réponse",
+                "answer": "Réponse",
+                "question": "Question",
+                "explanation": "Explication",
+                "result": "Voir les résultats",
+                "next": "Question suivante",
+                "report": "Signaler une erreur"
+            },
+            "exit": {
+                "title": "Quitter le quiz ?",
+                "message": "Vos résultats seront enregistrés et vous verrez votre bilan.",
+                "confirm": "Quitter"
+            }
+        },
+        "learnCard": {
+            "more": "En savoir plus"
+        },
+        "report": {
+            "title": {
+                "quiz": "Bilan des quiz",
+                "study": "Bilan d'étude"
+            },
+            "activeDays": "{{count}} jours actifs",
+            "period": {
+                "recent": "{{days}} derniers jours",
+                "custom": "Choisir la période"
+            },
+            "rangeMax": "Jusqu'à {{max}} jours à la fois",
+            "tile": {
+                "solved": "Questions",
+                "correct": "Bonnes",
+                "accuracy": "Réussite",
+                "studied": "Cartes vues",
+                "activeDays": "Jours actifs",
+                "dailyAvg": "Cartes/jour"
+            },
+            "weak": "Point faible · {{title}} {{accuracy}} %",
+            "legend": {
+                "studied": "Cartes étudiées"
+            },
+            "chartHint": "Touchez une date pour les détails",
+            "dayTitle": "{{dow}} {{day}}/{{month}}",
+            "dayAvg": "Moyenne {{accuracy}} %",
+            "day": {
+                "correctItems": "Questions réussies",
+                "cardUnit": " cartes",
+                "studiedCards": "Cartes étudiées ce jour",
+                "wrong": "Erreurs"
+            },
+            "picker": {
+                "pickStart": "Choisissez la date de début",
+                "pickEnd": "{{start}} ~ choisissez la date de fin",
+                "confirm": "Voir cette période"
+            },
+            "dow": {
+                "sun": "dim.",
+                "mon": "lun.",
+                "tue": "mar.",
+                "wed": "mer.",
+                "thu": "jeu.",
+                "fri": "ven.",
+                "sat": "sam."
+            },
+            "calendar": {
+                "month": "{{month}}",
+                "dayName": "{{dow}}",
+                "today": "Aujourd'hui"
+            },
+            "activeDays_one": "{{count}} jour actif",
+            "activeDays_other": "{{count}} jours actifs"
+        },
+        "rankBoard": {
+            "unit": "pts",
+            "meSuffix": " (moi)",
+            "empty": "Place libre",
+            "tierLabel": "{{rank}}e · TOP 3"
+        },
+        "header": {
+            "back": "Retour"
+        },
+        "guide": {
+            "title": "Mode d'emploi",
+            "confirm": "Compris",
+            "nextA11y": "Conseil suivant",
+            "nextLineA11y": "Voir le conseil suivant"
+        },
+        "learn": {
+            "titleOf": "Étudier · {{title}}",
+            "mode": {
+                "title": "Mode d'étude"
+            },
+            "bundle": {
+                "title": "Choix de l'étude",
+                "randomTitle": "Étude aléatoire",
+                "randomDesc": "Tous les thèmes de l'onglet, mélangés",
+                "startWith": "Étudier {{count}} thèmes",
+                "pickTopic": "Choisissez des thèmes",
+                "modeSubRandom": "Étude aléatoire sur tous les thèmes. Choisissez un mode.",
+                "modeSubSelected": "Comment étudier les {{count}} thèmes choisis ?",
+                "shortsTitle": "Format court",
+                "shortsDesc": "Balayez vers le haut pour survoler",
+                "cardsTitle": "Cartes",
+                "cardsDesc": "Balayez sur les côtés, carte par carte",
+                "startWith_one": "Étudier {{count}} thème",
+                "startWith_other": "Étudier {{count}} thèmes",
+                "modeSubSelected_one": "Comment étudier le thème choisi ?",
+                "modeSubSelected_other": "Comment étudier les {{count}} thèmes choisis ?"
+            },
+            "category": {
+                "search": "Rechercher",
+                "actions": {
+                    "studyTitle": "Étudier",
+                    "studyDesc": "En format court ou en cartes, au choix",
+                    "quizTitle": "Lancer le quiz",
+                    "quizDesc": "Choisissez un niveau et testez-vous en QCM",
+                    "quizDescNoLevel": "Testez-vous en QCM à 4 choix",
+                    "wrongTitle": "Carnet d'erreurs",
+                    "wrongDesc": "Revoyez vos erreurs sur ce thème",
+                    "wrongDescEmpty": "Aucune erreur pour l'instant",
+                    "browseTitle": "Parcourir la liste",
+                    "browseDesc": "Filtrez par catégorie ou niveau",
+                    "favoriteTitle": "Favoris",
+                    "favoriteDesc": "Vos éléments enregistrés sur ce thème",
+                    "favoriteDescEmpty": "Aucun favori pour l'instant"
+                },
+                "nextLevelSolved": "Niveau suivant : {{value}} questions",
+                "nextLevelScore": "Niveau suivant : {{value}} pts",
+                "maxLevel": "Niveau max atteint",
+                "nextGrade": "Rang suivant · {{label}}",
+                "totalCount": "{{value}} au total",
+                "charLevels": "Personnages par niveau",
+                "solved": "Questions",
+                "studyProgress": "Progression d'étude",
+                "quizProgress": "Progression des quiz",
+                "sampleEyebrow": "Un avant-goût",
+                "sampleTitle": "Exemples de questions",
+                "sectionActions": "Que voulez-vous faire ?",
+                "modeSub": "Comment étudier {{title}} ?",
+                "shortsTitle": "Mode court",
+                "shortsDesc": "Balayez vers le haut, passage auto à la suite",
+                "cardsTitle": "Mode cartes",
+                "cardsDesc": "Nom au recto → touchez pour l'explication",
+                "levelSubtitle": "Choisissez le niveau du quiz {{title}}"
+            },
+            "study": {
+                "exit": "Terminer",
+                "learning": "En cours",
+                "done": "Acquis",
+                "pctDone": "{{value}} % acquis",
+                "emptyDone": "Aucune carte acquise pour l'instant.",
+                "emptyLearning": "Aucune carte en cours. Commencez par Tout.",
+                "emptyAll": "Aucune donnée à étudier.",
+                "swipeHint": "← Balayez pour changer de carte →",
+                "toastDone": "Acquis ! Carte suivante",
+                "toastReview": "Remise dans « En cours »",
+                "tapToFlip": "Touchez pour retourner",
+                "tapToFront": "Touchez pour le recto",
+                "reportIssue": "Signaler une erreur",
+                "info": "Infos",
+                "summary": "Résumé",
+                "story": "Le mythe",
+                "more": "En savoir plus",
+                "review": "Réviser",
+                "completeLast": "Acquis · Passer au quiz",
+                "guideTitle": "Les cartes, mode d'emploi",
+                "guide": {
+                    "swipe": "Balayez sur les côtés pour voir la carte suivante.",
+                    "flip": "Touchez une carte pour la retourner et lire l'explication.",
+                    "complete": "Marquez toutes les cartes « Acquis » pour passer au quiz."
+                }
+            }
+        },
+        "quiz": {
+            "common": {
+                "titleOf": "Quiz {{title}}",
+                "resultOf": "Résultat · {{title}}",
+                "topicCount": "{{count}} thèmes",
+                "tabMain": "Thèmes",
+                "tabSub": "Bonus",
+                "selectTopics": "Choisir les thèmes",
+                "selectAll": "Tout cocher",
+                "clearAll": "Tout décocher",
+                "accuracy": "Réussite",
+                "correct": "Bonnes",
+                "wrong": "Erreurs",
+                "home": "Accueil",
+                "topicCount_one": "{{count}} thème",
+                "topicCount_other": "{{count}} thèmes"
+            },
+            "modes": {
+                "blank": "Texte à trous",
+                "initial": "Quiz initiales",
+                "mix": "Mix du jour",
+                "ox": "Vrai ou faux",
+                "picture": "Quiz images",
+                "speed": "Contre-la-montre",
+                "bookmark": "Quiz favoris",
+                "today": "Quiz du jour",
+                "random": "Quiz aléatoire"
+            },
+            "bookmark": {
+                "emptyTitle": "Aucun favori",
+                "emptySub": "Touchez l'étoile sur une carte ou une histoire pour l'ajouter.",
+                "cta": "Voir les histoires"
+            },
+            "bundle": {
+                "title": "Choix du quiz",
+                "randomDesc": "Questions au hasard sur tous les thèmes",
+                "startWith": "Jouer avec {{count}} thèmes",
+                "startAll": "Jouer avec tout : {{tab}}",
+                "subtitleAll": "Questions variées sur tout : {{tab}}",
+                "subtitleSelected": "Questions par niveau sur vos thèmes",
+                "startWith_one": "Jouer avec {{count}} thème",
+                "startWith_other": "Jouer avec {{count}} thèmes"
+            },
+            "match": {
+                "title": "Paires",
+                "titleFlag": "Paires de drapeaux",
+                "shuffle": "Mélanger",
+                "moves": "Essais {{count}}",
+                "matched": "Paires {{value}}/{{total}}",
+                "done": "Terminé !",
+                "resultSub": "{{count}} essais · {{time}}",
+                "again": "Rejouer",
+                "guide": "Associez chaque nom à sa description",
+                "guideFlag": "Associez chaque drapeau à son pays",
+                "resultSub_one": "{{count}} essai · {{time}}",
+                "resultSub_other": "{{count}} essais · {{time}}"
+            },
+            "sub": {
+                "introTitle": "Testez-vous sur la Coupe du monde et les JO",
+                "introText": "10 questions au hasard par thème. Non comptées dans le score ni les stats.",
+                "section": "Choix du quiz"
+            },
+            "today": {
+                "weekday": {
+                    "sun": "dim.",
+                    "mon": "lun.",
+                    "tue": "mar.",
+                    "wed": "mer.",
+                    "thu": "jeu.",
+                    "fri": "ven.",
+                    "sat": "sam."
+                },
+                "dateLabel": "{{dow}} {{day}}/{{month}}",
+                "perfect": "Parfait !",
+                "doneTitle": "Fini pour aujourd'hui !",
+                "statItems": "Questions",
+                "descPerfect": "Un sans-faute !",
+                "descDone": "Quiz du jour terminé. À demain !",
+                "nextIn": "Prochain quiz dans {{time}}",
+                "resultTitle": "Résultat du jour",
+                "collapse": "Réduire",
+                "moreCount": "{{count}} de plus",
+                "reviewWrong": "Revoir {{count}} erreurs",
+                "heroTitle": "{{count}} questions du jour",
+                "heroDesc": "Chaque jour, de nouvelles questions sur tous les thèmes.\n{{count}} questions pour tester vos réflexes.",
+                "infoCount": "{{count}} questions du jour",
+                "infoExplain": "Résultats et explications",
+                "alarmTitle": "Rappel du quiz du jour",
+                "alarmDesc": "Rappel chaque jour à {{time}}",
+                "alarmTime": "Heure du rappel",
+                "alarmTimeChanged": "Heure du rappel modifiée · {{time}}",
+                "permTitle": "Autorisation requise",
+                "permMsg": "Autorisez les notifications dans les réglages.",
+                "alarmOn": "Rappel du quiz du jour activé",
+                "alarmOff": "Rappel du quiz du jour désactivé",
+                "start": "Lancer le quiz du jour",
+                "guideTitle": "Le quiz du jour, mode d'emploi",
+                "guide": {
+                    "count": "{{count}} questions sur tous les thèmes, avec des erreurs à revoir.",
+                    "once": "Une fois par jour, sans limite de temps.",
+                    "result": "À la fin, résultats et explications immédiats !"
+                },
+                "reviewWrong_one": "Revoir {{count}} erreur",
+                "reviewWrong_other": "Revoir {{count}} erreurs",
+                "heroTitle_one": "{{count}} question du jour",
+                "heroTitle_other": "{{count}} questions du jour",
+                "infoCount_one": "{{count}} question du jour",
+                "infoCount_other": "{{count}} questions du jour"
+            },
+            "wrong": {
+                "title": "Révision des erreurs",
+                "titleScoped": "Erreurs · {{title}}",
+                "emptyTitle": "Aucune erreur à revoir !",
+                "emptySub": "Vos erreurs de quiz s'afficheront ici pour les réviser.",
+                "cta": "Étudier un thème",
+                "introTitle": "Revoir {{count}} erreurs",
+                "introDesc": "Parcourez les explications, puis lancez-vous. Chaque bonne réponse retire la question du carnet.",
+                "recent": "Dernière erreur {{date}}",
+                "missCount": "{{count}} erreurs",
+                "start": "Commencer ({{count}} questions)",
+                "guideTitle": "Révision des erreurs, mode d'emploi",
+                "guide": {
+                    "intro": "Rejouez uniquement les questions ratées.",
+                    "start": "Lisez les explications, puis touchez « Commencer ».",
+                    "remove": "Les questions réussies quittent automatiquement le carnet !"
+                },
+                "missCount_one": "{{count}} erreur",
+                "missCount_other": "{{count}} erreurs",
+                "introTitle_one": "Revoir {{count}} erreur",
+                "introTitle_other": "Revoir {{count}} erreurs",
+                "start_one": "Commencer ({{count}} question)",
+                "start_other": "Commencer ({{count}} questions)"
+            }
+        },
+        "special": {
+            "home": "Accueil",
+            "test": {
+                "history": "Résultats passés",
+                "historyCount": "{{count}} tentative(s)",
+                "historyCount_one": "{{count}} tentative",
+                "historyCount_other": "{{count}} tentatives",
+                "start": "Commencer le test",
+                "share": "Partager le résultat"
+            },
+            "exam": {
+                "title": "Parcours thématiques",
+                "sectionTitle": "Parcours par thème",
+                "sectionSub": "Chaque session compte dans vos scores et statistiques.",
+                "retryTitle": "{{title}} – erreurs",
+                "resultLabel": "Résultat {{title}}",
+                "noRetryTitle": "Aucune erreur à revoir",
+                "noRetryMsg": "Vos erreurs ne correspondent plus aux questions actuelles. Refaites la session complète.",
+                "introDesc": "{{count}} questions tirées des thèmes de ce pack, en une session.",
+                "bestScore": "Meilleur score",
+                "plays": "Tentatives",
+                "playsValue": "{{count}} fois",
+                "lastWrong": "Erreurs récentes",
+                "covers": "Thèmes couverts",
+                "questionCount": "Questions",
+                "level": "Difficulté",
+                "startCount": "Lancer {{count}} questions",
+                "retryWrong": "Revoir mes {{count}} erreurs",
+                "bestShort": "Record {{best}}/{{total}}",
+                "playsShort": "{{count}} tentative(s)",
+                "playsShort_one": "{{count}} tentative",
+                "playsShort_other": "{{count}} tentatives"
+            },
+            "league": {
+                "title": "Ligue hebdo",
+                "leagueName": "Ligue {{name}}",
+                "badgeSub": "Bilan dans {{days}} j · Rang {{rank}}",
+                "promote": "Top {{count}} promus",
+                "demote": "{{count}} derniers relégués",
+                "me": "Moi",
+                "promoteLine": "Zone de promotion",
+                "demoteLine": "Zone de relégation",
+                "cta": "Jouer et gagner des XP",
+                "note": "10 XP par bonne réponse · Bilan chaque dimanche"
+            },
+            "levelTest": {
+                "title": "Test de niveau",
+                "heroTitle": "Quel est votre niveau en culture générale ?",
+                "heroDesc": "{{count}} questions sur tous les thèmes\npour évaluer votre niveau tout de suite",
+                "chipTime": "Env. 2 min",
+                "chipSteps": "6 niveaux",
+                "gradePreview": "Les niveaux possibles",
+                "startHint": "Vos résultats sont enregistrés pour suivre vos progrès",
+                "shareMessage": "Mon niveau en culture générale : « {{title}} ({{tier}}) » — {{correct}} bonnes réponses sur {{total}} ({{rate}} pts) ! Et vous, quel est votre niveau ?",
+                "resultDetail": "{{correct}} bonnes réponses sur {{total}}",
+                "wrongNote": "Mes erreurs",
+                "correctNote": "Mes réussites",
+                "retry": "Recommencer",
+                "qTitle": "Test de niveau",
+                "seeResult": "Voir le résultat",
+                "gradeMsg": {
+                    "master": "Niveau exceptionnel ! Presque un sans-faute.",
+                    "expert": "Excellent niveau, jusque dans les détails.",
+                    "advanced": "Solide ! Encore un effort et vous serez expert.",
+                    "intermediate": "Les bases se mettent en place. Continuez !",
+                    "beginner": "Vous posez les fondations. Un peu chaque jour !",
+                    "novice": "C'est le début ! Commencez par les fiches."
+                },
+                "grades": {
+                    "master": {
+                        "title": "Maître",
+                        "tier": "Maître de la culture G"
+                    },
+                    "expert": {
+                        "title": "Expert",
+                        "tier": "Niveau d'expert"
+                    },
+                    "advanced": {
+                        "title": "Avancé",
+                        "tier": "Solides connaissances"
+                    },
+                    "intermediate": {
+                        "title": "Intermédiaire",
+                        "tier": "Bases acquises"
+                    },
+                    "beginner": {
+                        "title": "Débutant",
+                        "tier": "En progression"
+                    },
+                    "novice": {
+                        "title": "Novice",
+                        "tier": "Premier pas dans le monde"
+                    }
+                }
+            },
+            "ranking": {
+                "title": "Classement",
+                "boardTitle": "Classement {{label}}",
+                "tabTime": "Contre-la-montre",
+                "descTotal": "Le panthéon des meilleurs scores",
+                "descTime": "180 secondes de concentration",
+                "unit": "pts",
+                "shownCount": "Joueurs affichés",
+                "myRank": "Mon rang",
+                "myScore": "Mon score",
+                "rankValue": "{{rank}}e",
+                "nickChanged": "Pseudo modifié",
+                "nickChangeFailed": "Échec du changement de pseudo",
+                "joined": "Vous êtes dans le classement !",
+                "nickSaveFailed": "Échec de l'enregistrement du pseudo",
+                "notReady": "Le classement arrive bientôt.",
+                "joinTitle": "Rejoindre le classement",
+                "joinSub": "Lancez le dé pour tirer un pseudo qui vous plaît.",
+                "nickHint": "Pour éviter les insultes, les pseudos sont générés au hasard.",
+                "joinBtn": "Jouer avec ce pseudo",
+                "empty": "Aucun score pour l'instant.\nSoyez le premier !",
+                "listHead": "Classement général",
+                "editTitle": "Changer de pseudo",
+                "editSub": "Lancez le dé pour tirer un nouveau pseudo.",
+                "currentNick": "Pseudo actuel : {{name}}",
+                "changing": "Modification…",
+                "changeBtn": "Prendre ce pseudo"
+            },
+            "scoreDetail": {
+                "title": "Détail des scores",
+                "overallTitle": "Progression globale",
+                "nextGradeSolved": "Encore {{value}} questions avant le niveau suivant",
+                "nextGradeScore": "Encore {{value}} pts avant le niveau suivant",
+                "maxGrade": "Niveau max atteint",
+                "unitPoint": "pts",
+                "totalQuestions": "Questions",
+                "accuracy": "Réussite",
+                "charView": "Personnages par niveau",
+                "showAll": "Tout voir",
+                "sectionTitle": "Score par thème",
+                "sectionSub": "Touchez un thème pour afficher son résumé ci-dessus",
+                "sortName": "Nom",
+                "sortScore": "Score",
+                "sortRate": "Réussite",
+                "scoreValue": "{{value}} pts",
+                "questionsValue": "{{value}} questions",
+                "tagCorrect": "{{value}} bonnes",
+                "tagRate": "{{value}} % de réussite",
+                "tagSolved": "{{value}} faites",
+                "tagTotal": "{{value}} au total",
+                "tagProgress": "{{solved}}/{{total}} questions",
+                "studyProgress": "Apprentissage",
+                "remain": "Encore {{value}}",
+                "next": "Suivant",
+                "gradeFallback": "Niveau",
+                "toTop": "Remonter en haut",
+                "guideTitle": "Comment lire vos scores",
+                "guide1": "Scores et taux de réussite par thème, en un coup d'œil.",
+                "guide2": "Touchez un thème pour voir son niveau dans le résumé.",
+                "guide3": "Plus vous jouez, plus vous montez… et votre personnage grandit !"
+            },
+            "shorts": {
+                "swipeHint": "Glissez vers le haut ou le bas",
+                "toastNext": "Appris ! On passe à la suite",
+                "toastAllDone": "Toutes les cartes sont apprises !",
+                "toastDone": "Appris !",
+                "toastReview": "Remise dans « À apprendre »",
+                "shareMessage": "[{{domain}}] {{title}}\n→ {{meaning}}\n\nApprenons ensemble avec le quiz de culture générale.",
+                "review": "Réviser",
+                "complete": "Appris",
+                "bookmark": "Favori",
+                "share": "Partager",
+                "tabLearning": "À apprendre",
+                "tabLabel": "{{label}} ({{count}})",
+                "emptyDone": "Aucune carte apprise pour l'instant.",
+                "emptyLearning": "Aucune carte en cours.",
+                "emptyAll": "Aucune carte à afficher.",
+                "pct": "{{value}} % fait",
+                "exitA11y": "Quitter les cartes express",
+                "guideTitle": "Les cartes express, mode d'emploi",
+                "guide1": "Glissez vers le haut ou le bas pour changer de carte.",
+                "guide2": "L'étoile ajoute en favori, Partager l'envoie à un ami.",
+                "guide3": "Carte maîtrisée ? Touchez « Appris » pour la classer !"
+            },
+            "storyFeed": {
+                "sectionTitle": "À lire aujourd'hui",
+                "sectionSub": "De la culture générale de tous les thèmes, à feuilleter.",
+                "empty": "Les lectures de ce thème arrivent bientôt.",
+                "examples": "Exemples",
+                "more": "Voir d'autres histoires"
+            },
+            "typeTest": {
+                "title": "Test de profil",
+                "heroTitle": "Quel explorateur du monde êtes-vous ?",
+                "heroDesc": "{{count}} questions pour cerner vos goûts\net vous suggérer des thèmes sur mesure",
+                "chipCount": "{{count}} questions",
+                "chipTime": "Env. 1 min",
+                "chipTypes": "4 profils",
+                "typePreview": "Les profils possibles",
+                "startHint": "Vos résultats sont enregistrés pour voir vos goûts évoluer",
+                "historyDeleted": "Historique supprimé",
+                "shareMessage": "Mon profil culture G : « {{name}} ({{sub}}) » ! 🌏 Et vous, quel est le vôtre ?",
+                "recommend": "Thème conseillé : {{label}}",
+                "again": "Refaire",
+                "qTitle": "Test de profil",
+                "types": {
+                    "A": {
+                        "desc": "Vous cherchez les causes et le fil des choses. Les événements et figures qui ont changé le monde sont pour vous.",
+                        "domainLabel": "Événements historiques",
+                        "name": "L'historien pensif",
+                        "sub": "Histoire"
+                    },
+                    "B": {
+                        "desc": "L'inconnu vous attire. Pays, capitales et monuments sont faits pour vous.",
+                        "domainLabel": "Capitales du monde",
+                        "name": "Le voyageur curieux",
+                        "sub": "Géographie"
+                    },
+                    "C": {
+                        "desc": "Un rêveur qui imagine l'ailleurs. Le Système solaire et les constellations vous iront bien.",
+                        "domainLabel": "Constellations et astres",
+                        "name": "Le rêveur d'étoiles",
+                        "sub": "Espace"
+                    },
+                    "D": {
+                        "desc": "Vous adorez les belles histoires. Les mythes des dieux et des héros sont pour vous.",
+                        "domainLabel": "Mythologie gréco-romaine",
+                        "name": "Le collectionneur d'histoires",
+                        "sub": "Mythes"
+                    }
+                },
+                "questions": {
+                    "q1": {
+                        "title": "Entre amis, vous êtes plutôt…",
+                        "A": "à chercher le pourquoi",
+                        "B": "à raconter vos voyages",
+                        "C": "à partager des idées folles",
+                        "D": "à raconter des anecdotes"
+                    },
+                    "q2": {
+                        "title": "Un pays inconnu ? Vous…",
+                        "A": "voulez connaître son histoire",
+                        "B": "le cherchez sur la carte",
+                        "C": "imaginez son ciel nocturne",
+                        "D": "voulez connaître ses légendes"
+                    },
+                    "q3": {
+                        "title": "Vos contenus préférés ?",
+                        "A": "Documentaires historiques",
+                        "B": "Vlogs de voyage",
+                        "C": "Documentaires sur l'espace",
+                        "D": "Films fantastiques"
+                    },
+                    "q4": {
+                        "title": "Votre façon d'apprendre ?",
+                        "A": "Comprendre la logique",
+                        "B": "Voir par moi-même",
+                        "C": "Selon l'ambiance",
+                        "D": "Par des histoires"
+                    },
+                    "q5": {
+                        "title": "En voyage, vous visitez…",
+                        "A": "Sites historiques, musées",
+                        "B": "Ruelles et marchés",
+                        "C": "Paysages, ciel étoilé",
+                        "D": "Lieux de légende"
+                    },
+                    "q6": {
+                        "title": "Le compliment qui vous plaît ?",
+                        "A": "Brillant",
+                        "B": "Ouvert au monde",
+                        "C": "Plein de goût",
+                        "D": "Drôle"
+                    },
+                    "q7": {
+                        "title": "Au musée, vous restez surtout…",
+                        "A": "Frises et vestiges",
+                        "B": "Cultures du monde",
+                        "C": "Planétarium",
+                        "D": "Statues mythiques"
+                    },
+                    "q8": {
+                        "title": "Le charme de la culture G ?",
+                        "A": "Le fil de l'histoire",
+                        "B": "Un monde immense",
+                        "C": "L'univers infini",
+                        "D": "Des récits captivants"
+                    }
+                }
+            },
+            "weakFocus": {
+                "title": "Parcours points faibles",
+                "playerTitle": "Points faibles",
+                "resultLabel": "Résultat points faibles",
+                "weakTitle": "Ciblez vos thèmes faibles !",
+                "emptyTitle": "On commence par s'entraîner ?",
+                "weakDesc": "{{count}} questions sur vos thèmes les moins réussis pour progresser.",
+                "emptyDesc": "Pas encore assez de données. On démarre avec un mélange de tous les thèmes.",
+                "start": "Lancer l'entraînement"
+            }
+        },
+        "tower": {
+            "dev": {
+                "title": "Mode développeur",
+                "chooseAction": "Choisissez une action",
+                "clearLevel": "Valider l'étage {{level}}",
+                "reset": "Réinitialiser",
+                "autoPass": "Valider toutes les questions comme justes ?"
+            },
+            "homeButton": {
+                "confirmTitle": "Quitter le quiz ?",
+                "confirmMessage": "Votre progression ne sera pas enregistrée.",
+                "a11y": "Accueil"
+            },
+            "countdown": {
+                "go": "C'est parti !",
+                "step3": "Respirez à fond",
+                "step2": "Préparez-vous !",
+                "step1": "Ça commence !",
+                "step0": "Courage !"
+            },
+            "challenge": {
+                "title": "Défi de la Tour",
+                "subtitle": "En route vers le sommet",
+                "heroTitle": "Étage par étage, jusqu'au sommet",
+                "progressTitle": "Étages conquis",
+                "attemptsLeft": "Essais restants",
+                "attemptCount": "{{count}}",
+                "adButton": "Pub pour +1",
+                "adA11y": "Regarder une pub pour 1 essai de plus",
+                "adAllUsed": "Épuisé pour aujourd'hui",
+                "adUsed": "{{used}}/{{max}} aujourd'hui",
+                "rewardLabel": "Récompense",
+                "startA11y": "Défier l'étage {{level}}",
+                "start": "Relever le défi (-1 cœur)",
+                "watchAdToStart": "Pub pour jouer",
+                "allClearedTitle": "Tous les étages conquis !",
+                "allClearedSub": "Sommet atteint · Toutes les récompenses obtenues",
+                "lockedHint": "Terminez d'abord l'étage précédent",
+                "currentTag": "En cours",
+                "floorsTitle": "Tous les étages",
+                "exitConfirm": "Quitter le Défi de la Tour ?",
+                "notice": {
+                    "clear": "• Chaque étage : 5 questions, toutes justes pour passer",
+                    "reward": "• Chaque étage terminé donne sa récompense",
+                    "daily": "• {{daily}} essais par jour, rechargés à minuit",
+                    "ad": "• Une pub donne un essai de plus, jusqu'à {{max}} par jour"
+                },
+                "noAttempts": {
+                    "title": "Plus d'essais",
+                    "message": "Regarder une pub pour obtenir un essai ?",
+                    "confirm": "Regarder"
+                },
+                "toast": {
+                    "adLimit": "Plus de pubs disponibles aujourd'hui",
+                    "adRewarded": "1 essai ajouté",
+                    "adClosed": "Regardez la pub jusqu'au bout pour la récompense",
+                    "adFailed": "Impossible de charger la pub. Réessayez plus tard"
+                },
+                "guide": {
+                    "title": "Le Défi de la Tour, mode d'emploi",
+                    "line1": "5 bonnes réponses par étage débloquent le suivant.",
+                    "line2": "Chaque étage terminé donne sa récompense !",
+                    "line3": "{{daily}} essais par jour, et {{max}} de plus avec les pubs !"
+                }
+            },
+            "quiz": {
+                "loading": "Création du quiz...",
+                "notFound": "Tour introuvable.",
+                "noQuestions": "Aucune question pour le niveau {{level}}.",
+                "back": "Retour",
+                "exitA11y": "Quitter la tour",
+                "questionCount": "Question {{current}} / {{total}}",
+                "progress": "Progression",
+                "badge": "Question",
+                "next": "Question suivante",
+                "showResult": "Voir le résultat",
+                "exitConfirm": {
+                    "title": "Quitter le Défi de la Tour",
+                    "message": "Quitter le Défi de la Tour ?\nL'essai sera décompté.",
+                    "confirm": "Quitter"
+                }
+            },
+            "result": {
+                "home": "Accueil",
+                "reviewTitle": "📋 Revoir les questions",
+                "wrongCount": "{{count}} erreur(s)",
+                "wrongCount_one": "{{count}} erreur",
+                "wrongCount_other": "{{count}} erreurs",
+                "reviewA11y": "Question {{no}}, {{word}}, {{result}}. Touchez pour {{action}} l'explication",
+                "correct": "Juste",
+                "wrong": "Faux",
+                "collapse": "masquer",
+                "expand": "afficher",
+                "myAnswer": "Ma réponse · {{answer}}",
+                "notPicked": "Sans réponse",
+                "answer": "Réponse · {{answer}}",
+                "goReview": "Revoir mes {{count}} erreurs",
+                "failText": "Il faut tout réussir pour passer l'étage.\nNe lâchez rien, retentez votre chance !"
+            },
+            "data": {
+                "floor1": {
+                    "name": "Tour débutant",
+                    "bossName": "Groin-Groin, le sanglier glouton",
+                    "bossTitle": "Boss niveau 1",
+                    "bossDescription": "Un sanglier chapardeur de la forêt qui veut dévorer la gelée de sarrasin des gobelins",
+                    "clearCondition": "Réussir toutes les questions débutant",
+                    "rewardName": "Chapeau du débutant",
+                    "rewardDescription": "Votre premier chapeau, gagné en punissant Groin-Groin le voleur. Le symbole de vos premiers pas vers le sommet."
+                },
+                "floor2": {
+                    "name": "Tour intermédiaire",
+                    "bossName": "Têtu, le géant de pierre",
+                    "bossTitle": "Boss niveau 2",
+                    "bossDescription": "Un géant obstiné qui bloque l'entrée de la montagne rocheuse. Seul un quiz peut le faire céder",
+                    "clearCondition": "Réussir toutes les questions intermédiaires",
+                    "rewardName": "Cape intermédiaire",
+                    "rewardDescription": "La cape de la montagne offerte par Têtu en vous cédant le passage. Elle vous protège des vents les plus forts."
+                },
+                "floor3": {
+                    "name": "Tour avancé",
+                    "bossName": "Envoûteuse, la renarde millénaire",
+                    "bossTitle": "Boss niveau 3",
+                    "bossDescription": "Une renarde à neuf queues, mystérieuse et rusée, surgie de la brume des vallées",
+                    "clearCondition": "Réussir toutes les questions avancées",
+                    "rewardName": "Gardien légendaire",
+                    "rewardDescription": "Un gardien ancien apparu quand la brume de la renarde s'est levée. Il a choisi de veiller sur vous."
+                },
+                "floor4": {
+                    "name": "Tour final",
+                    "bossName": "Yeomra, le roi des gobelins",
+                    "bossTitle": "Boss final niveau 4",
+                    "bossDescription": "Le majestueux souverain des gobelins, coiffé d'une immense fleur royale et armé d'une massue d'or",
+                    "clearCondition": "Réussir toutes les questions expert",
+                    "rewardName": "Massue d'or des gobelins",
+                    "rewardDescription": "La massue d'or que Yeomra ne confie qu'aux plus dignes. Le symbole du vrai conquérant de la tour."
+                }
+            }
+        },
+        "modal": {
+            "achievement": {
+                "kicker": "Nouveau badge !",
+                "extra": "Et {{count}} autres badges obtenus !"
+            },
+            "attendance": {
+                "closeA11y": "Fermer la présence",
+                "eyebrow": "Présence",
+                "streakUnit": "jours d'affilée",
+                "subDone": "Présence validée ! À demain",
+                "subTodo": "Validez votre présence pour garder votre série",
+                "milestoneHead": "Badges de série",
+                "milestones": {
+                    "first": "1er jour",
+                    "week": "1 semaine",
+                    "twoWeeks": "2 semaines",
+                    "month": "1 mois",
+                    "fifty": "50 jours",
+                    "twoMonths": "2 mois",
+                    "hundred": "100 jours"
+                },
+                "legendAttended": "Présent",
+                "legendToday": "Aujourd'hui",
+                "legendShield": "Bouclier",
+                "celebrateShielded": "Série sauvée !",
+                "celebrateDone": "Présence validée !",
+                "celebrateSubShielded": "Bouclier utilisé · {{count}} jours d'affilée",
+                "celebrateSub": "{{count}} jours d'affilée"
+            },
+            "badgeDetail": {
+                "stateUnlocked": "Badge obtenu",
+                "stateLocked": "Badge en cours",
+                "progress": "Progression",
+                "unlockedAt": "Obtenu le {{date}}",
+                "shareA11y": "Partager le badge {{title}}",
+                "share": "Partager"
+            },
+            "badgeDex": {
+                "title": "Collection de badges",
+                "closeA11y": "Fermer la collection",
+                "rateLabel": "Badges collectés",
+                "countTotal": " / {{total}} obtenus",
+                "complete": "Tous les badges réunis ! Un vrai collectionneur !",
+                "remaining": "Plus que {{count}} pour compléter la collection",
+                "searchPlaceholder": "Chercher un badge ou une condition",
+                "clearSearch": "Effacer la recherche",
+                "onlyLocked": "À obtenir",
+                "emptyLocked": "Aucun badge à obtenir ne correspond",
+                "emptySearch": "Aucun résultat",
+                "rowA11y": "Détail du badge {{title}}"
+            },
+            "characterLevels": {
+                "title": "Personnages par niveau",
+                "sub": "Votre personnage grandit à mesure que vous apprenez",
+                "closeA11y": "Fermer les personnages",
+                "reqStart": "Départ",
+                "reqQuestions": "{{value}} questions",
+                "reqPoints": "{{value}} pts",
+                "unlocked": "Débloqué · {{req}}",
+                "locked": "Verrouillé · {{req}}"
+            },
+            "dailyAlarm": {
+                "title": "Rappel culture du jour",
+                "sub": "Recevez la culture du jour chaque jour à l'heure choisie",
+                "closeA11y": "Fermer les rappels",
+                "permWarn": "Autorisez les notifications dans les réglages.",
+                "openSettings": "Ouvrir les réglages",
+                "toggle": "Activer le rappel",
+                "time": "Heure du rappel",
+                "am": "Matin",
+                "pm": "Après-midi",
+                "timeLabel": "{{ampm}} {{hour}}:{{minute}}",
+                "toastOn": "Rappel du jour activé",
+                "toastOff": "Rappel du jour désactivé",
+                "toastFail": "Échec de l'enregistrement. Réessayez"
+            },
+            "difficulty": {
+                "title": "Difficulté",
+                "sub": "Choisissez votre niveau pour lancer le quiz",
+                "closeA11y": "Fermer le choix de difficulté",
+                "count": "{{value}} questions",
+                "desc": {
+                    "all": "Un mélange de tous les niveaux",
+                    "beginner": "Les bases, pas à pas",
+                    "intermediate": "On monte d'un cran",
+                    "advanced": "Pour consolider",
+                    "expert": "Le défi ultime"
+                }
+            },
+            "exitConfirm": {
+                "title": "Arrêter la session ?",
+                "message": "Si vous quittez, cette session sera fermée.",
+                "confirm": "Quitter"
+            },
+            "reset": {
+                "title": "Réinitialiser {{label}}",
+                "warn": "Cette action est irréversible."
+            },
+            "detail": {
+                "descLabel": "Résumé",
+                "tagLabel": "Mots-clés",
+                "infoChon": "Infos clés",
+                "info": "Infos",
+                "explanation": "Explication",
+                "story": "Le mythe",
+                "more": "En savoir plus",
+                "closeA11y": "Fermer le détail"
+            },
+            "onboarding": {
+                "greetTitle": "Bonjour !",
+                "greetLine": "Bienvenue dans le quiz de culture générale.\nDes capitales aux monuments, des grands noms à l'espace,\napprenons un peu chaque jour.",
+                "interestTitle": "Qu'aimeriez-vous apprendre ?",
+                "interestDesc": "Vos thèmes choisis s'afficheront en haut de l'accueil.",
+                "goalTitle": "Combien de questions par jour ?",
+                "goalDesc": "C'est votre objectif du jour. Modifiable à tout moment.",
+                "goalLabel": "{{count}} par jour",
+                "goalDesc5": "Tranquille · 2 min/jour",
+                "goalDesc10": "Régulier · 5 min/jour",
+                "goalDesc20": "Intensif · 10 min/jour",
+                "notiTitle": "Activer les rappels ?",
+                "notiDesc": "Pour réviser vos erreurs et garder votre série.\nAucune notification publicitaire.",
+                "notiAllow": "Activer",
+                "later": "Plus tard",
+                "skip": "Passer"
+            }
+        },
+        "atomic": {
+            "categoryScope": {
+                "allA11y": "Tous les thèmes",
+                "chipA11y": "{{title}}, {{value}}"
+            },
+            "entryImage": {
+                "broken": "Image indisponible"
+            },
+            "filterSheet": {
+                "closeA11y": "Fermer la sélection",
+                "selected": "{{label}}, sélectionné"
+            }
+        },
+        "ads": {
+            "preparing": "Chargement de la pub…",
+            "rewardSub": "Regardez-la en entier : +1 essai",
+            "rewardFrontButton": "Voir une pub récompensée"
+        },
+        "versionCheck": {
+            "badge": "Mise à jour requise",
+            "title": "Nouvelle version disponible",
+            "message": "Nouvelles fonctionnalités et corrections au programme.\nMettez l'application à jour.",
+            "feature": "Nouvelles fonctionnalités",
+            "fix": "Corrections et stabilité",
+            "current": "Actuelle",
+            "latest": "Dernière",
+            "update": "Mettre à jour",
+            "notice": "Mettez à jour pour continuer à utiliser l'app"
+        },
+        "svc": {
+            "notification": {
+                "testTitle": "Les notifications fonctionnent 🎉",
+                "testBody": "Vous ne manquerez plus le savoir du jour ni les quiz.",
+                "streakTitle": "N'oubliez pas votre présence !",
+                "streakBodyOn": "{{streak}} jours de suite ! Revenez aujourd'hui pour garder votre série.",
+                "streakBodyOff": "Passez aujourd'hui et apprenez un fait sur le monde ?",
+                "dailyWordTitle": "Le savoir du jour",
+                "dailyWordBody": "Un fait sur le monde vous attend. On jette un œil ?",
+                "todayQuizTitle": "Le quiz du jour",
+                "todayQuizBody": "Prêt pour les 5 questions du quiz du jour ?",
+                "wrongReviewTitle": "C'est l'heure de réviser",
+                "wrongReviewBody": "{{n}} erreurs à revoir vous attendent. On s'y remet ?"
+            },
+            "share": {
+                "appIntro": "Je vous recommande une appli que j'adore en ce moment ! 😊",
+                "appLink": "👇 Téléchargez-la ici",
+                "badgeHead": "🏅 J'ai obtenu le badge « {{title}} » !",
+                "badgeProgress": "Badges obtenus : {{unlocked}}/{{total}}"
+            },
+            "report": {
+                "intro": "J'ai trouvé une erreur dans la question ci-dessous.",
+                "ask": "■ Quelle est l'erreur ? (écrivez ici)",
+                "keepInfo": "※ Les infos ci-dessous servent à la vérification. Merci de ne pas les effacer.",
+                "prompt": "Question : {{value}}",
+                "answer": "Réponse : {{value}}",
+                "explanation": "Explication : {{value}}",
+                "uid": "Identifiant : {{value}}",
+                "domain": "Thème : {{value}}",
+                "version": "Version : {{version}} ({{build}})",
+                "noMailTitle": "Impossible d'ouvrir l'appli Mail",
+                "noMailMessage": "Écrivez-nous à {{mail}}, nous vérifierons.",
+                "issueSubject": "[Quiz Culture du monde] Signalement d'erreur",
+                "contactSubject": "Quiz Culture du monde – Contact"
+            },
+            "league": {
+                "me": "Moi",
+                "tier": {
+                    "bronze": "Bronze",
+                    "silver": "Argent",
+                    "gold": "Or",
+                    "platinum": "Platine",
+                    "diamond": "Diamant",
+                    "master": "Maître"
+                }
+            },
+            "onboarding": {
+                "vocabLabel": "Géographie · Histoire",
+                "vocabDesc": "Capitales · Monuments · Personnages · Histoire · Mythes · Espace",
+                "knowledgeLabel": "Culture sportive",
+                "knowledgeDesc": "Coupe du monde · JO d'été · JO d'hiver",
+                "bothLabel": "Les deux !",
+                "bothDesc": "Géo, histoire et sport, un peu de tout"
+            },
+            "weekday": {
+                "sun": "Dim",
+                "mon": "Lun",
+                "tue": "Mar",
+                "wed": "Mer",
+                "thu": "Jeu",
+                "fri": "Ven",
+                "sat": "Sam"
+            },
+            "learnHub": {
+                "oxTrue": "O (Vrai)",
+                "oxFalse": "X (Faux)",
+                "oxGuide": "{{guide}} Réponse correcte : O, sinon X",
+                "oxExplanation": "Bonne réponse : {{answer}}\n{{explanation}}",
+                "chosungGuide": "Trouvez le nom grâce aux initiales",
+                "wrongReviewGuide": "Révision ! {{guide}}",
+                "wrongReviewDefault": "Choisissez la bonne réponse",
+                "blankGuide": "Choisissez le mot manquant"
+            }
+        },
+        "calendar": {
+            "monthNames": [
+                "Janvier",
+                "Février",
+                "Mars",
+                "Avril",
+                "Mai",
+                "Juin",
+                "Juillet",
+                "Août",
+                "Septembre",
+                "Octobre",
+                "Novembre",
+                "Décembre"
+            ],
+            "dayNames": [
+                "Dimanche",
+                "Lundi",
+                "Mardi",
+                "Mercredi",
+                "Jeudi",
+                "Vendredi",
+                "Samedi"
+            ],
+            "dayNamesShort": [
+                "Dim",
+                "Lun",
+                "Mar",
+                "Mer",
+                "Jeu",
+                "Ven",
+                "Sam"
+            ],
+            "today": "Aujourd'hui"
+        },
+        "achievements": {
+            "groups": {
+                "progress": "Progression",
+                "session": "Parties",
+                "streak": "Assiduité",
+                "skill": "Combos · Précision",
+                "topic": "Thèmes · Modes"
+            },
+            "rarity": {
+                "common": "Commun",
+                "rare": "Rare",
+                "epic": "Épique",
+                "legend": "Légendaire"
+            },
+            "badges": {
+                "first_quiz": {
+                    "desc": "Le badge qui marque le début de votre aventure",
+                    "title": "Premier pas",
+                    "cond": "Premier quiz terminé"
+                },
+                "correct_50": {
+                    "desc": "Pour ceux dont les bonnes réponses s'accumulent",
+                    "title": "Jeune pousse",
+                    "cond": "50 bonnes réponses au total"
+                },
+                "solve_100": {
+                    "desc": "Le premier cap des joueurs réguliers",
+                    "title": "Cent questions",
+                    "cond": "100 questions au total"
+                },
+                "correct_300": {
+                    "desc": "La preuve que bien répondre est devenu une habitude",
+                    "title": "Bel arbre",
+                    "cond": "300 bonnes réponses au total"
+                },
+                "solve_500": {
+                    "desc": "Un volume de questions qui force le respect",
+                    "title": "Cap des 500",
+                    "cond": "500 questions au total"
+                },
+                "solve_1000": {
+                    "desc": "Réservé à ceux qui atteignent les quatre chiffres",
+                    "title": "Mille questions",
+                    "cond": "1,000 questions au total"
+                },
+                "correct_1000": {
+                    "desc": "Mille bonnes réponses, le symbole d'un vrai niveau",
+                    "title": "Forêt de savoir",
+                    "cond": "1,000 bonnes réponses au total"
+                },
+                "solve_2000": {
+                    "desc": "Un badge réservé aux fidèles de longue date",
+                    "title": "Club des 2000",
+                    "cond": "2,000 questions au total"
+                },
+                "solve_3000": {
+                    "desc": "La place de ceux qui ont conquis le quiz",
+                    "title": "Maître des 3000",
+                    "cond": "3,000 questions au total"
+                },
+                "quizzes_10": {
+                    "desc": "Le quiz commence à devenir une habitude",
+                    "title": "Échauffement",
+                    "cond": "10 quiz joués"
+                },
+                "quizzes_50": {
+                    "desc": "Le badge des habitués qui reviennent souvent",
+                    "title": "Joueur assidu",
+                    "cond": "50 quiz joués"
+                },
+                "quizzes_100": {
+                    "desc": "La marque d'un vétéran aux mille parties",
+                    "title": "Vétéran",
+                    "cond": "100 quiz joués"
+                },
+                "quizzes_300": {
+                    "desc": "Parmi les joueurs les plus actifs",
+                    "title": "300 parties",
+                    "cond": "300 quiz joués"
+                },
+                "streak_3": {
+                    "desc": "La preuve que vous tenez vos bonnes résolutions",
+                    "title": "Promesse de 3 jours",
+                    "cond": "3 jours d'affilée"
+                },
+                "streak_7": {
+                    "desc": "Une semaine complète, sans un seul jour manqué",
+                    "title": "Semaine parfaite",
+                    "cond": "7 jours d'affilée"
+                },
+                "streak_14": {
+                    "desc": "Deux semaines sans jamais perdre le rythme",
+                    "title": "2 semaines",
+                    "cond": "14 jours d'affilée"
+                },
+                "streak_30": {
+                    "desc": "Un mois complet : apprendre fait partie du quotidien",
+                    "title": "Mois parfait",
+                    "cond": "30 jours d'affilée"
+                },
+                "streak_60": {
+                    "desc": "Deux mois d'affilée. Il faut une sacrée volonté",
+                    "title": "2 mois",
+                    "cond": "60 jours d'affilée"
+                },
+                "streak_100": {
+                    "desc": "Le badge suprême pour 100 jours de constance",
+                    "title": "100 jours",
+                    "cond": "100 jours d'affilée"
+                },
+                "combo_5": {
+                    "desc": "Vous trouvez le rythme des bonnes réponses",
+                    "title": "Combo d'échauffement",
+                    "cond": "5 bonnes réponses d'affilée"
+                },
+                "combo_10": {
+                    "desc": "Une concentration à toute épreuve",
+                    "title": "Combo concentré",
+                    "cond": "10 bonnes réponses d'affilée"
+                },
+                "combo_20": {
+                    "desc": "La preuve d'une longue série sans faute",
+                    "title": "Maître du combo",
+                    "cond": "20 bonnes réponses d'affilée"
+                },
+                "combo_30": {
+                    "desc": "Une série sans la moindre erreur",
+                    "title": "Tempête de combos",
+                    "cond": "30 bonnes réponses d'affilée"
+                },
+                "combo_50": {
+                    "desc": "Un record de combo légendaire",
+                    "title": "Combo légendaire",
+                    "cond": "50 bonnes réponses d'affilée"
+                },
+                "accuracy_80": {
+                    "desc": "Pour ceux qui misent sur la précision",
+                    "title": "Efficace",
+                    "cond": "80 % de réussite ou plus (100 Q+)"
+                },
+                "accuracy_90": {
+                    "desc": "Un taux de réussite élevé, maintenu dans la durée",
+                    "title": "As des réponses",
+                    "cond": "90 % de réussite ou plus (100 Q+)"
+                },
+                "accuracy_95": {
+                    "desc": "Vous ne vous trompez presque jamais",
+                    "title": "Perfectionniste",
+                    "cond": "95 % de réussite ou plus (100 Q+)"
+                },
+                "time_10": {
+                    "desc": "Vous commencez à aimer la pression du chrono",
+                    "title": "Maître du temps",
+                    "cond": "10 Contre-la-montre"
+                },
+                "time_50": {
+                    "desc": "Le contre-la-montre n'a plus de secret pour vous",
+                    "title": "Conquérant du temps",
+                    "cond": "50 Contre-la-montre"
+                },
+                "review_10": {
+                    "desc": "Pour ceux qui ne laissent passer aucune erreur",
+                    "title": "Force de révision",
+                    "cond": "10 révisions d'erreurs"
+                },
+                "review_30": {
+                    "desc": "Vos points faibles comblés à force de révisions",
+                    "title": "Pro de la révision",
+                    "cond": "30 révisions d'erreurs"
+                },
+                "all_domains": {
+                    "desc": "Vous avez exploré tous les horizons",
+                    "title": "Touche-à-tout",
+                    "cond": "Jouer une fois aux 8 thèmes principaux"
+                },
+                "all_12": {
+                    "desc": "Le badge de ceux qui ont tout essayé",
+                    "title": "Tour complet",
+                    "cond": "10 questions ou plus dans les 8 thèmes"
+                },
+                "solve_50": {
+                    "desc": "Le signal de départ après 50 questions",
+                    "title": "Cap des 50",
+                    "cond": "50 questions au total"
+                },
+                "correct_100": {
+                    "desc": "Votre premier exploit : 100 bonnes réponses",
+                    "title": "100 bonnes réponses",
+                    "cond": "100 bonnes réponses au total"
+                },
+                "correct_2000": {
+                    "desc": "2000 bonnes réponses, un savoir bien ancré",
+                    "title": "2000 bonnes réponses",
+                    "cond": "2,000 bonnes réponses au total"
+                },
+                "solve_5000": {
+                    "desc": "5000 questions. La place des fans de toujours",
+                    "title": "Légende des 5000",
+                    "cond": "5,000 questions au total"
+                },
+                "quizzes_3": {
+                    "desc": "Trois parties, et vous prenez le coup de main",
+                    "title": "Jamais deux sans trois",
+                    "cond": "3 quiz joués"
+                },
+                "quizzes_200": {
+                    "desc": "200 parties, la preuve de votre régularité",
+                    "title": "200 parties",
+                    "cond": "200 quiz joués"
+                },
+                "quizzes_500": {
+                    "desc": "500 parties, au sommet des joueurs",
+                    "title": "Vétéran des 500",
+                    "cond": "500 quiz joués"
+                },
+                "streak_21": {
+                    "desc": "3 semaines d'affilée. L'habitude est prise",
+                    "title": "3 semaines",
+                    "cond": "21 jours d'affilée"
+                },
+                "streak_50": {
+                    "desc": "50 jours sans faiblir, quel rythme !",
+                    "title": "50 jours",
+                    "cond": "50 jours d'affilée"
+                },
+                "streak_180": {
+                    "desc": "Réservé à ceux qui tiennent six mois",
+                    "title": "6 mois",
+                    "cond": "180 jours d'affilée"
+                },
+                "combo_15": {
+                    "desc": "15 bonnes réponses de suite, quelle concentration",
+                    "title": "Série de 15",
+                    "cond": "15 bonnes réponses d'affilée"
+                },
+                "combo_100": {
+                    "desc": "100 bonnes réponses d'affilée, un mythe vivant",
+                    "title": "Combo mythique",
+                    "cond": "100 bonnes réponses d'affilée"
+                },
+                "accuracy_70": {
+                    "desc": "Des réponses justes, avec régularité",
+                    "title": "Valeur sûre",
+                    "cond": "70 % de réussite ou plus (100 Q+)"
+                },
+                "accuracy_99": {
+                    "desc": "Vous ne laissez presque rien passer",
+                    "title": "Sans faute",
+                    "cond": "99 % de réussite ou plus (100 Q+)"
+                },
+                "ox_20": {
+                    "desc": "Vous savez distinguer le vrai du faux",
+                    "title": "Juge Vrai/Faux",
+                    "cond": "20 quiz Vrai ou faux joués"
+                },
+                "blank_15": {
+                    "desc": "Le contexte vous suffit pour combler les trous",
+                    "title": "As des trous",
+                    "cond": "15 textes à trous joués"
+                },
+                "initial_15": {
+                    "desc": "Les initiales suffisent pour trouver le nom",
+                    "title": "Expert des initiales",
+                    "cond": "15 quiz Initiales joués"
+                },
+                "mix_30": {
+                    "desc": "Vous jouez à tout, sans préférence de thème",
+                    "title": "Mixeur du jour",
+                    "cond": "30 Mix du jour joués"
+                },
+                "bookmark_10": {
+                    "desc": "Pour ceux qui revoient leurs favoris",
+                    "title": "Fan des favoris",
+                    "cond": "10 quiz Favoris joués"
+                },
+                "day_solve_30": {
+                    "desc": "30 questions en une journée, quelle énergie",
+                    "title": "30 par jour",
+                    "cond": "30 questions en un jour"
+                },
+                "day_solve_100": {
+                    "desc": "100 questions en un jour. Une journée record",
+                    "title": "100 par jour",
+                    "cond": "100 questions en un jour"
+                },
+                "active_days_10": {
+                    "desc": "Dix jours passés à apprendre avec nous",
+                    "title": "10 jours",
+                    "cond": "10 jours d'apprentissage"
+                },
+                "active_days_30": {
+                    "desc": "Trente jours d'apprentissage au compteur",
+                    "title": "30 jours",
+                    "cond": "30 jours d'apprentissage"
+                },
+                "daily_7": {
+                    "desc": "Le quiz du jour, sept fois au rendez-vous",
+                    "title": "Habitué du jour",
+                    "cond": "7 quiz du jour terminés"
+                },
+                "daily_30": {
+                    "desc": "Trente quiz du jour, sans en manquer",
+                    "title": "Assidu du jour",
+                    "cond": "30 quiz du jour terminés"
+                },
+                "exam_5": {
+                    "desc": "Votre niveau testé avec les parcours à thème",
+                    "title": "Finisseur",
+                    "cond": "5 parcours à thème passés"
+                },
+                "weak_10": {
+                    "desc": "Pour ceux qui s'attaquent à leurs points faibles",
+                    "title": "Chasseur de failles",
+                    "cond": "10 sessions Points faibles"
+                },
+                "domain_30": {
+                    "desc": "Vous creusez un thème en profondeur",
+                    "title": "Spécialiste",
+                    "cond": "30 quiz par thème joués"
+                },
+                "streak_365": {
+                    "desc": "Un an sans interruption. Rien ne va plus haut",
+                    "title": "Promesse d'un an",
+                    "cond": "365 jours d'affilée"
+                },
+                "now_streak_5": {
+                    "desc": "Votre rythme actuel : 5 jours de suite",
+                    "title": "5e jour",
+                    "cond": "Série en cours de 5 jours"
+                },
+                "now_streak_15": {
+                    "desc": "15 jours de suite. Vous êtes lancé",
+                    "title": "15e jour",
+                    "cond": "Série en cours de 15 jours"
+                },
+                "time_correct_15": {
+                    "desc": "15 bonnes réponses avant la fin du chrono",
+                    "title": "Mitraillette",
+                    "cond": "15 bonnes réponses en un Contre-la-montre"
+                },
+                "time_correct_30": {
+                    "desc": "30 en une partie. Le top du contre-la-montre",
+                    "title": "Roi du chrono",
+                    "cond": "30 bonnes réponses en un Contre-la-montre"
+                },
+                "time_combo_10": {
+                    "desc": "10 bonnes réponses d'affilée, malgré le chrono",
+                    "title": "Combo chrono",
+                    "cond": "10 d'affilée en un Contre-la-montre"
+                },
+                "mode_5": {
+                    "desc": "Pour ceux qui aiment varier les modes",
+                    "title": "Explorateur",
+                    "cond": "5 modes différents joués"
+                },
+                "mode_8": {
+                    "desc": "Un collectionneur qui a goûté presque à tout",
+                    "title": "Collectionneur",
+                    "cond": "8 modes différents joués"
+                },
+                "deep_domain_3": {
+                    "desc": "Trois thèmes explorés en profondeur",
+                    "title": "Grand explorateur",
+                    "cond": "100 questions ou plus dans 3 thèmes"
+                },
+                "capital_100": {
+                    "desc": "Cent capitales visitées, en vrai voyageur",
+                    "title": "Pro des capitales",
+                    "cond": "100 questions Capitales du monde"
+                },
+                "capital_240": {
+                    "desc": "Toutes les capitales de la carte sont à vous",
+                    "title": "Roi des capitales",
+                    "cond": "240 questions Capitales du monde"
+                },
+                "landmark_50": {
+                    "desc": "Une photo suffit pour reconnaître le lieu",
+                    "title": "Globe-trotteur",
+                    "cond": "50 questions Monuments du monde"
+                },
+                "nature_30": {
+                    "desc": "Fleuves et montagnes prennent place sur la carte",
+                    "title": "Lecteur de cartes",
+                    "cond": "30 questions Géographie physique"
+                },
+                "figure_100": {
+                    "desc": "Vous connaissez ceux qui ont changé le monde",
+                    "title": "Biographe",
+                    "cond": "100 questions Grands personnages"
+                },
+                "figure_300": {
+                    "desc": "Un expert des personnages de toutes époques",
+                    "title": "Pro des personnages",
+                    "cond": "300 questions Grands personnages"
+                },
+                "event_50": {
+                    "desc": "Les grands moments de l'histoire n'ont plus de secret",
+                    "title": "Pro de l'histoire",
+                    "cond": "50 questions Événements historiques"
+                },
+                "myth_50": {
+                    "desc": "Les dieux et les héros n'ont plus de secret",
+                    "title": "Conteur de mythes",
+                    "cond": "50 questions Mythologie gréco-romaine"
+                },
+                "space_20": {
+                    "desc": "Vous avez fait le tour du Système solaire",
+                    "title": "Explorateur spatial",
+                    "cond": "20 questions Système solaire"
+                },
+                "constellation_30": {
+                    "desc": "Vous reconnaissez les étoiles du ciel nocturne",
+                    "title": "Gardien des étoiles",
+                    "cond": "30 questions Constellations et astres"
+                },
+                "sub_worldcup_3": {
+                    "desc": "Trois plongées dans l'histoire de la Coupe du monde",
+                    "title": "Pro du Mondial",
+                    "cond": "3 quiz Coupe du monde joués"
+                },
+                "sub_olympic_3": {
+                    "desc": "Villes hôtes et vainqueurs des JO d'été maîtrisés",
+                    "title": "Pro des JO",
+                    "cond": "3 quiz JO d'été joués"
+                },
+                "sub_winter_3": {
+                    "desc": "Même les épreuves sur neige et glace y passent",
+                    "title": "Pro des JO d'hiver",
+                    "cond": "3 quiz JO d'hiver joués"
+                },
+                "sub_sports_all": {
+                    "desc": "Un sportif complet qui a testé tous les quiz sport",
+                    "title": "Sportif complet",
+                    "cond": "Jouer aux quiz Mondial, JO d'été et d'hiver"
+                },
+                "picture_10": {
+                    "desc": "Un drapeau ou un portrait suffit pour deviner",
+                    "title": "Œil de lynx",
+                    "cond": "10 quiz en images joués"
+                }
+            },
+            "level": {
+                "unitScore": "{{value}} pts",
+                "unitSolved": "{{value}} Q",
+                "desc": "Votre niveau en {{topic}} a atteint « {{level}} »",
+                "title": "{{topic}} · {{level}}",
+                "name": "{{topic}} {{level}}",
+                "cond": "Atteindre le niveau {{name}} ({{unit}})"
+            }
+        },
+        "apps": {
+            "birthdaylog": {
+                "title": "Anniversaires",
+                "desc": "Anniversaires vous rappelle les dates à l'avance et garde la trace des cadeaux offerts et reçus chaque année."
+            },
+            "jptravel": {
+                "title": "Valise pour le Japon",
+                "desc": "Indiquez votre destination et la durée : Valise pour le Japon prépare votre checklist, votre budget et vos dépenses en yens, votre itinéraire sur carte et des phrases utiles en japonais."
+            },
+            "noisemeter": {
+                "title": "Sonomètre",
+                "desc": "Sonomètre mesure et enregistre en décibels les bruits de voisinage et du quotidien, compare le niveau maximal et le niveau équivalent sur 1 et 5 minutes aux seuils de jour et de nuit, et en tire un rapport d'une page."
+            },
+            "qrmaker": {
+                "title": "QRMaker",
+                "desc": "QRMaker crée et scanne facilement QR codes et codes-barres, les enregistre en image ou PDF et les organise avec historique et notes."
+            },
+            "spitogenie": {
+                "title": "Spitto Genie",
+                "desc": "Spitto Genie calcule l'espérance de gain et le taux de retour de chaque série de jeux à gratter coréens selon les lots et tickets restants, pour savoir laquelle acheter maintenant."
+            },
+            "koreaquiz": {
+                "title": "Quiz de culture coréenne",
+                "desc": "Apprenez en jouant les expressions, proverbes, mots coréens et grandes figures que tout Coréen devrait connaître, et révisez vos erreurs autant que nécessaire."
+            },
+            "hanpick": {
+                "title": "Quiz de hanja par niveau",
+                "desc": "Maîtrisez les 6 182 caractères hanja des examens officiels coréens grâce à des quiz sur le sens, la lecture, la clé et le nombre de traits."
+            },
+            "vaulty": {
+                "title": "PhotoLock",
+                "desc": "Masquez vos photos et vidéos de la galerie et protégez-les par code PIN ou empreinte dans un coffre privé."
+            },
+            "mindCare": {
+                "title": "Forêt intérieure",
+                "desc": "Journal d'émotions, arbre à faire grandir, outils anti-stress, sons apaisants et méditation guidée pour prendre soin de vous après une longue journée."
+            },
+            "financeCalc": {
+                "title": "Ma calculatrice financière",
+                "desc": "Épargne, prêts, salaire… tous vos calculs financiers du quotidien, rapides et simples, au même endroit."
+            },
+            "infinityOper": {
+                "title": "Quiz de maths infini",
+                "desc": "Entraînez votre sens du calcul chaque jour et gagnez points et badges au fil de vos progrès."
+            },
+            "bloodType": {
+                "title": "Labo des groupes sanguins",
+                "desc": "Tout sur les groupes sanguins : hérédité, compatibilité, croyances, quiz et don du sang !"
+            },
+            "linkManager": {
+                "title": "Quick Link : gestion de liens",
+                "desc": "Enregistrez facilement, retrouvez rapidement. Rangez vos liens dans vos propres dossiers !"
+            },
+            "emotionalEmoticon": {
+                "title": "Gamticon : émoticônes",
+                "desc": "Plus de 2 000 émoticônes texte vous attendent. Copiez d'un simple toucher, collez où vous voulez !"
+            },
+            "purekoreanquiz": {
+                "title": "Sunpick : quiz de mots coréens",
+                "desc": "Sunpick vous fait découvrir de beaux mots coréens d'origine de façon simple et ludique, teste votre vocabulaire avec des quiz variés et vous aide à retenir les mots ratés grâce à la révision."
+            },
+            "unitCalc": {
+                "title": "Mon convertisseur d'unités",
+                "desc": "Conversions d'unités et calculs du quotidien réunis dans une app tout-en-un, à organiser selon vos usages, pour la vie de tous les jours, le travail ou les études."
+            },
+            "choncalc": {
+                "title": "Calculateur de parenté Plus+",
+                "desc": "Calculateur de parenté Plus+ va au-delà d'un simple calcul : il vous aide à comprendre vos liens familiaux de façon claire et précise. Il calcule automatiquement le degré de parenté côté paternel, maternel et par alliance, et vous permet de rechercher instantanément les nombreux termes de parenté coréens. Avec son quiz sur la famille, apprenez tout en vous amusant."
+            },
+            "emotionbutton": {
+                "title": "Mood Pop : faites éclater votre humeur !",
+                "desc": "Mood Pop exprime votre humeur du moment d'un seul bouton et vous aide à décompresser grâce à des effets variés. Créez vos propres boutons avec vos images préférées et aménagez votre espace d'émotions."
+            },
+            "agecalc": {
+                "title": "Calculateur d'âge",
+                "desc": "Bien plus qu'un calculateur d'âge, il révèle ce que cache votre date de naissance. Conversion calendrier lunaire/solaire, signe chinois, signe astrologique, pierre, fleur, arbre, couleur et planète de naissance, tout en un coup d'œil."
+            },
+            "spellingquiz": {
+                "title": "Matpick : quiz d'orthographe",
+                "desc": "Un quiz pour apprendre l'orthographe coréenne de façon simple et ludique. Testez vos connaissances et revoyez vos erreurs grâce à la révision pour devenir un pro de l'orthographe."
+            },
+            "idiomquiz": {
+                "title": "Gwanpick : quiz d'expressions",
+                "desc": "Un quiz pour apprendre les expressions idiomatiques coréennes de façon simple et ludique. Testez vos connaissances et revoyez vos erreurs grâce à la révision pour les maîtriser parfaitement."
+            },
+            "catquiz": {
+                "title": "Nyangpick : quiz sur les chats",
+                "desc": "Découvrez les races de chats en vous amusant, progressez grâce aux quiz, à la révision et aux défis chronométrés, et collectionnez personnages et badges."
+            },
+            "todaycigarette": {
+                "title": "Ohup : journal du fumeur",
+                "desc": "« De petites notes pour un grand changement, commencez dès aujourd'hui ! » Cernez vos habitudes de fumeur et faites le premier pas vers l'arrêt."
+            },
+            "dogquiz": {
+                "title": "Meongpick : quiz sur les chiens",
+                "desc": "Une encyclopédie des races de chiens à apprendre et à retenir grâce aux quiz."
+            },
+            "fouridioms": {
+                "title": "Sapick : quiz de proverbes chinois",
+                "desc": "Apprenez les expressions en quatre caractères avec des cartes et testez-vous avec des quiz."
+            },
+            "proverb": {
+                "title": "Sokpick : quiz de proverbes",
+                "desc": "Apprenez des proverbes, testez-vous avec des quiz variés et révisez encore et encore."
+            },
+            "country": {
+                "title": "Supick : quiz des capitales",
+                "desc": "Apprenez les capitales du monde entier et vérifiez vos connaissances avec des quiz."
+            },
+            "lotto": {
+                "title": "Lotto Genie : générateur",
+                "desc": "Résultats, statistiques, génération de numéros : toutes les fonctions du loto en une seule app."
+            },
+            "squaremetercalc": {
+                "title": "Convertisseur m²/pyeong",
+                "desc": "Convertissez facilement les m² en pyeong (unité coréenne) et calculez le prix au pyeong."
+            }
+        },
+        "misc": {
+            "blankPlaceholder": "( ___ )",
+            "nickname": {
+                "format": "{{noun}} {{adj}}",
+                "adjectives": [
+                    "brave",
+                    "habile",
+                    "rapide",
+                    "tranquille",
+                    "fiable",
+                    "aimable",
+                    "intrépide",
+                    "loufoque",
+                    "sage",
+                    "infatigable",
+                    "calme",
+                    "allègre",
+                    "tendre",
+                    "robuste",
+                    "stellaire",
+                    "céleste",
+                    "affable",
+                    "paisible",
+                    "agile",
+                    "adorable",
+                    "superbe",
+                    "admirable",
+                    "magnifique",
+                    "timide",
+                    "espiègle",
+                    "libre",
+                    "honnête",
+                    "magnanime",
+                    "drôle"
+                ],
+                "nouns": [
+                    "Tigre",
+                    "Pie",
+                    "Chat",
+                    "Écureuil",
+                    "Grue",
+                    "Lapin",
+                    "Tortue",
+                    "Loutre",
+                    "Moineau",
+                    "Renard",
+                    "Cerf",
+                    "Baleine",
+                    "Girafe",
+                    "Raton laveur",
+                    "Hibou",
+                    "Manchot",
+                    "Thon",
+                    "Ours",
+                    "Rainette",
+                    "Héron",
+                    "Abricotier",
+                    "Azalée",
+                    "Pissenlit",
+                    "Pin",
+                    "Étoile",
+                    "Clair de lune",
+                    "Aurore",
+                    "Crépuscule",
+                    "Érable",
+                    "Flocon"
+                ]
+            }
+        },
+        "world": {
+            "topic": {
+                "capital": {
+                    "modes": {
+                        "capital": {
+                            "label": "Capitale",
+                            "question": "Quelle est sa capitale ?"
+                        },
+                        "continent": {
+                            "label": "Continent",
+                            "question": "Sur quel continent se trouve-t-il ?"
+                        },
+                        "country": {
+                            "label": "Pays",
+                            "question": "De quel pays est-ce la capitale ?"
+                        },
+                        "flag": {
+                            "label": "Drapeau",
+                            "question": "À qui appartient ce drapeau ?"
+                        }
+                    },
+                    "label": "Capitales du monde",
+                    "description": "Pays, capitales, drapeaux et continents"
+                },
+                "constellation": {
+                    "modes": {
+                        "image": {
+                            "label": "Image",
+                            "question": "Quelle est cette constellation ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quelle constellation correspond ?"
+                        },
+                        "season": {
+                            "label": "Saison",
+                            "question": "Quand la voit-on le mieux ?"
+                        },
+                        "star": {
+                            "label": "Étoile phare",
+                            "question": "Quelle est son étoile principale ?"
+                        }
+                    },
+                    "label": "Constellations et astres",
+                    "description": "Des noms à chercher dans le ciel nocturne"
+                },
+                "event": {
+                    "modes": {
+                        "century": {
+                            "label": "Époque",
+                            "question": "Quand cela s'est-il passé ?"
+                        },
+                        "country": {
+                            "label": "Pays",
+                            "question": "Quel pays est le plus concerné ?"
+                        },
+                        "kind": {
+                            "label": "Type",
+                            "question": "De quel type d'événement s'agit-il ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quel événement correspond ?"
+                        }
+                    },
+                    "label": "Événements historiques",
+                    "description": "Ces jours qui ont changé le monde"
+                },
+                "figure": {
+                    "modes": {
+                        "country": {
+                            "label": "Pays",
+                            "question": "De quel pays est cette personne ?"
+                        },
+                        "era": {
+                            "label": "Époque",
+                            "question": "À quelle époque a-t-elle vécu ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quelle personne correspond ?"
+                        },
+                        "portrait": {
+                            "label": "Portrait",
+                            "question": "Qui est sur ce portrait ?"
+                        },
+                        "role": {
+                            "label": "Rôle",
+                            "question": "Qu'a fait cette personne ?"
+                        }
+                    },
+                    "label": "Grandes figures",
+                    "description": "Ceux qui ont changé le monde"
+                },
+                "landmark": {
+                    "modes": {
+                        "city": {
+                            "label": "Lieu",
+                            "question": "Où se trouve ce monument ?"
+                        },
+                        "country": {
+                            "label": "Pays",
+                            "question": "Dans quel pays se trouve-t-il ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quel monument correspond ?"
+                        },
+                        "photo": {
+                            "label": "Photo",
+                            "question": "Quel est ce monument ?"
+                        }
+                    },
+                    "label": "Monuments du monde",
+                    "description": "Vus en photo, mais où sont-ils ?"
+                },
+                "myth": {
+                    "modes": {
+                        "domain": {
+                            "label": "Domaine",
+                            "question": "Quel est son domaine ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quel personnage correspond ?"
+                        },
+                        "portrait": {
+                            "label": "Image",
+                            "question": "Qui est sur cette image ?"
+                        },
+                        "roman": {
+                            "label": "Nom romain",
+                            "question": "Quel est son nom romain ?"
+                        }
+                    },
+                    "label": "Mythologie gréco-romaine",
+                    "description": "Dieux, héros et monstres"
+                },
+                "nature": {
+                    "modes": {
+                        "continent": {
+                            "label": "Continent",
+                            "question": "Sur quel continent est-ce ?"
+                        },
+                        "country": {
+                            "label": "Pays",
+                            "question": "Dans quel pays est-ce ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quel lieu correspond ?"
+                        }
+                    },
+                    "label": "Géographie physique",
+                    "description": "Fleuves, montagnes, déserts et lacs"
+                },
+                "olympic": {
+                    "modes": {
+                        "city": {
+                            "label": "Ville hôte",
+                            "question": "Dans quelle ville ont-ils eu lieu ?"
+                        },
+                        "host": {
+                            "label": "Pays hôte",
+                            "question": "Quel pays les a organisés ?"
+                        },
+                        "top": {
+                            "label": "1er au classement",
+                            "question": "Quel pays a fini 1er au classement des médailles ? (or d'abord)"
+                        }
+                    },
+                    "label": "JO d'été",
+                    "description": "Villes hôtes et 1ers au classement"
+                },
+                "space": {
+                    "modes": {
+                        "image": {
+                            "label": "Image",
+                            "question": "Quel est cet astre ?"
+                        },
+                        "kind": {
+                            "label": "Type",
+                            "question": "De quel type d'astre s'agit-il ?"
+                        },
+                        "name": {
+                            "label": "Description",
+                            "question": "Quel astre correspond ?"
+                        },
+                        "order": {
+                            "label": "Rang",
+                            "question": "Quel est son rang depuis le Soleil ?"
+                        }
+                    },
+                    "label": "Système solaire",
+                    "description": "Planètes, lunes et au-delà"
+                },
+                "winter": {
+                    "modes": {
+                        "city": {
+                            "label": "Ville hôte",
+                            "question": "Dans quelle ville ont-ils eu lieu ?"
+                        },
+                        "host": {
+                            "label": "Pays hôte",
+                            "question": "Quel pays les a organisés ?"
+                        },
+                        "top": {
+                            "label": "1er au classement",
+                            "question": "Quel pays a fini 1er au classement des médailles ? (or d'abord)"
+                        }
+                    },
+                    "label": "JO d'hiver",
+                    "description": "Hôtes et vainqueurs sur neige et glace"
+                },
+                "worldcup": {
+                    "modes": {
+                        "host": {
+                            "label": "Pays hôte",
+                            "question": "Quel pays l'a organisée ?"
+                        },
+                        "runnerUp": {
+                            "label": "Finaliste",
+                            "question": "Qui a été finaliste ?"
+                        },
+                        "winner": {
+                            "label": "Vainqueur",
+                            "question": "Qui l'a remportée ?"
+                        }
+                    },
+                    "label": "Coupe du monde",
+                    "description": "Pays hôtes et champions"
+                }
+            },
+            "field": {
+                "capital": "Capitale",
+                "continent": "Continent",
+                "country": "Pays",
+                "city": "Ville",
+                "era": "Époque",
+                "role": "Domaine",
+                "century": "Période",
+                "kind": "Type",
+                "roman": "Nom romain",
+                "domain": "Attribut",
+                "symbol": "Symbole",
+                "order": "Rang depuis le Soleil",
+                "host": "Pays hôte",
+                "feature": "Particularité",
+                "star": "Étoile phare",
+                "season": "Visibilité",
+                "winner": "Vainqueur",
+                "runnerUp": "Finaliste",
+                "top": "1er au classement"
+            },
+            "topicField": {
+                "space": {
+                    "host": "Orbite autour de"
+                }
+            }
+        },
+        "level": {
+            "step": {
+                "novice": {
+                    "name": "Débutant",
+                    "encouragement": "Premier pas franchi !\nLa suite s'annonce prometteuse !",
+                    "description": "Vous venez de découvrir ce thème.\nCommencez par les noms qui vous sont familiers."
+                },
+                "explorer": {
+                    "name": "Explorateur",
+                    "encouragement": "Beau départ !\nVotre carte s'agrandit peu à peu !",
+                    "description": "Les noms connus commencent à se relier entre eux.\nL'exploration commence pour de bon."
+                },
+                "skilled": {
+                    "name": "Confirmé",
+                    "encouragement": "Vos connaissances s'accumulent !\nVous êtes bien plus à l'aise !",
+                    "description": "Vous savez démêler les choix trompeurs.\nVos bases sont désormais solides."
+                },
+                "expert": {
+                    "name": "Expert",
+                    "encouragement": "Même l'inconnu ne vous arrête pas !\nVous êtes prêt pour tous les défis !",
+                    "description": "Vous maîtrisez même les noms les plus pointus.\nOn vient vous demander conseil."
+                },
+                "master": {
+                    "name": "Maître",
+                    "encouragement": "Vous avez tout conquis !\nUn vrai maître !",
+                    "description": "Vous avez conquis tout ce thème.\nVos connaissances sont vastes et profondes."
+                }
+            },
+            "topicLabel": "{{topic}} · {{step}}",
+            "overall": {
+                "1": {
+                    "label": "Lionceau explorateur",
+                    "encouragement": "Premiers pas autour du monde !"
+                },
+                "2": {
+                    "label": "Lion apprenti explorateur",
+                    "encouragement": "Votre carte s'agrandit pas à pas !"
+                },
+                "3": {
+                    "label": "Lion grand voyageur",
+                    "encouragement": "Pays et récits vous sont familiers !"
+                },
+                "4": {
+                    "label": "Lion érudit du monde",
+                    "encouragement": "Vos progrès sautent aux yeux !"
+                },
+                "5": {
+                    "label": "Lion grand explorateur",
+                    "encouragement": "Vous avez atteint un très haut niveau !"
+                },
+                "6": {
+                    "label": "Lion explorateur d'or",
+                    "encouragement": "Vous êtes un as de la culture générale !"
+                }
+            },
+            "stepN": "Niveau {{level}}"
+        },
+        "examPacks": {
+            "geo": {
+                "title": "Géographie mondiale",
+                "subtitle": "Pays · capitales · monuments · reliefs"
+            },
+            "history": {
+                "title": "L'essentiel de l'histoire",
+                "subtitle": "Figures · événements · mythes"
+            },
+            "space": {
+                "title": "Espace et ciel nocturne",
+                "subtitle": "Du Système solaire aux constellations"
+            },
+            "expert": {
+                "title": "Défi culture avancée",
+                "subtitle": "Que du niveau avancé",
+                "covers": "Tous les thèmes, niveau {{level}}"
+            },
+            "sports": {
+                "title": "Grandes compétitions",
+                "subtitle": "Histoire de la Coupe du monde et des JO"
+            }
+        }
     }
-  }
 }

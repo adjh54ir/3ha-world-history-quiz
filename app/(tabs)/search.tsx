@@ -8,7 +8,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import FilterOptionSheet from '@/src/screens/common/atomic/filter-option-sheet';
 import Colors, { isDark } from '@/src/const/ConstColors';
-import { BODY_FONTS, Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
+import { bodyFont, Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet, scaleArt} from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -508,7 +508,7 @@ const styles = themed(() => StyleSheet.create({
 	header: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.sm, backgroundColor: Colors.surface },
 	searchBox: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.md },
 	headerIllustration: { width: scaleArt(68), height: scaleArt(68) },
-	input: { flex: 1, fontSize: Typography.callout, fontFamily: BODY_FONTS.regular, color: Colors.textStrong, padding: 0, includeFontPadding: false, textAlignVertical: 'center' },
+	input: { flex: 1, fontSize: Typography.callout, ...bodyFont('regular'), color: Colors.textStrong, padding: 0, includeFontPadding: false, textAlignVertical: 'center' },
 	dropRow: { flexDirection: 'row', gap: Spacing.sm, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.surface },
 	dropBtn: { flex: 1, backgroundColor: Colors.surfaceAlt, borderRadius: Radius.md, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
 	dropLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted, marginBottom: SpacingV.xs },

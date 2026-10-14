@@ -10,6 +10,7 @@
  * - 화면에서는 getDomainLevel(domain, { solved, score }) 로 현재 레벨/타이틀/마스코트를 얻어 사용
  */
 
+import i18n from "@/src/translations";
 import { getCharacterImages } from "./ConstCharacters";
 import { POINT_PER_CORRECT } from "./ConstScoring";
 import { WORLD_TOPICS } from "./data/world/ConstWorldTopics";
@@ -47,39 +48,39 @@ interface DomainLevelDef {
 // ─────────────────────────────────────────────────────────────
 const TOPIC_STEPS: { name: string; icon: string; ratio: number; encouragement: string; description: string }[] = [
   {
-    name: "새내기",
+    name: i18n.t("level.step.novice.name"),
     icon: "seedling",
     ratio: 0,
-    encouragement: "첫걸음을 내디뎠어요!\n앞으로가 더욱 기대돼요!",
-    description: "이 주제를 막 펼친 단계예요.\n익숙한 이름부터 하나씩 알아가면 돼요.",
+    encouragement: i18n.t("level.step.novice.encouragement"),
+    description: i18n.t("level.step.novice.description"),
   },
   {
-    name: "탐험가",
+    name: i18n.t("level.step.explorer.name"),
     icon: "compass",
     ratio: 0.1,
-    encouragement: "좋은 출발이에요!\n조금씩 지도가 넓어지고 있어요!",
-    description: "자주 듣던 이름들이 하나둘 연결되기 시작하는 단계예요.\n본격적인 탐험의 길에 들어섰습니다.",
+    encouragement: i18n.t("level.step.explorer.encouragement"),
+    description: i18n.t("level.step.explorer.description"),
   },
   {
-    name: "숙련자",
+    name: i18n.t("level.step.skilled.name"),
     icon: "map",
     ratio: 0.3,
-    encouragement: "지식이 차곡차곡 쌓이고 있어요!\n이제 훨씬 더 능숙해졌네요!",
-    description: "헷갈리던 보기도 가려낼 수 있는 단계예요.\n기초를 넘어 한층 단단한 실력을 갖췄습니다.",
+    encouragement: i18n.t("level.step.skilled.encouragement"),
+    description: i18n.t("level.step.skilled.description"),
   },
   {
-    name: "고수",
+    name: i18n.t("level.step.expert.name"),
     icon: "chess-knight",
     ratio: 0.6,
-    encouragement: "낯선 문제도 거뜬해요!\n어떤 도전도 당당히 맞설 수 있네요!",
-    description: "특급 난이도의 낯선 이름까지 손에 넣어 가는 단계예요.\n주변에서 물어볼 만한 실력입니다.",
+    encouragement: i18n.t("level.step.expert.encouragement"),
+    description: i18n.t("level.step.expert.description"),
   },
   {
-    name: "마스터",
+    name: i18n.t("level.step.master.name"),
     icon: "crown",
     ratio: 1,
-    encouragement: "이 주제의 끝까지 왔어요!\n진정한 마스터예요!",
-    description: "이 주제의 항목을 모두 정복한 단계예요.\n누구보다 넓고 깊은 지식을 갖췄습니다.",
+    encouragement: i18n.t("level.step.master.encouragement"),
+    description: i18n.t("level.step.master.description"),
   },
 ];
 
@@ -90,7 +91,7 @@ const topicLevels = (key: keyof typeof WORLD_ENTRIES): DomainLevelDef => {
     metric: "score",
     levels: TOPIC_STEPS.map((step, i) => ({
       level: i + 1,
-      label: `${label} ${step.name}`,
+      label: i18n.t("level.topicLabel", { topic: label, step: step.name }),
       icon: step.icon,
       // 단계마다 적어도 10점은 벌어지게 한다 (항목 수가 적어도 두 단계가 같은 문턱을 쓰지 않게)
       threshold: Math.max(i * POINT_PER_CORRECT, Math.round((full * step.ratio) / POINT_PER_CORRECT) * POINT_PER_CORRECT),
@@ -107,12 +108,12 @@ const topicLevels = (key: keyof typeof WORLD_ENTRIES): DomainLevelDef => {
 const overall: DomainLevelDef = {
   metric: "score",
   levels: [
-    { level: 1, label: "탐험 새싹 사자", icon: "seedling", threshold: 0, encouragement: "세계 여행의 첫걸음을 뗐어요!" },
-    { level: 2, label: "견습 탐험가 사자", icon: "leaf", threshold: 400, encouragement: "차근차근 지도를 넓히고 있어요!" },
-    { level: 3, label: "노련한 여행가 사자", icon: "book", threshold: 900, encouragement: "여러 나라와 이야기가 익숙해졌어요!" },
-    { level: 4, label: "세계 탐구가 사자", icon: "chalkboard-user", threshold: 1600, encouragement: "실력이 눈에 띄게 늘었어요!" },
-    { level: 5, label: "대탐험가 사자", icon: "trophy", threshold: 2400, encouragement: "상당한 경지에 올랐어요!" },
-    { level: 6, label: "황금 대탐험가 사자", icon: "crown", threshold: 3400, encouragement: "세계 상식의 달인이 되었어요!" },
+    { level: 1, label: i18n.t("level.overall.1.label"), icon: "seedling", threshold: 0, encouragement: i18n.t("level.overall.1.encouragement") },
+    { level: 2, label: i18n.t("level.overall.2.label"), icon: "leaf", threshold: 400, encouragement: i18n.t("level.overall.2.encouragement") },
+    { level: 3, label: i18n.t("level.overall.3.label"), icon: "book", threshold: 900, encouragement: i18n.t("level.overall.3.encouragement") },
+    { level: 4, label: i18n.t("level.overall.4.label"), icon: "chalkboard-user", threshold: 1600, encouragement: i18n.t("level.overall.4.encouragement") },
+    { level: 5, label: i18n.t("level.overall.5.label"), icon: "trophy", threshold: 2400, encouragement: i18n.t("level.overall.5.encouragement") },
+    { level: 6, label: i18n.t("level.overall.6.label"), icon: "crown", threshold: 3400, encouragement: i18n.t("level.overall.6.encouragement") },
   ],
 };
 
