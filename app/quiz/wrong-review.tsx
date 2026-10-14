@@ -254,8 +254,9 @@ const styles = themed(() => StyleSheet.create({
 	cta: { marginTop: SpacingV.xxl, minHeight: Layout.touch, justifyContent: 'center', backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.lg },
 	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
 	introList: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
-	gridRow: { justifyContent: 'space-between' },
-	gridCell: { width: '49%' },
+	// 좌우 틈 = 카드 세로 간격(Layout.itemGap) — AdaptiveGrid 와 같은 방식
+	gridRow: { marginHorizontal: -Layout.itemGap / 2 },
+	gridCell: { width: '50%', paddingHorizontal: Layout.itemGap / 2 },
 	introTop: { alignItems: 'center', marginBottom: SpacingV.xl },
 	reviewIllustration: { width: scaleArt(112), height: scaleArt(112) },
 	introTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md },

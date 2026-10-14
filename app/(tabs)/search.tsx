@@ -414,7 +414,7 @@ const SearchTab = () => {
 							// 태블릿은 결과와 같은 2열 — 결과가 들어올 때 1열→2열로 튀지 않게
 							<View style={isTablet ? styles.skeletonGrid : undefined}>
 								{(isTablet ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4]).map((i) => (
-									<View key={i} style={[styles.skeletonCard, isTablet && styles.gridCell]}>
+									<View key={i} style={[styles.skeletonCard, isTablet && styles.skeletonCell]}>
 										<Skeleton width={'35%'} height={scaleHeight(16)} radius={Radius.md} />
 										<Skeleton width={'60%'} height={scaleHeight(20)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
 										<Skeleton width={'100%'} height={scaleHeight(18)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
@@ -516,9 +516,12 @@ const styles = themed(() => StyleSheet.create({
 	dropValue: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	listFill: { flexGrow: 1 },
-	gridRow: { justifyContent: 'space-between' },
-	gridCell: { width: '49%' },
-	skeletonGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
+	// 좌우 틈 = 카드 세로 간격(Layout.itemGap) — AdaptiveGrid 와 같은 방식
+	gridRow: { marginHorizontal: -Layout.itemGap / 2 },
+	gridCell: { width: '50%', paddingHorizontal: Layout.itemGap / 2 },
+	skeletonGrid: { flexDirection: 'row', flexWrap: 'wrap', columnGap: Layout.itemGap },
+	// 한 줄에 두 장 — 남는 폭을 반씩 나눠 가진다(개수가 짝수라 마지막 줄도 두 장)
+	skeletonCell: { flexBasis: '40%', flexGrow: 1 },
 	countBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xs, backgroundColor: Colors.background },
 	countScope: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginRight: Spacing.md },
 	recentWrap: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, backgroundColor: Colors.surface },

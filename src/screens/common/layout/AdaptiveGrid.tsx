@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Layout } from '@/src/const/ConstDesign';
 import { isTablet } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
@@ -33,6 +34,7 @@ const AdaptiveGrid = ({ children, style }: Props) => {
 export default AdaptiveGrid;
 
 const styles = themed(() => StyleSheet.create({
-	grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' },
-	cell: { width: '49%' },
+	// 좌우 틈 = 카드 세로 간격(Layout.itemGap). 49% + space-between 은 틈이 화면 폭 따라 13~15 로 달라져 세로 간격과 어긋났다
+	grid: { flexDirection: 'row', flexWrap: 'wrap', marginHorizontal: -Layout.itemGap / 2 },
+	cell: { width: '50%', paddingHorizontal: Layout.itemGap / 2 },
 }));

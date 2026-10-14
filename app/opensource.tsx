@@ -68,6 +68,7 @@ const OpenSource = () => {
 				keyExtractor={(item) => item.name}
 				renderItem={renderItem}
 				contentContainerStyle={styles.content}
+				showsVerticalScrollIndicator={false}
 				initialNumToRender={12}
 				windowSize={7}
 				removeClippedSubviews
