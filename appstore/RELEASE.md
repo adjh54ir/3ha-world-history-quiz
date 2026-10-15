@@ -3,7 +3,7 @@
 > 이 문서만 보고 그대로 붙여 넣으면 두 스토어 제출이 끝나도록 만든 시트입니다.
 > 모든 값은 **회색 박스 오른쪽 위 복사 버튼**으로 복사할 수 있습니다.
 > 설명은 한국어, 스토어에 넣는 값은 **언어별로 따로** 적었습니다 (§4).
-> 작성 기준일: **2026-10-14** · 코드 기준: `app.json` · `locales/*.json` · `src/translations/*` · `src/const/data/world/*`
+> 작성 기준일: **2026-10-15** (10-14 초안을 현재 코드로 다시 점검) · 코드 기준: `app.json` · `locales/*.json` · `src/translations/*` · `src/const/data/world/*`
 
 **목차**
 
@@ -27,18 +27,20 @@
 
 | 항목 | 상태 | 해야 할 일 |
 |---|---|---|
-| **앱 안 번역** | ❌ **비어 있음** | 언어 선택(마이 > 설정 > 언어)과 기기 언어 감지는 6개 언어로 열려 있지만, 번역 문구는 `en-EN` · `fr-FR` 14개, `ja-JP` · `zh-CN` · `es-ES` 0개입니다(한국어 1,226개). 세계 데이터 번역(`src/const/data/world/i18n` 의 `WORLD_I18N`)도 비어 있습니다. **지금 상태로 영어 기기에서 열면 언어는 English 로 잡히고 화면은 한국어가 나옵니다.** 번역이 끝나기 전에 §4.2~4.6 을 등록하면 Apple 2.3.7(부정확한 메타데이터) 반려 사유이자 별점 1점의 원인이 됩니다. 아래 "등록 전략" 참고 |
-| 개인정보 처리방침 URL | ❌ **다른 앱 페이지** | 받은 주소 `https://www.ecodelab.im/terms/spitogenie` 는 **"스피또 지니"** 방침입니다(2026-10-14 확인). 스토어 이름과 방침의 앱 이름이 다르면 반려됩니다. 세계 상식 퀴즈 페이지를 새로 게시 후 §8 값 교체 (예: `/terms/worldquiz`) |
-| Firebase 설정 파일 | ❌ 옛 앱 값 | `google-services.json` 의 package, `GoogleService-Info.plist` 의 BUNDLE_ID 가 `com.tha.lifehanja`. Firebase 콘솔에 `com.tha.worldhistoryquiz` 를 등록해 두 파일 교체 (Android 릴리스 빌드가 여기서 멈춤) |
-| App Store Connect App ID | ❌ 다른 앱 값 | `eas.json` `submit.production.ios.ascAppId = 6785401301` 은 한픽 값. 신규 앱 생성 후 새 ID 로 교체 |
+| **앱 안 번역** | ✅ 완료 (2026-10-14) | 화면 문구 6개 언어 모두 1,750~1,792개(`src/translations/*.json`), 세계 데이터 11주제 x 5개 언어 + 용어표(`src/const/data/world/i18n/`). `WorldI18n.spec.ts` 5개 테스트 통과(10-15 실행). **6개 언어 등록정보를 한 번에 올려도 됩니다** |
+| 개인정보 처리방침 URL | ⚠️ **한국어판만 게시됨** | 받은 주소 `.../terms/spitogenie` 는 **"스피또 지니"** 방침이라 쓰지 않습니다. 세계 상식 퀴즈 방침은 `/terms/worldhistoryquiz`(한국어)가 배포 번들에 있고, 언어별 5개(`...En` `...Jp` `...Zh` `...Fr` `...Es`)는 웹사이트 저장소 커밋 `fe64025` 에만 있고 **아직 배포 전**입니다(10-15 배포 번들 확인). 웹사이트 배포 후 §8 의 언어별 URL 사용 |
+| Firebase 설정 파일 | ✅ 교체 완료 | `google-services.json` · `GoogleService-Info.plist` 모두 `com.tha.worldhistoryquiz` |
+| Android 버전 값 | ⚠️ iOS 와 다름 | `android/app/build.gradle` 이 `versionName "1.0.0"` · `versionCode 1`, iOS 는 `1.1.0` (빌드 3). Play 에 "1.0.0" 으로 보입니다. 두 스토어를 맞추려면 `versionName "1.1.0"` 으로 바꾼 뒤 빌드 (`eas.json` 이 `appVersionSource: local` 이라 네이티브 값이 그대로 쓰입니다) |
+| App Store Connect App ID | ✅ 교체 완료 (2026-10-15) | 신규 앱 생성, Apple ID `6822964124` → `eas.json` `ascAppId` 반영 |
 | EAS 프로젝트 ID · OTA URL | ⚠️ 다른 앱과 공유 | `app.json` `extra.eas.projectId` · `updates.url` 이 `4125cad1-…`. OTA 를 쓸 거라면 `eas init` 으로 분리 |
 | AdMob App ID · 광고 단위 | ✅ 교체 완료 (2026-10-14) | App ID `~2106159208`(Android) / `~2074369616`(iOS), 배너·전면·보상형·오프닝 단위 `.env`·`.env.production` 반영. 보상형 전면·네이티브 고급 단위는 아직 비어 있어 테스트 광고로 폴백 |
-| Play 그래픽 이미지 (1024x500) | ❌ 옛 앱 디자인 | `scripts/store/feature-graphic.html` 이 "한자 급수 퀴즈" 디자인 그대로. 문구·그림 교체 후 촬영 (언어별로 따로 만들면 전환율이 오릅니다) |
-| 스크린샷 | ❌ 없음 | iPhone 6.9" · iPad 13" · Play 폰 각 최소 2장, **언어별로 그 언어 화면** (§7) |
+| Play 그래픽 이미지 (1024x500) | ✅ 완료 (2026-10-15) | 6개 언어 `~/Desktop/world-history-quiz-graphic/<lang>.png`(프로젝트 밖) (사자 탐험가 아이콘 + 강점 + 다운로드 버튼). 재생성: `sh ~/Desktop/world-history-quiz-graphic/render.sh`. 10-15 Play Console 6개 언어 업로드 → 임시보관함 저장(검토 제출 전) |
+| 스크린샷 | ✅ 완료 (2026-10-15) | 프로젝트 밖 `~/Desktop/world-history-quiz-screenshots/` 로 옮김 — iPhone 6.5" `release/` · iPad 13" `release_ipad/`(2064x2752) · Play 폰 `release_play/`, 원본 `screenshot*/`. 6개 언어 각 10장(Play 8장). 재생성: 그 폴더에서 `python3 make_release.py [--play\|--ipad]` |
+| iPad 지원 | ✅ 켬 (2026-10-15) | `ios/…/project.pbxproj` `TARGETED_DEVICE_FAMILY` 를 `1` → `"1,2"`. ios 폴더가 커밋돼 있어 `app.json` `supportsTablet` 만으로는 빌드에 반영되지 않았음 |
 | fastlane 메타데이터 | ⚠️ 낡음 | `fastlane/metadata/ko/*` 는 683개 · 8주제 기준 문구. 이 문서 값으로 덮어써야 `deliver` 업로드와 어긋나지 않음 |
 | 스토어 URL 환경변수 | ⚠️ 빈 값 | `.env` 의 `EXPO_PUBLIC_APP_STORE_URL` · `EXPO_PUBLIC_GOOGLE_PLAY_STORE_URL` — 출시 후 채우기 |
 | 수출 규정 | ✅ 해결됨 | `ITSAppUsesNonExemptEncryption = false` (iOS Info.plist) |
-| 앱 이름 중복 | ✅ 6개 언어 모두 없음 | §2 |
+| 앱 이름 중복 | ✅ 6개 언어 모두 없음 (10-15 재조회) | §2 |
 | 홈 화면 이름 · 권한 문구 현지화 | ✅ 완료 | `locales/*.json` 6개 (`app.json` `expo.locales`) |
 | 인앱 결제 · 로그인 | ✅ 없음 | 심사용 데모 계정 불필요 |
 
@@ -50,8 +52,8 @@
 |---|---|
 | 앱 표시 이름(기기 홈) | 언어별 — 아래 표 |
 | Bundle ID / package | `com.tha.worldhistoryquiz` |
-| 버전 | `1.1.0` (첫 출시지만 네이티브 값이 1.1.0 — 그대로 제출해도 문제없음) |
-| 빌드 / versionCode | iOS `3` · Android `3` |
+| 버전 | iOS `1.1.0` · Android `1.0.0` (§0 — 1.1.0 으로 맞추기 권장) |
+| 빌드 / versionCode | iOS `3` · Android `1` |
 | Apple Team ID | `XH6C349554` |
 | 최소 지원 OS | iOS 16.0 / Android (Expo SDK 55 기본값) |
 | 태블릿 지원 | 예 (`supportsTablet: true`) — **iPad 스크린샷 필수** |
@@ -65,19 +67,19 @@
 
 | 언어 | 앱 코드 | App Store 현지화 | Play 언어 코드 | 홈 화면 이름 (`locales/`) | 앱 안 번역 |
 |---|---|---|---|---|---|
-| 한국어 | `ko-KR` | 한국어 | `ko-KR` | 세계 상식 퀴즈 | ✅ 1,226 문구 + 데이터 원본 |
-| 영어 | `en-EN` | 영어(미국) | `en-US` | World Trivia Quiz | ❌ 14 문구 |
-| 일본어 | `ja-JP` | 일본어 | `ja-JP` | 世界の雑学クイズ | ❌ 0 |
-| 중국어 간체 | `zh-CN` | 중국어(간체) | `zh-CN` | 世界常识测验 | ❌ 0 |
-| 프랑스어 | `fr-FR` | 프랑스어 | `fr-FR` | Quiz Culture Mondiale | ❌ 14 문구 |
-| 스페인어 | `es-ES` | 스페인어(스페인) | `es-ES` | Quiz de Cultura Mundial | ❌ 0 |
+| 한국어 | `ko-KR` | 한국어 | `ko-KR` | 세계 상식 퀴즈 | ✅ 1,750 문구 + 데이터 원본 |
+| 영어 | `en-EN` | 영어(미국) | `en-US` | World Trivia Quiz | ✅ 1,784 문구 + 데이터 |
+| 일본어 | `ja-JP` | 일본어 | `ja-JP` | 世界の雑学クイズ | ✅ 1,750 문구 + 데이터 |
+| 중국어 간체 | `zh-CN` | 중국어(간체) | `zh-CN` | 世界常识测验 | ✅ 1,760 문구 + 데이터 |
+| 프랑스어 | `fr-FR` | 프랑스어 | `fr-FR` | Quiz Culture Mondiale | ✅ 1,792 문구 + 데이터 |
+| 스페인어 | `es-ES` | 스페인어(스페인) | `es-ES` | Quiz de Cultura Mundial | ✅ 1,788 문구 + 데이터 |
 
 앱 언어 결정: 설정에서 고른 언어 > 기기 언어 > 지원하지 않는 기기 언어면 영어 (`src/translations/index.ts` `resolveSystemLanguage`).
 
 ### 등록 전략
 
-1. **지금 바로 출시한다면** — 한국어(§4.1)만 등록. 기본 언어 한국어.
-2. **번역이 끝난 뒤** — §4.2~4.6 을 추가 현지화로 등록하고, 기본 언어를 **영어로 변경**하세요. 기본 언어는 현지화가 없는 나라(독일·브라질 등)에 보이는 언어라, 영어가 한국어보다 훨씬 많은 사람에게 읽힙니다. App Store(앱 정보 > 기본 언어)와 Play(기본 스토어 등록정보 > 기본 언어) 모두 나중에 바꿀 수 있습니다.
+1. **6개 언어를 첫 제출에 모두 등록** — 앱 번역이 끝났으므로 §4.1~4.6 을 한 번에 올립니다.
+2. **기본 언어는 영어(미국) / Play `en-US`** — 기본 언어는 현지화가 없는 나라(독일·브라질·인도 등)에 보이는 언어라, 영어가 한국어보다 훨씬 많은 사람에게 읽힙니다. 한국 사용자는 한국어 현지화(§4.1)를 그대로 봅니다. 그래서 App Store 신규 앱 생성 때 입력하는 이름은 영어 이름(§4.2)입니다.
 3. **같은 값 복사로 노출 넓히기 (선택)** — App Store: 영어(영국) · 영어(호주) · 영어(캐나다) ← §4.2, 스페인어(멕시코) ← §4.6, 프랑스어(캐나다) ← §4.5. Play: `en-GB` ← §4.2, `es-419` ← §4.6, `fr-CA` ← §4.5.
 
 App Store Connect `저작권` 입력란은 기호 없이 넣습니다:
@@ -88,7 +90,7 @@ App Store Connect `저작권` 입력란은 기호 없이 넣습니다:
 
 ---
 
-## 2. 앱 이름 중복 확인 결과 (2026-10-14)
+## 2. 앱 이름 중복 확인 결과 (2026-10-14 조회 · 10-15 재조회 동일)
 
 App Store 는 iTunes Search API(`itunes.apple.com/search`)로 언어권별 스토어를 조회했고, Play 는 스토어 검색 결과 상위 제목을 확인했습니다.
 
@@ -123,7 +125,7 @@ App Store 는 iTunes Search API(`itunes.apple.com/search`)로 언어권별 스�
 | 스토어 | 선택 | 이유 |
 |---|---|---|
 | App Store 기본 | **게임 (Games)** | 아래 근거 |
-| App Store 게임 하위 | **퀴즈 (Trivia)** + **교육 (Educational)** | 게임은 하위 카테고리 2개까지. 퀴즈 차트가 주 무대, 교육은 "공부" 성격 검색어 보조 |
+| App Store 게임 하위 | **퀴즈 (Trivia)** (2026-10 기준 게임 하위에 "교육(Educational)" 없음) | 게임은 하위 카테고리 2개까지. 퀴즈 차트가 주 무대, 교육은 "공부" 성격 검색어 보조 |
 | App Store 보조 | **교육 (Education)** | `상식 공부`·`geography study` 류 검색어에서 두 번째 진입로 |
 | Google Play | **게임 > 퀴즈 (Trivia)** | Play 는 1개만 고릅니다 |
 | Play 태그 (최대 5개) | `퀴즈` `트리비아` `교육` `두뇌 게임` `싱글 플레이어` | 콘솔 태그 목록에서 가장 가까운 항목 |
@@ -201,7 +203,7 @@ https://adjh5455.blogspot.com/
 
 ---
 
-### 4.1 한국어 (ko · 기본 언어)
+### 4.1 한국어 (ko)
 
 #### App Store
 
@@ -248,6 +250,7 @@ https://adjh5455.blogspot.com/
 [개선된 점]
 - 회원가입 없이 바로 시작합니다.
 - 매일 학습 알림, 다크 모드, 태블릿 화면을 지원합니다.
+- 한국어, 영어, 일본어, 중국어(간체), 프랑스어, 스페인어를 지원합니다.
 
 [버그 수정]
 - 첫 출시입니다.
@@ -340,6 +343,7 @@ https://adjh5455.blogspot.com/
 - 학습 기록은 이 기기에 저장됩니다.
 - 매일 정해 둔 시간에 학습 알림을 받을 수 있어요.
 - 다크 모드와 태블릿 화면을 지원합니다.
+- 한국어, 영어, 일본어, 중국어(간체), 프랑스어, 스페인어를 지원합니다.
 
 하루 10문제면 한 달에 300개. 오늘부터 세계를 한 문제씩 넓혀 보세요.
 
@@ -347,13 +351,11 @@ https://adjh5455.blogspot.com/
 문의: adjh54ir@gmail.com
 ```
 
-> 한국어 설명에는 "6개 언어 지원" 문구를 넣지 않았습니다. 번역이 끝나 다른 언어를 등록할 때 `[편하게 쓰도록]` 끝에 `- 한국어, 영어, 일본어, 중국어(간체), 프랑스어, 스페인어를 지원합니다.` 한 줄을 추가하세요.
-
 ---
 
-### 4.2 English (영어 · App Store 영어(미국) / Play `en-US`)
+### 4.2 English (영어 · App Store 영어(미국) / Play `en-US` · **기본 언어**)
 
-> ⚠️ §0 번역 완료 후 등록. `초성 퀴즈`(한글 자음 퀴즈)는 영어에 해당하지 않아 뺐습니다.
+> `초성 퀴즈`(한글 자음 퀴즈)는 영어에 해당하지 않아 뺐습니다.
 
 #### App Store
 
@@ -507,7 +509,7 @@ Contact: adjh54ir@gmail.com
 
 ### 4.3 日本語 (일본어 · App Store 일본어 / Play `ja-JP`)
 
-> ⚠️ §0 번역 완료 후 등록. 일본 검색어는 `クイズ` 보다 `雑学` · `国旗` · `脳トレ` · `一般常識` 이 강해 키워드 중심을 맞췄습니다.
+> 일본 검색어는 `クイズ` 보다 `雑学` · `国旗` · `脳トレ` · `一般常識` 이 강해 키워드 중심을 맞췄습니다.
 
 #### App Store
 
@@ -659,7 +661,7 @@ Contact: adjh54ir@gmail.com
 
 ### 4.4 简体中文 (중국어 간체 · App Store 중국어(간체) / Play `zh-CN`)
 
-> ⚠️ §0 번역 완료 후 등록. App Store 는 중국 본토 판매를 해제하므로(§3) 이 등록정보는 싱가포르·말레이시아 등 간체 사용자에게 보입니다.
+> App Store 는 중국 본토 판매를 해제하므로(§3) 이 등록정보는 싱가포르·말레이시아 등 간체 사용자에게 보입니다.
 
 #### App Store
 
@@ -811,7 +813,7 @@ Contact: adjh54ir@gmail.com
 
 ### 4.5 Français (프랑스어 · App Store 프랑스어 / Play `fr-FR`)
 
-> ⚠️ §0 번역 완료 후 등록. 프랑스 검색어 1순위는 `culture générale` 이라 이름의 `Culture` 와 키워드의 `générale` 이 조합되게 했습니다. 프랑스어 문장부호 앞 공백은 **일반 공백**으로 썼습니다(줄바꿈 없는 공백은 오류 원인 — §9).
+> 프랑스 검색어 1순위는 `culture générale` 이라 이름의 `Culture` 와 키워드의 `générale` 이 조합되게 했습니다. 프랑스어 문장부호 앞 공백은 **일반 공백**으로 썼습니다(줄바꿈 없는 공백은 오류 원인 — §9).
 
 #### App Store
 
@@ -965,7 +967,7 @@ Contact : adjh54ir@gmail.com
 
 ### 4.6 Español (스페인어 · App Store 스페인어(스페인) / Play `es-ES`)
 
-> ⚠️ §0 번역 완료 후 등록. 스페인어권 검색어 1순위는 `cultura general` · `preguntas` · `banderas` 입니다. 같은 값을 스페인어(멕시코) · Play `es-419` 에도 복사하면 중남미 노출이 열립니다(§1).
+> 스페인어권 검색어 1순위는 `cultura general` · `preguntas` · `banderas` 입니다. 같은 값을 스페인어(멕시코) · Play `es-419` 에도 복사하면 중남미 노출이 열립니다(§1).
 
 #### App Store
 
@@ -1118,22 +1120,6 @@ Contacto: adjh54ir@gmail.com
 ## 5. 연락처 · 심사 메모 · 앱 콘텐츠
 
 **App Store 앱 심사 정보 — 메모 (영문)**
-
-번역 완료 전 (한국어만 등록할 때):
-
-```
-Thank you for reviewing World Trivia Quiz (Korean: 세계 상식 퀴즈).
-
-- No login is required. All features are available immediately after launch.
-- The quiz content is in Korean. The store listing is registered in Korean only.
-- Leaderboard (Time Challenge ranking) uses an anonymous account created automatically. Nicknames are generated randomly by the app; users cannot type their own nickname, so there is no user-generated content.
-- Ads: Google AdMob banner, app open, and rewarded ads. The rewarded ad is optional and grants an extra Tower Challenge attempt (up to 3 per day).
-- App Tracking Transparency prompt is shown before any personalized ad request.
-- Notifications are local daily study reminders set by the user; no remote push content.
-- No in-app purchases.
-```
-
-번역 완료 후 (6개 언어 등록할 때):
 
 ```
 Thank you for reviewing World Trivia Quiz.
@@ -1318,7 +1304,7 @@ Thank you for reviewing World Trivia Quiz.
 |---|---|
 | 지원 URL | `https://ecodelab.im` |
 | 마케팅 URL | `https://adjh5455.blogspot.com/` |
-| 개인정보 처리방침 URL | `https://www.ecodelab.im/terms/spitogenie` ❌ §0 — 세계 상식 퀴즈 페이지로 교체 필요 |
+| 개인정보 처리방침 URL | 언어별 — 아래 표 (`spitogenie` 는 다른 앱 방침이라 쓰지 않음) |
 | 저작권 | `© 2025 EcodeLab` (입력란에는 `2025 EcodeLab`) |
 | 이름 | Lee Jonghoon |
 | 연락처 번호 | `+821073605455` |
@@ -1327,13 +1313,56 @@ Thank you for reviewing World Trivia Quiz.
 | 판매 지역 | 모든 국가·지역 (App Store 는 중국 본토 해제 — §3) |
 | 광고 | 포함 |
 
-**개인정보 처리방침 URL (교체 전 임시값 — 이대로 제출하면 반려 위험)**
+**개인정보 처리방침 URL — 언어별**
+
+App Store 는 현지화마다 방침 URL 입력란이 있습니다. Play 는 앱 콘텐츠 > 개인정보처리방침에 1개만 넣습니다.
+
+| 언어 | 게시 상태 (10-15) | URL |
+|---|---|---|
+| 한국어 | ✅ 배포됨 | `https://www.ecodelab.im/terms/worldhistoryquiz` |
+| English | ⚠️ 배포 전 | `https://www.ecodelab.im/terms/worldhistoryquizEn` |
+| 日本語 | ⚠️ 배포 전 | `https://www.ecodelab.im/terms/worldhistoryquizJp` |
+| 简体中文 | ⚠️ 배포 전 | `https://www.ecodelab.im/terms/worldhistoryquizZh` |
+| Français | ⚠️ 배포 전 | `https://www.ecodelab.im/terms/worldhistoryquizFr` |
+| Español | ⚠️ 배포 전 | `https://www.ecodelab.im/terms/worldhistoryquizEs` |
+
+> 웹사이트 배포 전에 제출해야 한다면 6개 언어 모두 한국어판 URL 을 넣고, 배포 후 언어별로 바꾸세요(심사 없이 수정 가능).
+
+한국어
 
 ```
-https://www.ecodelab.im/terms/spitogenie
+https://www.ecodelab.im/terms/worldhistoryquiz
 ```
 
-새 페이지에 넣을 항목: 앱 이름 `세계 상식 퀴즈 (World Trivia Quiz)`, 수집 항목(광고 ID · 앱 사용 기록 · 비정상 종료 로그 · 랭킹용 익명 ID와 랜덤 닉네임 · 점수), 제3자(Google AdMob · Firebase · Supabase), 보관 기간, 삭제 요청 방법(`adjh54ir@gmail.com`), 13세 미만 대상 아님. 해외 등록정보를 열면 **영문 방침도 같은 페이지에** 두는 것이 안전합니다 (App Store 는 현지화마다 방침 URL 입력란이 있지만 같은 URL 을 넣어도 됩니다).
+English · Play 앱 콘텐츠 (기본 언어가 영어이므로 Play 에는 이 값)
+
+```
+https://www.ecodelab.im/terms/worldhistoryquizEn
+```
+
+日本語
+
+```
+https://www.ecodelab.im/terms/worldhistoryquizJp
+```
+
+简体中文
+
+```
+https://www.ecodelab.im/terms/worldhistoryquizZh
+```
+
+Français
+
+```
+https://www.ecodelab.im/terms/worldhistoryquizFr
+```
+
+Español
+
+```
+https://www.ecodelab.im/terms/worldhistoryquizEs
+```
 
 ---
 
@@ -1372,14 +1401,14 @@ for i,ch in enumerate(s):
 **App Store**
 
 ```
-1. §0 차단 항목 해결 (개인정보 처리방침 · Firebase 파일 · AdMob · ascAppId · 앱 번역)
+1. §0 남은 항목 해결 (웹사이트 방침 배포 · ascAppId · 스크린샷 · Play 그래픽 이미지 · Android 버전)
 2. App Store Connect > 나의 앱 > + > 신규 앱
-   - 플랫폼 iOS / 이름 "세계 상식 퀴즈: 수도·국기·세계사" / 기본 언어 한국어
+   - 플랫폼 iOS / 이름 "World Trivia Quiz: Flags" / 기본 언어 영어(미국)
    - 번들 ID com.tha.worldhistoryquiz / SKU worldhistoryquiz-1000
 3. 앱 정보: 기본 카테고리 게임(하위 퀴즈 + 교육), 보조 카테고리 교육, 연령 등급 13+
-4. 앱 정보 오른쪽 위 언어 메뉴에서 현지화 추가 (번역 완료 후):
-   영어(미국) · 일본어 · 중국어(간체) · 프랑스어 · 스페인어(스페인)
-   - 각 언어에서 이름 · 부제 · 개인정보 처리방침 URL 입력 (§4.x)
+4. 앱 정보 오른쪽 위 언어 메뉴에서 현지화 추가:
+   한국어 · 일본어 · 중국어(간체) · 프랑스어 · 스페인어(스페인)
+   - 각 언어에서 이름 · 부제 · 개인정보 처리방침 URL 입력 (§4.x · §8)
 5. 가격 및 사용 가능 여부: 무료, 모든 국가 및 지역 (중국 본토만 해제)
 6. 앱 개인정보 보호: §6.1 단계대로 입력 (언어 무관, 1회)
 7. 버전 정보: 언어마다 §4.x 값 붙여넣기 (키워드 · 프로모션 · 설명 · 새로운 기능 · URL)
@@ -1388,19 +1417,18 @@ for i,ch in enumerate(s):
 10. 앱 심사 정보에 §5 메모 · 연락처, 로그인 필요 해제
 11. 광고 식별자(IDFA) 사용: 예 - 앱 내 광고 게재 체크
 12. 심사 제출
-13. (번역 완료 후) 앱 정보 > 기본 언어를 영어로 변경
 ```
 
 **Google Play**
 
 ```
-1. Play Console > 앱 만들기 (앱 이름 / 기본 언어 한국어 ko-KR / 게임 / 무료)
+1. Play Console > 앱 만들기 (앱 이름 World Trivia Quiz: Flags / 기본 언어 영어 en-US / 게임 / 무료)
 2. 앱 설정 대시보드 전 항목 처리 (§5 Google Play 앱 콘텐츠 표)
    - 데이터 보안: §6.2 단계대로
 3. 스토어 설정: 앱 카테고리 게임 > 퀴즈, 태그 5개, 연락처 세부정보
-4. 기본 스토어 등록정보: §4.1 Google Play 값 + 아이콘 512 + 그래픽 이미지 + 스크린샷
-5. 기본 스토어 등록정보 > 번역 관리 > 직접 번역 추가 (번역 완료 후):
-   en-US · ja-JP · zh-CN · fr-FR · es-ES 에 §4.x Google Play 값 입력
+4. 기본 스토어 등록정보: §4.2 Google Play 값 + 아이콘 512 + 그래픽 이미지 + 스크린샷
+5. 기본 스토어 등록정보 > 번역 관리 > 직접 번역 추가:
+   ko-KR · ja-JP · zh-CN · fr-FR · es-ES 에 §4.x Google Play 값 입력
    (Google 기계 번역 자동 적용은 쓰지 않습니다 — 품질이 이 문서보다 낮습니다)
 6. 프로덕션 트랙에 AAB 업로드 (eas build -p android --profile production 또는 ./gradlew bundleRelease)
 7. 출시 노트: 언어 태그별로 §4.x 출시 노트 입력
