@@ -9,6 +9,28 @@ export const COMMON_APPS_DATA: {
 } = {
 	Apps: [
 		{
+			id: 31,
+			icon: require('@/src/assets/appicons/main_familyevent.webp'),
+			title: i18n.t('apps.familyevent.title'),
+			desc: i18n.t('apps.familyevent.desc'),
+			category: 'utility',
+			// 출시일 미정 — 실제 스토어 출시일로 고쳐 주세요
+			releasedAt: '2026-10-01',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.familyevent',
+			ios: 'https://apps.apple.com/kr/app/id6814714209',
+		},
+		{
+			id: 30,
+			icon: require('@/src/assets/appicons/main_lifehanja.webp'),
+			title: i18n.t('apps.lifehanja.title'),
+			desc: i18n.t('apps.lifehanja.desc'),
+			category: 'quiz',
+			// 출시 전 — 실제 스토어 출시일로 고쳐 주세요
+			releasedAt: '2026-10-01',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.lifehanja',
+			ios: 'https://apps.apple.com/kr/app/id6815041813',
+		},
+		{
 			id: 29,
 			icon: require('@/src/assets/appicons/main_birthdaylog.webp'),
 			title: i18n.t('apps.birthdaylog.title'),
@@ -16,9 +38,8 @@ export const COMMON_APPS_DATA: {
 			category: 'utility',
 			// 출시일 미정 — 오늘 날짜로 넣어 둠, 실제 스토어 출시일로 고쳐 주세요
 			releasedAt: '2026-09-30',
-			// Play 출시되면 채우기 — https://play.google.com/store/apps/details?id=com.tha.birthdaylog
-			android: '',
-			ios: 'https://apps.apple.com/ko/app/id6815043532',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.birthdaylog',
+			ios: 'https://apps.apple.com/kr/app/id6815043532',
 		},
 		{
 			id: 28,
@@ -27,9 +48,8 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.jptravel.desc'),
 			category: 'utility',
 			releasedAt: '2026-09-29',
-			// Play 출시되면 채우기 — https://play.google.com/store/apps/details?id=com.tha.jptravel
-			android: '',
-			ios: 'https://apps.apple.com/ko/app/id6815037133',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.jptravel',
+			ios: 'https://apps.apple.com/kr/app/id6815037133',
 		},
 		{
 			id: 27,
@@ -38,9 +58,8 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.noisemeter.desc'),
 			category: 'utility',
 			releasedAt: '2026-09-15',
-			// 안드로이드 미출시 — Play 스토어 페이지가 아직 없어 링크를 비워 둔다
-			android: '',
-			ios: 'https://apps.apple.com/us/app/id6810932339',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.apartmentnoise',
+			ios: 'https://apps.apple.com/kr/app/id6810932339',
 		},
 		{
 			id: 26,
@@ -51,7 +70,7 @@ export const COMMON_APPS_DATA: {
 			// 아이콘을 넣은 날 기준 추정값 — 실제 스토어 출시일로 고쳐 주세요
 			releasedAt: '2026-09-04',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.qrbar',
-			ios: 'https://apps.apple.com/app/ko/id6807281540',
+			ios: 'https://apps.apple.com/kr/app/id6807281540',
 		},
 		{
 			id: 25,
@@ -60,7 +79,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.spitogenie.desc'),
 			releasedAt: '2026-09-04',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.spitogenie',
-			ios: 'https://apps.apple.com/us/app/id6807646866',
+			ios: 'https://apps.apple.com/kr/app/id6807646866',
 			category: 'utility',
 		},
 		{
@@ -79,7 +98,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.hanpick.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.hanpick',
-			ios: 'https://apps.apple.com/us/app/id6801430351',
+			ios: 'https://apps.apple.com/kr/app/id6801430351',
 		},
 		{
 			id: 22,
@@ -98,7 +117,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.mindCare.desc'),
 			category: 'utility',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.metalcare',
-			ios: 'https://apps.apple.com/us/app/id6787877075',
+			ios: 'https://apps.apple.com/kr/app/id6787877075',
 		},
 		{
 			id: 20,
@@ -107,7 +126,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.financeCalc.desc'),
 			category: 'calculator',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.lifefinancecalc',
-			ios: 'https://apps.apple.com/us/app/id6759258758',
+			ios: 'https://apps.apple.com/kr/app/id6759258758',
 		},
 		{
 			id: 19,
@@ -116,7 +135,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.infinityOper.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.infinityoperations',
-			ios: 'https://apps.apple.com/us/app/id6775210879',
+			ios: 'https://apps.apple.com/kr/app/id6775210879',
 		},
 		{
 			id: 18,
@@ -125,7 +144,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.bloodType.desc'),
 			category: 'utility',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.bloodtype',
-			ios: 'https://apps.apple.com/us/app/id6769299321',
+			ios: 'https://apps.apple.com/kr/app/id6769299321',
 		},
 		{
 			id: 17,
@@ -143,7 +162,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.emotionalEmoticon.desc'),
 			category: 'utility',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.emotionalemoticon',
-			ios: 'https://apps.apple.com/us/app/id6760441156',
+			ios: 'https://apps.apple.com/kr/app/id6760441156',
 		},
 		{
 			id: 15,
@@ -188,7 +207,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.agecalc.desc'),
 			category: 'calculator',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.agecalc',
-			ios: 'https://apps.apple.com/us/app/id6754360556',
+			ios: 'https://apps.apple.com/kr/app/id6754360556',
 		},
 		{
 			id: 10,
@@ -197,7 +216,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.spellingquiz.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.spellingquiz',
-			ios: 'https://apps.apple.com/us/app/id6753701785',
+			ios: 'https://apps.apple.com/kr/app/id6753701785',
 		},
 		{
 			id: 9,
@@ -242,7 +261,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.fouridioms.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.fouridioms',
-			ios: 'https://apps.apple.com/kr/app//id6747324308',
+			ios: 'https://apps.apple.com/kr/app/id6747324308',
 		},
 		{
 			id: 4,
@@ -251,7 +270,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.proverb.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.proverbquiz',
-			ios: 'https://apps.apple.com/app/id6746687973',
+			ios: 'https://apps.apple.com/kr/app/id6746687973',
 		},
 		{
 			id: 3,
@@ -260,7 +279,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.country.desc'),
 			category: 'quiz',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.capitalquiz',
-			ios: 'https://apps.apple.com/app/id6746687390',
+			ios: 'https://apps.apple.com/kr/app/id6746687390',
 		},
 		{
 			id: 2,
@@ -269,7 +288,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.lotto.desc'),
 			category: 'utility',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.lottogenerator',
-			ios: 'https://apps.apple.com/app/id6746621734',
+			ios: 'https://apps.apple.com/kr/app/id6746621734',
 		},
 		{
 			id: 1,
@@ -278,7 +297,7 @@ export const COMMON_APPS_DATA: {
 			desc: i18n.t('apps.squaremetercalc.desc'),
 			category: 'calculator',
 			android: 'https://play.google.com/store/apps/details?id=com.tha.squaremetercalc',
-			ios: 'https://apps.apple.com/app/id6746688301',
+			ios: 'https://apps.apple.com/kr/app/id6746688301',
 		},
 	],
 };

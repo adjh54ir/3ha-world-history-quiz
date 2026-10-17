@@ -2210,6 +2210,14 @@
             }
         },
         "apps": {
+            "familyevent": {
+                "title": "Envelope Ledger: Gift Money",
+                "desc": "Track wedding and funeral gift money offline. Export to Excel and PDF."
+            },
+            "lifehanja": {
+                "title": "Daily Hanja Quiz",
+                "desc": "Learn 5,046 everyday Korean Hanja words across 26 topics with quizzes and a review notebook for missed words."
+            },
             "birthdaylog": {
                 "title": "Birthday Log",
                 "desc": "Birthday Log reminds you of birthdays ahead of time and keeps a record of the gifts you give and get each year."

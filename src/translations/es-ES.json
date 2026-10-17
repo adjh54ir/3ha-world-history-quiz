@@ -2214,6 +2214,14 @@
             }
         },
         "apps": {
+            "familyevent": {
+                "title": "Registro de Sobres: Regalos",
+                "desc": "Registra regalos de boda y funeral sin conexión. Exporta a Excel y PDF."
+            },
+            "lifehanja": {
+                "title": "Quiz de Hanja cotidiano",
+                "desc": "Aprende 5.046 palabras sino-coreanas cotidianas en 26 temas con cuestionarios y un cuaderno de repaso de errores."
+            },
             "birthdaylog": {
                 "title": "Cumpleaños",
                 "desc": "Cumpleaños te avisa de cada cumpleaños con antelación y guarda los regalos que das y recibes año tras año."

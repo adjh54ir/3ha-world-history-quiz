@@ -2218,6 +2218,14 @@
             }
         },
         "apps": {
+            "familyevent": {
+                "title": "Registre des Enveloppes",
+                "desc": "Notez les cadeaux d'argent hors ligne. Export Excel et PDF inclus."
+            },
+            "lifehanja": {
+                "title": "Quiz Hanja du quotidien",
+                "desc": "Apprenez 5 046 mots sino-coréens du quotidien en 26 thèmes, avec quiz et carnet de révision des erreurs."
+            },
             "birthdaylog": {
                 "title": "Anniversaires",
                 "desc": "Anniversaires vous rappelle les dates à l'avance et garde la trace des cadeaux offerts et reçus chaque année."
