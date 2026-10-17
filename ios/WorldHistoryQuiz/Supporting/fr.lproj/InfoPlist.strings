@@ -1,0 +1,4 @@
+CFBundleDisplayName = "Quiz Culture Mondiale";
+NSUserTrackingUsageDescription = "L’identifiant publicitaire de votre appareil est utilisé pour vous proposer des publicités plus pertinentes.";
+NSPhotoLibraryAddUsageDescription = "Autorisez l’accès pour enregistrer dans Photos les cartes de badge que vous partagez.";
+NSPhotoLibraryUsageDescription = "La photothèque n’est utilisée que pour partager les cartes de badge. Vos photos ne sont ni lues ni envoyées ailleurs.";

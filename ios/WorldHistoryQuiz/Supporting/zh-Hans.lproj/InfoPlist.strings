@@ -1,0 +1,4 @@
+CFBundleDisplayName = "世界常识测验";
+NSUserTrackingUsageDescription = "需要使用设备的广告标识符，以便为您提供更相关的广告。";
+NSPhotoLibraryAddUsageDescription = "需要添加照片的权限，以便将您分享的徽章卡片图片保存到“照片”应用。";
+NSPhotoLibraryUsageDescription = "仅在分享徽章卡片图片时访问照片图库。我们不会读取您的照片，也不会将其传送到外部。";

@@ -1,0 +1,4 @@
+CFBundleDisplayName = "세계 상식 퀴즈";
+NSUserTrackingUsageDescription = "사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다.";
+NSPhotoLibraryAddUsageDescription = "공유한 뱃지 카드 이미지를 사진 앱에 저장하기 위해 사진 보관함 추가 권한이 필요합니다.";
+NSPhotoLibraryUsageDescription = "뱃지 카드 이미지를 공유할 때 사진 보관함에 접근할 수 있습니다. 사진을 읽어 오거나 외부로 전송하지 않습니다.";

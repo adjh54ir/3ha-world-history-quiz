@@ -22,7 +22,6 @@ import { recordAdClick } from '@/src/services/AdClickGuard';
 const AD_UNIT_ID = resolveAdUnitId(
 	Platform.select({ ios: GOOGLE_ADMOV_IOS_OPEN_APP, android: GOOGLE_ADMOV_ANDROID_OPEN_APP }),
 	TestIds.APP_OPEN,
-	'app-open',
 );
 
 const LOG = { adFormat: 'app_open', adUnitId: AD_UNIT_ID };

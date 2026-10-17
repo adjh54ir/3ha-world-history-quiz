@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RewardedAd, TestIds, RewardedAdEventType, AdEventType } from 'react-native-google-mobile-ads';
-import { recordAdClick } from '@/src/services/AdClickGuard';
+import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -13,7 +13,6 @@ import { themed } from '@/src/utils/ThemedStyles';
 const AD_UNIT_ID = resolveAdUnitId(
 	Platform.select({ ios: GOOGLE_ADMOV_IOS_REWARD, android: GOOGLE_ADMOV_ANDROID_REWARD }),
 	TestIds.REWARDED,
-	'reward',
 );
 
 const AdmobRewardAd: React.FC<{
@@ -48,7 +47,7 @@ const AdmobRewardAd: React.FC<{
 			}
 		});
 
-		// 보상형은 막지 않지만, 클릭은 하루 광고 클릭 수에 함께 센다
+		// 클릭은 하루 광고 클릭 수에 함께 센다
 		const unsubscribeClicked = ad.addAdEventListener(AdEventType.CLICKED, () => {
 			void recordAdClick();
 		});
@@ -58,9 +57,16 @@ const AdmobRewardAd: React.FC<{
 			onFailed();
 		});
 
-		ad.load();
+		// 오늘 광고 클릭 상한에 걸렸으면 보상형도 띄우지 않는다 → 실패로 돌려보낸다
+		let active = true;
+		void isAdClickCapped().then((capped) => {
+			if (!active) return;
+			if (capped) onFailed();
+			else ad.load();
+		});
 
 		return () => {
+			active = false;
 			unsubscribeLoaded();
 			unsubscribeEarned();
 			unsubscribeClosed();

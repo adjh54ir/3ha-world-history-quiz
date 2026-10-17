@@ -1,22 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 import { themed } from '@/src/utils/ThemedStyles';
 import DateUtils from '@/src/utils/DateUtils';
-import { recordAdClick } from '@/src/services/AdClickGuard';
+import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
 import { markBannerSettled } from '@/src/services/AppOpenAdService';
 import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
 import { resolveAdUnitId } from './adUnitId';
 
 type AdUnitIdType = string;
 
-// 개발·로컬 설치는 테스트 유닛, 스토어 설치 운영 빌드만 운영 유닛 (규칙은 adUnitId.ts)
+// __DEV__ 는 테스트 유닛, 그 외는 운영 유닛 (adUnitId.ts)
 const AD_UNIT_ID: AdUnitIdType = resolveAdUnitId(
 	Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }),
 	TestIds.BANNER,
-	'banner',
 );
 
 interface AdmobBannerAdProps {
@@ -32,8 +31,21 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 }) => {
 	const bannerRef = useRef<BannerAd | null>(null);
 	const retryTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+	// 오늘 광고 클릭 상한(AdClickGuard)에 걸렸는지 — 확인 전(null)·상한 도달(true)이면 배너를 그리지 않는다
+	const [capped, setCapped] = useState<boolean | null>(null);
+	const refreshCap = useCallback(() => {
+		void isAdClickCapped().then(setCapped);
+	}, []);
 
-	useEffect(() => () => clearTimeout(retryTimer.current), []);
+	useEffect(() => {
+		refreshCap();
+		return () => clearTimeout(retryTimer.current);
+	}, [refreshCap]);
+
+	// 배너를 안 띄우는 날은 시작 광고 대기(스플래시)를 붙잡지 않는다
+	useEffect(() => {
+		if (capped) markBannerSettled();
+	}, [capped]);
 
 	// 로드 실패(오프라인 시작 등) 시 30초 뒤 재요청 — 빈 배너로 남지 않게
 	const handleAdFailed = (e: Error) => {
@@ -44,6 +56,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 	};
 
 	useForeground(() => {
+		// 날짜가 바뀌었으면 상한이 풀린다
+		refreshCap();
 		if (Platform.OS === 'ios') {
 			bannerRef.current?.load();
 		}
@@ -51,7 +65,7 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 
 	// 배너 onAdOpened 는 사용자가 배너를 눌러 광고 랜딩이 열릴 때 온다 → 클릭으로 센다
 	const handleAdOpened = async () => {
-		void recordAdClick();
+		void recordAdClick().then(refreshCap);
 		try {
 			const instanceId = await analytics().getAppInstanceId();
 			await analytics().logEvent('ad_banner_opened', {
@@ -72,6 +86,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 			console.error('🔥 Failed to log ad click:', error);
 		}
 	};
+
+	if (capped !== false) return null;
 
 	return (
 		<View

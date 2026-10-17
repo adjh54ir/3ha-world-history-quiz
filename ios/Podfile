@@ -27,11 +27,11 @@ prepare_react_native_project!
 permissions_path = File.join(File.dirname(`node --print "require.resolve('react-native-permissions/package.json')"`), "scripts/setup.rb")
 require permissions_path
 
-# 앱이 실제로 요청하는 권한은 광고 추적(ATT)과 알림 두 가지뿐이다.
-# 사진/카메라는 쓰는 화면이 없으므로 핸들러를 빌드에 넣지 않는다 (NS...UsageDescription 도 불필요).
+# react-native-permissions 로 요청하는 권한은 광고 추적(ATT) 하나뿐이다.
+# 알림 권한은 notifee 가 직접 요청하므로 Notifications 핸들러는 넣지 않는다.
+# 사진/카메라는 쓰는 화면이 없으므로 핸들러를 빌드에 넣지 않는다.
 setup_permissions([
   'AppTrackingTransparency',
-  'Notifications',
 ])
 
 target 'WorldHistoryQuiz' do

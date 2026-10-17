@@ -9,9 +9,15 @@
 /* Begin PBXBuildFile section */
 		04647CCD3E14AC4F2179D465 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4C5C1540F6AF318B76E0ADFA /* PrivacyInfo.xcprivacy */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		260ED1F2EF3B4A1AA624D376 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1582BA497BF4119B12B319F /* InfoPlist.strings */; };
+		3E16CCD365D14209998E5E2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A726700974A34811A3766E29 /* InfoPlist.strings */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
 		4194B92CF5AB47ECAB9C2F51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 777A04B30F524AABAC15E6BD /* GoogleService-Info.plist */; };
+		4425318B9237448B909E79D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9F900DC528CF44919E507462 /* InfoPlist.strings */; };
+		A553BE07CAFD48F6AD5814E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 95BE3D4ED7FB49ABB9A3C748 /* InfoPlist.strings */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		BD6789C5B3B24BEEBB54ACD7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2FD2508B7434087A6B7A330 /* InfoPlist.strings */; };
+		DD3D0FC7DC434B28A66FC31B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EE7E574E12E849B590CEAA48 /* InfoPlist.strings */; };
 		DF19CC1321F552F833E38B12 /* Pods_WorldHistoryQuiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C0AD80D1401A7B676ED8B7E /* Pods_WorldHistoryQuiz.framework */; };
 		E7C011F14DBDB296F73D4795 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21921E2B65C5E84DF70EF017 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
@@ -26,10 +32,16 @@
 		5EA746BFB70F2A3A8A6F2FF8 /* Pods-WorldHistoryQuiz.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorldHistoryQuiz.debug.xcconfig"; path = "Target Support Files/Pods-WorldHistoryQuiz/Pods-WorldHistoryQuiz.debug.xcconfig"; sourceTree = "<group>"; };
 		777A04B30F524AABAC15E6BD /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "WorldHistoryQuiz/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8C0AD80D1401A7B676ED8B7E /* Pods_WorldHistoryQuiz.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WorldHistoryQuiz.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95BE3D4ED7FB49ABB9A3C748 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9F900DC528CF44919E507462 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A726700974A34811A3766E29 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = WorldHistoryQuiz/SplashScreen.storyboard; sourceTree = "<group>"; };
+		B2FD2508B7434087A6B7A330 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B9A75F4ADE8D05FCE6CEAEDD /* Pods-WorldHistoryQuiz.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WorldHistoryQuiz.release.xcconfig"; path = "Target Support Files/Pods-WorldHistoryQuiz/Pods-WorldHistoryQuiz.release.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		E1582BA497BF4119B12B319F /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EE7E574E12E849B590CEAA48 /* InfoPlist.strings */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = WorldHistoryQuiz/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* WorldHistoryQuiz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "WorldHistoryQuiz-Bridging-Header.h"; path = "WorldHistoryQuiz/WorldHistoryQuiz-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +80,15 @@
 			name = WorldHistoryQuiz;
 			sourceTree = "<group>";
 		};
+		1745A5E7125B416ABDFF69A7 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				9F900DC528CF44919E507462 /* InfoPlist.strings */,
+			);
+			name = en.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +96,15 @@
 				8C0AD80D1401A7B676ED8B7E /* Pods_WorldHistoryQuiz.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		303A7A4E2DFE4421B384C73F /* zh-Hans.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				EE7E574E12E849B590CEAA48 /* InfoPlist.strings */,
+			);
+			name = "zh-Hans.lproj";
+			path = "";
 			sourceTree = "<group>";
 		};
 		65F31B082B653A69D52EF962 /* ExpoModulesProviders */ = {
@@ -124,10 +154,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		93AB24FCD44042CD9454534C /* ja.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				A726700974A34811A3766E29 /* InfoPlist.strings */,
+			);
+			name = ja.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
+		99D5FD9699B54F6EB95CAB37 /* fr.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				95BE3D4ED7FB49ABB9A3C748 /* InfoPlist.strings */,
+			);
+			name = fr.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
+				E71A99A42E1B471B9D132033 /* ko.lproj */,
+				1745A5E7125B416ABDFF69A7 /* en.lproj */,
+				303A7A4E2DFE4421B384C73F /* zh-Hans.lproj */,
+				93AB24FCD44042CD9454534C /* ja.lproj */,
+				99D5FD9699B54F6EB95CAB37 /* fr.lproj */,
+				C739174B7FA6400483A96B75 /* es.lproj */,
 			);
 			name = Supporting;
 			path = WorldHistoryQuiz/Supporting;
@@ -140,6 +194,24 @@
 				B9A75F4ADE8D05FCE6CEAEDD /* Pods-WorldHistoryQuiz.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C739174B7FA6400483A96B75 /* es.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				B2FD2508B7434087A6B7A330 /* InfoPlist.strings */,
+			);
+			name = es.lproj;
+			path = "";
+			sourceTree = "<group>";
+		};
+		E71A99A42E1B471B9D132033 /* ko.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E1582BA497BF4119B12B319F /* InfoPlist.strings */,
+			);
+			name = ko.lproj;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +262,11 @@
 			knownRegions = (
 				Base,
 				ko,
+				en,
+				ja,
+				"zh-Hans",
+				fr,
+				es,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -211,6 +288,12 @@
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				4194B92CF5AB47ECAB9C2F51 /* GoogleService-Info.plist in Resources */,
 				04647CCD3E14AC4F2179D465 /* PrivacyInfo.xcprivacy in Resources */,
+				260ED1F2EF3B4A1AA624D376 /* InfoPlist.strings in Resources */,
+				4425318B9237448B909E79D3 /* InfoPlist.strings in Resources */,
+				DD3D0FC7DC434B28A66FC31B /* InfoPlist.strings in Resources */,
+				3E16CCD365D14209998E5E2E /* InfoPlist.strings in Resources */,
+				A553BE07CAFD48F6AD5814E4 /* InfoPlist.strings in Resources */,
+				BD6789C5B3B24BEEBB54ACD7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

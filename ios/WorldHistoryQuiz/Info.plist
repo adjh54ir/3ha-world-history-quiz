@@ -17,6 +17,11 @@
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>ko</string>
+		<string>en</string>
+		<string>ja</string>
+		<string>zh-Hans</string>
+		<string>fr</string>
+		<string>es</string>
 	</array>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
@@ -59,12 +64,12 @@
 	<string>공유한 뱃지 카드 이미지를 사진 앱에 저장하기 위해 사진 보관함 추가 권한이 필요합니다.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>뱃지 카드 이미지를 공유할 때 사진 보관함에 접근할 수 있습니다. 사진을 읽어 오거나 외부로 전송하지 않습니다.</string>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다.</string>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
 	</array>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>사용자님께 더 관련성 높은 광고를 제공하기 위해 기기의 광고 식별자 사용 권한이 필요합니다.</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>SKAdNetworkItems</key>

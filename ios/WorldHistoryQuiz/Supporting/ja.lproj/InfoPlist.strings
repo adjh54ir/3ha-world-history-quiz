@@ -1,0 +1,4 @@
+CFBundleDisplayName = "世界の雑学クイズ";
+NSUserTrackingUsageDescription = "より関連性の高い広告をお届けするため、デバイスの広告識別子を使用します。";
+NSPhotoLibraryAddUsageDescription = "共有したバッジカード画像を写真アプリに保存するため、写真ライブラリへの追加を許可してください。";
+NSPhotoLibraryUsageDescription = "バッジカード画像を共有するときだけ写真ライブラリにアクセスします。写真を読み込んだり外部に送信したりすることはありません。";
