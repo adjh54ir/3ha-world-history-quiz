@@ -103,7 +103,7 @@ const RankingService = {
 		}
 	},
 
-	/** 최고 기록 제출 (전체 점수 · 타임챌린지 최고점) */
+	/** 전체 점수 제출 — 타임챌린지는 개인 랭킹으로만 남기고 서버에 올리지 않는다 */
 	async submit(): Promise<void> {
 		if (!isSupabaseConfigured) return;
 		try {
@@ -115,10 +115,9 @@ const RankingService = {
 			// getStats는 쓰기 큐가 비워진 뒤 읽으므로, 방금 푼 마지막 문항까지 반영된 점수가 제출된다
 			const stats = await LearnProgressService.getStats();
 			const total = stats.totalCorrect * POINT_PER_CORRECT;
-			const timeRaw = await AsyncStorage.getItem(TIME_BEST_KEY);
-			const timeBest = timeRaw ? parseInt(timeRaw, 10) : 0;
 
-			await supabase.rpc('world_quiz_submit_scores', { p_total: total, p_time_best: timeBest });
+			// p_time_best 0 — 서버는 greatest 로 합치므로 기존 값을 건드리지 않는다 (RPC 시그니처 유지용)
+			await supabase.rpc('world_quiz_submit_scores', { p_total: total, p_time_best: 0 });
 		} catch {
 			// 네트워크 실패 등은 조용히 무시(다음 진입 시 재시도)
 		}

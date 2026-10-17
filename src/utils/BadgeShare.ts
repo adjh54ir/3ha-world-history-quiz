@@ -26,7 +26,17 @@ export const shareBadge = async (
 	unlocked?: number,
 	total?: number,
 ): Promise<void> => {
-	const message = buildBadgeShareMessage(title, unlocked, total);
+	await shareCapture(cardRef, buildBadgeShareMessage(title, unlocked, total));
+};
+
+/** 챌린지 기록 공유 문구 — 기록 한 줄 + 앱 추천 링크 */
+export const buildRecordShareMessage = (head: string): string => `${head}\n\n${buildAppShareMessage()}`;
+
+/**
+ * 화면에 그려진 카드를 캡처해 문구와 함께 공유. 실패하면 문구만 텍스트로 공유한다.
+ * @param cardRef 캡처할 View의 ref (안드로이드는 collapsable={false} 가 있어야 잡힌다)
+ */
+export const shareCapture = async (cardRef: RefObject<any>, message: string): Promise<void> => {
 	try {
 		const { captureRef } = require('react-native-view-shot');
 		const Sharing = require('expo-sharing');
@@ -42,4 +52,4 @@ export const shareBadge = async (
 	await Share.share({ message }).catch(() => undefined);
 };
 
-export default { shareBadge, buildBadgeShareMessage };
+export default { shareBadge, shareCapture, buildBadgeShareMessage, buildRecordShareMessage };

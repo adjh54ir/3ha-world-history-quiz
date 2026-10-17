@@ -11,7 +11,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import Skeleton from '@/src/screens/common/atomic/Skeleton';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { RankPodium, RankRowItem } from '@/src/screens/common/RankBoardView';
-import Colors, { BRAND_GRADIENT, HEAT_GRADIENT, readableOn } from '@/src/const/ConstColors';
+import Colors, { BRAND_GRADIENT, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border, Tracking } from '@/src/const/ConstDesign';
 import { scaleArt, scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
 import RankingService, { RankBoard, RankRow } from '@/src/services/RankingService';
@@ -31,7 +31,7 @@ const LOTTIE_EMPTY = require('@/src/assets/lottie/empty.json');
 // 문구는 렌더 시점에 t() 로 푼다 (labelKey/descKey)
 const TABS = themed(() => ([
 	{ key: 'total' as RankBoard, labelKey: 'common.all' as const, icon: 'emoji-events', descKey: 'special.ranking.descTotal' as const, colors: [...BRAND_GRADIENT] as [string, string, string] },
-	{ key: 'time' as RankBoard, labelKey: 'special.ranking.tabTime' as const, icon: 'bolt', descKey: 'special.ranking.descTime' as const, colors: [...HEAT_GRADIENT] as [string, string, string] },
+	// 타임챌린지 보드는 걷어냈다 — 타임·타워챌린지는 챌린지 탭의 개인 랭킹으로만 본다
 	// 주간 랭킹은 '내 활동' 탭(연속 학습 아래)으로 이동했습니다.
 ]));
 
@@ -43,7 +43,7 @@ const Ranking = () => {
 	// board 파라미터로 진입하면 해당 보드만 보여준다 (타임챌린지 전체보기 → 탭 없이 타임챌린지만)
 	const params = useLocalSearchParams();
 	const lockedBoard = stringParam(params.board, '') as RankBoard | '';
-	const [tab, setTab] = useState<RankBoard>(lockedBoard || 'total');
+	const [tab, setTab] = useState<RankBoard>(lockedBoard && TABS.some((b) => b.key === lockedBoard) ? lockedBoard : 'total');
 	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
 	useScrollTopOnChange(scrollTop.ref, [tab]);
 	const [rows, setRows] = useState<RankRow[]>([]);
@@ -204,7 +204,7 @@ const Ranking = () => {
 			</View>
 
 			{/* 탭 — 특정 보드로 진입했을 땐 숨김 */}
-			{!lockedBoard && (
+			{!lockedBoard && TABS.length > 1 && (
 			<View style={styles.tabBar}>
 				{TABS.map((b) => {
 					const on = tab === b.key;

@@ -115,7 +115,7 @@ const ExamPacks = () => {
 						<View style={[styles.introIcon, { backgroundColor: withAlpha(selected.color, '14') }]}>
 							<IconComponent type="materialIcons" name={selected.icon} size={scaledSize(42)} color={selected.color} />
 						</View>
-						<Text style={styles.introTitle} maxFontSizeMultiplier={1.3} numberOfLines={1} ellipsizeMode="tail">{selected.subtitle}</Text>
+						<Text style={styles.introTitle} numberOfLines={1} ellipsizeMode="tail">{selected.subtitle}</Text>
 						<Text style={styles.introDesc}>{t('special.exam.introDesc', { count: selected.count })}</Text>
 
 						{hasRecord && (
@@ -198,7 +198,7 @@ const ExamPacks = () => {
 									<IconComponent type="materialIcons" name={p.icon} size={scaledSize(26)} color={p.color} />
 								</View>
 								<View style={styles.packBody}>
-									<Text style={styles.packTitle} maxFontSizeMultiplier={1.3} numberOfLines={1} ellipsizeMode="tail">{p.title}</Text>
+									<Text style={styles.packTitle} numberOfLines={1} ellipsizeMode="tail">{p.title}</Text>
 									<Text style={styles.packSub} numberOfLines={2}>{p.covers}</Text>
 									{!!rec && (
 										<View style={styles.packStatRow}>

@@ -314,7 +314,11 @@ const LearnHubService = {
 	generatePictureQuiz(count = 10): LearnType.QuizQuestion[] {
 		const keys = MAIN_DOMAIN_KEYS.filter((k) => WORLD_TOPICS.find((t) => t.key === k)?.modes.some((m) => m.askAs));
 		const per = Math.ceil(count / Math.max(1, keys.length)) + 2;
-		return shuffle(keys.flatMap((k) => services[k].generateImageQuiz(per))).slice(0, count);
+		// 10문항 중 약 3문항은 그림을 곁들인 문항(이름을 보고 나라·수도 등) — 나머지는 그림만 보고 이름 맞히기
+		const aidedCount = Math.round(count * 0.3);
+		const aided = shuffle(keys.flatMap((k) => services[k].generateImageAidedQuiz(per))).slice(0, aidedCount);
+		const pure = shuffle(keys.flatMap((k) => services[k].generateImageQuiz(per))).slice(0, count - aided.length);
+		return shuffle([...pure, ...aided]);
 	},
 
 	/** OX 퀴즈: 전 주제 기반 O/X 판단 */

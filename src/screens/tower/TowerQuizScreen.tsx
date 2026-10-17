@@ -28,7 +28,8 @@ import { useModalHandoff } from './useModalHandoff';
 import { useDispatch } from 'react-redux';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import CountryFlags from '@/src/screens/common/atomic/CountryFlags';
-import { recordTower } from '@/src/store/slice/TowerSlice';
+import { logTowerRun, recordTower } from '@/src/store/slice/TowerSlice';
+import DateUtils from '@/src/utils/DateUtils';
 import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 
 
@@ -354,6 +355,8 @@ const TowerQuizScreen = () => {
 		if (isPassed) {
 			dispatch(recordTower(level));
 		}
+		// 개인 랭킹용 판 기록 — 깨지 못한 판도 남긴다
+		dispatch(logTowerRun({ level, correct: correctCount, total: totalQuestions, cleared: isPassed, at: DateUtils.getTimestamp() }));
 
 		setShowResultModal(true);
 	};
@@ -510,7 +513,7 @@ const TowerQuizScreen = () => {
 							}}>
 							<Image source={towerLevel.bossImage} style={styles.bossImage} contentFit="contain" />
 						</Animated.View>
-						<Animated.Text
+						<Animated.Text allowFontScaling={false}
 							style={[
 								styles.effectText,
 								{

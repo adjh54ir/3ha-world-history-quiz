@@ -155,7 +155,7 @@ export const CountUp: React.FC<CountUpProps> = ({ value, duration = 900, format 
 	// Animated.Text 는 앱 전역 Text 를 거치지 않는다 — 서체를 직접 정하지 않았으면 굵기에 맞는 본문 서체를 준다
 	const flat = StyleSheet.flatten(style) ?? {};
 	const font = flat.fontFamily || !APP_FONTS_ON ? null : { fontFamily: bodyFontFor(flat.fontWeight), fontWeight: 'normal' as const };
-	return <Animated.Text style={[style, font, pop && { transform: [{ scale }] }]}>{format(display)}</Animated.Text>;
+	return <Animated.Text allowFontScaling={false} style={[style, font, pop && { transform: [{ scale }] }]}>{format(display)}</Animated.Text>;
 };
 
 interface AnimatedProgressProps {

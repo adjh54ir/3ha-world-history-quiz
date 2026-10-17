@@ -23,7 +23,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { themed } from '@/src/utils/ThemedStyles';
 import { Image } from 'expo-image';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
-import { ensureTowerDay, useTower } from '@/src/store/slice/TowerSlice';
+import { compareTowerRun, ensureTowerDay, useTower, type TowerRun } from '@/src/store/slice/TowerSlice';
+import { useToast } from '@/src/context/ToastContext';
+import { buildRecordShareMessage, shareCapture } from '@/src/utils/BadgeShare';
+import { RANK_TIERS } from '@/src/screens/common/RankBoardView';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
@@ -45,6 +48,40 @@ const TIME_CHALLENGE_HREF = '/quiz/speed';
 const tabMemory: { last: ChallengeTab } = { last: 'time' };
 /** 마지막으로 신기록을 축하한 플레이 시각 — 같은 기록을 반복 축하하지 않기 위한 키 */
 const BEST_CELEBRATED_KEY = 'TIME_BEST_CELEBRATED_AT';
+/** 마지막으로 축하한 타워 최고층 판의 시각 — 같은 판을 다시 축하하지 않기 위한 키 */
+const TOWER_CELEBRATED_KEY = 'TOWER_BEST_CELEBRATED_AT';
+
+/** 개인 랭킹에 보여 줄 판 수 */
+const RANK_LIMIT = 10;
+
+/**
+ * 개인 랭킹 한 줄 — 1~3위는 금·은·동 메달, 나머지는 순위 숫자.
+ * 기록은 기기에만 남는 내 기록이다(서버 랭킹에 올리지 않는다).
+ */
+const PersonalRankRow: React.FC<{ rank: number; meta: string; isNew?: boolean; tags: React.ReactNode; value: string; unit: string; first?: boolean }> = ({ rank, meta, isNew, tags, value, unit, first }) => {
+	const { t } = useTranslation();
+	const tier = rank <= 3 ? RANK_TIERS[rank - 1] : null;
+	return (
+		<FadeInUp delay={Math.min(rank - 1, 6) * 50} distance={10}>
+			<View style={[styles.histRow, !first && styles.histRowBorder, rank === 1 && styles.histRowBest]}>
+				<View style={[styles.histIndex, tier && { backgroundColor: rank === 1 ? Colors.surface : tier.soft }]}>
+					{tier ? <IconComponent type="materialIcons" name={tier.icon} size={scaledSize(15)} color={tier.main} /> : <Text style={styles.histIndexText}>{rank}</Text>}
+				</View>
+				<View style={styles.histBody}>
+					<View style={styles.histMetaRow}>
+						<Text style={styles.histMeta} numberOfLines={1} ellipsizeMode="tail">{meta}</Text>
+						{isNew && <Text style={styles.histNew}>{t('challenge.rank.new')}</Text>}
+					</View>
+					<View style={styles.histTagRow}>{tags}</View>
+				</View>
+				<View style={styles.histScoreWrap}>
+					<Text style={[styles.histScore, rank === 1 && { color: Colors.goldDeep }]}>{value}</Text>
+					<Text style={styles.histScoreUnit}>{unit}</Text>
+				</View>
+			</View>
+		</FadeInUp>
+	);
+};
 
 const MODES: ModeCard[] = themed(() => ([
 	{ key: 'mix', href: '/quiz/mix', icon: 'casino', color: Colors.primary },
@@ -97,6 +134,12 @@ const Challenge = () => {
 	const tower = useTower();
 	const towerNext = TOWER_LEVELS.find((f) => !tower.clearedLevels.includes(f.level));
 	const dispatch = useDispatch();
+	const { showToast } = useToast();
+	// 기록 공유 — 개인 랭킹 카드를 그대로 캡처한다
+	const timeRankRef = useRef<View>(null);
+	const towerRankRef = useRef<View>(null);
+	// 타워 개인 최고층 갱신 축하 (방금 판이 지금까지 깬 층 중 가장 높을 때 1회)
+	const [celebrateTower, setCelebrateTower] = useState<TowerRun | null>(null);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -137,6 +180,28 @@ const Challenge = () => {
 
 	// 안내 모달이 떠 있는 동안에는 컨페티가 가려지므로 미뤄둔다
 	const showCelebrateBest = celebrateBest && !guide.visible;
+	const showCelebrateTower = !!celebrateTower && !guide.visible;
+	const towerRuns = tower.runs;
+
+	useFocusEffect(
+		useCallback(() => {
+			if (tab !== 'tower') return;
+			const runs = towerRuns ?? [];
+			const latest = runs.reduce<TowerRun | null>((m, r) => (!m || r.at > m.at ? r : m), null);
+			if (!latest?.cleared || runs.some((r) => r !== latest && r.cleared && r.level >= latest.level)) return;
+			let alive = true;
+			AsyncStorage.getItem(TOWER_CELEBRATED_KEY).then((raw) => {
+				if (alive && raw !== String(latest.at)) setCelebrateTower(latest);
+			});
+			return () => {
+				alive = false;
+			};
+		}, [tab, towerRuns, setCelebrateTower]),
+	);
+	// 컨페티가 실제로 보일 때 축하 문구도 함께 (안내 모달에 가려진 동안은 미룬다)
+	useEffect(() => {
+		if (showCelebrateTower && celebrateTower) showToast(t('challenge.rank.towerBest', { n: celebrateTower.level }), 'emoji-events');
+	}, [showCelebrateTower, celebrateTower, showToast, t]);
 
 	// 최고 점수 히어로 루프 애니메이션 (타임챌린지 탭에서만)
 	useEffect(() => {
@@ -163,8 +228,11 @@ const Challenge = () => {
 		};
 	}, [tab, reducedMotion, focused, shineAnim, trophyPulse]);
 
-	// 동점이 여러 판이면 왕관은 가장 최근 한 판에만 (목록은 최신순)
-	const bestHistIndex = localBest > 0 ? timeHistory.findIndex((h) => h.correct * POINT_PER_CORRECT === localBest) : -1;
+	// 개인 랭킹 — 점수 높은 순(동점이면 최근 판 먼저). 가장 최근 판에는 NEW 표시
+	const timeRanked = [...timeHistory].sort((a, b) => b.correct - a.correct || b.at - a.at).slice(0, RANK_LIMIT);
+	const latestTimeAt = timeHistory[0]?.at;
+	const towerRanked = [...(tower.runs ?? [])].sort(compareTowerRun).slice(0, RANK_LIMIT);
+	const latestTowerAt = (tower.runs ?? []).reduce((m, r) => Math.max(m, r.at), 0);
 
 	const TABS: { key: ChallengeTab; icon: string }[] = [
 		{ key: 'time', icon: 'bolt' },
@@ -242,29 +310,34 @@ const Challenge = () => {
 							</View>
 						</View>
 
-							{/* 플레이별 점수 — 전체 기록 노출 */}
-						{timeHistory.length > 0 && (
-							<View style={styles.histCard}>
+						{/* 개인 랭킹 — 내 플레이를 점수순으로 (서버 랭킹 없이 기기에만 저장) */}
+						{timeRanked.length > 0 && (
+							<View ref={timeRankRef} collapsable={false} style={styles.histCard}>
 								<View style={styles.histHead}>
-									<Text style={styles.histTitle}>{t('challenge.time.historyTitle')}</Text>
-									<Tag label={t('challenge.time.historyCount', { count: timeHistory.length })} variant="plain" />
+									<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(18)} color={Colors.primary} />
+									<Text style={styles.histTitle}>{t('challenge.rank.title')}</Text>
+									<Tag label={t('challenge.rank.top', { count: timeRanked.length })} variant="plain" />
+									<TouchableOpacity
+										style={styles.shareBtn}
+										activeOpacity={0.8}
+										hitSlop={Layout.hitSlop}
+										accessibilityRole="button"
+										accessibilityLabel={t('challenge.rank.share')}
+										onPress={() => shareCapture(timeRankRef, buildRecordShareMessage(t('challenge.rank.shareTime', { score: localBest.toLocaleString() })))}>
+										<IconComponent type="materialIcons" name="ios-share" size={scaledSize(16)} color={Colors.primary} />
+									</TouchableOpacity>
 								</View>
-								{timeHistory.map((h, i) => {
-									// 역대 최고 점수 행은 왕관 + 배경으로 바로 눈에 띄게 (동점이면 가장 최근 한 판만)
-									const score = h.correct * POINT_PER_CORRECT;
-									const isBest = i === bestHistIndex;
-									return (
-									<View key={`${h.at}-${i}`} style={[styles.histRow, i > 0 && styles.histRowBorder, isBest && styles.histRowBest]}>
-										<View style={[styles.histIndex, isBest && styles.histIndexBest]}>
-											{isBest ? (
-												<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(14)} color={Colors.gold} />
-											) : (
-												<Text style={styles.histIndexText}>{timeHistory.length - i}</Text>
-											)}
-										</View>
-										<View style={styles.histBody}>
-											<Text style={styles.histMeta} numberOfLines={2} ellipsizeMode="tail">{DateUtils.formatTimestamp(h.at, 'type2')}</Text>
-											<View style={styles.histTagRow}>
+								{timeRanked.map((h, i) => (
+									<PersonalRankRow
+										key={`${h.at}-${i}`}
+										rank={i + 1}
+										first={i === 0}
+										meta={DateUtils.formatTimestamp(h.at, 'type2')}
+										isNew={h.at === latestTimeAt && timeHistory.length > 1}
+										value={(h.correct * POINT_PER_CORRECT).toLocaleString()}
+										unit={t('challenge.time.unit')}
+										tags={
+											<>
 												<View style={styles.histTag}>
 													<IconComponent type="materialIcons" name="check-circle" size={scaledSize(12)} color={Colors.success} />
 													<Text style={styles.histTagText}>{h.correct}/{h.solved}</Text>
@@ -273,15 +346,10 @@ const Challenge = () => {
 													<IconComponent type="materialIcons" name="local-fire-department" size={scaledSize(12)} color={Colors.error} />
 													<Text style={styles.histComboText}>{h.bestCombo}</Text>
 												</View>
-											</View>
-										</View>
-										<View style={styles.histScoreWrap}>
-											<Text style={styles.histScore}>{score.toLocaleString()}</Text>
-											<Text style={styles.histScoreUnit}>{t('challenge.time.unit')}</Text>
-										</View>
-									</View>
-									);
-								})}
+											</>
+										}
+									/>
+								))}
 							</View>
 						)}
 
@@ -327,6 +395,63 @@ const Challenge = () => {
 								</Text>
 							)}
 						</View>
+						{/* 개인 랭킹 — 높이 오른 판 순 (깨지 못한 판도 남는다) */}
+						<View ref={towerRankRef} collapsable={false} style={[styles.histCard, styles.towerRankCard]}>
+							<View style={styles.histHead}>
+								<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(18)} color={Colors.primary} />
+								<Text style={styles.histTitle}>{t('challenge.rank.title')}</Text>
+								{towerRanked.length > 0 && (
+									<>
+										<Tag label={t('challenge.rank.top', { count: towerRanked.length })} variant="plain" />
+										<TouchableOpacity
+											style={styles.shareBtn}
+											activeOpacity={0.8}
+											hitSlop={Layout.hitSlop}
+											accessibilityRole="button"
+											accessibilityLabel={t('challenge.rank.share')}
+											onPress={() => shareCapture(towerRankRef, buildRecordShareMessage(t('challenge.rank.shareTower', { n: towerRanked[0].level })))}>
+											<IconComponent type="materialIcons" name="ios-share" size={scaledSize(16)} color={Colors.primary} />
+										</TouchableOpacity>
+									</>
+								)}
+							</View>
+							{towerRanked.length === 0 ? (
+								<View style={styles.rankEmptyWrap}>
+									<View style={styles.rankEmptyIcon}>
+										<IconComponent type="materialIcons" name="north" size={scaledSize(20)} color={Colors.primary} />
+									</View>
+									<Text style={styles.rankEmpty}>{t('challenge.rank.towerEmpty')}</Text>
+								</View>
+							) : (
+								towerRanked.map((r, i) => {
+									const boss = TOWER_LEVELS.find((f) => f.level === r.level)?.bossName;
+									return (
+										<PersonalRankRow
+											key={`${r.at}-${i}`}
+											rank={i + 1}
+											first={i === 0}
+											meta={DateUtils.formatTimestamp(r.at, 'type2')}
+											isNew={r.at === latestTowerAt && towerRanked.length > 1}
+											value={String(r.level)}
+											unit={t('challenge.tower.floorUnit')}
+											tags={
+												<>
+													<View style={r.cleared ? styles.histTag : styles.histTagMuted}>
+														<IconComponent type="materialIcons" name={r.cleared ? 'flag' : 'replay'} size={scaledSize(12)} color={r.cleared ? Colors.success : Colors.textSecondary} />
+														<Text style={r.cleared ? styles.histTagText : styles.histTagMutedText}>{r.cleared ? t('challenge.rank.cleared') : t('challenge.rank.failed')}</Text>
+													</View>
+													<View style={styles.histTagMuted}>
+														<IconComponent type="materialIcons" name="star" size={scaledSize(12)} color={Colors.gold} />
+														<Text style={styles.histTagMutedText}>{r.correct}/{r.total}</Text>
+													</View>
+													{!!boss && <Text style={styles.histBoss} numberOfLines={1} ellipsizeMode="tail">{boss}</Text>}
+												</>
+											}
+										/>
+									);
+								})
+							)}
+						</View>
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
 							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.startBtnText}>{t('challenge.tower.enter')}</Text>
@@ -364,12 +489,12 @@ const Challenge = () => {
 				visible={guide.visible}
 				onClose={guide.close}
 				// 점수는 정답 수 × POINT_PER_CORRECT(콤보 가산 없음)
-				lines={[t('challenge.guide.line1'), t('challenge.guide.line2', { point: POINT_PER_CORRECT }), t('challenge.guide.line3')]}
+				lines={[t('challenge.guide.line1', { point: POINT_PER_CORRECT }), t('challenge.guide.line2'), t('challenge.guide.line3')]}
 				title={t('challenge.guide.title')}
 				accent={Colors.heatDark}
 			/>
 
-			{showCelebrateBest && (
+			{(showCelebrateBest || showCelebrateTower) && (
 				<View pointerEvents="none" style={StyleSheet.absoluteFill}>
 					<ConfettiCannon
 						count={120}
@@ -383,7 +508,9 @@ const Challenge = () => {
 								AsyncStorage.setItem(BEST_CELEBRATED_KEY, String(celebrateAtRef.current)).catch(() => {});
 								celebrateAtRef.current = null;
 							}
+							if (celebrateTower) AsyncStorage.setItem(TOWER_CELEBRATED_KEY, String(celebrateTower.at)).catch(() => {});
 							setCelebrateBest(false);
+							setCelebrateTower(null);
 						}}
 					/>
 				</View>
@@ -443,11 +570,11 @@ const styles = themed(() => StyleSheet.create({
 	// 아래 시작 버튼(marginTop md)과의 간격을 타워 탭(카드→버튼 md)과 맞춘다 — 둘 다 주면 두 배가 된다
 	histCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
 	histHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
+	shareBtn: { width: scaleWidth(32), height: scaleWidth(32), borderRadius: Radius.pill, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center' },
 	histTitle: { flex: 1, fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	histRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingVertical: SpacingV.md },
 	histRowBorder: { borderTopWidth: 1, borderTopColor: Colors.border },
 	histRowBest: { backgroundColor: Colors.goldBg, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, marginHorizontal: -Spacing.sm },
-	histIndexBest: { backgroundColor: Colors.surface },
 	histIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' },
 	histIndexText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textSecondary },
 	histBody: { flex: 1 },
@@ -455,7 +582,16 @@ const styles = themed(() => StyleSheet.create({
 	histScoreWrap: { flexDirection: 'row', alignItems: 'baseline', gap: Spacing.xxs },
 	histScore: { fontSize: Typography.title, fontWeight: '900', color: Colors.primary },
 	histScoreUnit: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
-	histMeta: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
+	histMeta: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
+	histMetaRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+	histNew: { fontSize: Typography.micro, fontWeight: '900', color: Colors.onFill, backgroundColor: Colors.error, borderRadius: Radius.pill, overflow: 'hidden', paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xxs },
+	histTagMuted: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, borderRadius: Radius.pill },
+	histTagMutedText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.textSecondary },
+	histBoss: { flexShrink: 1, fontSize: Typography.micro, fontWeight: '700', color: Colors.textMuted },
+	towerRankCard: { marginTop: Layout.sectionGap },
+	rankEmptyWrap: { alignItems: 'center', gap: SpacingV.sm, paddingVertical: SpacingV.lg },
+	rankEmptyIcon: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.pill, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center' },
+	rankEmpty: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center' },
 	histTagRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginTop: SpacingV.xxs },
 	histTag: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, backgroundColor: Colors.successSoft, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, borderRadius: Radius.pill },
 	histTagText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.success },

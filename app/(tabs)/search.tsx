@@ -283,7 +283,7 @@ const SearchTab = () => {
 			<View style={styles.header}>
 				<View style={styles.searchBox}>
 					<IconComponent type="materialIcons" name="search" size={scaledSize(20)} color={Colors.textMuted} />
-					<TextInput
+					<TextInput allowFontScaling={false}
 						keyboardAppearance={isDark() ? 'dark' : 'light'}
 						style={styles.input}
 						value={query}

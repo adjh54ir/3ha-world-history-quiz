@@ -284,8 +284,6 @@
                 "scoreValue": "{{value}} pts",
                 "plays": "Parties",
                 "bestCombo": "Meilleur combo",
-                "historyTitle": "Scores par partie",
-                "historyCount": "{{count}} parties",
                 "historyCount_one": "{{count}} partie",
                 "historyCount_other": "{{count}} parties",
                 "unit": "pts",
@@ -331,7 +329,7 @@
                 },
                 "picture": {
                     "title": "Quiz images",
-                    "desc": "Nommez drapeaux, portraits et monuments en photo",
+                    "desc": "Drapeaux, portraits, photos : trouvez le nom, puis le pays ou la capitale",
                     "tag": "Visuel"
                 },
                 "flagMatch": {
@@ -374,7 +372,19 @@
                 "title": "Les défis, mode d'emploi",
                 "line1": "En Chrono, {{point}} pts par bonne réponse pendant 180 secondes.",
                 "line2": "Dans la Tour, battez le boss de chaque étage jusqu'au sommet.",
-                "line3": "Chaque partie s'ajoute à vos records, et la meilleure porte la couronne."
+                "line3": "Vos parties restent sur cet appareil et forment votre classement perso."
+            },
+            "rank": {
+                "title": "Mon classement",
+                "top": "TOP {{count}}",
+                "new": "NEW",
+                "cleared": "Réussi",
+                "failed": "Tenté",
+                "towerEmpty": "Aucune partie pour l’instant. Attaquez le premier étage !",
+                "towerBest": "Étage {{n}} réussi ! Nouveau record perso",
+                "share": "Partager le record",
+                "shareTime": "⏱️ Nouveau record perso au Chrono : {{score}} pts !",
+                "shareTower": "🏰 J’ai grimpé jusqu’à l’étage {{n}} de la Tour !"
             }
         },
         "stats": {
@@ -550,7 +560,7 @@
                 "quiz": "Quiz",
                 "quizDesc": "Efface scores, réussite, séries, erreurs et quiz du jour",
                 "time": "Chrono",
-                "timeDesc": "Efface record, parties et score de classement du Chrono",
+                "timeDesc": "Efface record, parties et classement perso du Chrono",
                 "all": "Tout",
                 "allDesc": "Toutes les données : favoris, erreurs, stats, scores, présence, compagnon, ligue, tests…",
                 "allButton": "Tout réinitialiser",
@@ -620,7 +630,7 @@
             "emptyFilter": "Aucun élément ne correspond.",
             "guide": {
                 "title": "La recherche, mode d'emploi",
-                "line1": "Tapez un mot ou une définition pour le trouver aussitôt.",
+                "line1": "Tapez un pays, un personnage, un lieu ou un indice pour le trouver aussitôt.",
                 "line2": "Choisissez un thème pour filtrer par catégorie et difficulté.",
                 "line3": "Touchez l'étoile pour l'ajouter aux favoris de la Collection."
             }
@@ -713,7 +723,8 @@
                 },
                 "loading": "Chargement des questions",
                 "home": "Accueil",
-                "retry": "Rejouer"
+                "retry": "Rejouer",
+                "personalRank": "Classement perso : {{rank}}e · {{total}} parties"
             },
             "start": {
                 "preparing": "Préparation des questions...",
@@ -1157,9 +1168,7 @@
             "ranking": {
                 "title": "Classement",
                 "boardTitle": "Classement {{label}}",
-                "tabTime": "Contre-la-montre",
                 "descTotal": "Le panthéon des meilleurs scores",
-                "descTime": "180 secondes de concentration",
                 "unit": "pts",
                 "shownCount": "Joueurs affichés",
                 "myRank": "Mon rang",

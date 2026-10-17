@@ -470,6 +470,7 @@ const TodayChallenge = () => {
 													title={word}
 													statusMark={it.correct ? 'correct' : 'wrong'}
 													explanation={desc}
+													imageRef={card?.imageRef}
 													examples={examples}
 													bookmarked={card ? saved : undefined}
 													onToggleBookmark={card ? () => toggleTodayBookmark(card) : undefined}

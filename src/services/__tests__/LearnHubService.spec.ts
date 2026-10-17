@@ -41,10 +41,24 @@ describe('LearnHubService — 세계 상식 도메인', () => {
 		const qs = LearnHubService.getDomain('figure').generateQuiz({ count: WORLD_ENTRIES.figure.length });
 		const images = qs.filter((q) => q.imageRef);
 		expect(images.length).toBeGreaterThan(0);
+		// 그림 문항(초상 보고 이름 맞히기)은 발문이 곧 문제다
+		expect(images.some((q) => q.prompt === q.guide)).toBe(true);
 		images.forEach((q) => {
 			expect(q.imageRef!.startsWith('figure:')).toBe(true);
-			expect(q.prompt).toBe(q.guide);
 			expect(q.prompt).not.toMatch(/\.(jpe?g|png|gif)$/i);
+		});
+	});
+
+	it('이름을 묻는 문항(설명 → 이름)에는 항목 그림을 걸지 않는다 — 그림이 답을 알려 준다', () => {
+		(['figure', 'landmark', 'capital'] as const).forEach((key) => {
+			const entries = WORLD_ENTRIES[key];
+			LearnHubService.getDomain(key)
+				.generateQuiz({ count: entries.length })
+				.filter((q) => q.imageRef && q.prompt !== q.guide)
+				.forEach((q) => {
+					const entry = entries.find((e) => e.id === q.uid);
+					expect(q.options[q.answerIndex]).not.toBe(entry?.name);
+				});
 		});
 	});
 
@@ -95,6 +109,9 @@ describe('LearnHubService — 세계 상식 도메인', () => {
 		const qs = LearnHubService.generatePictureQuiz(10);
 		expect(qs).toHaveLength(10);
 		qs.forEach((q) => expect(q.imageRef).toBeTruthy());
+		// 그림만 보고 맞히는 문항이 주가 되고, 그림을 곁들인 문항이 함께 섞인다
+		expect(qs.filter((q) => q.prompt === q.guide).length).toBeGreaterThanOrEqual(6);
+		expect(qs.some((q) => q.prompt !== q.guide)).toBe(true);
 	});
 
 	it('보기 국기는 나라 이름 보기에만 붙고, 국기 맞히기에는 절대 붙지 않는다', () => {

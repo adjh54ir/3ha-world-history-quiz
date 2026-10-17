@@ -284,8 +284,6 @@
                 "scoreValue": "{{value}} pts",
                 "plays": "Plays",
                 "bestCombo": "Best combo",
-                "historyTitle": "Scores by Game",
-                "historyCount": "{{count}} games",
                 "historyCount_one": "{{count}} game",
                 "historyCount_other": "{{count}} games",
                 "unit": "pts",
@@ -331,7 +329,7 @@
                 },
                 "picture": {
                     "title": "Picture Quiz",
-                    "desc": "Name it from just a flag, portrait or landmark photo",
+                    "desc": "See flags, portraits and photos—name them, then their country or capital",
                     "tag": "Visual"
                 },
                 "flagMatch": {
@@ -374,7 +372,19 @@
                 "title": "How to Play Challenges",
                 "line1": "In Time, earn {{point}} pts for each correct answer within 180 seconds.",
                 "line2": "In Tower, beat a boss on each floor and climb to the top.",
-                "line3": "Every game adds to your records, and your best score wears the crown."
+                "line3": "Your runs stay on this device and build your personal ranking."
+            },
+            "rank": {
+                "title": "My Ranking",
+                "top": "TOP {{count}}",
+                "new": "NEW",
+                "cleared": "Cleared",
+                "failed": "Tried",
+                "towerEmpty": "No runs yet. Take on the first floor!",
+                "towerBest": "Floor {{n}} cleared! New personal best",
+                "share": "Share record",
+                "shareTime": "⏱️ New Time Challenge personal best: {{score}} pts!",
+                "shareTower": "🏰 I climbed to floor {{n}} in the Tower Challenge!"
             }
         },
         "stats": {
@@ -550,7 +560,7 @@
                 "quiz": "Quiz",
                 "quizDesc": "Reset score, accuracy, streak, mistakes and daily quiz",
                 "time": "Time Challenge",
-                "timeDesc": "Reset Time Challenge best score, play history and ranking score",
+                "timeDesc": "Reset Time Challenge best score, play history and personal ranking",
                 "all": "Everything",
                 "allDesc": "All study data: favorites, mistakes, stats, score, check-ins, pets, league, tests and more",
                 "allButton": "Reset everything",
@@ -620,7 +630,7 @@
             "emptyFilter": "Nothing matches these filters.",
             "guide": {
                 "title": "How to Search",
-                "line1": "Type a word or meaning to find it instantly.",
+                "line1": "Type a country, person, or place—or a clue—to find it instantly.",
                 "line2": "Pick a topic to narrow down by category and difficulty.",
                 "line3": "Tap the star to save it to your Library favorites."
             }
@@ -715,7 +725,8 @@
                 },
                 "loading": "Loading questions",
                 "home": "Home",
-                "retry": "Try again"
+                "retry": "Try again",
+                "personalRank": "Personal rank #{{rank}} · {{total}} runs"
             },
             "start": {
                 "preparing": "Getting questions ready...",
@@ -1149,9 +1160,7 @@
             "ranking": {
                 "title": "Rankings",
                 "boardTitle": "{{label}} Rankings",
-                "tabTime": "Time Challenge",
                 "descTotal": "Hall of fame for your quiz scores",
-                "descTime": "A 180-second focus showdown",
                 "unit": "pts",
                 "shownCount": "Showing",
                 "myRank": "My rank",

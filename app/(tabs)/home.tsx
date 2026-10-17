@@ -614,10 +614,10 @@ const Hub = () => {
 											<Text style={styles.topicExampleText} numberOfLines={2}>{topicPreview[d.key]?.example}</Text>
 										</View>
 									)}
-									{/* 주제색 버튼은 주황·노랑에서 글자가 검게 바뀌어 카드마다 들쭉날쭉했다 — 서브 퀴즈와 같은 브랜드색으로 통일 */}
-									<View style={[styles.topicBtn, { backgroundColor: Colors.primary }]}>
-										<Text style={styles.topicBtnText}>{t('common.start')}</Text>
-										<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.onFill} />
+									{/* 카드 전체가 주제색(아이콘·태그·개수)인데 버튼만 브랜드색 채움이라 따로 놀았다 — 같은 주제색 옅은 채움 + 진한 글자로 맞춘다 */}
+									<View style={[styles.topicBtn, { backgroundColor: withAlpha(d.color, '1A') }]}>
+										<Text style={[styles.topicBtnText, { color: accentInk(d.color) }]}>{t('common.start')}</Text>
+										<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={accentInk(d.color)} />
 									</View>
 								</TouchableOpacity>
 							)}
@@ -699,9 +699,9 @@ const Hub = () => {
 											<Text style={[styles.topicExampleTag, { color: Colors.primary }]}>{best ? t('home.subQuiz.bestCorrect', { correct: best.correct, total: best.total }) : t('home.subQuiz.bonus', { value: d.total.toLocaleString() })}</Text>
 											<Text style={styles.topicExampleText} numberOfLines={2}>{t('home.subQuiz.note')}</Text>
 										</View>
-										<View style={[styles.topicBtn, { backgroundColor: Colors.primary }]}>
-											<Text style={styles.topicBtnText}>{t('common.start')}</Text>
-											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.onFill} />
+										<View style={[styles.topicBtn, { backgroundColor: withAlpha(Colors.primary, '1A') }]}>
+											<Text style={[styles.topicBtnText, { color: Colors.primary }]}>{t('common.start')}</Text>
+											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.primary} />
 										</View>
 									</TouchableOpacity>
 								);

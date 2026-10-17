@@ -174,24 +174,26 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 						</TouchableOpacity>
 					</View>
 
-					{!!imageRef && <EntryImage imageRef={imageRef} width={scaleWidth(132)} fetchWidth={320} style={styles.image} />}
-					{/* 제목 — 정중앙, 강조색으로 약간 강조 (단어 위 따옴표 아이콘 제거) */}
-					<Text style={[styles.title, { color: accent }]} numberOfLines={1} ellipsizeMode="tail">{titleText}</Text>
-
-					{/* 즐겨찾기 — 단어 아래 중앙 정렬 버튼 */}
-					{canBookmark && (
-						<TouchableOpacity
-							style={[styles.favBtn, bookmarked ? { backgroundColor: withAlpha(accent, '14'), borderColor: withAlpha(accent, '40') } : { borderColor: Colors.border }]}
-							onPress={toggleBookmark}
-							hitSlop={Layout.hitSlop}
-							activeOpacity={0.8}
-							accessibilityRole="button"
-							accessibilityLabel={t(bookmarked ? 'common.bookmarkRemove' : 'common.bookmarkAdd')}>
-							<IconComponent type="materialIcons" name={bookmarked ? 'star' : 'star-border'} size={scaledSize(20)} color={bookmarked ? Colors.bookmark : Colors.textMuted} />
-						</TouchableOpacity>
-					)}
-
 					<ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollBody}>
+						{/* 그림·제목·즐겨찾기도 본문과 함께 스크롤된다 — 위에 고정하면 긴 설명을 볼 자리가 줄었다 (태그·닫기만 고정) */}
+						<View style={styles.hero}>
+							{!!imageRef && <EntryImage imageRef={imageRef} width={scaleWidth(132)} fetchWidth={320} style={styles.image} />}
+							{/* 제목 — 정중앙, 강조색으로 약간 강조 (단어 위 따옴표 아이콘 제거) */}
+							<Text style={[styles.title, { color: accent }]} numberOfLines={2} ellipsizeMode="tail">{titleText}</Text>
+
+							{/* 즐겨찾기 — 단어 아래 중앙 정렬 버튼 */}
+							{canBookmark && (
+								<TouchableOpacity
+									style={[styles.favBtn, bookmarked ? { backgroundColor: withAlpha(accent, '14'), borderColor: withAlpha(accent, '40') } : { borderColor: Colors.border }]}
+									onPress={toggleBookmark}
+									hitSlop={Layout.hitSlop}
+									activeOpacity={0.8}
+									accessibilityRole="button"
+									accessibilityLabel={t(bookmarked ? 'common.bookmarkRemove' : 'common.bookmarkAdd')}>
+									<IconComponent type="materialIcons" name={bookmarked ? 'star' : 'star-border'} size={scaledSize(20)} color={bookmarked ? Colors.bookmark : Colors.textMuted} />
+								</TouchableOpacity>
+							)}
+						</View>
 						{/* 촌수: 설명을 최상단에 + 따옴표 아이콘 중앙정렬 (description 없으면 meaning으로 폴백) */}
 						{isChon && !!(item.description || item.meaning) && (
 							<View style={[styles.box, styles.quoteBox, { borderColor: withAlpha(accent, '40') }]}>
@@ -359,7 +361,8 @@ const styles = themed(() => StyleSheet.create({
 	image: { marginBottom: SpacingV.md, borderRadius: Radius.md },
 	title: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong, lineHeight: scaleHeight(32), textAlign: 'center' },
 	favBtn: { alignSelf: 'center', alignItems: 'center', justifyContent: 'center', marginTop: SpacingV.sm, width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.pill, borderWidth: 1 },
-	scroll: { marginTop: SpacingV.lg },
+	scroll: { marginTop: SpacingV.xs },
+	hero: { alignItems: 'center', marginBottom: SpacingV.lg },
 	scrollBody: { paddingBottom: SpacingV.xs },
 	box: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: SpacingV.sm },
 	quoteBox: { borderWidth: Border.thin, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },

@@ -116,7 +116,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 			<View style={styles.searchRow}>
 				<View style={styles.searchBox}>
 					<IconComponent type="materialIcons" name="search" size={scaledSize(18)} color={Colors.textMuted} />
-					<TextInput
+					<TextInput allowFontScaling={false}
 						keyboardAppearance={isDark() ? 'dark' : 'light'}
 						style={styles.searchInput}
 						value={query}

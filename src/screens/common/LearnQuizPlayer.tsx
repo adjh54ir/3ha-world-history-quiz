@@ -208,6 +208,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const resultScoreAnim = useRef(new Animated.Value(0)).current;
 	// 타임 챌린지 직전 최고 점수 (신기록 판정용, 이번 판 기록 전 값)
 	const [prevTimeBest, setPrevTimeBest] = useState<number | null>(null);
+	// 타임챌린지 이번 판의 개인 랭킹 순위 (챌린지 탭과 같은 정렬: 점수 → 최근 판)
+	const [timeRank, setTimeRank] = useState<{ rank: number; total: number } | null>(null);
 	const questionScrollRef = useRef<ScrollView>(null);
 	const [qTimeLeft, setQTimeLeft] = useState(30);
 	const qLimit = 30;
@@ -273,6 +275,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			answer: q.options[q.answerIndex],
 			explanation: (q.explanation ?? q.options[q.answerIndex] ?? '').split(/예\s*[)）]/)[0].trim() || undefined,
 		});
+	// 문항의 항목 그림 — 문제 그림이 없으면 원본 학습 카드(국기·초상·사진)에서 찾는다
+	const entryImageOf = (q: LearnType.QuizQuestion) => q.imageRef ?? LearnHubService.getStudyCardByUid(q.domain, q.uid)?.imageRef;
 	// 결과 목록 즐겨찾기 별 상태
 	const [bmUids, setBmUids] = useState<Set<string>>(new Set());
 	useEffect(() => {
@@ -547,15 +551,13 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			}
 			return;
 		}
-		// 랭킹: 타임챌린지 최고점 기록 후 서버 제출(닉네임 미설정 시 자동 스킵)
+		// 타임챌린지는 개인 랭킹(기기 안 기록)만 쓴다 — 서버 랭킹에는 올리지 않는다. 일반 퀴즈만 전체 점수를 제출
 		if (timed) {
 			// 이번 판을 저장하기 '전' 최고점을 읽어둬야 신기록 여부를 판단할 수 있다
-			RankingService.getTimeBest()
-				.then((prev) => {
-					setPrevTimeBest(prev);
-					return RankingService.recordTimeChallenge(correctCount * POINT_PER_CORRECT);
-				})
-				.then(() => RankingService.submit());
+			RankingService.getTimeBest().then((prev) => {
+				setPrevTimeBest(prev);
+				return RankingService.recordTimeChallenge(correctCount * POINT_PER_CORRECT);
+			});
 		} else RankingService.submit();
 		// 오늘의 퀴즈(daily)를 끝까지 완료하면 오늘 날짜로 완료 마킹 + 결과 스냅샷 저장 (홈 뱃지 해제 · 시작화면 결과 표시용)
 		// 호출 화면이 결과를 직접 그리는 경우, 저장이 끝난 뒤 넘겨준다
@@ -601,6 +603,11 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			try {
 				// 오늘의 퀴즈도 플레이 횟수(byMode.daily)는 남긴다 — 안 남기면 '오늘의 퀴즈 단골/개근' 뱃지가 영영 안 열린다
 				const newStats = await LearnProgressService.recordQuizSession({ mode, bestCombo, correct: correctCount, solved: answeredCount });
+				if (timed && newStats.timeHistory?.length) {
+					const latest = newStats.timeHistory[0];
+					const ranked = [...newStats.timeHistory].sort((a, b) => b.correct - a.correct || b.at - a.at);
+					setTimeRank({ rank: ranked.indexOf(latest) + 1, total: ranked.length });
+				}
 				// 오늘의 퀴즈는 완료 즉시 화면이 닫히므로 축하는 홈 복귀 시(pickNewlyUnlocked)에 맡긴다
 				if (mode === 'daily') return;
 				// 시작 시점 스냅샷이 아직 안 잡혔으면 판정하지 않는다.
@@ -931,7 +938,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								</>
 							) : (
 								<>
-									<Animated.Text style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen, !timed && isDark() && { color: onAccent }]}>{displayResultScore}</Animated.Text>
+									<Animated.Text allowFontScaling={false} style={[styles.resultScoreNum, !timed && styles.resultScoreNumGreen, !timed && isDark() && { color: onAccent }]}>{displayResultScore}</Animated.Text>
 									<Text style={[styles.resultScoreUnit, { color: heroSubInk }]}>{t('player.result.unitPoint')}</Text>
 								</>
 							)}
@@ -944,6 +951,15 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								<View style={styles.recordBadge}>
 									<IconComponent type="materialIcons" name="military-tech" size={scaledSize(16)} color={Colors.heatDeep} />
 									<Text style={styles.recordBadgeText}>{t('player.result.newRecord', { prev: prevTimeBest!.toLocaleString(), diff: (timeScore - prevTimeBest!).toLocaleString() })}</Text>
+								</View>
+							</FadeInUp>
+						)}
+						{/* 개인 랭킹 순위 — 신기록이 아니어도 이번 판이 몇 번째인지 보여 한 판 더 할 이유를 준다 */}
+						{timed && trackProgress && !!timeRank && timeRank.total > 1 && (
+							<FadeInUp delay={360}>
+								<View style={styles.rankChip}>
+									<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(15)} color={Colors.textInverse} />
+									<Text style={styles.rankChipText}>{t('player.result.personalRank', { rank: timeRank.rank, total: timeRank.total })}</Text>
 								</View>
 							</FadeInUp>
 						)}
@@ -984,6 +1000,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 										categoryLabel={q.categoryLabel}
 										levelLabel={q.level}
 										{...listFieldsOf(q)}
+										imageRef={entryImageOf(q)}
 										indexBadge={{ num: i + 1, color: resultTab === 'wrong' ? Colors.errorDark : Colors.successDeep }}
 										examples={q.examples}
 										bookmarked={trackProgress ? bmUids.has(q.uid) : undefined}
@@ -1020,6 +1037,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 												categoryLabel={q.categoryLabel}
 												levelLabel={q.level}
 												{...listFieldsOf(q)}
+												imageRef={entryImageOf(q)}
 												indexBadge={{ num: i + 1, color: resultTab === 'wrong' ? Colors.errorDark : Colors.successDeep }}
 												examples={q.examples}
 												bookmarked={bmUids.has(q.uid)}
@@ -1311,8 +1329,10 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const comboColors: [string, string, ...string[]] = combo >= 10 ? [LIGHT_COLORS.errorDark, LIGHT_COLORS.error, LIGHT_COLORS.heat] : combo >= 5 ? [LIGHT_COLORS.error, LIGHT_COLORS.heat, LIGHT_COLORS.bookmark] : [LIGHT_COLORS.amber, LIGHT_COLORS.heat];
 	// 오답 셰이크용 translateX (좌우 흔들림)
 	// 태블릿: 보기 묶음은 각 보기 상한까지만 자라고, 그 이상 남는 높이는 body 가 위아래로 나눠 문제+보기 덩어리를 가운데 둔다
-	const answerRows = current.imageRef ? Math.ceil(current.options.length / 2) : current.options.length;
-	const answersMaxH = answerRows * (current.imageRef ? scaleHeight(140) : Layout.optionMaxH) + (answerRows - 1) * SpacingV.sm;
+	const answerRows = current.options.length;
+	const answersMaxH = answerRows * Layout.optionMaxH + (answerRows - 1) * SpacingV.sm;
+	// 해설용 항목 그림 — 문제 그림과 같으면(국기 맞히기 등) 문제 칸에 이미 있으니 다시 걸지 않는다
+	const explainImageRef = entryImageOf(current);
 	const shakeX = optionShake.interpolate({ inputRange: [-1, 1], outputRange: [-scaleWidth(9), scaleWidth(9)] });
 
 	// ── 퀴즈 ──────────────────────────────
@@ -1346,7 +1366,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				<View style={styles.scoreStrip}>
 					<View style={styles.scoreItem}>
 						<IconComponent type="materialIcons" name="stars" size={scaledSize(15)} color={onAccent} />
-						<Animated.Text style={[styles.scoreValue, { color: onAccent, transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
+						<Animated.Text allowFontScaling={false} style={[styles.scoreValue, { color: onAccent, transform: [{ scale: scorePop }] }]}>{correctCount * POINT_PER_CORRECT}</Animated.Text>
 						<Text style={[styles.scoreLabel, { color: withAlpha(onAccent, 'E6') }]}>{t('player.play.score')}</Text>
 					</View>
 					<View style={styles.scoreDivider} />
@@ -1418,7 +1438,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				</Animated.View>
 			)}
 
-			<Animated.Text
+			<Animated.Text allowFontScaling={false}
 					pointerEvents="none"
 					style={[
 						styles.scoreFloat,
@@ -1467,7 +1487,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={[styles.promptFrame, presentation.variant === 'chat' && styles.promptFrameChat, presentation.variant === 'sentence' && styles.promptFrameSentence]}>
 							{current.imageRef ? (
 								<>
-									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176))} fetchWidth={isTablet ? 640 : 420} />
+									{/* 그림이 곧 문제인 문항은 크게, 문제 글을 거드는 그림은 작게 — 보기가 첫 화면 밖으로 밀리지 않게 */}
+									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), current.guide.includes(current.prompt) ? (isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176)) : (isWideImageRef(current.imageRef) ? scaleArt(160) : scaleArt(120)))} fetchWidth={isTablet ? 640 : 420} />
 									{/* 그림 문항은 prompt 가 발문 그 자체다(OX 는 발문에 감싸 들어간다). 발문에 없는 글이면
 									    그림이 곁들임일 뿐인 문항(신화 로마 이름 등)이라 문제 글도 함께 보여 준다 */}
 									{!current.guide.includes(current.prompt) && <Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, styles.promptWithImage]}>{current.prompt}</Text>}
@@ -1510,8 +1531,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						})}
 					</View>
 				) : (
-					// 그림 문항은 그림이 세로 자리를 먹어 보기 넷이 화면 밖으로 밀린다 — 2×2 격자로 한눈에 보이게 한다
-					<View style={[styles.answers, !!current.imageRef && styles.optionGrid, isTablet && { maxHeight: answersMaxH }]}>
+					// 보기는 그림 문항이어도 늘 세로 한 줄씩 — 넘치면 본문 ScrollView 로 내려 본다 (2×2 는 긴 보기가 잘렸다)
+					<View style={[styles.answers, isTablet && { maxHeight: answersMaxH }]}>
 					{current.options.map((opt, i) => {
 						const isAnswer = i === current.answerIndex;
 						const isSelected = i === selected;
@@ -1527,7 +1548,6 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								key={i}
 								style={[
 									styles.option,
-									!!current.imageRef && styles.optionHalf,
 									!checked && isSelected && { borderColor: accent },
 									showCorrect && styles.optionCorrect,
 									showWrong && styles.optionWrong,
@@ -1625,6 +1645,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											<IconComponent type="materialIcons" name="lightbulb" size={scaledSize(16)} color={Colors.primary} />
 											<Text style={styles.explainBodyTitle}>{t('player.explain.explanation')}</Text>
 										</View>
+										{!!explainImageRef && explainImageRef !== current.imageRef && <EntryImage imageRef={explainImageRef} width={scaleWidth(120)} style={styles.explainImage} />}
 										<Text style={styles.explainBody}>{current.explanation}</Text>
 									</View>
 
@@ -1780,7 +1801,8 @@ const styles = themed(() => StyleSheet.create({
 	explainBody: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), alignSelf: 'stretch' },
 	explainQuestion: { fontSize: Typography.callout, fontWeight: '800', color: Colors.primary, lineHeight: scaleHeight(23), alignSelf: 'stretch' },
 	explainQuestionSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, alignSelf: 'stretch' },
-	explainImage: { marginBottom: SpacingV.sm },
+	// 해설 칸은 글이 왼쪽 정렬이라 그림만 가운데 — 둥근 모서리로 칸 안에 얹는다
+	explainImage: { alignSelf: 'center', marginBottom: SpacingV.md, borderRadius: Radius.md, overflow: 'hidden' },
 	// 광고 제거 구매자는 배너가 없으므로 헤더와 같은 색으로 상단 안전영역만 채운다
 	explainNextBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, alignSelf: 'stretch', paddingVertical: SpacingV.lg, borderRadius: Radius.lg, marginTop: SpacingV.xl },
 	explainNextText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
@@ -1864,9 +1886,6 @@ const styles = themed(() => StyleSheet.create({
 	},
 	// 보기 묶음 — 간격은 gap 하나로 (marginBottom 과 섞이지 않게)
 	answers: { flexGrow: 1, gap: SpacingV.sm },
-	// 2×2 — 가로·세로 간격을 같은 gap 으로. space-between + 48.8% 는 가운데 골이 줄 간격보다 넓었다
-	optionGrid: { flexDirection: 'row', flexWrap: 'wrap', alignContent: 'stretch', gap: Spacing.sm },
-	optionHalf: { flexBasis: '40%', gap: Spacing.sm, paddingHorizontal: Spacing.md, minHeight: scaleHeight(64), maxHeight: scaleHeight(140) },
 	optionCorrect: { borderColor: Colors.success, backgroundColor: Colors.successSoft },
 	optionWrong: { borderColor: Colors.error, backgroundColor: Colors.errorSoft },
 	optionIndex: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, justifyContent: 'center', alignItems: 'center' },
@@ -1911,6 +1930,8 @@ const styles = themed(() => StyleSheet.create({
 	resultScoreNumGreen: { color: isDark() ? Colors.onFill : Colors.goldSoft },
 	resultScoreUnit: { fontSize: Typography.h3, fontWeight: '900', color: Colors.onBrandText, marginLeft: Spacing.xs, marginBottom: SpacingV.sm },
 	recordBadge: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, alignSelf: 'center', backgroundColor: Colors.bookmarkSoft, borderWidth: 1, borderColor: Colors.goldDark, borderRadius: Radius.pill, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.xs, marginTop: SpacingV.md },
+	rankChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, alignSelf: 'center', backgroundColor: Colors.onBrandSurface, borderWidth: 1, borderColor: Colors.onBrandBorderSoft, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginTop: SpacingV.sm },
+	rankChipText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse },
 	recordBadgeText: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '900', color: Colors.heatDeep },
 	resultScoreDetail: { fontSize: Typography.body, color: Colors.onBrandText, marginTop: SpacingV.md, textAlign: 'center' },
 	resultProfile: { alignSelf: 'stretch', backgroundColor: Colors.onBrandSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },

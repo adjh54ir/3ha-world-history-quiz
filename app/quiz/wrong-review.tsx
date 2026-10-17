@@ -154,6 +154,7 @@ const QuizWrongReview = () => {
 									levelLabel={w.level}
 									{...fields}
 									answer={fields.title === w.answer ? undefined : w.answer}
+									imageRef={w.imageRef ?? LearnHubService.getStudyCardByUid(w.domain, w.uid)?.imageRef}
 									examples={w.examples}
 									bookmarked={bmUids.has(w.uid)}
 									onToggleBookmark={() => toggleBookmark(w)}

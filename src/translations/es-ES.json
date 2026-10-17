@@ -284,8 +284,6 @@
                 "scoreValue": "{{value}} pts",
                 "plays": "Partidas",
                 "bestCombo": "Mejor combo",
-                "historyTitle": "Puntos por partida",
-                "historyCount": "{{count}} partidas",
                 "historyCount_one": "{{count}} partida",
                 "historyCount_other": "{{count}} partidas",
                 "unit": "pts",
@@ -329,7 +327,7 @@
                 },
                 "picture": {
                     "title": "Quiz de imágenes",
-                    "desc": "Adivina por la bandera, el retrato o el monumento",
+                    "desc": "Mira banderas, retratos y fotos: adivina el nombre y luego el país o la capital",
                     "tag": "Visual"
                 },
                 "flagMatch": {
@@ -372,7 +370,19 @@
                 "title": "Así se juegan los retos",
                 "line1": "En Contrarreloj, cada acierto vale {{point}} pts durante 180 segundos.",
                 "line2": "En la Torre, vence al jefe de cada piso y sube hasta la cima.",
-                "line3": "Cada partida queda en tus récords y la mejor lleva la corona."
+                "line3": "Tus partidas se guardan en este dispositivo y forman tu ranking personal."
+            },
+            "rank": {
+                "title": "Mi ranking",
+                "top": "TOP {{count}}",
+                "new": "NEW",
+                "cleared": "Superado",
+                "failed": "Intento",
+                "towerEmpty": "Aún no hay partidas. ¡Atrévete con el primer piso!",
+                "towerBest": "¡Piso {{n}} superado! Nuevo récord personal",
+                "share": "Compartir récord",
+                "shareTime": "⏱️ ¡Nuevo récord personal en Contrarreloj: {{score}} pts!",
+                "shareTower": "🏰 ¡Subí hasta el piso {{n}} en el Desafío Torre!"
             }
         },
         "stats": {
@@ -548,7 +558,7 @@
                 "quiz": "Quiz",
                 "quizDesc": "Borra puntos, aciertos, racha, errores y quiz del día",
                 "time": "Contrarreloj",
-                "timeDesc": "Borra récord, partidas y puntos de ranking de contrarreloj",
+                "timeDesc": "Borra récord, partidas y ranking personal de contrarreloj",
                 "all": "Todo",
                 "allDesc": "Todos tus datos: favoritos, errores, estadísticas, puntos, asistencia, mascota, liga, tests y más",
                 "allButton": "Borrar todo",
@@ -618,7 +628,7 @@
             "emptyFilter": "Nada coincide con los filtros.",
             "guide": {
                 "title": "Así funciona la búsqueda",
-                "line1": "Escribe un nombre o significado y lo encontramos al momento.",
+                "line1": "Escribe un país, personaje o lugar, o una pista, y lo encontramos al momento.",
                 "line2": "Elige un tema para filtrar por categoría y dificultad.",
                 "line3": "Toca la estrella para guardarlo en favoritos."
             }
@@ -711,7 +721,8 @@
                 },
                 "loading": "Cargando preguntas",
                 "home": "Inicio",
-                "retry": "Reintentar"
+                "retry": "Reintentar",
+                "personalRank": "Ranking personal: n.º {{rank}} · {{total}} partidas"
             },
             "start": {
                 "preparing": "Preparando preguntas...",
@@ -1149,9 +1160,7 @@
             "ranking": {
                 "title": "Ranking",
                 "boardTitle": "Ranking de {{label}}",
-                "tabTime": "Contrarreloj",
                 "descTotal": "Salón de la fama de tus puntos de quiz",
-                "descTime": "Duelo de concentración en 180 segundos",
                 "unit": "pts",
                 "shownCount": "Jugadores",
                 "myRank": "Mi puesto",

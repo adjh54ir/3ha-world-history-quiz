@@ -5,13 +5,6 @@ import Colors from '@/src/const/ConstColors';
 import { APP_FONTS_ON, bodyFontFor, Typography } from '@/src/const/ConstDesign';
 
 /**
- * OS 큰 글씨 설정에서 글자가 커지는 배율 상한.
- * 화면 대부분이 numberOfLines 로 줄 수를 고정하고 있어 배율이 무제한이면 문장이 잘린다.
- * 접근성은 살리되(1.3배까지 커짐) 레이아웃이 깨지지 않는 선에서 자른다.
- */
-const MAX_FONT_SCALE = 1.3;
-
-/**
  * 안드로이드는 글꼴 위아래에 여분(font padding)을 붙여 글자가 아래로 처진다.
  * 아이콘과 나란히 놓인 글자가 정중앙에 오지 않는 원인이라 전역으로 끈다.
  */
@@ -62,8 +55,10 @@ const AppText = (props: TextProps) => {
 	const nested = useContext(TextAncestorContext);
 	const font = appFont(props.style, nested);
 	return createElement(OriginalText, {
-		maxFontSizeMultiplier: MAX_FONT_SCALE,
 		...props,
+		// OS 글자 크기 설정을 따라가지 않는다 — 앱이 정한 크기·서체 그대로 그려야 줄 수 고정 레이아웃이 깨지지 않는다.
+		// 펼친 뒤에 둔다: 탭 바처럼 allowFontScaling={undefined} 를 명시해 넘기는 곳이 있어 앞에 두면 기본값이 지워진다
+		allowFontScaling: props.allowFontScaling ?? false,
 		...fitProps(props),
 		// fontSize 를 안 준 글자는 안드로이드에서 시스템 기본(아주 작게 보이는 경우가 있음) 대신 본문 크기로 그린다
 		style: nested ? [props.style, font] : [{ color: Colors.text, fontSize: Typography.body }, ANDROID_TEXT_FIX, props.style, font],

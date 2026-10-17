@@ -75,8 +75,9 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 			const mode = topic.modes.find((m) => m.key === q.mode);
 			const question = text.modes[q.mode]?.question ?? text.label;
 			const promptImage = mode?.askAs ? makeImageRef(mode.askAs, q.prompt) : undefined;
-			// 신화는 그림 문항이 아니어도(로마 이름·관장 분야·설명) 인물 그림을 함께 건다 — 문제 글은 그대로 둔다
-			const imageRef = promptImage ?? (key === 'myth' ? selectEntryImageRef(key, q.entry) : undefined);
+			// 이름을 보여 주고 묻는 문항(수도·나라·시대 등)은 항목 그림을 함께 건다 — 이름이 이미 문제에 있어 그림이 답을 알려 주지 않는다.
+			// 설명을 보고 이름을 맞히는 문항은 그림이 곧 답이라 걸지 않는다 (신화는 예전처럼 늘 건다). 문제 글은 그대로 둔다
+			const imageRef = promptImage ?? (key === 'myth' || mode?.ask === 'name' ? selectEntryImageRef(key, q.entry) : undefined);
 			const answerIndex = q.options.indexOf(q.answer);
 			// 해설은 "정답 — 이 항목이 무엇인지" 로 쓴다. 답이 이름이 아닌 문항(수도·대륙)은 이름을 앞에 붙여 무엇의 답인지 알린다
 			const answerIsName = mode?.answer === 'name';
@@ -127,6 +128,20 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data, Math.random, modes)
 				.slice(0, count)
 				.map((q) => service.toQuizQuestion(q));
+		},
+
+		/**
+		 * 그림을 곁들인 문항만 — 이름을 보여 주고 나라·수도·시대 등을 묻는 문항 중 항목 그림이 있는 것.
+		 * 그림 퀴즈에 섞어 '보고 맞히기'만 반복되지 않게 한다. 그림 없는 주제는 빈 목록이다.
+		 */
+		generateImageAidedQuiz(count = 10): LearnType.QuizQuestion[] {
+			const modes = topic.modes.filter((m) => !m.askAs && m.ask === 'name');
+			if (modes.length === 0) return [];
+			const targets = shuffle(data.filter((entry) => selectEntryImageRef(key, entry)));
+			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data, Math.random, modes)
+				.map((q) => service.toQuizQuestion(q))
+				.filter((q) => q.imageRef)
+				.slice(0, count);
 		},
 
 		/**

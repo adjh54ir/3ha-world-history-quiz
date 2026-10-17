@@ -82,7 +82,7 @@ export interface LearnStats {
 	byMode: Record<string, number>;
 	/** 일자별 풀이 기록 (최근 60일) */
 	dailyLog: Record<string, DomainStat>;
-	/** 타임챌린지 플레이별 기록 (최신순, 최근 20회) */
+	/** 타임챌린지 플레이별 기록 (최신순 — 최근 20회 + 개인 랭킹 TOP 10 은 오래돼도 남긴다) */
 	timeHistory?: TimePlayRecord[];
 }
 
@@ -399,7 +399,7 @@ const LearnProgressService = {
 			if (opts.mode?.startsWith('sub-')) {
 				await this.recordSubQuizBest(opts.mode.slice(4), opts.correct ?? 0, opts.solved ?? 0);
 			}
-			// 타임챌린지는 플레이별 점수를 최근 20회까지 보관
+			// 타임챌린지는 플레이별 점수를 최근 20회 + 점수 TOP 10 까지 보관 (개인 랭킹이 최근 기록에 밀려 사라지지 않게)
 			if (opts.mode === 'time') {
 				const history = stats.timeHistory ?? [];
 				history.unshift({
@@ -408,7 +408,9 @@ const LearnProgressService = {
 					solved: opts.solved ?? 0,
 					bestCombo: opts.bestCombo ?? 0,
 				});
-				stats.timeHistory = history.slice(0, 20);
+				const top = [...history].sort((a, b) => b.correct - a.correct || b.at - a.at).slice(0, 10);
+				const recent = history.slice(0, 20);
+				stats.timeHistory = [...recent, ...top.filter((h) => !recent.includes(h))].sort((a, b) => b.at - a.at);
 			}
 			await writeJson(KEY.STATS, stats);
 			return stats;
