@@ -2,21 +2,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { useScrollToTop } from '@react-navigation/native';
+import { useIsFocused, useScrollToTop } from '@react-navigation/native';
 import { router, useFocusEffect } from 'expo-router';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Tag from '@/src/screens/common/atomic/Tag';
 import Colors, { HEAT_GRADIENT, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
 import { FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
-import RankingService from '@/src/services/RankingService';
 import LearnProgressService, { TimePlayRecord } from '@/src/services/LearnProgressService';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
-import { randomNickname } from '@/src/utils/NicknameUtils';
-import { useToast } from '@/src/context/ToastContext';
-import { playPop } from '@/src/utils/SoundUtils';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
 import DateUtils from '@/src/utils/DateUtils';
 import TabHeader from '@/src/screens/common/TabHeader';
@@ -45,6 +41,8 @@ interface ModeCard {
 type ChallengeTab = 'time' | 'tower' | 'mode';
 
 const TIME_CHALLENGE_HREF = '/quiz/speed';
+/** 화면이 포커스마다 다시 마운트되므로 마지막 탭을 모듈에 기억한다(타워·모드에서 돌아와도 보던 탭 유지) */
+const tabMemory: { last: ChallengeTab } = { last: 'time' };
 /** 마지막으로 신기록을 축하한 플레이 시각 — 같은 기록을 반복 축하하지 않기 위한 키 */
 const BEST_CELEBRATED_KEY = 'TIME_BEST_CELEBRATED_AT';
 
@@ -73,16 +71,14 @@ const Challenge = () => {
 	const scrollRef = useRef<any>(null);
 	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
-	const [tab, setTab] = useState<ChallengeTab>('time');
+	const [tab, setTab] = useState<ChallengeTab>(tabMemory.last);
+	useEffect(() => {
+		tabMemory.last = tab;
+	}, [tab]);
 	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
 	useScrollTopOnChange(scrollRef, [tab]);
-	// 타임챌린지 탭: 내 기록만 노출(전체 순위는 랭킹 화면에서) + 랭킹 참여 상태
-	const [myRank, setMyRank] = useState<{ rank: number; score: number } | null>(null);
 	// 규칙 안내 — 처음 들어온 사용자에게만 1회
 	const guide = useCharacterGuideOnce('time-challenge');
-	const [nickname, setNickname] = useState<string | null>(null);
-	const [nickInput, setNickInput] = useState(() => randomNickname());
-	const [joining, setJoining] = useState(false);
 	const [bestCombo, setBestCombo] = useState(0);
 	const [timePlays, setTimePlays] = useState(0);
 	const [localBest, setLocalBest] = useState(0);
@@ -92,33 +88,23 @@ const Challenge = () => {
 	const [celebrateBest, setCelebrateBest] = useState(false);
 	// 축하 대기 중인 판의 시각 — 컨페티가 실제로 보인 뒤 기록한다
 	const celebrateAtRef = useRef<number | null>(null);
-	const diceSpin = useRef(new Animated.Value(0)).current;
 	// 최고 점수 히어로 연출 — 빛 흐름 + 트로피 펄스 (언마운트 시 정리)
 	const shineAnim = useRef(new Animated.Value(0)).current;
 	const trophyPulse = useRef(new Animated.Value(0)).current;
-	const { showToast } = useToast();
-	const rankingReady = RankingService.isConfigured;
 	const reducedMotion = useReducedMotion();
+	// 다른 화면(타임챌린지 플레이 등)이 위에 떠 있는 동안 루프 연출을 멈춘다
+	const focused = useIsFocused();
 	const tower = useTower();
+	const towerNext = TOWER_LEVELS.find((f) => !tower.clearedLevels.includes(f.level));
 	const dispatch = useDispatch();
 
-	/** 서버 최신 점수 반영 후 내 순위 조회 (참여한 사용자만) */
-	const refreshMyRank = useCallback(async () => {
-		await RankingService.submit();
-		const r = await RankingService.myRank('time');
-		setMyRank(r);
-	}, []);
-
-	// 탭에 들어올 때마다 화면 상태를 최초 상태로 되돌린다
 	useFocusEffect(
 		useCallback(() => {
-			setTab('time');
-			setJoining(false);
 			dispatch(ensureTowerDay());
 		}, [dispatch]),
 	);
 
-	// 타임챌린지 탭일 때만 랭킹/기록 로드 (모드 탭에선 불필요한 네트워크 호출 방지)
+	// 타임챌린지 탭일 때만 내 기록 로드
 	useFocusEffect(
 		useCallback(() => {
 			if (tab !== 'time') return;
@@ -143,31 +129,18 @@ const Challenge = () => {
 					setCelebrateBest(true);
 				});
 			});
-			// 여기서 early return 하면 아래 cleanup 이 등록되지 않아 위 getStats 콜백이 언마운트 후에도 setState 한다
-			if (rankingReady) {
-				(async () => {
-					const nick = await RankingService.getNickname();
-					if (!alive) return;
-					setNickname(nick);
-					if (!nick) return; // 미참여 — 참여 버튼만 노출
-					await refreshMyRank();
-				})().catch(() => {});
-			}
 			return () => {
 				alive = false;
 			};
-		}, [tab, rankingReady, refreshMyRank]),
+		}, [tab]),
 	);
-
-	// 언마운트 시 주사위 회전 애니메이션 정리
-	useEffect(() => () => diceSpin.stopAnimation(), [diceSpin]);
 
 	// 안내 모달이 떠 있는 동안에는 컨페티가 가려지므로 미뤄둔다
 	const showCelebrateBest = celebrateBest && !guide.visible;
 
 	// 최고 점수 히어로 루프 애니메이션 (타임챌린지 탭에서만)
 	useEffect(() => {
-		if (tab !== 'time' || reducedMotion) return;
+		if (tab !== 'time' || reducedMotion || !focused) return;
 		const shine = Animated.loop(
 			Animated.sequence([
 				Animated.timing(shineAnim, { toValue: 1, duration: 1600, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
@@ -188,35 +161,10 @@ const Challenge = () => {
 			shineAnim.setValue(0);
 			trophyPulse.setValue(0);
 		};
-	}, [tab, reducedMotion, shineAnim, trophyPulse]);
+	}, [tab, reducedMotion, focused, shineAnim, trophyPulse]);
 
 	// 동점이 여러 판이면 왕관은 가장 최근 한 판에만 (목록은 최신순)
 	const bestHistIndex = localBest > 0 ? timeHistory.findIndex((h) => h.correct * POINT_PER_CORRECT === localBest) : -1;
-
-	/** 주사위 굴리기 — 닉네임 재추첨 + 회전 애니메이션 */
-	const rollNickname = () => {
-		playPop();
-		setNickInput(randomNickname());
-		diceSpin.setValue(0);
-		Animated.timing(diceSpin, { toValue: 1, duration: 420, easing: Easing.out(Easing.cubic), useNativeDriver: true }).start();
-	};
-
-	/** 랭킹 참여 — 닉네임 저장(Supabase) 후 점수 제출·내 순위 갱신 */
-	const joinRanking = async () => {
-		if (joining) return;
-		setJoining(true);
-		const nick = nickInput.trim() || randomNickname();
-		const ok = await RankingService.setNickname(nick);
-		if (ok) {
-			setNickname(nick);
-			playPop();
-			showToast(t('challenge.time.joinedToast'), 'emoji-events');
-			await refreshMyRank().catch(() => {});
-		} else {
-			showToast(t('challenge.time.joinFailedToast'), 'cloud-off');
-		}
-		setJoining(false);
-	};
 
 	const TABS: { key: ChallengeTab; icon: string }[] = [
 		{ key: 'time', icon: 'bolt' },
@@ -263,26 +211,8 @@ const Challenge = () => {
 								<Text style={styles.cardDesc}>{t('challenge.time.heroDesc')}</Text>
 							</View>
 						</View>
-						{/* 타임챌린지 랭킹 — 랭킹 화면의 타임챌린지 보드를 그대로 사용 */}
-						<View style={styles.boardHead}>
-							<View style={styles.rankHeadLeft}>
-								<View style={styles.rankIcon}>
-									<IconComponent type="materialIcons" name="bolt" size={scaledSize(18)} color={Colors.primary} />
-								</View>
-								<View style={styles.rankHeadBody}>
-									<Text style={styles.rankTitle}>{t('challenge.time.rankTitle')}</Text>
-									<Text style={styles.rankDesc}>{t('challenge.time.rankDesc')}</Text>
-								</View>
-							</View>
-							<TouchableOpacity style={styles.moreBtn} activeOpacity={0.85} hitSlop={Layout.hitSlop} onPress={() => router.push({ pathname: '/special/ranking', params: { board: 'time' } } as never)}>
-								<Text style={styles.moreText}>{t('challenge.time.viewAll')}</Text>
-								<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.primary} />
-							</TouchableOpacity>
-						</View>
-
 						{/* 최고 점수 히어로 — 그라데이션 + 빛 흐름 + 트로피 펄스 */}
-						{/* 닉네임이 있으면 참여 카드가 없어 이 카드가 랭킹 섹션의 끝 */}
-						<View style={[styles.bestHero, !!nickname && { marginBottom: Layout.sectionGap }]}>
+						<View style={styles.bestHero}>
 							<LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 							<Animated.View
 								pointerEvents="none"
@@ -293,45 +223,11 @@ const Challenge = () => {
 									<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(22)} color={Colors.gold} />
 								</Animated.View>
 								<View style={styles.rankHeadBody}>
-									<Text style={styles.bestLabel} numberOfLines={1} ellipsizeMode="tail">{nickname ? t('challenge.time.bestWithNick', { nickname }) : t('challenge.time.myBest')}</Text>
-									<FitText style={styles.bestValue}>{t('challenge.time.scoreValue', { value: Math.max(myRank?.score ?? 0, localBest).toLocaleString() })}</FitText>
+									<Text style={styles.bestLabel} numberOfLines={1} ellipsizeMode="tail">{t('challenge.time.myBest')}</Text>
+									<FitText style={styles.bestValue}>{t('challenge.time.scoreValue', { value: localBest.toLocaleString() })}</FitText>
 								</View>
 							</View>
-							{/* 내 순위 — 점수와 같은 줄에 두면 폭이 좁은 기기에서 칩이 밀려 잘렸다. 아래 줄로 분리 */}
-							<View style={styles.bestRankRow}>
-								<Text style={styles.bestRankLabel}>{t('challenge.time.myRank')}</Text>
-								<View style={styles.bestPill}>
-									<Text style={styles.bestPillText} numberOfLines={1}>{myRank ? t('challenge.time.rankValue', { rank: myRank.rank }) : t('challenge.time.notJoined')}</Text>
-								</View>
-							</View>
-							{!!nickname && <Text style={styles.bestHint}>{t('challenge.time.bestHint')}</Text>}
 						</View>
-
-						{/* 랭킹 미참여 — 닉네임 발급 후 참여 */}
-						{!nickname && (
-							<View style={styles.myCard}>
-								{rankingReady ? (
-									<>
-										<Text style={styles.joinTitle}>{t('challenge.time.joinTitle')}</Text>
-										<View style={styles.nickCard}>
-											<Text style={styles.nickValue} numberOfLines={1}>{nickInput}</Text>
-											<TouchableOpacity style={styles.diceBtn} activeOpacity={0.8} hitSlop={Layout.hitSlop} onPress={rollNickname} accessibilityRole="button" accessibilityLabel={t('challenge.time.rollA11y')}>
-												<Animated.View style={{ transform: [{ rotate: diceSpin.interpolate({ inputRange: [0, 1], outputRange: ['0deg', '360deg'] }) }] }}>
-													<IconComponent type="materialIcons" name="casino" size={scaledSize(22)} color={Colors.primary} />
-												</Animated.View>
-											</TouchableOpacity>
-										</View>
-										<TouchableOpacity style={[styles.joinBtn, joining && { opacity: 0.6 }]} activeOpacity={0.9} disabled={joining} onPress={joinRanking}>
-											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(18)} color={Colors.onFill} />
-											<Text style={styles.joinBtnText}>{joining ? t('challenge.time.joining') : t('challenge.time.join')}</Text>
-										</TouchableOpacity>
-										<Text style={styles.joinHint}>{t('challenge.time.joinHint')}</Text>
-									</>
-								) : (
-									<Text style={styles.myCardHint}>{t('challenge.time.notReady')}</Text>
-								)}
-							</View>
-						)}
 
 						{/* 내 기록 요약 */}
 						<View style={styles.statRow}>
@@ -400,7 +296,7 @@ const Challenge = () => {
 					<FadeInUp>
 						{(() => {
 							const cleared = tower.clearedLevels.length;
-							const next = TOWER_LEVELS.find((f) => !tower.clearedLevels.includes(f.level));
+							const next = towerNext;
 							return (
 								<TouchableOpacity style={styles.towerCard} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
 									<Image source={require('@/src/assets/tower/tower-challenge-hero.webp')} style={styles.towerHero} contentFit="cover" />
@@ -418,6 +314,19 @@ const Challenge = () => {
 								</TouchableOpacity>
 							);
 						})()}
+						{/* 현재 층 표지판 — 지금 몇 층을 오르는 중인지 한눈에 */}
+						<View style={styles.floorPlate} accessible accessibilityLabel={towerNext ? t('challenge.tower.current', { n: towerNext.level }) : t('challenge.tower.allCleared')}>
+							<View style={styles.floorIcon}>
+								<IconComponent type="materialIcons" name={towerNext ? 'north' : 'emoji-events'} size={scaledSize(18)} color={Colors.onFill} />
+							</View>
+							<Text style={styles.floorLabel} numberOfLines={1}>{towerNext ? t('challenge.tower.currentLabel') : t('challenge.tower.allCleared')}</Text>
+							{towerNext && (
+								<Text style={styles.floorNum}>
+									{towerNext.level}
+									<Text style={styles.floorUnit}>{t('challenge.tower.floorUnit')}</Text>
+								</Text>
+							)}
+						</View>
 						<TouchableOpacity style={styles.startBtn} activeOpacity={0.9} onPress={() => router.push('/quiz/tower' as never)}>
 							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.startBtnText}>{t('challenge.tower.enter')}</Text>
@@ -454,7 +363,7 @@ const Challenge = () => {
 			<CharacterGuide
 				visible={guide.visible}
 				onClose={guide.close}
-				// 점수는 정답 수 × POINT_PER_CORRECT(콤보 가산 없음), 랭킹은 한 판 최고점만 반영 — RankingService.recordTimeChallenge
+				// 점수는 정답 수 × POINT_PER_CORRECT(콤보 가산 없음)
 				lines={[t('challenge.guide.line1'), t('challenge.guide.line2', { point: POINT_PER_CORRECT }), t('challenge.guide.line3')]}
 				title={t('challenge.guide.title')}
 				accent={Colors.heatDark}
@@ -496,37 +405,14 @@ const styles = themed(() => StyleSheet.create({
 	tabText: { fontSize: Typography.body, fontWeight: '800', color: Colors.textMuted },
 	tabTextOn: { color: Colors.primary },
 
-	// 타임챌린지 탭 — 랭킹 보드 (랭킹 화면 공용 컴포넌트 사용)
-	boardHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.md, marginBottom: SpacingV.lg },
-	rankHeadLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, flex: 1 },
 	rankHeadBody: { flex: 1, minWidth: 0 },
-	rankIcon: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: Radius.md, backgroundColor: withAlpha(Colors.primary, '14'), alignItems: 'center', justifyContent: 'center' },
-	rankTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
-	rankDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xxs },
-	moreBtn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, backgroundColor: Colors.primaryBg, borderRadius: Radius.pill, paddingLeft: Spacing.md, paddingRight: Spacing.sm, paddingVertical: SpacingV.xs },
-	moreText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
-	// 내 기록 카드 + 랭킹 참여
-	myCard: { backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
-	bestHero: { overflow: 'hidden', borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
+	// 내 최고 점수 히어로
+	bestHero: { overflow: 'hidden', borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	bestShine: { position: 'absolute', top: scaleHeight(-40), left: 0, width: scaleWidth(56), height: scaleHeight(200), backgroundColor: Colors.onBrandDivider },
 	bestHeroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
 	bestTrophy: { width: scaleWidth(42), height: scaleWidth(42), borderRadius: Radius.pill, backgroundColor: Colors.onBrandDivider, alignItems: 'center', justifyContent: 'center' },
 	bestLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse, opacity: 0.92 },
 	bestValue: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textInverse, marginTop: SpacingV.xxs },
-	bestRankRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: SpacingV.md },
-	bestRankLabel: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse, opacity: 0.92 },
-	// flexShrink:0 — 점수가 길어져도 '내 순위' 칩이 눌려 잘리지 않게 고정
-	bestPill: { flexShrink: 0, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.surface, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm },
-	bestPillText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.heatDeep },
-	bestHint: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textInverse, opacity: 0.9, marginTop: SpacingV.md },
-	myCardHint: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textSecondary, marginTop: SpacingV.md },
-	joinTitle: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginBottom: SpacingV.md },
-	nickCard: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, backgroundColor: Colors.surface, borderWidth: Border.thin, borderColor: Colors.primarySoft, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md },
-	nickValue: { flex: 1, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
-	diceBtn: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
-	joinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md, marginTop: SpacingV.md },
-	joinBtnText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.body, fontWeight: '900' },
-	joinHint: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center', marginTop: SpacingV.sm },
 
 	// 타임챌린지 탭 — 내 기록
 	statRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
@@ -545,6 +431,12 @@ const styles = themed(() => StyleSheet.create({
 	towerHero: { width: '100%', aspectRatio: isTablet ? 2 : 16 / 9 },
 	towerBody: { paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, gap: SpacingV.xs },
 	towerProgressRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: SpacingV.sm },
+	// 현재 층 표지판
+	floorPlate: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginTop: SpacingV.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, borderRadius: Radius.lg, backgroundColor: Colors.primarySoft },
+	floorIcon: { width: scaleWidth(32), height: scaleWidth(32), borderRadius: Radius.pill, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center' },
+	floorLabel: { flex: 1, fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
+	floorNum: { fontSize: Typography.display, fontWeight: '900', color: Colors.primaryDeep },
+	floorUnit: { fontSize: Typography.callout },
 	towerMeta: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	towerTrack: { height: scaleHeight(8), borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, overflow: 'hidden' },
 	towerFill: { height: '100%', borderRadius: Radius.pill, backgroundColor: Colors.primary },

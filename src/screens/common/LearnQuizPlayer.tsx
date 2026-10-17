@@ -1468,6 +1468,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							{current.imageRef ? (
 								<>
 									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176))} fetchWidth={isTablet ? 640 : 420} />
+									{/* 그림 문항은 prompt 가 발문 그 자체다(OX 는 발문에 감싸 들어간다). 발문에 없는 글이면
+									    그림이 곁들임일 뿐인 문항(신화 로마 이름 등)이라 문제 글도 함께 보여 준다 */}
+									{!current.guide.includes(current.prompt) && <Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, styles.promptWithImage]}>{current.prompt}</Text>}
 									{!!current.subPrompt && <Text style={styles.subPromptText}>{current.subPrompt}</Text>}
 								</>
 							) : (
@@ -1841,6 +1844,7 @@ const styles = themed(() => StyleSheet.create({
 	promptFrameChat: { alignItems: 'center', backgroundColor: 'transparent', paddingHorizontal: Spacing.xs },
 	promptFrameSentence: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: Colors.border },
 	promptText: { fontSize: Typography.h2, fontWeight: '900', color: Colors.primary, textAlign: 'center', lineHeight: scaleHeight(33) },
+	promptWithImage: { marginTop: SpacingV.md },
 	subPromptText: { fontSize: Typography.callout, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(22) },
 
 	option: {

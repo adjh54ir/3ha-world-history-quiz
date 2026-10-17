@@ -280,24 +280,8 @@
             "time": {
                 "heroTitle": "180 s de course avec le lion",
                 "heroDesc": "Répondez juste un maximum avant la fin du temps et battez votre record",
-                "rankTitle": "Classement Chrono",
-                "rankDesc": "180 s de concentration pure",
-                "viewAll": "Tout voir",
-                "bestWithNick": "{{nickname}} · Meilleur score",
                 "myBest": "Mon record",
                 "scoreValue": "{{value}} pts",
-                "myRank": "Mon rang",
-                "rankValue": "{{rank}}e",
-                "notJoined": "Non inscrit",
-                "bestHint": "Le classement retient votre meilleure partie, pas le cumul",
-                "joinTitle": "Rejoignez le classement pour vous mesurer à tous",
-                "joining": "Inscription…",
-                "join": "Rejoindre le classement Chrono",
-                "joinHint": "Pour éviter les grossièretés, les pseudos sont aléatoires",
-                "rollA11y": "Tirer un autre pseudo",
-                "notReady": "Le classement n'est pas encore prêt",
-                "joinedToast": "Vous avez rejoint le classement !",
-                "joinFailedToast": "Inscription impossible. Réessayez dans un instant",
                 "plays": "Parties",
                 "bestCombo": "Meilleur combo",
                 "historyTitle": "Scores par partie",
@@ -314,7 +298,10 @@
                 "attempts": "Encore {{count}} essais aujourd'hui",
                 "attempts_one": "Encore {{count}} essai aujourd'hui",
                 "attempts_other": "Encore {{count}} essais aujourd'hui",
-                "enter": "Entrer dans la tour"
+                "enter": "Entrer dans la tour",
+                "current": "Étage {{n}} en cours",
+                "currentLabel": "En pleine ascension",
+                "floorUnit": "e"
             },
             "modes": {
                 "mix": {
@@ -384,10 +371,10 @@
                 }
             },
             "guide": {
-                "title": "Le Chrono, mode d'emploi",
-                "line1": "Un maximum de bonnes réponses en 180 secondes.",
-                "line2": "{{point}} pts par bonne réponse, votre meilleure série devient votre combo record.",
-                "line3": "Au classement, c'est votre meilleure partie qui compte."
+                "title": "Les défis, mode d'emploi",
+                "line1": "En Chrono, {{point}} pts par bonne réponse pendant 180 secondes.",
+                "line2": "Dans la Tour, battez le boss de chaque étage jusqu'au sommet.",
+                "line3": "Chaque partie s'ajoute à vos records, et la meilleure porte la couronne."
             }
         },
         "stats": {
@@ -496,7 +483,7 @@
             "guide": {
                 "title": "Mon activité, mode d'emploi",
                 "line1": "Vos parties et apprentissages s'enregistrent ici automatiquement.",
-                "line2": "Les onglets du milieu affichent Apprendre, Quiz ou Chrono.",
+                "line2": "Les onglets du milieu affichent Apprendre, Quiz, Chrono ou Du jour.",
                 "line3": "Touchez un badge en bas pour voir comment l'obtenir."
             }
         },
@@ -595,6 +582,11 @@
                 "completeLearning": "Terminer tout l'apprentissage",
                 "completedQuizzes": "Tous les quiz marqués terminés",
                 "completedLearning": "Tout l'apprentissage marqué terminé"
+            },
+            "language": {
+                "desc": "Touchez pour changer la langue de l'app",
+                "pickTitle": "Choisir la langue",
+                "pickSub": "L'app se rouvre dans la langue choisie"
             }
         },
         "search": {
@@ -1700,7 +1692,8 @@
                     "platinum": "Platine",
                     "diamond": "Diamant",
                     "master": "Maître"
-                }
+                },
+                "botNames": "Gabriel,Jade,Louis,Louise,Raphaël,Emma,Jules,Alice,Adam,Lina,Arthur,Chloé,Hugo,Léa"
             },
             "onboarding": {
                 "vocabLabel": "Géographie · Histoire",

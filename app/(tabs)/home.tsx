@@ -8,7 +8,7 @@ import { router, useFocusEffect } from 'expo-router';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
+import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border, DisplayText } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet} from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -614,9 +614,10 @@ const Hub = () => {
 											<Text style={styles.topicExampleText} numberOfLines={2}>{topicPreview[d.key]?.example}</Text>
 										</View>
 									)}
-									<View style={[styles.topicBtn, { backgroundColor: d.color }]}>
-										<Text style={[styles.topicBtnText, { color: readableOn(d.color) }]}>{t('common.start')}</Text>
-										<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={readableOn(d.color)} />
+									{/* 주제색 버튼은 주황·노랑에서 글자가 검게 바뀌어 카드마다 들쭉날쭉했다 — 서브 퀴즈와 같은 브랜드색으로 통일 */}
+									<View style={[styles.topicBtn, { backgroundColor: Colors.primary }]}>
+										<Text style={styles.topicBtnText}>{t('common.start')}</Text>
+										<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(15)} color={Colors.onFill} />
 									</View>
 								</TouchableOpacity>
 							)}

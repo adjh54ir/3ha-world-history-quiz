@@ -280,24 +280,8 @@
             "time": {
                 "heroTitle": "180 s a toda marcha con el león",
                 "heroDesc": "Acierta todo lo que puedas antes de que acabe el tiempo y bate tu récord",
-                "rankTitle": "Ranking contrarreloj",
-                "rankDesc": "180 s de máxima concentración",
-                "viewAll": "Ver todo",
-                "bestWithNick": "{{nickname}} · Récord",
                 "myBest": "Mi récord",
                 "scoreValue": "{{value}} pts",
-                "myRank": "Mi puesto",
-                "rankValue": "N.º {{rank}}",
-                "notJoined": "Sin unirte",
-                "bestHint": "El ranking cuenta tu mejor partida, no el total acumulado",
-                "joinTitle": "Únete al ranking y compite con todos",
-                "joining": "Uniéndote…",
-                "join": "Unirme al ranking contrarreloj",
-                "joinHint": "Para evitar groserías, el apodo se genera al azar",
-                "rollA11y": "Generar otro apodo",
-                "notReady": "El ranking aún no está listo",
-                "joinedToast": "¡Te uniste al ranking!",
-                "joinFailedToast": "No pudimos unirte al ranking. Inténtalo de nuevo en un momento",
                 "plays": "Partidas",
                 "bestCombo": "Mejor combo",
                 "historyTitle": "Puntos por partida",
@@ -312,7 +296,10 @@
                 "desc": "Vence al jefe de cada piso y llega a la cima",
                 "cleared": "Pisos superados {{cleared}} / {{total}}",
                 "attempts": "Intentos hoy: {{count}}",
-                "enter": "Entrar a la torre"
+                "enter": "Entrar a la torre",
+                "current": "Ahora en el piso {{n}}",
+                "currentLabel": "Subiendo",
+                "floorUnit": "P"
             },
             "modes": {
                 "mix": {
@@ -382,10 +369,10 @@
                 }
             },
             "guide": {
-                "title": "Así se juega la contrarreloj",
-                "line1": "Acierta todo lo que puedas en 180 segundos.",
-                "line2": "Cada acierto vale {{point}} pts; tu mejor racha queda como combo.",
-                "line3": "En el ranking compites con tu mejor partida."
+                "title": "Así se juegan los retos",
+                "line1": "En Contrarreloj, cada acierto vale {{point}} pts durante 180 segundos.",
+                "line2": "En la Torre, vence al jefe de cada piso y sube hasta la cima.",
+                "line3": "Cada partida queda en tus récords y la mejor lleva la corona."
             }
         },
         "stats": {
@@ -494,7 +481,7 @@
             "guide": {
                 "title": "Así funciona tu actividad",
                 "line1": "Tu historial de estudio y quizzes se guarda aquí solo.",
-                "line2": "Usa las pestañas para ver aprendizaje, quizzes o contrarreloj.",
+                "line2": "Usa las pestañas para ver aprendizaje, quizzes, contrarreloj o el quiz del día.",
                 "line3": "Toca una insignia abajo para ver cómo conseguirla."
             }
         },
@@ -593,6 +580,11 @@
                 "completeLearning": "Completar todo el estudio",
                 "completedQuizzes": "Todos los quizzes marcados como hechos",
                 "completedLearning": "Todo el estudio marcado como hecho"
+            },
+            "language": {
+                "desc": "Toca para cambiar el idioma de la app",
+                "pickTitle": "Elegir idioma",
+                "pickSub": "La app se vuelve a abrir en el idioma elegido"
             }
         },
         "search": {
@@ -1696,7 +1688,8 @@
                     "platinum": "Platino",
                     "diamond": "Diamante",
                     "master": "Maestro"
-                }
+                },
+                "botNames": "Hugo,Lucía,Mateo,Sofía,Martín,Martina,Leo,María,Daniel,Julia,Pablo,Paula,Álvaro,Valeria"
             },
             "onboarding": {
                 "vocabLabel": "Geografía · Historia",

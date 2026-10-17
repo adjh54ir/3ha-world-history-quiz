@@ -578,7 +578,15 @@ const TowerQuizScreen = () => {
 							<View style={styles.questionTextWrap}>
 								{/* minimumFontScale 이 없으면 안드로이드가 lineHeight 상자까지 폭으로 계산해 글자를 터무니없이 줄인다 */}
 								{currentQuestion.imageRef ? (
-									<EntryImage imageRef={currentQuestion.imageRef} width={scaleArt(150)} fetchWidth={isTablet ? 640 : 360} />
+									<>
+										<EntryImage imageRef={currentQuestion.imageRef} width={scaleArt(150)} fetchWidth={isTablet ? 640 : 360} />
+										{/* 그림이 곁들임일 뿐인 문항(신화 로마 이름 등)은 묻는 대상 글도 함께 */}
+										{!currentQuestion.question.includes(currentQuestion.proverb) && (
+											<Text style={styles.questionTarget} numberOfLines={3} adjustsFontSizeToFit minimumFontScale={0.75}>
+												{currentQuestion.proverb}
+											</Text>
+										)}
+									</>
 								) : (
 									<Text style={styles.questionTarget} numberOfLines={3} adjustsFontSizeToFit minimumFontScale={0.75}>
 										{currentQuestion.proverb}

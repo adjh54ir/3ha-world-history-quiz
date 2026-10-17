@@ -56,7 +56,8 @@ interface LeagueState {
 	leagueIndex: number;
 }
 
-const BOT_NAMES = ['민준', '서연', '도윤', '지우', '하준', '수아', '지호', '예준', '시우', '유나', '건우', '채원', '주원', '서윤'];
+/** 봇 이름 — 언어마다 그 나라에서 흔한 이름 14개 (쉼표 구분). 영어 화면에 한국 이름만 뜨지 않게 번역 파일에 둔다 */
+const botNames = (): string[] => i18n.t('svc.league.botNames').split(',');
 
 const sundayOf = (dateKey: string): string => DateUtils.addLocalDays(dateKey, -DateUtils.getLocalDayOfWeek(dateKey));
 
@@ -84,7 +85,7 @@ const xpForDates = (dailyLog: Record<string, { solved: number; correct: number }
 
 const makeBots = (weekId: string, leagueIndex: number): { name: string; xp: number; isMe: boolean }[] => {
 	const r = mulberry32(hash(`${weekId}|${leagueIndex}`));
-	const names = [...BOT_NAMES].sort(() => r() - 0.5).slice(0, 9);
+	const names = botNames().sort(() => r() - 0.5).slice(0, 9);
 	const base = (leagueIndex + 1) * 120;
 	return names.map((name) => ({ name, xp: Math.round(base * (0.35 + r() * 1.5)), isMe: false }));
 };

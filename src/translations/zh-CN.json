@@ -272,24 +272,8 @@
             "time": {
                 "heroTitle": "与历史小狮子一起，180秒冲刺",
                 "heroDesc": "时间结束前答对更多题，冲击最高纪录",
-                "rankTitle": "限时挑战排行榜",
-                "rankDesc": "180秒瞬间专注力对决",
-                "viewAll": "查看全部",
-                "bestWithNick": "{{nickname}} · 最高分",
                 "myBest": "我的最高分",
                 "scoreValue": "{{value}}分",
-                "myRank": "我的排名",
-                "rankValue": "第{{rank}}名",
-                "notJoined": "未参与",
-                "bestHint": "排行榜按单局最高分计算，不累计",
-                "joinTitle": "参与排行榜，和所有人一较高下",
-                "joining": "正在加入…",
-                "join": "加入限时挑战排行榜",
-                "joinHint": "为防止不当用语，昵称只能随机生成",
-                "rollA11y": "重新随机昵称",
-                "notReady": "排行榜还在准备中",
-                "joinedToast": "已加入排行榜！",
-                "joinFailedToast": "加入排行榜失败，请稍后再试",
                 "plays": "局数",
                 "bestCombo": "最高连击",
                 "historyTitle": "每局得分",
@@ -302,7 +286,10 @@
                 "desc": "逐层击败首领，一路登顶",
                 "cleared": "已征服 {{cleared}} / {{total}} 层",
                 "attempts": "今日剩余挑战 {{count}} 次",
-                "enter": "进入爬塔挑战"
+                "enter": "进入爬塔挑战",
+                "current": "当前在第 {{n}} 层",
+                "currentLabel": "正在攀登",
+                "floorUnit": "层"
             },
             "modes": {
                 "mix": {
@@ -372,10 +359,10 @@
                 }
             },
             "guide": {
-                "title": "限时挑战玩法",
-                "line1": "在180秒内尽可能多地答对题目。",
-                "line2": "每答对1题得{{point}}分，连续答对记为最高连击。",
-                "line3": "加入排行榜，用单局最高分一争排名。"
+                "title": "挑战玩法",
+                "line1": "限时挑战中，180秒内每答对1题得{{point}}分。",
+                "line2": "爬塔挑战中，击败每层的首领，登上塔顶。",
+                "line3": "每局都会留下记录，最高分会戴上皇冠。"
             }
         },
         "stats": {
@@ -484,7 +471,7 @@
             "guide": {
                 "title": "我的动态使用指南",
                 "line1": "学习和答题记录会自动汇总到这里。",
-                "line2": "用中间的标签切换学习、答题、限时挑战记录。",
+                "line2": "用中间的标签切换学习、答题、限时挑战、今日一测记录。",
                 "line3": "点击底部徽章，查看获得条件。"
             }
         },
@@ -583,6 +570,11 @@
                 "completeLearning": "完成全部学习",
                 "completedQuizzes": "已将全部答题标记为完成",
                 "completedLearning": "已将全部学习标记为完成"
+            },
+            "language": {
+                "desc": "点击更改应用语言",
+                "pickTitle": "选择语言",
+                "pickSub": "选择后应用将以新语言重新打开"
             }
         },
         "search": {
@@ -1668,7 +1660,8 @@
                     "platinum": "铂金",
                     "diamond": "钻石",
                     "master": "大师"
-                }
+                },
+                "botNames": "子轩,欣怡,浩然,梓涵,宇航,诗涵,俊杰,雨桐,明轩,佳怡,博文,思琪,天佑,若曦"
             },
             "onboarding": {
                 "vocabLabel": "世界地理 · 历史",

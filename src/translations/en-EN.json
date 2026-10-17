@@ -280,24 +280,8 @@
             "time": {
                 "heroTitle": "180-second dash with the History Lion",
                 "heroDesc": "Get as many right as you can before time runs out and beat your best",
-                "rankTitle": "Time Challenge Ranking",
-                "rankDesc": "A 180-second focus showdown",
-                "viewAll": "See all",
-                "bestWithNick": "{{nickname}} · Best score",
                 "myBest": "My best",
                 "scoreValue": "{{value}} pts",
-                "myRank": "My rank",
-                "rankValue": "#{{rank}}",
-                "notJoined": "Not joined",
-                "bestHint": "Rankings use your best single-game score, not your total",
-                "joinTitle": "Join the ranking to compete with everyone",
-                "joining": "Joining…",
-                "join": "Join Time Challenge ranking",
-                "joinHint": "To prevent offensive names, nicknames are randomly generated",
-                "rollA11y": "Reroll nickname",
-                "notReady": "Ranking isn't ready yet",
-                "joinedToast": "You joined the ranking!",
-                "joinFailedToast": "Couldn't join the ranking. Please try again shortly",
                 "plays": "Plays",
                 "bestCombo": "Best combo",
                 "historyTitle": "Scores by Game",
@@ -314,7 +298,10 @@
                 "attempts": "{{count}} tries left today",
                 "attempts_one": "{{count}} try left today",
                 "attempts_other": "{{count}} tries left today",
-                "enter": "Enter Tower Challenge"
+                "enter": "Enter Tower Challenge",
+                "current": "Now on floor {{n}}",
+                "currentLabel": "Now climbing",
+                "floorUnit": "F"
             },
             "modes": {
                 "mix": {
@@ -384,10 +371,10 @@
                 }
             },
             "guide": {
-                "title": "How to Play Time Challenge",
-                "line1": "Answer as many as you can in 180 seconds.",
-                "line2": "Each correct answer earns {{point}} pts, and your best streak is saved as your top combo.",
-                "line3": "Join the ranking to compete with your best single-game score."
+                "title": "How to Play Challenges",
+                "line1": "In Time, earn {{point}} pts for each correct answer within 180 seconds.",
+                "line2": "In Tower, beat a boss on each floor and climb to the top.",
+                "line3": "Every game adds to your records, and your best score wears the crown."
             }
         },
         "stats": {
@@ -496,7 +483,7 @@
             "guide": {
                 "title": "How to Read Activity",
                 "line1": "Your study and quiz records are saved here automatically.",
-                "line2": "Use the middle tabs to switch between study, quiz and Time Challenge.",
+                "line2": "Use the middle tabs to switch between Study, Quiz, Time and Daily records.",
                 "line3": "Tap a badge at the bottom to see how to earn it."
             }
         },
@@ -595,6 +582,11 @@
                 "completeLearning": "Complete all study",
                 "completedQuizzes": "Marked all quizzes as complete",
                 "completedLearning": "Marked all study as complete"
+            },
+            "language": {
+                "desc": "Tap to change the app language",
+                "pickTitle": "Choose language",
+                "pickSub": "The app reopens in the language you pick"
             }
         },
         "search": {
@@ -1692,7 +1684,8 @@
                     "platinum": "Platinum",
                     "diamond": "Diamond",
                     "master": "Master"
-                }
+                },
+                "botNames": "Liam,Olivia,Noah,Emma,Oliver,Ava,Ethan,Mia,Lucas,Chloe,Mason,Grace,Leo,Ruby"
             },
             "onboarding": {
                 "vocabLabel": "Geography · History",

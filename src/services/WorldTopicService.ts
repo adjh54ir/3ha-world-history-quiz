@@ -74,7 +74,9 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		toQuizQuestion(q: WorldType.Question): LearnType.QuizQuestion {
 			const mode = topic.modes.find((m) => m.key === q.mode);
 			const question = text.modes[q.mode]?.question ?? text.label;
-			const imageRef = mode?.askAs ? makeImageRef(mode.askAs, q.prompt) : undefined;
+			const promptImage = mode?.askAs ? makeImageRef(mode.askAs, q.prompt) : undefined;
+			// 신화는 그림 문항이 아니어도(로마 이름·관장 분야·설명) 인물 그림을 함께 건다 — 문제 글은 그대로 둔다
+			const imageRef = promptImage ?? (key === 'myth' ? selectEntryImageRef(key, q.entry) : undefined);
 			const answerIndex = q.options.indexOf(q.answer);
 			// 해설은 "정답 — 이 항목이 무엇인지" 로 쓴다. 답이 이름이 아닌 문항(수도·대륙)은 이름을 앞에 붙여 무엇의 답인지 알린다
 			const answerIsName = mode?.answer === 'name';
@@ -84,7 +86,7 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 				domain: key,
 				kind: 'choice',
 				guide: question,
-				prompt: imageRef ? question : q.prompt,
+				prompt: promptImage ? question : q.prompt,
 				options: q.options,
 				answerIndex,
 				explanation: answerIsName ? `${q.entry.name} — ${q.entry.summary}` : `${q.entry.name}: ${q.answer}\n${q.entry.summary}`,

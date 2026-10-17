@@ -29,6 +29,7 @@ import { RequestNotificationPermission, CancelDailyWordReminder, SendTestNotific
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
+import LanguagePickerModal from '@/src/screens/modal/LanguagePickerModal';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
 import { shareApp as appShare } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
@@ -76,6 +77,7 @@ const Setting = () => {
 	const { t } = useTranslation();
 	const [reminderOn, setReminderOn] = useState(false);
 	const [showAlarm, setShowAlarm] = useState(false);
+	const [showLang, setShowLang] = useState(false);
 	const [interest, setInterestState] = useState<Interest>('both');
 	const [theme, setTheme] = useState<ThemeMode>(() => getThemeMode());
 	const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
@@ -419,20 +421,21 @@ const Setting = () => {
 					{/* 언어 — 고르면 저장하고 앱을 다시 읽는다 (주제·뱃지·세계 데이터가 켤 때 한 번 번역된다) */}
 					<SubHead label={t('settings.section.language')} icon="translate" />
 					<View style={styles.card}>
-						{LANGUAGE_OPTIONS.map((o, i) => {
-							const on = appLanguage() === o.code;
+						{(() => {
+							const cur = LANGUAGE_OPTIONS.find((o) => o.code === appLanguage()) ?? LANGUAGE_OPTIONS[0];
 							return (
-								<TouchableOpacity key={o.code} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => setAppLanguage(o.code)}>
-									<View style={[styles.rowIcon, { backgroundColor: on ? Colors.primarySoft : Colors.surfaceAlt }]}>
-										<Text style={[styles.langBadge, { color: on ? Colors.primary : Colors.textSecondary }]} numberOfLines={1}>{o.badge}</Text>
+								<TouchableOpacity style={styles.row} activeOpacity={0.7} onPress={() => setShowLang(true)}>
+									<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
+										<Text style={[styles.langBadge, { color: Colors.primary }]} numberOfLines={1}>{cur.badge}</Text>
 									</View>
 									<View style={styles.rowBody}>
-										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{o.label}</Text>
+										<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{cur.label}</Text>
+										<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.language.desc')}</Text>
 									</View>
-									{on && <IconComponent type="materialIcons" name="check-circle" size={scaledSize(20)} color={Colors.primary} />}
+									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							);
-						})}
+						})()}
 					</View>
 
 					{/* 관심 주제 — 홈 섹션 순서를 정한다 (온보딩에서 고른 값) */}
@@ -630,6 +633,16 @@ const Setting = () => {
 			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
 
 			<DailyAlarmModal visible={showAlarm} onClose={() => setShowAlarm(false)} onChange={setReminderOn} />
+
+			{/* 언어 선택 팝업 — 팝업을 먼저 닫고 저장·재시작한다(모달이 떠 있는 채로 다시 읽으면 창이 남는다) */}
+			<LanguagePickerModal
+				visible={showLang}
+				onClose={() => setShowLang(false)}
+				onSelect={(code) => {
+					setShowLang(false);
+					setAppLanguage(code);
+				}}
+			/>
 
 			{/* 데이터 초기화 전용 확인 팝업 */}
 			<ResetConfirmModal
