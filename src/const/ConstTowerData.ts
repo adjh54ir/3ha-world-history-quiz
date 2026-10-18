@@ -1,5 +1,6 @@
 // @/src/const/ConstTowerData.ts
 import i18n from '@/src/translations';
+import { localized } from '@/src/utils/ThemedStyles';
 
 /**
  * 층별 보스 데이터.
@@ -12,7 +13,7 @@ import i18n from '@/src/translations';
  * 네 색 모두 어두운 패널 위에서 4.5:1 이상으로 읽히는 중간 밝기다.
  * 배지 위 글씨는 `readableOn()` 로 면 밝기에 맞춰 고른다.
  */
-export const TOWER_LEVELS = [
+export const TOWER_LEVELS = localized(() => [
 	{
 		id: 1, // ← 추가
 		level: 1,
@@ -89,4 +90,4 @@ export const TOWER_LEVELS = [
 		color: '#F87171', // 붉은색 (도깨비)
 		clearCondition: i18n.t('tower.data.floor4.clearCondition'),
 	},
-];
+]);

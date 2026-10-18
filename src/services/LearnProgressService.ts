@@ -4,6 +4,8 @@ import { LearnType } from '@/src/types/data/LearnType';
 import DateUtils from '@/src/utils/DateUtils';
 import { CancelWrongReviewReminder } from '@/src/utils/NotifactionHelper';
 import i18n from '@/src/translations';
+import { relocalizer } from '@/src/services/world/WorldRelocalize';
+import { selectEntry } from '@/src/const/data/world/ConstWorldEntries';
 
 /**
  * 통합 학습/퀴즈 진행 데이터 영구 저장 서비스 (AsyncStorage)
@@ -61,6 +63,8 @@ export interface WrongItem {
 	guide?: string;
 	/** 그림 문항(국기·초상 맞히기)의 그림 참조 */
 	imageRef?: string;
+	/** 글자를 저장한 언어 — 지금 언어와 다르면 읽을 때 지금 언어로 되짚는다 (예전 데이터는 없음) */
+	lang?: string;
 }
 
 export interface DomainStat {
@@ -157,6 +161,27 @@ const serialize = <T>(fn: () => Promise<T>): Promise<T> => {
 	return run;
 };
 
+/** 언어를 적기 전의 예전 오답 — 곁가지가 지금 언어 항목과 같으면 지금 언어로 저장된 것이라 되짚지 않는다 (되짚기는 비싸다) */
+const savedInCurrentLanguage = (w: WrongItem): boolean => !w.lang && !!w.examples?.[0] && selectEntry(w.uid)?.facts[0] === w.examples[0];
+
+/** 오답 하나를 지금 언어로 되짚는다 (WorldRelocalize — 못 찾은 글자는 그대로) */
+const relocalizeWrong = (w: WrongItem): WrongItem => {
+	const tr = relocalizer(w.domain, w.uid);
+	return {
+		...w,
+		domainTitle: tr(w.domainTitle),
+		prompt: tr(w.prompt),
+		subTitle: tr(w.subTitle),
+		answer: tr(w.answer),
+		explanation: tr(w.explanation),
+		level: tr(w.level),
+		categoryLabel: tr(w.categoryLabel),
+		examples: w.examples?.map((e) => tr(e)),
+		guide: tr(w.guide),
+		lang: i18n.language,
+	};
+};
+
 const writeJson = async (key: string, value: unknown): Promise<void> => {
 	try {
 		await AsyncStorage.setItem(key, JSON.stringify(value));
@@ -222,8 +247,13 @@ const LearnProgressService = {
 	},
 
 	// ── 오답노트 ──────────────────────────────
+	/**
+	 * 오답노트는 문항 글자를 그대로 저장한다 — 저장한 뒤 언어를 바꿨으면 지금 언어로 되짚어 돌려준다.
+	 * 되짚은 값은 다음 쓰기(추가·복습 결과·삭제) 때 함께 저장돼 차츰 지금 언어로 맞춰진다.
+	 */
 	async getWrongNotes(): Promise<WrongItem[]> {
-		return readJson<WrongItem[]>(KEY.WRONG_NOTES, []);
+		const list = await readJson<WrongItem[]>(KEY.WRONG_NOTES, []);
+		return list.map((w) => (w.lang === i18n.language || savedInCurrentLanguage(w) ? w : relocalizeWrong(w)));
 	},
 
 	/** 오답 추가 (uid 기준 중복 제거, 최신 우선, 최대 WRONG_CAP개 유지) */
@@ -236,6 +266,7 @@ const LearnProgressService = {
 		// 같은 문항을 또 틀리면 누적 횟수를 올린다(반복 오답 우선 복습용)
 		const fresh = items.map((i) => ({
 			...i,
+			lang: i18n.language,
 			addedAt: now,
 			reviewStage: 0,
 			nextReviewAt: reviewDueAt(REVIEW_INTERVALS_DAY[0]),
@@ -245,6 +276,15 @@ const LearnProgressService = {
 			if (!map.has(w.uid)) map.set(w.uid, w);
 		});
 		await writeJson(KEY.WRONG_NOTES, Array.from(map.values()).slice(0, WRONG_CAP));
+	},
+
+	/** 그 시각까지 복습할 차례가 되는 오답 수 — 오답 복습 알림 문구의 개수 */
+	async countDueWrongNotesAt(at: number): Promise<number> {
+		try {
+			return (await this.getWrongNotes()).filter((w) => (w.nextReviewAt ?? 0) <= at).length;
+		} catch {
+			return 0;
+		}
 	},
 
 	/** 복습할 때가 된 오답 (예정 시각이 지난 것 · 오래된 것 우선). 예정 시각이 없는 기존 데이터도 대상 */

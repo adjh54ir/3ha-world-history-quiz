@@ -5,6 +5,7 @@
  */
 import i18n, { appLanguage } from '@/src/translations';
 import { koTerm } from '@/src/const/data/world/ConstWorldEntries';
+import { localized } from '@/src/utils/ThemedStyles';
 
 /** 카테고리 태그용 아이콘 */
 export const CATEGORY_ICON = 'sell';
@@ -14,18 +15,18 @@ export const DIFFICULTY_ICON = 'bar-chart';
 
 /**
  * 필터/드롭다운에서 사용하는 공통 난이도 표시 순서 (초급→특급)
- * 언어는 번들이 살아 있는 동안 고정이라 정의할 때 번역한다 — 문항·카드·필터가 모두 이 값을 쓰므로 언어 안에서는 서로 맞는다.
+ * 언어마다 한 번 번역해 둔다(localized) — 문항·카드·필터가 모두 이 값을 쓰므로 언어 안에서는 서로 맞는다.
  * 난이도를 가리킬 때는 '초급' 같은 글자 대신 DIFFICULTY_ORDER[i] / DIFFICULTY_LABELS[n] 을 쓴다.
  */
-export const DIFFICULTY_ORDER: readonly string[] = [
+export const DIFFICULTY_ORDER = localized((): readonly string[] => [
 	i18n.t('special.levelTest.grades.beginner.title'),
 	i18n.t('special.levelTest.grades.intermediate.title'),
 	i18n.t('special.levelTest.grades.advanced.title'),
 	i18n.t('special.levelTest.grades.expert.title'),
-];
+]);
 
 /** 숫자 난이도 공통 표기 (데이터 경계에서 한 번만 변환) */
-export const DIFFICULTY_LABELS: Readonly<Record<number, string>> = { 1: DIFFICULTY_ORDER[0], 2: DIFFICULTY_ORDER[1], 3: DIFFICULTY_ORDER[2], 4: DIFFICULTY_ORDER[3] };
+export const DIFFICULTY_LABELS = localized((): Readonly<Record<number, string>> => ({ 1: DIFFICULTY_ORDER[0], 2: DIFFICULTY_ORDER[1], 3: DIFFICULTY_ORDER[2], 4: DIFFICULTY_ORDER[3] }));
 
 /** 난이도 라벨 전체 순서 (세계 상식 항목은 1~4단계 = 초급~특급) */
 export const LEVEL_ORDER: readonly string[] = DIFFICULTY_ORDER;

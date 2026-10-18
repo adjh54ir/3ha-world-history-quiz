@@ -32,6 +32,7 @@ import BadgeDexModal from '@/src/screens/modal/BadgeDexModal';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
+import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { useToast } from '@/src/context/ToastContext';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
@@ -383,7 +384,7 @@ const Hub = () => {
 		});
 	};
 
-	// 핸들러에서 시작되는 애니메이션(닫기 페이드·캐릭터 미리보기)도 언마운트 시 정리
+	// 핸들러에서 시작되는 애니메이션(닫기 페이드·캐릭터 미리보기)도 언마운트 시 정리 — 완료 콜백은 finished 일 때만 상태를 바꾼다
 	useEffect(() => () => {
 		recFade.stopAnimation();
 		curFade.stopAnimation();
@@ -393,14 +394,14 @@ const Hub = () => {
 	/** 오늘의 추천 닫기 → 스르륵 사라지고 날짜가 바뀔 때까지 다시 뜨지 않음 */
 	const dismissRecommend = () => {
 		AsyncStorage.setItem(REC_DISMISS_KEY, DateUtils.getLocalDateString()).catch(() => {});
-		Animated.timing(recFade, { toValue: 0, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(() => setRecHidden(true));
+		Animated.timing(recFade, { toValue: 0, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(({ finished }) => finished && setRecHidden(true));
 		showToast(t('home.toast.recommendHidden'), 'visibility-off');
 	};
 
 	/** 완주 축하 닫기 → 커리큘럼 카드가 스르륵 사라짐 */
 	const closeCurriculumCelebrate = () => {
 		setCurCelebrate(false);
-		Animated.timing(curFade, { toValue: 0, duration: 520, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(() => setCurHidden(true));
+		Animated.timing(curFade, { toValue: 0, duration: 520, easing: Easing.out(Easing.quad), useNativeDriver: true }).start(({ finished }) => finished && setCurHidden(true));
 	};
 
 	useFocusEffect(useCallback(() => {
@@ -1097,8 +1098,14 @@ const Hub = () => {
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</View>
 							</View>
-							<Text style={styles.dailyTitle} numberOfLines={2} ellipsizeMode="tail">{daily.title}</Text>
-							<Text style={styles.dailyMeaning} numberOfLines={2}>{daily.description || daily.meaning}</Text>
+							{/* 그림이 있는 항목(국기·초상·사진·천체)은 오른쪽에 함께 보여 준다 */}
+							<View style={styles.dailyBody}>
+								<View style={styles.dailyText}>
+									<Text style={styles.dailyTitle} numberOfLines={2} ellipsizeMode="tail">{daily.title}</Text>
+									<Text style={styles.dailyMeaning} numberOfLines={2}>{daily.description || daily.meaning}</Text>
+								</View>
+								{!!daily.imageRef && <EntryImage imageRef={daily.imageRef} width={scaleArt(76)} fetchWidth={isTablet ? 320 : 200} compact style={styles.dailyThumb} />}
+							</View>
 						</TouchableOpacity>
 					</View>
 				)}
@@ -1385,6 +1392,7 @@ const Hub = () => {
 							</View>
 							{!!daily.subTitle && <Text style={styles.modalSub} numberOfLines={2} ellipsizeMode="tail">{daily.subTitle}</Text>}
 							<ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={false}>
+								{!!daily.imageRef && <EntryImage imageRef={daily.imageRef} width={scaleWidth(132)} fetchWidth={320} zoomable style={styles.modalImage} />}
 								<View style={styles.modalGroup}>
 									<Text style={[styles.modalLabel, { color: dailyAccent }]}>{t('home.daily.meaning')}</Text>
 									<Text style={styles.modalText}>{daily.description || daily.meaning}</Text>
@@ -1544,8 +1552,11 @@ const styles = themed(() => StyleSheet.create({
 	dailyCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.sectionGap },
 	dailyHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	dailyHeadRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-	dailyTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.lg },
+	dailyBody: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginTop: SpacingV.lg },
+	dailyText: { flex: 1 },
+	dailyTitle: { fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
 	dailyMeaning: { fontSize: Typography.body, color: Colors.text, marginTop: SpacingV.sm, lineHeight: scaleHeight(20) },
+	dailyThumb: { alignSelf: 'flex-start', borderRadius: Radius.md, backgroundColor: Colors.surfaceAlt },
 
 	// 공통 칩
 	chip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.sm },
@@ -1630,6 +1641,7 @@ const styles = themed(() => StyleSheet.create({
 	modalTitle: { flex: 1, fontSize: Typography.h2, fontWeight: '900', color: Colors.textStrong },
 	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm },
 	modalScroll: { marginTop: SpacingV.lg, flexGrow: 0, flexShrink: 1 },
+	modalImage: { marginBottom: SpacingV.lg, borderRadius: Radius.md },
 	modalGroup: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg },
 	modalGroupDivider: { height: 1, backgroundColor: Colors.border, marginVertical: SpacingV.lg },
 	modalLabel: { fontSize: Typography.footnote, fontWeight: '900', marginBottom: SpacingV.sm },

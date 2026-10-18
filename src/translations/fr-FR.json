@@ -602,7 +602,7 @@
             "language": {
                 "desc": "Touchez pour changer la langue de l'app",
                 "pickTitle": "Choisir la langue",
-                "pickSub": "L'app se rouvre dans la langue choisie"
+                "pickSub": "L'app passe tout de suite à la langue choisie"
             }
         },
         "search": {
@@ -1640,7 +1640,9 @@
                 "chipA11y": "{{title}}, {{value}}"
             },
             "entryImage": {
-                "broken": "Image indisponible"
+                "broken": "Image indisponible",
+                "zoomIn": "Agrandir l'image",
+                "zoomOut": "Réduire l'image"
             },
             "filterSheet": {
                 "closeA11y": "Fermer la sélection",

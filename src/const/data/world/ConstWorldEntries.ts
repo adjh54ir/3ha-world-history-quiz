@@ -1,6 +1,8 @@
 import type { WorldType } from '@/src/types/data/WorldType';
+import type { Language } from '@/src/hooks/language/schema';
 import { appLanguage } from '@/src/translations';
-import { WORLD_I18N } from './i18n';
+import { WORLD_I18N, type WorldLangPack } from './i18n';
+import { localized } from '@/src/utils/ThemedStyles';
 import capital from './capital.json';
 import landmark from './landmark.json';
 import nature from './nature.json';
@@ -84,15 +86,13 @@ const SOURCE: Record<WorldType.TopicKey, WorldType.Entry[]> = {
 };
 
 /**
- * 앱 언어로 옮긴 항목 — 언어는 앱을 켤 때 정해지고 바꾸면 번들을 다시 읽으므로 한 번만 만든다.
+ * 앱 언어로 옮긴 항목 — 언어마다 한 번만 만든다 (설정에서 언어를 바꾸면 다음 읽기부터 새 언어 값이 나온다).
  * id·등급·그림 열쇠는 그대로 두고 글자만 바꾼다 (저장된 즐겨찾기·오답노트는 id 로 찾아온다).
  * 필드 값은 terms 한 표로 옮긴다 — 같은 '아시아' 가 어느 항목에서나 같은 말이어야 보기 묶음·오답 갈래가 흩어지지 않는다.
  */
-const pack = WORLD_I18N[appLanguage()];
-const term = (value: string): string => pack?.terms[value] ?? value;
-
-const localize = (topic: WorldType.TopicKey, entry: WorldType.Entry): WorldType.Entry => {
+const localize = (pack: WorldLangPack | undefined, topic: WorldType.TopicKey, entry: WorldType.Entry): WorldType.Entry => {
 	if (!pack) return entry;
+	const term = (value: string): string => pack.terms[value] ?? value;
 	const text = pack.topics[topic]?.[entry.id];
 	return {
 		...entry,
@@ -104,16 +104,27 @@ const localize = (topic: WorldType.TopicKey, entry: WorldType.Entry): WorldType.
 	};
 };
 
-export const WORLD_ENTRIES = Object.fromEntries(
-	(Object.keys(SOURCE) as WorldType.TopicKey[]).map((topic) => [topic, SOURCE[topic].map((entry) => localize(topic, entry))]),
-) as Record<WorldType.TopicKey, WorldType.Entry[]>;
+export const WORLD_ENTRIES = localized(() => {
+	const pack = WORLD_I18N[appLanguage()];
+	return Object.fromEntries(
+		(Object.keys(SOURCE) as WorldType.TopicKey[]).map((topic) => [topic, SOURCE[topic].map((entry) => localize(pack, topic, entry))]),
+	) as Record<WorldType.TopicKey, WorldType.Entry[]>;
+});
+
+/** 같은 항목을 다른 언어로 옮긴 것 — 저장해 둔 글자(오답노트)가 어느 언어의 어느 자리였는지 되짚을 때 쓴다 */
+export const entryIn = (language: Language, topic: WorldType.TopicKey, id: string): WorldType.Entry | undefined => {
+	const entry = SOURCE[topic]?.find((e) => e.id === id);
+	return entry && localize(WORLD_I18N[language], topic, entry);
+};
 
 /** 번역된 값 → 한국어 원래 값. 대륙·시대 이름으로 아이콘을 고르는 것처럼 한국어 낱말에 기대는 코드가 쓴다 */
-const KO_TERMS: Record<string, string> = Object.fromEntries(Object.entries(pack?.terms ?? {}).map(([ko, tr]) => [tr, ko]));
+const KO_TERMS = localized((): Record<string, string> => Object.fromEntries(Object.entries(WORLD_I18N[appLanguage()]?.terms ?? {}).map(([ko, tr]) => [tr, ko])));
 export const koTerm = (value: string): string => KO_TERMS[value] ?? value;
 
-export const ALL_WORLD_ENTRIES: WorldType.Entry[] = Object.values(WORLD_ENTRIES).flat();
+export const ALL_WORLD_ENTRIES = localized((): WorldType.Entry[] => Object.values(WORLD_ENTRIES).flat());
+
+// 배열을 Proxy 너머로 훑으면 원소마다 언어를 다시 확인한다 — id 표를 한 번 만들어 한 번에 찾는다
+const ENTRY_BY_ID = localized((): Record<string, WorldType.Entry> => Object.fromEntries(ALL_WORLD_ENTRIES.map((entry) => [entry.id, entry])));
 
 /** id 로 한 항목 찾기 — 오답 노트·뱃지처럼 id 만 들고 있는 자리에서 쓴다 */
-export const selectEntry = (id: string): WorldType.Entry | undefined =>
-	ALL_WORLD_ENTRIES.find((entry) => entry.id === id);
+export const selectEntry = (id: string): WorldType.Entry | undefined => ENTRY_BY_ID[id];

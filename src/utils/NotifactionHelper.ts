@@ -303,6 +303,13 @@ const ReconcileNotificationSchedules = async () => {
         }
         else await CancelTodayQuizReminder();
 
+        // 오답 복습 예약이 다른 언어 문구로 걸려 있으면 같은 시각에 지금 언어로 다시 건다 (예약이 없으면 새로 만들지 않는다)
+        const wrongPending = (await notifee.getTriggerNotifications()).find((t) => t.notification?.id === WRONG_REVIEW_REMINDER_ID);
+        if (wrongPending && wrongPending.notification?.data?.lang !== i18n.language) {
+            const { default: LearnProgressService } = require('@/src/services/LearnProgressService');
+            await ScheduleWrongReviewReminder((at: number) => LearnProgressService.countDueWrongNotesAt(at));
+        }
+
         // 출석 스트릭 리마인더 — 오늘 아직 출석 안 했을 때만 21시에 알린다(끊기기 직전)
         const attendance = await AttendanceService.getState();
         const checkedToday = await AttendanceService.isCheckedToday();
@@ -320,6 +327,15 @@ const ReconcileNotificationSchedules = async () => {
 /** 오답 복습 리마인더 고정 id */
 const WRONG_REVIEW_REMINDER_ID = 'wrong-review-reminder';
 
+/** 앞으로 울릴 오답 복습 예약의 시각 (지정 시각 정각에 걸린 것만, 문구 언어는 따지지 않는다) */
+const pendingWrongReviewAt = async (hour: number): Promise<number | undefined> => {
+    const found = (await notifee.getTriggerNotifications()).find((t) => t.notification?.id === WRONG_REVIEW_REMINDER_ID);
+    const at = (found?.trigger as { timestamp?: number } | undefined)?.timestamp;
+    if (!at || at <= DateUtils.getTimestamp()) return undefined;
+    const { hour: h, minute } = DateUtils.getZonedParts(new Date(at));
+    return h === hour && minute === 0 ? at : undefined;
+};
+
 /**
  * 오답 복습 리마인더 예약 — 다음 날 지정 시각(기본 09:00) 1회 알림
  * - 오답이 쌓였을 때 호출. 같은 id로 기존 예약을 취소해 중복을 방지합니다.
@@ -330,11 +346,8 @@ const ScheduleWrongReviewReminder = async (count: number | ((at: number) => Prom
     try {
         // 이미 앞으로 울릴 예약이 있으면 그 시각은 그대로 두고 문구의 개수만 갱신한다
         // (아침에 퀴즈를 풀었다고 오늘 9시 알림이 내일로 밀리면 안 된다)
-        let existingAt: number | undefined;
-        if (await isScheduledAt(WRONG_REVIEW_REMINDER_ID, hour, 0)) {
-            const found = (await notifee.getTriggerNotifications()).find((t) => t.notification?.id === WRONG_REVIEW_REMINDER_ID);
-            existingAt = (found?.trigger as { timestamp?: number } | undefined)?.timestamp;
-        }
+        // 언어를 바꾼 뒤의 예약도 시각은 지킨다 — isScheduledAt 은 언어가 다르면 없는 것으로 봐서 오늘 알림이 내일로 밀렸다
+        const existingAt = await pendingWrongReviewAt(hour);
         const countAt = (at: number) => (typeof count === 'function' ? count(at) : Promise.resolve(count));
         let targetAt = existingAt ?? DateUtils.getLocalTimeAfterDays(1, hour).getTime();
         let n = await countAt(targetAt);

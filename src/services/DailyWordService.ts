@@ -27,7 +27,8 @@ const DailyWordService = {
 			const raw = await AsyncStorage.getItem(KEY);
 			if (raw) {
 				const cached = JSON.parse(raw) as DailyWordCache;
-				if (cached.date === today && cached.card) return cached.card;
+				// 카드는 글자째 저장돼 있다 — 고른 뒤 언어를 바꿨으면 예전 언어로 남으므로 지금 언어 카드로 다시 찾는다
+				if (cached.date === today && cached.card) return LearnHubService.getStudyCardByUid(cached.card.domain, cached.card.uid) ?? cached.card;
 			}
 		} catch {
 			/* noop */

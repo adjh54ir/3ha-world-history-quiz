@@ -10,7 +10,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import { DialogIn } from '@/src/screens/common/anim/Motion';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Border, Layout, appFonts, bodyFont } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
 import AttendanceService, { AttendanceState } from '@/src/services/AttendanceService';
 import { hapticSuccess } from '@/src/utils/HapticUtils';
@@ -27,16 +27,19 @@ const tList = (key: 'calendar.monthNames' | 'calendar.dayNames' | 'calendar.dayN
 	const v = i18n.t(key, { returnObjects: true });
 	return Array.isArray(v) ? (v as string[]) : fallback;
 };
-const monthNames = tList('calendar.monthNames', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
 const weekFallback = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-LocaleConfig.locales.app = {
-	monthNames,
-	monthNamesShort: monthNames,
-	dayNames: tList('calendar.dayNames', weekFallback),
-	dayNamesShort: tList('calendar.dayNamesShort', weekFallback),
-	today: i18n.t('calendar.today'),
+/** 달력을 그리기 직전에 지금 언어로 다시 건다 — 설정에서 언어를 바꿔도 앱을 다시 켜지 않고 따라간다 */
+const applyCalendarLocale = () => {
+	const monthNames = tList('calendar.monthNames', ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']);
+	LocaleConfig.locales.app = {
+		monthNames,
+		monthNamesShort: monthNames,
+		dayNames: tList('calendar.dayNames', weekFallback),
+		dayNamesShort: tList('calendar.dayNamesShort', weekFallback),
+		today: i18n.t('calendar.today'),
+	};
+	LocaleConfig.defaultLocale = 'app';
 };
-LocaleConfig.defaultLocale = 'app';
 
 interface Props {
 	visible: boolean;
@@ -68,6 +71,8 @@ const STREAK_MILESTONES = [
  */
 const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOnOpen = false, shielded = false }) => {
 	const { t } = useTranslation();
+	applyCalendarLocale();
+	const fonts = appFonts();
 	const [state, setState] = useState<AttendanceState>({ dates: [], lastCheck: null, streak: 0, bestStreak: 0 });
 	const [checkedToday, setCheckedToday] = useState(false);
 	const [celebrate, setCelebrate] = useState(false);
@@ -99,7 +104,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 		Animated.spring(successScale, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true }).start();
 		if (celebrateTimer.current) clearTimeout(celebrateTimer.current);
 		celebrateTimer.current = setTimeout(() => {
-			Animated.timing(successScale, { toValue: 0, duration: 240, useNativeDriver: true }).start(() => setCelebrate(false));
+			Animated.timing(successScale, { toValue: 0, duration: 240, useNativeDriver: true }).start(({ finished }) => finished && setCelebrate(false));
 		}, 1500);
 	}, [successScale]);
 
@@ -108,6 +113,9 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 			load();
 			if (celebrateOnOpen) playCelebrate();
 		} else {
+			// 축하 연출 도중 닫으면 남은 타이머·페이드도 함께 멈춘다
+			if (celebrateTimer.current) clearTimeout(celebrateTimer.current);
+			successScale.stopAnimation();
 			setLoaded(false);
 			setCelebrate(false);
 			successScale.setValue(0);
@@ -120,17 +128,17 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	// 달력 마킹: 참여한 날은 파란색(채움), 오늘은 초록색 강조
 	const marked: Record<string, any> = {};
 	state.dates.forEach((d) => {
-		marked[d] = { customStyles: { container: { backgroundColor: Colors.primary }, text: { color: Colors.onFill, fontWeight: '800' } } };
+		marked[d] = { customStyles: { container: { backgroundColor: Colors.primary }, text: { color: Colors.onFill, ...bodyFont('heavy') } } };
 	});
 	// 보호권으로 살린 날 = 금색 (빠졌지만 연속은 유지된 날)
 	(state.shieldDates ?? []).forEach((d) => {
-		marked[d] = { customStyles: { container: { borderWidth: Border.thin, borderColor: Colors.goldDark, backgroundColor: Colors.goldBg }, text: { color: Colors.goldDeep, fontWeight: '800' } } };
+		marked[d] = { customStyles: { container: { borderWidth: Border.thin, borderColor: Colors.goldDark, backgroundColor: Colors.goldBg }, text: { color: Colors.goldDeep, ...bodyFont('heavy') } } };
 	});
 	// 오늘 = 초록색 (참여했으면 초록 채움, 미참여면 초록 테두리)
 	const attendedToday = state.dates.includes(today);
 	marked[today] = attendedToday
-		? { customStyles: { container: { backgroundColor: Colors.successDeep }, text: { color: Colors.textInverse, fontWeight: '800' } } }
-		: { customStyles: { container: { borderWidth: Border.thin, borderColor: Colors.success }, text: { color: Colors.success, fontWeight: '800' } } };
+		? { customStyles: { container: { backgroundColor: Colors.successDeep }, text: { color: Colors.textInverse, ...bodyFont('heavy') } } }
+		: { customStyles: { container: { borderWidth: Border.thin, borderColor: Colors.success }, text: { color: Colors.success, ...bodyFont('heavy') } } };
 
 	const bestStreak = Math.max(state.streak, state.bestStreak);
 	const successRotate = successScale.interpolate({ inputRange: [0, 1], outputRange: ['-12deg', '0deg'] });
@@ -192,7 +200,10 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 								calendarBackground: 'transparent',
 								textSectionTitleColor: Colors.textSecondary,
 								monthTextColor: Colors.textStrong,
-								textMonthFontWeight: '800',
+								// 달력은 서체를 'System' 으로 박아 OS 서체(삼성 글꼴 등)를 따라간다 — 앱 서체를 쓰는 언어면 직접 건다
+								...(fonts
+									? { textDayFontFamily: fonts.regular, textDayHeaderFontFamily: fonts.bold, textMonthFontFamily: fonts.heavy, textDayFontWeight: 'normal', textDayHeaderFontWeight: 'normal', textMonthFontWeight: 'normal' }
+									: { textMonthFontWeight: '800' }),
 								arrowColor: Colors.primary,
 								todayTextColor: Colors.success,
 								dayTextColor: Colors.text,

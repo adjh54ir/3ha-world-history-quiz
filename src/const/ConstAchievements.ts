@@ -4,7 +4,7 @@ import { DOMAIN_LEVELS } from '@/src/const/ConstDomainLevels';
 import { WORLD_TOPIC_TEXT } from '@/src/const/data/world/ConstWorldText';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
 import { LearnStats } from '@/src/services/LearnProgressService';
-import { themed } from '@/src/utils/ThemedStyles';
+import { localized, themed } from '@/src/utils/ThemedStyles';
 import i18n from '@/src/translations';
 
 /** 도메인별 풀이 수 헬퍼 */
@@ -80,7 +80,7 @@ export interface AchievementDef {
 }
 
 /** 뱃지 설명(의미) — 획득 조건(cond)과 구분해서 보여준다 */
-const DESCS: Record<string, string> = {
+const DESCS = localized((): Record<string, string> => ({
 	first_quiz: i18n.t('achievements.badges.first_quiz.desc'),
 	correct_50: i18n.t('achievements.badges.correct_50.desc'),
 	solve_100: i18n.t('achievements.badges.solve_100.desc'),
@@ -166,7 +166,7 @@ const DESCS: Record<string, string> = {
 	sub_winter_3: i18n.t('achievements.badges.sub_winter_3.desc'),
 	sub_sports_all: i18n.t('achievements.badges.sub_sports_all.desc'),
 	picture_10: i18n.t('achievements.badges.picture_10.desc'),
-};
+}));
 
 /** 정답률 업적 공통 — 100문제 이상 풀었을 때만 집계 */
 const accuracyOf = (s: LearnStats): number => (s.totalSolved >= 100 ? Math.round((s.totalCorrect / s.totalSolved) * 100) : 0);
@@ -186,7 +186,7 @@ const bestTimeCombo = (s: LearnStats): number => Math.max(0, ...(s.timeHistory ?
 /**
  * 통합 업적 정의 — 학습/퀴즈/연속출석/모드/도메인 전반
  */
-const BASE_DEFS: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = [
+const BASE_DEFS = localized((): Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] => [
 	// ── 누적 학습 (풀이·정답) ──
 	{ id: 'first_quiz', group: 'progress', title: i18n.t('achievements.badges.first_quiz.title'), cond: i18n.t('achievements.badges.first_quiz.cond'), icon: 'rocket-launch', target: 1, current: (s) => s.totalQuizzes },
 	{ id: 'correct_50', group: 'progress', title: i18n.t('achievements.badges.correct_50.title'), cond: i18n.t('achievements.badges.correct_50.cond'), icon: 'done-all', target: 50, current: (s) => s.totalCorrect },
@@ -283,21 +283,21 @@ const BASE_DEFS: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = [
 	{ id: 'mode_5', group: 'topic', title: i18n.t('achievements.badges.mode_5.title'), cond: i18n.t('achievements.badges.mode_5.cond'), icon: 'apps', target: 5, current: (s) => Object.values(s.byMode ?? {}).filter((v) => v > 0).length },
 	{ id: 'mode_8', group: 'topic', title: i18n.t('achievements.badges.mode_8.title'), cond: i18n.t('achievements.badges.mode_8.cond'), icon: 'widgets', target: 8, current: (s) => Object.values(s.byMode ?? {}).filter((v) => v > 0).length },
 	{ id: 'deep_domain_3', group: 'topic', title: i18n.t('achievements.badges.deep_domain_3.title'), cond: i18n.t('achievements.badges.deep_domain_3.cond'), icon: 'landscape', target: 3, current: (s) => Object.values(s.byDomain ?? {}).filter((d) => d.solved >= 100).length },
-];
+]);
+
+/** 레벨이 오를수록 무게감 있는 아이콘으로 */
+const LEVEL_ICONS = ['military-tech', 'workspace-premium', 'emoji-events', 'diamond', 'auto-awesome'];
 
 /**
  * 메인 주제 레벨 뱃지 — 주제별 등급(ConstDomainLevels)에 도달할 때마다 하나씩.
  * 등급 정의를 그대로 따라가므로 레벨이 늘면 뱃지도 자동으로 늘어난다.
  */
-const LEVEL_DOMAIN_TITLES: Record<string, string> = Object.fromEntries(
-	(['capital', 'landmark', 'nature', 'figure', 'event', 'myth', 'space', 'constellation'] as const).map((key) => [key, WORLD_TOPIC_TEXT[key].label]),
-);
-/** 레벨이 오를수록 무게감 있는 아이콘으로 */
-const LEVEL_ICONS = ['military-tech', 'workspace-premium', 'emoji-events', 'diamond', 'auto-awesome'];
-
-const LEVEL_DESCS: Record<string, string> = {};
-const LEVEL_DEFS: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = Object.entries(LEVEL_DOMAIN_TITLES).flatMap(
-	([key, topic]) => {
+const LEVEL = localized(() => {
+	const titles: Record<string, string> = Object.fromEntries(
+		(['capital', 'landmark', 'nature', 'figure', 'event', 'myth', 'space', 'constellation'] as const).map((key) => [key, WORLD_TOPIC_TEXT[key].label]),
+	);
+	const descs: Record<string, string> = {};
+	const defs: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = Object.entries(titles).flatMap(([key, topic]) => {
 		const def = DOMAIN_LEVELS[key];
 		if (!def) return [];
 		// 1레벨(임계값 0)은 시작하자마자 달성이라 뱃지로 만들지 않는다
@@ -306,7 +306,7 @@ const LEVEL_DEFS: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = Object.e
 			.map((lv, i) => {
 				const id = `level_${key}_${lv.level}`;
 				const unitCond = i18n.t(def.metric === 'score' ? 'achievements.level.unitScore' : 'achievements.level.unitSolved', { value: lv.threshold.toLocaleString() });
-				LEVEL_DESCS[id] = i18n.t('achievements.level.desc', { topic, level: lv.label });
+				descs[id] = i18n.t('achievements.level.desc', { topic, level: lv.label });
 				return {
 					id,
 					group: 'topic' as AchievementGroup,
@@ -318,10 +318,11 @@ const LEVEL_DEFS: Omit<AchievementDef, 'color' | 'desc' | 'rarity'>[] = Object.e
 					current: def.metric === 'score' ? (st: LearnStats) => domainScore(st, key) : (st: LearnStats) => domainSolved(st, key),
 				};
 			});
-	},
-);
+	});
+	return { descs, defs };
+});
 
-const DEFS = [...BASE_DEFS, ...LEVEL_DEFS];
+const DEFS = localized(() => [...BASE_DEFS, ...LEVEL.defs]);
 
 /** 희귀도 자동 산정 — 같은 그룹에서 목표치 오름차순 위치를 4구간으로 나눈다 */
 const rarityOf = (def: (typeof DEFS)[number]): AchievementRarity => {
@@ -334,7 +335,7 @@ export const CONST_ACHIEVEMENTS: AchievementDef[] = themed(() => DEFS.map((d) =>
 	...d,
 	// 뱃지 색은 등급색(연함 → 진함). 그룹색은 목록 헤더에서만 쓴다
 	color: RARITY_META[rarityOf(d)].color,
-	desc: DESCS[d.id] ?? LEVEL_DESCS[d.id] ?? d.cond,
+	desc: DESCS[d.id] ?? LEVEL.descs[d.id] ?? d.cond,
 	rarity: rarityOf(d),
 })));
 

@@ -602,7 +602,7 @@
             "language": {
                 "desc": "Tap to change the app language",
                 "pickTitle": "Choose language",
-                "pickSub": "The app reopens in the language you pick"
+                "pickSub": "The app switches to the language you pick right away"
             }
         },
         "search": {
@@ -1632,7 +1632,9 @@
                 "chipA11y": "{{title}}, {{value}}"
             },
             "entryImage": {
-                "broken": "Couldn't load image"
+                "broken": "Couldn't load image",
+                "zoomIn": "Enlarge image",
+                "zoomOut": "Shrink image"
             },
             "filterSheet": {
                 "closeA11y": "Close picker",

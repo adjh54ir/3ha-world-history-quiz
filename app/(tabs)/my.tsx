@@ -660,13 +660,15 @@ const Setting = () => {
 
 			<DailyAlarmModal visible={showAlarm} onClose={() => setShowAlarm(false)} onChange={setReminderOn} />
 
-			{/* 언어 선택 팝업 — 팝업을 먼저 닫고 저장·재시작한다(모달이 떠 있는 채로 다시 읽으면 창이 남는다) */}
+			{/* 언어 선택 팝업 — 팝업을 닫고 그 자리에서 언어만 바꾼다(앱을 다시 켜지 않아 화면·광고가 그대로 남는다) */}
 			<LanguagePickerModal
 				visible={showLang}
 				onClose={() => setShowLang(false)}
 				onSelect={(code) => {
 					setShowLang(false);
-					setAppLanguage(code);
+					// 시트가 닫히는 동안 시트 글자가 새 언어로 뒤집히지 않게 닫힘(fade) 뒤에 바꾼다.
+					// 화면을 떠나도 언어는 바뀌어야 하므로 타이머를 언마운트에 묶지 않는다
+					setTimeout(() => setAppLanguage(code), LANG_SWITCH_DELAY_MS);
 				}}
 			/>
 
@@ -691,6 +693,8 @@ const TEST_BTN_HIT_SLOP = { ...Layout.hitSlop, right: 0 };
 
 /** 함께하면 좋은 앱 목록 열 수 — 폰 1 / 태블릿 2 */
 const APP_COLS = gridColumns(320, 2);
+/** 언어 시트 닫힘(AppModal fade 220ms) 뒤에 언어를 바꾼다 */
+const LANG_SWITCH_DELAY_MS = 240;
 
 /** 태블릿에서 혼자 놓인 버튼이 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 묶어 가운데 (폰은 그대로) */
 const TABLET_SOLO_BTN = isTablet ? ({ alignSelf: 'center', width: '100%', maxWidth: Layout.dialogMaxWidth } as const) : null;

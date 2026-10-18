@@ -164,7 +164,7 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 					<ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollBody}>
 						{/* 그림·제목·즐겨찾기도 본문과 함께 스크롤된다 — 위에 고정하면 긴 설명을 볼 자리가 줄었다 (태그·닫기만 고정) */}
 						<View style={styles.hero}>
-							{!!imageRef && <EntryImage imageRef={imageRef} width={scaleWidth(132)} fetchWidth={320} style={styles.image} />}
+							{!!imageRef && <EntryImage imageRef={imageRef} width={scaleWidth(132)} fetchWidth={320} zoomable style={styles.image} />}
 							{/* 제목 — 정중앙, 강조색으로 약간 강조 (단어 위 따옴표 아이콘 제거) */}
 							<Text style={[styles.title, { color: accent }]} numberOfLines={2} ellipsizeMode="tail">{titleText}</Text>
 

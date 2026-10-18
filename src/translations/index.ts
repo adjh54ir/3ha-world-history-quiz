@@ -104,8 +104,9 @@ i18n
 export const appLanguage = (): Language => (languageSchema.safeParse(i18n.language).success ? (i18n.language as Language) : SupportedLanguages.KR_KR);
 
 /**
- * 설정에서 언어 바꾸기 — 저장하고 번들을 다시 읽는다.
- * 주제 이름·뱃지·세계 데이터가 모듈을 읽을 때 한 번 번역되므로 changeLanguage 만으로는 반쪽만 바뀐다.
+ * 설정에서 언어 바꾸기 — 저장하고 그 자리에서 바꾼다 (번들을 다시 읽지 않아 화면·광고가 그대로 남는다).
+ * 주제 이름·뱃지·세계 데이터는 언어마다 따로 만들어 두는 값(ThemedStyles 의 localized·themed)이라
+ * changeLanguage 뒤 다음 렌더부터 새 언어로 읽힌다. useTranslation 을 쓰는 화면이 다시 그려진다.
  */
 export const setAppLanguage = async (language: Language): Promise<void> => {
   if (language === appLanguage()) return;
@@ -116,8 +117,10 @@ export const setAppLanguage = async (language: Language): Promise<void> => {
   } catch {
     return;
   }
-  const { reload } = require('@/src/utils/ThemeReload');
-  await reload();
+  await i18n.changeLanguage(language);
+  // 예약해 둔 알림 문구도 새 언어로 다시 건다
+  const { ReconcileNotificationSchedules } = require('@/src/utils/NotifactionHelper');
+  ReconcileNotificationSchedules().catch(() => {});
 };
 
 /** 기기 언어를 따르는 중에 기기 언어가 바뀌었으면 포그라운드 복귀 시 다시 읽는다 */

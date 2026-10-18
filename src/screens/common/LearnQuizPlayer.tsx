@@ -64,7 +64,7 @@ import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import CountryFlags from '@/src/screens/common/atomic/CountryFlags';
 import { isWideImageRef } from '@/src/const/data/world/ConstWorldImages';
-import { themed } from '@/src/utils/ThemedStyles';
+import { localized, themed } from '@/src/utils/ThemedStyles';
 import { reportQuizIssue } from '@/src/utils/ReportIssue';
 
 // 보기 선택 피드백 애니메이션용 (정답 팝 / 오답 셰이크)
@@ -78,7 +78,7 @@ const ADAPTIVE_COMBO = 3;
 /** 진행바 세그먼트가 너무 잘게 쪼개지지 않는 최대 문항 수 (타임 챌린지 같은 대량 출제는 표시하지 않음) */
 const LEVEL_STRIP_MAX = 20;
 /** 난이도별 진행바 농도 — 헤더(accent 배경) 위 흰색 알파로 표현해 새 색을 만들지 않는다 */
-const LEVEL_ALPHA: Record<string, string> = { [DIFFICULTY_LABELS[1]]: '59', [DIFFICULTY_LABELS[2]]: '8C', [DIFFICULTY_LABELS[3]]: 'BF', [DIFFICULTY_LABELS[4]]: 'FF' };
+const LEVEL_ALPHA = localized((): Record<string, string> => ({ [DIFFICULTY_LABELS[1]]: '59', [DIFFICULTY_LABELS[2]]: '8C', [DIFFICULTY_LABELS[3]]: 'BF', [DIFFICULTY_LABELS[4]]: 'FF' }));
 
 /**
  * 문제 카드 표현 — 한국어 퀴즈는 도메인마다(맞춤법=문장, 관용구=대화…) 틀을 바꿨다.
@@ -360,16 +360,27 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		transform: [{ translateX: interpolate(challengeSweep.value, [0, 1], [challengeSweepStartX, challengeSweepEndX]) }],
 	}));
 
-	// 뒤 문항 백그라운드 생성 타이머 (언마운트/재시작 시 정리)
+	// 시작 타이머 · 뒤 문항 백그라운드 생성 타이머·작업 (언마운트/재시작 시 정리 — 화면을 떠난 뒤 무거운 생성·setState 가 돌지 않게)
+	const beginTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 	const restTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	useEffect(() => () => { if (restTimerRef.current) clearTimeout(restTimerRef.current); }, []);
+	const restTaskRef = useRef<{ cancel: () => void } | null>(null);
+	useEffect(
+		() => () => {
+			if (beginTimerRef.current) clearTimeout(beginTimerRef.current);
+			if (restTimerRef.current) clearTimeout(restTimerRef.current);
+			restTaskRef.current?.cancel();
+		},
+		[],
+	);
 
 	// 시작하기 → 다음 틱에 문항 생성(무거운 생성이 첫 페인트를 막지 않도록)
 	// generateRest 가 있으면 첫 묶음만 즉시 만들어 바로 시작하고, 나머지는 백그라운드로 이어붙인다.
 	const beginQuiz = () => {
 		playWhoosh(); // 🎬 퀴즈 시작 사운드
 		setPreparing(true);
-		setTimeout(() => {
+		if (beginTimerRef.current) clearTimeout(beginTimerRef.current);
+		beginTimerRef.current = setTimeout(() => {
+			beginTimerRef.current = null;
 			try {
 				setQuestions(orderByLevel ? sortByLevelAsc(generate()) : generate()); // 기본은 쉬운 문제부터 출제
 			} catch (e) {
@@ -385,7 +396,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			// 첫 화면 전환 애니메이션이 끝난 뒤 나머지 문항 생성 → 체감 로딩 0
 			if (restTimerRef.current) clearTimeout(restTimerRef.current);
 			restTimerRef.current = setTimeout(() => {
-				InteractionManager.runAfterInteractions(() => {
+				restTimerRef.current = null;
+				restTaskRef.current = InteractionManager.runAfterInteractions(() => {
 					try {
 						const rest = generateRest();
 						setQuestions((prev) => {
@@ -596,11 +608,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 		// 알림 문구의 개수는 '실제 알림 시각까지 복습할 차례가 되는 오답 전체' — 이번 판 개수만 넣으면 여러 판을 풀어도 첫 판 숫자로 남고,
 		// 오늘 9시 예약이 이미 있으면 내일 0시에야 차례가 오는 방금 틀린 문제는 세지 않아야 한다
 		if (wrongList.length > 0) {
-			ScheduleWrongReviewReminder((at) =>
-				LearnProgressService.getWrongNotes()
-					.then((all) => all.filter((w) => (w.nextReviewAt ?? 0) <= at).length)
-					.catch(() => 0),
-			).catch(() => {});
+			ScheduleWrongReviewReminder((at) => LearnProgressService.countDueWrongNotesAt(at)).catch(() => {});
 		}
 		(async () => {
 			try {

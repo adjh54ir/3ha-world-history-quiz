@@ -9,7 +9,7 @@
 import { isTablet, scaledSize, scaleHeight, scaleWidth, screenWidth, TABLET_SHEET_MAX_WIDTH } from '@/src/utils/DementionUtils';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { themed } from '@/src/utils/ThemedStyles';
-import { appLanguage } from '@/src/translations';
+import i18n from '@/src/translations';
 
 /**
  * 타이포그래피 스케일 (반응형) — 2pt 등간격 위계
@@ -55,45 +55,58 @@ export const Typography = {
 } as const;
 
 /**
- * 디스플레이 서체 — 정글 탐험대 표지판처럼 굵게 깎은 한글 제목체 (Black Han Sans, OFL)
- * - 제목(탭 헤더·화면 헤더·섹션 제목·히어로)에만 쓴다. 본문은 시스템 서체 그대로.
- * - 굵기 하나짜리 서체라 fontWeight 를 400 으로 되돌린다 (안드로이드는 굵기를 주면 가짜 볼드로 뭉갠다).
+ * 앱 서체 — 제목체 하나 + 본문 굵기 셋을 한 묶음으로 둔다.
+ * - 제목체는 제목(탭 헤더·화면 헤더·섹션 제목·히어로)에만 쓴다. 굵기 하나짜리라 fontWeight 를 400 으로 되돌린다
+ *   (안드로이드는 굵기를 주면 가짜 볼드로 뭉갠다).
+ * - 본문은 앱 전역 Text 가 fontWeight 에 맞는 파일을 고른다 (GlobalComponentDefaults). 굵기마다 파일이 따로라
+ *   fontWeight 로 굵게 하지 않고 서체 이름을 바꾼다.
  * - 서체가 아직 안 올라왔으면 시스템 서체로 그려진다 (app/_layout 에서 스플래시 전에 올린다).
+ * - 그 언어 글자가 다 들어 있는 묶음만 쓴다 — 빠진 글자만 시스템 서체로 그려지면 한 낱말 안에서 서체가 섞인다.
+ *   한국어 묶음(블랙한산스·나눔스퀘어라운드)에는 악센트 라틴 글자(é ñ ç)가 없어 영어·스페인어·프랑스어는 Nunito 를 쓴다.
+ *   중국어·일본어는 한자·가나를 다 담은 둥근 서체가 수십 MB 라 시스템 서체 + 굵기로 그린다.
  */
-export const DISPLAY_FONT = 'BlackHanSans';
+export interface FontSet {
+	display: string;
+	regular: string;
+	bold: string;
+	heavy: string;
+}
 
-/**
- * 앱 서체(블랙한산스·나눔스퀘어라운드)는 한국어에서만 쓴다.
- * 두 서체에는 악센트 라틴 글자(é ñ ç)와 중국어·일본어 글자 대부분이 없어, 다른 언어에서 쓰면
- * 빠진 글자만 시스템 서체로 그려져 한 낱말 안에서 서체가 섞인다. 다른 언어는 시스템 서체 + 굵기로 그린다.
- */
-export const APP_FONTS_ON = appLanguage() === 'ko-KR';
+/** 한국어 — 블랙한산스(정글 탐험대 표지판처럼 굵게 깎은 제목체) + 나눔스퀘어라운드(NAVER). 둘 다 OFL */
+export const KO_FONTS: FontSet = { display: 'BlackHanSans', regular: 'NanumSquareRoundR', bold: 'NanumSquareRoundB', heavy: 'NanumSquareRoundEB' };
 
-export const DisplayText = APP_FONTS_ON ? ({ fontFamily: DISPLAY_FONT, fontWeight: '400' } as const) : ({ fontWeight: '800' } as const);
+/** 영어·스페인어·프랑스어 — Nunito (OFL). 나눔스퀘어라운드처럼 획 끝이 둥글다. 제목은 가장 굵은 Black */
+export const LATIN_FONTS: FontSet = { display: 'Nunito-Black', regular: 'Nunito-Regular', bold: 'Nunito-Bold', heavy: 'Nunito-ExtraBold' };
 
-/**
- * 본문 서체 — 나눔스퀘어라운드 (NAVER, OFL). 둥근 획이 굵은 제목체와 짝을 이룬다.
- * 시스템 서체 대신 앱 전역 Text 가 fontWeight 에 맞는 파일을 고른다 (GlobalComponentDefaults).
- * 굵기마다 파일이 따로라 fontWeight 로 굵게 하지 않고 서체 이름을 바꾼다.
- */
-export const BODY_FONTS = {
-	regular: 'NanumSquareRoundR',
-	bold: 'NanumSquareRoundB',
-	heavy: 'NanumSquareRoundEB',
-} as const;
+const FONT_SETS: Partial<Record<string, FontSet>> = { 'ko-KR': KO_FONTS, 'en-EN': LATIN_FONTS, 'es-ES': LATIN_FONTS, 'fr-FR': LATIN_FONTS };
+
+/** 지금 언어의 서체 묶음 (없으면 시스템 서체). 앱 전역 Text 가 글자마다 부르므로 문자열 조회만 한다 */
+export const appFonts = (): FontSet | undefined => FONT_SETS[i18n.language];
+
+export const appFontsOn = (): boolean => !!appFonts();
+
+/** 언어를 바꾸면 서체도 바뀌므로 읽는 시점의 언어로 고른다 (스타일 팩토리 안에서 펼쳐 쓴다) */
+export const DisplayText = themed(() => {
+	const fonts = appFonts();
+	return fonts ? ({ fontFamily: fonts.display, fontWeight: '400' } as const) : ({ fontWeight: '800' } as const);
+});
 
 const BODY_WEIGHTS = { regular: '400', bold: '700', heavy: '800' } as const;
+type BodyWeight = keyof typeof BODY_WEIGHTS;
 
-/** 서체를 직접 고를 때 — 한국어는 서체 파일, 다른 언어는 시스템 서체의 굵기 */
-export const bodyFont = (weight: keyof typeof BODY_FONTS): { fontFamily: string } | { fontWeight: (typeof BODY_WEIGHTS)[keyof typeof BODY_WEIGHTS] } =>
-	APP_FONTS_ON ? { fontFamily: BODY_FONTS[weight] } : { fontWeight: BODY_WEIGHTS[weight] };
+/** 서체를 직접 고를 때 — 앱 서체가 있는 언어는 서체 파일, 없는 언어는 시스템 서체의 굵기 */
+export const bodyFont = (weight: BodyWeight): { fontFamily: string } | { fontWeight: (typeof BODY_WEIGHTS)[BodyWeight] } => {
+	const fonts = appFonts();
+	return fonts ? { fontFamily: fonts[weight] } : { fontWeight: BODY_WEIGHTS[weight] };
+};
 
 /** fontWeight → 본문 서체 파일. 300 이하 얇은 굵기는 파일을 두지 않아 regular 로 그린다 */
 export const bodyFontFor = (weight?: string | number): string => {
+	const fonts = appFonts() ?? KO_FONTS;
 	const w = weight === 'bold' ? 700 : Number(weight) || 400;
-	if (w >= 800) return BODY_FONTS.heavy;
-	if (w >= 600) return BODY_FONTS.bold;
-	return BODY_FONTS.regular;
+	if (w >= 800) return fonts.heavy;
+	if (w >= 600) return fonts.bold;
+	return fonts.regular;
 };
 
 /**

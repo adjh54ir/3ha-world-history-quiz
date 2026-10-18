@@ -11,6 +11,7 @@
  */
 
 import i18n from "@/src/translations";
+import { localized } from "@/src/utils/ThemedStyles";
 import { getCharacterImages } from "./ConstCharacters";
 import { POINT_PER_CORRECT } from "./ConstScoring";
 import { WORLD_TOPICS } from "./data/world/ConstWorldTopics";
@@ -46,7 +47,7 @@ interface DomainLevelDef {
 // ─────────────────────────────────────────────────────────────
 // 주제별 등급 — 한 틀에서 만든다 (주제 이름 + 단계 이름)
 // ─────────────────────────────────────────────────────────────
-const TOPIC_STEPS: { name: string; icon: string; ratio: number; encouragement: string; description: string }[] = [
+const TOPIC_STEPS = localized((): { name: string; icon: string; ratio: number; encouragement: string; description: string }[] => [
   {
     name: i18n.t("level.step.novice.name"),
     icon: "seedling",
@@ -82,7 +83,7 @@ const TOPIC_STEPS: { name: string; icon: string; ratio: number; encouragement: s
     encouragement: i18n.t("level.step.master.encouragement"),
     description: i18n.t("level.step.master.description"),
   },
-];
+]);
 
 const topicLevels = (key: keyof typeof WORLD_ENTRIES): DomainLevelDef => {
   const label = WORLD_TOPIC_TEXT[key].label;
@@ -105,7 +106,7 @@ const topicLevels = (key: keyof typeof WORLD_ENTRIES): DomainLevelDef => {
 // 전체(누적 점수) — 세계를 누비는 역사 사자 서사 (점수 상세 '전체'·홈 캐릭터 공용 기준)
 // 임계값은 전체 마스코트 단계(OVERALL_TIERS)와 동일
 // ─────────────────────────────────────────────────────────────
-const overall: DomainLevelDef = {
+const overall = (): DomainLevelDef => ({
   metric: "score",
   levels: [
     { level: 1, label: i18n.t("level.overall.1.label"), icon: "seedling", threshold: 0, encouragement: i18n.t("level.overall.1.encouragement") },
@@ -115,13 +116,13 @@ const overall: DomainLevelDef = {
     { level: 5, label: i18n.t("level.overall.5.label"), icon: "trophy", threshold: 2400, encouragement: i18n.t("level.overall.5.encouragement") },
     { level: 6, label: i18n.t("level.overall.6.label"), icon: "crown", threshold: 3400, encouragement: i18n.t("level.overall.6.encouragement") },
   ],
-};
+});
 
 /** 주제 키 → 레벨 정의 */
-export const DOMAIN_LEVELS: Record<string, DomainLevelDef> = {
-  overall,
+export const DOMAIN_LEVELS = localized((): Record<string, DomainLevelDef> => ({
+  overall: overall(),
   ...Object.fromEntries(WORLD_TOPICS.map((t) => [t.key, topicLevels(t.key)])),
-};
+}));
 
 export interface DomainLevelInfo {
   /** 현재 레벨 메타 */

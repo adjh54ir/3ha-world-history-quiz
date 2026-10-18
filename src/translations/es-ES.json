@@ -600,7 +600,7 @@
             "language": {
                 "desc": "Toca para cambiar el idioma de la app",
                 "pickTitle": "Elegir idioma",
-                "pickSub": "La app se vuelve a abrir en el idioma elegido"
+                "pickSub": "La app cambia al instante al idioma elegido"
             }
         },
         "search": {
@@ -1636,7 +1636,9 @@
                 "chipA11y": "{{title}}, {{value}}"
             },
             "entryImage": {
-                "broken": "No se pudo cargar la imagen"
+                "broken": "No se pudo cargar la imagen",
+                "zoomIn": "Ampliar imagen",
+                "zoomOut": "Reducir imagen"
             },
             "filterSheet": {
                 "closeA11y": "Cerrar selector",

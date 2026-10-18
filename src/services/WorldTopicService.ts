@@ -29,8 +29,9 @@ const levelLabel = (level: WorldType.Level): string => DIFFICULTY_LABELS[level];
 
 export const createWorldTopicService = (key: WorldType.TopicKey) => {
 	const topic = selectTopic(key);
-	const text = WORLD_TOPIC_TEXT[key];
-	const data = WORLD_ENTRIES[key];
+	// 글자는 읽는 시점의 언어로 — 설정에서 언어를 바꾸면 다음 문항부터 새 언어로 나온다
+	const text = () => WORLD_TOPIC_TEXT[key];
+	const data = () => WORLD_ENTRIES[key];
 
 	/** 세부 카테고리 = 오답을 가르는 갈래 값 (수도는 대륙, 위인은 시대, 사건은 갈래) */
 	const categoryOf = (entry: WorldType.Entry): string | undefined => (topic.groupBy ? entry.fields[topic.groupBy] || undefined : undefined);
@@ -42,15 +43,15 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 
 	const service = {
 		selectAll(): WorldType.Entry[] {
-			return data;
+			return data();
 		},
 
 		selectCategoryList(): string[] {
-			return [...new Set(data.map(categoryOf).filter((c): c is string => !!c))];
+			return [...new Set(data().map(categoryOf).filter((c): c is string => !!c))];
 		},
 
 		filter(opts?: LearnType.BuildOptions): WorldType.Entry[] {
-			return opts?.category ? data.filter((entry) => categoryOf(entry) === opts.category) : data;
+			return opts?.category ? data().filter((entry) => categoryOf(entry) === opts.category) : data();
 		},
 
 		/** 원본 → 학습 카드: 표제=이름, 뜻=한 줄 설명, 예문 자리=곁가지 두 줄 */
@@ -73,7 +74,7 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		/** 세계 문항 → 화면 문항. 그림 문항은 prompt 에 파일 이름이 들어 있으므로 발문으로 바꾸고 그림 참조를 단다 */
 		toQuizQuestion(q: WorldType.Question): LearnType.QuizQuestion {
 			const mode = topic.modes.find((m) => m.key === q.mode);
-			const question = text.modes[q.mode]?.question ?? text.label;
+			const question = text().modes[q.mode]?.question ?? text().label;
 			const promptImage = mode?.askAs ? makeImageRef(mode.askAs, q.prompt) : undefined;
 			// 이름을 보여 주고 묻는 문항(수도·나라·시대 등)은 항목 그림을 함께 건다 — 이름이 이미 문제에 있어 그림이 답을 알려 주지 않는다.
 			// 설명을 보고 이름을 맞히는 문항은 그림이 곧 답이라 걸지 않는다 (신화는 예전처럼 늘 건다). 문제 글은 그대로 둔다
@@ -113,7 +114,7 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		generateQuiz(opts?: LearnType.BuildOptions): LearnType.QuizQuestion[] {
 			const count = opts?.count ?? 10;
 			const targets = shuffle(service.filter(opts));
-			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data)
+			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data())
 				.slice(0, count)
 				.map((q) => service.toQuizQuestion(q));
 		},
@@ -124,8 +125,8 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		generateImageQuiz(count = 10): LearnType.QuizQuestion[] {
 			const modes = topic.modes.filter((m) => m.askAs);
 			if (modes.length === 0) return [];
-			const targets = shuffle(data);
-			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data, Math.random, modes)
+			const targets = shuffle(data());
+			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data(), Math.random, modes)
 				.slice(0, count)
 				.map((q) => service.toQuizQuestion(q));
 		},
@@ -137,8 +138,8 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		generateImageAidedQuiz(count = 10): LearnType.QuizQuestion[] {
 			const modes = topic.modes.filter((m) => !m.askAs && m.ask === 'name');
 			if (modes.length === 0) return [];
-			const targets = shuffle(data.filter((entry) => selectEntryImageRef(key, entry)));
-			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data, Math.random, modes)
+			const targets = shuffle(data().filter((entry) => selectEntryImageRef(key, entry)));
+			return buildQuestions(targets.slice(0, Math.min(targets.length, count * 2 + 4)), topic, data(), Math.random, modes)
 				.map((q) => service.toQuizQuestion(q))
 				.filter((q) => q.imageRef)
 				.slice(0, count);
@@ -149,15 +150,15 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		 * (수도 문제의 오답 복습에 대륙 이름이 보기로 섞이면 읽지 않고도 답이 보인다)
 		 */
 		distractorsFor(uid: string, answer: string, count = 3): string[] {
-			const entry = data.find((e) => e.id === uid);
+			const entry = data().find((e) => e.id === uid);
 			if (!entry) return [];
 			// 즐겨찾기 퀴즈는 '이름 → 설명' 으로 묻는다 — summary 도 자리로 본다
 			const slot = ['name', 'summary', ...Object.keys(entry.fields)].find((k) => pick(entry, k) === answer);
 			if (!slot) return [];
 			const group = topic.groupBy ? pick(entry, topic.groupBy) : undefined;
 			const values = (list: WorldType.Entry[]) => [...new Set(list.map((e) => pick(e, slot)).filter((v) => v && v !== answer))];
-			const same = shuffle(values(group ? data.filter((e) => pick(e, topic.groupBy!) === group) : []));
-			const rest = shuffle(values(data)).filter((v) => !same.includes(v));
+			const same = shuffle(values(group ? data().filter((e) => pick(e, topic.groupBy!) === group) : []));
+			const rest = shuffle(values(data())).filter((v) => !same.includes(v));
 			return [...same, ...rest].slice(0, count);
 		},
 
@@ -167,8 +168,8 @@ export const createWorldTopicService = (key: WorldType.TopicKey) => {
 		 */
 		getBlankCandidates(): { entry: WorldType.Entry; slot: string; sentence: string; answer: string }[] {
 			const out: { entry: WorldType.Entry; slot: string; sentence: string; answer: string }[] = [];
-			const slots = ['name', ...Object.keys(data[0]?.fields ?? {})].filter((slot) => slot === 'name' || !!fieldLabel(key, slot));
-			data.forEach((entry) => {
+			const slots = ['name', ...Object.keys(data()[0]?.fields ?? {})].filter((slot) => slot === 'name' || !!fieldLabel(key, slot));
+			data().forEach((entry) => {
 				const sentences = [entry.summary, ...entry.facts];
 				for (const slot of slots) {
 					const answer = pick(entry, slot);

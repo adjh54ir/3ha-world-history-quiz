@@ -1,11 +1,12 @@
 /**
  * 세계 상식 주제의 보이는 글자 (번역 파일 main.world)
  * -------------------------------------------------
- * 언어는 번들이 살아 있는 동안 고정이라(바꾸면 번들을 다시 읽는다) 모듈을 읽을 때 한 번 번역한다.
+ * 언어마다 한 번 번역해 두고(localized) 읽는 시점의 언어 값을 돌려준다 — 설정에서 언어를 바꾸면 바로 따라간다.
  * 주제 키·모드 키는 ConstWorldTopics 와 같다 — 모드를 더하면 여기와 번역 파일에 이름·발문을 넣는다.
  */
 import type { WorldType } from '@/src/types/data/WorldType';
 import i18n from '@/src/translations';
+import { localized } from '@/src/utils/ThemedStyles';
 
 export interface TopicText {
 	label: string;
@@ -14,7 +15,7 @@ export interface TopicText {
 	modes: Record<string, { label: string; question: string }>;
 }
 
-export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
+export const WORLD_TOPIC_TEXT = localized((): Record<WorldType.TopicKey, TopicText> => ({
 	capital: {
 		label: i18n.t('world.topic.capital.label'),
 		description: i18n.t('world.topic.capital.description'),
@@ -122,13 +123,13 @@ export const WORLD_TOPIC_TEXT: Record<WorldType.TopicKey, TopicText> = {
 			winner: { label: i18n.t('world.topic.worldcup.modes.winner.label'), question: i18n.t('world.topic.worldcup.modes.winner.question') },
 		},
 	},
-};
+}));
 
 /**
  * 학습 카드 '정보' 표에 띄울 필드 이름.
  * 여기 없는 필드(code·image·hemisphere 처럼 그림 열쇠이거나 다른 값과 겹치는 것)는 표에 나오지 않는다.
  */
-export const WORLD_FIELD_LABELS: Record<string, string> = {
+export const WORLD_FIELD_LABELS = localized((): Record<string, string> => ({
 	capital: i18n.t('world.field.capital'),
 	continent: i18n.t('world.field.continent'),
 	country: i18n.t('world.field.country'),
@@ -148,11 +149,11 @@ export const WORLD_FIELD_LABELS: Record<string, string> = {
 	winner: i18n.t('world.field.winner'),
 	runnerUp: i18n.t('world.field.runnerUp'),
 	top: i18n.t('world.field.top'),
-};
+}));
 
 /** 주제마다 뜻이 다른 필드 — 태양계의 host 는 개최국이 아니라 그 천체가 도는 중심이다 */
-const TOPIC_FIELD_LABELS: Partial<Record<WorldType.TopicKey, Record<string, string>>> = {
+const TOPIC_FIELD_LABELS = localized((): Partial<Record<WorldType.TopicKey, Record<string, string>>> => ({
 	space: { host: i18n.t('world.topicField.space.host') },
-};
+}));
 
 export const fieldLabel = (topic: WorldType.TopicKey, field: string): string | undefined => TOPIC_FIELD_LABELS[topic]?.[field] ?? WORLD_FIELD_LABELS[field];

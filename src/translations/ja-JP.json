@@ -590,7 +590,7 @@
             "language": {
                 "desc": "タップしてアプリの言語を変更",
                 "pickTitle": "言語を選択",
-                "pickSub": "選ぶとアプリが新しい言語で開き直します"
+                "pickSub": "選ぶとすぐに新しい言語に切り替わります"
             }
         },
         "search": {
@@ -1598,7 +1598,9 @@
                 "chipA11y": "{{title}}、{{value}}件"
             },
             "entryImage": {
-                "broken": "画像を読み込めませんでした"
+                "broken": "画像を読み込めませんでした",
+                "zoomIn": "画像を拡大",
+                "zoomOut": "画像を縮小"
             },
             "filterSheet": {
                 "closeA11y": "選択画面を閉じる",

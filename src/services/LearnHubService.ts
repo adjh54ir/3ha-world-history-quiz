@@ -6,6 +6,7 @@ import { createWorldTopicService, WorldTopicService } from './WorldTopicService'
 import { selectFlagsByName } from '@/src/const/data/world/ConstFlagImages';
 import { shuffle } from './LearnQuizFactory';
 import i18n, { appLanguage } from '@/src/translations';
+import { localized } from '@/src/utils/ThemedStyles';
 
 /**
  * 통합 학습 도메인 인터페이스
@@ -18,30 +19,33 @@ export interface LearnDomain {
 	generateQuiz(opts?: LearnType.BuildOptions): LearnType.QuizQuestion[];
 }
 
-const services = {} as Record<LearnType.Domain, WorldTopicService>;
+/** 주제 하나 = 서비스 하나. 서비스는 글자를 읽는 시점의 언어로 꺼내므로 언어와 무관하게 하나씩만 둔다 */
+const services = Object.fromEntries(WORLD_TOPICS.map((topic) => [topic.key, createWorldTopicService(topic.key)])) as Record<LearnType.Domain, WorldTopicService>;
 
-/** 주제 하나 = 도메인 하나. 이름·소개는 ConstWorldText, 아이콘·색은 ConstWorldTopics 에 있다 */
-const domains = Object.fromEntries(
-	WORLD_TOPICS.map((topic) => {
-		const service = createWorldTopicService(topic.key);
-		services[topic.key] = service;
-		const domain: LearnDomain = {
-			meta: {
-				key: topic.key,
-				title: WORLD_TOPIC_TEXT[topic.key].label,
-				subtitle: WORLD_TOPIC_TEXT[topic.key].description,
-				icon: topic.icon,
-				iconType: 'materialCommunityIcons',
-				color: topic.color,
-				total: service.selectAll().length,
-			},
-			selectCategoryList: () => service.selectCategoryList(),
-			getStudyCards: (opts) => service.getStudyCards(opts),
-			generateQuiz: (opts) => service.generateQuiz(opts),
-		};
-		return [topic.key, domain];
-	}),
-) as Record<LearnType.Category, LearnDomain>;
+/** 주제 하나 = 도메인 하나. 이름·소개는 ConstWorldText(언어별), 아이콘·색은 ConstWorldTopics 에 있다 */
+const domains = localized(
+	() =>
+		Object.fromEntries(
+			WORLD_TOPICS.map((topic) => {
+				const service = services[topic.key];
+				const domain: LearnDomain = {
+					meta: {
+						key: topic.key,
+						title: WORLD_TOPIC_TEXT[topic.key].label,
+						subtitle: WORLD_TOPIC_TEXT[topic.key].description,
+						icon: topic.icon,
+						iconType: 'materialCommunityIcons',
+						color: topic.color,
+						total: service.selectAll().length,
+					},
+					selectCategoryList: () => service.selectCategoryList(),
+					getStudyCards: (opts) => service.getStudyCards(opts),
+					generateQuiz: (opts) => service.generateQuiz(opts),
+				};
+				return [topic.key, domain];
+			}),
+		) as Record<LearnType.Category, LearnDomain>,
+);
 
 const isCategory = (key: string): key is LearnType.Category => key in domains;
 
@@ -51,7 +55,7 @@ const isCategory = (key: string): key is LearnType.Category => key in domains;
  */
 const SUB_QUIZ_KEYS: LearnType.Domain[] = ['worldcup', 'olympic', 'winter'];
 const HIDDEN_FROM_MAIN: LearnType.Domain[] = SUB_QUIZ_KEYS;
-const MAIN_DOMAIN_KEYS = (Object.keys(domains) as LearnType.Domain[]).filter((k) => !HIDDEN_FROM_MAIN.includes(k));
+const MAIN_DOMAIN_KEYS = WORLD_TOPICS.map((t) => t.key as LearnType.Domain).filter((k) => !HIDDEN_FROM_MAIN.includes(k));
 const mainDomains = (): LearnDomain[] => MAIN_DOMAIN_KEYS.map((k) => domains[k]);
 
 // 도메인별 uid→학습카드 인덱스 캐시 (getStudyCardByUid 최초 1회 생성 후 재사용)
@@ -64,6 +68,13 @@ const titleOf = (key: LearnType.Domain): string => domains[key].meta.title;
 let allCardsCache: LearnType.StudyCard[] | null = null;
 /** 서브 퀴즈 주제까지 포함한 검색 캐시 (검색 탭 전용) */
 let allCardsWithSubCache: LearnType.StudyCard[] | null = null;
+
+// 캐시는 카드 글자(번역)를 품는다 — 설정에서 언어를 바꾸면 비워 새 언어로 다시 만든다
+i18n.on('languageChanged', () => {
+	studyCardIndexCache.clear();
+	allCardsCache = null;
+	allCardsWithSubCache = null;
+});
 
 /** 검색 비교용 — 대소문자·악센트를 지운다 ('Pekin' 으로 'Pékin' 을 찾는다). 한글은 NFC 로 되돌려 그대로 둔다 */
 export const fold = (text: string): string => text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').normalize('NFC');

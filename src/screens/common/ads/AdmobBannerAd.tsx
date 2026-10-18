@@ -7,16 +7,12 @@ import { themed } from '@/src/utils/ThemedStyles';
 import DateUtils from '@/src/utils/DateUtils';
 import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
 import { markBannerSettled, skipAppOpenOnNextResume } from '@/src/services/AppOpenAdService';
-import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
-import { resolveAdUnitId } from './adUnitId';
 
 type AdUnitIdType = string;
 
-// __DEV__ 는 테스트 유닛, 그 외는 운영 유닛 (adUnitId.ts)
-const AD_UNIT_ID: AdUnitIdType = resolveAdUnitId(
-	Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }),
-	TestIds.BANNER,
-);
+// ponytail: 배너는 당분간 운영 빌드에서도 테스트 유닛만 띄운다 (수익 없음).
+// 운영 유닛으로 돌릴 때는 resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.BANNER) 로 되돌린다 (adUnitId.ts, @env)
+const AD_UNIT_ID: AdUnitIdType = TestIds.BANNER;
 
 interface AdmobBannerAdProps {
 	paramMarginTop?: number;

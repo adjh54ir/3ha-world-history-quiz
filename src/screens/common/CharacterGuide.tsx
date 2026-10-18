@@ -135,7 +135,8 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 			return;
 		}
 		enter.setValue(0);
-		Animated.spring(enter, { toValue: 1, friction: 7, tension: 70, useNativeDriver: true }).start();
+		const spring = Animated.spring(enter, { toValue: 1, friction: 7, tension: 70, useNativeDriver: true });
+		spring.start();
 		const loop = Animated.loop(
 			Animated.sequence([
 				Animated.timing(bob, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
@@ -143,7 +144,10 @@ const CharacterGuide: React.FC<CharacterGuideProps> = ({
 			]),
 		);
 		loop.start();
-		return () => loop.stop();
+		return () => {
+			spring.stop();
+			loop.stop();
+		};
 	}, [visible, enter, bob]);
 
 	// 문장 타이핑 — 한 글자씩 노출

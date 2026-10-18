@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, LayoutAnimation, Animated, Easing } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useScrollToTop } from '@react-navigation/native';
+import { useIsFocused, useScrollToTop } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import FitText from '@/src/screens/common/atomic/FitText';
@@ -122,8 +122,10 @@ const Stats = () => {
 	useEffect(() => () => { if (achSwapTimer.current) clearTimeout(achSwapTimer.current); }, []);
 	const rankShine = useRef(new Animated.Value(0)).current;
 	const rankPulse = useRef(new Animated.Value(0)).current;
+	// 위에 다른 화면이 덮여 있는 동안은 반복 연출을 멈춘다 (챌린지 탭과 같은 기준)
+	const focused = useIsFocused();
 	useEffect(() => {
-		if (reducedMotion) return;
+		if (reducedMotion || !focused) return;
 		const shine = Animated.loop(
 			Animated.sequence([
 				Animated.timing(rankShine, { toValue: 1, duration: 1600, easing: Easing.inOut(Easing.quad), useNativeDriver: true }),
@@ -144,7 +146,7 @@ const Stats = () => {
 			rankShine.setValue(0);
 			rankPulse.setValue(0);
 		};
-	}, [reducedMotion, rankShine, rankPulse]);
+	}, [reducedMotion, focused, rankShine, rankPulse]);
 	const domains = LearnHubService.getDomainList();
 	const subDomains = LearnHubService.getSubQuizDomainList();
 	const insets = useSafeAreaInsets();

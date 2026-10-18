@@ -590,7 +590,7 @@
             "language": {
                 "desc": "点击更改应用语言",
                 "pickTitle": "选择语言",
-                "pickSub": "选择后应用将以新语言重新打开"
+                "pickSub": "选择后立即切换为新语言"
             }
         },
         "search": {
@@ -1608,7 +1608,9 @@
                 "chipA11y": "{{title}}，{{value}} 个"
             },
             "entryImage": {
-                "broken": "图片加载失败"
+                "broken": "图片加载失败",
+                "zoomIn": "放大图片",
+                "zoomOut": "缩小图片"
             },
             "filterSheet": {
                 "closeA11y": "关闭选择窗口",

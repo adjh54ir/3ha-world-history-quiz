@@ -28,12 +28,12 @@ import { playPop } from '@/src/utils/SoundUtils';
 import LearnItemCard from '@/src/screens/common/LearnItemCard';
 import { Image as ExpoImage } from 'expo-image';
 import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
-import { themed } from '@/src/utils/ThemedStyles';
+import { localized, themed } from '@/src/utils/ThemedStyles';
 import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 
 const DAILY_COUNT = 5;
 /** 오늘의 퀴즈 난이도 배분 — 쉬운 문제부터 계단식으로 오르게 고정 (복습 문항이 있으면 앞에서부터 잘라 쓴다) */
-const LEVEL_QUOTA = [1, 1, 2, 2, 3].map((lv) => DIFFICULTY_LABELS[lv]);
+const LEVEL_QUOTA = localized(() => [1, 1, 2, 2, 3].map((lv) => DIFFICULTY_LABELS[lv]));
 /** 오늘의 퀴즈에 섞어 낼 복습(오답) 문항 최대 개수 */
 const REVIEW_SLOT = 2;
 const ALARM_KEY = 'TODAY_QUIZ_ALARM_ON';
@@ -261,7 +261,9 @@ const TodayChallenge = () => {
 	useEffect(() => {
 		if (!doneToday) return;
 		doneAnim.setValue(0);
-		Animated.spring(doneAnim, { toValue: 1, friction: 6, tension: 70, useNativeDriver: true }).start();
+		const spring = Animated.spring(doneAnim, { toValue: 1, friction: 6, tension: 70, useNativeDriver: true });
+		spring.start();
+		return () => spring.stop();
 	}, [doneToday, doneAnim]);
 
 	/** 완료 화면 지표 */

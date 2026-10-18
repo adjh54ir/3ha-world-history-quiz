@@ -7,7 +7,7 @@ import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Border, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleWidth } from '@/src/utils';
-import { themed } from '@/src/utils/ThemedStyles';
+import { localized, themed } from '@/src/utils/ThemedStyles';
 import { DIFFICULTY_ORDER } from '@/src/const/ConstQuizMeta';
 
 export interface DifficultyOption {
@@ -36,14 +36,14 @@ interface Props {
  * 난이도 선택 bottom sheet (홈/묶음 퀴즈 공용)
  * - 데이터 난이도 라벨(초급/중급/고급/특급)만 제공
  */
-// key 는 데이터 난이도 라벨(필터 값) 그대로다 — DIFFICULTY_ORDER 가 앱 언어로 이미 번역돼 있다. 라벨도 key 와 같다('' = 전체).
-const OPTIONS = [
+// key 는 데이터 난이도 라벨(필터 값) 그대로다 — DIFFICULTY_ORDER 가 지금 앱 언어로 번역돼 있다. 라벨도 key 와 같다('' = 전체).
+const OPTIONS = localized(() => [
 	{ key: '', icon: 'apps', descKey: 'modal.difficulty.desc.all' },
 	{ key: DIFFICULTY_ORDER[0], icon: 'signal-cellular-alt', descKey: 'modal.difficulty.desc.beginner' },
 	{ key: DIFFICULTY_ORDER[1], icon: 'bar-chart', descKey: 'modal.difficulty.desc.intermediate' },
 	{ key: DIFFICULTY_ORDER[2], icon: 'trending-up', descKey: 'modal.difficulty.desc.advanced' },
 	{ key: DIFFICULTY_ORDER[3], icon: 'whatshot', descKey: 'modal.difficulty.desc.expert' },
-] as const;
+] as const);
 
 const DifficultyPickerModal: React.FC<Props> = ({ visible, value, onClose, onSelect, options, subtitle }) => {
 	const { t } = useTranslation();
