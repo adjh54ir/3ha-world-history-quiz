@@ -390,8 +390,6 @@ ios/LifeHanja/GoogleService-Info.plist
 
 App ID·단위 ID 는 세계 상식 퀴즈 전용 값으로 교체 완료(2026-10-14).
 
-> `EXPO_PUBLIC_IAP_REMOVE_AD_KEY` 가 `src/const/EnvCompat.ts:32` 에 정의되어 있으나 인앱 결제 라이브러리는 설치되어 있지 않습니다. 광고 제거 상품을 출시하지 않는다면 스토어의 "인앱 구매" 항목은 **없음**으로 신고하세요.
-
 ---
 
 ## 12. OTA 업데이트 (expo-updates)

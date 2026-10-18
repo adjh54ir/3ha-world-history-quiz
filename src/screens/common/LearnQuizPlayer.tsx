@@ -1816,7 +1816,6 @@ const styles = themed(() => StyleSheet.create({
 	explainQuestionSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, alignSelf: 'stretch' },
 	// 해설 칸은 글이 왼쪽 정렬이라 그림만 가운데 — 둥근 모서리로 칸 안에 얹는다
 	explainImage: { alignSelf: 'center', marginBottom: SpacingV.md, borderRadius: Radius.md, overflow: 'hidden' },
-	// 광고 제거 구매자는 배너가 없으므로 헤더와 같은 색으로 상단 안전영역만 채운다
 	explainNextBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, alignSelf: 'stretch', paddingVertical: SpacingV.lg, borderRadius: Radius.lg, marginTop: SpacingV.xl },
 	explainNextText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	headerCount: { fontSize: Typography.body, fontWeight: '800', color: withAlpha(Colors.onFill, 'E6') },
