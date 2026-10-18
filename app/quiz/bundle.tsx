@@ -13,13 +13,14 @@ import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleWidth, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
 import DifficultyPickerModal, { DifficultyOption } from '@/src/screens/modal/DifficultyPickerModal';
 import { themed } from '@/src/utils/ThemedStyles';
 import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 /** 시작 시 즉시 생성할 첫 묶음 문항 수 (나머지는 백그라운드로 이어붙임) */
 const FIRST_CHUNK = 20;
@@ -214,10 +215,12 @@ const QuizBundle = () => {
 						</View>
 					}
 				/>
+				{/* 태블릿 2열 — 가로 행 카드라도 셀 폭(350pt 이상)이 넉넉해 본문이 눌리지 않는다 */}
+				<AdaptiveGrid>
 				{visibleDomains.map((d, i) => {
 					const on = selected.includes(d.key);
 					return (
-						<FadeInUp key={d.key} delay={40 + i * 45} duration={340} distance={12}>
+						<View key={d.key} style={isTablet ? styles.cellFill : undefined}>
 						<TouchableOpacity style={[styles.row, on && { borderColor: d.color, backgroundColor: withAlpha(d.color, '0F') }]} activeOpacity={0.85} onPress={() => toggle(d.key)}>
 							<View style={[styles.rowIcon, { backgroundColor: d.mainIcon ? Colors.surfaceAlt : withAlpha(d.color, '14') }]}>
 								<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 32 : 22)} color={d.color} />
@@ -233,9 +236,10 @@ const QuizBundle = () => {
 								color={on ? d.color : Colors.textMuted}
 							/>
 						</TouchableOpacity>
-						</FadeInUp>
+						</View>
 					);
 				})}
+				</AdaptiveGrid>
 			</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
 			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
@@ -263,7 +267,8 @@ export default QuizBundle;
 
 const styles = themed(() => StyleSheet.create({
 	heroCard: { ...CardSurface, borderRadius: Radius.lg, overflow: 'hidden' },
-	selectionHero: { width: '100%', aspectRatio: 2 },
+	// 태블릿 가득 폭에서 2:1 이면 높이가 390~490pt 가 되어 목록을 밀어낸다 — 더 납작하게 (폰은 그대로)
+	selectionHero: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 2 },
 	sectionHead: { marginTop: Layout.sectionGap },
 	countBadge: { borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, backgroundColor: Colors.primarySoft },
 	countText: { fontSize: Typography.caption, fontWeight: '900', color: Colors.primary },
@@ -285,7 +290,9 @@ const styles = themed(() => StyleSheet.create({
 	actionBtns: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
 	actionText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.primary },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
-	row: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
+	// 태블릿 2열 — 부제 줄 수가 달라도 같은 줄 두 카드의 높이를 맞춘다 (폰은 그대로)
+	cellFill: { flexGrow: 1 },
+	row: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, ...(isTablet && { flexGrow: 1 }) },
 	rowIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowBody: { flex: 1 },
 	rowTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },

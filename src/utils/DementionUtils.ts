@@ -24,18 +24,19 @@ export const isTablet = shortSide >= 600;
  */
 export const TABLET_SCALE = 1.25;
 
-/** 태블릿 본문 최대 폭 — 카드/문장이 화면 끝까지 늘어나 읽기 힘들어지는 것을 막는다 */
-export const TABLET_MAX_CONTENT_WIDTH = 720;
+/**
+ * 바텀시트 최대 폭 — 화면 본문은 태블릿에서도 가로를 가득 쓰지만,
+ * 하단 시트는 1024 폭 끝까지 늘어나면 목록·버튼이 판자처럼 보여 상한을 둔다. 폰은 화면 폭 그대로라 무효.
+ */
+export const TABLET_SHEET_MAX_WIDTH = 720;
 
 /**
- * 실제 본문이 차지하는 폭 (폰은 화면 폭 그대로)
- * 태블릿은 화면 폭의 82%를 쓰되 720 을 넘지 않는다.
- * - 고정값 하나로 묶으면 12.9" 에서 좌우가 과하게 비고, 안 묶으면 한 줄이 너무 길어진다.
- * - mini 744 → 610 / 11" 834 → 684 / Pro 12.9" 1024 → 720
+ * 태블릿 그리드 열 수 — 화면 폭(좌우 여백 제외)을 셀 최소 폭으로 나눠 정한다.
+ * mini 744 → 2열 / 11" 834 → 2열 / 12.9" 1024 → 2~3열 (minCell 에 따라). 폰은 항상 1열.
  */
-export const contentWidth = isTablet
-	? Math.min(Math.round(screenWidth * 0.82), TABLET_MAX_CONTENT_WIDTH)
-	: screenWidth;
+export const gridColumns = (minCellWidth = 320, maxColumns = 3) =>
+	// 좌우 여백 = Layout.screenH(20) × 2 — ConstDesign 이 이 파일을 import 하므로 값을 직접 계산한다
+	isTablet ? Math.max(1, Math.min(maxColumns, Math.floor((screenWidth - scaleWidth(40)) / minCellWidth))) : 1;
 
 // 폰은 기존 식을 글자 그대로 유지한다(부동소수점 결과까지 동일 → 모바일 무영향 보장)
 const scaleWidth = (val: number) => (isTablet ? val * TABLET_SCALE : (screenWidth * val) / designWidth);

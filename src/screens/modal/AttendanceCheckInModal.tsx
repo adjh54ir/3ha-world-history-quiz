@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
@@ -138,7 +138,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	return (
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
+				<DialogIn visible={visible} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('modal.attendance.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textInverse} />
 					</TouchableOpacity>
@@ -227,7 +227,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 						<Text style={styles.confirmText}>{t('common.confirm')}</Text>
 					</TouchableOpacity>
 
-				</SheetIn>
+				</DialogIn>
 
 				{/* 🎉 출석 완료 축하 */}
 				{celebrate && (

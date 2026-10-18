@@ -555,7 +555,9 @@
                 "doneTitle": "リセット完了",
                 "doneMessage": "{{label}}をリセットしました。",
                 "failTitle": "リセット失敗",
-                "failMessage": "{{label}}のリセット中に問題が発生しました。しばらくしてからもう一度お試しください。"
+                "failMessage": "{{label}}のリセット中に問題が発生しました。しばらくしてからもう一度お試しください。",
+                "ranking": "ランキング情報",
+                "rankingDesc": "サーバーのニックネーム・スコア・匿名アカウントを削除"
             },
             "permission": {
                 "notification": "通知",
@@ -569,11 +571,15 @@
             "info": {
                 "version": "アプリのバージョン",
                 "share": "アプリをシェア",
+                "rate": "アプリを評価",
+                "rateDesc": "星評価とレビューで応援してください",
                 "contact": "お問い合わせ",
                 "openSource": "オープンソースライブラリ",
                 "openSourceDesc": "使用中のオープンソースとライセンスを確認できます",
                 "homepage": "公式サイト",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "プライバシーポリシー",
+                "privacyDesc": "収集する情報と利用目的を確認できます"
             },
             "dev": {
                 "completeQuizzes": "全クイズ完了",
@@ -2176,6 +2182,10 @@
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "恐竜クイズ",
+                "desc": "恐竜ガイドで恐竜の名前・時代・特徴を学んで、いろいろなクイズで復習しよう。"
+            },
             "familyevent": {
                 "title": "ご祝儀香典ノート",
                 "desc": "ご祝儀と香典を端末の中だけで記録。エクセルとPDFに書き出せます。"

@@ -11,7 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { contentWidth, isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { generateTowerQuiz, TOWER_LEVEL_MAP, TowerQuizQuestion } from '@/src/const/ConstTowerQuizData';
 import TowerResultModal from './TowerResultModal';
@@ -695,11 +695,8 @@ export default TowerQuizScreen;
 const makeStyles = () => StyleSheet.create({
 	container: { flex: 1 },
 	safeArea: { flex: 1 },
-	// 태블릿: 제목·나가기 버튼이 화면 끝으로 흩어지지 않도록 본문과 같은 기둥에 맞춘다
 	header: {
 		width: '100%',
-		maxWidth: contentWidth,
-		alignSelf: 'center',
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
@@ -716,7 +713,7 @@ const makeStyles = () => StyleSheet.create({
 	// 타워 챌린지 헤더(h3 heavy + 작은 보조줄)와 같은 위계로 맞춘다
 	levelTitle: { fontSize: Typography.h3, fontWeight: FontWeight.heavy, color: Colors.textInverse },
 	questionCount: { fontSize: Typography.footnote, color: Colors.onBrandTextSoft, marginTop: SpacingV.xxs },
-	progressBarContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.lg },
+	progressBarContainer: { paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.lg },
 	progressLabelRow: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
@@ -733,9 +730,8 @@ const makeStyles = () => StyleSheet.create({
 	progressBarFill: { height: '100%', borderRadius: Radius.pill },
 	content: { flex: 1 },
 	// 마지막 보기가 화면 아래 끝(홈 인디케이터)에 붙지 않게 — 답을 고르기 전에는 아래 '다음 문제' 띠도 없다
-	// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭).
-	// 좌우 여백은 기둥 안쪽에 준다 — 스크롤 쪽에 주면 태블릿에서 카드가 헤더·진행 막대보다 16 씩 밖으로 삐져나왔다
-	contentInner: { flexGrow: 1, width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingBottom: Layout.screenBottom },
+	// 좌우 여백은 스크롤 안쪽에 준다 — 헤더·진행 막대와 카드 왼쪽 선을 맞춘다
+	contentInner: { flexGrow: 1, paddingHorizontal: Layout.screenH, paddingBottom: Layout.screenBottom },
 	bossSection: { alignItems: 'center', marginVertical: SpacingV.xl },
 	bossGlow: {
 		position: 'absolute',
@@ -791,7 +787,7 @@ const makeStyles = () => StyleSheet.create({
 	},
 	answerNumberText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse },
 	answerText: { flex: 1, fontSize: Typography.subtitle, color: Colors.textInverse, lineHeight: scaledSize(22) },
-	nextButtonContainer: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.lg, paddingBottom: SpacingV.xxl },
+	nextButtonContainer: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.lg, paddingBottom: SpacingV.xxl },
 	nextButton: { borderRadius: Radius.md, overflow: 'hidden' },
 	nextButtonGradient: {
 		flexDirection: 'row',

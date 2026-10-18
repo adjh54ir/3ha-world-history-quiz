@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
 import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
@@ -69,6 +70,7 @@ const WEEKDAY_KEYS = [
  */
 const TodayChallenge = () => {
 	const { t } = useTranslation();
+	const scrollTop = useScrollTop();
 	const todayLabel = (): string => {
 		const { month, day } = DateUtils.getLocalMonthDay();
 		return t('quiz.today.dateLabel', { month, day, dow: t(WEEKDAY_KEYS[DateUtils.getLocalDayOfWeek()]) });
@@ -376,7 +378,8 @@ const TodayChallenge = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			<ScrollView style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+			<View style={{ flex: 1 }}>
+			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
 					{doneToday ? (
 						<>
@@ -388,7 +391,7 @@ const TodayChallenge = () => {
 								<Text style={[styles.heroDoneTitle, { color: doneColor }]} numberOfLines={1} ellipsizeMode="tail">{allPerfect ? t('quiz.today.perfect') : t('quiz.today.doneTitle')}</Text>
 								{result ? (
 									<>
-										<FadeInUp delay={220} duration={420} distance={10} style={styles.heroDonut}>
+										<View style={styles.heroDonut}>
 											<DonutChart
 												// 태블릿은 안쪽 글자(h2)가 1.25배로 커지므로 도넛도 같은 배율로 키운다 (폰은 기존 값)
 												size={isTablet ? scaleWidth(124) : 124}
@@ -399,7 +402,7 @@ const TodayChallenge = () => {
 												<CountUp value={pct} duration={900} format={(v) => `${v}%`} style={[styles.heroDonutPct, { color: doneColor }]} />
 												<Text style={styles.heroDonutLabel}>{t('quiz.common.accuracy')}</Text>
 											</DonutChart>
-										</FadeInUp>
+										</View>
 										<View style={styles.heroStatRow}>
 											{([
 												{ label: t('quiz.common.correct'), value: result.correct, icon: 'check-circle', color: Colors.success },
@@ -407,11 +410,11 @@ const TodayChallenge = () => {
 												{ label: t('quiz.today.statItems'), value: result.total, icon: 'quiz', color: Colors.textSecondary },
 											] as const).map((st, i) => (
 												// 정답 → 오답 → 문항 순으로 하나씩 올라오게 (완료 연출)
-												<FadeInUp key={st.icon} delay={420 + i * 110} duration={380} distance={12} style={styles.heroStat}>
+												<View key={st.icon} style={styles.heroStat}>
 													<IconComponent type="materialIcons" name={st.icon} size={scaledSize(15)} color={st.color} />
 													<CountUp value={st.value} duration={800} style={styles.heroStatNum} />
 													<Text style={styles.heroStatLabel} numberOfLines={1} ellipsizeMode="tail">{st.label}</Text>
-												</FadeInUp>
+												</View>
 											))}
 										</View>
 									</>
@@ -420,9 +423,9 @@ const TodayChallenge = () => {
 										<IconComponent type="materialIcons" name="check-circle" size={scaledSize(34)} color={Colors.success} />
 									</View>
 								)}
-								<FadeInUp delay={780} duration={420} distance={10}>
+								<View>
 									<Text style={styles.heroDoneDesc} numberOfLines={2} ellipsizeMode="tail">{allPerfect ? t('quiz.today.descPerfect') : t('quiz.today.descDone')}</Text>
-								</FadeInUp>
+								</View>
 							</Animated.View>
 
 							<View style={styles.infoCard}>
@@ -462,8 +465,9 @@ const TodayChallenge = () => {
 										const lvlLabel = card?.levelLabel;
 										const saved = card ? bmUids.has(card.uid) : false;
 										return (
-											<FadeInUp key={`${it.domain}-${it.uid}`} delay={Math.min(i * 45, 300)} duration={340} distance={14}>
+											<View key={`${it.domain}-${it.uid}`} style={isTablet ? styles.gridFill : undefined}>
 												<LearnItemCard
+													style={isTablet ? styles.gridFill : undefined}
 													domain={it.domain}
 													categoryLabel={catLabel}
 													levelLabel={lvlLabel}
@@ -476,7 +480,7 @@ const TodayChallenge = () => {
 													onToggleBookmark={card ? () => toggleTodayBookmark(card) : undefined}
 													onPress={() => setDetail(it)}
 												/>
-											</FadeInUp>
+											</View>
 										);
 									})}
 									</AdaptiveGrid>
@@ -525,6 +529,8 @@ const TodayChallenge = () => {
 					)}
 				</FadeInUp>
 			</ScrollView>
+			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+			</View>
 
 			{/* 주 행동(시작)은 하단 고정 — 스크롤 끝에 묻히지 않게 한다 */}
 			{doneToday ? (
@@ -562,7 +568,8 @@ const styles = themed(() => StyleSheet.create({
 	// 하단 고정 버튼과 마지막 카드가 붙어 보이지 않도록 한 섹션만큼 더 띄운다
 	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	hero: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
-	heroIllustration: { width: '100%', aspectRatio: 16 / 9, borderRadius: Radius.lg, marginBottom: Layout.itemGap },
+	// 태블릿 가득 폭에서 16:9 면 높이가 390~550pt 가 되어 본문을 밀어낸다 — 더 납작하게 (폰은 그대로)
+	heroIllustration: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 16 / 9, borderRadius: Radius.lg, marginBottom: Layout.itemGap },
 	heroDone: { ...CardSurface, overflow: 'hidden', alignItems: 'center', borderRadius: Radius.lg, paddingTop: SpacingV.xl, paddingBottom: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
 	heroDoneBadge: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.sm },
 	heroDoneDate: { color: Colors.textSecondary, fontSize: Typography.footnote, fontWeight: '800' },
@@ -589,8 +596,9 @@ const styles = themed(() => StyleSheet.create({
 	resultMoreText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	resultFilterText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	resultFilterTextOn: { color: Colors.onFill },
-	reviewBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.errorSoft, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md },
-	reviewBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.error },
+	// 단독 버튼 — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	reviewBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.errorSoft, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.md, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
+	reviewBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.error, flexShrink: 1, textAlign: 'center' },
 	// 좌우 안쪽 여백은 같은 화면의 알림 카드(padding: Spacing.lg)와 맞춘다 — 문구가 길면 카드 테두리에 붙었다
 	infoCard: { ...CardSurface, flexDirection: 'row', alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.lg, paddingHorizontal: Spacing.lg, marginBottom: SpacingV.md },
 	infoRow: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm },
@@ -607,4 +615,6 @@ const styles = themed(() => StyleSheet.create({
 	alarmBody: { flex: 1 },
 	alarmTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	alarmDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
+	// 태블릿 2열: 같은 줄 두 카드 높이를 맞춘다 (셀은 줄 높이로 늘어나므로 카드가 셀을 채우게)
+	gridFill: { flexGrow: 1 },
 }));

@@ -10,7 +10,7 @@ import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border, DisplayText } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet} from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet, gridColumns } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import DailyWordService from '@/src/services/DailyWordService';
 import LearnProgressService from '@/src/services/LearnProgressService';
@@ -23,7 +23,7 @@ import OnboardingService, { type Interest } from '@/src/services/OnboardingServi
 import { AchievementDef, rarityRank, RARITY_ON_BRAND_COLOR } from '@/src/const/ConstAchievements';
 import TestHistoryService from '@/src/services/TestHistoryService';
 import { LearnType } from '@/src/types/data/LearnType';
-import { AnimatedProgress, CountUp, FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
+import { AnimatedProgress, CountUp, DialogIn, FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
 import JungleCanopy from '@/src/screens/common/anim/JungleCanopy';
 import AttendanceCheckInModal from '@/src/screens/modal/AttendanceCheckInModal';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
@@ -45,7 +45,11 @@ import { getDomainLevels, DOMAIN_LEVELS } from '@/src/const/ConstDomainLevels';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
-import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
+
+/** 태블릿 가로 행 카드 열 수 — 셀이 폰 카드 폭(약 320) 아래로 눌리지 않을 때만 2열 */
+const ROW_GRID_COLUMNS = gridColumns(320, 2);
 
 /**
  * 홈 (Toss 스타일 리디자인)
@@ -109,6 +113,8 @@ const Hub = () => {
 	const scrollRef = useRef<any>(null);
 	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
+	// 캐릭터 선택 팝업 — 주제 탭을 바꾸면 그리드를 맨 위로
+	const charScrollRef = useRef<ScrollView>(null);
 
 	const [daily, setDaily] = useState<LearnType.StudyCard | null>(null);
 	const [dailyBookmarked, setDailyBookmarked] = useState(false);
@@ -132,6 +138,7 @@ const Hub = () => {
 	const [showCharacterPicker, setShowCharacterPicker] = useState(false);
 	const [selectedCharacterKey, setSelectedCharacterKey] = useState('overall');
 	const [pickerTab, setPickerTab] = useState('overall');
+	useScrollTopOnChange(charScrollRef, [pickerTab]);
 	const [pendingCharKey, setPendingCharKey] = useState('overall');
 	const { showToast } = useToast();
 	const [topicsExpanded, setTopicsExpanded] = useState(false);
@@ -553,7 +560,7 @@ const Hub = () => {
 	const topicSection = (
 		<React.Fragment key="topic">
 				{/* 주제 골라보기 — 캐러셀 */}
-				<FadeInUp delay={240}>
+				<View>
 					<SectionHead
 						title={t('home.topics.title')}
 						sub={topicsExpanded ? t('home.topics.subExpanded') : t('home.topics.subCollapsed')}
@@ -567,6 +574,7 @@ const Hub = () => {
 
 					{topicsExpanded && (
 						<View style={styles.topicList}>
+							<AdaptiveGrid columns={ROW_GRID_COLUMNS} style={styles.gridRows}>
 							{domains.map((d) => (
 								<TouchableOpacity key={d.key} style={styles.topicRow} activeOpacity={0.85} onPress={() => moveToCategory(d.key)}>
 									<View style={[styles.topicRowIcon, { backgroundColor: d.mainIcon ? Colors.surfaceAlt : withAlpha(d.color, '14') }]}>
@@ -583,6 +591,7 @@ const Hub = () => {
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							))}
+							</AdaptiveGrid>
 						</View>
 					)}
 
@@ -623,13 +632,13 @@ const Hub = () => {
 							)}
 						/>
 					)}
-				</FadeInUp>
+				</View>
 		</React.Fragment>
 	);
 	const subSection = (
 		<React.Fragment key="sub">
 				{/* 서브 퀴즈 — 주제 골라보기와 동일한 가로 스크롤 카드형 (펼치면 세로 목록) */}
-				<FadeInUp delay={270}>
+				<View>
 					<SectionHead
 						title={t('home.subQuiz.title')}
 						sub={subExpanded ? t('home.subQuiz.subExpanded') : t('home.subQuiz.subCollapsed')}
@@ -643,6 +652,7 @@ const Hub = () => {
 
 					{subExpanded && (
 						<View style={styles.topicList}>
+							<AdaptiveGrid columns={ROW_GRID_COLUMNS} style={styles.gridRows}>
 							{subDomains.map((d) => {
 								const best = subBests[d.key];
 								return (
@@ -665,6 +675,7 @@ const Hub = () => {
 									</TouchableOpacity>
 								);
 							})}
+							</AdaptiveGrid>
 						</View>
 					)}
 
@@ -708,7 +719,7 @@ const Hub = () => {
 							}}
 						/>
 					)}
-				</FadeInUp>
+				</View>
 		</React.Fragment>
 	);
 	const orderedSections = interest === 'knowledge' ? [subSection, topicSection] : [topicSection, subSection];
@@ -762,7 +773,7 @@ const Hub = () => {
 				</FadeInUp>
 
 				{/* 히어로 — 인사 · 연속 학습 · 오늘의 목표 · 다음 행동(CTA)을 한 장에 모은다 */}
-				<FadeInUp delay={40}>
+				<View>
 					<View style={styles.hero}>
 						<View style={styles.heroTop}>
 							{/* 캐릭터 아바타 — 우하단 편집 뱃지로 변경 가능함을 알림 */}
@@ -812,10 +823,10 @@ const Hub = () => {
 							style={styles.heroProgress}
 						/>
 					</View>
-				</FadeInUp>
+				</View>
 
 				{/* 내 학습 현황 — 메인 요약 카드 (히어로) */}
-				<FadeInUp delay={60}>
+				<View>
 					<View style={styles.summaryCard}>
 						<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 						{/* 정글 캐노피 — 카드 우상단에 매달려 흔들리는 잎 (앱 테마의 상징 장식) */}
@@ -898,11 +909,11 @@ const Hub = () => {
 							</>
 						)}
 					</View>
-				</FadeInUp>
+				</View>
 
 				{/* 학습 커리큘럼 — 레벨 테스트 → 학습 → 퀴즈 → 오답노트 → 타임챌린지 (전 단계 완료 시 숨김) */}
 				{!curHidden && (
-					<FadeInUp delay={100}>
+					<View>
 						<Animated.View style={[styles.curCard, !curOpen && styles.curCardClosed, { opacity: curFade, transform: [{ scale: curFade.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] }) }] }]}>
 							<TouchableOpacity style={styles.curHead} activeOpacity={0.8} onPress={toggleCurriculum}>
 								<View style={styles.curHeadLeft}>
@@ -931,7 +942,7 @@ const Hub = () => {
 									const done = curriculumDone[s.key];
 									const wrongBadge = s.key === 'wrong' && wrongCount > 0;
 									return (
-										<FadeInUp key={s.key} delay={140 + i * 60}>
+										<View key={s.key}>
 											<TouchableOpacity style={styles.curRow} activeOpacity={0.85} onPress={() => router.push(s.href as never)}>
 												{/* 좌측 레일 — 단계 번호/체크 + 연결선 */}
 												<View style={styles.curRail}>
@@ -967,18 +978,18 @@ const Hub = () => {
 													<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(20)} color={Colors.textMuted} />
 												)}
 											</TouchableOpacity>
-										</FadeInUp>
+										</View>
 									);
 								})}
 							</View>
 							)}
 						</Animated.View>
-					</FadeInUp>
+					</View>
 				)}
 
 				{/* 오늘의 추천 주제 — 커리큘럼 진행 여부와 무관하게 상시 노출 (X로 닫으면 오늘 하루 숨김) */}
 				{!!recommend && !recHidden && (
-					<FadeInUp delay={100}>
+					<View>
 						<Animated.View style={[styles.recCard, { opacity: recFade, transform: [{ scale: recFade.interpolate({ inputRange: [0, 1], outputRange: [0.94, 1] }) }] }]}>
 							<TouchableOpacity
 								style={styles.recClose}
@@ -1016,11 +1027,11 @@ const Hub = () => {
 								</TouchableOpacity>
 							</View>
 						</Animated.View>
-					</FadeInUp>
+					</View>
 				)}
 
 				{/* 바로 시작하기 */}
-				<FadeInUp delay={120}>
+				<View>
 					<SectionHead title={t('home.quick.title')} sub={t('home.quick.sub')} />
 					<ScrollView
 						horizontal
@@ -1061,11 +1072,11 @@ const Hub = () => {
 							</TouchableOpacity>
 						))}
 					</ScrollView>
-				</FadeInUp>
+				</View>
 
 				{/* 오늘의 상식 */}
 				{daily && (
-					<FadeInUp delay={180}>
+					<View>
 						<SectionHead title={t('home.daily.title')} sub={t('home.daily.sub')} />
 						<TouchableOpacity style={styles.dailyCard} activeOpacity={0.9} onPress={() => setShowDailyDetail(true)}>
 							<View style={styles.dailyHead}>
@@ -1089,7 +1100,7 @@ const Hub = () => {
 							<Text style={styles.dailyTitle} numberOfLines={2} ellipsizeMode="tail">{daily.title}</Text>
 							<Text style={styles.dailyMeaning} numberOfLines={2}>{daily.description || daily.meaning}</Text>
 						</TouchableOpacity>
-					</FadeInUp>
+					</View>
 				)}
 
 				{sectionOrder}
@@ -1103,9 +1114,10 @@ const Hub = () => {
 
 				{/* 특별 콘텐츠 */}
 				{!compact && (
-				<FadeInUp delay={360}>
+				<View>
 					<SectionHead title={t('home.features.title')} sub={t('home.features.sub')} />
 					<View style={styles.featureList}>
+						<AdaptiveGrid columns={ROW_GRID_COLUMNS} style={styles.gridRows}>
 						{features.map((f) => (
 							<TouchableOpacity key={f.href} style={styles.featureRow} activeOpacity={0.85} onPress={() => router.push(f.href as never)}>
 								<View style={[styles.featureIcon, { backgroundColor: withAlpha(f.color, '14') }]}>
@@ -1118,8 +1130,9 @@ const Hub = () => {
 								<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 							</TouchableOpacity>
 						))}
+						</AdaptiveGrid>
 					</View>
-				</FadeInUp>
+				</View>
 				)}
 			</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
@@ -1194,7 +1207,7 @@ const Hub = () => {
 							<Text style={styles.charPreviewReq}>{t(previewChar.unlocked ? 'home.picker.unlockedReq' : 'home.picker.lockedReq', { req: previewChar.req })}</Text>
 							{!!previewChar.desc && <Text style={styles.charPreviewDesc} numberOfLines={2} ellipsizeMode="tail">{previewChar.desc}</Text>}
 						</View>
-						<ScrollView style={styles.characterScroll} showsVerticalScrollIndicator={false}>
+						<ScrollView ref={charScrollRef} style={styles.characterScroll} showsVerticalScrollIndicator={false}>
 							<View style={styles.characterGrid}>
 								{pickerItems.map((c) => {
 									const selected = pendingCharKey === c.key;
@@ -1300,7 +1313,7 @@ const Hub = () => {
 			<AppModal visible={showAuto('curriculum')} transparent animationType="fade" onRequestClose={closeCurriculumCelebrate}>
 				<View style={styles.unlockOverlay}>
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={closeCurriculumCelebrate} />
-					<View style={styles.unlockSheet}>
+					<DialogIn visible style={styles.unlockSheet}>
 						<LottieBox source={LOTTIE_CELEBRATE} autoPlay loop={false} style={styles.unlockLottie} />
 						<View style={styles.curDoneIcon}>
 							<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(40)} color={Colors.primary} />
@@ -1311,7 +1324,7 @@ const Hub = () => {
 						<TouchableOpacity style={styles.unlockBtn} activeOpacity={0.9} onPress={closeCurriculumCelebrate}>
 							<Text style={styles.unlockBtnText}>{t('home.curriculum.celebrate.ok')}</Text>
 						</TouchableOpacity>
-					</View>
+					</DialogIn>
 				</View>
 			</AppModal>
 
@@ -1320,7 +1333,7 @@ const Hub = () => {
 				<View style={styles.unlockOverlay}>
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setUnlockedInfo(null)} />
 					{!!unlockedInfo && (
-						<View style={styles.unlockSheet}>
+						<DialogIn visible style={styles.unlockSheet}>
 							<LottieBox source={LOTTIE_CELEBRATE} autoPlay loop={false} style={styles.unlockLottie} />
 							<ExpoImage source={unlockedInfo.img} style={styles.unlockImg} contentFit="contain" />
 							<Text style={styles.unlockEyebrow}>{t('home.unlock.eyebrow')}</Text>
@@ -1328,7 +1341,7 @@ const Hub = () => {
 							<TouchableOpacity style={styles.unlockBtn} activeOpacity={0.9} onPress={() => setUnlockedInfo(null)}>
 								<Text style={styles.unlockBtnText}>{t('common.confirm')}</Text>
 							</TouchableOpacity>
-						</View>
+						</DialogIn>
 					)}
 				</View>
 			</AppModal>
@@ -1499,7 +1512,7 @@ const styles = themed(() => StyleSheet.create({
 	goalCount: { fontSize: Typography.body, fontWeight: '800', color: Colors.primary },
 	goalDoneRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
 	unlockOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Layout.screenH },
-	unlockSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, alignItems: 'center' },
+	unlockSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, alignItems: 'center' },
 	unlockLottie: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(180) },
 	unlockImg: { width: scaleArt(96), height: scaleArt(96), borderRadius: Radius.xxl },
 	// 완주 후 추천 카드
@@ -1524,7 +1537,7 @@ const styles = themed(() => StyleSheet.create({
 	unlockTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.xs, textAlign: 'center' },
 	// 하단 주 버튼 — 다른 팝업(온보딩·알림·출석)과 같은 높이·라운드
 	unlockBtn: { alignSelf: 'stretch', marginTop: SpacingV.xl, paddingVertical: SpacingV.lg, borderRadius: Radius.md, backgroundColor: Colors.primary, alignItems: 'center' },
-	unlockBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
+	unlockBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 	streakChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 
 	// 오늘의 상식
@@ -1545,7 +1558,10 @@ const styles = themed(() => StyleSheet.create({
 
 	// 주제 목록 (펼치기)
 	topicList: { marginBottom: Layout.sectionGap, gap: Layout.itemGap },
-	topicRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md },
+	// 태블릿 2열 그리드 — 줄 간격을 1열 목록(gap itemGap)과 맞춘다
+	gridRows: { rowGap: Layout.itemGap },
+	// 태블릿 그리드에선 옆 칸과 높이를 맞추도록 셀을 채운다 (폰은 미적용)
+	topicRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md, ...(isTablet && { flexGrow: 1 }) },
 	topicRowIcon: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center' },
 	topicRowBody: { flex: 1 },
 	topicRowTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
@@ -1564,7 +1580,7 @@ const styles = themed(() => StyleSheet.create({
 	topicExampleTag: { fontSize: Typography.footnote, fontWeight: '900', marginBottom: SpacingV.xs },
 	topicExampleText: { fontSize: Typography.footnote, color: Colors.text, lineHeight: scaleHeight(17), fontWeight: '600' },
 	topicBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, borderRadius: Radius.md, paddingVertical: SpacingV.md, marginTop: SpacingV.lg },
-	topicBtnText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
+	topicBtnText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 
 	// 공통 카운트 필
 	countPill: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md },
@@ -1602,7 +1618,7 @@ const styles = themed(() => StyleSheet.create({
 
 	// 특별 콘텐츠 — 액션 버튼 리스트 (좌 아이콘 / 우 제목+서브설명)
 	featureList: { marginBottom: Layout.sectionGap, gap: Layout.itemGap },
-	featureRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md },
+	featureRow: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, gap: Spacing.md, ...(isTablet && { flexGrow: 1 }) },
 	featureIcon: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center' },
 	featureBody: { flex: 1 },
 	featureTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
@@ -1621,7 +1637,7 @@ const styles = themed(() => StyleSheet.create({
 	modalDesc: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22) },
 	modalExample: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(22), marginTop: SpacingV.xs },
 	modalCta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.md, paddingVertical: SpacingV.lg, marginTop: SpacingV.lg, backgroundColor: Colors.primary },
-	modalCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
+	modalCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 	charTabBar: { marginTop: SpacingV.md, height: scaleHeight(44), flexGrow: 0, flexShrink: 0 },
 	charTabRow: { gap: Spacing.sm, alignItems: 'center' },
 	charTab: { flexDirection: 'row', gap: Spacing.xs, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, borderRadius: Radius.xl, backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },

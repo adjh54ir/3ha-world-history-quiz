@@ -26,6 +26,7 @@ import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/Char
 import { themed } from '@/src/utils/ThemedStyles';
 import { appLanguage } from '@/src/translations';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 // 전체(종합) 히어로·목록 아이콘용 앱 메인 아이콘 이미지
 const MAIN_ICON = require('@/src/assets/mainIcon.webp');
@@ -159,7 +160,7 @@ const ScoreDetail = () => {
 
 					{/* 캐릭터 아래 등급 타이틀 뱃지 — 주제 선택 시 도메인별 레벨, 전체 보기 시 누적 등급 */}
 					{heroLevel ? (
-						<FadeInUp delay={80} style={styles.titleBadgeCol}>
+						<View style={styles.titleBadgeCol}>
 							<View style={styles.titleBadgeRow}>
 								<IconComponent type="fontAwesome6" name={heroLevel.def.icon} size={scaledSize(12)} color={Colors.primary} />
 								<Text style={styles.titleBadgeText} numberOfLines={1} ellipsizeMode="tail">{heroLevel.def.label}</Text>
@@ -190,9 +191,9 @@ const ScoreDetail = () => {
 									</View>
 								</View>
 							)}
-						</FadeInUp>
+						</View>
 					) : !selectedRow && overallLevel ? (
-						<FadeInUp delay={80} style={styles.titleBadgeCol}>
+						<View style={styles.titleBadgeCol}>
 							<View style={styles.titleBadgeRow}>
 								<IconComponent type="fontAwesome6" name={overallLevel.def.icon} size={scaledSize(12)} color={Colors.primary} />
 								<Text style={styles.titleBadgeText} numberOfLines={1} ellipsizeMode="tail">{overallLevel.def.label}</Text>
@@ -215,7 +216,7 @@ const ScoreDetail = () => {
 									</View>
 								</View>
 							)}
-						</FadeInUp>
+						</View>
 					) : null}
 
 					{/* 점수: 주제는 누적 점수, 전체는 총 문제 대비 달성률(%) */}
@@ -274,7 +275,7 @@ const ScoreDetail = () => {
 							] as const).map((o) => {
 								const on = sortBy === o.key;
 								return (
-									<TouchableOpacity key={o.key} style={[styles.sortChip, on && styles.sortChipOn]} activeOpacity={0.85} onPress={() => setSortBy(o.key)}>
+									<TouchableOpacity key={o.key} style={[styles.sortChip, on && styles.sortChipOn]} activeOpacity={0.85} hitSlop={SORT_CHIP_HIT} onPress={() => setSortBy(o.key)}>
 										<Text style={[styles.sortText, on && styles.sortTextOn]}>{t(o.labelKey)}</Text>
 									</TouchableOpacity>
 								);
@@ -302,6 +303,8 @@ const ScoreDetail = () => {
 							</View>
 						</View>
 					</TouchableOpacity>
+					{/* 태블릿 2열 — 진행 바·태그가 들어가도 셀 폭(350pt 이상)이 넉넉하다. '전체' 행은 위에 가득 폭으로 둔다 */}
+					<AdaptiveGrid>
 					{rows.map((r) => {
 					const active = selectedKey === r.key;
 					return (
@@ -366,6 +369,7 @@ const ScoreDetail = () => {
 						</TouchableOpacity>
 					);
 				})}
+				</AdaptiveGrid>
 				</FadeInUp>
 			</ScrollView>
 
@@ -394,6 +398,9 @@ const ScoreDetail = () => {
 };
 
 export default ScoreDetail;
+
+// 정렬 칩은 36 높이라 위아래만 4 씩 늘려 터치 44 를 맞춘다 (옆 칩과 겹치지 않게 좌우는 두지 않음)
+const SORT_CHIP_HIT = { top: 4, bottom: 4 };
 
 const styles = themed(() => StyleSheet.create({
 	sectionHeadInline: { flex: 1, marginBottom: 0 },
@@ -444,7 +451,8 @@ const styles = themed(() => StyleSheet.create({
 	sortChipOn: { backgroundColor: Colors.surface },
 	sortText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textMuted },
 	sortTextOn: { color: Colors.primary },
-	row: { ...CardSurface, flexDirection: 'row', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap },
+	// 태블릿 2열 — 같은 줄 두 카드의 아래 끝을 맞춘다 (폰은 그대로)
+	row: { ...CardSurface, flexDirection: 'row', borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: Layout.itemGap, ...(isTablet && { flexGrow: 1 }) },
 	rowCharWrap: { width: scaleWidth(46), height: scaleWidth(46), borderRadius: Radius.md, backgroundColor: Colors.primaryBg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowCharImg: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: scaleWidth(11) },
 	rowLvBadge: { position: 'absolute', bottom: scaleWidth(-4), right: scaleWidth(-4), backgroundColor: Colors.primary, paddingHorizontal: Spacing.xs, paddingVertical: SpacingV.xs, borderRadius: Radius.sm, borderWidth: Border.thin, borderColor: Colors.surface },

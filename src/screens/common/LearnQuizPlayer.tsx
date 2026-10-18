@@ -27,8 +27,8 @@ import EmptyState from '@/src/screens/common/atomic/EmptyState';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { accentInk, isDark, withAlpha, readableOn, EMBER_GRADIENT, HEAT_GRADIENT, LIGHT_COLORS, NIGHT_GRADIENT } from '@/src/const/ConstColors';
-import { bodyFont, Border, DisplayText, Layout, Radius, Shadow, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, screenHeight, contentWidth, scaleArt, isTablet } from '@/src/utils';
+import { bodyFont, Border, DisplayText, Layout, Radius, Spacing, SpacingV, Tracking, Typography } from '@/src/const/ConstDesign';
+import { scaledSize, scaleHeight, scaleWidth, screenHeight, screenWidth, scaleArt, isTablet } from '@/src/utils';
 import { LearnType } from '@/src/types/data/LearnType';
 import { setQuizInProgress } from '@/src/utils/ThemeReload';
 import LearnProgressService from '@/src/services/LearnProgressService';
@@ -47,10 +47,11 @@ const IMG_TIMEOUT = require('@/src/assets/illustrations/lion/lion-quiz-timeout.w
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 const LOTTIE_LOADING = require('@/src/assets/lottie/loading.json');
 import ExitConfirmModal from '@/src/screens/modal/ExitConfirmModal';
-import { FadeInUp } from '@/src/screens/common/anim/Motion';
+import { DialogIn, FadeInUp } from '@/src/screens/common/anim/Motion';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
 import { hapticSuccess, hapticError, hapticLight } from '@/src/utils/HapticUtils';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import { playCorrect, playWrong, playFinish, playTimeout, playCombo, playTick, playWhoosh, playPop, isSoundEnabled, setSoundEnabled } from '@/src/utils/SoundUtils';
 import { useToast } from '@/src/context/ToastContext';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
@@ -211,6 +212,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	// 타임챌린지 이번 판의 개인 랭킹 순위 (챌린지 탭과 같은 정렬: 점수 → 최근 판)
 	const [timeRank, setTimeRank] = useState<{ rank: number; total: number } | null>(null);
 	const questionScrollRef = useRef<ScrollView>(null);
+	// 결과 화면 긴 오답·정답 목록 — 맨 위로 버튼
+	const resultScrollTop = useScrollTop();
 	const [qTimeLeft, setQTimeLeft] = useState(30);
 	const qLimit = 30;
 	const [unlockedAch, setUnlockedAch] = useState<AchievementDef[]>([]);
@@ -345,7 +348,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const insets = useSafeAreaInsets();
 	// Worklet에서는 일반 JS 함수인 scaleWidth를 호출할 수 없으므로 UI 스레드 밖에서 미리 계산한다.
 	const challengeSweepStartX = -scaleWidth(64);
-	const challengeSweepEndX = isTablet ? contentWidth : scaleWidth(330);
+	const challengeSweepEndX = isTablet ? screenWidth : scaleWidth(330);
 	const challengeTimerMotionStyle = useAnimatedStyle(() => ({
 		transform: [{ scale: reduceMotion ? 1 : challengePulse.value }],
 	}));
@@ -913,7 +916,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 
 		return withSharedModals(
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<ScrollView style={styles.scrollFlex} contentContainerStyle={styles.resultScroll} showsVerticalScrollIndicator={false}>
+				<View style={{ flex: 1 }}>
+				<ScrollView ref={resultScrollTop.ref} onScroll={resultScrollTop.onScroll} scrollEventThrottle={16} style={styles.scrollFlex} contentContainerStyle={styles.resultScroll} showsVerticalScrollIndicator={false}>
 					{/* 상단 인셋·배너는 AppLayout 이 담당한다 — 여기서 인셋을 더하면 여백이 두 번 들어간다 */}
 					<View style={[styles.resultHero, { backgroundColor: timed ? HEAT_GRADIENT[1] : accent, paddingTop: SpacingV.xxl }]}>
 						{timed && <LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />}
@@ -956,12 +960,12 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						)}
 						{/* 개인 랭킹 순위 — 신기록이 아니어도 이번 판이 몇 번째인지 보여 한 판 더 할 이유를 준다 */}
 						{timed && trackProgress && !!timeRank && timeRank.total > 1 && (
-							<FadeInUp delay={360}>
+							<View>
 								<View style={styles.rankChip}>
 									<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(15)} color={Colors.textInverse} />
 									<Text style={styles.rankChipText}>{t('player.result.personalRank', { rank: timeRank.rank, total: timeRank.total })}</Text>
 								</View>
-							</FadeInUp>
+							</View>
 						)}
 						<View style={styles.resultProfile}>
 							<Text style={[styles.resultProfileTitle, { color: heroInk }]} numberOfLines={1} ellipsizeMode="tail">{t(profile.title)}</Text>
@@ -969,7 +973,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						</View>
 					</View>
 
-					<FadeInUp delay={120}>
+					<View>
 						<View style={styles.statsRow}>
 							<TouchableOpacity style={[styles.statBox, resultTab === 'correct' && styles.statBoxActive]} activeOpacity={0.7} onPress={() => setResultTab('correct')}>
 								<Text style={[styles.statNum, { color: Colors.success }]}>{correctCount}</Text>
@@ -984,7 +988,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								<Text style={styles.statLabel}>{t('player.result.stat.bestCombo')}</Text>
 							</View>
 						</View>
-					</FadeInUp>
+					</View>
 
 					{!timed && (resultTab === 'wrong' ? wrongList.length > 0 : correctList.length > 0) && (
 						<View style={styles.wrongSection}>
@@ -994,7 +998,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							</View>
 							<AdaptiveGrid>
 							{(resultTab === 'wrong' ? wrongList : correctList).map((q, i) => (
-								<FadeInUp key={`${q.uid}-${i}`} delay={Math.min(i, 6) * 40}>
+								<View key={`${q.uid}-${i}`}>
 									<LearnItemCard
 										domain={q.domain}
 										categoryLabel={q.categoryLabel}
@@ -1011,7 +1015,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 											<IconComponent type="materialIcons" name="arrow-forward" size={scaledSize(11)} color={Colors.textMuted} />
 										</View>
 									</LearnItemCard>
-								</FadeInUp>
+								</View>
 							))}
 							</AdaptiveGrid>
 						</View>
@@ -1031,7 +1035,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 								) : (
 									<AdaptiveGrid>
 									{list.map((q, i) => (
-										<FadeInUp key={`ans-${q.uid}-${i}`} delay={Math.min(i, 6) * 40}>
+										<View key={`ans-${q.uid}-${i}`}>
 											<LearnItemCard
 												domain={q.domain}
 												categoryLabel={q.categoryLabel}
@@ -1044,7 +1048,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 												onToggleBookmark={() => toggleResultBookmark(q)}
 												onPress={() => setDetailQ(q)}
 											/>
-										</FadeInUp>
+										</View>
 									))}
 									</AdaptiveGrid>
 								)}
@@ -1055,6 +1059,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 					{(suggestWrongReview && wrongList.length > 0) || suggestTimeChallenge ? (
 						<View style={styles.nextWrap}>
 							<Text style={styles.nextTitle}>{t('player.result.next.title')}</Text>
+							{/* 태블릿: 제안이 둘이면 2열 — 한 개면 열 수 1 이라 그대로 가득 */}
+							<AdaptiveGrid columns={(suggestWrongReview && wrongList.length > 0 ? 1 : 0) + (suggestTimeChallenge ? 1 : 0)}>
 							{suggestWrongReview && wrongList.length > 0 && (
 								<TouchableOpacity style={styles.stepBtn} activeOpacity={0.85} onPress={() => router.replace('/quiz/wrong-review' as never)}>
 									<View style={[styles.stepIcon, { backgroundColor: Colors.errorSoft }]}>
@@ -1079,13 +1085,16 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 								</TouchableOpacity>
 							)}
+							</AdaptiveGrid>
 						</View>
 					) : null}
 				</ScrollView>
+				<ScrollTopButton visible={resultScrollTop.visible} toTop={resultScrollTop.toTop} progress={resultScrollTop.progress} inset={false} />
+				</View>
 				{/* 결과 진입 전면 광고 — 게이트를 통과한 회차에만 마운트된다 */}
 				<AppModal visible={restarting} transparent animationType="fade" onRequestClose={() => {}}>
 					<View style={styles.loadingOverlay}>
-						<View style={styles.loadingCard}>
+						<DialogIn visible={restarting} style={styles.loadingCard}>
 							<ActivityIndicator size="large" color={accent} />
 							<Text style={styles.loadingTitle}>{t('player.result.loading')}</Text>
 							<View style={styles.loadingTrack}>
@@ -1099,7 +1108,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									]}
 								/>
 							</View>
-						</View>
+						</DialogIn>
 					</View>
 				</AppModal>
 				{/* 타임챌린지는 챌린지(스코어) 화면으로 돌아가지만, 버튼 이름은 '홈으로'로 통일한다 */}
@@ -1112,7 +1121,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				{/* 🎉 컨페티 — 콘텐츠 위(맨 앞)에서 뿌려지도록 마지막에 렌더 */}
 				{pass && (
 					<View style={styles.confettiFront} pointerEvents="none">
-						<ConfettiCannon count={120} origin={{ x: contentWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
+						<ConfettiCannon count={120} origin={{ x: screenWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
 					</View>
 				)}
 			</SafeAreaView>
@@ -1133,7 +1142,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 				<View style={styles.introFill} />
 				<AppModal visible transparent animationType="fade" onRequestClose={() => router.back()}>
 					<View style={styles.startOverlay}>
-						<View style={styles.startSheet}>
+						<DialogIn visible style={styles.startSheet}>
 							{startIllustration ? (
 								<ExpoImage source={startIllustration} style={styles.startIllustration} contentFit="contain" accessible={false} />
 							) : (
@@ -1201,7 +1210,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									</View>
 								</>
 							)}
-						</View>
+						</DialogIn>
 					</View>
 				</AppModal>
 			</SafeAreaView>
@@ -1488,7 +1497,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							{current.imageRef ? (
 								<>
 									{/* 그림이 곧 문제인 문항은 크게, 문제 글을 거드는 그림은 작게 — 보기가 첫 화면 밖으로 밀리지 않게 */}
-									<EntryImage imageRef={current.imageRef} width={Math.min(contentWidth - scaleWidth(96), current.guide.includes(current.prompt) ? (isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176)) : (isWideImageRef(current.imageRef) ? scaleArt(160) : scaleArt(120)))} fetchWidth={isTablet ? 640 : 420} />
+									<EntryImage imageRef={current.imageRef} width={Math.min(screenWidth - scaleWidth(96), current.guide.includes(current.prompt) ? (isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176)) : (isWideImageRef(current.imageRef) ? scaleArt(160) : scaleArt(120)))} fetchWidth={isTablet ? 640 : 420} />
 									{/* 그림 문항은 prompt 가 발문 그 자체다(OX 는 발문에 감싸 들어간다). 발문에 없는 글이면
 									    그림이 곁들임일 뿐인 문항(신화 로마 이름 등)이라 문제 글도 함께 보여 준다 */}
 									{!current.guide.includes(current.prompt) && <Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, styles.promptWithImage]}>{current.prompt}</Text>}
@@ -1585,10 +1594,13 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 							<Animated.View
 								style={[
 									styles.explainSheet,
+									isTablet && styles.explainSheetTablet,
 									{
 										// 시트가 상태바 위로 넘치지 않도록 화면 높이 - 상단 인셋으로 상한을 고정한다
 										maxHeight: screenHeight - insets.top - scaleHeight(16),
-										paddingBottom: SpacingV.xxl + insets.bottom,
+										// 태블릿은 공통 BottomSheet 처럼 아래를 띄운 카드라 인셋은 margin 이 맡는다
+										paddingBottom: SpacingV.xxl + (isTablet ? 0 : insets.bottom),
+										...(isTablet && { marginBottom: Math.max(insets.bottom, Layout.screenH) }),
 										opacity: explainAnim,
 										transform: [{ translateY: explainAnim.interpolate({ inputRange: [0, 1], outputRange: [scaleHeight(60), 0] }) }, { scale: explainAnim.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) }],
 									},
@@ -1604,7 +1616,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 									<View style={styles.explainMetaRow}>
 										<View style={[styles.explainMetaChip, { backgroundColor: withAlpha(currentDomainMeta.color, '14') }]}>
 											<DomainIcon mainIcon={currentDomainMeta.mainIcon} icon={currentDomainMeta.icon} iconType={currentDomainMeta.iconType} size={scaledSize(13)} color={currentDomainMeta.color} />
-											<Text style={[styles.explainMetaText, { color: accentInk(currentDomainMeta.color) }]}>{currentDomainMeta.title}</Text>
+											<Text style={[styles.explainMetaText, { color: accentInk(currentDomainMeta.color) }]} numberOfLines={1} ellipsizeMode="tail">{currentDomainMeta.title}</Text>
 										</View>
 										{!!current.categoryLabel && current.categoryLabel !== currentDomainMeta.title && (
 										<View style={styles.explainMetaChip}>
@@ -1753,7 +1765,8 @@ const styles = themed(() => StyleSheet.create({
 	metaChipText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	guideLine: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary, textAlign: 'center', marginBottom: SpacingV.md },
 	explainOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', alignItems: 'center' },
-	explainSheet: { width: '100%', maxWidth: Layout.sheetMaxWidth, backgroundColor: Colors.surface, borderTopLeftRadius: scaleWidth(28), borderTopRightRadius: scaleWidth(28), paddingHorizontal: Layout.screenH, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	explainSheet: { width: '100%', maxWidth: Layout.sheetMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderBottomWidth: 0, borderColor: Colors.border, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	explainSheetTablet: { maxWidth: Math.min(Layout.sheetMaxWidth, screenWidth - Layout.screenH * 2), borderBottomWidth: 1, borderRadius: Radius.xl },
 	explainBadge: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.pill, backgroundColor: Colors.surface, overflow: 'hidden', justifyContent: 'center', alignItems: 'center' },
 	explainBadgeImg: { width: scaleWidth(84), height: scaleWidth(84), borderRadius: Radius.xl },
 	loadingLottie: { width: scaleWidth(90), height: scaleWidth(90), alignSelf: 'center' },
@@ -1767,7 +1780,7 @@ const styles = themed(() => StyleSheet.create({
 	introFill: { flex: 1 },
 	preparingWrap: { alignItems: 'center', gap: SpacingV.md, marginTop: SpacingV.xl },
 	startOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
+	startSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	startIcon: { width: scaleWidth(60), height: scaleWidth(60), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginBottom: SpacingV.lg },
 	startIllustration: { width: scaleWidth(112), height: scaleWidth(112), marginBottom: SpacingV.md },
 	startTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, textAlign: 'center' },
@@ -1794,7 +1807,7 @@ const styles = themed(() => StyleSheet.create({
 	explainSection: { alignSelf: 'stretch', backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: SpacingV.sm },
 	explainExample: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(21), marginTop: SpacingV.xs },
 	reportBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginTop: SpacingV.xs, marginBottom: SpacingV.sm, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt },
-	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted },
+	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted, flexShrink: 1 },
 	explainDivider: { height: 1, alignSelf: 'stretch', backgroundColor: Colors.border, marginVertical: SpacingV.lg },
 	explainBodyRow: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	explainBodyTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
@@ -1819,7 +1832,6 @@ const styles = themed(() => StyleSheet.create({
 		zIndex: 30,
 		borderRadius: Radius.lg,
 		overflow: 'hidden',
-		...Shadow.floating,
 	},
 	comboGradient: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.sm, borderWidth: Border.thin, borderColor: Colors.onBrandBorder, borderRadius: Radius.lg },
 	comboKicker: { color: Colors.onBrandText, fontSize: Typography.micro, fontWeight: '900', letterSpacing: Tracking.wide },
@@ -1843,7 +1855,7 @@ const styles = themed(() => StyleSheet.create({
 		alignItems: 'center',
 		marginBottom: SpacingV.lg,
 	},
-	questionCardChat: { alignItems: 'center', backgroundColor: 'transparent', borderWidth: 0, shadowOpacity: 0 },
+	questionCardChat: { alignItems: 'center', backgroundColor: 'transparent', borderWidth: 0 },
 	questionCardWord: { borderColor: Colors.primarySoft },
 	questionCardRelation: { backgroundColor: Colors.secondaryBg },
 	questionCardPlay: { borderStyle: 'dashed' },
@@ -1956,7 +1968,7 @@ const styles = themed(() => StyleSheet.create({
 	wrongSectionCount: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted },
 	wrongDetailHint: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: Spacing.xxs, marginTop: SpacingV.sm },
 	wrongDetailHintText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textMuted },
-	nextWrap: { paddingHorizontal: Layout.screenH, marginTop: Layout.sectionGap, gap: SpacingV.sm },
+	nextWrap: { paddingHorizontal: Layout.screenH, marginTop: Layout.sectionGap, gap: Layout.itemGap },
 	nextTitle: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	stepBtn: {
 		flexDirection: 'row',
@@ -1970,10 +1982,10 @@ const styles = themed(() => StyleSheet.create({
 	},
 	stepIcon: { width: scaleWidth(42), height: scaleWidth(42), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	stepBody: { flex: 1 },
-	stepBtnTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
-	stepBtnDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
+	stepBtnTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong, flexShrink: 1 },
+	stepBtnDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs, flexShrink: 1 },
 	loadingOverlay: { flex: 1, backgroundColor: Colors.backdrop, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xl },
-	loadingCard: { width: '100%', maxWidth: Layout.dialogMaxWidth, alignItems: 'center', borderRadius: Radius.xl, backgroundColor: Colors.surface, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
+	loadingCard: { width: '100%', maxWidth: Layout.dialogMaxWidth, alignItems: 'center', borderRadius: Radius.xl, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
 	loadingTitle: { marginTop: SpacingV.md, fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong },
 	loadingTrack: { alignSelf: 'stretch', height: scaleHeight(6), marginTop: SpacingV.lg, borderRadius: scaleWidth(3), backgroundColor: Colors.border, overflow: 'hidden' },
 	loadingFill: { height: '100%', borderRadius: scaleWidth(3) },

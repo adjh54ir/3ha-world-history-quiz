@@ -11,13 +11,14 @@ import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import CommonHeader from '@/src/screens/common/CommonHeader';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { themed } from '@/src/utils/ThemedStyles';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 /**
  * 세계 상식 학습 — 여러 주제를 골라 묶어서 학습하거나, 그냥 랜덤으로 학습
@@ -137,10 +138,12 @@ const StudyBundle = () => {
 						</View>
 					}
 				/>
+				{/* 태블릿: 주제 행을 2열로 — 가득 폭 한 줄이면 아이콘과 체크가 양끝으로 멀어진다 */}
+				<AdaptiveGrid>
 				{domains.map((d, i) => {
 					const on = selected.includes(d.key);
 					return (
-						<FadeInUp key={d.key} delay={40 + i * 45} duration={340} distance={12}>
+						<View key={d.key}>
 						<TouchableOpacity style={[styles.row, on && { borderColor: d.color, backgroundColor: withAlpha(d.color, '0F') }]} activeOpacity={0.85} onPress={() => toggle(d.key)}>
 							<View style={[styles.rowIcon, { backgroundColor: d.mainIcon ? Colors.surfaceAlt : withAlpha(d.color, '14') }]}>
 								<DomainIcon mainIcon={d.mainIcon} icon={d.icon} iconType={d.iconType} size={scaledSize(d.mainIcon ? 32 : 22)} color={d.color} />
@@ -151,9 +154,10 @@ const StudyBundle = () => {
 							</View>
 							<IconComponent type="materialIcons" name={on ? 'check-circle' : 'radio-button-unchecked'} size={scaledSize(24)} color={on ? d.color : Colors.textMuted} />
 						</TouchableOpacity>
-						</FadeInUp>
+						</View>
 					);
 				})}
+				</AdaptiveGrid>
 			</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
 			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
@@ -208,7 +212,8 @@ export default StudyBundle;
 
 const styles = themed(() => StyleSheet.create({
 	heroCard: { ...CardSurface, borderRadius: Radius.lg, overflow: 'hidden' },
-	selectionHero: { width: '100%', aspectRatio: 2 },
+	// 태블릿은 가득 폭이라 2:1 이면 높이가 480 을 넘는다 — 납작하게 (cover 라 잘라서 채운다)
+	selectionHero: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 2 },
 	sectionHead: { marginTop: Layout.sectionGap },
 	countBadge: { borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs, backgroundColor: Colors.primarySoft },
 	countText: { fontSize: Typography.caption, fontWeight: '900', color: Colors.primary },

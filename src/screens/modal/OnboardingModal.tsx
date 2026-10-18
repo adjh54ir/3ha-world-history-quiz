@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { getHomeCharacterImage } from '@/src/const/ConstCharacters';
-import { SheetIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
+import { DialogIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -91,7 +91,7 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 	return (
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={() => finish(interest, goal)}>
 			<View style={styles.overlay}>
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.card}>
+				<DialogIn visible={visible} style={styles.card}>
 					<View style={styles.dots}>
 						{[0, 1, 2, 3].map((i) => (
 							<View key={i} style={[styles.dot, i === step && styles.dotOn]} />
@@ -197,7 +197,7 @@ const OnboardingModal: React.FC<Props> = ({ visible, onDone }) => {
 							<Text style={styles.skipText}>{t('modal.onboarding.skip')}</Text>
 						</TouchableOpacity>
 					)}
-				</SheetIn>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);

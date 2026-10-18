@@ -221,7 +221,7 @@ const LearnCategory = () => {
 				</View>
 
 				<View style={styles.body}>
-					<FadeInUp>
+					<View>
 					{/* 통계 요약 카드 */}
 					<View style={styles.summaryCard}>
 						<View style={styles.summaryStat}>
@@ -242,7 +242,7 @@ const LearnCategory = () => {
 
 					{/* 진도율 */}
 					<View style={styles.progressCard}>
-						<View>
+						<View style={styles.progressItem}>
 							<View style={styles.progressTop}>
 								<IconComponent type="materialIcons" name="school" size={scaledSize(15)} color={accentInk} />
 								<Text style={styles.progressTitle}>{t('learn.category.studyProgress')}</Text>
@@ -250,7 +250,7 @@ const LearnCategory = () => {
 							</View>
 							<AnimatedProgress ratio={studyProgress / 100} color={accent} trackColor={Colors.border} height={scaleHeight(8)} />
 						</View>
-						<View>
+						<View style={styles.progressItem}>
 							<View style={styles.progressTop}>
 								<IconComponent type="materialIcons" name="quiz" size={scaledSize(15)} color={Colors.primary} />
 								<Text style={styles.progressTitle}>{t('learn.category.quizProgress')}</Text>
@@ -315,7 +315,7 @@ const LearnCategory = () => {
 							</TouchableOpacity>
 						))}
 					</View>
-					</FadeInUp>
+					</View>
 				</View>
 			</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
@@ -414,7 +414,9 @@ const styles = themed(() => StyleSheet.create({
 	summaryDivider: { width: 1, height: scaleHeight(30), backgroundColor: Colors.border },
 
 	// 진도율
-	progressCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, gap: SpacingV.lg, marginBottom: Layout.sectionGap },
+	// 태블릿: 학습·퀴즈 진도를 나란히 — 가득 폭 막대 두 줄은 비어 보인다 (폰은 기존 세로 그대로)
+	progressCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, gap: isTablet ? Spacing.xxl : SpacingV.lg, flexDirection: isTablet ? 'row' : 'column', marginBottom: Layout.sectionGap },
+	progressItem: isTablet ? { flex: 1 } : {},
 	progressTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginBottom: SpacingV.sm },
 	progressTitle: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	progressPct: { fontSize: Typography.body, fontWeight: '900' },

@@ -9,7 +9,7 @@ import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import FilterOptionSheet from '@/src/screens/common/atomic/filter-option-sheet';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { bodyFont, Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, isTablet, scaleArt} from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt, gridColumns } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { LearnType } from '@/src/types/data/LearnType';
 import { stringParam } from '@/src/navigation/expoRouterUtils';
@@ -37,6 +37,8 @@ const RECENT_KEY = 'SEARCH_RECENT_QUERIES';
 const RECENT_CAP = 8;
 /** 목록 한 번에 붙이는 개수 — 끝까지 내리면 다음 묶음을 이어 붙인다 */
 const PAGE_SIZE = 50;
+/** 결과 카드 열 수 — 폰 1 / 태블릿 2 (12.9" 는 3) */
+const COLS = gridColumns(320);
 
 /**
  * 검색 탭 (통합 검색 + 상세 필터)
@@ -71,7 +73,7 @@ const SearchTab = () => {
 	const listRef = useRef<any>(null);
 	const scrollTop = useScrollTop(listRef);
 	// 필터·탭을 바꾸면 목록 맨 위부터 보여 준다
-	useScrollTopOnChange(listRef, [scope, cat, lvl]);
+	useScrollTopOnChange(listRef, [scope, cat, lvl, debounced]);
 	useScrollToTop(listRef);
 
 	// 최근 검색어 (최신순, 최대 RECENT_CAP개)
@@ -255,7 +257,7 @@ const SearchTab = () => {
 		const showSub = !!c.subTitle && !subDup && c.subTitle !== meta.title;
 		return (
 			// 첫 화면에 보이는 카드만 스태거(320ms 상한) — 스크롤 중 지연 체감 방지
-			<FadeInUp delay={Math.min((index % PAGE_SIZE) * 40, 320)} duration={340} distance={12} style={isTablet ? styles.gridCell : undefined}>
+			<FadeInUp delay={Math.min((index % PAGE_SIZE) * 40, 320)} duration={340} distance={12} style={COLS > 1 ? styles.gridCell : undefined}>
 			<LearnItemCard
 				domain={c.domain}
 				categoryLabel={c.categoryLabel}
@@ -388,8 +390,8 @@ const SearchTab = () => {
 				</View>
 			</View>
 
-			{/* 태블릿에서만 2단 — 검색 결과 카드는 블록형이라 열을 나눠도 본문이 눌리지 않는다 */}
-			<FlatList onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16}
+			{/* 태블릿에서만 여러 단 — 검색 결과 카드는 블록형이라 열을 나눠도 본문이 눌리지 않는다 */}
+			<FlatList key={`cols-${COLS}`} onScroll={scrollTop.onScroll} onContentSizeChange={scrollTop.onContentSizeChange} scrollEventThrottle={16}
 				ref={listRef}
 				data={visible}
 				extraData={bmUids}
@@ -398,8 +400,8 @@ const SearchTab = () => {
 				ListFooterComponent={hasMore ? <ActivityIndicator style={styles.footerLoader} color={scopeAccent} /> : null}
 				keyExtractor={(c) => c.uid}
 				renderItem={renderItem}
-				numColumns={isTablet ? 2 : 1}
-				columnWrapperStyle={isTablet ? styles.gridRow : undefined}
+				numColumns={COLS}
+				columnWrapperStyle={COLS > 1 ? styles.gridRow : undefined}
 				// 결과가 없으면 빈 상태가 남은 높이를 다 써서 정중앙에 온다
 				contentContainerStyle={[styles.list, ready && visible.length === 0 && styles.listFill]}
 				keyboardShouldPersistTaps="handled"
@@ -411,10 +413,10 @@ const SearchTab = () => {
 				removeClippedSubviews
 				ListEmptyComponent={
 						!ready ? (
-							// 태블릿은 결과와 같은 2열 — 결과가 들어올 때 1열→2열로 튀지 않게
-							<View style={isTablet ? styles.skeletonGrid : undefined}>
-								{(isTablet ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4]).map((i) => (
-									<View key={i} style={[styles.skeletonCard, isTablet && styles.skeletonCell]}>
+							// 태블릿은 결과와 같은 열 수 — 결과가 들어올 때 1열→여러 열로 튀지 않게
+							<View style={COLS > 1 ? styles.skeletonGrid : undefined}>
+								{(COLS > 1 ? [0, 1, 2, 3, 4, 5] : [0, 1, 2, 3, 4]).map((i) => (
+									<View key={i} style={[styles.skeletonCard, COLS > 1 && styles.skeletonCell]}>
 										<Skeleton width={'35%'} height={scaleHeight(16)} radius={Radius.md} />
 										<Skeleton width={'60%'} height={scaleHeight(20)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
 										<Skeleton width={'100%'} height={scaleHeight(18)} radius={Radius.sm} style={{ marginTop: SpacingV.sm }} />
@@ -518,10 +520,10 @@ const styles = themed(() => StyleSheet.create({
 	listFill: { flexGrow: 1 },
 	// 좌우 틈 = 카드 세로 간격(Layout.itemGap) — AdaptiveGrid 와 같은 방식
 	gridRow: { marginHorizontal: -Layout.itemGap / 2 },
-	gridCell: { width: '50%', paddingHorizontal: Layout.itemGap / 2 },
+	gridCell: { width: `${100 / COLS}%`, paddingHorizontal: Layout.itemGap / 2 },
 	skeletonGrid: { flexDirection: 'row', flexWrap: 'wrap', columnGap: Layout.itemGap },
-	// 한 줄에 두 장 — 남는 폭을 반씩 나눠 가진다(개수가 짝수라 마지막 줄도 두 장)
-	skeletonCell: { flexBasis: '40%', flexGrow: 1 },
+	// 한 줄에 COLS 장 — 남는 폭을 나눠 가진다(6개라 2·3열 모두 마지막 줄이 꽉 찬다)
+	skeletonCell: { flexBasis: `${100 / COLS - 5}%`, flexGrow: 1 },
 	countBar: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.xs, backgroundColor: Colors.background },
 	countScope: { flex: 1, fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong, marginRight: Spacing.md },
 	recentWrap: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, backgroundColor: Colors.surface },

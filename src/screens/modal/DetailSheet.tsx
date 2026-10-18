@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { FadeInUp, SheetIn } from '@/src/screens/common/anim/Motion';
+import { useToast } from '@/src/context/ToastContext';
+import { FadeInUp, DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors, { withAlpha, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Border, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
@@ -76,22 +77,8 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 	const [bookmarked, setBookmarked] = useState(false);
 	// 즐겨찾기 여부를 읽은 뒤에 연다 — 별 아이콘이 꺼졌다 켜지는 깜빡임 방지
 	const [loaded, setLoaded] = useState(false);
-	// 팝업 내부 자체 토스트 (팝업 뒤에 가려지는 문제 해결)
-	const [localToast, setLocalToast] = useState<{ msg: string; icon: string } | null>(null);
-	const toastAnim = useRef(new Animated.Value(0)).current;
-	// 언마운트 시 진행 중인 애니메이션 정리
-	useEffect(() => () => toastAnim.stopAnimation(), [toastAnim]);
-	const toastTimer = useRef<any>(null);
-	const showLocalToast = (msg: string, icon = 'check-circle') => {
-		setLocalToast({ msg, icon });
-		toastAnim.setValue(0);
-		Animated.timing(toastAnim, { toValue: 1, duration: 180, useNativeDriver: true }).start();
-		if (toastTimer.current) clearTimeout(toastTimer.current);
-		toastTimer.current = setTimeout(() => {
-			Animated.timing(toastAnim, { toValue: 0, duration: 220, useNativeDriver: true }).start(() => setLocalToast(null));
-		}, 1500);
-	};
-	useEffect(() => () => { if (toastTimer.current) clearTimeout(toastTimer.current); }, []);
+	// AppModal 이 모달 안에 ToastHost 를 그려 공통 토스트가 팝업 위에 보인다
+	const { showToast } = useToast();
 	useEffect(() => {
 		if (!visible || !item?.uid) {
 			setBookmarked(false);
@@ -138,14 +125,14 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 		setBookmarked(now);
 		onBookmarkChange?.(item.uid, now);
 		playPop();
-		showLocalToast(t(now ? 'common.bookmarkSaved' : 'common.bookmarkUnsaved'), now ? 'star' : 'star-border');
+		showToast(t(now ? 'common.bookmarkSaved' : 'common.bookmarkUnsaved'), now ? 'star' : 'star-border');
 	};
 
 	return (
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
+				<DialogIn visible={visible} style={styles.sheet}>
 					{/* 헤더 행: 좌측 여백(밸런서) · 태그(정중앙) · X(우측) — 모두 세로 중앙 정렬 */}
 					<View style={styles.headerRow}>
 						<View style={styles.headerSide} />
@@ -318,14 +305,6 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 						)}
 					</ScrollView>
 
-					{/* 팝업 내부 자체 토스트 — 시트 하단 위로 부드럽게 등장(팝업 뒤 가려짐 방지) */}
-					{!!localToast && (
-						<Animated.View pointerEvents="none" style={[styles.localToast, { opacity: toastAnim, transform: [{ translateY: toastAnim.interpolate({ inputRange: [0, 1], outputRange: [scaleHeight(16), 0] }) }] }]}>
-							<IconComponent type="materialIcons" name={localToast.icon} size={scaledSize(15)} color={Colors.bookmark} />
-							<Text style={styles.localToastText}>{localToast.msg}</Text>
-						</Animated.View>
-					)}
-
 					<View style={styles.ctaRow}>
 						<TouchableOpacity
 							style={[styles.cta, primaryAction ? styles.ctaSecondary : { backgroundColor: accent }]}
@@ -336,11 +315,11 @@ const DetailSheet: React.FC<Props> = ({ visible, item, accent = Colors.primary, 
 						{primaryAction && (
 							<TouchableOpacity style={[styles.cta, styles.ctaPrimary, { backgroundColor: accent }]} activeOpacity={0.9} onPress={primaryAction.onPress}>
 								{!!primaryAction.icon && <IconComponent type="materialIcons" name={primaryAction.icon} size={scaledSize(18)} color={readableOn(accent)} />}
-								<Text style={[styles.ctaText, { color: readableOn(accent) }]}>{primaryAction.label}</Text>
+								<Text style={[styles.ctaText, { color: readableOn(accent) }]} numberOfLines={1} ellipsizeMode="tail">{primaryAction.label}</Text>
 							</TouchableOpacity>
 						)}
 					</View>
-				</SheetIn>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);
@@ -404,8 +383,6 @@ const styles = themed(() => StyleSheet.create({
 	chipText: { fontSize: Typography.footnote, fontWeight: '700' },
 	ctaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: SpacingV.xl },
 	// 흐름에 끼면 나타날 때 하단 CTA 가 밀린다 — 시트 하단 위에 겹쳐 띄운다
-	localToast: { position: 'absolute', bottom: scaleHeight(78), alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, backgroundColor: Colors.overlayStrong, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.xl },
-	localToastText: { color: Colors.textInverse, fontSize: Typography.footnote, fontWeight: '700' },
 	cta: { flex: 1, flexDirection: 'row', gap: Spacing.sm, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.lg, borderRadius: Radius.md },
 	ctaPrimary: { borderWidth: 1, borderColor: 'transparent' },
 	ctaSecondary: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'rea
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -33,7 +33,7 @@ const ResetConfirmModal: React.FC<Props> = ({ visible, label, desc, icon = 'dele
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={busy ? undefined : onCancel}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={busy ? undefined : onCancel} />
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.card}>
+				<DialogIn visible={visible} style={styles.card}>
 					<View style={styles.iconWrap}>
 						<IconComponent type="materialIcons" name={icon} size={scaledSize(28)} color={Colors.error} />
 					</View>
@@ -55,7 +55,7 @@ const ResetConfirmModal: React.FC<Props> = ({ visible, label, desc, icon = 'dele
 							{busy ? <ActivityIndicator color={Colors.onFill} /> : <Text style={styles.confirmText}>{t('common.reset')}</Text>}
 						</TouchableOpacity>
 					</View>
-				</SheetIn>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);

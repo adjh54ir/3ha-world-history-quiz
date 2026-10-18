@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, Animated, Easing, Pressable, StyleProp, StyleSheet, TextStyle, ViewStyle, GestureResponderEvent } from 'react-native';
-import { APP_FONTS_ON, bodyFontFor } from '@/src/const/ConstDesign';
+import { APP_FONTS_ON, bodyFontFor, Typography } from '@/src/const/ConstDesign';
 
 /**
  * 공통 애니메이션 프리미티브
@@ -102,6 +102,9 @@ export const ScalePressable: React.FC<ScalePressableProps> = ({ children, onPres
 	);
 };
 
+/** Animated.Text 는 앱 전역 Text 기본값(fontSize)을 거치지 않는다 — 크기를 안 준 호출부도 안드로이드에서 작아지지 않게 깐다 */
+const DEFAULT_COUNT_TEXT: TextStyle = { fontSize: Typography.body };
+
 interface CountUpProps {
 	/** 목표 숫자 */
 	value: number;
@@ -155,7 +158,7 @@ export const CountUp: React.FC<CountUpProps> = ({ value, duration = 900, format 
 	// Animated.Text 는 앱 전역 Text 를 거치지 않는다 — 서체를 직접 정하지 않았으면 굵기에 맞는 본문 서체를 준다
 	const flat = StyleSheet.flatten(style) ?? {};
 	const font = flat.fontFamily || !APP_FONTS_ON ? null : { fontFamily: bodyFontFor(flat.fontWeight), fontWeight: 'normal' as const };
-	return <Animated.Text allowFontScaling={false} style={[style, font, pop && { transform: [{ scale }] }]}>{format(display)}</Animated.Text>;
+	return <Animated.Text allowFontScaling={false} style={[DEFAULT_COUNT_TEXT, style, font, pop && { transform: [{ scale }] }]}>{format(display)}</Animated.Text>;
 };
 
 interface AnimatedProgressProps {
@@ -295,4 +298,41 @@ export const SheetIn: React.FC<SheetInProps> = ({ children, visible, distance = 
 	);
 };
 
-export default { FadeInUp, ScalePressable, CountUp, AnimatedProgress, Pulse, SheetIn };
+interface DialogInProps {
+	children: React.ReactNode;
+	/** 모달의 visible — true 로 바뀔 때마다 처음부터 다시 열린다 */
+	visible: boolean;
+	duration?: number;
+	style?: StyleProp<ViewStyle>;
+}
+
+/**
+ * 가운데 팝업 카드 진입 (opacity 0 · scale 0.9 → 1)
+ * - 배경(dim)은 AppModal 이 visible 즉시 화면 전체를 채우고, 카드는 레이아웃을 마친 채 투명하게 기다렸다가 떠오른다.
+ *   첫 표시 때 카드가 그려지기 전 한 프레임 동안 배경이 비어 보이던 현상을 막는다.
+ * - 닫힐 때는 AppModal 의 fade 로 사라지므로 별도 종료 연출을 두지 않는다.
+ */
+export const DialogIn: React.FC<DialogInProps> = ({ children, visible, duration = 220, style }) => {
+	const anim = useRef(new Animated.Value(0)).current;
+
+	useEffect(() => {
+		if (!visible) {
+			anim.setValue(0);
+			return;
+		}
+		const a = Animated.timing(anim, { toValue: 1, duration, easing: Easing.out(Easing.cubic), useNativeDriver: true });
+		a.start();
+		return () => {
+			a.stop();
+			anim.stopAnimation();
+		};
+	}, [visible, duration, anim]);
+
+	return (
+		<Animated.View style={[style, { opacity: anim, transform: [{ scale: anim.interpolate({ inputRange: [0, 1], outputRange: [0.9, 1] }) }] }]}>
+			{children}
+		</Animated.View>
+	);
+};
+
+export default { FadeInUp, ScalePressable, CountUp, AnimatedProgress, Pulse, SheetIn, DialogIn };

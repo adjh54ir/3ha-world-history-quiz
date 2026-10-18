@@ -55,32 +55,32 @@ const navigationTheme = () => {
  * - ATT 응답을 기다리지 않는다. 기다리면 첫 화면까지 몇 초가 더 걸린다.
  *   (동의 전에는 SDK가 비개인화 광고로 요청한다 — 추적은 하지 않는다)
  */
-const initAdMob = () => {
+const initAdMob = async () => {
 	try {
-		const mobileAds = require('react-native-google-mobile-ads').default;
-		mobileAds()
-			.initialize()
-			.then((s: unknown) => {
-				// 광고 소리를 끈다 — 앱을 켜자마자 동영상 광고가 붙으면 아무것도 안 눌렀는데 소리부터 난다.
-				// 안드로이드는 initialize() 전에 부르면 네이티브 IllegalStateException 으로 앱이 죽는다 → 반드시 초기화 뒤에 건다.
-				// 앱 열기 광고는 이 뒤에 요청하므로 첫 광고부터 적용된다.
-				try {
-					mobileAds().setAppMuted(true);
-					mobileAds().setAppVolume(0);
-				} catch (e) {
-					console.warn('AdMob 음소거 설정 실패:', e);
-				}
-				console.log('✅ AdMob 초기화 완료:', s);
-				require('@/src/services/AppOpenAdService').initAppOpenAd();
-			})
-			.catch((e: unknown) => console.warn('❌ AdMob 초기화 실패:', e));
+		const { default: mobileAds, MaxAdContentRating } = require('react-native-google-mobile-ads');
+		// 앱 등급(4+ / 전체이용가)에 맞지 않는 광고가 붙지 않게 광고 콘텐츠 등급 상한을 건다 (더 엄격히 하려면 G)
+		await mobileAds()
+			.setRequestConfiguration({ maxAdContentRating: MaxAdContentRating.PG })
+			.catch((e: unknown) => console.warn('AdMob 요청 설정 실패:', e));
+		const s = await mobileAds().initialize();
+		// 광고 소리를 끈다 — 앱을 켜자마자 동영상 광고가 붙으면 아무것도 안 눌렀는데 소리부터 난다.
+		// 안드로이드는 initialize() 전에 부르면 네이티브 IllegalStateException 으로 앱이 죽는다 → 반드시 초기화 뒤에 건다.
+		// 앱 열기 광고는 이 뒤에 요청하므로 첫 광고부터 적용된다.
+		try {
+			mobileAds().setAppMuted(true);
+			mobileAds().setAppVolume(0);
+		} catch (e) {
+			console.warn('AdMob 음소거 설정 실패:', e);
+		}
+		console.log('✅ AdMob 초기화 완료:', s);
+		require('@/src/services/AppOpenAdService').initAppOpenAd();
 	} catch (e) {
-		console.warn('AdMob 모듈 로드 실패(미설치?):', e);
+		console.warn('❌ AdMob 초기화 실패:', e);
 	}
 };
 
 // 앱 열기 광고를 최대한 빨리 띄우려면 React 마운트를 기다릴 수 없다 → 번들 평가 시점에 시작
-initAdMob();
+void initAdMob();
 
 // 네이티브 스플래시(expo-splash-screen, app.json)를 초기화가 끝날 때까지 붙잡아 두고 페이드로 걷는다.
 // 한국어 퀴즈는 react-native-bootsplash 를 썼지만, 이 앱의 네이티브 프로젝트는 expo-splash-screen 으로 이미 짜여 있어 그대로 쓴다.

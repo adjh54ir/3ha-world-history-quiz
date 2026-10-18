@@ -7,13 +7,13 @@ import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Layout, Radius, SpacingV } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, screenHeight } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useToastShown } from '@/src/context/ToastContext';
 import { ScrollMemoryContext } from '@/src/screens/common/withRemountOnFocus';
 
-/** 이만큼 내려가면 버튼이 나온다 (화면 높이의 절반 정도 — 한 화면을 넘긴 목록에서만 보인다) */
-const SHOW_AFTER = scaleHeight(400);
+/** 화면 높이 이상 내려가면 버튼이 나온다 (한 화면을 넘긴 목록에서만 보인다) */
+const SHOW_AFTER = screenHeight;
 /** 위치 복원은 데이터가 늦게 그려지는 것까지 이만큼만 기다린다 */
 const RESTORE_WAIT_MS = 2000;
 /** 버튼 지름과 진행률 링 두께 */

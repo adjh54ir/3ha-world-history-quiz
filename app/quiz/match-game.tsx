@@ -8,7 +8,7 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, contentWidth, isTablet } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, screenWidth, isTablet, gridColumns } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { LearnType } from '@/src/types/data/LearnType';
 import ConfettiCannon from 'react-native-confetti-cannon';
@@ -152,7 +152,7 @@ const MatchGame = () => {
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
-			{done && <ConfettiCannon count={110} origin={{ x: contentWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />}
+			{done && <ConfettiCannon count={110} origin={{ x: screenWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />}
 
 			<View style={styles.header}>
 				<CommonHeader
@@ -228,9 +228,11 @@ const MatchGame = () => {
 export default MatchGame;
 
 
-// 2열 타일 — 가로·세로 간격을 같은 gap 으로 맞추려고 폭을 컬럼 폭에서 직접 계산한다.
+// 폰 2열 / 태블릿 3열 — 가로·세로 간격을 같은 gap 으로 맞추려고 폭을 컬럼 폭에서 직접 계산한다.
+// 태블릿 2열이면 타일이 340~480pt 폭의 납작한 판(최대 3.2:1)이 되고 판이 5줄로 길어진다 — 3열로 4줄에 담는다.
 // 태블릿은 폰 비율(약 1.68:1)을 유지하도록 높이를 폭에서 역산한다.
-const TILE_W = (contentWidth - Layout.screenH * 2 - Spacing.sm) / 2;
+const TILE_COLS = isTablet ? gridColumns(220) : 2;
+const TILE_W = (screenWidth - Layout.screenH * 2 - Spacing.sm * (TILE_COLS - 1)) / TILE_COLS;
 // 상한 — 폰 비율 그대로면 태블릿 타일이 186pt 가 되어 판이 화면보다 길어진다
 const TILE_H = isTablet ? Math.min(Math.round(TILE_W / 1.68), scaleHeight(120)) : scaleHeight(96);
 /** 국기 타일 — 국기 틀(가로:세로 = 1 : 0.62)이 타일 안쪽 높이에 들어가게 폭을 줄인다 */
@@ -270,7 +272,7 @@ const styles = themed(() => StyleSheet.create({
 	resultSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm },
 	resultBtns: { flexDirection: 'row', gap: Spacing.md, marginTop: SpacingV.lg, alignSelf: 'stretch' },
 	outlineBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
-	outlineBtnText: { fontSize: Typography.callout, fontWeight: '700', color: Colors.text },
+	outlineBtnText: { fontSize: Typography.callout, fontWeight: '700', color: Colors.text, flexShrink: 1, textAlign: 'center' },
 	filledBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
-	filledBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
+	filledBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill, flexShrink: 1, textAlign: 'center' },
 }));

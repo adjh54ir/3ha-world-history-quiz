@@ -7,7 +7,8 @@
  * 2) show() 는 미로드 상태면 "동기 throw" 하므로 반드시 try 안에서 호출한다.
  * 3) 로드·노출 실패는 Firebase 이벤트로 남긴다(운영에서 원인 추적).
  *
- * 노출 규칙은 AppOpenAdGate 참고 — 최초 설치 1회 무조건, 이후 복귀 2번 중 1번.
+ * 노출 규칙은 AppOpenAdGate 참고 — 최초 설치 첫 실행은 건너뛰고, 이후 복귀 2번 중 1번(최소 30분 간격).
+ * 다른 광고(배너 클릭 랜딩·보상형)에서 돌아온 복귀에는 띄우지 않는다 — 광고 뒤에 광고가 붙지 않게.
  */
 import { AppState, AppStateStatus, Platform } from 'react-native';
 import { AdEventType, AppOpenAd, TestIds } from 'react-native-google-mobile-ads';
@@ -36,6 +37,8 @@ let loadedAt = 0;
 let loading = false;
 let showing = false;
 let lastShowAt = 0;
+/** 다음 복귀 1회는 광고를 띄우지 않는다 — 다른 광고로 앱을 잠깐 벗어났다 돌아오는 경우 */
+let skipNextResume = false;
 /** 로드가 끝나면 즉시 노출할지 — 조건 판단이 로드보다 먼저 끝난 경우 */
 let pendingShow = false;
 let watching = false;
@@ -123,6 +126,8 @@ export const preloadAppOpenAd = (): void => {
 		void logAdEvent('ad_app_open_opened', LOG);
 	});
 	next.addAdEventListener(AdEventType.CLICKED, () => {
+		// 광고 랜딩에서 돌아오는 복귀에 또 광고를 띄우지 않는다
+		skipNextResume = true;
 		void recordAdClick();
 		void logAdEvent('ad_app_open_clicked', LOG);
 	});
@@ -190,9 +195,21 @@ const watchForeground = (): void => {
 		const returned = state === 'active' && prev === 'background';
 		prev = state;
 		if (!returned || showing) return;
+		if (skipNextResume) {
+			skipNextResume = false;
+			return;
+		}
 		if (DateUtils.getTimestamp() - lastShowAt < SELF_RETURN_GUARD_MS) return;
 		void requestShowIfDue();
 	});
+};
+
+/**
+ * 다른 광고(배너 클릭 랜딩·보상형)로 앱을 벗어나기 직전에 부른다 — 돌아오는 복귀 1회는 앱 열기 광고를 띄우지 않는다.
+ * 안드로이드는 전체화면 광고·외부 브라우저로 나가도 background 로 바뀌어 복귀로 잡힌다.
+ */
+export const skipAppOpenOnNextResume = (): void => {
+	skipNextResume = true;
 };
 
 /**
@@ -205,4 +222,4 @@ export const initAppOpenAd = (): void => {
 	watchForeground();
 };
 
-export default { initAppOpenAd, preloadAppOpenAd, waitForStartupAds, markBannerSettled };
+export default { initAppOpenAd, preloadAppOpenAd, waitForStartupAds, markBannerSettled, skipAppOpenOnNextResume };

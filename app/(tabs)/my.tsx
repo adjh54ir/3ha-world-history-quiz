@@ -16,7 +16,8 @@ import { resetCharacterGuideSeen } from '@/src/screens/common/CharacterGuide';
 import { setBgmEnabled, isBgmEnabled } from '@/src/utils/BgmUtils';
 import Colors, { withAlpha, getThemeMode, isDark, type ThemeMode } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, CardSurface, Tracking } from '@/src/const/ConstDesign';
-import { scaledSize, scaleWidth, scaleHeight } from '@/src/utils';
+import { scaledSize, scaleWidth, scaleHeight, isTablet, gridColumns } from '@/src/utils';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import DailyWordService from '@/src/services/DailyWordService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -31,7 +32,7 @@ import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
 import LanguagePickerModal from '@/src/screens/modal/LanguagePickerModal';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
-import { shareApp as appShare } from '@/src/utils/AppShare';
+import { shareApp as appShare, openStoreReview } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
 import { COMMON_APPS_DATA, appStoreUrl, isNewApp } from '@/src/const/common/CommonAppsData';
 import { CommonType } from '@/src/types/CommonType';
@@ -234,6 +235,8 @@ const Setting = () => {
 		{ key: 'learn', label: t('settings.reset.learn'), desc: t('settings.reset.learnDesc'), icon: 'menu-book', run: () => LearnProgressService.clearLearning() },
 		{ key: 'quiz', label: t('settings.reset.quiz'), desc: t('settings.reset.quizDesc'), icon: 'quiz', run: () => resetQuizRecords() },
 		{ key: 'time', label: t('settings.reset.time'), desc: t('settings.reset.timeDesc'), icon: 'timer', run: () => resetTimeChallenge() },
+		// 서버 데이터 삭제 — 닉네임·점수·익명 계정 (스토어 데이터 삭제 요건). '모두 초기화'는 점수만 지우고 닉네임을 남긴다
+		{ key: 'ranking', label: t('settings.reset.ranking'), desc: t('settings.reset.rankingDesc'), icon: 'leaderboard', run: () => RankingService.deleteMe() },
 	];
 
 	/** 오늘의 퀴즈 관련 저장키 (완료일·결과 스냅샷·히스토리·발급목록·알림설정) */
@@ -509,6 +512,16 @@ const Setting = () => {
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
+						<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={openStoreReview}>
+							<View style={[styles.rowIcon, { backgroundColor: Colors.primarySoft }]}>
+								<IconComponent type="materialIcons" name="star-rate" size={scaledSize(20)} color={Colors.primaryDeep} />
+							</View>
+							<View style={styles.rowBody}>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.rate')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.info.rateDesc')}</Text>
+							</View>
+							<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
+						</TouchableOpacity>
 						<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={contact}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.surfaceAlt }]}>
 								<IconComponent type="materialIcons" name="mail" size={scaledSize(20)} color={Colors.textSecondary} />
@@ -526,6 +539,16 @@ const Setting = () => {
 							<View style={styles.rowBody}>
 								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.homepage')}</Text>
 								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.info.homepageDesc')}</Text>
+							</View>
+							<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
+						</TouchableOpacity>
+						<TouchableOpacity style={[styles.row, styles.rowBorder]} activeOpacity={0.7} onPress={() => Linking.openURL(privacyUrl()).catch(() => { })}>
+							<View style={[styles.rowIcon, { backgroundColor: Colors.surfaceAlt }]}>
+								<IconComponent type="materialIcons" name="policy" size={scaledSize(20)} color={Colors.textSecondary} />
+							</View>
+							<View style={styles.rowBody}>
+								<Text style={styles.rowLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.info.privacy')}</Text>
+								<Text style={styles.rowDesc} numberOfLines={2} ellipsizeMode="tail">{t('settings.info.privacyDesc')}</Text>
 							</View>
 							<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
 						</TouchableOpacity>
@@ -587,8 +610,10 @@ const Setting = () => {
 					{/* 함께하면 좋은 퀴즈 앱 */}
 					<SubHead label={t('settings.section.relatedApps')} icon="apps" />
 					<View style={styles.card}>
+						{/* 태블릿은 2열 — 첫 줄(열 수만큼)은 윗선 없이 */}
+						<AdaptiveGrid columns={APP_COLS}>
 						{previewApps.map((app, i) => (
-							<TouchableOpacity key={app.id} style={[styles.row, i > 0 && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
+							<TouchableOpacity key={app.id} style={[styles.row, i >= APP_COLS && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
 								<Image source={app.icon} style={styles.appIcon} />
 								<View style={styles.rowBody}>
 									<Text style={styles.rowLabel} numberOfLines={1}>{app.title}</Text>
@@ -597,6 +622,7 @@ const Setting = () => {
 								<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
 							</TouchableOpacity>
 						))}
+						</AdaptiveGrid>
 					</View>
 
 					{/* 제작자 앱 더보기 — 설정 화면 맨 아래 앱 목록(가로 스크롤) */}
@@ -663,8 +689,19 @@ export default withRemountOnFocus(Setting);
 /** 미리듣기·테스트 버튼 터치 여유 — 오른쪽 스위치와 겹치지 않게 위아래·왼쪽만 넓힌다 */
 const TEST_BTN_HIT_SLOP = { ...Layout.hitSlop, right: 0 };
 
+/** 함께하면 좋은 앱 목록 열 수 — 폰 1 / 태블릿 2 */
+const APP_COLS = gridColumns(320, 2);
+
+/** 태블릿에서 혼자 놓인 버튼이 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 묶어 가운데 (폰은 그대로) */
+const TABLET_SOLO_BTN = isTablet ? ({ alignSelf: 'center', width: '100%', maxWidth: Layout.dialogMaxWidth } as const) : null;
+
 /** 제작자(EcodeLab) 공식 홈페이지 */
 const HOMEPAGE_URL = 'https://ecodelab.im/main';
+
+/** 개인정보처리방침·이용약관 — 웹사이트(terms/worldhistoryquiz*)에 언어별로 게시돼 있다 */
+const PRIVACY_URL_BASE = 'https://www.ecodelab.im/terms/worldhistoryquiz';
+const PRIVACY_URL_SUFFIX: Record<string, string> = { 'ko-KR': '', 'en-EN': 'En', 'ja-JP': 'Jp', 'zh-CN': 'Zh', 'fr-FR': 'Fr', 'es-ES': 'Es' };
+const privacyUrl = () => `${PRIVACY_URL_BASE}${PRIVACY_URL_SUFFIX[appLanguage()] ?? 'En'}`;
 
 /** 권한 상태 배지 — 허용됨은 체크, 미설정은 눌러서 설정으로 간다는 화살표를 함께 보여 준다 */
 const PermPill = ({ granted }: { granted: boolean | null }) => {
@@ -692,7 +729,7 @@ const styles = themed(() => StyleSheet.create({
 	shareCardSub: { fontSize: Typography.body, color: Colors.textSecondary, textAlign: 'center', marginBottom: SpacingV.lg },
 	shareIconWrap: { width: scaleWidth(80), height: scaleWidth(80), borderRadius: Radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: Colors.border, marginBottom: SpacingV.lg },
 	shareIconImg: { width: '100%', height: '100%' },
-	shareCardBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.md },
+	shareCardBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.md, paddingVertical: SpacingV.md, ...TABLET_SOLO_BTN },
 	shareCardBtnText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', textAlign: 'center' },
 	permPill: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill },
 	permOn: { backgroundColor: Colors.successSoft },
@@ -708,7 +745,7 @@ const styles = themed(() => StyleSheet.create({
 	rowIcon: { width: scaleWidth(38), height: scaleWidth(38), borderRadius: Radius.md, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	rowBody: { flex: 1 },
 	// 언어 행 머리 글자 — 아이콘 칸(38) 안에 아이콘과 같은 무게로 앉힌다
-	langBadge: { fontSize: Typography.footnote, fontWeight: '800', letterSpacing: 0.5 },
+	langBadge: { fontSize: Typography.footnote, fontWeight: '800', letterSpacing: Tracking.normal },
 	rowLabel: { fontSize: Typography.callout, fontWeight: '700', color: Colors.textStrong },
 	rowDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	// 효과음 미리듣기 버튼
@@ -716,7 +753,7 @@ const styles = themed(() => StyleSheet.create({
 	soundTestText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	versionText: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary },
 	appIcon: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.md, marginRight: Spacing.md },
-	resetAllBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.errorSoft, borderWidth: 1, borderColor: Colors.errorBorder },
+	resetAllBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.errorSoft, borderWidth: 1, borderColor: Colors.errorBorder, ...TABLET_SOLO_BTN },
 	resetAllText: { fontSize: Typography.body, fontWeight: '800', color: Colors.errorDark },
 	devGroup: { gap: SpacingV.sm },
 	devBtn: {
@@ -730,7 +767,7 @@ const styles = themed(() => StyleSheet.create({
 		borderWidth: 1,
 		borderColor: Colors.border,
 	},
-	devBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.primaryDeep },
+	devBtnText: { fontSize: Typography.body, fontWeight: '800', color: Colors.primaryDeep, flexShrink: 1, textAlign: 'center' },
 	// 맨 아래 앱 목록 — 가로 카드 리스트 (화면 끝까지 스크롤, 첫 카드는 본문 좌측선에 맞춤)
 	footerAppWrapper: { paddingVertical: SpacingV.sm, marginHorizontal: -Layout.screenH },
 	footerAppList: { paddingHorizontal: Layout.screenH, gap: Spacing.md },

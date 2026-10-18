@@ -10,7 +10,7 @@ import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { readableOn, withAlpha, accentInk as inkOf } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaledSize, scaleHeight, scaleWidth, contentWidth, scaleArt } from '@/src/utils';
+import { isTablet, scaledSize, scaleHeight, scaleWidth, screenWidth, scaleArt } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -26,7 +26,7 @@ import EntryImage from '@/src/screens/common/atomic/EntryImage';
 import { reportQuizIssue } from '@/src/utils/ReportIssue';
 import { themed } from '@/src/utils/ThemedStyles';
 
-const ITEM_W = contentWidth;
+const ITEM_W = screenWidth;
 /** 카드 조작법 안내 — 캐릭터가 최초 1회만 설명 (문구는 렌더 시점에 번역) */
 const COACH_KEYS = ['learn.study.guide.swipe', 'learn.study.guide.flip', 'learn.study.guide.complete'] as const;
 /** 진행 도트 최대 개수 (카드가 많아도 한 줄 유지) */
@@ -622,7 +622,8 @@ const styles = themed(() => StyleSheet.create({
 	flipFace: { ...StyleSheet.absoluteFillObject },
 	flipFront: { alignItems: 'center', justifyContent: 'center' },
 	flipFrontInner: { flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' },
-	backScroll: { paddingBottom: SpacingV.sm, flexGrow: 1 },
+	// 태블릿 뒷면은 긴 설명·이야기 단락 — 카드 가득(최대 ~910)이면 한 줄이 너무 길어 읽기 폭으로 묶는다
+	backScroll: { paddingBottom: SpacingV.sm, flexGrow: 1, ...(isTablet && { width: '100%', maxWidth: Layout.sheetMaxWidth, alignSelf: 'center' }) },
 	cardImage: { marginBottom: SpacingV.lg, borderRadius: Radius.md },
 	cardTitle: { fontSize: Typography.h1, fontWeight: '900', color: Colors.textStrong, textAlign: 'center', lineHeight: scaleHeight(40) },
 	cardSubTitle: { fontSize: Typography.callout, color: Colors.textSecondary, textAlign: 'center', marginTop: SpacingV.sm },
@@ -631,7 +632,7 @@ const styles = themed(() => StyleSheet.create({
 	tapHintMini: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.sm, marginBottom: SpacingV.xs, paddingVertical: SpacingV.sm },
 	tapHintMiniText: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted },
 	reportBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, marginBottom: SpacingV.sm, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt },
-	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted },
+	reportBtnText: { fontSize: Typography.caption, fontWeight: '600', color: Colors.textMuted, flexShrink: 1 },
 	sectionBox: { borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.md, marginBottom: SpacingV.md },
 	meaningHighlightBox: { backgroundColor: Colors.successSoft, borderColor: withAlpha(Colors.success, '40') },
 	meaningLabel: { fontSize: Typography.footnote, fontWeight: '900', marginTop: 0, marginBottom: SpacingV.sm },
@@ -655,8 +656,9 @@ const styles = themed(() => StyleSheet.create({
 	exampleText: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(22) },
 	cardHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.lg },
 	cardSaveBtn: { padding: Spacing.xs },
-	cardActions: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.md },
-	completeBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
+	cardActions: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.md },
+	// 단독 버튼 — 태블릿에선 카드 끝까지 늘이지 않고 가운데 적정 폭 (폰은 maxWidth 없음)
+	completeBtn: { flex: 1, maxWidth: isTablet ? Layout.dialogMaxWidth : undefined, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
 	completeBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
 	dotsRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, marginTop: SpacingV.sm },
 	dot: { width: scaleWidth(6), height: scaleWidth(6), borderRadius: Radius.pill, backgroundColor: Colors.borderStrong },

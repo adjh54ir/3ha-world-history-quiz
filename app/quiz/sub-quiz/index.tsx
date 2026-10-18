@@ -9,12 +9,13 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import Colors from '@/src/const/ConstColors';
 import { CardSurface, Radius, Spacing, SpacingV, Typography, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { getDomainIllustration } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 export default function SubQuizHub() {
 	const scrollTop = useScrollTop();
@@ -38,10 +39,12 @@ export default function SubQuizHub() {
 				</View>
 
 				<SectionHead title={t('quiz.sub.section')} style={styles.sectionHeadWide} />
+				{/* 태블릿 2열 — 셀 폭(350pt 이상)이 넉넉해 그림+본문 행 카드가 눌리지 않는다 */}
+				<AdaptiveGrid style={styles.grid}>
 				{domains.map((domain, i) => {
 					const illustration = getDomainIllustration(domain.key);
 					return (
-						<FadeInUp key={domain.key} delay={Math.min(i * 45, 300)}>
+						<FadeInUp key={domain.key} delay={Math.min(i * 45, 300)} style={isTablet ? styles.cellFill : undefined}>
 							<TouchableOpacity
 								style={styles.card}
 								activeOpacity={0.86}
@@ -69,6 +72,7 @@ export default function SubQuizHub() {
 						</FadeInUp>
 					);
 				})}
+				</AdaptiveGrid>
 			</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
 			<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} />
@@ -77,7 +81,10 @@ export default function SubQuizHub() {
 }
 
 const styles = themed(() => StyleSheet.create({
-	heroBanner: { width: '100%', aspectRatio: 16 / 9, borderRadius: Radius.lg },
+	// 태블릿 가득 폭에서 16:9 면 높이가 390~550pt 가 되어 목록을 밀어낸다 — 더 납작하게 (폰은 그대로)
+	heroBanner: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 16 / 9, borderRadius: Radius.lg },
+	// 그리드 안 줄 간격 — 바깥 목록의 gap(itemGap)과 같은 값 (태블릿 전용, 폰은 그리드를 거치지 않는다)
+	grid: { rowGap: Layout.itemGap },
 	sectionHeadWide: { paddingTop: Layout.sectionGap - Layout.itemGap },
 	safe: { flex: 1, backgroundColor: Colors.background },
 	content: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: Layout.itemGap },
@@ -86,7 +93,9 @@ const styles = themed(() => StyleSheet.create({
 	introBody: { flex: 1, gap: SpacingV.xs },
 	introTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
 	introText: { fontSize: Typography.body, lineHeight: scaleHeight(19), color: Colors.textSecondary },
-	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+	// 태블릿 2열 — 부제 줄 수가 달라도 같은 줄 두 카드의 높이를 맞춘다 (폰은 그대로)
+	cellFill: { flexGrow: 1 },
+	card: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, ...(isTablet && { flexGrow: 1 }) },
 	iconBox: { width: scaleWidth(50), height: scaleWidth(50), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center' },
 	illustrationBox: { width: scaleArt(76), height: scaleArt(76), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
 	illustration: { width: scaleArt(72), height: scaleArt(72) },

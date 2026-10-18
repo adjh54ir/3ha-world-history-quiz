@@ -6,7 +6,7 @@
  * - 하드코딩된 숫자 대신 의미 단위(토큰)를 사용해 화면 간 통일성을 확보합니다.
  * - 색상은 src/const/ConstColors.ts(Colors) 를 함께 사용합니다.
  */
-import { contentWidth, scaledSize, scaleHeight, scaleWidth } from '@/src/utils/DementionUtils';
+import { isTablet, scaledSize, scaleHeight, scaleWidth, screenWidth, TABLET_SHEET_MAX_WIDTH } from '@/src/utils/DementionUtils';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { themed } from '@/src/utils/ThemedStyles';
 import { appLanguage } from '@/src/translations';
@@ -200,16 +200,10 @@ export const Radius = {
  * 공통 그림자 프리셋 (iOS/Android 동시 대응)
  * -------------------------------------------------
  * 정돈형 원칙: 평면에 놓인 카드는 그림자를 쓰지 않고 헤어라인 보더로 경계를 만듭니다.
- * 그림자는 '실제로 떠 있는' 요소(모달 시트, 하단 고정 바, FAB)에만 사용합니다.
+ * 그림자는 '실제로 떠 있는' 요소에만 남기며, 현재는 광고 보상 팝업(AdMob, 수정 금지)만 사용합니다.
+ * elevation 은 쓰지 않는다 — 안드로이드·iOS 모양이 갈리므로 경계는 보더·배경 톤으로 만든다.
  */
 export const Shadow = {
-	/** @deprecated 카드는 헤어라인 보더(CardSurface)로 통일. 그림자 없음. */
-	card: {
-		shadowColor: 'transparent',
-		shadowOffset: { width: 0, height: 0 },
-		shadowOpacity: 0,
-		shadowRadius: 0,
-	},
 	/** 떠 있는 요소 전용 — 모달 시트 / 하단 고정 바 / FAB. 다크 배경에선 0.12 가 안 보여 농도를 올린다(themed 팩토리에서 스프레드되므로 테마마다 다시 읽힌다) */
 	get floating() {
 		return {
@@ -222,7 +216,7 @@ export const Shadow = {
 } as const;
 
 /**
- * 공용 카드 표면 (surface + 헤어라인 보더 + 옅은 그림자)
+ * 공용 카드 표면 (surface + 헤어라인 보더, 그림자 없음)
  * -------------------------------------------------
  * 화면마다 개별 선언하던 `const card = {...}` 를 이 토큰 하나로 수렴시킵니다.
  * borderRadius 는 용도에 따라 다르므로 사용처에서 Radius 토큰으로 지정합니다.
@@ -232,7 +226,6 @@ export const CardSurface = themed(() => ({
 	backgroundColor: Colors.surface,
 	borderWidth: 1,
 	borderColor: Colors.border,
-	...Shadow.card,
 } as const));
 
 /**
@@ -267,8 +260,10 @@ export const Layout = {
 	/** 다이얼로그(가운데 팝업) 최대 폭 — 태블릿에서 카드가 화면 끝까지 늘어나지 않게 한다.
 	 *  폰에서는 화면 폭보다 큰 값이라 적용되지 않는다(모바일 영향 없음). */
 	dialogMaxWidth: scaleWidth(360),
-	/** 바텀시트 최대 폭 — 본문 컬럼과 같은 폭으로 맞춘다(폰은 화면 폭 그대로라 무효) */
-	sheetMaxWidth: contentWidth,
+	/** 태블릿 가득 폭 히어로 배너 비율 — 16:9·2:1 그대로면 높이가 400~550pt 로 첫 화면을 다 먹는다 (cover 라 위아래만 잘린다) */
+	heroAspectTablet: 2.4,
+	/** 바텀시트 최대 폭 — 태블릿은 720 상한(폰은 화면 폭 그대로라 무효) */
+	sheetMaxWidth: isTablet ? Math.min(screenWidth, TABLET_SHEET_MAX_WIDTH) : screenWidth,
 } as const;
 
 export default { Typography, FontWeight, Spacing, SpacingV, Radius, Border, Tracking, Shadow, CardSurface, Layout };

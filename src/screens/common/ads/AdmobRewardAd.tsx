@@ -8,6 +8,7 @@ import { RewardedAd, TestIds, RewardedAdEventType, AdEventType } from 'react-nat
 import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
+import { skipAppOpenOnNextResume } from '@/src/services/AppOpenAdService';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const AD_UNIT_ID = resolveAdUnitId(
@@ -32,6 +33,8 @@ const AdmobRewardAd: React.FC<{
 		rewardedRef.current = false;
 
 		const unsubscribeLoaded = ad.addAdEventListener(RewardedAdEventType.LOADED, () => {
+			// 보상형을 닫고 돌아오는 복귀에 앱 열기 광고가 붙지 않게 (안드로이드는 전체화면 광고도 background 로 잡힌다)
+			skipAppOpenOnNextResume();
 			ad.show();
 		});
 

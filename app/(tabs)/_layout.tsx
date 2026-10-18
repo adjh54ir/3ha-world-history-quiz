@@ -3,9 +3,9 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { scaledSize, scaleWidth } from '@/src/utils';
+import { isTablet, scaledSize, scaleWidth, screenWidth } from '@/src/utils';
 import Colors from '@/src/const/ConstColors';
-import { bodyFont, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { bodyFont, Layout, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -41,6 +41,8 @@ export default function TabsLayout() {
 					backgroundColor: Colors.surface,
 					borderTopWidth: 1,
 					borderTopColor: Colors.border,
+					// 태블릿은 탭 5개가 1024 폭 끝까지 벌어지지 않게 시트 폭(720) 안으로 모은다 (폰은 기본값 그대로)
+					...(isTablet && { paddingHorizontal: Math.max(0, (screenWidth - Layout.sheetMaxWidth) / 2) }),
 				},
 				tabBarLabelStyle: { fontSize: Typography.footnote, ...bodyFont('bold') },
 			}}>

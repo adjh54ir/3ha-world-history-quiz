@@ -9,7 +9,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import ListSkeleton from '@/src/screens/common/atomic/ListSkeleton';
 import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleWidth, isTablet } from '@/src/utils';
 import LeagueService, { LeagueBoard } from '@/src/services/LeagueService';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { Image as ExpoImage } from 'expo-image';
@@ -139,7 +139,8 @@ const styles = themed(() => StyleSheet.create({
 	xp: { fontSize: Typography.body, fontWeight: '800', color: Colors.textStrong },
 	zoneLine: { borderTopWidth: Border.thin, borderStyle: 'dashed', marginHorizontal: Spacing.lg, marginVertical: SpacingV.xs, alignItems: 'flex-end' },
 	zoneText: { fontSize: Typography.micro, fontWeight: '800', marginTop: SpacingV.xs },
-	cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: Layout.sectionGap },
+	// 단독 CTA — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: Layout.sectionGap, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	ctaText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	note: { fontSize: Typography.footnote, color: Colors.textMuted, textAlign: 'center', marginTop: SpacingV.md },
 }));

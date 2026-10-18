@@ -10,7 +10,7 @@ import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import Colors, { accentInk, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnQuizPlayer from '@/src/screens/common/LearnQuizPlayer';
 import TestHistoryService, { type ExamPackRecord } from '@/src/services/TestHistoryService';
@@ -19,6 +19,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import { EXAM_PACKS, getExamPack, type ExamPack } from '@/src/const/ConstExamPacks';
 import { themed } from '@/src/utils/ThemedStyles';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 /**
  * 테마 코스 (한국어 퀴즈의 시험 대비 팩 화면)
@@ -176,7 +177,7 @@ const ExamPacks = () => {
 					{retryCount > 0 && (
 						<TouchableOpacity style={[styles.retryBtn, { borderColor: selected.color }]} activeOpacity={0.85} onPress={() => start(true)}>
 							<IconComponent type="materialIcons" name="replay" size={scaledSize(18)} color={selected.color} />
-							<Text style={[styles.retryText, { color: selected.color }]} numberOfLines={1} ellipsizeMode="tail">{t('special.exam.retryWrong', { count: retryCount })}</Text>
+							<Text style={[styles.retryText, { color: accentInk(selected.color) }]} numberOfLines={1} ellipsizeMode="tail">{t('special.exam.retryWrong', { count: retryCount })}</Text>
 						</TouchableOpacity>
 					)}
 				</View>
@@ -190,6 +191,8 @@ const ExamPacks = () => {
 			<ScrollView contentContainerStyle={styles.listWrap} showsVerticalScrollIndicator={false}>
 				<FadeInUp>
 					<SectionHead title={t('special.exam.sectionTitle')} sub={t('special.exam.sectionSub')} />
+					{/* 태블릿 2열 — 셀 폭(350pt 이상)이 넉넉해 아이콘+본문 행 카드가 눌리지 않는다 */}
+					<AdaptiveGrid>
 					{EXAM_PACKS.map((p) => {
 						const rec = records[p.key];
 						return (
@@ -203,7 +206,7 @@ const ExamPacks = () => {
 									{!!rec && (
 										<View style={styles.packStatRow}>
 											<IconComponent type="materialIcons" name="emoji-events" size={scaledSize(13)} color={p.color} />
-											<Text style={[styles.packStatText, { color: p.color }]}>{t('special.exam.bestShort', { best: rec.best, total: rec.total })}</Text>
+											<Text style={[styles.packStatText, { color: accentInk(p.color) }]}>{t('special.exam.bestShort', { best: rec.best, total: rec.total })}</Text>
 											<Text style={styles.packStatDot}>·</Text>
 											<Text style={styles.packStatText}>{t('special.exam.playsShort', { count: rec.plays })}</Text>
 										</View>
@@ -215,6 +218,7 @@ const ExamPacks = () => {
 							</TouchableOpacity>
 						);
 					})}
+					</AdaptiveGrid>
 				</FadeInUp>
 			</ScrollView>
 		</SafeAreaView>
@@ -226,7 +230,8 @@ export default ExamPacks;
 const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	listWrap: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
-	packCard: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
+	// 태블릿 2열 — 같은 줄 두 카드의 아래 끝을 맞춘다 (폰은 그대로)
+	packCard: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', gap: Spacing.md, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap, ...(isTablet && { flexGrow: 1 }) },
 	packIcon: { width: scaleWidth(48), height: scaleWidth(48), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center' },
 	packBody: { flex: 1 },
 	packTitle: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textStrong },
@@ -255,8 +260,9 @@ const styles = themed(() => StyleSheet.create({
 	chip: { paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.md },
 	chipText: { fontSize: Typography.footnote, fontWeight: '800' },
 	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
-	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.lg, borderRadius: Radius.lg },
+	// 하단 CTA — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	startText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.textInverse },
-	retryBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, borderWidth: 1, marginTop: SpacingV.sm },
+	retryBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, borderWidth: 1, marginTop: SpacingV.sm, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	retryText: { fontSize: Typography.callout, fontWeight: '800' },
 }));

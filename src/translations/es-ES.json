@@ -565,7 +565,9 @@
                 "doneTitle": "Datos borrados",
                 "doneMessage": "Se ha restablecido: {{label}}.",
                 "failTitle": "Error al borrar",
-                "failMessage": "Hubo un problema al restablecer {{label}}. Inténtalo de nuevo en un momento."
+                "failMessage": "Hubo un problema al restablecer {{label}}. Inténtalo de nuevo en un momento.",
+                "ranking": "Perfil de clasificación",
+                "rankingDesc": "Eliminar del servidor tu apodo, puntuaciones y cuenta anónima"
             },
             "permission": {
                 "notification": "Notificaciones",
@@ -579,11 +581,15 @@
             "info": {
                 "version": "Versión",
                 "share": "Compartir app",
+                "rate": "Valorar la app",
+                "rateDesc": "Apóyanos con una valoración y una reseña",
                 "contact": "Contacto",
                 "openSource": "Código abierto",
                 "openSourceDesc": "Librerías de código abierto y licencias",
                 "homepage": "Web oficial",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "Política de privacidad",
+                "privacyDesc": "Consulta qué datos recogemos y para qué"
             },
             "dev": {
                 "completeQuizzes": "Completar todos los quizzes",
@@ -621,10 +627,10 @@
                 "pickCategory": "Elegir categoría",
                 "pickLevel": "Elegir dificultad"
             },
-            "resultsFor": "Resultados de '{{query}}'",
+            "resultsFor": "Resultados de «{{query}}»",
             "resetA11y": "Restablecer filtros",
             "countUnit": "",
-            "emptySearch": "No hay resultados para '{{query}}'.",
+            "emptySearch": "No hay resultados para «{{query}}».",
             "emptyFilter": "Nada coincide con los filtros.",
             "guide": {
                 "title": "Así funciona la búsqueda",
@@ -1115,7 +1121,7 @@
                 "chipSteps": "6 niveles",
                 "gradePreview": "Niveles que puedes obtener",
                 "startHint": "Tus resultados se guardan para ver cómo progresas",
-                "shareMessage": "Mi nivel de cultura mundial es '{{title}} ({{tier}})': ¡{{correct}} de {{total}} aciertos ({{rate}} pts)! Pon a prueba tu nivel tú también.",
+                "shareMessage": "Mi nivel de cultura mundial es «{{title}} ({{tier}})»: ¡{{correct}} de {{total}} aciertos ({{rate}} pts)! Pon a prueba tu nivel tú también.",
                 "resultDetail": "{{correct}} de {{total}} aciertos",
                 "wrongNote": "Fallos",
                 "correctNote": "Aciertos",
@@ -1237,7 +1243,7 @@
                 "guideTitle": "Cómo usar el formato corto",
                 "guide1": "Desliza arriba o abajo para ver la siguiente tarjeta.",
                 "guide2": "Usa la estrella para guardarla y comparte con amigos.",
-                "guide3": "¿Ya la sabes? Toca 'Aprendida' para moverla a completadas."
+                "guide3": "¿Ya la sabes? Toca «Aprendida» para moverla a completadas."
             },
             "storyFeed": {
                 "sectionTitle": "Lecturas de hoy",
@@ -1256,7 +1262,7 @@
                 "typePreview": "Perfiles que pueden salirte",
                 "startHint": "Tus resultados se guardan para ver cómo cambian tus gustos",
                 "historyDeleted": "Historial borrado",
-                "shareMessage": "¡Mi perfil de cultura mundial es '{{name}} ({{sub}})'! 🌏 Descubre el tuyo.",
+                "shareMessage": "¡Mi perfil de cultura mundial es «{{name}} ({{sub}})»! 🌏 Descubre el tuyo.",
                 "recommend": "Tema recomendado: {{label}}",
                 "again": "Repetir",
                 "qTitle": "Test de perfil",
@@ -1665,6 +1671,7 @@
                 "todayQuizTitle": "Quiz del día",
                 "todayQuizBody": "¿Te animas con las 5 preguntas del quiz de hoy?",
                 "wrongReviewTitle": "Hora de repasar errores",
+                "wrongReviewBody_one": "Tienes {{n}} pregunta fallada esperándote. ¿La intentas otra vez?",
                 "wrongReviewBody": "Tienes {{n}} preguntas falladas esperándote. ¿Lo intentas otra vez?"
             },
             "share": {
@@ -2214,6 +2221,10 @@
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "Quiz de Dinosaurios",
+                "desc": "Aprende nombres, eras y rasgos de dinosaurios con una guía dino y repasa con muchos tipos de quizzes."
+            },
             "familyevent": {
                 "title": "Registro de Sobres: Regalos",
                 "desc": "Registra regalos de boda y funeral sin conexión. Exporta a Excel y PDF."

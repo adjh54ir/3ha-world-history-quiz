@@ -13,7 +13,7 @@ import DateUtils from '@/src/utils/DateUtils';
 import { useToast } from '@/src/context/ToastContext';
 import LearnProgressService, { LearnStats } from '@/src/services/LearnProgressService';
 import LearnHubService from '@/src/services/LearnHubService';
-import { FadeInUp } from '@/src/screens/common/anim/Motion';
+import { DialogIn, FadeInUp } from '@/src/screens/common/anim/Motion';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -341,7 +341,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 			{/* 기간 직접 선택 달력 */}
 			<AppModal visible={showRangePicker} transparent animationType="fade" onRequestClose={() => setShowRangePicker(false)}>
 				<TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setShowRangePicker(false)}>
-					<TouchableOpacity activeOpacity={1} style={styles.rangeModal}>
+					<DialogIn visible={showRangePicker} style={styles.rangeModal}><TouchableOpacity activeOpacity={1}>
 						<View style={styles.dailyModalHead}>
 							<Text style={styles.dailyModalTitle}>{t('report.period.custom')}</Text>
 							<TouchableOpacity onPress={() => setShowRangePicker(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('common.close')}>
@@ -366,6 +366,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 							<Text style={[styles.rangeConfirmText, !(rangeDraft.start && rangeDraft.end) && styles.rangeConfirmTextOff]}>{t('report.picker.confirm')}</Text>
 						</TouchableOpacity>
 					</TouchableOpacity>
+					</DialogIn>
 				</TouchableOpacity>
 			</AppModal>
 		</View>
@@ -432,7 +433,7 @@ const styles = themed(() => StyleSheet.create({
 	dayScoreTileNum: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
 	dayScoreTileLabel: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
 	modalBackdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Layout.screenH },
-	rangeModal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
+	rangeModal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
 	dailyModalHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	dailyModalTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
 	rangeHint: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.md, marginBottom: SpacingV.sm },

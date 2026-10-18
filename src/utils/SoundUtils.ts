@@ -1,6 +1,6 @@
 /**
  * 퀴즈 효과음 유틸 (expo-audio 기반)
- * - 효과음: assets/sounds/*.wav (Mixkit Free SFX — LICENSE.txt 참고)
+ * - 효과음: assets/sounds/*.m4a (Mixkit Free SFX, 원본 WAV 를 AAC 160kbps 로 변환)
  * - 플레이어를 미리 만들어 재사용한다. 매 재생마다 createAudioPlayer 하면
  *   에셋 로드가 끝나기 전에 play()가 호출되어 소리가 나지 않는다.
  * - expo-audio 로드 실패 시 무음(앱이 죽지 않음)
@@ -9,18 +9,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 정적 require (metro 번들 대상)
 const SOURCES = {
-	correct: require('../../assets/sounds/correct.wav'),
+	correct: require('../../assets/sounds/correct.m4a'),
 	wrong: require('../../assets/sounds/wrong.mp3'),
-	finish: require('../../assets/sounds/finish.wav'),
-	timeout: require('../../assets/sounds/timeout.wav'),
-	complete: require('../../assets/sounds/complete.wav'),
+	finish: require('../../assets/sounds/finish.m4a'),
+	timeout: require('../../assets/sounds/timeout.m4a'),
+	complete: require('../../assets/sounds/complete.m4a'),
 	// 게임/타임챌린지 전용 효과음
-	combo: require('../../assets/sounds/combo.wav'), // 콤보 달성(타임챌린지)
-	tick: require('../../assets/sounds/tick.wav'), // 남은 시간 5초 카운트다운
-	flip: require('../../assets/sounds/flip.wav'), // 카드 뒤집기(짝 맞추기)
-	match: require('../../assets/sounds/match.wav'), // 짝 맞춤 성공
-	pop: require('../../assets/sounds/pop.wav'), // 즐겨찾기 저장/해제
-	whoosh: require('../../assets/sounds/whoosh.wav'), // 퀴즈 시작
+	combo: require('../../assets/sounds/combo.m4a'), // 콤보 달성(타임챌린지)
+	tick: require('../../assets/sounds/tick.m4a'), // 남은 시간 5초 카운트다운
+	flip: require('../../assets/sounds/flip.m4a'), // 카드 뒤집기(짝 맞추기)
+	match: require('../../assets/sounds/match.m4a'), // 짝 맞춤 성공
+	pop: require('../../assets/sounds/pop.m4a'), // 즐겨찾기 저장/해제
+	whoosh: require('../../assets/sounds/whoosh.m4a'), // 퀴즈 시작
 } as const;
 
 type SoundKey = keyof typeof SOURCES;

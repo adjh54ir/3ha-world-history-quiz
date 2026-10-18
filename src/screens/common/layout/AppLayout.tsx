@@ -9,7 +9,6 @@ import { SpacingV } from '@/src/const/ConstDesign';
 
 import AdmobBannerAd from '@/src/screens/common/ads/AdmobBannerAd';
 import { useTopBarColor } from '@/src/utils/TopBarColor';
-import { contentWidth, isTablet } from '@/src/utils/DementionUtils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 /**
@@ -109,19 +108,18 @@ const AppLayout = () => {
 
 	return (
 		<SafeAreaView style={[styles.safe, { backgroundColor: bg }]} edges={needsTopInset ? ['top'] : []}>
-			{/* 배너: 루트에서 한 번만 마운트하고 높이로만 토글 → 페이지 이동 시 재로딩 방지.
+			{/* 배너: 루트에 두어 광고 경로 사이 이동에서는 재로딩하지 않는다.
+			    차단 경로에서는 배너를 내린다 — 높이 0 으로 숨긴 채 계속 로드·갱신하면 보이지 않는 노출이 된다(AdMob 정책).
 			    높이를 애니메이션으로 접고 펴서 차단 경로 진입·이탈 때 본문이 툭 튀지 않게 한다 */}
 			<Animated.View style={[styles.bannerClip, { backgroundColor: bg }, bannerClipStyle]}>
 				<View style={styles.bannerWrap} onLayout={(e) => setBannerH(e.nativeEvent.layout.height)}>
-					<AdmobBannerAd paramMarginTop={Platform.OS === 'android' ? 4 : 2} paramMarginBottom={Platform.OS === 'android' ? 4 : 2} />
+					{showAd && <AdmobBannerAd paramMarginTop={Platform.OS === 'android' ? 4 : 2} paramMarginBottom={Platform.OS === 'android' ? 4 : 2} />}
 				</View>
 			</Animated.View>
 
-			{/* 태블릿: 본문을 최대 폭으로 묶어 가운데 정렬 — 카드·문장이 화면 끝까지 늘어나지 않게 한다.
-			    전체화면 경로(숏폼)는 화면 전체를 써야 하므로 제외. 폰은 isTablet=false 라 기존과 동일.
-			    바깥 View 가 좌우 여백까지 화면 배경색을 깔아 준다(상단바 색이 옆으로 새지 않게). */}
+			{/* 태블릿도 본문은 화면 가로를 가득 쓴다 — 넓어진 폭은 각 화면이 그리드 열로 나눠 쓴다 */}
 			<View style={styles.body}>
-				<View style={[styles.stack, isTablet && needsTopInset && styles.stackTablet]}>
+				<View style={styles.stack}>
 					<Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: Colors.background }, animation: 'slide_from_right' }}>
 						{/* 탭 그룹: 홈 · 챌린지 · 통계 · MY */}
 						<Stack.Screen name="index" />
@@ -147,9 +145,6 @@ const styles = themed(() => StyleSheet.create({
 	// 광고 위아래 간격 + 하단 구분선
 	bannerClip: { overflow: 'hidden' },
 	bannerWrap: { paddingTop: SpacingV.sm, paddingBottom: 0 },
-	// 좌우 여백까지 화면 배경색으로 덮는다 — 태블릿에서 상단바 색이 양옆으로 새지 않게
 	body: { flex: 1, backgroundColor: Colors.background },
 	stack: { flex: 1 },
-	// 태블릿 본문 최대 폭 + 가운데 정렬
-	stackTablet: { width: '100%', maxWidth: contentWidth, alignSelf: 'center' },
 }));

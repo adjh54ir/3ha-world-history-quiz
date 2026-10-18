@@ -6,7 +6,7 @@ import AppModal from '@/src/screens/common/atomic/AppModal';
 import { SheetIn } from '@/src/screens/common/anim/Motion';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { SpacingV, Radius, Layout } from '@/src/const/ConstDesign';
-import { scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleHeight, scaleWidth, screenWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 interface Props {
@@ -42,9 +42,12 @@ const BottomSheet: React.FC<Props> = ({ visible, onClose, children, maxHeightRat
 	const insets = useSafeAreaInsets();
 	// 태블릿에서 시트가 화면 끝까지 늘어나지 않도록 폭 상한을 애니메이션 래퍼에 건다
 	// (안쪽 sheet 의 width:'100%' 는 이 래퍼 기준이므로 상한을 여기 둬야 한다)
+	// 태블릿: 바닥에 붙은 판 대신 좌우·아래를 같은 여백(screenH)으로 띄운 카드 — 홈 인디케이터보다 작으면 인디케이터만큼 띄운다
+	const tabletGap = Math.max(insets.bottom, Layout.screenH);
 	const sizeStyle: ViewStyle = {
 		width: '100%',
-		maxWidth: Layout.sheetMaxWidth,
+		maxWidth: isTablet ? Math.min(Layout.sheetMaxWidth, screenWidth - Layout.screenH * 2) : Layout.sheetMaxWidth,
+		...(isTablet && { marginBottom: tabletGap }),
 		...(heightRatio ? { height: `${heightRatio * 100}%` as const } : { maxHeight: `${maxHeightRatio * 100}%` as const }),
 	};
 
@@ -54,7 +57,7 @@ const BottomSheet: React.FC<Props> = ({ visible, onClose, children, maxHeightRat
 			<KeyboardAvoidingView style={styles.overlay} behavior="padding">
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} accessibilityLabel={t('common.close')} onPress={onClose} />
 				<SheetIn visible={visible} style={sizeStyle}>
-					<View accessibilityViewIsModal onStartShouldSetResponder={dismissKeyboard} style={[styles.sheet, heightRatio ? styles.sheetFill : null, { paddingBottom: SpacingV.lg + insets.bottom }, contentStyle]}>
+					<View accessibilityViewIsModal onStartShouldSetResponder={dismissKeyboard} style={[styles.sheet, heightRatio ? styles.sheetFill : null, { paddingBottom: SpacingV.lg + (isTablet ? 0 : insets.bottom) }, isTablet && styles.sheetFloating, contentStyle]}>
 						{handle && <View style={styles.handle} />}
 						{children}
 						{footer}
@@ -71,5 +74,6 @@ const styles = themed(() => StyleSheet.create({
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'flex-end', alignItems: 'center' },
 	sheet: { width: '100%', maxHeight: '100%', backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderTopLeftRadius: Radius.xl, borderTopRightRadius: Radius.xl, paddingHorizontal: Layout.screenH, paddingTop: SpacingV.md },
 	sheetFill: { flex: 1 },
+	sheetFloating: { borderRadius: Radius.xl },
 	handle: { alignSelf: 'center', width: scaleWidth(40), height: scaleHeight(4), borderRadius: scaleWidth(2), backgroundColor: isDark() ? Colors.borderStrong : Colors.border, marginBottom: SpacingV.lg },
 }));

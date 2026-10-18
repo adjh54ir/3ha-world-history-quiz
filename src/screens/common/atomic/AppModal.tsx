@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Modal, StyleSheet, View, useWindowDimensions, type ModalProps } from 'react-native';
 import { ToastHost } from '@/src/context/ToastContext';
+import DateUtils from '@/src/utils/DateUtils';
 
 /**
  * 현재 화면에 떠 있는 AppModal 수.
@@ -20,7 +21,7 @@ const acquire = () => {
 const release = () => {
 	presentedCount = Math.max(0, presentedCount - 1);
 	if (presentedCount === 0) {
-		lastReleaseAt = Date.now();
+		lastReleaseAt = DateUtils.getTimestamp();
 		waiters.forEach((notify) => notify());
 	}
 };
@@ -30,60 +31,61 @@ const DISMISS_MS = 220;
 /** 앞 모달이 닫히지 않는 '의도적 겹침'까지 막지 않기 위한 대기 상한 */
 const STACK_FALLBACK_MS = 400;
 
+/** 앞 모달이 아직 떠 있거나 방금 닫혀 dismiss 애니메이션 중인지 — 이때만 겹침을 피하려고 기다린다 */
+const mustWait = () => presentedCount > 0 || DateUtils.getTimestamp() - lastReleaseAt < DISMISS_MS;
+
 /**
  * 모달 공통 래퍼.
+ * - visible 에 즉시 반응한다: 지연 게이트 없이 첫 렌더에 배경(dim)까지 그려 화면을 끝까지 채운다.
+ *   카드는 DialogIn / SheetIn 으로 투명하게 레이아웃을 마친 뒤 떠오른다.
  * - 숨겨진 모달을 네이티브 트리에 남기지 않아 연속 전환 시 이전 모달이 번쩍이는 현상을 막습니다.
- * - 다른 모달이 아직 떠 있으면 그 모달이 완전히 닫힌 뒤에 올립니다(겹침 방지).
+ * - 다른 모달이 아직 떠 있으면 그 모달이 완전히 닫힌 뒤에 올립니다(겹침 방지 — 이 경우에만 기다린다).
  * - 모달 안에서 부른 토스트(useToast)도 보이도록 ToastHost 를 함께 그립니다.
  * - 하단 여백은 각 시트가 자체 insets.bottom 으로 처리하므로 래퍼에서 패딩을 주지 않습니다.
  */
 const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullScreen', animationType = 'fade', children, ...props }: ModalProps) => {
-	const [ready, setReady] = useState(false);
+	// 열릴지 기다릴지는 visible 이 바뀐 렌더 안에서 정한다 — effect 에서 정하면 한 프레임 비었다가 열린다
+	const [prevVisible, setPrevVisible] = useState(visible);
+	const [waiting, setWaiting] = useState(() => !!visible && mustWait());
+	if (prevVisible !== visible) {
+		setPrevVisible(visible);
+		setWaiting(!!visible && mustWait());
+	}
 	const { width, height } = useWindowDimensions();
 	/** 이 인스턴스가 presentedCount 를 점유 중인지 */
 	const heldRef = useRef(false);
 
 	// 앞 모달이 닫힐 때까지 기다렸다가 올린다
 	useEffect(() => {
-		if (!visible) {
-			setReady(false);
-			return;
-		}
-		if (presentedCount === 0) {
-			// 앞 모달이 방금 닫혔다면(닫힘 애니메이션 진행 중) 남은 시간만큼 기다렸다가 올린다.
-			// 효과 실행 순서상 닫히는 모달의 release 가 먼저 돌면 카운트가 0으로 보여 바로 열리면서 이전 모달이 번쩍였다.
-			const remain = DISMISS_MS - (Date.now() - lastReleaseAt);
-			if (remain <= 0) {
-				setReady(true);
-				return;
-			}
-			const wait = setTimeout(() => setReady(true), remain);
-			return () => clearTimeout(wait);
-		}
+		if (!waiting) return;
+		const open = () => setWaiting(false);
 		let timer: ReturnType<typeof setTimeout> | undefined;
 		const notify = () => {
 			if (timer) clearTimeout(timer);
-			timer = setTimeout(() => setReady(true), DISMISS_MS);
+			timer = setTimeout(open, DISMISS_MS);
 		};
-		waiters.add(notify);
+		// 앞 모달이 이미 닫혀 dismiss 중이면 남은 시간만 기다린다
+		if (presentedCount === 0) timer = setTimeout(open, Math.max(0, DISMISS_MS - (DateUtils.getTimestamp() - lastReleaseAt)));
+		else waiters.add(notify);
 		// 앞 모달 위에 의도적으로 겹쳐 띄우는 경우(시트 안의 확인 팝업 등)까지 막지 않도록
 		// 일정 시간이 지나면 기다리지 않고 올린다.
-		const fallback = setTimeout(() => setReady(true), STACK_FALLBACK_MS);
+		const fallback = setTimeout(open, STACK_FALLBACK_MS);
 		return () => {
 			waiters.delete(notify);
 			clearTimeout(fallback);
 			if (timer) clearTimeout(timer);
 		};
-	}, [visible]);
+	}, [waiting]);
+
+	const ready = !!visible && !waiting;
 
 	// 실제로 떠 있는 동안만 카운트를 점유하고, 언마운트 시 반드시 반납한다
 	useEffect(() => {
-		const shouldHold = !!visible && ready;
-		if (shouldHold === heldRef.current) return;
-		heldRef.current = shouldHold;
-		if (shouldHold) acquire();
+		if (ready === heldRef.current) return;
+		heldRef.current = ready;
+		if (ready) acquire();
 		else release();
-	}, [visible, ready]);
+	}, [ready]);
 
 	useEffect(
 		() => () => {
@@ -95,7 +97,7 @@ const AppModal = ({ visible, transparent = true, presentationStyle = 'overFullSc
 		[],
 	);
 
-	if (!visible || !ready) return null;
+	if (!ready) return null;
 	return (
 		<Modal
 			{...props}

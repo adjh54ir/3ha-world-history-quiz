@@ -6,7 +6,7 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize } from '@/src/utils';
+import { gridColumns, scaledSize } from '@/src/utils';
 import { OPEN_SOURCE_LIBS, OpenSourceLib } from '@/src/const/ConstOpenSource';
 import { LANDMARK_CREDITS } from '@/src/const/data/world/ConstLandmarkCredits';
 import { WORLD_ENTRIES } from '@/src/const/data/world/ConstWorldEntries';
@@ -15,6 +15,10 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { themed } from '@/src/utils/ThemedStyles';
 import { useTranslation } from 'react-i18next';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
+
+/** 태블릿 열 수 — 이름·라이선스 한 줄짜리 행이라 320 이면 충분하다 (폰 1열) */
+const COLS = gridColumns(320);
 
 /**
  * 설정 > 오픈소스 라이브러리
@@ -44,7 +48,7 @@ const OpenSource = () => {
 
 	const renderItem = ({ item, index }: { item: OpenSourceLib; index: number }) => (
 		// 첫 화면 분량만 순차 등장 — 스크롤 이후 항목은 지연 없이 바로 보인다
-		<FadeInUp delay={Math.min(index, 8) * 40} duration={260} distance={10}>
+		<View style={COLS > 1 ? styles.cell : undefined}>
 		<TouchableOpacity style={styles.card} activeOpacity={item.url ? 0.7 : 1} onPress={() => openUrl(item)}>
 			<View style={styles.cardBody}>
 				<Text style={styles.libName} numberOfLines={1} ellipsizeMode="middle">{item.name}</Text>
@@ -57,16 +61,18 @@ const OpenSource = () => {
 			</View>
 			{!!item.url && <IconComponent type="feather" name="external-link" size={scaledSize(16)} color={Colors.textMuted} />}
 		</TouchableOpacity>
-		</FadeInUp>
+		</View>
 	);
 
 	return (
 		<SafeAreaView style={styles.safe} edges={[]}>
 			<CommonHeader title={t('opensource.title')} onBack={() => router.back()} />
-			<FlatList ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16}
+			<FlatList key={`cols-${COLS}`} ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16}
 				data={OPEN_SOURCE_LIBS}
 				keyExtractor={(item) => item.name}
 				renderItem={renderItem}
+				numColumns={COLS}
+				columnWrapperStyle={COLS > 1 ? styles.colWrap : undefined}
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}
 				initialNumToRender={12}
@@ -90,6 +96,7 @@ const OpenSource = () => {
 							<Text style={styles.summaryTitle}>{t('opensource.creditTitle')}</Text>
 							<Text style={styles.creditSub}>{t('opensource.creditSub')}</Text>
 						</View>
+						<AdaptiveGrid columns={COLS}>
 						{LANDMARK_CREDITS.map((c) => (
 							<TouchableOpacity
 								key={c.file}
@@ -108,6 +115,7 @@ const OpenSource = () => {
 								<IconComponent type="feather" name="external-link" size={scaledSize(16)} color={Colors.textMuted} />
 							</TouchableOpacity>
 						))}
+						</AdaptiveGrid>
 						<View style={styles.footerRow}>
 							<IconComponent type="materialIcons" name="volunteer-activism" size={scaledSize(18)} color={Colors.primary} />
 							<Text style={styles.footer}>{t('opensource.thanks')}</Text>
@@ -147,6 +155,9 @@ const styles = themed(() => StyleSheet.create({
 		marginBottom: Layout.itemGap,
 	},
 	cardBody: { flex: 1, gap: SpacingV.xs },
+	// 태블릿 다열 — AdaptiveGrid 와 같은 방식(셀 좌우 패딩 = 세로 간격)이라 아래 사진 출처 그리드와 열이 맞는다
+	colWrap: { marginHorizontal: -Layout.itemGap / 2 },
+	cell: { width: `${100 / COLS}%`, paddingHorizontal: Layout.itemGap / 2 },
 	libName: { fontSize: Typography.body, fontWeight: '700', color: Colors.text },
 	metaRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 	licenseChip: {

@@ -9,6 +9,16 @@ export const COMMON_APPS_DATA: {
 } = {
 	Apps: [
 		{
+			id: 32,
+			icon: require('@/src/assets/appicons/main_dinosaurquiz.webp'),
+			title: i18n.t('apps.dinosaurquiz.title'),
+			desc: i18n.t('apps.dinosaurquiz.desc'),
+			category: 'quiz',
+			releasedAt: '2026-10-18',
+			android: 'https://play.google.com/store/apps/details?id=com.tha.dinosaurquiz',
+			ios: 'https://apps.apple.com/kr/app/id6822555212',
+		},
+		{
 			id: 31,
 			icon: require('@/src/assets/appicons/main_familyevent.webp'),
 			title: i18n.t('apps.familyevent.title'),

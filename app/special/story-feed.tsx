@@ -94,9 +94,9 @@ const StoryFeed = () => {
 			{/* 스크롤 영역 — 맨 위로 버튼을 하단 고정 버튼과 겹치지 않게 이 영역 기준으로 띄운다 */}
 			<View style={{ flex: 1 }}>
 			<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={[styles.list, cards.length === 0 && styles.listFill]} showsVerticalScrollIndicator={false}>
-				<FadeInUp>
+				<View>
 				<SectionHead title={t('special.storyFeed.sectionTitle')} sub={t('special.storyFeed.sectionSub')} />
-				</FadeInUp>
+				</View>
 
 				{/* 주제 선택 필터 — 공용 칩(맨 앞 '전체') */}
 				<CategoryScopeChips value={scope} onChange={setScope} showCount={false} style={styles.filterBar} />
@@ -116,7 +116,7 @@ const StoryFeed = () => {
 									<View style={styles.cardTopLeft}>
 										<View style={[styles.domainChip, { backgroundColor: withAlpha(color, '14') }]}>
 											<DomainIcon mainIcon={meta.mainIcon} icon={meta.icon} iconType={meta.iconType} size={scaledSize(16)} color={color} radius={scaledSize(5)} />
-											<Text style={[styles.domainText, { color: accentInk(color) }]}>{meta.title}</Text>
+											<Text style={[styles.domainText, { color: accentInk(color) }]} numberOfLines={1} ellipsizeMode="tail">{meta.title}</Text>
 										</View>
 										{!!c.categoryLabel && c.categoryLabel !== meta.title && (
 											<View style={styles.catChip}>
@@ -213,6 +213,7 @@ const styles = themed(() => StyleSheet.create({
 	example: { fontSize: Typography.body, color: Colors.textSecondary, lineHeight: scaleHeight(20) },
 	tagRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, marginTop: SpacingV.md },
 	tag: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600' },
-	moreBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft },
+	// 단독 버튼 — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	moreBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	moreText: { fontSize: Typography.body, fontWeight: '800', color: Colors.primaryDeep },
 }));

@@ -1,4 +1,4 @@
-import { Share } from 'react-native';
+import { Linking, Platform, Share } from 'react-native';
 import i18n from '@/src/translations';
 import { APP_NAME, APP_DESCRIPTION } from '@/src/const/EnvCompat';
 
@@ -8,7 +8,13 @@ import { APP_NAME, APP_DESCRIPTION } from '@/src/const/EnvCompat';
  */
 const THIS_APP_STORE_LINKS = {
 	android: 'https://play.google.com/store/apps/details?id=com.tha.worldhistoryquiz',
-	ios: 'https://apps.apple.com/kr/app/id6785401301',
+	ios: 'https://apps.apple.com/kr/app/id6822964124',
+} as const;
+
+/** 리뷰 작성 화면 — 스토어 앱으로 먼저 열고, 실패하면 웹 주소로 연다 */
+const THIS_APP_REVIEW_LINKS = {
+	android: ['market://details?id=com.tha.worldhistoryquiz', THIS_APP_STORE_LINKS.android],
+	ios: ['itms-apps://apps.apple.com/app/id6822964124?action=write-review', 'https://apps.apple.com/app/id6822964124?action=write-review'],
 } as const;
 
 /**
@@ -22,9 +28,8 @@ export const buildAppShareMessage = (): string => {
 	if (APP_NAME) lines.push(APP_NAME);
 	if (APP_DESCRIPTION) lines.push(APP_DESCRIPTION);
 	lines.push('', i18n.t('svc.share.appLink'));
-	// 받는 사람의 기기를 알 수 없으므로 두 스토어 링크를 모두 넣는다
-	lines.push(`• Android: ${THIS_APP_STORE_LINKS.android}`, '');
-	lines.push(`• iOS: ${THIS_APP_STORE_LINKS.ios}`);
+	// 공유하는 기기의 스토어 링크 하나만 넣는다
+	lines.push(Platform.OS === 'ios' ? THIS_APP_STORE_LINKS.ios : THIS_APP_STORE_LINKS.android);
 	return lines.join('\n').trim();
 };
 
@@ -34,4 +39,12 @@ export const shareApp = (): Promise<void> =>
 		.then(() => undefined)
 		.catch(() => undefined);
 
-export default { buildAppShareMessage, shareApp };
+/** 앱 평가하기 — 현재 기기 스토어의 리뷰 작성 화면 열기 */
+export const openStoreReview = (): Promise<void> => {
+	const [app, web] = Platform.OS === 'ios' ? THIS_APP_REVIEW_LINKS.ios : THIS_APP_REVIEW_LINKS.android;
+	return Linking.openURL(app)
+		.catch(() => Linking.openURL(web))
+		.catch(() => undefined);
+};
+
+export default { buildAppShareMessage, shareApp, openStoreReview };

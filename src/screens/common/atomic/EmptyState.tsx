@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Image as ExpoImage, type ImageSource } from 'expo-image';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
+import { Layout, Spacing, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { scaleArt, scaledSize, scaleHeight } from '@/src/utils';
 import { getSharedStateIllustration, SharedStateIllustrationKey } from '@/src/const/ConstIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -55,6 +55,7 @@ const styles = themed(() => StyleSheet.create({
 	wrap: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxxxl, paddingVertical: SpacingV.xxxxl },
 	illustration: { width: scaleArt(148), height: scaleArt(148) },
 	iconCircle: { width: scaledSize(84), height: scaledSize(84), borderRadius: scaledSize(42), backgroundColor: Colors.surfaceAlt, alignItems: 'center', justifyContent: 'center' },
-	text: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.lg, textAlign: 'center', lineHeight: scaleHeight(22) },
-	sub: { fontSize: Typography.body, color: Colors.textMuted, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
+	// 안내 문구는 태블릿에서 한 줄이 화면 끝까지 길어지지 않게 팝업 카드 폭으로 묶는다 (폰은 여백 안쪽 폭보다 커서 무효)
+	text: { maxWidth: Layout.dialogMaxWidth, fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', marginTop: SpacingV.lg, textAlign: 'center', lineHeight: scaleHeight(22) },
+	sub: { maxWidth: Layout.dialogMaxWidth, fontSize: Typography.body, color: Colors.textMuted, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
 }));

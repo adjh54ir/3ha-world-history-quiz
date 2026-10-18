@@ -9,7 +9,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useIsFocused } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
-import { contentWidth, isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import { TOWER_LEVELS } from '@/src/const/ConstTowerData';
 import { useDispatch } from 'react-redux';
 import { addTowerAttemptByAd, devResetTower, ensureTowerDay, recordTower, spendTowerAttempt, TOWER_AD_REWARD_MAX, TOWER_DAILY_ATTEMPTS, useTower } from '@/src/store/slice/TowerSlice';
@@ -21,7 +21,9 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { useToast } from '@/src/context/ToastContext';
 import AdmobRewardAd from '@/src/screens/common/ads/AdmobRewardAd';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import BottomHomeButton from './BottomHomeButton';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import ChallengeCountdown from './ChallengeCountdown';
 import { showConfirm } from '@/src/screens/common/modal/ConfirmModal';
 import CharacterGuide, { CharacterGuideButton, useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
@@ -61,6 +63,7 @@ const TowerChallengeScreen = () => {
 	const focused = useIsFocused();
 
 	const scrollRef = useRef<ScrollView>(null);
+	const scrollTop = useScrollTop(scrollRef);
 
 	useFocusEffect(
 		useCallback(() => {
@@ -186,7 +189,7 @@ const TowerChallengeScreen = () => {
 						{/* 층 색은 데이터에서 오므로 글씨색을 고정할 수 없다 — 면 밝기에 맞춰 고른다 */}
 						<Text style={[styles.levelBadgeText, { color: readableOn(floor.color) }]}>LV.{floor.level}</Text>
 					</View>
-					<Text style={styles.challengeName}>{floor.name}</Text>
+					<Text style={styles.challengeName} numberOfLines={1} ellipsizeMode="tail">{floor.name}</Text>
 				</View>
 
 				<View style={styles.bossRow}>
@@ -266,7 +269,7 @@ const TowerChallengeScreen = () => {
 		const state = stateOf(floor);
 		const isLocked = state === 'locked';
 		return (
-			<FadeInUp key={floor.level} delay={index * 30}>
+			<View key={floor.level}>
 				<View style={[styles.floorRow, state === 'current' && { borderColor: withAlpha(floor.color, '80') }]}>
 					<View style={[styles.floorBadge, { backgroundColor: isLocked ? Colors.onBrandSurface : floor.color }]}>
 						<Text style={[styles.floorBadgeText, !isLocked && { color: readableOn(floor.color) }]}>{floor.level}</Text>
@@ -279,7 +282,7 @@ const TowerChallengeScreen = () => {
 						<Image source={floor.bossImage} style={styles.floorThumb} contentFit="contain" />
 					)}
 					<View style={styles.floorTextWrap}>
-						<Text style={styles.floorName}>{floor.name}</Text>
+						<Text style={styles.floorName} numberOfLines={1} ellipsizeMode="tail">{floor.name}</Text>
 						<Text style={styles.floorSub} numberOfLines={1}>
 							{isLocked ? t('tower.challenge.lockedHint') : floor.bossName}
 						</Text>
@@ -290,7 +293,7 @@ const TowerChallengeScreen = () => {
 					{state === 'current' && <Text style={styles.floorTag}>{t('tower.challenge.currentTag')}</Text>}
 					{isLocked && <IconComponent type="materialIcons" name="lock" size={scaledSize(18)} color={Colors.onBrandBorder} />}
 				</View>
-			</FadeInUp>
+			</View>
 		);
 	};
 
@@ -320,34 +323,39 @@ const TowerChallengeScreen = () => {
 					</View>
 				</View>
 
-				<ScrollView ref={scrollRef} style={styles.body} contentContainerStyle={styles.bodyContent} showsVerticalScrollIndicator={false}>
+				<View style={{ flex: 1 }}>
+				<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.body} contentContainerStyle={styles.bodyContent} showsVerticalScrollIndicator={false}>
 					{/* 위 카드 세 장은 한 덩어리(촘촘히), 층 목록·안내는 섹션 간격(sectionGap)으로 띄운다 — 예전엔 전부 12 로 붙어 섹션 경계가 안 보였다 */}
+					{/* 태블릿: 가득 폭에서 배너(343:176)가 500pt 높이로 커지지 않게 [배너+진행 | 도전] 두 열로 나눈다. 폰은 한 열 그대로 */}
 					<View style={styles.cardStack}>
-						<FadeInUp delay={0}>
-							<View style={styles.heroBanner}>
-								<Image
-									source={require('@/src/assets/tower/tower-challenge-hero.webp')}
-									style={styles.heroBannerImage}
-									contentFit="cover"
-								/>
-								<View style={styles.heroBannerShade} />
-								<View style={styles.heroBannerCopy}>
-									<Text style={styles.heroBannerEyebrow}>CLIMB TO THE TOP</Text>
-									<Text style={styles.heroBannerTitle}>{t('tower.challenge.heroTitle')}</Text>
+						<View style={styles.cardColumn}>
+							<FadeInUp delay={0}>
+								<View style={styles.heroBanner}>
+									<Image
+										source={require('@/src/assets/tower/tower-challenge-hero.webp')}
+										style={styles.heroBannerImage}
+										contentFit="cover"
+									/>
+									<View style={styles.heroBannerShade} />
+									<View style={styles.heroBannerCopy}>
+										<Text style={styles.heroBannerEyebrow}>CLIMB TO THE TOP</Text>
+										<Text style={styles.heroBannerTitle}>{t('tower.challenge.heroTitle')}</Text>
+									</View>
 								</View>
-							</View>
-						</FadeInUp>
+							</FadeInUp>
 
-						<FadeInUp delay={30}>{renderProgressCard()}</FadeInUp>
+							<View style={styles.progressWrap}>{renderProgressCard()}</View>
+						</View>
 
-						<FadeInUp delay={60}>
+						<View style={styles.challengeWrap}>
 							{isAllCleared || !currentTower ? renderAllClearedCard() : renderChallengeCard(currentTower)}
-						</FadeInUp>
+						</View>
 					</View>
 
 					<View style={styles.floorList}>
 						<Text style={styles.sectionTitle}>{t('tower.challenge.floorsTitle')}</Text>
-						{TOWER_LEVELS.map((tower, index) => renderFloorRow(tower, index + 3))}
+						{/* 층 줄은 짧은 가로 행이라 태블릿에서 두 열로 — 폰은 그대로 통과 */}
+						<AdaptiveGrid style={styles.floorGrid}>{TOWER_LEVELS.map((tower, index) => renderFloorRow(tower, index + 3))}</AdaptiveGrid>
 					</View>
 
 					<View style={styles.noticeBox}>
@@ -357,6 +365,8 @@ const TowerChallengeScreen = () => {
 						<Text style={styles.noticeLine}>{t('tower.challenge.notice.ad', { max: MAX_AD_REWARD })}</Text>
 					</View>
 				</ScrollView>
+				<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+				</View>
 
 				<BottomHomeButton
 					confirmTitle={t('tower.challenge.exitConfirm')}
@@ -419,11 +429,8 @@ const makeStyles = () =>
 		safeArea: { flex: 1 },
 
 		// ===== 헤더 =====
-		// 태블릿: 제목이 화면 왼쪽 끝에 붙지 않도록 본문 카드와 같은 기둥에 맞춘다
 		header: {
 			width: '100%',
-			maxWidth: contentWidth,
-			alignSelf: 'center',
 			flexDirection: 'row',
 			alignItems: 'center',
 			paddingHorizontal: Layout.screenH,
@@ -447,16 +454,20 @@ const makeStyles = () =>
 			borderColor: withAlpha(Colors.warning, '80'),
 			backgroundColor: withAlpha(Colors.warning, '33'),
 		},
-		devButtonText: { fontSize: Typography.micro, fontWeight: FontWeight.bold, color: Colors.warning },
+		devButtonText: { fontSize: Typography.micro, fontWeight: FontWeight.bold, color: Colors.warning, flexShrink: 1, textAlign: 'center' },
 
 		body: { flex: 1 },
-		// 태블릿: 본문을 가운데 한 기둥으로 묶는다 (헤더와 같은 폭이라 제목과 카드 왼쪽 선이 맞는다)
-		bodyContent: { width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: Layout.sectionGap },
-		cardStack: { gap: SpacingV.md },
+		bodyContent: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom, gap: Layout.sectionGap },
+		// 폰: 한 열(배너·진행·도전) / 태블릿: 왼쪽 열(배너·진행) + 오른쪽 열(도전) — 두 열 높이를 맞춰 늘린다
+		cardStack: isTablet ? { flexDirection: 'row', gap: Spacing.md } : { gap: SpacingV.md },
+		cardColumn: { gap: SpacingV.md, ...(isTablet && { flex: 1 }) },
+		progressWrap: isTablet ? { flex: 1 } : {},
+		challengeWrap: isTablet ? { flex: 1 } : {},
+		floorGrid: { rowGap: Layout.itemGap },
 		// 층 줄 사이는 목록 아이템 간격 — 카드 사이(12)보다 좁혀 한 목록으로 읽히게
 		floorList: { gap: Layout.itemGap },
 		heroBanner: {
-			// 태블릿 넓은 기둥에서 고정 높이면 2.9:1 띠가 되어 그림이 크게 잘린다 — 폰 비율 유지
+			// 태블릿은 반 폭 열 안이라 폰 비율(343:176)을 그대로 써도 높이가 ~250 에 머문다
 			...(isTablet ? { aspectRatio: 343 / 176 } : { height: scaleHeight(176) }),
 			borderRadius: Radius.xl,
 			overflow: 'hidden',
@@ -484,6 +495,8 @@ const makeStyles = () =>
 			borderWidth: 1,
 			borderColor: Colors.onBrandSurface,
 			padding: Spacing.lg,
+			// 태블릿 두 열에서 옆 열 높이에 맞춰 늘어난다 — 내용은 위·아래로 벌려 빈칸이 한쪽에 몰리지 않게
+			...(isTablet && { flex: 1, justifyContent: 'space-between' }),
 		},
 
 		// ===== 진행 카드 =====
@@ -583,12 +596,12 @@ const makeStyles = () =>
 			borderRadius: Radius.md,
 		},
 		// 타임 챌린지의 '챌린지 시작하기' 버튼과 같은 글자 크기 — 두 챌린지의 주요 버튼을 한 언어로 맞춘다
-		challengeButtonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse, letterSpacing: 0.3 },
+		challengeButtonText: { fontSize: Typography.subtitle, fontWeight: FontWeight.bold, color: Colors.textInverse, letterSpacing: 0.3, flexShrink: 1, textAlign: 'center' },
 
 		// ===== 모두 정복 =====
 		clearedPanel: {
-			// 태블릿 넓은 기둥에서 고정 높이면 그림이 가늘게 잘린다 — 히어로 배너처럼 폰 비율 유지
-			...(isTablet ? { aspectRatio: 343 / 190 } : { height: scaleHeight(190) }),
+			// 태블릿은 오른쪽 열 높이(배너+진행)를 그대로 채운다 — 가득 폭 비율이면 540pt 판이 됐다
+			...(isTablet ? { flex: 1 } : { height: scaleHeight(190) }),
 			padding: 0,
 			justifyContent: 'flex-end',
 			overflow: 'hidden',
@@ -637,7 +650,7 @@ const makeStyles = () =>
 			backgroundColor: Colors.onBrandSurface,
 		},
 		floorTextWrap: { flex: 1 },
-		floorName: { fontSize: Typography.bodySm, fontWeight: FontWeight.bold, color: Colors.onBrandText },
+		floorName: { flexShrink: 1, fontSize: Typography.bodySm, fontWeight: FontWeight.bold, color: Colors.onBrandText },
 		floorSub: { fontSize: Typography.micro, color: Colors.onBrandTextSoft, marginTop: SpacingV.xxs },
 		floorTag: { fontSize: Typography.micro, fontWeight: FontWeight.heavy, color: Colors.onBrandText },
 

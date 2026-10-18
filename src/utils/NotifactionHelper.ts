@@ -33,6 +33,7 @@ const ALARM_MANAGER = { type: AlarmType.SET_AND_ALLOW_WHILE_IDLE } as const;
  * - 발화 시각이 과거면(앱 업데이트·재부팅으로 알람이 유실됐거나 발화가 밀린 경우)
  *   그대로 두면 다음 복구 시점에 즉시 발화해 "지정한 시간이 아닌 때" 알림이 뜬다.
  *   과거 timestamp 는 무효로 보고 다음 발생 시각으로 다시 잡는다.
+ * - 예약 때의 언어(data.lang)가 지금 앱 언어와 다르면 무효로 보고 지금 언어 문구로 다시 잡는다.
  * - 조회에 실패하면 false 를 돌려 기존 동작(재예약)을 유지합니다.
  */
 const isScheduledAt = async (id: string, hour: number, minute: number): Promise<boolean> => {
@@ -43,6 +44,8 @@ const isScheduledAt = async (id: string, hour: number, minute: number): Promise<
         if (!timestamp) return false;
         const { hour: at, minute: min } = DateUtils.getZonedParts(new Date(timestamp));
         if (at !== hour || min !== minute) return false;
+        // 문구는 예약할 때 정해진다 — 그 뒤 언어를 바꿨으면 지금 언어로 다시 예약한다
+        if (found?.notification?.data?.lang !== i18n.language) return false;
         return timestamp > DateUtils.getTimestamp();
     } catch {
         return false;
@@ -86,6 +89,7 @@ const ScheduleStreakReminder = async (streak: number, hour = 21, minute = 0) => 
         await notifee.createTriggerNotification(
             {
                 id: STREAK_REMINDER_ID,
+                data: { lang: i18n.language },
                 title: i18n.t('svc.notification.streakTitle'),
                 body,
                 android: {
@@ -145,6 +149,7 @@ const ScheduleDailyWordReminder = async (hour = 8, minute = 0) => {
         await notifee.createTriggerNotification(
             {
                 id: DAILY_WORD_REMINDER_ID,
+                data: { lang: i18n.language },
 				title: i18n.t('svc.notification.dailyWordTitle'),
                 body: i18n.t('svc.notification.dailyWordBody'),
                 android: {
@@ -245,7 +250,7 @@ const ScheduleTodayQuizReminder = async (hour = 9, minute = 0) => {
                 id: TODAY_QUIZ_REMINDER_ID,
                 title: i18n.t('svc.notification.todayQuizTitle'),
                 body: i18n.t('svc.notification.todayQuizBody'),
-                data: { moveToScreen: 'quiz/today' },
+                data: { moveToScreen: 'quiz/today', lang: i18n.language },
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,
@@ -351,9 +356,9 @@ const ScheduleWrongReviewReminder = async (count: number | ((at: number) => Prom
             {
                 id: WRONG_REVIEW_REMINDER_ID,
                 title: i18n.t('svc.notification.wrongReviewTitle'),
-                body: i18n.t('svc.notification.wrongReviewBody', { n }),
+                body: i18n.t('svc.notification.wrongReviewBody', { n, count: n }),
                 // 누르면 바로 오답 복습으로
-                data: { moveToScreen: 'quiz/wrong-review' },
+                data: { moveToScreen: 'quiz/wrong-review', lang: i18n.language },
                 android: {
                     channelId,
                     importance: AndroidImportance.HIGH,

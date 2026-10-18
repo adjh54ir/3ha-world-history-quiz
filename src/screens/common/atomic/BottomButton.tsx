@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaledSize, scaleWidth } from '@/src/utils';
 import { themed } from '@/src/utils/ThemedStyles';
 
 type Variant = 'primary' | 'secondary' | 'neutral';
@@ -69,20 +69,20 @@ const BottomButton: React.FC<BottomButtonProps> = ({
 				style,
 			]}>
 			{twoButtons ? (
-				<View style={styles.row}>
+				<View style={[styles.row, isTablet && styles.rowTablet]}>
 					<TouchableOpacity style={[styles.half, styles.outline]} activeOpacity={0.85} onPress={onSecondary}>
 						{!!secondaryIcon && <IconComponent type="materialIcons" name={secondaryIcon} size={scaledSize(20)} color={Colors.text} />}
-						<Text style={[styles.label, { color: Colors.text }]} numberOfLines={1} ellipsizeMode="tail">{secondaryLabel}</Text>
+						<Text style={[styles.label, { color: Colors.text }]} numberOfLines={2}>{secondaryLabel}</Text>
 					</TouchableOpacity>
 					<TouchableOpacity style={[styles.half, { backgroundColor: bg }, disabled && styles.disabled]} activeOpacity={0.9} disabled={disabled} onPress={onPress}>
 						{!!icon && <IconComponent type="materialIcons" name={icon} size={scaledSize(20)} color={fg} />}
-						<Text style={[styles.label, { color: fg }]} numberOfLines={1} ellipsizeMode="tail">{label}</Text>
+						<Text style={[styles.label, { color: fg }]} numberOfLines={2}>{label}</Text>
 					</TouchableOpacity>
 				</View>
 			) : (
 				<TouchableOpacity style={[styles.btn, { backgroundColor: bg }, disabled && styles.disabled]} activeOpacity={0.9} disabled={disabled} onPress={onPress}>
 					{!!icon && <IconComponent type="materialIcons" name={icon} size={scaledSize(20)} color={fg} />}
-					<Text style={[styles.label, { color: fg }]} numberOfLines={1} ellipsizeMode="tail">{label}</Text>
+					<Text style={[styles.label, { color: fg }]} numberOfLines={2}>{label}</Text>
 				</TouchableOpacity>
 			)}
 		</View>
@@ -105,9 +105,13 @@ const styles = themed(() => StyleSheet.create({
 		paddingHorizontal: Spacing.xxl,
 		borderRadius: Radius.xl,
 		minWidth: scaleWidth(140),
+		// 긴 라벨이 줄바꿈 전에 바 끝까지 늘어나지 않게 (폰은 바 안쪽 폭보다 커서 무효)
+		maxWidth: Layout.dialogMaxWidth,
 	},
 	// 2버튼: 가로 반반
 	row: { flexDirection: 'row', gap: Spacing.sm },
+	// 태블릿은 반반 버튼이 각 480pt 판자가 되지 않게 팝업 카드 폭으로 묶어 가운데 둔다
+	rowTablet: { width: '100%', maxWidth: Layout.dialogMaxWidth, alignSelf: 'center' },
 	half: {
 		flex: 1,
 		flexDirection: 'row',

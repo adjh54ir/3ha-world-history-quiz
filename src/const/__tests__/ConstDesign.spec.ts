@@ -30,7 +30,8 @@ describe('ConstDesign 토큰 규칙', () => {
 	});
 
 	it('평면 카드에는 그림자가 없다 (헤어라인 보더로 통일)', () => {
-		expect(Shadow.card.shadowOpacity).toBe(0);
+		expect(CardSurface).not.toHaveProperty('shadowOpacity');
+		expect(CardSurface).not.toHaveProperty('elevation');
 		expect(CardSurface.borderWidth).toBe(1);
 	});
 

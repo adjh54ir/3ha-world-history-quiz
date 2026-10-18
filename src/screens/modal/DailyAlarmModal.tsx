@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -108,7 +108,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 	return (
 		<AppModal visible={visible && loaded} transparent animationType="fade" onRequestClose={onClose}>
 			<View style={styles.overlay}>
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.sheet}>
+				<DialogIn visible={visible} style={styles.sheet}>
 					<TouchableOpacity style={styles.closeBtn} onPress={onClose} hitSlop={Layout.hitSlop} accessibilityRole="button" accessibilityLabel={t('modal.dailyAlarm.closeA11y')}>
 						<IconComponent type="materialIcons" name="close" size={scaledSize(22)} color={Colors.textSecondary} />
 					</TouchableOpacity>
@@ -155,7 +155,7 @@ const DailyAlarmModal: React.FC<Props> = ({ visible, onClose, onChange }) => {
 					<TouchableOpacity style={[styles.saveBtn, { backgroundColor: Colors.primary }]} activeOpacity={0.9} disabled={saving} onPress={save}>
 						<Text style={styles.saveBtnText}>{t('common.save')}</Text>
 					</TouchableOpacity>
-				</SheetIn>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);
@@ -168,7 +168,7 @@ const styles = themed(() => StyleSheet.create({
 	permWarnText: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: isDark() ? Colors.error : Colors.errorDark, lineHeight: scaleHeight(17) },
 	permWarnBtn: { paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs, borderRadius: Radius.md, backgroundColor: Colors.errorDark },
 	// errorDark 채움은 다크에서 밝아져 흰 글자가 3.8:1 — onFill 로 뒤집는다 (라이트는 흰색 그대로)
-	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.onFill },
+	permWarnBtnText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.onFill, flexShrink: 1, textAlign: 'center' },
 	overlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
 	sheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingTop: SpacingV.xxl, paddingBottom: SpacingV.xxl, alignItems: 'center' },
 	// 닫기 터치 영역 44 — 다른 팝업(난이도·도감) 닫기와 같은 크기

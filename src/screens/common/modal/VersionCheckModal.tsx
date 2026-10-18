@@ -12,7 +12,7 @@ import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
 import { Radius, Spacing, SpacingV, Typography, Tracking, Layout } from '@/src/const/ConstDesign';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import { themed } from '@/src/utils/ThemedStyles';
-import { FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
+import { DialogIn, Pulse } from '@/src/screens/common/anim/Motion';
 
 /** '1.2.3' → [1, 2] (패치는 강제 업데이트 대상이 아니므로 버린다) */
 const parseMajorMinor = (version: string): [number, number] => {
@@ -91,7 +91,7 @@ const VersionCheckModal = () => {
 		<AppModal visible={showUpdateModal} transparent animationType="fade" statusBarTranslucent presentationStyle="overFullScreen" onRequestClose={() => {}}>
 			<View style={styles.backdrop}>
 				{/* 카드가 아래에서 떠오르고, 아이콘은 은은하게 숨쉬듯 움직여 시선을 '업데이트'로 모은다 */}
-				<FadeInUp distance={scaleHeight(24)} duration={420} style={styles.cardWrap}>
+				<DialogIn visible={showUpdateModal} duration={320} style={styles.cardWrap}>
 				<View style={styles.card}>
 					{/* 헤더 — 브랜드 그라디언트 위 아이콘 */}
 					<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
@@ -143,7 +143,7 @@ const VersionCheckModal = () => {
 						<Text style={styles.notice}>{t('versionCheck.notice')}</Text>
 					</View>
 				</View>
-				</FadeInUp>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);
@@ -291,6 +291,8 @@ const styles = themed(() => StyleSheet.create({
 		color: Colors.onFill,
 		fontSize: Typography.callout,
 		fontWeight: '800',
+		flexShrink: 1,
+		textAlign: 'center',
 	},
 	notice: {
 		fontSize: Typography.footnote,

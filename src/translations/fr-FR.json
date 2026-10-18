@@ -567,7 +567,9 @@
                 "doneTitle": "Réinitialisation terminée",
                 "doneMessage": "{{label}} : réinitialisé.",
                 "failTitle": "Échec de la réinitialisation",
-                "failMessage": "Problème lors de la réinitialisation de {{label}}. Réessayez dans un instant."
+                "failMessage": "Problème lors de la réinitialisation de {{label}}. Réessayez dans un instant.",
+                "ranking": "Profil de classement",
+                "rankingDesc": "Supprimer du serveur votre pseudo, vos scores et votre compte anonyme"
             },
             "permission": {
                 "notification": "Notifications",
@@ -581,11 +583,15 @@
             "info": {
                 "version": "Version",
                 "share": "Partager l'appli",
+                "rate": "Noter l'appli",
+                "rateDesc": "Soutenez-nous avec une note et un avis",
                 "contact": "Nous contacter",
                 "openSource": "Bibliothèques open source",
                 "openSourceDesc": "Logiciels open source utilisés et licences",
                 "homepage": "Site officiel",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "Politique de confidentialité",
+                "privacyDesc": "Voir les données collectées et leur usage"
             },
             "dev": {
                 "completeQuizzes": "Terminer tous les quiz",
@@ -1669,6 +1675,7 @@
                 "todayQuizTitle": "Le quiz du jour",
                 "todayQuizBody": "Prêt pour les 5 questions du quiz du jour ?",
                 "wrongReviewTitle": "C'est l'heure de réviser",
+                "wrongReviewBody_one": "{{n}} erreur à revoir vous attend. On s'y remet ?",
                 "wrongReviewBody": "{{n}} erreurs à revoir vous attendent. On s'y remet ?"
             },
             "share": {
@@ -2218,6 +2225,10 @@
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "Quiz Dinosaures",
+                "desc": "Découvre les noms, les époques et les caractéristiques des dinosaures avec un guide dino, puis révise avec plein de quiz variés."
+            },
             "familyevent": {
                 "title": "Registre des Enveloppes",
                 "desc": "Notez les cadeaux d'argent hors ligne. Export Excel et PDF inclus."

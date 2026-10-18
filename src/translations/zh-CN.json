@@ -555,7 +555,9 @@
                 "doneTitle": "重置完成",
                 "doneMessage": "{{label}}已重置。",
                 "failTitle": "重置失败",
-                "failMessage": "重置{{label}}时出了点问题，请稍后再试。"
+                "failMessage": "重置{{label}}时出了点问题，请稍后再试。",
+                "ranking": "排行榜信息",
+                "rankingDesc": "删除服务器上的昵称、分数和匿名账户"
             },
             "permission": {
                 "notification": "通知",
@@ -569,11 +571,15 @@
             "info": {
                 "version": "应用版本",
                 "share": "分享应用",
+                "rate": "为应用评分",
+                "rateDesc": "用评分和评价为我们加油",
                 "contact": "联系我们",
                 "openSource": "开源库",
                 "openSourceDesc": "查看使用的开源项目及许可证",
                 "homepage": "官方网站",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "隐私政策",
+                "privacyDesc": "查看我们收集的信息及用途"
             },
             "dev": {
                 "completeQuizzes": "完成全部答题",
@@ -2186,6 +2192,10 @@
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "恐龙知识测验",
+                "desc": "通过恐龙图鉴认识恐龙的名称、时代和特征，再用多种测验复习，轻松积累恐龙知识的学习应用。"
+            },
             "familyevent": {
                 "title": "礼金账本",
                 "desc": "只在手机本地记录婚礼礼金和丧事奠仪，查看每个人的往来差额，并可导出为 Excel 和 PDF。"

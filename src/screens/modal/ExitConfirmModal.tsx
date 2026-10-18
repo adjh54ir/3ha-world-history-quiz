@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Typography, Radius, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -38,7 +38,7 @@ const ExitConfirmModal: React.FC<Props> = ({
 		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onCancel} />
-				<SheetIn visible={visible} distance={scaleHeight(24)} style={styles.card}>
+				<DialogIn visible={visible} style={styles.card}>
 					<View style={styles.iconWrap}>
 						<IconComponent type="materialIcons" name="logout" size={scaledSize(26)} color={Colors.primary} />
 					</View>
@@ -52,7 +52,7 @@ const ExitConfirmModal: React.FC<Props> = ({
 							<Text style={styles.confirmText}>{confirmText ?? t('modal.exitConfirm.confirm')}</Text>
 						</TouchableOpacity>
 					</View>
-				</SheetIn>
+				</DialogIn>
 			</View>
 		</AppModal>
 	);

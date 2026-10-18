@@ -9,7 +9,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Tag from '@/src/screens/common/atomic/Tag';
 import Colors, { HEAT_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet, gridColumns } from '@/src/utils';
 import { FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import LearnProgressService, { TimePlayRecord } from '@/src/services/LearnProgressService';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
@@ -30,6 +30,7 @@ import { RANK_TIERS } from '@/src/screens/common/RankBoardView';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import ScrollTopButton, { useScrollTop, useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 type ModeKey = 'mix' | 'bundle' | 'ox' | 'blank' | 'initial' | 'picture' | 'flagMatch' | 'match' | 'bookmark' | 'wrongReview' | 'weakFocus' | 'exam' | 'league';
 
@@ -62,7 +63,7 @@ const PersonalRankRow: React.FC<{ rank: number; meta: string; isNew?: boolean; t
 	const { t } = useTranslation();
 	const tier = rank <= 3 ? RANK_TIERS[rank - 1] : null;
 	return (
-		<FadeInUp delay={Math.min(rank - 1, 6) * 50} distance={10}>
+		<View>
 			<View style={[styles.histRow, !first && styles.histRowBorder, rank === 1 && styles.histRowBest]}>
 				<View style={[styles.histIndex, tier && { backgroundColor: rank === 1 ? Colors.surface : tier.soft }]}>
 					{tier ? <IconComponent type="materialIcons" name={tier.icon} size={scaledSize(15)} color={tier.main} /> : <Text style={styles.histIndexText}>{rank}</Text>}
@@ -79,7 +80,7 @@ const PersonalRankRow: React.FC<{ rank: number; meta: string; isNew?: boolean; t
 					<Text style={styles.histScoreUnit}>{unit}</Text>
 				</View>
 			</View>
-		</FadeInUp>
+		</View>
 	);
 };
 
@@ -284,7 +285,7 @@ const Challenge = () => {
 							<LinearGradient colors={HEAT_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 							<Animated.View
 								pointerEvents="none"
-								style={[styles.bestShine, { transform: [{ translateX: shineAnim.interpolate({ inputRange: [0, 1], outputRange: [-scaleWidth(160), Math.max(scaleWidth(420), contentWidth)] }) }, { rotate: '18deg' }] }]}
+								style={[styles.bestShine, { transform: [{ translateX: shineAnim.interpolate({ inputRange: [0, 1], outputRange: [-scaleWidth(160), Math.max(scaleWidth(420), screenWidth)] }) }, { rotate: '18deg' }] }]}
 							/>
 							<View style={styles.bestHeroTop}>
 								<Animated.View style={[styles.bestTrophy, { transform: [{ scale: trophyPulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.12] }) }] }]}>
@@ -361,7 +362,7 @@ const Challenge = () => {
 
 					</FadeInUp>
 				) : tab === 'tower' ? (
-					<FadeInUp>
+					<View>
 						{(() => {
 							const cleared = tower.clearedLevels.length;
 							const next = towerNext;
@@ -456,12 +457,12 @@ const Challenge = () => {
 							<IconComponent type="materialIcons" name="apartment" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.startBtnText}>{t('challenge.tower.enter')}</Text>
 						</TouchableOpacity>
-					</FadeInUp>
+					</View>
 				) : (
-					<>
-				{MODES.map((m, i) => (
-					<FadeInUp key={m.href} delay={50 + i * 45}>
-						<TouchableOpacity style={styles.card} activeOpacity={0.9} onPress={() => router.push(m.href as never)}>
+					// 태블릿은 모드 13개를 2열로 (폰·좁은 태블릿은 1열 그대로)
+					<AdaptiveGrid columns={gridColumns(320, 2)}>
+				{MODES.map((m) => (
+						<TouchableOpacity key={m.href} style={styles.card} activeOpacity={0.9} onPress={() => router.push(m.href as never)}>
 							<View style={[styles.iconChip, { backgroundColor: withAlpha(m.color, '14') }]}>
 								<IconComponent type="materialIcons" name={m.icon} size={scaledSize(25)} color={m.color} />
 							</View>
@@ -474,10 +475,8 @@ const Challenge = () => {
 							</View>
 							<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textMuted} />
 						</TouchableOpacity>
-					</FadeInUp>
 				))}
-
-					</>
+					</AdaptiveGrid>
 				)}
 		</ScrollView>
 			{/* 긴 목록 — 우하단 맨 위로 버튼 */}
@@ -498,7 +497,7 @@ const Challenge = () => {
 				<View pointerEvents="none" style={StyleSheet.absoluteFill}>
 					<ConfettiCannon
 						count={120}
-						origin={{ x: contentWidth / 2, y: -10 }}
+						origin={{ x: screenWidth / 2, y: -10 }}
 						fadeOut
 						autoStart
 						explosionSpeed={380}
@@ -550,12 +549,12 @@ const styles = themed(() => StyleSheet.create({
 	// 플레이별 점수 아코디언
 	// 타임챌린지 시작 — 기록 목록 아래 인라인 pill 버튼
 	startBtn: { alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, minHeight: Layout.ctaMinH, paddingHorizontal: Spacing.xxl, borderRadius: Radius.xl, backgroundColor: Colors.primary, marginTop: SpacingV.md },
-	startBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill },
+	startBtnText: { fontSize: Typography.callout, fontWeight: '800', color: Colors.onFill, flexShrink: 1, textAlign: 'center' },
 	// 타워챌린지 탭
 	timeHeroCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg, marginBottom: Layout.sectionGap },
 	towerCard: { ...CardSurface, overflow: 'hidden', borderRadius: Radius.lg },
-	// 태블릿은 본문 폭이 넓어 16:9 면 히어로가 화면 3분의 1을 차지한다 — 2:1 로 눌러 아래 내용이 첫 화면에 들어오게
-	towerHero: { width: '100%', aspectRatio: isTablet ? 2 : 16 / 9 },
+	// 태블릿은 본문이 화면 가로를 가득 써 2:1 이어도 높이가 350~490pt 가 된다 — 3:1 로 눌러 아래 내용이 첫 화면에 들어오게
+	towerHero: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 16 / 9 },
 	towerBody: { paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, gap: SpacingV.xs },
 	towerProgressRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: SpacingV.sm },
 	// 현재 층 표지판
@@ -600,7 +599,7 @@ const styles = themed(() => StyleSheet.create({
 
 
 	// 모드 카드
-	card: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
+	card: { ...CardSurface, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap, ...(isTablet && { flexGrow: 1 }) },
 	iconChip: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, justifyContent: 'center', alignItems: 'center', marginRight: Spacing.md },
 	cardBody: { flex: 1 },
 	cardTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flexWrap: 'wrap' },

@@ -9,7 +9,7 @@ import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import CategoryScopeChips, { ALL_SCOPE } from '@/src/screens/common/atomic/CategoryScopeChips';
 import Colors from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { isTablet, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
 import LearnProgressService, { BookmarkItem, WrongItem } from '@/src/services/LearnProgressService';
 import LearnHubService from '@/src/services/LearnHubService';
 import { categoryIcon, difficultyIcon } from '@/src/const/ConstQuizMeta';
@@ -242,8 +242,9 @@ const Library = () => {
 							{bookmarks.map((b, i) => {
 								const c = findCard(b.domain, b.uid);
 								return (
-									<FadeInUp key={b.uid} delay={Math.min(i * 45, 300)} duration={340} distance={14}>
+									<View key={b.uid} style={isTablet ? styles.gridFill : undefined}>
 										<LearnItemCard
+											style={isTablet ? styles.gridFill : undefined}
 											domain={b.domain}
 											categoryLabel={c?.categoryLabel}
 											levelLabel={c?.levelLabel}
@@ -255,7 +256,7 @@ const Library = () => {
 											onToggleBookmark={() => removeBookmark(b)}
 											onPress={() => setBookmarkDetail(b)}
 										/>
-									</FadeInUp>
+									</View>
 								);
 							})}
 						</AdaptiveGrid>
@@ -264,7 +265,7 @@ const Library = () => {
 					<EmptyState illustration="allComplete" icon="check-circle" text={t('library.emptyWrong')} subText={t('library.emptyWrongSub')} />
 				) : (
 					<>
-						<TouchableOpacity style={styles.reviewCta} activeOpacity={0.9} onPress={() => router.push({ pathname: '/quiz/wrong-review', params: scope === ALL_SCOPE ? {} : { category: scope } } as never)}>
+						<TouchableOpacity style={[styles.reviewCta, styles.ctaTablet]} activeOpacity={0.9} onPress={() => router.push({ pathname: '/quiz/wrong-review', params: scope === ALL_SCOPE ? {} : { category: scope } } as never)}>
 							<IconComponent type="materialIcons" name="history-edu" size={scaledSize(20)} color={Colors.onFill} />
 							<Text style={styles.reviewCtaText}>{t('library.review', { n: wrongs.length })}</Text>
 						</TouchableOpacity>
@@ -283,8 +284,9 @@ const Library = () => {
 									explanation: w.explanation || (c ? c.meaning : ''),
 								});
 								return (
-									<FadeInUp key={w.uid} delay={Math.min(i * 45, 300)} duration={340} distance={14}>
+									<View key={w.uid} style={isTablet ? styles.gridFill : undefined}>
 									<LearnItemCard
+										style={isTablet ? styles.gridFill : undefined}
 										domain={w.domain}
 										categoryLabel={w.categoryLabel}
 										levelLabel={w.level}
@@ -295,7 +297,7 @@ const Library = () => {
 										onToggleBookmark={() => toggleWrongBookmark(w)}
 										onPress={() => setDetail(w)}
 									/>
-									</FadeInUp>
+									</View>
 								);
 							})}
 						</AdaptiveGrid>
@@ -304,7 +306,7 @@ const Library = () => {
 
 				{!loading && scope !== ALL_SCOPE && (
 					<TouchableOpacity
-						style={styles.goQuizBtn}
+						style={[styles.goQuizBtn, styles.ctaTablet]}
 						activeOpacity={0.85}
 						onPress={() => router.push({ pathname: '/learn/category', params: { category: scope } } as never)}>
 						<IconComponent type="materialIcons" name="school" size={scaledSize(18)} color={Colors.primary} />
@@ -381,6 +383,8 @@ const styles = themed(() => StyleSheet.create({
 	scroll: { flex: 1 },
 	list: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	listFill: { flexGrow: 1 },
+	// 단독 버튼 — 태블릿 가득 폭이면 판자처럼 늘어나 가운데 적정 폭으로 (폰은 그대로 가득)
+	ctaTablet: isTablet ? { alignSelf: 'center', width: '100%', maxWidth: Layout.dialogMaxWidth } : {},
 	skeletonCard: { ...CardSurface, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingVertical: SpacingV.lg, marginBottom: Layout.itemGap },
 	reviewCta: {
 		flexDirection: 'row',
@@ -392,7 +396,7 @@ const styles = themed(() => StyleSheet.create({
 		paddingVertical: SpacingV.lg,
 		marginBottom: SpacingV.sm,
 	},
-	reviewCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
+	reviewCtaText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 	clearBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	clearText: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	goQuizBtn: {
@@ -408,4 +412,6 @@ const styles = themed(() => StyleSheet.create({
 		borderColor: Colors.primarySoft,
 	},
 	goQuizText: { fontSize: Typography.body, fontWeight: '800', color: Colors.primaryDeep },
+	// 태블릿 2열: 같은 줄 두 카드 높이를 맞춘다 (셀은 줄 높이로 늘어나므로 카드가 셀을 채우게)
+	gridFill: { flexGrow: 1 },
 }));

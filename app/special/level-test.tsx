@@ -11,11 +11,12 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { BRAND_GRADIENT, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { AnimatedProgress, FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
 import { playFinish, playCorrect, playWrong } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -66,6 +67,7 @@ const gradeOf = (rate: number): Grade => GRADES.find((g) => rate >= g.min) ?? GR
  */
 const LevelTest = () => {
 	const { t } = useTranslation();
+	const scrollTop = useScrollTop();
 	const [started, setStarted] = useState(false);
 	const [questions, setQuestions] = useState(() => LearnHubService.generateMixedQuiz(TEST_COUNT));
 	const [index, setIndex] = useState(0);
@@ -227,7 +229,7 @@ const LevelTest = () => {
 					</FadeInUp>
 
 					{/* 등급 미리보기 — 입문부터 최상급까지 */}
-					<FadeInUp delay={90}>
+					<View>
 						<View style={styles.gradeCard}>
 							<View style={styles.gradeCardHead}>
 								<IconComponent type="materialIcons" name="leaderboard" size={scaledSize(16)} color={Colors.primary} />
@@ -242,16 +244,18 @@ const LevelTest = () => {
 								))}
 							</View>
 						</View>
-					</FadeInUp>
+					</View>
 
 					{/* 지난 결과 */}
 					{history.length > 0 && (
-						<FadeInUp delay={140}>
+						<View>
 							<View style={styles.historyWrap}>
 								<View style={styles.historyHead}>
 									<Text style={styles.historyTitle}>{t('special.test.history')}</Text>
 									<Text style={styles.historyCount}>{t('special.test.historyCount', { count: history.length })}</Text>
 								</View>
+								{/* 태블릿 2열 — 결과 목록(AdaptiveGrid)과 같은 배치 */}
+								<AdaptiveGrid>
 								{history.slice(0, 5).map((h, i) => (
 									<View key={`${h.date}-${i}`} style={styles.historyRow}>
 										<View style={styles.historyIcon}>
@@ -267,8 +271,9 @@ const LevelTest = () => {
 										</View>
 									</View>
 								))}
+								</AdaptiveGrid>
 							</View>
-						</FadeInUp>
+						</View>
 					)}
 				</ScrollView>
 
@@ -291,7 +296,7 @@ const LevelTest = () => {
 		const correctItems = questions.filter((_, i) => results[i] === true);
 		// 오답/정답 목록 — 보관함·퀴즈 결과와 동일한 공통 카드(LearnItemCard) 사용
 		const renderReviewRow = (q: LearnType.QuizQuestion, i: number, ok: boolean) => (
-			<FadeInUp key={`${q.uid}-${i}`} delay={Math.min(i, 6) * 40}>
+			<View key={`${q.uid}-${i}`}>
 				<LearnItemCard
 					domain={q.domain}
 					categoryLabel={q.categoryLabel}
@@ -307,11 +312,12 @@ const LevelTest = () => {
 					examples={q.examples}
 					onPress={() => setDetailItem(toDetailItem(q))}
 				/>
-			</FadeInUp>
+			</View>
 		);
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<ScrollView style={styles.scroll} contentContainerStyle={[styles.resultScroll, { paddingTop: Layout.screenTop }]} showsVerticalScrollIndicator={false}>
+				<View style={{ flex: 1 }}>
+				<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={[styles.resultScroll, { paddingTop: Layout.screenTop }]} showsVerticalScrollIndicator={false}>
 					<View style={styles.resultHero}>
 						<View style={styles.gradeIconWrap}>
 							<LottieBox source={LOTTIE_STAR} autoPlay loop={false} style={styles.gradeStar} />
@@ -344,7 +350,7 @@ const LevelTest = () => {
 					)}
 
 					{correctItems.length > 0 && (
-						<FadeInUp delay={180}>
+						<View>
 							<View style={styles.reviewSection}>
 								<View style={styles.reviewHead}>
 									<Text style={styles.reviewTitle}>{t('special.levelTest.correctNote')}</Text>
@@ -352,7 +358,7 @@ const LevelTest = () => {
 								</View>
 								<AdaptiveGrid>{correctItems.map((q, i) => renderReviewRow(q, i, true))}</AdaptiveGrid>
 							</View>
-						</FadeInUp>
+						</View>
 					)}
 
 					<TouchableOpacity style={styles.shareBtn} activeOpacity={0.9} onPress={onShare}>
@@ -361,6 +367,8 @@ const LevelTest = () => {
 					</TouchableOpacity>
 
 					</ScrollView>
+				<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+				</View>
 				<BottomButton
 					label={t('special.home')}
 					icon="home"
@@ -371,7 +379,7 @@ const LevelTest = () => {
 				/>
 				{rate >= 70 && (
 					<View style={styles.confettiFront} pointerEvents="none">
-						<ConfettiCannon count={120} origin={{ x: contentWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
+						<ConfettiCannon count={120} origin={{ x: screenWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
 					</View>
 				)}
 				<DetailSheet visible={!!detailItem} item={detailItem} onClose={() => setDetailItem(null)} />
@@ -461,7 +469,8 @@ const styles = themed(() => StyleSheet.create({
 	gradePillText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
 	// 시작 CTA
 	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
-	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden' },
+	// 하단 CTA — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden', ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	startBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900' },
 	startHint: { marginTop: SpacingV.sm, fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center' },
 
@@ -513,7 +522,8 @@ const styles = themed(() => StyleSheet.create({
 	gradeDetail: { color: Colors.textSecondary, fontSize: Typography.body, marginTop: SpacingV.xs },
 	msgCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	msgText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), textAlign: 'center', fontWeight: '600' },
-	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
+	// 단독 버튼 — 태블릿은 다이얼로그 폭으로 가운데 (폰은 그대로)
+	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
 	reviewSection: { marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	reviewHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: SpacingV.sm },

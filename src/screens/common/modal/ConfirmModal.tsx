@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
-import { SheetIn } from '@/src/screens/common/anim/Motion';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors, { withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, DisplayText } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -67,7 +67,7 @@ export const ConfirmModalHost: React.FC = () => {
 			<View style={styles.overlay}>
 				<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => close(false)} />
 				{!!pending && (
-					<SheetIn visible distance={scaleHeight(24)} style={styles.card}>
+					<DialogIn visible style={styles.card}>
 						{!!pending.icon && (
 							<View style={[styles.iconWrap, { backgroundColor: withAlpha(accent, '14') }]}>
 								<IconComponent type="materialIcons" name={pending.icon} size={scaledSize(28)} color={accent} />
@@ -85,7 +85,7 @@ export const ConfirmModalHost: React.FC = () => {
 								<Text style={styles.confirmText}>{pending.confirmText ?? t('common.confirm')}</Text>
 							</TouchableOpacity>
 						</View>
-					</SheetIn>
+					</DialogIn>
 				)}
 			</View>
 		</AppModal>

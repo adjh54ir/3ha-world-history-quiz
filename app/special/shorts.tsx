@@ -9,7 +9,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import Colors, { mixHex, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, scaleArt, contentWidth, screenWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
 import LearnProgressService from '@/src/services/LearnProgressService';
 import { LearnType } from '@/src/types/data/LearnType';
@@ -246,7 +246,7 @@ const Shorts = () => {
 						onLayout={(e) => (viewportRef.current = e.nativeEvent.layout.height)}
 						onContentSizeChange={(_w, h) => setOverflow(h > viewportRef.current + 1)}>
 						{/* 태블릿은 본문 폭이 넓어 1.25배 그림이 왜소하다 — 아트 배율 (폰은 scaleWidth 와 같은 값) */}
-						{!!item.imageRef && <EntryImage imageRef={item.imageRef} width={compactHeight ? scaleWidth(120) : scaleArt(170)} fetchWidth={360} style={styles.image} />}
+						{!!item.imageRef && <EntryImage imageRef={item.imageRef} width={compactHeight ? scaleWidth(120) : scaleArt(170)} fetchWidth={isTablet ? 640 : 360} style={styles.image} />}
 						<Text style={[styles.title, compactHeight && styles.titleCompact]} numberOfLines={1} ellipsizeMode="tail">{item.title}</Text>
 						{!!item.subTitle && <Text style={styles.subTitle} numberOfLines={2} ellipsizeMode="tail">{item.subTitle}</Text>}
 						<View style={[styles.divider, { backgroundColor: color }]} />
@@ -386,14 +386,10 @@ const Shorts = () => {
 export default Shorts;
 
 
-// 숏폼은 전체화면이라 AppLayout 의 본문 폭 래퍼를 타지 않는다.
-// 태블릿에서 한 줄이 1000px 가까이 늘어나지 않도록 본문 폭만큼만 쓰고 남는 좌우를 인셋으로 흡수한다.
-const SHORTS_SIDE = (screenWidth - contentWidth) / 2;
-
 const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.darkBackground },
 	page: { width: '100%', justifyContent: 'center' },
-	pageContent: { flex: 1, width: '100%', maxWidth: contentWidth, alignSelf: 'center', paddingHorizontal: Layout.screenH },
+	pageContent: { flex: 1, width: '100%', paddingHorizontal: Layout.screenH },
 	topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	domainChip: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.xl },
 	domainText: { color: Colors.darkText, fontSize: Typography.footnote, fontWeight: '800' },
@@ -416,25 +412,27 @@ const styles = themed(() => StyleSheet.create({
 	meaningCompact: { fontSize: Typography.title, lineHeight: scaleHeight(25) },
 	example: { color: Colors.darkTextSecondary, fontSize: Typography.callout, fontStyle: 'italic', lineHeight: scaleHeight(23), marginTop: SpacingV.lg },
 	exampleCompact: { fontSize: Typography.body, lineHeight: scaleHeight(20), marginTop: SpacingV.sm },
-	bottomRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
-	completeBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.textInverse, paddingVertical: SpacingV.md, borderRadius: Radius.xxl },
-	completeBtnText: { color: Colors.ink, fontSize: Typography.callout, fontWeight: '900' },
+	// 태블릿은 버튼을 다이얼로그 폭으로 묶고 쪽 번호를 오른쪽 끝에 둔다 (폰은 버튼이 가득 차 그대로)
+	bottomRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, ...(isTablet && { justifyContent: 'space-between' as const }) },
+	completeBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.textInverse, paddingVertical: SpacingV.md, borderRadius: Radius.xxl, ...(isTablet && { maxWidth: Layout.dialogMaxWidth }) },
+	completeBtnText: { color: Colors.ink, fontSize: Typography.callout, fontWeight: '900', flexShrink: 1, textAlign: 'center' },
 	// 학습 완료 버튼과 같은 높이 — 완료/미완료 카드를 넘길 때 버튼·레일 위치가 튀지 않게 (테두리 두께만큼 패딩을 덜어낸다)
-	reviewBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.darkSurface, borderWidth: Border.thin, borderColor: Colors.darkBorder, paddingVertical: SpacingV.md - Border.thin, borderRadius: Radius.xxl },
-	reviewBtnText: { color: Colors.darkText, fontSize: Typography.callout, fontWeight: '900' },
+	reviewBtn: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.darkSurface, borderWidth: Border.thin, borderColor: Colors.darkBorder, paddingVertical: SpacingV.md - Border.thin, borderRadius: Radius.xxl, ...(isTablet && { maxWidth: Layout.dialogMaxWidth }) },
+	reviewBtnText: { color: Colors.darkText, fontSize: Typography.callout, fontWeight: '900', flexShrink: 1, textAlign: 'center' },
 	pageIdx: { color: Colors.darkTextSecondary, fontSize: Typography.body, fontWeight: '800' },
-	rail: { position: 'absolute', right: Layout.screenH + SHORTS_SIDE, alignItems: 'center', gap: SpacingV.lg },
+	rail: { position: 'absolute', right: Layout.screenH, alignItems: 'center', gap: SpacingV.lg },
 	railBtn: { alignItems: 'center', gap: SpacingV.xs },
 	railLabel: { color: Colors.darkText, fontSize: Typography.footnote, fontWeight: '700' },
 	// 우측 상단 도움말·닫기 버튼과 겹치지 않도록 오른쪽 경계를 둔다
-	tabBar: { position: 'absolute', left: Layout.screenH + SHORTS_SIDE, right: Layout.screenH + scaleWidth(80) + Spacing.lg + SHORTS_SIDE, flexDirection: 'row', gap: Spacing.sm, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), padding: Spacing.xs, borderRadius: Radius.xl },
-	tabBtn: { flexShrink: 1, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.lg },
+	tabBar: { position: 'absolute', left: Layout.screenH, right: Layout.screenH + scaleWidth(80) + Spacing.lg, flexDirection: 'row', gap: Spacing.sm, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), padding: Spacing.xs, borderRadius: Radius.xl },
+	// 태블릿은 탭바가 570pt 이상으로 넓어 탭이 왼쪽에 몰리고 오른쪽이 빈 띠가 된다 — 칸을 나눠 채운다 (폰은 그대로)
+	tabBtn: { flexShrink: 1, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.lg, ...(isTablet && { flexGrow: 1, alignItems: 'center' as const }) },
 	// 이 화면은 테마와 무관하게 항상 어둡다 — surface 를 쓰면 다크 모드에서 버튼까지 어두워져 글자가 묻는다
 	tabBtnOn: { backgroundColor: Colors.textInverse },
 	tabText: { color: Colors.darkTextSecondary, fontSize: Typography.footnote, fontWeight: '800' },
 	tabTextOn: { color: Colors.ink },
 	// 진행 표시 — 카드 모드(learn/study)의 '나의 학습 스코어'와 동일한 구조, 다크 배경에 맞춰 색만 조정
-	learnStatus: { position: 'absolute', left: Layout.screenH + SHORTS_SIDE, right: Layout.screenH + SHORTS_SIDE, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: withAlpha(Colors.darkSurface, 'E6'), paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.lg },
+	learnStatus: { position: 'absolute', left: Layout.screenH, right: Layout.screenH, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: withAlpha(Colors.darkSurface, 'E6'), paddingHorizontal: Spacing.md, paddingVertical: SpacingV.sm, borderRadius: Radius.lg },
 	learnStatusLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 	learnStatusIcon: { width: scaleWidth(26), height: scaleWidth(26), borderRadius: Radius.sm, justifyContent: 'center', alignItems: 'center' },
 	learnStatusText: { fontSize: Typography.body, fontWeight: '700', color: Colors.darkTextSecondary },
@@ -444,6 +442,6 @@ const styles = themed(() => StyleSheet.create({
 	learnStatusPct: { fontSize: Typography.footnote, fontWeight: '900' },
 	emptyWrap: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: Spacing.xxxxl },
 	emptyText: { color: Colors.darkTextSecondary, fontSize: Typography.body, fontWeight: '700', marginTop: SpacingV.lg, textAlign: 'center' },
-	helpBtn: { position: 'absolute', right: Layout.screenH + scaleWidth(40) + Spacing.sm + SHORTS_SIDE, width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.xl, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), justifyContent: 'center', alignItems: 'center' },
-	close: { position: 'absolute', right: Layout.screenH + SHORTS_SIDE, width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.xl, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), justifyContent: 'center', alignItems: 'center' },
+	helpBtn: { position: 'absolute', right: Layout.screenH + scaleWidth(40) + Spacing.sm, width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.xl, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), justifyContent: 'center', alignItems: 'center' },
+	close: { position: 'absolute', right: Layout.screenH, width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.xl, backgroundColor: withAlpha(Colors.darkSurface, 'E6'), justifyContent: 'center', alignItems: 'center' },
 }));

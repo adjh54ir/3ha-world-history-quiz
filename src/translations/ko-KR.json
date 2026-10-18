@@ -555,7 +555,9 @@
                 "doneTitle": "초기화 완료",
                 "doneMessage": "{{label}}이(가) 초기화되었습니다.",
                 "failTitle": "초기화 실패",
-                "failMessage": "{{label}} 초기화 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요."
+                "failMessage": "{{label}} 초기화 중 문제가 생겼어요. 잠시 후 다시 시도해 주세요.",
+                "ranking": "랭킹 정보",
+                "rankingDesc": "서버에 저장된 닉네임·점수·익명 계정 삭제"
             },
             "permission": {
                 "notification": "알림",
@@ -569,11 +571,15 @@
             "info": {
                 "version": "앱 버전",
                 "share": "앱 공유하기",
+                "rate": "앱 평가하기",
+                "rateDesc": "별점과 리뷰로 응원해 주세요",
                 "contact": "문의하기",
                 "openSource": "오픈소스 라이브러리",
                 "openSourceDesc": "사용 중인 오픈소스와 라이선스를 확인해요",
                 "homepage": "공식 홈페이지",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "개인정보처리방침",
+                "privacyDesc": "수집하는 정보와 이용 목적을 확인해요"
             },
             "dev": {
                 "completeQuizzes": "모든 퀴즈 완료",
@@ -2176,6 +2182,10 @@
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "공룡 상식 퀴즈",
+                "desc": "공룡 도감으로 이름·시대·특징을 익히고 다양한 퀴즈로 복습하며 공룡 상식을 키우는 학습 앱입니다."
+            },
             "familyevent": {
                 "title": "경조사금 관리",
                 "desc": "경조사금 관리는 주고받은 축의금과 조의금을 기기 안에서만 기록하고, 사람별 차액을 확인하며 엑셀과 PDF로 내보낼 수 있는 경조사 장부 앱입니다."

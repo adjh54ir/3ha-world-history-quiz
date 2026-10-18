@@ -11,7 +11,8 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import SectionHead from '@/src/screens/common/atomic/SectionHead';
 import Colors, { accentInk, accuracyColor, BRAND_GRADIENT, readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Tracking, Border } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, isTablet, screenWidth, gridColumns } from '@/src/utils';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import DateUtils from '@/src/utils/DateUtils';
 import LearnProgressService, { LearnStats } from '@/src/services/LearnProgressService';
 import { POINT_PER_CORRECT } from '@/src/const/ConstScoring';
@@ -20,7 +21,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import AchievementService, { AchievementStatus } from '@/src/services/AchievementService';
 import { ACHIEVEMENT_GROUPS, RARITY_META } from '@/src/const/ConstAchievements';
 import { LinearGradient } from 'expo-linear-gradient';
-import { AnimatedProgress, FadeInUp, SheetIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
+import { AnimatedProgress, FadeInUp, SheetIn, DialogIn, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
@@ -38,6 +39,8 @@ import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/Scrol
 
 /** 그라데이션 테두리로 한 번 더 강조하는 상위 희귀도 */
 const HIGH_RARITY = new Set(['epic', 'legend']);
+/** 주제별 진도 행 열 수 — 폰 1 / 태블릿 2 */
+const TOPIC_COLS = gridColumns(320, 2);
 
 
 type DailyItem = { uid: string; prompt: string; answer: string; explanation?: string; correct: boolean; domain: string };
@@ -299,6 +302,8 @@ const Stats = () => {
 									</Text>
 								</View>
 								<AnimatedProgress ratio={gRate / 100} color={Colors.primary} trackColor={Colors.border} height={scaleHeight(8)} />
+								{/* 태블릿은 행을 2열로 — 모든 행이 윗선을 가져 열을 나눠도 구분선이 맞는다 */}
+								<AdaptiveGrid columns={TOPIC_COLS}>
 								{g.list.map((d) => {
 									const q = quizStatOf(d.key);
 									const solved = q?.solved ?? 0;
@@ -362,6 +367,7 @@ const Stats = () => {
 										</View>
 									);
 								})}
+								</AdaptiveGrid>
 							</View>
 						</View>
 					);
@@ -446,7 +452,7 @@ const Stats = () => {
 							<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
 							<Animated.View
 								pointerEvents="none"
-								style={[styles.rankShine, { transform: [{ translateX: rankShine.interpolate({ inputRange: [0, 1], outputRange: [-scaleWidth(140), Math.max(scaleWidth(420), contentWidth)] }) }, { rotate: '18deg' }] }]}
+								style={[styles.rankShine, { transform: [{ translateX: rankShine.interpolate({ inputRange: [0, 1], outputRange: [-scaleWidth(140), Math.max(scaleWidth(420), screenWidth)] }) }, { rotate: '18deg' }] }]}
 							/>
 							<View style={styles.rankHeroRow}>
 								<Animated.View style={[styles.rankHeroIcon, { transform: [{ scale: rankPulse.interpolate({ inputRange: [0, 1], outputRange: [1, 1.12] }) }] }]}>
@@ -814,7 +820,7 @@ const Stats = () => {
 				<View style={styles.modalBackdrop}>
 					{/* 배경 탭으로 닫기 — 카드 위에 겹치지 않아 내부 스크롤 제스처를 가로채지 않는다 */}
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setSelectedDaily(null)} />
-					<SheetIn visible={!!selectedDaily} distance={scaleHeight(40)} style={styles.dailyModal}>
+					<DialogIn visible={!!selectedDaily} style={styles.dailyModal}>
 						{/* 헤더 — 브랜드 그라데이션 위에 날짜·점수 요약 */}
 						<View style={styles.dailyModalHero}>
 							<LinearGradient colors={BRAND_GRADIENT} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={StyleSheet.absoluteFill} />
@@ -869,7 +875,7 @@ const Stats = () => {
 								);
 							})}
 						</ScrollView>
-					</SheetIn>
+					</DialogIn>
 				</View>
 			</AppModal>
 
@@ -942,7 +948,8 @@ const styles = themed(() => StyleSheet.create({
 	// 마지막 행 여백 때문에 카드 아래 안쪽 여백만 두 배가 된다 → 마지막 행 여백을 상쇄
 	rankRowsWrap: { marginBottom: -Layout.itemGap },
 	weeklyEmpty: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textSecondary, textAlign: 'center', paddingVertical: SpacingV.lg },
-	weeklyJoinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md },
+	// 태블릿은 카드 폭 끝까지 늘어나지 않게 다이얼로그 폭으로 묶어 가운데 (폰은 그대로 가득)
+	weeklyJoinBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.md, ...(isTablet ? ({ alignSelf: 'center', width: '100%', maxWidth: Layout.dialogMaxWidth } as const) : null) },
 	weeklyJoinText: { flexShrink: 1, color: Colors.onFill, fontSize: Typography.body, fontWeight: '900' },
 
 	// 가로 행 카드
@@ -990,7 +997,7 @@ const styles = themed(() => StyleSheet.create({
 	recordTabTextOn: { color: Colors.textInverse },
 	recordEmpty: { alignItems: 'center' },
 	recordCta: { marginTop: SpacingV.md, backgroundColor: Colors.primary, paddingHorizontal: Spacing.xxl, paddingVertical: SpacingV.md, borderRadius: Radius.md },
-	recordCtaText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800' },
+	recordCtaText: { color: Colors.onFill, fontSize: Typography.body, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 
 	// 타임 챌린지 통계
 	timeStatsRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: SpacingV.sm },

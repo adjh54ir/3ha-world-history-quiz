@@ -71,9 +71,10 @@ const RankingService = {
 			console.warn('[Ranking] 닉네임 저장 불가 — 로그인(uid) 없음');
 			return false;
 		}
+		// 프랑스어·스페인어 생성 닉네임은 최대 30자 — 16자로 자르면 #숫자가 잘려 서버 검증에 걸렸다 (서버 상한 40)
 		const { error } = await supabase
 			.from('world_quiz_profiles')
-			.upsert({ id: uid, nickname: nickname.trim().slice(0, 16), character_key: characterKey ?? null, updated_at: DateUtils.toISOString() });
+			.upsert({ id: uid, nickname: nickname.trim().slice(0, 40), character_key: characterKey ?? null, updated_at: DateUtils.toISOString() });
 		if (error) {
 			console.warn('[Ranking] 프로필 저장 실패 — SQL(world_quiz_profiles) 실행/RLS 확인:', error.message);
 			return false;
@@ -168,6 +169,21 @@ const RankingService = {
 		} catch {
 			return false;
 		}
+	},
+
+	/**
+	 * 내 랭킹 정보 삭제 — 서버의 닉네임·점수·익명 계정을 지우고 로컬 세션·제출 기준값도 비운다.
+	 * 다음에 랭킹에 들어오면 새 익명 계정으로 처음부터 시작한다.
+	 * 실패하면 throw — 호출부(설정 초기화 팝업)가 실패 안내를 띄운다.
+	 */
+	async deleteMe(): Promise<void> {
+		if (isSupabaseConfigured && (await currentUid())) {
+			const { error } = await supabase.rpc('world_quiz_delete_me');
+			if (error) throw new Error(error.message);
+			// 서버에서 계정이 지워졌으므로 로컬 세션만 버린다
+			await supabase.auth.signOut({ scope: 'local' }).catch(() => {});
+		}
+		await AsyncStorage.multiRemove([LAST_TOTAL_KEY, WEEK_SENT_KEY]);
 	},
 
 	async myRank(type: RankBoard): Promise<{ rank: number; score: number } | null> {

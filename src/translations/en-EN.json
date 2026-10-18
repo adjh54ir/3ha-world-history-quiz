@@ -567,7 +567,9 @@
                 "doneTitle": "Reset complete",
                 "doneMessage": "{{label}} has been reset.",
                 "failTitle": "Reset failed",
-                "failMessage": "Something went wrong resetting {{label}}. Please try again shortly."
+                "failMessage": "Something went wrong resetting {{label}}. Please try again shortly.",
+                "ranking": "Ranking profile",
+                "rankingDesc": "Delete your nickname, scores, and anonymous account from the server"
             },
             "permission": {
                 "notification": "Notifications",
@@ -581,11 +583,15 @@
             "info": {
                 "version": "App version",
                 "share": "Share app",
+                "rate": "Rate this app",
+                "rateDesc": "Support us with a rating and review",
                 "contact": "Contact us",
                 "openSource": "Open source libraries",
                 "openSourceDesc": "See the open source libraries and licenses we use",
                 "homepage": "Official website",
-                "homepageDesc": "ecodelab.im"
+                "homepageDesc": "ecodelab.im",
+                "privacy": "Privacy Policy",
+                "privacyDesc": "See what we collect and why"
             },
             "dev": {
                 "completeQuizzes": "Complete all quizzes",
@@ -623,10 +629,10 @@
                 "pickCategory": "Choose category",
                 "pickLevel": "Choose difficulty"
             },
-            "resultsFor": "Results for '{{query}}'",
+            "resultsFor": "Results for “{{query}}”",
             "resetA11y": "Reset search filters",
             "countUnit": "",
-            "emptySearch": "No results for '{{query}}'.",
+            "emptySearch": "No results for “{{query}}”.",
             "emptyFilter": "Nothing matches these filters.",
             "guide": {
                 "title": "How to Search",
@@ -934,7 +940,7 @@
                 "guide": {
                     "swipe": "Swipe left or right to see the next card.",
                     "flip": "Tap a card to flip it and see the details.",
-                    "complete": "Mark every card as 'Learned' to unlock the quiz."
+                    "complete": "Mark every card as “Learned” to unlock the quiz."
                 }
             }
         },
@@ -1059,7 +1065,7 @@
                 "guideTitle": "How Mistake Review Works",
                 "guide": {
                     "intro": "Retry only the questions you got wrong.",
-                    "start": "Skim the explanations, then tap 'Start review'.",
+                    "start": "Skim the explanations, then tap “Start review”.",
                     "remove": "Answer right and it's cleared from Mistake Notes!"
                 }
             }
@@ -1115,7 +1121,7 @@
                 "chipSteps": "6 levels",
                 "gradePreview": "Levels you can earn",
                 "startHint": "Results are saved so you can track your progress",
-                "shareMessage": "My world trivia level is '{{title}} ({{tier}})' — {{correct}} of {{total}} correct ({{rate}} pts)! Test your trivia skills too.",
+                "shareMessage": "My world trivia level is “{{title}} ({{tier}})” — {{correct}} of {{total}} correct ({{rate}} pts)! Test your trivia skills too.",
                 "resultDetail": "{{correct}} of {{total}} correct",
                 "wrongNote": "Missed",
                 "correctNote": "Correct",
@@ -1237,7 +1243,7 @@
                 "guideTitle": "How Shorts Work",
                 "guide1": "Swipe up or down for the next card.",
                 "guide2": "Tap the star to favorite, or share with friends.",
-                "guide3": "Got it? Tap 'Learned' to move it to the Learned tab!"
+                "guide3": "Got it? Tap “Learned” to move it to the Learned tab!"
             },
             "storyFeed": {
                 "sectionTitle": "Today's Reads",
@@ -1256,7 +1262,7 @@
                 "typePreview": "Types you might get",
                 "startHint": "Results are saved so you can see how you change",
                 "historyDeleted": "Record deleted",
-                "shareMessage": "My world trivia type is '{{name}} ({{sub}})'! 🌏 Find out yours.",
+                "shareMessage": "My world trivia type is “{{name}} ({{sub}})”! 🌏 Find out yours.",
                 "recommend": "Recommended: Learn {{label}}",
                 "again": "Retake",
                 "qTitle": "Type Test",
@@ -1655,18 +1661,19 @@
                 "testBody": "You'll never miss your daily fact or quiz reminder again.",
                 "streakTitle": "Don't forget to check in!",
                 "streakBodyOn": "{{streak}}-day streak! Check in today to keep it going.",
-                "streakBodyOff": "Check in today and learn a new world fact?",
+                "streakBodyOff": "Check in today and learn a new world fact!",
                 "dailyWordTitle": "Fact of the Day",
                 "dailyWordBody": "Today's world fact is ready. Take a look?",
                 "todayQuizTitle": "Daily Quiz",
                 "todayQuizBody": "Ready for today's 5-question world trivia quiz?",
                 "wrongReviewTitle": "Time to review",
+                "wrongReviewBody_one": "{{n}} missed question is waiting. Try it again now?",
                 "wrongReviewBody": "{{n}} missed questions are waiting. Try them again now?"
             },
             "share": {
                 "appIntro": "I've been having fun with this app lately, so I wanted to share it! 😊",
                 "appLink": "👇 Get it from the link below",
-                "badgeHead": "🏅 I earned the '{{title}}' badge!",
+                "badgeHead": "🏅 I earned the “{{title}}” badge!",
                 "badgeProgress": "Badges collected so far: {{unlocked}}/{{total}}"
             },
             "report": {
@@ -2203,13 +2210,17 @@
             "level": {
                 "unitScore": "{{value}} pts",
                 "unitSolved": "{{value}} solved",
-                "desc": "Proof your {{topic}} study reached '{{level}}' rank",
+                "desc": "Proof your {{topic}} study reached “{{level}}” rank",
                 "title": "{{topic}} · {{level}}",
                 "name": "{{topic}} {{level}}",
                 "cond": "Reach {{name}} rank ({{unit}})"
             }
         },
         "apps": {
+            "dinosaurquiz": {
+                "title": "Dinosaur Trivia Quiz",
+                "desc": "Learn dinosaur names, eras and traits with a dino guide, then review with a variety of quizzes."
+            },
             "familyevent": {
                 "title": "Envelope Ledger: Gift Money",
                 "desc": "Track wedding and funeral gift money offline. Export to Excel and PDF."

@@ -127,5 +127,5 @@ const styles = themed(() => StyleSheet.create({
 	desc: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(20) },
 	extra: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary, marginTop: SpacingV.sm },
 	btn: { alignSelf: 'stretch', paddingVertical: SpacingV.lg, borderRadius: Radius.md, alignItems: 'center', marginTop: SpacingV.xl },
-	btnText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800' },
+	btnText: { color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 }));

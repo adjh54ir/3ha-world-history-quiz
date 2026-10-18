@@ -100,7 +100,7 @@ const QuizWrongReview = () => {
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
 				<CommonHeader title={headerTitle} onBack={() => router.back()} />
-				<ListSkeleton />
+				<ListSkeleton columns={isTablet ? 2 : 1} />
 			</SafeAreaView>
 		);
 	}
@@ -149,6 +149,7 @@ const QuizWrongReview = () => {
 						return (
 							<FadeInUp delay={Math.min(index * 45, 320)} duration={360} distance={16} style={isTablet ? styles.gridCell : undefined}>
 								<LearnItemCard
+									style={isTablet ? styles.gridFill : undefined}
 									domain={w.domain}
 									categoryLabel={w.categoryLabel}
 									levelLabel={w.level}
@@ -258,6 +259,8 @@ const styles = themed(() => StyleSheet.create({
 	// 좌우 틈 = 카드 세로 간격(Layout.itemGap) — AdaptiveGrid 와 같은 방식
 	gridRow: { marginHorizontal: -Layout.itemGap / 2 },
 	gridCell: { width: '50%', paddingHorizontal: Layout.itemGap / 2 },
+	// 같은 줄 두 카드 높이를 맞춘다
+	gridFill: { flexGrow: 1 },
 	introTop: { alignItems: 'center', marginBottom: SpacingV.xl },
 	reviewIllustration: { width: scaleArt(112), height: scaleArt(112) },
 	introTitle: { fontSize: Typography.h3, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.md },

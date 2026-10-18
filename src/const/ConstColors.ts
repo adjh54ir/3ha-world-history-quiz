@@ -159,6 +159,8 @@ const LIGHT_COLORS_BASE = {
 	errorDark: '#DC2626',
 	errorSoft: '#FEE2E2',
 	errorBorder: '#FECACA', // errorSoft 배경 위 보더
+	errorPanel: '#7F1D1D', // 늘 어두운 패널(타워 패배 창) — 다크에서도 뒤집지 않는다
+	errorBand: '#B91C1C', // errorPanel 위 띠 — 고정값
 	warning: '#0E7C66', // 하이라이트 → 포인트 컬러로 흡수
 	warningSoft: '#DDF1EA',
 

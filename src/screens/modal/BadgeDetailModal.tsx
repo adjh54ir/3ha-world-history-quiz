@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
+import { DialogIn } from '@/src/screens/common/anim/Motion';
 import Colors, { accentInk, isDark, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -39,6 +40,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 		<View style={styles.backdrop}>
 			<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={onClose} />
 			{!!badge && (
+				<DialogIn visible style={styles.modalWrap}>
 				<View style={styles.modal} ref={cardRef} collapsable={false}>
 					<View
 						style={[
@@ -102,6 +104,7 @@ const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, tota
 						</TouchableOpacity>
 					</View>
 				</View>
+				</DialogIn>
 			)}
 		</View>
 	</AppModal>
@@ -112,6 +115,7 @@ export default BadgeDetailModal;
 
 const styles = themed(() => StyleSheet.create({
 	backdrop: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
+	modalWrap: { width: '100%', maxWidth: Layout.dialogMaxWidth },
 	modal: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl, alignItems: 'center' },
 	// 다이얼로그(최대 450) 안의 아트는 scaleArt 를 쓰지 않는다 — 태블릿에서 카드 대비 아이콘만 과하게 커진다 (폰은 같은 값)
 	iconWrap: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.xxl, justifyContent: 'center', alignItems: 'center', overflow: 'hidden' },

@@ -148,9 +148,9 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 	 * 뒤집히지 않는 고정값으로 둔다.
 	 * 승리 창은 옛 파랑 테마의 남색(#082463)이 남아 있어 비취 테마와 따로 놀았다 — 라이트의 짙은 비취(숲그늘)로 맞춘다.
 	 */
-	const bgColor = isVictory ? LIGHT_COLORS.primaryDeep : '#7F1D1D';
+	const bgColor = isVictory ? LIGHT_COLORS.primaryDeep : Colors.errorPanel;
 	// 패배 띠도 창과 같은 이유로 고정값 — errorDeep 은 다크에서 연분홍(#FCA5A5) 글씨색으로 뒤집혀 어두운 창 위에 밝은 띠가 떴다
-	const headerBgColor = isVictory ? Colors.primary : '#B91C1C';
+	const headerBgColor = isVictory ? Colors.primary : Colors.errorBand;
 	const borderColor = isVictory ? Colors.primary : Colors.error;
 	/**
 	 * 어두운 패널 위 '맞힘' 표시색 — primary 는 라이트에서 짙은 파랑(#1249C9)이라 어두운 창 위 대비가 2.2:1 이었다.
@@ -176,14 +176,15 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 
 	// statusBarTranslucent 는 AppModal 이 이미 켜 둔다 — 개별 모달에서 다시 주지 않는다
 	return (
-		<AppModal visible={visible} transparent animationType="none" onRequestClose={onHome}>
-			{/* 오버레이 */}
-			<Animated.View style={[styles.overlay, { opacity: fadeAnim }]}>
+		<AppModal visible={visible} transparent animationType="fade" onRequestClose={onHome}>
+			{/* 오버레이 — visible 즉시 화면 전체를 채운다 (투명하게 시작하면 첫 표시 때 배경이 비어 보인다). 카드만 떠오른다 */}
+			<View style={styles.overlay}>
 				{/* 모달 전체 컨테이너: 화면 높이의 일정 비율로 고정 */}
 				<Animated.View
 					style={[
 						styles.modalContainer,
 						{
+							opacity: fadeAnim,
 							transform: [{ scale: scaleAnim }],
 							backgroundColor: bgColor,
 							borderColor,
@@ -215,7 +216,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 								<Text style={styles.crownText}>👑</Text>
 							</View>
 						)}
-						<Text style={styles.levelName}>{towerLevel.name}</Text>
+						<Text style={styles.levelName} numberOfLines={1} ellipsizeMode="tail">{towerLevel.name}</Text>
 					</Animated.View>
 
 					{/* 스크롤 가능한 본문 */}
@@ -287,7 +288,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 								<View style={styles.rewardBody}>
 									<Image source={towerLevel.reward.image} style={styles.rewardImage} contentFit="contain" />
 									<View style={styles.rewardInfo}>
-										<Text style={styles.rewardName}>{towerLevel.reward.name}</Text>
+										<Text style={styles.rewardName} numberOfLines={1} ellipsizeMode="tail">{towerLevel.reward.name}</Text>
 										{!!towerLevel.reward.description && <Text style={styles.rewardDescription}>{towerLevel.reward.description}</Text>}
 									</View>
 								</View>
@@ -407,7 +408,7 @@ const TowerResultModal: React.FC<TowerResultModalProps> = ({
 						)}
 					</View>
 				</Animated.View>
-			</Animated.View>
+			</View>
 		</AppModal>
 	);
 };
@@ -716,6 +717,8 @@ const makeStyles = () => StyleSheet.create({
 		fontSize: Typography.callout,
 		fontWeight: FontWeight.bold,
 		color: Colors.textInverse,
+		flexShrink: 1,
+		textAlign: 'center',
 	},
 	btnPrimary: {
 		flex: 2,
@@ -730,6 +733,8 @@ const makeStyles = () => StyleSheet.create({
 		fontSize: Typography.callout,
 		fontWeight: FontWeight.heavy, // 디자인 토큰 최대 굵기(heavy)로 통일 — 900은 스케일 밖
 		letterSpacing: 1,
+		flexShrink: 1,
+		textAlign: 'center',
 	},
 });
 const styles = themed(makeStyles);

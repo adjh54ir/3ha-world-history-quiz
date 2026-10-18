@@ -12,12 +12,13 @@ import CommonHeader from '@/src/screens/common/CommonHeader';
 import { useTopBarAccent } from '@/src/utils/TopBarColor';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import BottomButton from '@/src/screens/common/atomic/BottomButton';
+import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { TYPE_RESULT_GRADIENTS, BRAND_GRADIENT, withAlpha, isDark } from '@/src/const/ConstColors';
 import { AnimatedProgress, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } from '@/src/const/ConstDesign';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, contentWidth, isTablet } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
 import { useToast } from '@/src/context/ToastContext';
 import { playFinish, playPop } from '@/src/utils/SoundUtils';
 import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
@@ -26,6 +27,7 @@ import DateUtils from '@/src/utils/DateUtils';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
+import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 
 const LOTTIE_STAR = require('@/src/assets/lottie/star.json');
 
@@ -63,6 +65,7 @@ const typeTone = (ty: TypeInfo): string => (isDark() ? ty.gradient[0] : ty.gradi
  */
 const TypeTest = () => {
 	const { t } = useTranslation();
+	const scrollTop = useScrollTop();
 	const { showToast } = useToast();
 	const [started, setStarted] = useState(false);
 	const [index, setIndex] = useState(0);
@@ -143,7 +146,8 @@ const TypeTest = () => {
 			Share.share({ message: t('special.typeTest.shareMessage', { name: r.name, sub: r.sub }) }).catch(() => {});
 		return (
 			<SafeAreaView style={styles.safe} edges={[]}>
-				<ScrollView style={styles.scroll} contentContainerStyle={[styles.resultScroll, { paddingTop: Layout.screenTop }]} showsVerticalScrollIndicator={false}>
+				<View style={{ flex: 1 }}>
+				<ScrollView ref={scrollTop.ref} onScroll={scrollTop.onScroll} scrollEventThrottle={16} style={styles.scroll} contentContainerStyle={[styles.resultScroll, { paddingTop: Layout.screenTop }]} showsVerticalScrollIndicator={false}>
 					<View style={styles.resultHero}>
 						<View style={styles.resultIconWrap}>
 							<LottieBox source={LOTTIE_STAR} autoPlay loop={false} style={styles.resultStar} />
@@ -170,6 +174,8 @@ const TypeTest = () => {
 					</TouchableOpacity>
 
 					</ScrollView>
+				<ScrollTopButton visible={scrollTop.visible} toTop={scrollTop.toTop} progress={scrollTop.progress} inset={false} />
+				</View>
 				<BottomButton
 					label={t('special.home')}
 					icon="home"
@@ -179,7 +185,7 @@ const TypeTest = () => {
 					onSecondary={restart}
 				/>
 				<View style={styles.confettiFront} pointerEvents="none">
-					<ConfettiCannon count={110} origin={{ x: contentWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
+					<ConfettiCannon count={110} origin={{ x: screenWidth / 2, y: -10 }} fadeOut autoStart explosionSpeed={350} />
 				</View>
 			</SafeAreaView>
 		);
@@ -216,7 +222,7 @@ const TypeTest = () => {
 					</FadeInUp>
 
 					{/* 유형 미리보기 */}
-					<FadeInUp delay={90}>
+					<View>
 						<View style={styles.gradeCard}>
 							<View style={styles.gradeCardHead}>
 								<IconComponent type="materialIcons" name="emoji-objects" size={scaledSize(16)} color={Colors.primary} />
@@ -231,16 +237,18 @@ const TypeTest = () => {
 								))}
 							</View>
 						</View>
-					</FadeInUp>
+					</View>
 
 					{/* 지난 결과 */}
 					{history.length > 0 && (
-						<FadeInUp delay={140}>
+						<View>
 							<View style={styles.historyWrap}>
 								<View style={styles.historyHead}>
 									<Text style={styles.historyTitle}>{t('special.test.history')}</Text>
 									<Text style={styles.historyCount}>{t('special.test.historyCount', { count: history.length })}</Text>
 								</View>
+								{/* 태블릿 2열 — 결과 목록(AdaptiveGrid)과 같은 배치 */}
+								<AdaptiveGrid>
 								{history.slice(0, 5).map((h, i) => (
 									<View key={`${h.date}-${i}`} style={styles.historyRow}>
 										<View style={styles.historyIcon}>
@@ -264,8 +272,9 @@ const TypeTest = () => {
 										</TouchableOpacity>
 									</View>
 								))}
+								</AdaptiveGrid>
 							</View>
-						</FadeInUp>
+						</View>
 					)}
 				</ScrollView>
 
@@ -364,7 +373,8 @@ const styles = themed(() => StyleSheet.create({
 	historyDelete: { width: scaleWidth(28), height: scaleWidth(28), borderRadius: Radius.sm, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.surfaceAlt },
 
 	introFooter: { paddingHorizontal: Layout.screenH, paddingTop: SpacingV.sm, paddingBottom: SpacingV.md, backgroundColor: Colors.background, borderTopWidth: 1, borderTopColor: Colors.border },
-	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden' },
+	// 하단 CTA — 태블릿은 화면 끝까지 늘어나지 않게 다이얼로그 폭으로 가운데 (폰은 그대로)
+	startBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, overflow: 'hidden', ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	startBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.textInverse, fontSize: Typography.callout, fontWeight: '900' },
 	startHint: { marginTop: SpacingV.sm, fontSize: Typography.footnote, fontWeight: '600', color: Colors.textMuted, textAlign: 'center' },
 	qHeader: { paddingHorizontal: Layout.screenH, paddingBottom: SpacingV.lg, borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.surface },
@@ -395,8 +405,9 @@ const styles = themed(() => StyleSheet.create({
 	resultName: { color: Colors.textStrong, fontSize: Typography.h1, fontWeight: '900', marginTop: SpacingV.xs },
 	msgCard: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap },
 	msgText: { fontSize: Typography.body, color: Colors.text, lineHeight: scaleHeight(22), textAlign: 'center', fontWeight: '600' },
-	recBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary },
+	// 결과 CTA 두 개 — 태블릿은 다이얼로그 폭으로 가운데 (폰은 그대로)
+	recBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: Layout.sectionGap, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.primary, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	recBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
-	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong },
+	shareBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginHorizontal: Layout.screenH, marginTop: SpacingV.sm, paddingVertical: SpacingV.lg, borderRadius: Radius.lg, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.borderStrong, ...(isTablet && { alignSelf: 'center' as const, width: '100%' as const, maxWidth: Layout.dialogMaxWidth }) },
 	shareBtnText: { flexShrink: 1, textAlign: 'center', color: Colors.text, fontSize: Typography.callout, fontWeight: '700' },
 }));

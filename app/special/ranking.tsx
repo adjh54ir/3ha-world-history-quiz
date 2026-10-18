@@ -9,11 +9,11 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import Skeleton from '@/src/screens/common/atomic/Skeleton';
-import { FadeInUp } from '@/src/screens/common/anim/Motion';
+import { DialogIn, FadeInUp } from '@/src/screens/common/anim/Motion';
 import { RankPodium, RankRowItem } from '@/src/screens/common/RankBoardView';
 import Colors, { BRAND_GRADIENT, readableOn } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Layout, Border, Tracking } from '@/src/const/ConstDesign';
-import { scaleArt, scaledSize, scaleHeight, scaleWidth, isTablet, contentWidth } from '@/src/utils';
+import { scaleArt, scaledSize, scaleHeight, scaleWidth, isTablet, screenWidth } from '@/src/utils';
 import RankingService, { RankBoard, RankRow } from '@/src/services/RankingService';
 import { useToast } from '@/src/context/ToastContext';
 import { playPop } from '@/src/utils/SoundUtils';
@@ -298,7 +298,7 @@ const Ranking = () => {
 			<AppModal visible={editNick} transparent animationType="fade" onRequestClose={() => setEditNick(false)}>
 				<View style={styles.modalOverlay}>
 					<TouchableOpacity style={StyleSheet.absoluteFill} activeOpacity={1} onPress={() => setEditNick(false)} />
-					<View style={styles.modalSheet}>
+					<DialogIn visible={editNick} style={styles.modalSheet}>
 						<View style={styles.modalTitleRow}>
 							<Text style={styles.modalTitle}>{t('special.ranking.editTitle')}</Text>
 							<TouchableOpacity onPress={() => setEditNick(false)} hitSlop={Layout.hitSlop} activeOpacity={0.7}>
@@ -317,9 +317,9 @@ const Ranking = () => {
 						<Text style={styles.nickHint} numberOfLines={1} ellipsizeMode="tail">{t('special.ranking.currentNick', { name: nickname })}</Text>
 						<TouchableOpacity style={[styles.nickBtn, saving && { opacity: 0.6 }]} activeOpacity={0.9} disabled={saving} onPress={applyNickChange}>
 							<IconComponent type="materialIcons" name="check" size={scaledSize(18)} color={Colors.onFill} />
-							<Text style={styles.nickBtnText} numberOfLines={1} ellipsizeMode="tail">{saving ? t('special.ranking.changing') : t('special.ranking.changeBtn')}</Text>
+							<Text style={styles.nickBtnText} numberOfLines={2}>{saving ? t('special.ranking.changing') : t('special.ranking.changeBtn')}</Text>
 						</TouchableOpacity>
-					</View>
+					</DialogIn>
 				</View>
 			</AppModal>
 
@@ -348,7 +348,7 @@ const styles = themed(() => StyleSheet.create({
 	heroNick: { flexDirection: 'row', alignItems: 'center', alignSelf: 'center', gap: Spacing.xs, marginTop: SpacingV.sm, backgroundColor: Colors.onBrandSurface, borderRadius: Radius.pill, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs },
 	heroNickText: { color: Colors.textInverse, fontSize: Typography.body, fontWeight: '900', maxWidth: scaleWidth(200) },
 	modalOverlay: { flex: 1, backgroundColor: Colors.backdrop, justifyContent: 'center', alignItems: 'center', paddingHorizontal: Spacing.xl },
-	modalSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
+	modalSheet: { width: '100%', maxWidth: Layout.dialogMaxWidth, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingHorizontal: Spacing.xl, paddingVertical: SpacingV.xxl },
 	modalTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
 	modalTitle: { fontSize: Typography.title, fontWeight: '900', color: Colors.textStrong },
 	modalSub: { fontSize: Typography.body, color: Colors.textSecondary, marginTop: SpacingV.xs, marginBottom: SpacingV.md },
@@ -373,7 +373,7 @@ const styles = themed(() => StyleSheet.create({
 	myScore: { fontSize: Typography.title, fontWeight: '900', color: Colors.textInverse },
 	// 공통
 	// 태블릿은 참여 카드·버튼이 본문 폭 끝까지 늘어나지 않게 다이얼로그 폭으로 모은다
-	center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: isTablet ? Math.max(Spacing.xxxxl, (contentWidth - Layout.dialogMaxWidth) / 2) : Spacing.xxxxl, gap: SpacingV.sm },
+	center: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: isTablet ? Math.max(Spacing.xxxxl, (screenWidth - Layout.dialogMaxWidth) / 2) : Spacing.xxxxl, gap: SpacingV.sm },
 	emptyLottie: { width: scaleArt(130), height: scaleArt(130) },
 	emptyText: { fontSize: Typography.body, color: Colors.textSecondary, fontWeight: '700', textAlign: 'center' },
 	joinLottie: { width: scaleArt(150), height: scaleArt(150) },
@@ -384,6 +384,6 @@ const styles = themed(() => StyleSheet.create({
 	diceBtn: { width: scaleWidth(44), height: scaleWidth(44), borderRadius: Radius.lg, backgroundColor: Colors.primaryBg, borderWidth: 1, borderColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
 	nickHint: { fontSize: Typography.footnote, color: Colors.textMuted, fontWeight: '600', textAlign: 'center', marginTop: SpacingV.xs },
 	nickBtn: { alignSelf: 'stretch', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, backgroundColor: Colors.primary, borderRadius: Radius.lg, paddingVertical: SpacingV.lg, marginTop: SpacingV.xl },
-	nickBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800' },
+	nickBtnText: { color: Colors.onFill, fontSize: Typography.callout, fontWeight: '800', flexShrink: 1, textAlign: 'center' },
 	celebrate: { position: 'absolute', top: 0, left: 0, right: 0, height: scaleHeight(340) },
 }));

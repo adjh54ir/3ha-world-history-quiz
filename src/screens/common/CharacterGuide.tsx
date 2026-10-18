@@ -9,7 +9,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
-import { Spacing, SpacingV, Radius, Typography, Shadow, Layout } from '@/src/const/ConstDesign';
+import { Spacing, SpacingV, Radius, Typography, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, scaleArt } from '@/src/utils';
 import { HOME_CHARACTER_KEY, getHomeCharacterImage } from '@/src/const/ConstCharacters';
 import { playPop } from '@/src/utils/SoundUtils';
@@ -259,7 +259,6 @@ const styles = themed(() => StyleSheet.create({
 		borderWidth: 1,
 		paddingHorizontal: Spacing.lg,
 		paddingVertical: SpacingV.lg,
-		...Shadow.floating,
 	},
 	bubbleHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, marginBottom: SpacingV.sm },
 	bubbleTitle: { flex: 1, fontSize: Typography.footnote, fontWeight: '700' },
@@ -275,7 +274,7 @@ const styles = themed(() => StyleSheet.create({
 		paddingHorizontal: Spacing.lg,
 		borderRadius: Radius.pill,
 	},
-	ctaText: { fontSize: Typography.body, fontWeight: '700' },
+	ctaText: { fontSize: Typography.body, fontWeight: '700', flexShrink: 1, textAlign: 'center' },
 	// 삼각 꼬리 — 배경색 삼각형 위에 테두리색 삼각형을 1px 겹쳐 테두리 선을 잇는다
 	// left 는 캐릭터(scaleArt)와 같은 배율로 잡아 태블릿에서도 꼬리가 캐릭터 쪽을 가리키게 한다 (폰은 scaleWidth 와 같은 값)
 	tail: {

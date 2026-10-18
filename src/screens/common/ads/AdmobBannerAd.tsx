@@ -6,7 +6,7 @@ import DeviceInfo from 'react-native-device-info';
 import { themed } from '@/src/utils/ThemedStyles';
 import DateUtils from '@/src/utils/DateUtils';
 import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
-import { markBannerSettled } from '@/src/services/AppOpenAdService';
+import { markBannerSettled, skipAppOpenOnNextResume } from '@/src/services/AppOpenAdService';
 import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
 import { resolveAdUnitId } from './adUnitId';
 
@@ -65,6 +65,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 
 	// 배너 onAdOpened 는 사용자가 배너를 눌러 광고 랜딩이 열릴 때 온다 → 클릭으로 센다
 	const handleAdOpened = async () => {
+		// 광고 랜딩에서 돌아올 때 앱 열기 광고가 바로 붙지 않게
+		skipAppOpenOnNextResume();
 		void recordAdClick().then(refreshCap);
 		try {
 			const instanceId = await analytics().getAppInstanceId();

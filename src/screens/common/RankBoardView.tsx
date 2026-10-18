@@ -7,7 +7,7 @@ import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import Colors, { readableOn, withAlpha } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Border, Tracking, Layout } from '@/src/const/ConstDesign';
-import { scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
+import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
 import { RankRow } from '@/src/services/RankingService';
 import { themed } from '@/src/utils/ThemedStyles';
 
@@ -109,7 +109,8 @@ const styles = themed(() => StyleSheet.create({
 	podiumCard: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.xl, paddingTop: SpacingV.md, paddingBottom: 0, paddingHorizontal: Spacing.lg, marginBottom: Layout.sectionGap, overflow: 'hidden' },
 	podiumHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, marginBottom: SpacingV.md },
 	podiumHeadText: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textStrong, letterSpacing: 1 },
-	podiumWrap: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: Spacing.sm },
+	// 태블릿은 카드가 가로를 가득 써 막대가 판자처럼 납작해진다 — 시상대만 다이얼로그 폭으로 묶어 가운데 (폰은 그대로)
+	podiumWrap: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', gap: Spacing.sm, ...(isTablet ? ({ alignSelf: 'center', width: '100%', maxWidth: Layout.dialogMaxWidth } as const) : null) },
 	podiumCol: { flex: 1, alignItems: 'center' },
 	crown: { marginBottom: SpacingV.xxs },
 	avatarRing: { width: scaleWidth(50), height: scaleWidth(50), borderRadius: Radius.pill, borderWidth: Border.heavy, alignItems: 'center', justifyContent: 'center' },

@@ -29,6 +29,7 @@ jest.mock('@/src/services/DailyWordService', () => ({
 }));
 
 import { ScheduleDailyWordReminder, ScheduleTodayQuizReminder } from '@/src/utils/NotifactionHelper';
+import i18n from '@/src/translations';
 
 const notifeeMock = jest.requireMock('@notifee/react-native').default as {
 	cancelTriggerNotification: jest.Mock;
@@ -46,7 +47,7 @@ describe('notification schedule isolation', () => {
 		const at = new Date();
 		at.setHours(at.getHours() + 1, 30, 0, 0);
 		notifeeMock.getTriggerNotifications.mockResolvedValue([
-			{ notification: { id: 'daily-word-reminder' }, trigger: { timestamp: at.getTime() } },
+			{ notification: { id: 'daily-word-reminder', data: { lang: i18n.language } }, trigger: { timestamp: at.getTime() } },
 		]);
 
 		await ScheduleDailyWordReminder(at.getHours(), 30);
@@ -56,6 +57,18 @@ describe('notification schedule isolation', () => {
 		// 시각이 바뀌면 다시 예약한다
 		await ScheduleDailyWordReminder(at.getHours(), 45);
 		expect(notifeeMock.createTriggerNotification).toHaveBeenCalledTimes(1);
+	});
+
+	it('예약 뒤 앱 언어가 바뀌었으면 지금 언어 문구로 다시 예약한다', async () => {
+		const at = new Date();
+		at.setHours(at.getHours() + 1, 30, 0, 0);
+		notifeeMock.getTriggerNotifications.mockResolvedValue([
+			{ notification: { id: 'daily-word-reminder', data: { lang: 'xx-XX' } }, trigger: { timestamp: at.getTime() } },
+		]);
+
+		await ScheduleDailyWordReminder(at.getHours(), 30);
+		expect(notifeeMock.createTriggerNotification).toHaveBeenCalledTimes(1);
+		expect(notifeeMock.createTriggerNotification.mock.calls[0][0].data.lang).toBe(i18n.language);
 	});
 
 	it('발화 시각이 과거면(앱 업데이트·재부팅으로 유실) 다음 발생 시각으로 다시 잡는다', async () => {
