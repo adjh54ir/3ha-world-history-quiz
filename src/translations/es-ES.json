@@ -2765,6 +2765,43 @@
                 "title": "Grandes torneos",
                 "subtitle": "Historia del Mundial y los JJ. OO."
             }
+        },
+        "pet": {
+            "section": "Mi mascota de asistencia",
+            "totalDays": "{{count}} días de asistencia",
+            "totalDays_one": "{{count}} día de asistencia",
+            "totalDays_other": "{{count}} días de asistencia",
+            "next": "Crece en {{count}} días más",
+            "next_one": "Crece en {{count}} día más",
+            "next_other": "Crece en {{count}} días más",
+            "maxed": "¡Ya creció del todo!",
+            "unlockAt": "Aparece con {{count}} días",
+            "unlockAt_one": "Aparece con {{count}} día",
+            "unlockAt_other": "Aparece con {{count}} días",
+            "stageA11y": "Ver a {{name}}",
+            "homeA11y": "Mascota {{name}}, abrir asistencia",
+            "stages": {
+                "1": {
+                    "name": "Pico bebé",
+                    "desc": "Un loro bebé recién salido del nido. Todo en el mundo le hace brillar los ojos."
+                },
+                "2": {
+                    "name": "Pico pequeño explorador",
+                    "desc": "Con su pañuelo puesto, sale a su primer viaje. Sus alas aún son pequeñas, pero camina con valor."
+                },
+                "3": {
+                    "name": "Pico explorador de la selva",
+                    "desc": "Ya tiene sombrero y chaleco de explorador. Aprende uno a uno los nombres de países lejanos."
+                },
+                "4": {
+                    "name": "Pico guardián de la brújula",
+                    "desc": "Ganó la medalla de la brújula dorada. Abre bien las alas y vuela hasta continentes lejanos."
+                },
+                "5": {
+                    "name": "Pico capitán de expedición",
+                    "desc": "El mejor explorador, con sombrero y abrigo azul marino. Conoce la historia de cada rincón del mundo."
+                }
+            }
         }
     }
 }

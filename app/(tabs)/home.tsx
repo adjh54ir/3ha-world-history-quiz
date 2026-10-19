@@ -14,7 +14,7 @@ import { scaledSize, scaleHeight, scaleWidth, scaleArt, isTablet, gridColumns } 
 import LearnHubService from '@/src/services/LearnHubService';
 import DailyWordService from '@/src/services/DailyWordService';
 import LearnProgressService from '@/src/services/LearnProgressService';
-import AttendanceService from '@/src/services/AttendanceService';
+import AttendanceService, { attendedDays } from '@/src/services/AttendanceService';
 import { CancelStreakReminder } from '@/src/utils/NotifactionHelper';
 import AchievementService, { AchievementStatus } from '@/src/services/AchievementService';
 import AchievementUnlockModal from '@/src/screens/modal/AchievementUnlockModal';
@@ -24,6 +24,8 @@ import { AchievementDef, rarityRank, RARITY_ON_BRAND_COLOR } from '@/src/const/C
 import TestHistoryService from '@/src/services/TestHistoryService';
 import { LearnType } from '@/src/types/data/LearnType';
 import { AnimatedProgress, CountUp, DialogIn, FadeInUp, Pulse } from '@/src/screens/common/anim/Motion';
+import PetIdle from '@/src/screens/common/anim/PetIdle';
+import { getPetProgress } from '@/src/const/ConstPet';
 import JungleCanopy from '@/src/screens/common/anim/JungleCanopy';
 import AttendanceCheckInModal from '@/src/screens/modal/AttendanceCheckInModal';
 import CharacterGuide, { useCharacterGuideOnce, CharacterGuideButton } from '@/src/screens/common/CharacterGuide';
@@ -87,6 +89,11 @@ const CURRICULUM: { key: CurriculumKey; icon: string; href: string; accent?: str
 ]));
 
 /** 홈 진입마다 바뀌는 헤더 문구 키 (첫 값이 디폴트) */
+/** 마지막으로 읽은 누적 출석일 — 홈은 들어올 때마다 리마운트되므로, 0 에서 시작해 펫이 1단계→실제 단계로 바뀌어 보이는 깜빡임을 막는다 */
+let lastAttDays = 0;
+
+/** 무대 위 캐릭터 발이 바닥에 걸치는 깊이 */
+const STAGE_FOOT = scaleArt(14);
 const GREET_KEYS = ['home.greet.g1', 'home.greet.g2', 'home.greet.g3', 'home.greet.g4', 'home.greet.g5', 'home.greet.g6'] as const;
 
 /**
@@ -126,6 +133,11 @@ const Hub = () => {
 	const [todaySolved, setTodaySolved] = useState(0);
 	const [unlockedInfo, setUnlockedInfo] = useState<{ title: string; img: ReturnType<typeof require> } | null>(null);
 	const [attStreak, setAttStreak] = useState(0);
+	// 누적 출석일 — 출석 펫(피코) 성장 단계
+	const [attDays, setAttDays] = useState(lastAttDays);
+	useEffect(() => {
+		lastAttDays = attDays;
+	}, [attDays]);
 	const [checkedToday, setCheckedToday] = useState(false);
 	const [showCheckIn, setShowCheckIn] = useState(false);
 	// 사용자가 '출석체크' 버튼으로 직접 연 경우 — 자동 팝업(하루 1회)과 별개로 취급한다
@@ -246,6 +258,7 @@ const Hub = () => {
 		try {
 			const res = await AttendanceService.checkIn();
 			setAttStreak(res.state.streak);
+			setAttDays(attendedDays(res.state));
 			setCheckedToday(true);
 			if (res.checked) {
 				// 오늘 출석했으므로 저녁 리마인더는 더 필요 없다
@@ -310,7 +323,10 @@ const Hub = () => {
 				if (fresh.length > 0) setNewAch(fresh);
 			});
 		});
-		AttendanceService.getState().then((a) => setAttStreak(a.streak));
+		AttendanceService.getState().then((a) => {
+			setAttStreak(a.streak);
+			setAttDays(attendedDays(a));
+		});
 		AttendanceService.isCheckedToday().then(setCheckedToday);
 		// 오늘의 퀴즈 완료 여부 (오늘 날짜로 완료 마킹됐는지 — 미완료면 버튼에 뱃지)
 		AsyncStorage.getItem('TODAY_QUIZ_DONE_DATE').then((d) => {
@@ -761,6 +777,7 @@ const Hub = () => {
 		return () => clearTimeout(t);
 	}, [queuedOverlay, autoOverlay, autoStillWanted]);
 	const showAuto = (key: string) => autoOverlay === key;
+	const pet = getPetProgress(attDays);
 
 	return (
 		<View style={styles.safe}>
@@ -776,14 +793,8 @@ const Hub = () => {
 				{/* 히어로 — 인사 · 연속 학습 · 오늘의 목표 · 다음 행동(CTA)을 한 장에 모은다 */}
 				<View>
 					<View style={styles.hero}>
+						{/* 인사 — 연속 출석 칩 + 인사말, 오른쪽 끝에 알림 */}
 						<View style={styles.heroTop}>
-							{/* 캐릭터 아바타 — 우하단 편집 뱃지로 변경 가능함을 알림 */}
-							<TouchableOpacity style={styles.greetCharacterWrap} activeOpacity={0.85} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
-								<ExpoImage source={selectedCharacter.img} style={styles.greetCharacterImg} contentFit="contain" />
-								<View style={styles.characterEditBadge}>
-									<IconComponent type="materialIcons" name="edit" size={scaledSize(11)} color={Colors.onFill} />
-								</View>
-							</TouchableOpacity>
 							<View style={styles.greeting}>
 								{attStreak > 0 && (
 									<View style={styles.streakChip}>
@@ -793,10 +804,61 @@ const Hub = () => {
 								)}
 								<Text style={styles.greetTitle} numberOfLines={2} ellipsizeMode="tail">{t(greetKey)}</Text>
 							</View>
-							{/* 알림 — 캐릭터가 포함된 영역의 오른쪽 끝 */}
 							<TouchableOpacity style={styles.headBellBtn} onPress={() => setShowAlarm(true)} hitSlop={Layout.hitSlop} activeOpacity={0.7} accessibilityRole="button" accessibilityLabel={t('home.hero.alarmA11y')}>
 								<IconComponent type="materialIcons" name={reminderOn ? 'notifications-active' : 'notifications-none'} size={scaledSize(20)} color={reminderOn ? Colors.primary : Colors.textMuted} />
 							</TouchableOpacity>
+						</View>
+
+						{/* 탐험 무대 — 내 캐릭터(사자)와 출석 펫(피코)이 나란히 서 있다.
+						    캐릭터를 누르면 깡충 반응, 이름표를 누르면 캐릭터 변경 / 출석체크 */}
+						<View style={styles.stage}>
+							<LinearGradient colors={[Colors.surface, Colors.primaryBg]} style={StyleSheet.absoluteFill} />
+							<View style={styles.stageCast}>
+								<View style={styles.stageSlot}>
+									<PetIdle source={selectedCharacter.img} size={scaleArt(136)} shadowColor={Colors.shadowStrong} />
+								</View>
+								<View style={styles.stageSlot}>
+									<PetIdle source={pet.current.img} size={scaleArt(112)} shadowColor={Colors.shadowStrong} />
+								</View>
+							</View>
+							{/* 바닥 — 캐릭터 발이 살짝 걸치도록 위로 겹친다. 이름표와 펫 성장을 담는다 */}
+							<View style={styles.stageFloor}>
+								<View style={styles.stagePlates}>
+									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.8} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
+										<Text style={styles.stagePlateName} numberOfLines={2}>{selectedCharacter.title}</Text>
+										<View style={styles.stagePlateMeta}>
+											<View style={styles.stageLv}>
+												<Text style={styles.stageLvText}>{`Lv.${selectedCharacter.level}`}</Text>
+											</View>
+											<IconComponent type="materialIcons" name="edit" size={scaledSize(14)} color={Colors.textMuted} />
+										</View>
+									</TouchableOpacity>
+									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.8} onPress={openCheckIn} accessibilityRole="button" accessibilityLabel={t('pet.homeA11y', { name: t(`pet.stages.${pet.current.stage}.name`) })}>
+										<Text style={styles.stagePlateName} numberOfLines={2}>{t(`pet.stages.${pet.current.stage}.name`)}</Text>
+										<View style={styles.stagePlateMeta}>
+											<View style={[styles.stageLv, !pet.next && styles.stageLvMax]}>
+												<Text style={[styles.stageLvText, !pet.next && styles.stageLvTextMax]}>{`Lv.${pet.current.stage}`}</Text>
+											</View>
+											<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.textMuted} />
+										</View>
+									</TouchableOpacity>
+								</View>
+								{/* 피코 성장 — 다음 단계까지 남은 출석일 */}
+								<TouchableOpacity style={styles.stageGrow} activeOpacity={0.8} onPress={openCheckIn} accessibilityRole="button">
+									<IconComponent type="materialIcons" name={pet.next ? 'eco' : 'emoji-events'} size={scaledSize(15)} color={pet.next ? Colors.primary : Colors.goldDark} />
+									<AnimatedProgress
+										ratio={pet.next ? (attDays - pet.current.days) / (pet.next.days - pet.current.days) : 1}
+										color={pet.next ? Colors.primary : Colors.goldDark}
+										trackColor={Colors.surface}
+										height={scaleHeight(6)}
+										radius={scaleWidth(3)}
+										style={styles.stageGrowBar}
+									/>
+									<Text style={[styles.stageGrowText, !pet.next && { color: Colors.goldDeep }]} numberOfLines={1} ellipsizeMode="tail">
+										{pet.next ? t('pet.next', { count: pet.next.days - attDays }) : t('pet.maxed')}
+									</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 
 						{/* 오늘의 목표 — 하루 10문제 진행 */}
@@ -1477,13 +1539,28 @@ const styles = themed(() => StyleSheet.create({
 	// 제목 아래 여백은 행에 둔다 — 텍스트에 주면 가이드 버튼이 제목보다 아래로 치우친다
 	appTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, marginBottom: SpacingV.md },
 	appTitle: { fontSize: Typography.h1, ...DisplayText, color: Colors.textStrong },
-	heroTop: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md, marginBottom: SpacingV.lg },
+	heroTop: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginBottom: SpacingV.md },
 	heroProgress: { marginBottom: 0 },
+	// 출석 펫 줄 — 히어로 하단, 얇은 구분선 아래
 
 	// 인사
-	greetCharacterWrap: { width: scaleArt(72), height: scaleArt(72), borderRadius: Radius.lg, backgroundColor: Colors.surfaceAlt, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: Colors.border },
-	characterEditBadge: { position: 'absolute', right: -scaleWidth(3), bottom: -scaleWidth(3), width: scaleWidth(22), height: scaleWidth(22), borderRadius: Radius.pill, backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center', borderWidth: Border.thick, borderColor: Colors.surface },
-	greetCharacterImg: { width: scaleArt(64), height: scaleArt(64), borderRadius: Radius.lg },
+	// 탐험 무대 — 하늘(그라데이션) 위에 사자·피코가 서고, 아래 바닥에 이름표와 성장 바
+	stage: { borderRadius: Radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: Colors.primarySoft, marginBottom: SpacingV.lg },
+	stageCast: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: Spacing.md, paddingTop: SpacingV.md, marginBottom: -STAGE_FOOT, zIndex: 1 },
+	stageSlot: { flex: 1, alignItems: 'center' },
+	stageFloor: { backgroundColor: Colors.primarySoft, paddingHorizontal: Spacing.md, paddingTop: STAGE_FOOT + SpacingV.sm, paddingBottom: SpacingV.md },
+	stagePlates: { flexDirection: 'row', alignItems: 'stretch', gap: Spacing.sm },
+	stagePlate: { flex: 1, alignItems: 'center', justifyContent: 'space-between', backgroundColor: Colors.surface, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm },
+	stagePlateName: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textStrong, textAlign: 'center' },
+	stagePlateMeta: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginTop: SpacingV.xs },
+	stageLv: { backgroundColor: Colors.primaryBg, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs },
+	stageLvText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.primary },
+	// 최고 단계 피코 = 금색
+	stageLvMax: { backgroundColor: Colors.goldBg },
+	stageLvTextMax: { color: Colors.goldDeep },
+	stageGrow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.md },
+	stageGrowBar: { width: scaleWidth(72) },
+	stageGrowText: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	greeting: { flex: 1 },
 	greetTitle: { fontSize: Typography.h3, ...DisplayText, color: Colors.textStrong, lineHeight: scaleHeight(27) },
 

@@ -2769,6 +2769,43 @@
                 "title": "Grandes compétitions",
                 "subtitle": "Histoire de la Coupe du monde et des JO"
             }
+        },
+        "pet": {
+            "section": "Mon compagnon de présence",
+            "totalDays": "{{count}} jours de présence",
+            "totalDays_one": "{{count}} jour de présence",
+            "totalDays_other": "{{count}} jours de présence",
+            "next": "Grandit dans {{count}} jours",
+            "next_one": "Grandit dans {{count}} jour",
+            "next_other": "Grandit dans {{count}} jours",
+            "maxed": "Il a fini de grandir !",
+            "unlockAt": "Arrive au jour {{count}}",
+            "unlockAt_one": "Arrive au jour {{count}}",
+            "unlockAt_other": "Arrive au jour {{count}}",
+            "stageA11y": "Voir {{name}}",
+            "homeA11y": "Compagnon {{name}}, ouvrir la présence",
+            "stages": {
+                "1": {
+                    "name": "Bébé Pico",
+                    "desc": "Un bébé perroquet tout juste sorti du nid. Tout dans le monde fait briller ses yeux."
+                },
+                "2": {
+                    "name": "Pico petit explorateur",
+                    "desc": "Foulard noué, il part pour son tout premier voyage. Ses ailes sont encore petites, mais il avance avec courage."
+                },
+                "3": {
+                    "name": "Pico explorateur de la jungle",
+                    "desc": "Chapeau et gilet d’explorateur enfilés, il apprend un à un les noms des pays lointains."
+                },
+                "4": {
+                    "name": "Pico gardien de la boussole",
+                    "desc": "Il a reçu la médaille de la boussole dorée. Ailes grandes ouvertes, il vole vers des continents lointains."
+                },
+                "5": {
+                    "name": "Pico capitaine d’expédition",
+                    "desc": "Le meilleur des explorateurs, en chapeau et manteau bleu marine. Il connaît l’histoire de chaque coin du monde."
+                }
+            }
         }
     }
 }

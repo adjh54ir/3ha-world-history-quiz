@@ -7,13 +7,16 @@ import { LinearGradient } from 'expo-linear-gradient';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import AppModal from '@/src/screens/common/atomic/AppModal';
-import { DialogIn } from '@/src/screens/common/anim/Motion';
+import { AnimatedProgress, DialogIn } from '@/src/screens/common/anim/Motion';
+import PetIdle from '@/src/screens/common/anim/PetIdle';
+import { Image as ExpoImage } from 'expo-image';
 import LottieBox from '@/src/screens/common/atomic/LottieBox';
 import Colors, { BRAND_GRADIENT } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, Border, Layout, appFonts, bodyFont } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
-import AttendanceService, { AttendanceState } from '@/src/services/AttendanceService';
-import { hapticSuccess } from '@/src/utils/HapticUtils';
+import AttendanceService, { AttendanceState, attendedDays } from '@/src/services/AttendanceService';
+import { hapticSelection, hapticSuccess } from '@/src/utils/HapticUtils';
+import { getPetProgress, PET_STAGES } from '@/src/const/ConstPet';
 
 const LOTTIE_CONFETTI = require('@/src/assets/lottie/confetti.json');
 import { playFinish } from '@/src/utils/SoundUtils';
@@ -79,6 +82,16 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 	// 저장값을 다 읽은 뒤에 연다 — 그 전에 열면 직전에 열었던 값이 잠깐 보였다가 바뀐다
 	const [loaded, setLoaded] = useState(false);
 	const successScale = useRef(new Animated.Value(0)).current;
+	// 출석 펫 — 고른 단계(null = 지금 단계)와 바꿀 때의 팝 연출
+	const [petPick, setPetPick] = useState<number | null>(null);
+	const petPop = useRef(new Animated.Value(1)).current;
+	const pickPet = useCallback((stage: number) => {
+		hapticSelection();
+		setPetPick(stage);
+		petPop.setValue(0.82);
+		Animated.spring(petPop, { toValue: 1, friction: 5, tension: 140, useNativeDriver: true }).start();
+	}, [petPop]);
+	useEffect(() => () => petPop.stopAnimation(), [petPop]);
 	// 축하 연출 타이머 — 모달 언마운트 시 정리
 	const celebrateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 	useEffect(() => () => { if (celebrateTimer.current) clearTimeout(celebrateTimer.current); }, []);
@@ -118,6 +131,7 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 			successScale.stopAnimation();
 			setLoaded(false);
 			setCelebrate(false);
+			setPetPick(null);
 			successScale.setValue(0);
 		}
 	}, [visible, load, celebrateOnOpen, playCelebrate, successScale]);
@@ -141,6 +155,12 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 		: { customStyles: { container: { borderWidth: Border.thin, borderColor: Colors.success }, text: { color: Colors.success, ...bodyFont('heavy') } } };
 
 	const bestStreak = Math.max(state.streak, state.bestStreak);
+	// 출석 펫 — 누적 출석일로 자란다. 썸네일을 누르면 그 단계의 이름·설명을 보여준다
+	const petDays = attendedDays(state);
+	const pet = getPetProgress(petDays);
+	const petView = PET_STAGES.find((s) => s.stage === petPick) ?? pet.current;
+	const petViewLocked = petDays < petView.days;
+	const petRatio = pet.next ? (petDays - pet.current.days) / (pet.next.days - pet.current.days) : 1;
 	const successRotate = successScale.interpolate({ inputRange: [0, 1], outputRange: ['-12deg', '0deg'] });
 
 	return (
@@ -187,6 +207,67 @@ const AttendanceCheckInModal: React.FC<Props> = ({ visible, onClose, celebrateOn
 								);
 							})}
 						</ScrollView>
+					</View>
+
+					{/* 출석 펫 — 탐험가 앵무 피코. 누적 출석일로 5단계 성장 */}
+					<View style={styles.petSection}>
+						<View style={styles.petHeadRow}>
+							<Text style={styles.milestoneHead}>{t('pet.section')}</Text>
+							<Text style={styles.petTotal}>{t('pet.totalDays', { count: petDays })}</Text>
+						</View>
+						<View style={styles.petCard}>
+							<View style={styles.petFeature}>
+								<Animated.View style={[styles.petStage, { transform: [{ scale: petPop }] }]}>
+									<PetIdle
+										source={petView.img}
+										size={scaleWidth(80)}
+										still={petViewLocked}
+										tintColor={petViewLocked ? Colors.textMuted : undefined}
+										shadowColor={Colors.shadowStrong}
+										style={petViewLocked && styles.petImgLocked}
+									/>
+								</Animated.View>
+								<View style={styles.petInfo}>
+									<View style={[styles.petLvChip, petView.stage === PET_STAGES.length && !petViewLocked && styles.petLvChipMax, petViewLocked && styles.petLvChipLocked]}>
+										{petViewLocked && <IconComponent type="materialIcons" name="lock" size={scaledSize(11)} color={Colors.textMuted} />}
+										<Text style={[styles.petLvText, petViewLocked && { color: Colors.textMuted }]} numberOfLines={1}>
+											{petViewLocked ? t('pet.unlockAt', { count: petView.days }) : `Lv.${petView.stage}`}
+										</Text>
+									</View>
+									<Text style={styles.petName} numberOfLines={2}>{t(`pet.stages.${petView.stage}.name`)}</Text>
+									<Text style={styles.petDesc}>{t(`pet.stages.${petView.stage}.desc`)}</Text>
+								</View>
+							</View>
+
+							{/* 다음 성장까지 — 고른 단계와 무관하게 '지금' 피코 기준 */}
+							<AnimatedProgress ratio={petRatio} color={pet.next ? Colors.primary : Colors.goldDark} trackColor={Colors.border} height={scaleHeight(6)} radius={scaleWidth(3)} style={styles.petProgress} />
+							<Text style={[styles.petNext, !pet.next && { color: Colors.goldDeep }]}>
+								{pet.next ? t('pet.next', { count: pet.next.days - petDays }) : t('pet.maxed')}
+							</Text>
+
+							{/* 5단계 썸네일 — 눌러서 이름·설명 보기 */}
+							<View style={styles.petThumbRow}>
+								{PET_STAGES.map((s) => {
+									const locked = petDays < s.days;
+									const on = s.stage === petView.stage;
+									return (
+										<TouchableOpacity
+											key={s.stage}
+											style={[styles.petThumb, s.stage === pet.current.stage && styles.petThumbNow, on && styles.petThumbOn]}
+											activeOpacity={0.8}
+											onPress={() => pickPet(s.stage)}
+											accessibilityRole="button"
+											accessibilityState={{ selected: on }}
+											accessibilityLabel={t('pet.stageA11y', { name: t(`pet.stages.${s.stage}.name`) })}>
+											<ExpoImage source={s.img} style={[styles.petThumbImg, locked && styles.petImgLocked]} tintColor={locked ? Colors.textMuted : undefined} contentFit="contain" />
+											<Text style={[styles.petThumbDays, on && { color: Colors.primary }]} numberOfLines={1}>
+												{locked ? t('common.days', { count: s.days }) : `Lv.${s.stage}`}
+											</Text>
+										</TouchableOpacity>
+									);
+								})}
+							</View>
+						</View>
 					</View>
 
 					{/* 달력 — 항상 펼친 상태로 보여준다 */}
@@ -296,7 +377,31 @@ const styles = themed(() => StyleSheet.create({
 	milestoneIconDone: { backgroundColor: Colors.primary, borderColor: Colors.primary },
 	milestoneDays: { fontSize: Typography.footnote, fontWeight: '900', color: Colors.textMuted, marginTop: SpacingV.xs },
 	milestoneLabel: { fontSize: Typography.micro, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xxs },
-	calendarWrap: { alignSelf: 'stretch', marginTop: SpacingV.md, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, overflow: 'hidden', paddingBottom: SpacingV.xs },
+	// 출석 펫 — 연한 브랜드 틴트 카드. 큰 펫(왼쪽) + 이름·설명(오른쪽), 아래에 성장 바와 5단계 썸네일
+	petSection: { alignSelf: 'stretch', marginTop: SpacingV.xl },
+	petHeadRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between', gap: Spacing.sm },
+	petTotal: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary, marginBottom: SpacingV.sm },
+	petCard: { borderWidth: 1, borderColor: Colors.primarySoft, backgroundColor: Colors.primaryBg, borderRadius: Radius.lg, paddingHorizontal: Spacing.lg, paddingTop: SpacingV.lg, paddingBottom: SpacingV.md },
+	petFeature: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+	petStage: { width: scaleWidth(96), height: scaleWidth(96), borderRadius: Radius.pill, backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.primarySoft, alignItems: 'center', justifyContent: 'center' },
+	petImgLocked: { opacity: 0.35 },
+	petInfo: { flex: 1 },
+	petLvChip: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', gap: Spacing.xxs, backgroundColor: Colors.primary, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs },
+	petLvChipLocked: { backgroundColor: Colors.surface, borderWidth: 1, borderColor: Colors.border },
+	petLvText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.onFill },
+	petName: { fontSize: Typography.callout, fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.xs },
+	petDesc: { fontSize: Typography.footnote, fontWeight: '600', color: Colors.textSecondary, lineHeight: scaleHeight(18), marginTop: SpacingV.xxs },
+	petProgress: { marginTop: SpacingV.lg },
+	petNext: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textSecondary, marginTop: SpacingV.xs },
+	petThumbRow: { flexDirection: 'row', gap: Spacing.xs, marginTop: SpacingV.md },
+	petThumb: { flex: 1, alignItems: 'center', paddingTop: SpacingV.xs, paddingBottom: SpacingV.xxs, borderRadius: Radius.md, borderWidth: Border.thin, borderColor: 'transparent', backgroundColor: Colors.surface },
+	// 지금 피코가 있는 단계 = 옅은 채움, 눌러 보고 있는 단계 = 테두리
+	petThumbNow: { backgroundColor: Colors.primarySoft },
+	petThumbOn: { borderColor: Colors.primary },
+	petLvChipMax: { backgroundColor: Colors.goldDark },
+	petThumbImg: { width: scaleWidth(40), height: scaleWidth(40) },
+	petThumbDays: { fontSize: Typography.micro, fontWeight: '800', color: Colors.textMuted, marginTop: SpacingV.xxs },
+	calendarWrap: { alignSelf: 'stretch', marginTop: SpacingV.xl, borderWidth: 1, borderColor: Colors.border, borderRadius: Radius.lg, overflow: 'hidden', paddingBottom: SpacingV.xs },
 	calendar: { borderRadius: Radius.lg },
 	legendRow: { flexDirection: 'row', justifyContent: 'center', gap: Spacing.xl, marginTop: SpacingV.md },
 	legendItem: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },

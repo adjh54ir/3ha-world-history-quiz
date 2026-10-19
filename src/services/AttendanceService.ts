@@ -17,6 +17,8 @@ export interface AttendanceState {
 	lastShieldDate?: string | null;
 	/** 보호권으로 살린 날짜 (달력에 따로 표시) */
 	shieldDates?: string[];
+	/** 누적 출석일 — dates 는 90개까지만 남으므로 따로 센다 (없으면 dates 개수로 시작) */
+	totalDays?: number;
 }
 
 const DEFAULT: AttendanceState = { dates: [], lastCheck: null, streak: 0, bestStreak: 0, lastShieldDate: null, shieldDates: [] };
@@ -27,6 +29,9 @@ const SHIELD_COOLDOWN_DAYS = 7;
 /** 로컬 타임존 기준 오늘 'YYYY-MM-DD' */
 const todayStr = (): string => DateUtils.getLocalDateString();
 const yesterdayStr = (): string => DateUtils.addLocalDays(todayStr(), -1);
+
+/** 누적 출석일 (출석 펫 성장 기준) */
+export const attendedDays = (s: AttendanceState): number => s.totalDays ?? s.dates.length;
 
 const AttendanceService = {
 	async getState(): Promise<AttendanceState> {
@@ -71,6 +76,7 @@ const AttendanceService = {
 			streak,
 			bestStreak: Math.max(s.bestStreak, streak),
 			lastShieldDate: shielded ? today : s.lastShieldDate ?? null,
+			totalDays: attendedDays(s) + 1,
 			shieldDates: missedDay ? [...new Set([missedDay, ...(s.shieldDates ?? [])])].slice(0, CAP) : s.shieldDates ?? [],
 		};
 		try {

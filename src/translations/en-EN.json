@@ -2761,6 +2761,43 @@
                 "title": "Sports Events",
                 "subtitle": "World Cup · Olympic history"
             }
+        },
+        "pet": {
+            "section": "My check-in pet",
+            "totalDays": "{{count}} days checked in",
+            "totalDays_one": "{{count}} day checked in",
+            "totalDays_other": "{{count}} days checked in",
+            "next": "Grows after {{count}} more days",
+            "next_one": "Grows after {{count}} more day",
+            "next_other": "Grows after {{count}} more days",
+            "maxed": "Fully grown!",
+            "unlockAt": "Meet at {{count}} days",
+            "unlockAt_one": "Meet at {{count}} day",
+            "unlockAt_other": "Meet at {{count}} days",
+            "stageA11y": "View {{name}}",
+            "homeA11y": "Check-in pet {{name}}, open check-in",
+            "stages": {
+                "1": {
+                    "name": "Baby Pico",
+                    "desc": "A baby parrot fresh out of the nest. Everything in the world makes its eyes sparkle."
+                },
+                "2": {
+                    "name": "Little Explorer Pico",
+                    "desc": "Scarf tied, off on the very first trip. The wings are still small, but every step is brave."
+                },
+                "3": {
+                    "name": "Jungle Explorer Pico",
+                    "desc": "Now in an explorer hat and vest, learning the names of faraway countries one by one."
+                },
+                "4": {
+                    "name": "Compass Keeper Pico",
+                    "desc": "Earned the golden compass medal. Spreads both wings wide and flies to distant continents."
+                },
+                "5": {
+                    "name": "Expedition Captain Pico",
+                    "desc": "The finest explorer, in safari hat and navy coat. Knows the history of every corner of the world."
+                }
+            }
         }
     }
 }
