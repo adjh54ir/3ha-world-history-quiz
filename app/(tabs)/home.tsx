@@ -93,7 +93,9 @@ const CURRICULUM: { key: CurriculumKey; icon: string; href: string; accent?: str
 let lastAttDays = 0;
 
 /** 무대 위 캐릭터 발이 바닥에 걸치는 깊이 */
-const STAGE_FOOT = scaleArt(14);
+const STAGE_FOOT = scaleArt(24);
+/** 초록 카드 위 발 그림자 — 검정은 탁한 띠로 보여 밤의 정글 잉크를 옅게 */
+const STAGE_SHADOW = withAlpha(Colors.ink, '66');
 const GREET_KEYS = ['home.greet.g1', 'home.greet.g2', 'home.greet.g3', 'home.greet.g4', 'home.greet.g5', 'home.greet.g6'] as const;
 
 /**
@@ -809,58 +811,6 @@ const Hub = () => {
 							</TouchableOpacity>
 						</View>
 
-						{/* 탐험 무대 — 내 캐릭터(사자)와 출석 펫(피코)이 나란히 서 있다.
-						    캐릭터를 누르면 깡충 반응, 이름표를 누르면 캐릭터 변경 / 출석체크 */}
-						<View style={styles.stage}>
-							<LinearGradient colors={[Colors.surface, Colors.primaryBg]} style={StyleSheet.absoluteFill} />
-							<View style={styles.stageCast}>
-								<View style={styles.stageSlot}>
-									<PetIdle source={selectedCharacter.img} size={scaleArt(136)} shadowColor={Colors.shadowStrong} />
-								</View>
-								<View style={styles.stageSlot}>
-									<PetIdle source={pet.current.img} size={scaleArt(112)} shadowColor={Colors.shadowStrong} />
-								</View>
-							</View>
-							{/* 바닥 — 캐릭터 발이 살짝 걸치도록 위로 겹친다. 이름표와 펫 성장을 담는다 */}
-							<View style={styles.stageFloor}>
-								<View style={styles.stagePlates}>
-									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.8} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
-										<Text style={styles.stagePlateName} numberOfLines={2}>{selectedCharacter.title}</Text>
-										<View style={styles.stagePlateMeta}>
-											<View style={styles.stageLv}>
-												<Text style={styles.stageLvText}>{`Lv.${selectedCharacter.level}`}</Text>
-											</View>
-											<IconComponent type="materialIcons" name="edit" size={scaledSize(14)} color={Colors.textMuted} />
-										</View>
-									</TouchableOpacity>
-									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.8} onPress={openCheckIn} accessibilityRole="button" accessibilityLabel={t('pet.homeA11y', { name: t(`pet.stages.${pet.current.stage}.name`) })}>
-										<Text style={styles.stagePlateName} numberOfLines={2}>{t(`pet.stages.${pet.current.stage}.name`)}</Text>
-										<View style={styles.stagePlateMeta}>
-											<View style={[styles.stageLv, !pet.next && styles.stageLvMax]}>
-												<Text style={[styles.stageLvText, !pet.next && styles.stageLvTextMax]}>{`Lv.${pet.current.stage}`}</Text>
-											</View>
-											<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.textMuted} />
-										</View>
-									</TouchableOpacity>
-								</View>
-								{/* 피코 성장 — 다음 단계까지 남은 출석일 */}
-								<TouchableOpacity style={styles.stageGrow} activeOpacity={0.8} onPress={openCheckIn} accessibilityRole="button">
-									<IconComponent type="materialIcons" name={pet.next ? 'eco' : 'emoji-events'} size={scaledSize(15)} color={pet.next ? Colors.primary : Colors.goldDark} />
-									<AnimatedProgress
-										ratio={pet.next ? (attDays - pet.current.days) / (pet.next.days - pet.current.days) : 1}
-										color={pet.next ? Colors.primary : Colors.goldDark}
-										trackColor={Colors.surface}
-										height={scaleHeight(6)}
-										radius={scaleWidth(3)}
-										style={styles.stageGrowBar}
-									/>
-									<Text style={[styles.stageGrowText, !pet.next && { color: Colors.goldDeep }]} numberOfLines={1} ellipsizeMode="tail">
-										{pet.next ? t('pet.next', { count: pet.next.days - attDays }) : t('pet.maxed')}
-									</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
-
 						{/* 오늘의 목표 — 하루 10문제 진행 */}
 						<View style={styles.goalTop}>
 							<TouchableOpacity style={styles.goalTitleRow} activeOpacity={0.7} hitSlop={Layout.hitSlop} onPress={() => setShowGoalPicker(true)} accessibilityRole="button" accessibilityLabel={t('home.hero.goalA11y')}>
@@ -908,7 +858,61 @@ const Hub = () => {
 								<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(22)} color={Colors.textInverse} />
 							</View>
 						</View>
+						</TouchableOpacity>
 
+						{/* 탐험 무대 — 점수 아래 정글 바닥에 내 캐릭터(사자)와 출석 펫(피코)이 나란히 선다.
+						    캐릭터를 누르면 깡충 반응, 이름표를 누르면 캐릭터 변경 / 출석체크. Lv·성장 바는 점수와 같은 금색 */}
+						<View style={styles.stage}>
+							<View style={styles.stageCast}>
+								<View style={styles.stageSlot}>
+									<PetIdle source={selectedCharacter.img} size={scaleArt(136)} shadowColor={STAGE_SHADOW} />
+								</View>
+								<View style={styles.stageSlot}>
+									<PetIdle source={pet.current.img} size={scaleArt(112)} shadowColor={STAGE_SHADOW} />
+								</View>
+							</View>
+							{/* 바닥 — 캐릭터 발이 살짝 걸치도록 위로 겹친다. 이름표 두 칸(세로 구분선)과 피코 성장 줄 */}
+							<View style={styles.stageFloor}>
+								<View style={styles.stagePlates}>
+									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.7} onPress={openCharacterPicker} accessibilityRole="button" accessibilityLabel={t('home.hero.characterA11y')}>
+										<Text style={styles.stagePlateName} numberOfLines={2}>{selectedCharacter.title}</Text>
+										<View style={styles.stagePlateMeta}>
+											<View style={styles.stageLv}>
+												<Text style={styles.stageLvText}>{`Lv.${selectedCharacter.level}`}</Text>
+											</View>
+											<IconComponent type="materialIcons" name="edit" size={scaledSize(14)} color={Colors.onBrandTextSoft} />
+										</View>
+									</TouchableOpacity>
+									<View style={styles.stagePlateSep} />
+									<TouchableOpacity style={styles.stagePlate} activeOpacity={0.7} onPress={openCheckIn} accessibilityRole="button" accessibilityLabel={t('pet.homeA11y', { name: t(`pet.stages.${pet.current.stage}.name`) })}>
+										<Text style={styles.stagePlateName} numberOfLines={2}>{t(`pet.stages.${pet.current.stage}.name`)}</Text>
+										<View style={styles.stagePlateMeta}>
+											<View style={[styles.stageLv, !pet.next && styles.stageLvMax]}>
+												<Text style={styles.stageLvText}>{`Lv.${pet.current.stage}`}</Text>
+											</View>
+											<IconComponent type="materialIcons" name="chevron-right" size={scaledSize(16)} color={Colors.onBrandTextSoft} />
+										</View>
+									</TouchableOpacity>
+								</View>
+								{/* 피코 성장 — 다음 단계까지 남은 출석일 */}
+								<TouchableOpacity style={styles.stageGrow} activeOpacity={0.7} onPress={openCheckIn} accessibilityRole="button">
+									<IconComponent type="materialIcons" name={pet.next ? 'eco' : 'emoji-events'} size={scaledSize(15)} color={Colors.goldSoft} />
+									<AnimatedProgress
+										ratio={pet.next ? (attDays - pet.current.days) / (pet.next.days - pet.current.days) : 1}
+										color={Colors.goldSoft}
+										trackColor={Colors.onBrandSurface}
+										height={scaleHeight(6)}
+										radius={scaleWidth(3)}
+										style={styles.stageGrowBar}
+									/>
+									<Text style={[styles.stageGrowText, !pet.next && { color: Colors.goldSoft }]} numberOfLines={1} ellipsizeMode="tail">
+										{pet.next ? t('pet.next', { count: pet.next.days - attDays }) : t('pet.maxed')}
+									</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+
+						<TouchableOpacity activeOpacity={0.9} onPress={() => router.push('/special/score-detail' as never)}>
 						<View style={styles.summaryDivider} />
 
 						<View style={styles.summaryStats}>
@@ -1539,28 +1543,9 @@ const styles = themed(() => StyleSheet.create({
 	// 제목 아래 여백은 행에 둔다 — 텍스트에 주면 가이드 버튼이 제목보다 아래로 치우친다
 	appTitleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, marginBottom: SpacingV.md },
 	appTitle: { fontSize: Typography.h1, ...DisplayText, color: Colors.textStrong },
-	heroTop: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginBottom: SpacingV.md },
+	heroTop: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md, marginBottom: SpacingV.lg },
 	heroProgress: { marginBottom: 0 },
-	// 출석 펫 줄 — 히어로 하단, 얇은 구분선 아래
-
 	// 인사
-	// 탐험 무대 — 하늘(그라데이션) 위에 사자·피코가 서고, 아래 바닥에 이름표와 성장 바
-	stage: { borderRadius: Radius.lg, overflow: 'hidden', borderWidth: 1, borderColor: Colors.primarySoft, marginBottom: SpacingV.lg },
-	stageCast: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: Spacing.md, paddingTop: SpacingV.md, marginBottom: -STAGE_FOOT, zIndex: 1 },
-	stageSlot: { flex: 1, alignItems: 'center' },
-	stageFloor: { backgroundColor: Colors.primarySoft, paddingHorizontal: Spacing.md, paddingTop: STAGE_FOOT + SpacingV.sm, paddingBottom: SpacingV.md },
-	stagePlates: { flexDirection: 'row', alignItems: 'stretch', gap: Spacing.sm },
-	stagePlate: { flex: 1, alignItems: 'center', justifyContent: 'space-between', backgroundColor: Colors.surface, borderRadius: Radius.md, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm },
-	stagePlateName: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textStrong, textAlign: 'center' },
-	stagePlateMeta: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginTop: SpacingV.xs },
-	stageLv: { backgroundColor: Colors.primaryBg, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs },
-	stageLvText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.primary },
-	// 최고 단계 피코 = 금색
-	stageLvMax: { backgroundColor: Colors.goldBg },
-	stageLvTextMax: { color: Colors.goldDeep },
-	stageGrow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.md },
-	stageGrowBar: { width: scaleWidth(72) },
-	stageGrowText: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
 	greeting: { flex: 1 },
 	greetTitle: { fontSize: Typography.h3, ...DisplayText, color: Colors.textStrong, lineHeight: scaleHeight(27) },
 
@@ -1572,6 +1557,23 @@ const styles = themed(() => StyleSheet.create({
 	summaryScore: { fontSize: Typography.displayLg, ...DisplayText, color: Colors.goldSoft, letterSpacing: 0 },
 	summaryUnit: { fontSize: Typography.title, fontWeight: '900', color: Colors.onBrandText, marginLeft: Spacing.xs },
 	summaryMore: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginTop: SpacingV.xxs, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.sm, borderRadius: Radius.lg, backgroundColor: Colors.onBrandSurface },
+	// 탐험 무대 — 점수 아래 정글 바닥. 카드 그라데이션을 그대로 하늘로 쓰고, 바닥·이름표는 카드 안 통계 칸과 같은 반투명 흰 면
+	stage: { marginTop: SpacingV.md },
+	stageCast: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: Spacing.md, marginBottom: -STAGE_FOOT, zIndex: 1 },
+	stageSlot: { flex: 1, alignItems: 'center' },
+	stageFloor: { backgroundColor: Colors.onBrandSurface, borderWidth: 1, borderColor: Colors.onBrandBorderSoft, borderRadius: Radius.lg, paddingHorizontal: Spacing.md, paddingTop: STAGE_FOOT + SpacingV.sm, paddingBottom: SpacingV.md },
+	stagePlates: { flexDirection: 'row', alignItems: 'stretch' },
+	stagePlate: { flex: 1, alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xs },
+	stagePlateSep: { width: 1, backgroundColor: Colors.onBrandDivider, marginVertical: SpacingV.xs },
+	stagePlateName: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textInverse, textAlign: 'center' },
+	stagePlateMeta: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginTop: SpacingV.xs },
+	stageLv: { backgroundColor: Colors.onBrandSurfaceStrong, borderRadius: Radius.pill, paddingHorizontal: Spacing.sm, paddingVertical: SpacingV.xxs },
+	stageLvText: { fontSize: Typography.micro, fontWeight: '900', color: Colors.goldSoft },
+	// 최고 단계 피코 = 금색 테두리 (채움은 다크 테마에서 글자 대비가 무너진다)
+	stageLvMax: { borderWidth: 1, borderColor: Colors.goldSoft },
+	stageGrow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: SpacingV.sm, paddingTop: SpacingV.sm, borderTopWidth: 1, borderTopColor: Colors.onBrandDivider },
+	stageGrowBar: { width: scaleWidth(72) },
+	stageGrowText: { flex: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.onBrandText },
 	summaryDivider: { height: 1, backgroundColor: Colors.onBrandDivider, marginVertical: SpacingV.lg },
 	summaryStats: { flexDirection: 'row', alignItems: 'stretch', gap: Spacing.sm },
 	summaryStat: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.md, paddingHorizontal: Spacing.xs, borderRadius: Radius.lg, backgroundColor: Colors.onBrandSurface, borderWidth: 1, borderColor: Colors.onBrandBorderSoft },
