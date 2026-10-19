@@ -6,6 +6,8 @@
  * - expo-audio 로드 실패 시 무음(앱이 죽지 않음)
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+import DateUtils from './DateUtils';
 
 // 정적 require (metro 번들 대상)
 const SOURCES = {
@@ -36,6 +38,24 @@ export const setSoundEnabled = (v: boolean) => {
 
 /** 현재 효과음 on/off 상태 */
 export const isSoundEnabled = () => soundEnabled;
+
+/** 효과음 크기 3단계 — 보통(0.8)이 예전 고정값이라 기본으로 둔다 */
+export type SoundVolume = 'low' | 'mid' | 'high';
+export const SOUND_VOLUMES: Record<SoundVolume, number> = { low: 0.4, mid: 0.8, high: 1 };
+const VOLUME_KEY = 'SOUND_VOLUME';
+let soundVolume: SoundVolume = 'mid';
+
+/** 현재 효과음 크기 */
+export const getSoundVolume = () => soundVolume;
+
+/** 효과음 크기 변경 — 이미 만든 플레이어에도 바로 반영한다 */
+export const setSoundVolume = (v: SoundVolume) => {
+	soundVolume = v;
+	AsyncStorage.setItem(VOLUME_KEY, v).catch(() => {});
+	Object.values(players).forEach((p) => {
+		if (p) p.volume = SOUND_VOLUMES[v];
+	});
+};
 
 // 프리로드된 플레이어 (키당 1개 재사용)
 const players: Partial<Record<SoundKey, any>> = {};
@@ -89,7 +109,7 @@ export const preloadSounds = async () => {
 	(Object.keys(SOURCES) as SoundKey[]).forEach((key) => {
 		try {
 			const player = a.createAudioPlayer(SOURCES[key]);
-			player.volume = 0.8;
+			player.volume = SOUND_VOLUMES[soundVolume];
 			players[key] = player;
 		} catch (e) {
 			if (__DEV__) console.warn(`🔇 효과음 프리로드 실패: ${key}`, e);
@@ -104,20 +124,20 @@ export const loadSoundSetting = async () => {
 		soundEnabled = v !== '0';
 		// 최초 실행(값 없음)이면 '켜짐'을 기본값으로 기록해 둔다
 		if (v == null) AsyncStorage.setItem(SOUND_KEY, '1').catch(() => {});
+		const vol = await AsyncStorage.getItem(VOLUME_KEY);
+		if (vol && vol in SOUND_VOLUMES) soundVolume = vol as SoundVolume;
 	} catch {
 		soundEnabled = true;
 	}
 	await preloadSounds();
 };
 
-const play = (key: SoundKey) => {
-	if (!soundEnabled) return;
-	const player = players[key];
-	if (!player) {
-		// 프리로드 전에 호출된 경우 — 준비되면 다음 호출부터 재생된다
-		preloadSounds().catch(() => {});
-		return;
-	}
+/** 마지막으로 세션을 다시 잡은 시각 — 효과음을 연타해도 네이티브 호출이 몰리지 않게 */
+let lastModeAt = 0;
+const MODE_REFRESH_MS = 3000;
+
+/** 플레이어 커서를 처음으로 돌리고 재생 */
+const rewindAndPlay = (key: SoundKey, player: any) => {
 	try {
 		// 이전 재생이 끝까지 갔으면 커서가 끝에 있어 그대로 play()하면 무음이다.
 		// seekTo 는 Promise — play() 를 곧바로 부르면 커서가 아직 끝이라 소리가 안 난다.
@@ -132,6 +152,26 @@ const play = (key: SoundKey) => {
 	} catch (e) {
 		if (__DEV__) console.warn(`🔇 효과음 재생 실패: ${key}`, e);
 	}
+};
+
+const play = (key: SoundKey) => {
+	if (!soundEnabled) return;
+	const player = players[key];
+	if (!player) {
+		// 프리로드 전에 호출된 경우 — 준비되면 다음 호출부터 재생된다
+		preloadSounds().catch(() => {});
+		return;
+	}
+	// 상단 배너가 자동 새로고침으로 동영상 소재를 받을 때도 광고 SDK 가 iOS 세션을 ambient(무음 스위치를 따름)로 바꿔 간다.
+	// AppState 변화가 없어 active 훅으로는 못 잡는다 — 효과음 직전에 되돌린다(iOS 만, 3초에 한 번까지만).
+	// 세션을 다시 잡은 **뒤에** 재생한다 — 동시에 부르면 바뀐 직후 첫 효과음이 여전히 ambient 로 나가 무음이 된다
+	const now = DateUtils.getTimestamp();
+	if (Platform.OS === 'ios' && now - lastModeAt > MODE_REFRESH_MS) {
+		lastModeAt = now;
+		ensureAudioMode().finally(() => rewindAndPlay(key, player));
+		return;
+	}
+	rewindAndPlay(key, player);
 };
 
 export const playCorrect = () => play('correct');
@@ -168,6 +208,8 @@ export default {
 	playWhoosh,
 	setSoundEnabled,
 	isSoundEnabled,
+	getSoundVolume,
+	setSoundVolume,
 	loadSoundSetting,
 	preloadSounds,
 };

@@ -1,6 +1,6 @@
 {
 	"myth-001": {
-		"summary": "Roi des dieux de l'Olympe, qui a la foudre pour arme.",
+		"summary": "Dieu de la foudre qui vainquit son père Cronos et les Titans, reçut le ciel et devint roi des dieux de l'Olympe.",
 		"facts": [
 			"La planète Jupiter doit son nom à son équivalent romain, Jupiter.",
 			"Sa statue d'Olympie comptait parmi les Sept Merveilles du monde antique."
@@ -12,7 +12,7 @@
 		]
 	},
 	"myth-002": {
-		"summary": "Reine des dieux, protectrice du mariage et du foyer.",
+		"summary": "Reine des dieux et gardienne du mariage, qui poursuivit sans relâche les amantes de son époux et leurs enfants.",
 		"facts": [
 			"Selon l'hypothèse la plus répandue, le mois de juin (June en anglais) tire son nom de Junon, son nom romain.",
 			"On dit qu'elle fixa sur la queue du paon les cent yeux d'Argos après sa mort."
@@ -24,7 +24,7 @@
 		]
 	},
 	"myth-003": {
-		"summary": "Frère aîné de Zeus, qui ébranle la mer et la terre d'un seul trident.",
+		"summary": "Dieu qui reçut la mer par tirage au sort, déchaîna tempêtes et séismes de son trident et fit errer Ulysse des années sur les flots.",
 		"facts": [
 			"La planète Neptune tient son nom de son équivalent romain, Neptune.",
 			"On disait qu'il avait créé le premier cheval en frappant un rocher de son trident ; on l'honorait donc aussi comme dieu des chevaux."
@@ -36,7 +36,7 @@
 		]
 	},
 	"myth-004": {
-		"summary": "Déesse de la terre qui fait pousser les céréales.",
+		"summary": "Déesse des moissons qui fonda les mystères d'Éleusis et envoya Triptolème apprendre aux hommes à cultiver le blé.",
 		"facts": [
 			"Son chagrin d'avoir perdu sa fille, emportée aux Enfers, expliquerait l'origine des saisons.",
 			"Les céréales du petit-déjeuner doivent leur nom à Cérès, son nom romain."
@@ -48,7 +48,7 @@
 		]
 	},
 	"myth-005": {
-		"summary": "Déesse de la sagesse, sortie tout armée de la tête de son père.",
+		"summary": "Déesse de la sagesse qui remporta l'Attique sur Poséidon grâce à l'olivier et guida des héros comme Persée et Ulysse.",
 		"facts": [
 			"La chouette, son oiseau, figure au revers de la pièce grecque de 1 euro.",
 			"Le Parthénon, sur l'Acropole, est le temple qui lui était consacré."
@@ -60,7 +60,7 @@
 		]
 	},
 	"myth-006": {
-		"summary": "Dieu de la lumière qui rend des oracles en jouant de la lyre.",
+		"summary": "Dieu de la musique, de la prophétie et de l'arc, qui abattit le serpent Python à Delphes et fit du lieu son sanctuaire.",
 		"facts": [
 			"À Delphes, il rendait ses oracles par la bouche de la Pythie.",
 			"Le programme américain Apollo, qui envoya les premiers hommes sur la Lune en 1969, porte son nom."
@@ -72,7 +72,7 @@
 		]
 	},
 	"myth-007": {
-		"summary": "Déesse de la chasse qui parcourt les forêts, l'arc à l'épaule.",
+		"summary": "Déesse de la chasse qui abattit les filles de Niobé pour avoir insulté sa mère et changea Actéon en cerf pour l'avoir vue au bain.",
 		"facts": [
 			"Jumelle d'Apollon, elle serait née la première à Délos et aurait aidé à mettre au monde son frère.",
 			"Le programme lunaire Artemis de la NASA, successeur d'Apollo, porte son nom."
@@ -84,7 +84,7 @@
 		]
 	},
 	"myth-008": {
-		"summary": "Dieu brutal de la guerre, qui aime le combat pour lui-même.",
+		"summary": "Dieu de la guerre, avide de combats, qui soutint Troie jusqu'à ce que la lance de Diomède le blesse et le renvoie sur l'Olympe.",
 		"facts": [
 			"Peu populaire en Grèce, il était en revanche très honoré à Rome.",
 			"La planète Mars et le mois de mars tiennent leur nom de Mars, son nom romain."
@@ -96,7 +96,7 @@
 		]
 	},
 	"myth-009": {
-		"summary": "Déesse de l'amour et de la beauté, née de l'écume de la mer.",
+		"summary": "Déesse de l'amour et de la beauté qui aima le chasseur Adonis et donna au Troyen Anchise un fils, Énée, ancêtre des Romains.",
 		"facts": [
 			"En recevant la pomme d'or, elle donna le coup d'envoi de la guerre de Troie.",
 			"La planète Vénus doit son nom à Vénus, son nom romain."
@@ -108,7 +108,7 @@
 		]
 	},
 	"myth-010": {
-		"summary": "Dieu forgeron boiteux qui fabrique les armes de l'Olympe.",
+		"summary": "Dieu forgeron qui fabriqua le bouclier et l'armure d'Achille et prit au piège d'un filet invisible son épouse infidèle et Arès.",
 		"facts": [
 			"Son temple, dressé sur une colline de l'agora d'Athènes, est encore presque intact plus de 2 400 ans après sa construction.",
 			"Le mot « volcan » vient de Vulcain, son nom romain."
@@ -120,7 +120,7 @@
 		]
 	},
 	"myth-011": {
-		"summary": "Messager qui porte les nouvelles des dieux, chaussé de sandales ailées.",
+		"summary": "Dieu qui, le jour de sa naissance, vola les bœufs d'Apollon et fit une lyre d'une carapace de tortue, puis porta les messages des dieux et les âmes des morts.",
 		"facts": [
 			"En 1902, le corps médical de l'armée américaine adopta pour insigne son bâton entouré de deux serpents.",
 			"Mercure, la planète la plus proche du Soleil, porte son nom romain."
@@ -132,7 +132,7 @@
 		]
 	},
 	"myth-012": {
-		"summary": "Dieu de la fête qui parcourt le monde en enseignant l'art du vin.",
+		"summary": "Dieu né de la cuisse de son père, qui répandit la vigne et le vin dans le monde et châtia le roi de Thèbes qui le rejetait.",
 		"facts": [
 			"À Athènes, ses fêtes accueillaient chaque année des concours de tragédie et de comédie.",
 			"La boisson énergisante coréenne Bacchus, du laboratoire Dong-A, tire son nom de Bacchus, son nom romain."
@@ -144,7 +144,7 @@
 		]
 	},
 	"myth-013": {
-		"summary": "Discrète déesse qui veille sur le feu du foyer, dans les maisons comme dans les temples.",
+		"summary": "Déesse qui repoussa Poséidon et Apollon, fit vœu de virginité et reçut le foyer au cœur de chaque maison et de chaque temple.",
 		"facts": [
 			"Fille aînée de Cronos, elle fut la première avalée et la dernière recrachée.",
 			"À Rome, six prêtresses vierges entretenaient le feu du temple de Vesta."
@@ -155,7 +155,7 @@
 		]
 	},
 	"myth-014": {
-		"summary": "Roi souterrain qui règne sur le monde des morts.",
+		"summary": "Dieu qui reçut par tirage au sort le monde souterrain pour régner sur les morts et enleva Perséphone, fille de Déméter, pour en faire sa reine.",
 		"facts": [
 			"Parce qu'il dispensait les minerais et les récoltes du sous-sol, on l'appelait aussi Ploutôn, « le riche ».",
 			"La planète naine Pluton porte son nom romain."
@@ -167,7 +167,7 @@
 		]
 	},
 	"myth-015": {
-		"summary": "Déesse du printemps, emportée dans le monde souterrain dont elle devint la reine.",
+		"summary": "Fille de Déméter, enlevée par le roi des morts pendant qu'elle cueillait des fleurs, qui se disputa avec Aphrodite le petit Adonis.",
 		"facts": [
 			"Pour avoir mangé des pépins de grenade, elle doit passer un tiers de l'année aux Enfers.",
 			"Dans les mystères d'Éleusis, on l'honorait avec sa mère sous le nom de Coré, « la jeune fille »."
@@ -179,7 +179,7 @@
 		]
 	},
 	"myth-016": {
-		"summary": "Jeune dieu dont les flèches rendent amoureux ceux qu'elles touchent.",
+		"summary": "Dieu dont les flèches allument l'amour, qui désobéit à sa mère en s'éprenant de la princesse Psyché et finit par l'épouser avec l'accord des dieux.",
 		"facts": [
 			"Cupidon, le bébé armé d'un arc des cartes de Saint-Valentin, est sa version romaine.",
 			"La flèche d'or fait naître l'amour, la flèche de plomb émoussée le repousse."
@@ -191,7 +191,7 @@
 		]
 	},
 	"myth-017": {
-		"summary": "Déesse ailée qui annonce la victoire, à la guerre comme aux jeux.",
+		"summary": "Déesse ailée de la victoire qui, avec sa mère Styx, fut la première à rallier Zeus contre les Titans et ne le quitta plus jamais.",
 		"facts": [
 			"Sa statue sans tête, découverte en 1863 à Samothrace, se dresse en haut de l'escalier Daru, au Louvre.",
 			"La marque de sport Nike porte son nom, prononcé à l'anglaise."
@@ -202,7 +202,7 @@
 		]
 	},
 	"myth-018": {
-		"summary": "Dieu du Soleil qui traverse chaque jour le ciel sur son char de feu.",
+		"summary": "Dieu de l'astre du jour, qui voit tout, révéla qui avait enlevé Perséphone et perdit son fils Phaéton après lui avoir confié son char.",
 		"facts": [
 			"Le colosse de Rhodes, l'une des Sept Merveilles du monde antique, était une statue de bronze à son image.",
 			"L'hélium, élément découvert d'abord dans la lumière du Soleil, tient son nom du sien, qui signifie « soleil » en grec."
@@ -214,7 +214,7 @@
 		]
 	},
 	"myth-019": {
-		"summary": "Déesse de la Lune qui mène un char d'argent dans le ciel nocturne.",
+		"summary": "Déesse de la lune, sœur du soleil et de l'aurore, qui menait chaque nuit son char d'argent jusqu'au berger Endymion, endormi pour toujours.",
 		"facts": [
 			"Selon Pausanias, elle eut d'Endymion cinquante filles.",
 			"Découvert en 1817, le sélénium reçut ce nom, qui signifie « lune », pour faire pendant au tellure, nommé d'après la Terre."
@@ -225,7 +225,7 @@
 		]
 	},
 	"myth-020": {
-		"summary": "Déesse de l'aube qui précède le soleil et ouvre le ciel en le teintant de rouge.",
+		"summary": "Déesse de l'aube qui ouvre chaque matin les portes du ciel au soleil, et obtint l'immortalité pour le prince troyen Tithon sans demander la jeunesse éternelle.",
 		"facts": [
 			"Homère l'appelle souvent « l'Aurore aux doigts de rose ».",
 			"Les aurores polaires qui ondoient dans le ciel nocturne tiennent leur nom d'Aurore, son nom romain."
@@ -237,7 +237,7 @@
 		]
 	},
 	"myth-021": {
-		"summary": "Dieu qui chassa son père d'un coup de faucille et prit la tête des Titans.",
+		"summary": "Titan qui chassa le dieu du ciel avec la faucille de sa mère et devint roi, puis avala ses enfants et fut renversé par le plus jeune.",
 		"facts": [
 			"Le Musée du Prado conserve « Saturne dévorant un de ses fils », que Goya peignit sur un mur de sa maison.",
 			"La planète Saturne et le mot anglais Saturday (samedi) tiennent leur nom de Saturne, son nom romain."
@@ -249,7 +249,7 @@
 		]
 	},
 	"myth-022": {
-		"summary": "Déesse qui est la Terre elle-même, mère de tous les dieux et de toute vie.",
+		"summary": "Déesse qui arma son fils d'une faucille contre l'époux qui retenait leurs enfants, puis lança les Géants et le monstre Typhon contre l'Olympe.",
 		"facts": [
 			"Seule, elle enfanta le dieu du ciel, puis s'unit à lui pour donner naissance aux douze Titans.",
 			"La théorie Gaïa de Lovelock, qui voit la Terre comme un être vivant, lui a emprunté son nom."
@@ -261,7 +261,7 @@
 		]
 	},
 	"myth-023": {
-		"summary": "Premier dieu du ciel, uni à la déesse de la Terre.",
+		"summary": "Dieu primordial du ciel, premier maître du monde, qui enferma ses enfants au fond de la terre et fut chassé par la faucille de son fils Cronos.",
 		"facts": [
 			"Des huit planètes, seule Uranus porte le nom d'un dieu grec et non romain.",
 			"L'uranium, découvert par Klaproth en 1789, doit son nom à la planète Uranus, découverte huit ans plus tôt."
@@ -272,7 +272,7 @@
 		]
 	},
 	"myth-024": {
-		"summary": "Dieu aux jambes de bouc qui parcourt forêts et prairies en jouant de la flûte de roseau.",
+		"summary": "Dieu des bergers aux pattes de bouc, qui promit son aide à Athènes à Marathon et défia Apollon dans un concours de musique.",
 		"facts": [
 			"Le mot « panique », qui désigne une peur soudaine, vient de son nom.",
 			"La flûte de Pan, faite de tuyaux de longueurs différentes, porte son nom."
@@ -284,7 +284,7 @@
 		]
 	},
 	"myth-025": {
-		"summary": "Déesse du hasard qui dispense aux hommes la chance et la malchance.",
+		"summary": "Déesse du hasard, réputée décider à sa guise de l'essor des nations et de la chance des hommes, honorée comme protectrice par les cités grecques et romaines.",
 		"facts": [
 			"On la représente tenant une corne d'abondance et coiffée d'une couronne en forme de remparts.",
 			"Le mot « fortune », en français comme en anglais, vient de son nom romain, Fortuna."
@@ -296,7 +296,7 @@
 		]
 	},
 	"myth-026": {
-		"summary": "Fils d'Apollon qui apprit la médecine auprès d'un centaure et alla jusqu'à ressusciter les morts.",
+		"summary": "Fils d'Apollon qui apprit la médecine d'un centaure et ressuscita même des morts, jusqu'à ce que la foudre de Zeus l'abatte.",
 		"facts": [
 			"Le serment d'Hippocrate s'ouvre en prenant à témoin Apollon, Asclépios et ses deux filles.",
 			"Son bâton entouré d'un serpent figure sur le drapeau de l'Organisation mondiale de la santé."
@@ -308,7 +308,7 @@
 		]
 	},
 	"myth-027": {
-		"summary": "Déesse de la magie qui veille sur la nuit et les carrefours.",
+		"summary": "Déesse de la magie et des carrefours qui, torche en main, aida Déméter à chercher sa fille disparue et combattit contre les Géants.",
 		"facts": [
 			"À chaque nouvelle lune, on avait coutume de déposer pour elle des offrandes de nourriture aux carrefours de trois chemins.",
 			"Dans « Macbeth », elle apparaît comme la reine qui convoque et réprimande les trois sorcières."
@@ -331,7 +331,7 @@
 		]
 	},
 	"myth-029": {
-		"summary": "Dieu du sommeil dont le simple contact suffit à endormir.",
+		"summary": "Dieu du sommeil qui, à la demande d'Héra, plongea Zeus dans un profond sommeil pendant la guerre de Troie pour laisser les Grecs contre-attaquer.",
 		"facts": [
 			"Jumeau de Thanatos, dieu de la mort, il vit dans une grotte où coule le Léthé, fleuve de l'oubli.",
 			"Le mot « hypnose », comme l'anglais hypnosis, vient de son nom."
@@ -343,7 +343,7 @@
 		]
 	},
 	"myth-030": {
-		"summary": "Dieu de la mort qui emporte ceux qui ont rendu leur dernier souffle.",
+		"summary": "Dieu de la mort qui fut un temps enchaîné par Sisyphe, si bien que personne ne mourait, et qui perdit Alceste après une lutte avec Héraclès.",
 		"facts": [
 			"Avec le dieu du sommeil, il ramena le corps de Sarpédon, tombé au combat, dans sa patrie, la Lycie.",
 			"Le mot « euthanasie » signifie littéralement « bonne (eu) mort (thanatos) »."
@@ -354,7 +354,7 @@
 		]
 	},
 	"myth-031": {
-		"summary": "Trois déesses qui filent, mesurent et coupent le fil fixant la durée de chaque vie humaine.",
+		"summary": "Trois déesses du destin, que même les dieux ne pouvaient contrarier, qui lièrent la vie du petit Méléagre à une bûche et dupèrent le monstre Typhon avec des fruits.",
 		"facts": [
 			"Clotho file, Lachésis mesure et Atropos coupe.",
 			"Atropa, nom scientifique de la belladone, plante vénéneuse, et l'atropine, un médicament, viennent d'Atropos."
@@ -366,7 +366,7 @@
 		]
 	},
 	"myth-032": {
-		"summary": "Neuf sœurs qui inspirent la poésie, le chant et le savoir.",
+		"summary": "Neuf sœurs divines qui insufflèrent le chant au berger Hésiode et changèrent en pies les filles de Piéros qui les avaient défiées.",
 		"facts": [
 			"Les mots « musée » et « musique » viennent tous deux de leur nom.",
 			"Chacune avait son domaine : la poésie épique pour Calliope, l'histoire pour Clio, l'astronomie pour Uranie, et ainsi de suite."
@@ -378,7 +378,7 @@
 		]
 	},
 	"myth-033": {
-		"summary": "Titan qui vola le feu pour le donner aux hommes.",
+		"summary": "Titan qui façonna les hommes dans l'argile et leur offrit le feu volé au ciel, puis subit un long châtiment jusqu'à ce qu'Héraclès le libère.",
 		"facts": [
 			"Enchaîné à un rocher, il voyait chaque jour un aigle venir lui dévorer le foie.",
 			"Son nom signifie « celui qui pense avant »."
@@ -390,7 +390,7 @@
 		]
 	},
 	"myth-034": {
-		"summary": "Titan condamné à porter la voûte céleste sur ses épaules.",
+		"summary": "Titan qui mena les siens contre Zeus et fut condamné à porter le ciel, et qui alla un jour cueillir les pommes d'or à la place d'Héraclès.",
 		"facts": [
 			"Selon Ovide, il fut pétrifié en voyant la tête de Méduse et devint le mont Atlas.",
 			"Mercator donna son nom à son recueil de cartes, et l'océan Atlantique signifie lui aussi « mer d'Atlas »."
@@ -402,7 +402,7 @@
 		]
 	},
 	"myth-035": {
-		"summary": "Première femme, qui ouvrit la jarre interdite et répandit les maux sur le monde.",
+		"summary": "Première femme, façonnée dans l'argile par les dieux pour punir les hommes du vol du feu et comblée de dons, qui ouvrit une jarre et répandit les maux sur le monde.",
 		"facts": [
 			"L'expression « boîte de Pandore », qui désigne une source de malheurs à laquelle mieux vaut ne pas toucher, vient de là.",
 			"Si l'on parle de boîte, c'est parce qu'au XVIe siècle Érasme a traduit la jarre par une boîte."
@@ -412,7 +412,7 @@
 		]
 	},
 	"myth-036": {
-		"summary": "Le plus fort des héros grecs, venu à bout de douze travaux.",
+		"summary": "Héros qui accomplit les douze travaux, du lion de Némée au serpent d'eau à plusieurs têtes, et fut admis parmi les dieux après sa mort.",
 		"facts": [
 			"Fils de Zeus et de la mortelle Alcmène, il subit toute sa vie la haine d'Héra.",
 			"L'adjectif « herculéen » (Herculean en anglais), synonyme d'effort surhumain, vient de son nom romain."
@@ -424,7 +424,7 @@
 		]
 	},
 	"myth-037": {
-		"summary": "Héros qui trancha la tête d'un monstre en ne le regardant que dans le reflet de son bouclier.",
+		"summary": "Héros qui rapporta la tête de Méduse et, sur le chemin du retour, sauva la princesse Andromède d'un monstre marin.",
 		"facts": [
 			"Chaque année à la mi-août, une pluie d'étoiles filantes semble jaillir de sa constellation.",
 			"Il était le fils de Danaé, princesse d'Argos, et de Zeus, venu à elle sous la forme d'une pluie d'or."
@@ -436,7 +436,7 @@
 		]
 	},
 	"myth-038": {
-		"summary": "Héros qui entra dans le labyrinthe en déroulant une pelote de fil et y tua un monstre.",
+		"summary": "Héros qui pénétra dans le labyrinthe de Crète pour tuer le Minotaure et châtia le brigand Procuste sur la route d'Athènes.",
 		"facts": [
 			"Le paradoxe du bateau de Thésée — un navire dont on a remplacé toutes les pièces est-il encore le même ? — tire son nom de son navire.",
 			"Comme il oublia de hisser la voile blanche, son père se jeta dans la mer, qui porte depuis son nom : la mer Égée."
@@ -448,7 +448,7 @@
 		]
 	},
 	"myth-039": {
-		"summary": "Roi qui eut l'idée du cheval de bois et erra dix ans avant de rentrer chez lui.",
+		"summary": "Roi d'Ithaque qui mit fin à la guerre de Troie grâce à la ruse du cheval de bois, puis échappa au Cyclope et aux Sirènes pour rentrer chez lui au bout de dix ans.",
 		"facts": [
 			"Le mot « odyssée », qui désigne un long voyage plein d'aventures, vient de son nom.",
 			"L'« Odyssée » d'Homère chante son retour au pays."
@@ -460,7 +460,7 @@
 		]
 	},
 	"myth-040": {
-		"summary": "Héros de la guerre de Troie, invulnérable partout sauf au talon.",
+		"summary": "Le plus grand guerrier grec, qui reprit le combat après la mort de son ami Patrocle et tua Hector, fils aîné du roi de Troie.",
 		"facts": [
 			"Le tendon d'Achille, qui relie le mollet au talon, tient son nom de lui.",
 			"Sur la volonté de sa mère Thétis, il vécut caché au palais de l'île de Skyros, vêtu en femme."
@@ -472,7 +472,7 @@
 		]
 	},
 	"myth-041": {
-		"summary": "Chef d'une expédition partie en bateau à la recherche de la Toison d'or.",
+		"summary": "Chef d'expédition qui attela des taureaux crachant le feu en Colchide et, avec l'aide de la princesse Médée, conquit la Toison d'or.",
 		"facts": [
 			"Du nom de leur navire, l'Argo, on appelle ses compagnons d'expédition les Argonautes.",
 			"Le bélier d'or à qui appartenait la toison qu'il cherchait serait monté au ciel pour devenir la constellation du Bélier."
@@ -484,7 +484,7 @@
 		]
 	},
 	"myth-042": {
-		"summary": "Musicien dont la lyre charmait jusqu'aux bêtes et aux rochers.",
+		"summary": "Musicien dont la lyre émut le roi des morts au point de lui rendre son épouse, mais qui la perdit de nouveau en se retournant au dernier moment.",
 		"facts": [
 			"Il aurait été mis en pièces par des femmes thraces vouées au culte de Dionysos.",
 			"En 1607, l'opéra « L'Orfeo » de Monteverdi porta son histoire à la scène."
@@ -496,7 +496,7 @@
 		]
 	},
 	"myth-043": {
-		"summary": "Artisan qui conçut un labyrinthe dont nul ne pouvait sortir.",
+		"summary": "Artisan athénien qui bâtit pour le roi de Crète le labyrinthe où enfermer un monstre et résolut grâce à une fourmi l'énigme du coquillage à enfiler.",
 		"facts": [
 			"Avec des ailes de plumes et de cire, il s'échappa de Crète avec son fils.",
 			"Selon une hypothèse, la structure complexe du palais de Cnossos aurait inspiré le mythe du labyrinthe."
@@ -508,7 +508,7 @@
 		]
 	},
 	"myth-044": {
-		"summary": "Jeune garçon qui vola trop près du soleil et tomba à la mer quand ses ailes fondirent.",
+		"summary": "Garçon qui s'évada de Crète avec les ailes fabriquées par son père, mais vola trop haut : la cire fondit et il tomba dans la mer.",
 		"facts": [
 			"Sur le tableau attribué à Bruegel, on ne voit de lui que deux jambes qui dépassent de la mer.",
 			"L'astéroïde Icare, qui s'approche du Soleil plus près encore que Mercure, porte son nom."
@@ -519,7 +519,7 @@
 		]
 	},
 	"myth-045": {
-		"summary": "Prince qui s'échappa de Troie en flammes pour gagner l'Italie.",
+		"summary": "Prince qui emporta son père hors de Troie en flammes et, après de longues errances, atteignit l'Italie et devint l'ancêtre des Romains.",
 		"facts": [
 			"La famille des Julii, celle de Jules César, prétendait descendre de son fils Iule.",
 			"Il est le héros de l'épopée de Virgile, « L'Énéide »."
@@ -531,7 +531,7 @@
 		]
 	},
 	"myth-046": {
-		"summary": "Fils aîné du roi de Troie, tombé sous les coups d'Achille en défendant sa cité.",
+		"summary": "Fils aîné du roi de Troie, qui tua Patrocle, l'ami d'Achille, avant de tomber sous les coups d'Achille en duel devant les portes de la ville.",
 		"facts": [
 			"Le verbe anglais to hector, « intimider en fanfaronnant », vient de son nom.",
 			"« L'Iliade » s'achève sur ses funérailles, une fois son corps rendu aux siens."
@@ -543,7 +543,7 @@
 		]
 	},
 	"myth-047": {
-		"summary": "Prince troyen qui dut désigner la plus belle de trois déesses.",
+		"summary": "Fils du roi Priam qui s'enfuit à Troie avec Hélène, reine de Sparte, et attira sur sa ville les armées grecques coalisées.",
 		"facts": [
 			"En préférant Aphrodite à Héra et Athéna, il obtint Hélène.",
 			"Il abattit Achille d'une flèche au talon."
@@ -555,7 +555,7 @@
 		]
 	},
 	"myth-048": {
-		"summary": "Roi de Mycènes qui mena à Troie l'armée des Grecs coalisés.",
+		"summary": "Roi de Mycènes qui sacrifia sa fille pour que la flotte puisse partir vers Troie et se querella violemment avec Achille pour une part du butin.",
 		"facts": [
 			"Le jour de son retour, il fut assassiné par sa femme Clytemnestre.",
 			"Le masque d'or découvert par Schliemann à Mycènes en 1876 porte son nom, mais il est en réalité plus ancien."
@@ -567,7 +567,7 @@
 		]
 	},
 	"myth-049": {
-		"summary": "Héros de Corinthe qui dompta le cheval ailé grâce à une bride d'or offerte par Athéna.",
+		"summary": "Héros qui triompha de toutes les épreuves du roi de Lycie, du monstre aux Amazones, mais chuta en voulant monter au ciel sur son cheval ailé.",
 		"facts": [
 			"Il vainquit la Chimère en l'attaquant du haut du ciel.",
 			"L'insigne des parachutistes du Royaume-Uni le montre chevauchant Pégase."
@@ -579,7 +579,7 @@
 		]
 	},
 	"myth-050": {
-		"summary": "Roi de Thèbes, couronné pour avoir résolu une énigme, qui se creva les yeux en découvrant qu'il avait tué son père et épousé sa mère.",
+		"summary": "Roi tragique qui résolut l'énigme du Sphinx et devint maître de Thèbes, sans savoir qu'il avait tué son père et épousé sa mère.",
 		"facts": [
 			"À la question de l'être qui n'a qu'une voix mais marche sur quatre, puis deux, puis trois pieds, il répondit : l'homme.",
 			"Sigmund Freud a donné son nom à l'attirance d'un fils pour sa mère."
@@ -591,7 +591,7 @@
 		]
 	},
 	"myth-051": {
-		"summary": "Monstre à la chevelure de serpents, dont le regard changeait en pierre.",
+		"summary": "Monstre à la chevelure de serpents qui changeait en pierre quiconque croisait son regard, jusqu'à ce que Persée lui tranche la tête pendant son sommeil.",
 		"facts": [
 			"Des trois sœurs Gorgones, elle était la seule mortelle.",
 			"Le logo de la maison de mode Versace représente son visage."
@@ -603,7 +603,7 @@
 		]
 	},
 	"myth-052": {
-		"summary": "Monstre à tête de taureau et corps d'homme, enfermé dans le labyrinthe de Crète et tué par Thésée.",
+		"summary": "Monstre à tête de taureau, né de la reine de Crète et d'un taureau blanc sorti de la mer, enfermé dans le labyrinthe jusqu'à ce que Thésée le tue.",
 		"facts": [
 			"Apollodore indique que son vrai nom était Astérion.",
 			"Tous les neuf ans, Athènes lui livrait en pâture sept garçons et sept filles."
@@ -614,7 +614,7 @@
 		]
 	},
 	"myth-053": {
-		"summary": "Chien à trois têtes qui garde la porte des Enfers.",
+		"summary": "Chien à trois têtes qui gardait les portes des Enfers pour qu'aucune âme n'en ressorte, jusqu'à ce qu'Héraclès le capture à mains nues et le traîne à la surface.",
 		"facts": [
 			"En 2013, un petit satellite de Pluton a été baptisé Cerbère.",
 			"Envoûté par le chant d'Orphée, il s'arrêta net, ses trois gueules grandes ouvertes."
@@ -626,7 +626,7 @@
 		]
 	},
 	"myth-054": {
-		"summary": "Serpent d'eau des marais dont chaque cou tranché laissait place à deux nouveaux.",
+		"summary": "Serpent d'eau des marais dont chaque tête coupée repoussait en double, abattu par Héraclès lors de son deuxième travail.",
 		"facts": [
 			"Iolaos, le neveu d'Héraclès, brûlait au feu les cous tranchés pour qu'ils ne repoussent pas.",
 			"Sa tête centrale étant immortelle, on l'écrasa sous un rocher."
@@ -638,7 +638,7 @@
 		]
 	},
 	"myth-055": {
-		"summary": "Monstre crachant le feu, qui réunissait en un seul corps un lion, une chèvre et un serpent.",
+		"summary": "Monstre crachant le feu, mi-lion, mi-chèvre, mi-serpent, qui ravagea la Lycie jusqu'à ce que Bellérophon, monté sur un cheval ailé, l'abatte.",
 		"facts": [
 			"En biologie, on appelle chimère un organisme qui réunit des cellules génétiquement différentes.",
 			"Une statue antique en bronze de la Chimère, découverte à Arezzo en 1553, est conservée dans un musée de Florence."
@@ -649,7 +649,7 @@
 		]
 	},
 	"myth-056": {
-		"summary": "Monstre qui, aux portes de Thèbes, posait une énigme et dévorait ceux qui ne savaient pas la résoudre.",
+		"summary": "Monstre qui dévorait sur la route de Thèbes ceux qui ne résolvaient pas son énigme, et se jeta dans le vide quand Œdipe trouva la réponse.",
 		"facts": [
 			"Contrairement au Sphinx de Gizeh, en Égypte, il était ailé et avait un visage de femme.",
 			"En dialecte béotien, on l'appelait Phix, et le mont Phikion tire son nom de là."
@@ -661,7 +661,7 @@
 		]
 	},
 	"myth-057": {
-		"summary": "Créatures marines dont le chant ensorcelait les marins pour les attirer vers les rochers.",
+		"summary": "Monstres marins dont le chant envoûtant menait les marins à la mort, mais qui échouèrent face à Ulysse, attaché au mât, et à ses compagnons aux oreilles bouchées.",
 		"facts": [
 			"Les Grecs anciens les représentaient avec un corps d'oiseau et une tête de femme ; la queue de poisson ne s'est répandue qu'au Moyen Âge.",
 			"La sirène d'alarme et la femme du logo de Starbucks doivent leur nom aux Sirènes."
@@ -673,7 +673,7 @@
 		]
 	},
 	"myth-058": {
-		"summary": "Race de géants n'ayant qu'un seul œil rond au milieu du front.",
+		"summary": "Race de géants n'ayant qu'un œil au milieu du front, à qui l'on attribuait les énormes murailles de pierre de Tirynthe et de Mycènes.",
 		"facts": [
 			"On les présente aussi comme les forgerons qui fabriquèrent la foudre de Zeus.",
 			"Odysseus creva l'œil de Polyphème après lui avoir fait croire qu'il s'appelait « Personne »."
@@ -685,7 +685,7 @@
 		]
 	},
 	"myth-059": {
-		"summary": "Cheval blanc ailé, né du sang de Méduse.",
+		"summary": "Cheval blanc ailé qui porta Bellérophon contre la Chimère, puis monta sur l'Olympe pour porter la foudre de Zeus.",
 		"facts": [
 			"La constellation de Pégase, grand carré qui brille dans le ciel des soirées d'automne, le représente.",
 			"Le cheval ailé rouge du logo de la compagnie pétrolière Mobil, c'est lui."
@@ -696,7 +696,7 @@
 		]
 	},
 	"myth-060": {
-		"summary": "Peuple mi-homme, mi-cheval : humain au-dessus de la taille, cheval en dessous.",
+		"summary": "Peuple mi-homme mi-cheval qui, ivre aux noces du roi des Lapithes, voulut enlever la mariée et déclencha une grande bataille.",
 		"facts": [
 			"On les dépeint souvent comme brutaux, mais Chiron était un maître plein de sagesse.",
 			"Parmi les 88 constellations, deux les représentent : le Sagittaire et le Centaure."
@@ -708,7 +708,7 @@
 		]
 	},
 	"myth-061": {
-		"summary": "Monstre à six têtes qui, embusqué au bord d'un détroit, happait les marins des navires de passage.",
+		"summary": "Monstre du détroit à six têtes, aux chiens féroces sous la taille, qui arracha d'un coup six marins au navire d'Ulysse.",
 		"facts": [
 			"On situait son repaire dans le détroit de Messine, entre la Sicile et la péninsule italienne.",
 			"En anglais, être « entre Scylla et Charybde » signifie n'avoir aucune issue."
@@ -720,7 +720,7 @@
 		]
 	},
 	"myth-062": {
-		"summary": "Monstre-tourbillon qui avalait puis recrachait la mer, engloutissant les navires.",
+		"summary": "Monstre qui vola et dévora les bœufs d'Héraclès, fut précipité dans la mer par la foudre de Zeus et devint un tourbillon avaleur de navires.",
 		"facts": [
 			"On dit qu'elle aspirait les eaux trois fois par jour.",
 			"Odysseus survécut en s'agrippant au figuier qui poussait sur la falaise."
@@ -732,7 +732,7 @@
 		]
 	},
 	"myth-063": {
-		"summary": "Monstres au corps d'oiseau et au visage de femme qui raflaient la nourriture.",
+		"summary": "Monstres au corps d'oiseau qui volaient et souillaient chaque jour le repas du devin Phinée, jusqu'à ce que les deux fils du vent du Nord les chassent.",
 		"facts": [
 			"Leur nom signifie « les ravisseuses » en grec.",
 			"Harpia, le nom scientifique de la harpie féroce, grand rapace des forêts d'Amérique centrale et du Sud, vient de leur nom."
@@ -744,7 +744,7 @@
 		]
 	},
 	"myth-064": {
-		"summary": "Le plus grand et le plus féroce des monstres, qui fit fuir les dieux eux-mêmes.",
+		"summary": "Le plus gigantesque des monstres, qui fit fuir les dieux jusqu'en Égypte et trancha même les tendons de Zeus, avant de succomber à sa foudre.",
 		"facts": [
 			"Vaincu par la foudre de Zeus, il aurait été enseveli sous l'Etna, le volcan de Sicile.",
 			"Selon une hypothèse, ce nom serait à la racine de l'anglais typhoon."
@@ -756,7 +756,7 @@
 		]
 	},
 	"myth-065": {
-		"summary": "Beau jeune homme qui dépérit, épris de son propre reflet dans l'eau.",
+		"summary": "Bel adolescent qui repoussa tous ses prétendants et, en châtiment, tomba amoureux de son reflet dans une source, auprès de laquelle il dépérit.",
 		"facts": [
 			"À l'endroit où il se tenait, dit-on, poussa une fleur de narcisse.",
 			"Le narcissisme, qui désigne l'amour excessif de soi, vient de son nom."
@@ -766,7 +766,7 @@
 		]
 	},
 	"myth-066": {
-		"summary": "Nymphe éprise de Narcisse sans retour, dont le corps s'évanouit et dont seule la voix demeura.",
+		"summary": "Nymphe qui retenait Héra par son bavardage pour couvrir les aventures de Zeus, et qui se consuma d'amour pour Narcisse jusqu'à n'être plus qu'une voix.",
 		"facts": [
 			"Punie par Héra, elle perdit le pouvoir de parler la première.",
 			"Son nom est tout simplement le mot grec pour « écho », et l'anglais echo est le même mot."
@@ -778,7 +778,7 @@
 		]
 	},
 	"myth-067": {
-		"summary": "Roi de Phrygie qui demanda à Dionysos que tout ce qu'il toucherait se change en or.",
+		"summary": "Roi de Phrygie que le toucher d'or accordé par Dionysos empêchait de manger et de boire, jusqu'à ce qu'il s'en lave dans le fleuve Pactole.",
 		"facts": [
 			"Un véritable roi Midas a régné sur la Phrygie au VIIIe siècle av. J.-C. ; les sources assyriennes l'appellent Mita.",
 			"L'histoire des oreilles d'âne dont l'affubla Apollon rappelle le conte coréen « Le roi a des oreilles d'âne »."
@@ -790,7 +790,7 @@
 		]
 	},
 	"myth-068": {
-		"summary": "Roi de Corinthe condamné à pousser au sommet d'une montagne un rocher qui retombe sans cesse.",
+		"summary": "Roi de Corinthe qui, par la ruse, revint des Enfers et vécut jusqu'à la vieillesse, mais fut enfin condamné à pousser éternellement un rocher en haut d'une colline.",
 		"facts": [
 			"On dit qu'il fut puni pour avoir trahi un secret de Zeus et être allé jusqu'à enchaîner le dieu de la Mort.",
 			"Dans « Le Mythe de Sisyphe », Camus a donné une nouvelle lecture de son labeur aussi vain qu'éternel."
@@ -802,7 +802,7 @@
 		]
 	},
 	"myth-069": {
-		"summary": "Roi condamné pour l'éternité à voir l'eau et les fruits à portée de main sans jamais pouvoir les atteindre.",
+		"summary": "Roi si aimé des dieux qu'il partageait leur table, mais qui leur servit son propre fils pour les éprouver et fut condamné à une faim et une soif éternelles.",
 		"facts": [
 			"Le nom de son fils Pélops survit dans celui du Péloponnèse, au sud de la Grèce.",
 			"Le verbe anglais to tantalize et l'élément chimique tantale tirent leur nom du sien."
@@ -814,7 +814,7 @@
 		]
 	},
 	"myth-070": {
-		"summary": "Jeune Lydienne changée en araignée pour avoir défié Athéna au tissage.",
+		"summary": "Jeune Lydienne qui défia la déesse de la sagesse au tissage et tissa une tapisserie sans défaut, mais encourut sa colère et fut changée en araignée.",
 		"facts": [
 			"Furieuse de voir les fautes des dieux tissées sur sa toile, la déesse la frappa de sa navette.",
 			"Son nom signifie « araignée » en grec, et la classe des arachnides (Arachnida) vient du même mot."
@@ -826,7 +826,7 @@
 		]
 	},
 	"myth-071": {
-		"summary": "Sculpteur chypriote tombé amoureux de la statue de femme en ivoire qu'il avait lui-même taillée.",
+		"summary": "Sculpteur chypriote qui, déçu par les femmes, sculpta dans l'ivoire la femme idéale et, après avoir prié la déesse, l'épousa devenue vivante.",
 		"facts": [
 			"Aphrodite donna vie à la statue, qui reçut plus tard le nom de Galatée.",
 			"L'effet Pygmalion, qui veut que les attentes placées en quelqu'un améliorent réellement ses résultats, vient de ce mythe."
@@ -836,7 +836,7 @@
 		]
 	},
 	"myth-072": {
-		"summary": "La plus belle femme du monde, qui fut l'étincelle de la guerre de Troie.",
+		"summary": "La plus belle femme du monde, dont la fuite outre-mer avec Pâris attira sur les Troyens la flotte grecque coalisée.",
 		"facts": [
 			"Fille de Léda et de Zeus changé en cygne, elle était reine de Sparte avant de partir pour Troie.",
 			"« Le visage qui lança mille navires » est un vers du dramaturge anglais Christopher Marlowe."
@@ -847,7 +847,7 @@
 		]
 	},
 	"myth-073": {
-		"summary": "Faille originelle d'où tout serait né, au commencement, quand rien n'existait encore.",
+		"summary": "Vide primordial qu'Hésiode chante comme la toute première chose apparue, qui enfanta les Ténèbres et la Nuit et fit naître le monde.",
 		"facts": [
 			"Ovide le décrit comme une masse informe où tous les éléments étaient mêlés.",
 			"Le mot « chaos », synonyme de désordre, et le mot « gaz » viennent de ce nom."
@@ -858,7 +858,7 @@
 		]
 	},
 	"myth-074": {
-		"summary": "Déesse qui incarnait la nuit elle-même et que Zeus lui-même n'osait pas offenser.",
+		"summary": "Déesse primordiale de la nuit qui enfanta seule la Mort, le Sommeil et les Parques, et devant qui même Zeus en colère recula.",
 		"facts": [
 			"Hésiode chante que la Nuit et le Jour se croisent sur un seuil de bronze : quand l'un entre, l'autre sort.",
 			"Nix, un satellite de Pluton, porte le nom de cette déesse."
@@ -870,7 +870,7 @@
 		]
 	},
 	"myth-075": {
-		"summary": "Mer primordiale que la déesse de la Terre enfanta seule.",
+		"summary": "Mer primordiale, née de la seule déesse de la Terre, père de Nérée, le vieillard de la mer, et des ancêtres de nombreux monstres.",
 		"facts": [
 			"Son nom signifie tout simplement « mer » en grec.",
 			"Les Grecs appelaient autrefois la mer Noire Pontos Euxeinos, le Pont-Euxin, c'est-à-dire « la mer hospitalière »."
@@ -881,7 +881,7 @@
 		]
 	},
 	"myth-076": {
-		"summary": "Abîme semblable à une prison, situé plus bas encore que les Enfers.",
+		"summary": "Abîme le plus profond, sous le royaume des morts, où furent enfermés les Titans vaincus, et dieu primordial qui engendra avec la Terre le monstre Typhon.",
 		"facts": [
 			"Selon une explication, si l'Europe a appelé les Tatars « Tartares », c'est par confusion avec ce nom.",
 			"On chantait qu'une enclume lâchée depuis la terre mettrait neuf jours à y tomber."
@@ -892,7 +892,7 @@
 		]
 	},
 	"myth-077": {
-		"summary": "Titan du grand fleuve qui, croyait-on, coulait en anneau autour des confins de la terre.",
+		"summary": "Titan qui refusa de suivre ses frères dans la guerre contre Zeus et échappa ainsi au châtiment, maître du grand fleuve qui encercle les confins du monde.",
 		"facts": [
 			"Le mot anglais ocean vient de son nom, par l'intermédiaire du latin.",
 			"Au centre de la Fontaine de Trevi, à Rome, le géant debout sur un char en forme de coquillage, c'est lui."
@@ -903,7 +903,7 @@
 		]
 	},
 	"myth-078": {
-		"summary": "Titanide qui, unie à Océanos, donna naissance aux fleuves et aux nymphes des sources du monde entier.",
+		"summary": "Titanide qui enfanta trois mille filles et tous les fleuves du monde, et éleva la jeune Héra pendant la guerre des dieux.",
 		"facts": [
 			"La Téthys, océan disparu de l'époque des dinosaures, porte son nom.",
 			"Il ne faut pas la confondre avec Thétis, la nymphe marine mère d'Achille."
@@ -915,7 +915,7 @@
 		]
 	},
 	"myth-079": {
-		"summary": "Titan de la lumière, père des dieux du Soleil, de la Lune et de l'Aurore.",
+		"summary": "Titan de la lumière, père du Soleil, de la Lune et de l'Aurore, qui aurait le premier observé la course des astres et découvert les saisons.",
 		"facts": [
 			"Le plus grand arbre du monde, découvert en 2006 en Californie, porte son nom.",
 			"Son nom signifie « celui qui va en haut » en grec."
@@ -925,7 +925,7 @@
 		]
 	},
 	"myth-080": {
-		"summary": "Titanide qui, unie à Hypérion, donna naissance au Soleil et à la Lune.",
+		"summary": "Titanide qui donna le jour au Soleil, à la Lune et à l'Aurore avec son frère, et qui aurait donné à l'or et aux gemmes leur éclat et leur valeur.",
 		"facts": [
 			"Son nom signifie « divine » en grec.",
 			"Elle a donné son nom à la planète hypothétique qui aurait percuté la Terre et donné naissance à la Lune."
@@ -935,7 +935,7 @@
 		]
 	},
 	"myth-081": {
-		"summary": "Titan qu'on disait pilier du ciel boréal et maître de l'intelligence qui questionne.",
+		"summary": "Titan qui aurait gouverné l'axe du ciel et qui, par sa fille Astéria, devint le grand-père d'Hécate, déesse de la magie.",
 		"facts": [
 			"Uni à sa sœur Phébé, il eut une fille, Léto.",
 			"Son nom latin, Polus, désigne l'axe du ciel, et le mot anglais pole (pôle) vient de la même racine."
@@ -945,7 +945,7 @@
 		]
 	},
 	"myth-082": {
-		"summary": "Titanide qui aurait légué l'oracle de Delphes à son petit-fils.",
+		"summary": "Titanide qui tint l'oracle de Delphes après Gaïa et Thémis, puis l'offrit à son petit-fils Apollon en cadeau de naissance.",
 		"facts": [
 			"Mère de Léto, elle est la grand-mère maternelle d'Apollon et d'Artémis.",
 			"Son nom signifie « la brillante », et Phébé, une lune de Saturne, le porte."
@@ -955,7 +955,7 @@
 		]
 	},
 	"myth-083": {
-		"summary": "Titan du ciel austral, qu'on disait chargé de la course des constellations.",
+		"summary": "Titan du ciel austral qui, par son fils Astréos, devint le grand-père des vents, de l'étoile du matin et de toutes les étoiles.",
 		"facts": [
 			"Uni à Eurybie, il eut pour fils Astraios, Pallas et Persès.",
 			"Son nom signifie « bélier », et les Grecs appelaient Crios la constellation du Bélier."
@@ -965,7 +965,7 @@
 		]
 	},
 	"myth-084": {
-		"summary": "Titan père des frères Prométhée, Épiméthée et Atlas.",
+		"summary": "Titan père de fils comme Atlas et Prométhée, devenu par son petit-fils Deucalion un lointain ancêtre de l'humanité.",
 		"facts": [
 			"Son nom ressemble à celui de Japhet, fils de Noé, et l'on a très tôt proposé de les identifier.",
 			"Japet, la lune de Saturne dont une face est claire et l'autre sombre, porte son nom."
@@ -975,7 +975,7 @@
 		]
 	},
 	"myth-085": {
-		"summary": "Titanide de la mémoire, mère des neuf Muses.",
+		"summary": "Titanide de la mémoire qui passa neuf nuits avec Zeus et mit au monde les neuf déesses de la poésie et du chant.",
 		"facts": [
 			"Les orphiques apprenaient qu'aux Enfers il fallait boire à sa source plutôt qu'au fleuve de l'oubli.",
 			"Le mot « mnémonique » (mnemonic en anglais), qui désigne un procédé pour retenir, vient de la même racine."
@@ -986,7 +986,7 @@
 		]
 	},
 	"myth-086": {
-		"summary": "Titanide de la loi, représentée tenant une balance et un glaive.",
+		"summary": "Titanide de la loi et de la justice qui tenait l'oracle de Delphes et indiqua au couple survivant du Déluge comment faire renaître l'humanité.",
 		"facts": [
 			"Les statues de la Justice dressées devant les tribunaux perpétuent son image.",
 			"Deuxième épouse de Zeus, elle donna naissance aux Heures, déesses des saisons, et aux Moires, déesses du destin."
@@ -998,7 +998,7 @@
 		]
 	},
 	"myth-087": {
-		"summary": "Titanide qui, voyant son époux avaler leurs enfants, lui tendit une pierre emmaillotée à la place du dernier-né.",
+		"summary": "Titanide qui donna à son époux dévoreur d'enfants une pierre emmaillotée pour sauver son dernier-né, lequel délivra ensuite ses frères et sœurs.",
 		"facts": [
 			"Elle cacha son dernier-né, Zeus, dans une grotte de Crète pour l'y élever.",
 			"Son nom romain, Ops, signifie « abondance » et partage sa racine avec l'anglais opulent."
@@ -1009,7 +1009,7 @@
 		]
 	},
 	"myth-088": {
-		"summary": "Titan qui oublia l'avertissement de son frère et prit Pandore pour épouse.",
+		"summary": "Titan qui oublia l'avertissement de son frère et épousa la femme envoyée par Zeus, laissant ainsi les maux entrer dans le monde.",
 		"facts": [
 			"Son nom signifie « celui qui réfléchit après coup ».",
 			"Il distribua toutes les qualités aux animaux sans rien garder pour les hommes."
@@ -1020,7 +1020,7 @@
 		]
 	},
 	"myth-089": {
-		"summary": "Roi de Crète qui fit bâtir le Labyrinthe et y enferma un monstre.",
+		"summary": "Roi de Crète qui domina la mer Égée grâce à une flotte puissante et fit construire par Dédale un labyrinthe pour enfermer un monstre à tête de taureau.",
 		"facts": [
 			"On dit qu'après sa mort il devint juge aux Enfers.",
 			"Arthur Evans, qui fouilla Cnossos en 1900, donna le nom de civilisation minoenne à cette culture."
@@ -1032,7 +1032,7 @@
 		]
 	},
 	"myth-090": {
-		"summary": "Créature à la tête et aux ailes d'aigle, au corps de lion.",
+		"summary": "Bête à tête d'aigle et à corps de lion qui disputait l'or aux Arimaspes borgnes et passait pour un animal sacré du dieu du soleil.",
 		"facts": [
 			"Hérodote le décrit comme une bête gardant l'or dans l'extrême nord.",
 			"Un griffon orne le logo de Scania, constructeur de camions établi en Suède."

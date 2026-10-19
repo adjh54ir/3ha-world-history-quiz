@@ -1,209 +1,209 @@
 {
 	"olympic-1896": {
-		"summary": "The first modern Games, where Coubertin revived the ancient Olympics and 241 athletes from 14 countries competed.",
+		"summary": "The first modern Games, held in Athens, Greece, where Coubertin revived the ancient contests and 241 athletes from 14 countries competed.",
 		"facts": [
 			"Winners received a silver medal and an olive branch instead of a gold medal.",
 			"Spyridon Louis, a former water carrier, won the first-ever marathon."
 		]
 	},
 	"olympic-1900": {
-		"summary": "Games held as a sideshow to the World's Fair, stretching from May to October.",
+		"summary": "Games held in Paris, France, as a sideshow of the World's Fair, dragging on from May to October.",
 		"facts": [
 			"Women competed for the first time, and tennis player Charlotte Cooper became the first female individual champion.",
 			"Some athletes competed without even knowing their event was part of the Olympics."
 		]
 	},
 	"olympic-1904": {
-		"summary": "The first Games to leave Europe and be held in the Americas.",
+		"summary": "Held alongside the World's Fair in St. Louis, United States, the first Games staged outside Europe.",
 		"facts": [
 			"Of the 648 athletes, more than 520 were from the host nation.",
 			"Gold, silver and bronze medals were awarded for the first time, just as they are today."
 		]
 	},
 	"olympic-1908": {
-		"summary": "Games that took over after Rome withdrew because of a volcanic eruption, and first used today's marathon distance.",
+		"summary": "Games taken over by London, United Kingdom, after Rome withdrew following the eruption of Vesuvius.",
 		"facts": [
 			"A course starting at Windsor Castle and finishing in front of the royal box came out to 42.195 kilometers.",
 			"In 1921 this became the official marathon distance, and it's still used today."
 		]
 	},
 	"olympic-1912": {
-		"summary": "Games that introduced electronic timing in track and field and saw Japan become the first Asian nation to compete.",
+		"summary": "Held in Stockholm, Sweden, where electronic timing was first used and Jim Thorpe swept the pentathlon and decathlon.",
 		"facts": [
 			"In 1913, the year after these Games, Coubertin designed the Olympic rings to represent five continents.",
-			"Jim Thorpe won both the pentathlon and the decathlon."
+			"Japan became the first Asian country to compete."
 		]
 	},
 	"olympic-1920": {
-		"summary": "Games that resumed without inviting Germany, Austria and the other nations defeated in World War I.",
+		"summary": "Held in Antwerp, Belgium, as the first Games after the First World War, with defeated Germany, Austria and others left uninvited.",
 		"facts": [
 			"The Olympic flag flew for the first time, and doves were released as a symbol of peace for the first time.",
 			"Victor Boin of Belgium took the first Olympic athletes' oath."
 		]
 	},
 	"olympic-1924": {
-		"summary": "The first Games to build an Olympic Village next to the venues to house the athletes.",
+		"summary": "Games hosted by Paris, France, for a second time, the first to house athletes in a village built beside the stadium.",
 		"facts": [
 			"The film “Chariots of Fire” tells the story of the United Kingdom's track athletes at these Games.",
 			"The motto “Faster, Higher, Stronger” was used for the first time."
 		]
 	},
 	"olympic-1928": {
-		"summary": "The first Games to light an Olympic flame atop a tower at the stadium.",
+		"summary": "Held in Amsterdam, Netherlands, where a flame was first lit atop a stadium tower and women's athletics made its debut.",
 		"facts": [
 			"Coca-Cola became an official sponsor for the first time and has stayed one ever since.",
 			"The tradition of the team from Greece leading the parade of nations took hold."
 		]
 	},
 	"olympic-1932": {
-		"summary": "Games where the Great Depression cut the number of athletes to less than half that of the previous Games.",
+		"summary": "Held in Los Angeles, United States, in the depths of the Great Depression, with fewer than half as many athletes as the previous Games.",
 		"facts": [
 			"The medal ceremony, raising the winner's flag and playing the national anthem, took its modern form here.",
 			"Male athletes stayed in cottages in the Olympic Village, while the 126 female athletes stayed separately in a hotel."
 		]
 	},
 	"olympic-1936": {
-		"summary": "The first Games with a torch relay and a television broadcast.",
+		"summary": "Held in Berlin, capital of Nazi Germany, where the torch relay and television broadcasts began.",
 		"facts": [
 			"Sohn Kee-chung won the marathon running under the flag of Japan.",
 			"Jesse Owens won the 100 meters, the 200 meters, the long jump and the relay."
 		]
 	},
 	"olympic-1948": {
-		"summary": "Games held again after a 12-year gap following World War II.",
+		"summary": "Held in London, United Kingdom, 12 years after the previous Games and after the Second World War, with Germany and Japan not invited.",
 		"facts": [
 			"South Korea took part in the Summer Games for the first time under the Taegukgi, its national flag.",
 			"Weightlifter Kim Sung-jip won bronze, the first Olympic medal under the Korean flag."
 		]
 	},
 	"olympic-1952": {
-		"summary": "Games where the Soviet Union competed for the first time and began battling the United States atop the medal table.",
+		"summary": "Held in Helsinki, Finland, where the Soviet Union made its debut and began its medal rivalry with the United States.",
 		"facts": [
 			"Israel and the People's Republic of China also made their debuts.",
 			"Emil Zátopek of Czechoslovakia swept three long-distance events."
 		]
 	},
 	"olympic-1956": {
-		"summary": "The first Games held in the Southern Hemisphere, opening in late November.",
+		"summary": "The first Games in the Southern Hemisphere, held in Melbourne, Australia, and boycotted by several countries over the Hungarian uprising and the Suez Crisis.",
 		"facts": [
 			"Because of quarantine rules, the equestrian events alone were held five months early in Stockholm.",
 			"The tradition of athletes entering the closing ceremony together, mixed regardless of nation, began here."
 		]
 	},
 	"olympic-1960": {
-		"summary": "Games that held events at ancient sites such as the Basilica of Maxentius and the Baths of Caracalla.",
+		"summary": "Held in Rome, Italy, where barefoot runner Abebe Bikila won the marathon for Ethiopia's first gold medal.",
 		"facts": [
-			"Running barefoot, Abebe Bikila won the marathon to give Ethiopia its first gold medal.",
+			"Events were staged at ancient sites such as the Basilica of Maxentius and the Baths of Caracalla.",
 			"Right after the Olympics, the first Paralympics were held in the same city."
 		]
 	},
 	"olympic-1964": {
-		"summary": "The first Games held in Asia, with the Shinkansen bullet train starting service nine days before the opening.",
+		"summary": "The first Games in Asia, held in Tokyo, Japan, with the Shinkansen bullet train entering service nine days before the opening.",
 		"facts": [
 			"The Games were broadcast live across the ocean to the United States via the geostationary satellite Syncom 3.",
 			"Judo and volleyball, both hugely popular in Japan, became official sports for the first time."
 		]
 	},
 	"olympic-1968": {
-		"summary": "Games held at high altitude, 2,240 meters above sea level.",
+		"summary": "Held in high-altitude Mexico City, Mexico, where Black medallists raised their fists on the podium.",
 		"facts": [
 			"Bob Beamon's 8.90-meter long jump stood as the world record for 23 years.",
 			"After Fosbury won with his backward “flop,” the technique became the standard in the high jump."
 		]
 	},
 	"olympic-1972": {
-		"summary": "Games halted for 34 hours by a hostage crisis in the Olympic Village.",
+		"summary": "Held in Munich, West Germany, where Palestinian militants attacked the athletes' village and 11 members of the Israeli team were killed.",
 		"facts": [
 			"Swimmer Mark Spitz won seven gold medals.",
 			"Waldi the dachshund became the first official Olympic mascot."
 		]
 	},
 	"olympic-1976": {
-		"summary": "Games where a 14-year-old gymnast earned the first perfect 10 in Olympic history.",
+		"summary": "Held in Montreal, Canada, where 14-year-old Nadia Comăneci scored the first perfect 10 in gymnastics.",
 		"facts": [
 			"Yang Jung-mo won South Korea's first Olympic gold medal, in wrestling.",
 			"Because the scoreboard couldn't display 10.00, Comăneci's perfect score showed up as 1.00."
 		]
 	},
 	"olympic-1980": {
-		"summary": "Games missing 66 countries because of a boycott led by the United States.",
+		"summary": "Held in Moscow, Soviet Union, and missing some 60 countries because of a US-led boycott.",
 		"facts": [
 			"Misha, the bear mascot, shed a tear in a card stunt at the closing ceremony.",
 			"South Korea, Japan and West Germany also stayed away in protest of the invasion of Afghanistan."
 		]
 	},
 	"olympic-1984": {
-		"summary": "Games boycotted in return by the Soviet Union and 14 other Eastern Bloc countries.",
+		"summary": "Held in Los Angeles, United States, and skipped by the Soviet Union and Eastern Bloc countries in a retaliatory boycott.",
 		"facts": [
 			"They're considered the first Olympics to turn a profit, thanks to corporate sponsorship.",
 			"Carl Lewis won four track and field events."
 		]
 	},
 	"olympic-1988": {
-		"summary": "The first Games held in South Korea, bringing together a then-record 159 nations and territories.",
+		"summary": "Held in Seoul, South Korea, bringing East and West together for the first time in 12 years, with 159 nations and territories taking part.",
 		"facts": [
-			"For the first time in 12 years, both sides of the East–West divide took part together.",
+			"Ben Johnson won the 100 metres but was stripped of his gold for doping.",
 			"At the opening ceremony, a boy rolled a hoop alone across the empty stadium field."
 		]
 	},
 	"olympic-1992": {
-		"summary": "The first Summer Games held after the Dissolution of the Soviet Union and the Unification of Germany.",
+		"summary": "Held in Barcelona, Spain, after the Cold War, where former Soviet republics competed together as a single Unified Team.",
 		"facts": [
-			"Former Soviet republics competed together as a single Unified Team.",
+			"The “Dream Team” of US NBA stars won the basketball gold.",
 			"Hwang Young-cho won the marathon, taking gold 56 years after Sohn Kee-chung."
 		]
 	},
 	"olympic-1996": {
-		"summary": "Games marking the 100th anniversary of the modern Olympics, where Muhammad Ali lit the cauldron.",
+		"summary": "Held in Atlanta, United States, for the centenary of the modern Games, with Muhammad Ali lighting the cauldron.",
 		"facts": [
 			"A bombing in a park killed two people, but the Games went on.",
 			"Beach volleyball and softball became official sports for the first time."
 		]
 	},
 	"olympic-2000": {
-		"summary": "Games where the triathlon made its debut in the harbor in front of the Opera House.",
+		"summary": "Held in Sydney, Australia, where the North and South Korean teams marched together under the Korean Unification Flag at the opening ceremony for the first time.",
 		"facts": [
-			"Athletes from North Korea and South Korea marched together at the opening ceremony.",
+			"The triathlon made its debut in the waters in front of the Opera House.",
 			"Taekwondo became an official sport, and South Korea won three gold medals in it."
 		]
 	},
 	"olympic-2004": {
-		"summary": "Games that returned, after 108 years, to the city that hosted the first modern Olympics.",
+		"summary": "Games that returned to Athens, Greece, birthplace of the modern Games, after 108 years.",
 		"facts": [
 			"The shot put was held in the stadium at ancient Olympia.",
 			"The marathon started from the historic plain of Marathon."
 		]
 	},
 	"olympic-2008": {
-		"summary": "The Games where China topped the gold medal count for the first time.",
+		"summary": "Held in Beijing, China, where the host nation topped the gold medal table for the first time, ahead of the United States.",
 		"facts": [
 			"Usain Bolt set world records in the 100 and 200 meters.",
 			"Michael Phelps won eight gold medals at a single Games."
 		]
 	},
 	"olympic-2012": {
-		"summary": "Games that made their host the first city to stage the Olympics three times.",
+		"summary": "Held in London, United Kingdom, making it the first city to host the Games three times.",
 		"facts": [
 			"It was the first Games where every participating nation sent at least one female athlete.",
 			"With the addition of women's boxing, it became the first Games where women competed in every sport."
 		]
 	},
 	"olympic-2016": {
-		"summary": "The first Games held in South America, with the opening ceremony at the Maracanã Stadium.",
+		"summary": "The first Games in South America, held in Rio de Janeiro, Brazil, where a team of refugee athletes competed for the first time.",
 		"facts": [
-			"Ten athletes from South Sudan, Syria and elsewhere competed as the first Refugee Olympic Team.",
+			"The opening ceremony was held at the Maracanã football stadium.",
 			"Golf returned as an official sport after 112 years."
 		]
 	},
 	"olympic-2020": {
-		"summary": "Games postponed by a year because of a pandemic and held in 2021.",
+		"summary": "Postponed a year by COVID-19 and held in Tokyo, Japan, in 2021, mostly without spectators.",
 		"facts": [
-			"Because of COVID-19, most events were held without spectators.",
+			"Tokyo became the first Asian city to host the Summer Games twice.",
 			"Skateboarding and surfing became official sports for the first time."
 		]
 	},
 	"olympic-2024": {
-		"summary": "Games that held the opening ceremony on a river instead of in a stadium.",
+		"summary": "Held in Paris, France, 100 years after it last hosted, with an opening ceremony staged as a boat parade on the Seine.",
 		"facts": [
 			"The South Korea women's archery team won its 10th straight team gold medal.",
 			"Breaking was held as an official sport for the first time."

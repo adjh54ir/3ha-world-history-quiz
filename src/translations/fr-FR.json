@@ -529,7 +529,11 @@
                 "testDesc": "Vérifiez tout de suite que les notifications arrivent",
                 "testSend": "Envoyer",
                 "bgm": "Musique de fond",
-                "bgmDesc": "Musique de jungle pendant quiz, jeux et révisions"
+                "bgmDesc": "Musique de jungle pendant quiz, jeux et révisions",
+                "volume": "Volume des effets",
+                "volumeLow": "Faible",
+                "volumeMid": "Moyen",
+                "volumeHigh": "Fort"
             },
             "toast": {
                 "soundOn": "Effets sonores activés",
@@ -1037,12 +1041,13 @@
                 "permMsg": "Autorisez les notifications dans les réglages.",
                 "alarmOn": "Rappel du quiz du jour activé",
                 "alarmOff": "Rappel du quiz du jour désactivé",
-                "start": "Lancer le quiz du jour",
+                "start": "Lancer le quiz",
+                "topicsLabel": "Thèmes du jour",
                 "guideTitle": "Le quiz du jour, mode d'emploi",
                 "guide": {
                     "count": "{{count}} questions sur tous les thèmes, avec des erreurs à revoir.",
-                    "once": "Une fois par jour, sans limite de temps.",
-                    "result": "À la fin, résultats et explications immédiats !"
+                    "image": "Les questions illustrées s’affichent avec leur image.",
+                    "result": "Une fois par jour ! Résultats et explications à la fin."
                 },
                 "reviewWrong_one": "Revoir {{count}} erreur",
                 "reviewWrong_other": "Revoir {{count}} erreurs",

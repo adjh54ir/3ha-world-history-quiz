@@ -1,163 +1,163 @@
 {
 	"worldcup-1930": {
-		"summary": "The very first tournament, timed to mark the 100th anniversary of the host nation's first constitution.",
+		"summary": "The very first tournament, held in Montevideo, Uruguay, where the hosts beat neighbouring Argentina 4–2 in the final.",
 		"facts": [
 			"There was no qualifying; only the 13 nations that accepted invitations took part.",
-			"The hosts beat their neighbors 4–2 in the final to claim the first-ever title."
+			"It was timed to mark the 100th anniversary of the host nation's first constitution."
 		]
 	},
 	"worldcup-1934": {
-		"summary": "The first tournament held in Europe, and the first to use regional qualifying to pick its 16 finalists.",
+		"summary": "Held in Mussolini's Italy, where the hosts beat Czechoslovakia after extra time in the final in Rome.",
 		"facts": [
 			"It's the only tournament the reigning champions didn't enter.",
-			"In the final, the hosts beat Czechoslovakia 2–1 after extra time."
+			"It was the first edition held in Europe and the first to use qualifying rounds to pick the 16 finalists."
 		]
 	},
 	"worldcup-1938": {
-		"summary": "Held a year before World War II broke out, it became the last tournament before the war.",
+		"summary": "Held in France, where Italy beat Hungary in the final in Paris to become the first team to retain the title.",
 		"facts": [
-			"Italy beat Hungary 4–2 in the final to win back-to-back titles.",
+			"The Dutch East Indies became the first Asian team to play at the finals.",
 			"No World Cup was held for the next 12 years."
 		]
 	},
 	"worldcup-1950": {
-		"summary": "The tournament that returned after a 12-year break caused by the war.",
+		"summary": "Held in Brazil, where Uruguay beat the hosts 2–1 in the decisive last match at the Maracanã to take the title.",
 		"facts": [
 			"Instead of a knockout final, a final-round league decided the champion.",
-			"The hosts' defeat in the deciding match is remembered as the “Maracanazo,” the tragedy of the Maracanã."
+			"It resumed after a 12-year break caused by the Second World War."
 		]
 	},
 	"worldcup-1954": {
-		"summary": "The tournament where Hungary, unbeaten in 31 straight official matches, led the final 2–0 before collapsing.",
+		"summary": "Held in Switzerland and remembered for the “Miracle of Bern,” when West Germany came back to beat the unbeatable Hungarians 3–2 in the final.",
 		"facts": [
-			"West Germany's 3–2 comeback in that final is known as the “Miracle of Bern.”",
+			"Hungary had thrashed West Germany 8–3 in the group stage.",
 			"South Korea, playing in its first finals, lost 9–0 to Hungary."
 		]
 	},
 	"worldcup-1958": {
-		"summary": "The tournament where a 17-year-old Pelé made his name by scoring twice in the final.",
+		"summary": "Held in Sweden, where Brazil, led by 17-year-old Pelé, beat the hosts in the final to win their first title.",
 		"facts": [
-			"Brazil beat the hosts 5–2 in the final to win its first title.",
+			"France's Just Fontaine scored 13 goals, setting the record for a single tournament.",
 			"It was the first time a team from South America won a tournament held in Europe."
 		]
 	},
 	"worldcup-1962": {
-		"summary": "A tournament in South America where Brazil won its second title in a row.",
+		"summary": "Held in Chile, where Garrincha carried an injury-hit Brazil without Pelé to a second straight title.",
 		"facts": [
-			"When Pelé went down injured, Garrincha carried the team.",
+			"Brazil beat Czechoslovakia 3–1 in the final.",
 			"A brawl between Chile and Italy went down in history as the “Battle of Santiago.”"
 		]
 	},
 	"worldcup-1966": {
-		"summary": "The tournament where the birthplace of football won its first title, helped by a disputed goal in extra time.",
+		"summary": "Held in England, where the hosts beat West Germany for their first title after a disputed extra-time goal in the Wembley final.",
 		"facts": [
 			"World Cup Willie, a lion, became the tournament's first official mascot.",
 			"It's also remembered for North Korea's run to the quarterfinals."
 		]
 	},
 	"worldcup-1970": {
-		"summary": "The tournament where Brazil's third title let it keep the Jules Rimet Trophy for good.",
+		"summary": "Held in Mexico, where Pelé's Brazil beat Italy 4–1 and kept the Jules Rimet Trophy for good with a third title.",
 		"facts": [
 			"Matches were broadcast live by satellite, some of them in color for the first time.",
 			"Yellow cards and substitutions were used for the first time."
 		]
 	},
 	"worldcup-1974": {
-		"summary": "The tournament where the Netherlands and its “Total Football” had to settle for second place.",
+		"summary": "Held in West Germany, where the hosts beat Johan Cruyff's “Total Football” Netherlands in the final in Munich.",
 		"facts": [
-			"The hosts beat the Netherlands in the final.",
+			"The Dutch went ahead from a penalty two minutes into the final but lost 2–1.",
 			"The current FIFA World Cup Trophy was awarded for the first time."
 		]
 	},
 	"worldcup-1978": {
-		"summary": "A South American tournament where the hosts won their first title.",
+		"summary": "Held in Argentina under military rule, where the hosts beat the Netherlands 3–1 after extra time for their first title.",
 		"facts": [
 			"The Netherlands finished runner-up for the second tournament in a row.",
 			"Kempes scored twice in the final and finished as top scorer."
 		]
 	},
 	"worldcup-1982": {
-		"summary": "The first tournament to expand the finals to 24 teams.",
+		"summary": "Held in Spain, where Italy beat West Germany 3–1 in the final in Madrid for their third title.",
 		"facts": [
-			"Italy beat West Germany 3–1 in the final to win its third title.",
+			"The finals expanded to 24 teams for the first time.",
 			"Paolo Rossi finished as top scorer with six goals."
 		]
 	},
 	"worldcup-1986": {
-		"summary": "The tournament where Maradona led Argentina to its second title.",
+		"summary": "Moved to Mexico, the first country to host twice, after Colombia pulled out, and won by Maradona's Argentina.",
 		"facts": [
 			"Both the “Hand of God” and the “Goal of the Century” came in the quarterfinal against England.",
 			"South Korea returned to the finals for the first time in 32 years."
 		]
 	},
 	"worldcup-1990": {
-		"summary": "Won by West Germany on the eve of reunification, it was the lowest-scoring tournament ever at 2.21 goals per game.",
+		"summary": "Held in Italy, where West Germany beat Argentina 1–0 in the final in Rome for their third title.",
 		"facts": [
-			"The final was settled by a single penalty from Brehme.",
+			"At 2.21 goals per match, it was the lowest-scoring tournament ever.",
 			"Cameroon became the first team from Africa to reach the quarterfinals."
 		]
 	},
 	"worldcup-1994": {
-		"summary": "Held in a country seen as a football backwater, it drew more than 3.5 million spectators.",
+		"summary": "Held in the United States, where Brazil returned to the top after 24 years and became the first nation to win four titles.",
 		"facts": [
 			"For the first time, the final went to a penalty shootout, which ended with Baggio's miss.",
-			"Brazil won for the first time in 24 years, becoming the first nation to win four titles."
+			"More than 3.5 million spectators attended, setting an attendance record for the tournament."
 		]
 	},
 	"worldcup-1998": {
-		"summary": "The first tournament to expand the finals to 32 teams.",
+		"summary": "Held in France, where the hosts beat Brazil 3–0 in the final in Saint-Denis for their first title.",
 		"facts": [
-			"The hosts beat Brazil 3–0 in the final.",
+			"The finals expanded to 32 teams for the first time.",
 			"Zidane headed in two goals from corner kicks in the final."
 		]
 	},
 	"worldcup-2002": {
-		"summary": "The first World Cup held in Asia, and the first co-hosted by two countries.",
+		"summary": "Co-hosted by South Korea and Japan as the first edition in Asia, with Brazil winning a fifth title in the final in Yokohama.",
 		"facts": [
 			"South Korea reached the semifinals under coach Guus Hiddink.",
-			"Ronaldo scored twice in the final as Brazil won its fifth title."
+			"Ronaldo, with two goals in the final, finished as top scorer with eight."
 		]
 	},
 	"worldcup-2006": {
-		"summary": "The tournament remembered for a final that ended with Zidane's headbutt.",
+		"summary": "Held in Germany and remembered for Zidane's sending-off for headbutting Materazzi in the final in Berlin.",
 		"facts": [
 			"The final was decided on penalties after a 1–1 draw.",
 			"Italy won its fourth title."
 		]
 	},
 	"worldcup-2010": {
-		"summary": "The first tournament held on the African continent, with the drone of vuvuzelas filling the stadiums.",
+		"summary": "The first edition in Africa, held in South Africa, where Spain won their first title in the final in Johannesburg.",
 		"facts": [
 			"Paul the Octopus correctly predicted all seven of Germany's matches as well as the final.",
-			"Spain won its first title thanks to Iniesta's goal in extra time of the final."
+			"For the first time, the hosts were knocked out in the group stage."
 		]
 	},
 	"worldcup-2014": {
-		"summary": "The tournament where the hosts lost 7–1 in the semifinal, a defeat remembered as the “Mineirazo.”",
+		"summary": "Held in Brazil, where the hosts collapsed 7–1 to Germany in the semifinal and Germany went on to win the final in Rio.",
 		"facts": [
 			"Goal-line technology was used at a World Cup for the first time.",
-			"Germany won its first title since reunification and its fourth overall."
+			"Mario Götze's extra-time goal gave Germany a 1–0 win over Argentina in the final."
 		]
 	},
 	"worldcup-2018": {
-		"summary": "The first tournament where referees could overturn decisions using video review.",
+		"summary": "Held in Russia, where France beat Croatia 4–2 in the final in Moscow for their second title.",
 		"facts": [
-			"Croatia reached the final for the first time.",
+			"It was the first edition in which referees could change decisions using video review.",
 			"South Korea beat Germany 2–0 in the group stage."
 		]
 	},
 	"worldcup-2022": {
-		"summary": "The first tournament held in the Middle East, kicking off in November to avoid the heat.",
+		"summary": "The first edition in the Middle East, held in Qatar, where Argentina beat France on penalties after a 3–3 final.",
 		"facts": [
-			"The final was decided on penalties after a 3–3 draw.",
+			"To avoid the heat, it kicked off in November for the first time.",
 			"Messi lifted the trophy for the first time at his fifth World Cup."
 		]
 	},
 	"worldcup-2026": {
-		"summary": "The first tournament co-hosted by three countries, with the finals expanded to 48 teams.",
+		"summary": "Co-hosted by the United States, Canada and Mexico with 48 teams, and won by Spain over Argentina in the final.",
 		"facts": [
 			"The number of matches grew from 64 to 104, played across 16 cities.",
-			"Spain beat Argentina 1–0 after extra time in the final to win its second title."
+			"It was the first edition with three co-hosts and the first with 48 teams."
 		]
 	}
 }

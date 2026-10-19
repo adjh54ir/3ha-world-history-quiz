@@ -1,163 +1,163 @@
 {
 	"worldcup-1930": {
-		"summary": "Primera edición del torneo, organizada para celebrar el centenario de la Constitución del país anfitrión.",
+		"summary": "Primera edición del torneo, disputada en Montevideo (Uruguay), donde el anfitrión venció 4-2 a su vecina Argentina en la final.",
 		"facts": [
 			"Sin fase de clasificación, solo acudieron los trece países que aceptaron la invitación.",
-			"El anfitrión ganó su primer título al vencer 4-2 a su vecino en la final."
+			"Se organizó para celebrar el centenario de la Constitución del país anfitrión."
 		]
 	},
 	"worldcup-1934": {
-		"summary": "Primera edición disputada en Europa y la primera con una fase de clasificación regional para elegir a las 16 selecciones finalistas.",
+		"summary": "Torneo celebrado en la Italia de Mussolini, donde el anfitrión venció a Checoslovaquia en la prórroga de la final en Roma.",
 		"facts": [
 			"Es la única edición en la que no participó el campeón vigente.",
-			"En la final, el anfitrión venció 2-1 a Checoslovaquia en la prórroga."
+			"Fue la primera edición en Europa y la primera con fase de clasificación para elegir a las 16 selecciones finalistas."
 		]
 	},
 	"worldcup-1938": {
-		"summary": "Torneo disputado un año antes del estallido de la Segunda Guerra Mundial, el último antes de la contienda.",
+		"summary": "Torneo celebrado en Francia, donde Italia venció a Hungría en la final de París y fue la primera en revalidar el título.",
 		"facts": [
-			"Italia derrotó 4-2 a Hungría en la final y logró su segundo título consecutivo.",
+			"Las Indias Orientales Neerlandesas fueron la primera selección asiática en disputar la fase final.",
 			"Después de este torneo, el Mundial no volvió a jugarse durante 12 años."
 		]
 	},
 	"worldcup-1950": {
-		"summary": "Torneo que volvió a disputarse tras 12 años de interrupción por la guerra.",
+		"summary": "Torneo celebrado en Brasil, donde Uruguay venció 2-1 al anfitrión en el último partido decisivo en el Maracaná y se llevó el título.",
 		"facts": [
 			"En lugar de eliminatorias finales, el título se decidió en una liguilla final.",
-			"La derrota del anfitrión en el último partido se conoce como el «Maracanazo»."
+			"Volvió a disputarse tras doce años de interrupción por la Segunda Guerra Mundial."
 		]
 	},
 	"worldcup-1954": {
-		"summary": "Torneo en el que Hungría, invicta en 31 partidos oficiales seguidos, se vino abajo en la final tras ir ganando 2-0.",
+		"summary": "Torneo celebrado en Suiza y recordado por el «milagro de Berna», cuando Alemania Occidental remontó 3-2 a la invencible Hungría en la final.",
 		"facts": [
-			"Esa final, remontada 3-2 por Alemania Occidental, se conoce como el «milagro de Berna».",
+			"Hungría había goleado 8-3 a Alemania Occidental en la fase de grupos.",
 			"Corea del Sur, en su primera participación, perdió 0-9 ante Hungría."
 		]
 	},
 	"worldcup-1958": {
-		"summary": "Torneo en el que Pelé, con 17 años, se dio a conocer marcando dos goles en la final.",
+		"summary": "Torneo celebrado en Suecia, donde el Brasil de un Pelé de 17 años venció al anfitrión en la final y ganó su primer título.",
 		"facts": [
-			"Brasil ganó su primer título al vencer 5-2 al anfitrión en la final.",
+			"El francés Just Fontaine marcó 13 goles y estableció el récord en una sola edición.",
 			"Fue la primera vez que una selección sudamericana ganaba un Mundial disputado en Europa."
 		]
 	},
 	"worldcup-1962": {
-		"summary": "Torneo sudamericano en el que Brasil logró su segundo título consecutivo.",
+		"summary": "Torneo celebrado en Chile, donde Garrincha llevó a un Brasil sin Pelé, lesionado, a su segundo título consecutivo.",
 		"facts": [
-			"Con Pelé lesionado, Garrincha tomó las riendas del equipo.",
+			"Brasil venció 3-1 a Checoslovaquia en la final.",
 			"La pelea entre Chile e Italia se recuerda como la «batalla de Santiago»."
 		]
 	},
 	"worldcup-1966": {
-		"summary": "Torneo en el que la cuna del fútbol ganó su primer título, entre la polémica por un gol en la prórroga.",
+		"summary": "Torneo celebrado en Inglaterra, donde el anfitrión venció a Alemania Occidental y ganó su primer título tras un polémico gol en la prórroga de Wembley.",
 		"facts": [
 			"El león Willie fue la primera mascota oficial de un Mundial.",
 			"También se recuerda porque Corea del Norte llegó a cuartos de final."
 		]
 	},
 	"worldcup-1970": {
-		"summary": "Torneo en el que Brasil, con su tercer título, se quedó en propiedad la Copa Jules Rimet.",
+		"summary": "Torneo celebrado en México, donde el Brasil de Pelé venció 4-1 a Italia y se quedó para siempre la Copa Jules Rimet con su tercer título.",
 		"facts": [
 			"Se retransmitió en directo vía satélite y, en parte, por primera vez en color.",
 			"Se usaron por primera vez las tarjetas amarillas y los cambios de jugadores."
 		]
 	},
 	"worldcup-1974": {
-		"summary": "Torneo en el que los Países Bajos del «fútbol total» se quedaron con el subcampeonato.",
+		"summary": "Torneo celebrado en Alemania Occidental, donde el anfitrión venció en la final de Múnich a los Países Bajos del «fútbol total» de Johan Cruyff.",
 		"facts": [
-			"El anfitrión venció a los Países Bajos en la final.",
+			"Los Países Bajos se adelantaron de penalti en el minuto 2 de la final, pero perdieron 2-1.",
 			"Se estrenó el actual trofeo de la Copa Mundial de la FIFA."
 		]
 	},
 	"worldcup-1978": {
-		"summary": "Torneo sudamericano en el que el país anfitrión conquistó su primer título.",
+		"summary": "Torneo celebrado en la Argentina de la dictadura militar, donde el anfitrión venció 3-1 a los Países Bajos en la prórroga y ganó su primer título.",
 		"facts": [
 			"Los Países Bajos fueron subcampeones por segunda edición consecutiva.",
 			"Kempes marcó dos goles en la final y fue el máximo goleador."
 		]
 	},
 	"worldcup-1982": {
-		"summary": "Primer torneo con 24 selecciones en la fase final.",
+		"summary": "Torneo celebrado en España, donde Italia venció 3-1 a Alemania Occidental en la final de Madrid y logró su tercer título.",
 		"facts": [
-			"Italia ganó 3-1 a Alemania Occidental en la final y logró su tercer título.",
+			"La fase final se amplió por primera vez a 24 selecciones.",
 			"Paolo Rossi fue el máximo goleador con seis tantos."
 		]
 	},
 	"worldcup-1986": {
-		"summary": "Torneo en el que Maradona llevó a Argentina a su segundo título.",
+		"summary": "Torneo trasladado a México, que lo organizaba por segunda vez tras la renuncia de Colombia, y ganado por la Argentina de Maradona.",
 		"facts": [
 			"En los cuartos de final contra Inglaterra llegaron a la vez «la mano de Dios» y «el gol del siglo».",
 			"Corea del Sur volvió a la fase final 32 años después."
 		]
 	},
 	"worldcup-1990": {
-		"summary": "Torneo que ganó Alemania Occidental poco antes de la reunificación y el de menos goles de la historia, con 2,21 por partido.",
+		"summary": "Torneo celebrado en Italia, donde Alemania Occidental venció 1-0 a Argentina en la final de Roma y logró su tercer título.",
 		"facts": [
-			"La final se decidió con un único gol, de penalti, obra de Brehme.",
+			"Con 2,21 goles por partido, fue la edición con menos goles de la historia.",
 			"Camerún fue la primera selección africana en llegar a cuartos de final."
 		]
 	},
 	"worldcup-1994": {
-		"summary": "Torneo celebrado en un país considerado periférico en el fútbol, que superó los 3,5 millones de espectadores.",
+		"summary": "Torneo celebrado en Estados Unidos, donde Brasil volvió a la cima tras 24 años y fue el primer país en ganar cuatro títulos.",
 		"facts": [
 			"Por primera vez la final se decidió en la tanda de penaltis, que terminó con el fallo de Baggio.",
-			"Brasil ganó tras 24 años de espera y se convirtió en el primer país con cuatro títulos."
+			"Asistieron más de 3,5 millones de espectadores, récord de asistencia del torneo."
 		]
 	},
 	"worldcup-1998": {
-		"summary": "Primer torneo con 32 selecciones en la fase final.",
+		"summary": "Torneo celebrado en Francia, donde el anfitrión venció 3-0 a Brasil en la final de Saint-Denis y ganó su primer título.",
 		"facts": [
-			"El anfitrión venció 3-0 a Brasil en la final.",
+			"La fase final se amplió por primera vez a 32 selecciones.",
 			"Zidane marcó en la final dos goles de cabeza, ambos a la salida de un córner."
 		]
 	},
 	"worldcup-2002": {
-		"summary": "Primera Copa del Mundo celebrada en Asia y la primera organizada conjuntamente por dos países.",
+		"summary": "Primera edición en Asia, organizada por Corea del Sur y Japón, en la que Brasil ganó su quinto título en la final de Yokohama.",
 		"facts": [
 			"Corea del Sur llegó a semifinales con Hiddink en el banquillo.",
-			"Ronaldo marcó dos goles en la final y Brasil conquistó su quinto título."
+			"Ronaldo, con dos goles en la final, fue el máximo goleador con ocho tantos."
 		]
 	},
 	"worldcup-2006": {
-		"summary": "Torneo recordado por la final que terminó con el cabezazo de Zidane.",
+		"summary": "Torneo celebrado en Alemania y recordado por la expulsión de Zidane tras su cabezazo a Materazzi en la final de Berlín.",
 		"facts": [
 			"La final acabó 1-1 y se decidió en la tanda de penaltis.",
 			"Italia conquistó su cuarto título."
 		]
 	},
 	"worldcup-2010": {
-		"summary": "Primer torneo celebrado en el continente africano, con el sonido de las vuvuzelas llenando los estadios.",
+		"summary": "Primera edición en África, celebrada en Sudáfrica, donde España ganó su primer título en la final de Johannesburgo.",
 		"facts": [
 			"El pulpo Paul acertó los siete partidos de Alemania y el resultado de la final.",
-			"España ganó su primer título gracias a un gol de Iniesta en la prórroga de la final."
+			"Por primera vez, el anfitrión cayó en la fase de grupos."
 		]
 	},
 	"worldcup-2014": {
-		"summary": "Torneo en el que el anfitrión cayó 1-7 en semifinales y dejó para la historia el «Mineirazo».",
+		"summary": "Torneo celebrado en Brasil, donde el anfitrión se hundió 1-7 ante Alemania en semifinales y Alemania ganó la final en Río.",
 		"facts": [
 			"La tecnología de línea de gol se utilizó por primera vez en un Mundial.",
-			"Alemania ganó su primer título tras la reunificación, el cuarto de su historia."
+			"En la final, un gol de Mario Götze en la prórroga dio a Alemania el 1-0 sobre Argentina."
 		]
 	},
 	"worldcup-2018": {
-		"summary": "Primer torneo en el que el árbitro podía cambiar sus decisiones gracias al videoarbitraje.",
+		"summary": "Torneo celebrado en Rusia, donde Francia venció 4-2 a Croacia en la final de Moscú y logró su segundo título.",
 		"facts": [
-			"Croacia llegó por primera vez a la final.",
+			"Fue la primera edición en la que el árbitro pudo cambiar sus decisiones con el videoarbitraje.",
 			"Corea del Sur venció 2-0 a Alemania en la fase de grupos."
 		]
 	},
 	"worldcup-2022": {
-		"summary": "Primer torneo celebrado en Oriente Medio, que arrancó en noviembre para evitar el calor.",
+		"summary": "Primera edición en Oriente Medio, celebrada en Catar, donde Argentina venció a Francia en los penaltis tras un 3-3 en la final.",
 		"facts": [
-			"La final terminó 3-3 y se decidió en la tanda de penaltis.",
+			"Para evitar el calor, arrancó por primera vez en noviembre.",
 			"Messi levantó por fin el trofeo en su quinto Mundial."
 		]
 	},
 	"worldcup-2026": {
-		"summary": "Primer torneo organizado por tres países y con la fase final ampliada a 48 selecciones.",
+		"summary": "Torneo organizado por Estados Unidos, Canadá y México, con 48 selecciones, y ganado por España ante Argentina en la final.",
 		"facts": [
 			"Los partidos pasaron de 64 a 104 y se jugaron en 16 ciudades.",
-			"España venció 1-0 a Argentina en la prórroga de la final y logró su segundo título."
+			"Fue la primera edición con tres anfitriones y la primera con 48 selecciones."
 		]
 	}
 }

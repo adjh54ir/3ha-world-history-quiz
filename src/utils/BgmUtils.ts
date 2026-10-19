@@ -17,6 +17,8 @@ const SOURCES = {
 export type BgmTrack = keyof typeof SOURCES;
 
 const BGM_KEY = 'BGM_ENABLED';
+/** 효과음보다 한참 낮게 깔아 정답·오답음을 가리지 않는다 */
+const BGM_VOLUME = 0.28;
 let bgmEnabled = true;
 
 // 현재 재생 중인 플레이어/트랙 (expo-audio 또는 expo-av)
@@ -69,6 +71,37 @@ export const stopBgm = () => {
 };
 
 /**
+ * 결과 화면 진입용 — 뚝 끊지 않고 durationMs 동안 소리를 줄이며 멈춘다.
+ * 상태(currentPlayer)는 곧바로 비운다 — 줄어드는 사이 새 startBgm 이 들어와도 그 트랙은 건드리지 않고,
+ * stopBgm 이 불려도 이 플레이어는 스스로 끝까지 줄인 뒤 해제된다.
+ */
+export const fadeOutBgm = (durationMs = 500) => {
+	const player = currentPlayer;
+	if (!player || isAv) {
+		stopBgm();
+		return;
+	}
+	generation += 1;
+	currentPlayer = null;
+	currentTrack = null;
+	const from = typeof player.volume === 'number' ? player.volume : BGM_VOLUME;
+	const STEPS = 10;
+	let step = 0;
+	const timer = setInterval(() => {
+		step += 1;
+		try {
+			player.volume = from * (1 - step / STEPS);
+			if (step < STEPS) return;
+			player.pause?.();
+			player.remove?.();
+		} catch {
+			// 이미 해제된 플레이어 — 무시
+		}
+		clearInterval(timer);
+	}, durationMs / STEPS);
+};
+
+/**
  * BGM 재생 시작 (반복). 이미 같은 트랙이 재생 중이면 무시.
  * @param track 'quiz' | 'time' | 'study'
  */
@@ -89,7 +122,7 @@ export const startBgm = async (track: BgmTrack) => {
 		const audio = require('expo-audio');
 		const player = audio.createAudioPlayer(SOURCES[track]);
 		player.loop = true;
-		player.volume = 0.28;
+		player.volume = BGM_VOLUME;
 		player.play();
 		currentPlayer = player;
 		currentTrack = track;
@@ -99,4 +132,4 @@ export const startBgm = async (track: BgmTrack) => {
 	}
 };
 
-export default { startBgm, stopBgm, setBgmEnabled, isBgmEnabled, loadBgmSetting };
+export default { startBgm, stopBgm, fadeOutBgm, setBgmEnabled, isBgmEnabled, loadBgmSetting };

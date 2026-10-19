@@ -12,7 +12,7 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import CharacterGuide, { useCharacterGuideOnce } from '@/src/screens/common/CharacterGuide';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
-import Colors, { isDark, withAlpha } from '@/src/const/ConstColors';
+import Colors, { isDark, withAlpha, accentInk } from '@/src/const/ConstColors';
 import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout } from '@/src/const/ConstDesign';
 import { scaledSize, scaleHeight, scaleWidth, isTablet } from '@/src/utils';
 import LearnHubService from '@/src/services/LearnHubService';
@@ -30,12 +30,15 @@ import { Image as ExpoImage } from 'expo-image';
 import AdaptiveGrid from '@/src/screens/common/layout/AdaptiveGrid';
 import { localized, themed } from '@/src/utils/ThemedStyles';
 import { DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
+import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 
 const DAILY_COUNT = 5;
 /** 오늘의 퀴즈 난이도 배분 — 쉬운 문제부터 계단식으로 오르게 고정 (복습 문항이 있으면 앞에서부터 잘라 쓴다) */
 const LEVEL_QUOTA = localized(() => [1, 1, 2, 2, 3].map((lv) => DIFFICULTY_LABELS[lv]));
 /** 오늘의 퀴즈에 섞어 낼 복습(오답) 문항 최대 개수 */
 const REVIEW_SLOT = 2;
+/** 오늘의 퀴즈 새 문항 중 그림이 붙은 문항을 먼저 채울 자리 수 (나머지는 주제가 고르게 섞이도록 둔다) */
+const IMAGE_SLOTS = 3;
 const ALARM_KEY = 'TODAY_QUIZ_ALARM_ON';
 /** 완료 화면 결과 목록 기본 노출 개수 (나머지는 '더보기') */
 const RESULT_PREVIEW = 3;
@@ -93,7 +96,8 @@ const TodayChallenge = () => {
 	const doneAnim = useRef(new Animated.Value(0)).current;
 	const doneScale = doneAnim.interpolate({ inputRange: [0, 1], outputRange: [0.92, 1] });
 	// 화면 사용법 안내 — 최초 1회, 홈에서 고른 캐릭터가 설명
-	const guide = useCharacterGuideOnce('today-quiz');
+	// v2: 그림 문항 안내가 들어간 문구 — 예전 안내를 본 사람에게도 한 번 더 보여 준다
+	const guide = useCharacterGuideOnce('today-quiz-v2');
 	const { showToast } = useToast();
 
 	// 복습할 때가 된 오답 (최대 REVIEW_SLOT개) — 새 문제와 섞어 오늘의 퀴즈로 낸다
@@ -114,11 +118,18 @@ const TodayChallenge = () => {
 		const slots = Math.max(0, DAILY_COUNT - reviewQs.length);
 		const picked: LearnType.QuizQuestion[] = [];
 		const taken = new Set<string>();
+		// 앞 IMAGE_SLOTS 자리는 그림이 붙은 문항을 먼저 고르고, 모든 자리에서 아직 안 나온 주제를 먼저 고른다
+		// (그림만 앞세우면 그림 없는 주제(지형·사건)가 아예 안 나오고 같은 주제가 겹친다)
+		const domainsUsed = new Set(reviewQs.map((q) => q.domain));
 		LEVEL_QUOTA.slice(0, slots).forEach((level) => {
-			const q = pool.find((c) => c.level === level && !taken.has(c.uid));
+			const fits = (c: LearnType.QuizQuestion) => c.level === level && !taken.has(c.uid);
+			const fresh = (c: LearnType.QuizQuestion) => fits(c) && !domainsUsed.has(c.domain);
+			const wantImage = picked.filter((p) => p.imageRef).length < IMAGE_SLOTS;
+			const q = (wantImage ? pool.find((c) => fresh(c) && c.imageRef) : undefined) ?? pool.find(fresh) ?? pool.find(fits);
 			if (q) {
 				picked.push(q);
 				taken.add(q.uid);
+				domainsUsed.add(q.domain);
 			}
 		});
 		// 해당 난이도 문항이 모자라면 남은 문항으로 채운다
@@ -130,6 +141,11 @@ const TodayChallenge = () => {
 		return [...reviewQs, ...picked];
 	}, [reviewQs]);
 	const reviewUids = useMemo(() => new Set(reviewQs?.map((q) => q.uid) ?? []), [reviewQs]);
+	// 시작 전 미리 보여 줄 오늘의 주제 (복습 문항끼리 주제가 겹칠 수 있어 한 번씩만)
+	const todayTopics = useMemo(
+		() => [...new Set(questions.map((q) => q.domain))].filter((d) => LearnHubService.isValidCategory(d)).map((d) => ({ key: d, title: LearnHubService.getDomainTitle(d), meta: LearnHubService.getDomain(d).meta })),
+		[questions],
+	);
 
 	useEffect(() => {
 		AsyncStorage.getItem(ALARM_KEY).then((v) => setAlarmOn(v === '1'));
@@ -256,7 +272,7 @@ const TodayChallenge = () => {
 			answer: it.answer,
 			explanation: it.explanation,
 		};
-	}, []);
+	}, [cardOf]);
 
 	useEffect(() => {
 		if (!doneToday) return;
@@ -410,7 +426,7 @@ const TodayChallenge = () => {
 												{ label: t('quiz.common.correct'), value: result.correct, icon: 'check-circle', color: Colors.success },
 												{ label: t('quiz.common.wrong'), value: result.total - result.correct, icon: 'cancel', color: Colors.error },
 												{ label: t('quiz.today.statItems'), value: result.total, icon: 'quiz', color: Colors.textSecondary },
-											] as const).map((st, i) => (
+											] as const).map((st) => (
 												// 정답 → 오답 → 문항 순으로 하나씩 올라오게 (완료 연출)
 												<View key={st.icon} style={styles.heroStat}>
 													<IconComponent type="materialIcons" name={st.icon} size={scaledSize(15)} color={st.color} />
@@ -457,7 +473,7 @@ const TodayChallenge = () => {
 										</View>
 									</View>
 									<AdaptiveGrid>
-									{visibleResultItems.map((it, i) => {
+									{visibleResultItems.map((it) => {
 										const card = cardOf(it);
 										// 이름/설명/더 알아보기 — 문제·정답 대신 표제어와 설명 노출
 										const word = card ? card.title : it.answer;
@@ -512,6 +528,22 @@ const TodayChallenge = () => {
 								<Text style={styles.heroDate}>{todayLabel()}</Text>
 								<Text style={styles.heroTitle}>{t('quiz.today.heroTitle', { count: DAILY_COUNT })}</Text>
 								<Text style={styles.heroDesc}>{t('quiz.today.heroDesc', { count: DAILY_COUNT })}</Text>
+								{todayTopics.length > 0 && (
+									<View style={styles.topicBox}>
+										<Text style={styles.topicLabel}>{t('quiz.today.topicsLabel')}</Text>
+										<View style={styles.topicRow}>
+											{todayTopics.map(({ key, title, meta }, i) => (
+												// 한 칩씩 차례로 올라오게
+												<FadeInUp key={key} delay={120 + i * 70} distance={8}>
+													<View style={[styles.topicChip, { backgroundColor: withAlpha(meta.color, '14') }]}>
+														<DomainIcon mainIcon={meta.mainIcon} icon={meta.icon} iconType={meta.iconType} size={scaledSize(14)} color={accentInk(meta.color)} />
+														<Text style={[styles.topicChipText, { color: accentInk(meta.color) }]} numberOfLines={1} ellipsizeMode="tail">{title}</Text>
+													</View>
+												</FadeInUp>
+											))}
+										</View>
+									</View>
+								)}
 							</View>
 
 							<View style={styles.infoCard}>
@@ -552,7 +584,7 @@ const TodayChallenge = () => {
 			<CharacterGuide
 				visible={guide.visible && !doneToday}
 				onClose={guide.close}
-				lines={[t('quiz.today.guide.count', { count: DAILY_COUNT }), t('quiz.today.guide.once'), t('quiz.today.guide.result')]}
+				lines={[t('quiz.today.guide.count', { count: DAILY_COUNT }), t('quiz.today.guide.image'), t('quiz.today.guide.result')]}
 				title={t('quiz.today.guideTitle')}
 			/>
 
@@ -571,7 +603,7 @@ const styles = themed(() => StyleSheet.create({
 	container: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 	hero: { ...CardSurface, alignItems: 'center', borderRadius: Radius.lg, paddingVertical: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
 	// 태블릿 가득 폭에서 16:9 면 높이가 390~550pt 가 되어 본문을 밀어낸다 — 더 납작하게 (폰은 그대로)
-	heroIllustration: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 16 / 9, borderRadius: Radius.lg, marginBottom: Layout.itemGap },
+	heroIllustration: { width: '100%', aspectRatio: isTablet ? Layout.heroAspectTablet : 16 / 9, borderRadius: Radius.lg, marginBottom: SpacingV.md },
 	heroDone: { ...CardSurface, overflow: 'hidden', alignItems: 'center', borderRadius: Radius.lg, paddingTop: SpacingV.xl, paddingBottom: SpacingV.xxl, paddingHorizontal: Spacing.xl, marginBottom: Layout.sectionGap },
 	heroDoneBadge: { width: scaleWidth(52), height: scaleWidth(52), borderRadius: Radius.lg, alignItems: 'center', justifyContent: 'center', marginBottom: SpacingV.sm },
 	heroDoneDate: { color: Colors.textSecondary, fontSize: Typography.footnote, fontWeight: '800' },
@@ -588,6 +620,12 @@ const styles = themed(() => StyleSheet.create({
 	heroDate: { color: Colors.textSecondary, fontSize: Typography.body, fontWeight: '700' },
 	heroTitle: { color: Colors.textStrong, fontSize: Typography.h1, fontWeight: '900', marginTop: SpacingV.xs },
 	heroDesc: { color: Colors.textSecondary, fontSize: Typography.body, textAlign: 'center', marginTop: SpacingV.sm, lineHeight: scaleHeight(20) },
+	// 오늘의 주제 — 설명 아래 옅은 구분선 뒤에 칩을 가운데 정렬로 감싼다
+	topicBox: { alignSelf: 'stretch', alignItems: 'center', marginTop: SpacingV.lg, paddingTop: SpacingV.lg, borderTopWidth: 1, borderTopColor: Colors.border },
+	topicLabel: { color: Colors.textSecondary, fontSize: Typography.footnote, fontWeight: '800', marginBottom: SpacingV.sm },
+	topicRow: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: Spacing.sm },
+	topicChip: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill },
+	topicChipText: { fontSize: Typography.footnote, fontWeight: '800', maxWidth: scaleWidth(120) },
 	resultList: { ...CardSurface, borderRadius: Radius.lg, padding: Spacing.lg, marginBottom: SpacingV.md },
 	resultListTitle: { fontSize: Typography.body, fontWeight: '900', color: Colors.textStrong },
 	resultListHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: Spacing.sm, marginBottom: SpacingV.md },

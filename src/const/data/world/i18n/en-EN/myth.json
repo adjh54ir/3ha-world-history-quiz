@@ -1,6 +1,6 @@
 {
 	"myth-001": {
-		"summary": "King of the Olympian gods, who wields the thunderbolt as his weapon.",
+		"summary": "The god who overthrew his father Cronus and the Titans, took the sky as his share and became king of the Olympians, wielding the thunderbolt.",
 		"facts": [
 			"The planet Jupiter is named after his Roman counterpart, Jupiter.",
 			"The Statue of Zeus at Olympia was one of the Seven Wonders of the Ancient World."
@@ -12,7 +12,7 @@
 		]
 	},
 	"myth-002": {
-		"summary": "Queen of the gods and goddess who protects marriage and the home.",
+		"summary": "Queen of the gods and guardian of marriage, who relentlessly hounded her husband's lovers and their children.",
 		"facts": [
 			"The English word June most likely comes from her Roman name, Juno.",
 			"She is said to have set the hundred eyes of the slain Argus into the peacock’s tail."
@@ -24,7 +24,7 @@
 		]
 	},
 	"myth-003": {
-		"summary": "Zeus’s older brother, who can shake both sea and land with a single trident.",
+		"summary": "The god who drew the sea as his lot, stirred up storms and earthquakes with his trident, and kept Odysseus wandering the seas for years.",
 		"facts": [
 			"The planet Neptune takes its name from his Roman name, Neptune.",
 			"He was said to have created the first horse by striking a rock with his trident, so he was also worshipped as the god of horses."
@@ -36,7 +36,7 @@
 		]
 	},
 	"myth-004": {
-		"summary": "Earth goddess who makes the grain grow.",
+		"summary": "Goddess of grain and farming, who founded the Eleusinian Mysteries and sent Triptolemus out to teach the world to grow wheat.",
 		"facts": [
 			"Her grief at losing her daughter to the underworld is told as the origin of the seasons.",
 			"Breakfast cereal gets its name from her Roman name, Ceres."
@@ -48,7 +48,7 @@
 		]
 	},
 	"myth-005": {
-		"summary": "Goddess of wisdom, born fully armed from her father’s head.",
+		"summary": "Goddess of wisdom who won Attica from Poseidon with the gift of an olive tree and guided heroes such as Perseus and Odysseus.",
 		"facts": [
 			"Her bird, the owl, appears on the back of Greece’s 1-euro coin.",
 			"The Parthenon on the Acropolis was a temple dedicated to her."
@@ -60,7 +60,7 @@
 		]
 	},
 	"myth-006": {
-		"summary": "God of light, who plays the lyre and delivers prophecies.",
+		"summary": "God of music, prophecy and archery, who shot the great serpent Python at Delphi and made the spot his own sanctuary.",
 		"facts": [
 			"At his temple in Delphi, he gave oracles through the mouth of his priestess, the Pythia.",
 			"The US Apollo program, which sent the first humans to the Moon in 1969, was named after him."
@@ -72,7 +72,7 @@
 		]
 	},
 	"myth-007": {
-		"summary": "Goddess of the hunt, who roams the forest with a bow on her back.",
+		"summary": "Goddess of the hunt who shot down Niobe's daughters for insulting her mother and turned Actaeon into a stag for seeing her bathe.",
 		"facts": [
 			"The twin of Apollo, she is said to have been born first on the island of Delos and then helped deliver her brother.",
 			"NASA’s Artemis lunar program, the successor to the Apollo program, is named after her."
@@ -84,7 +84,7 @@
 		]
 	},
 	"myth-008": {
-		"summary": "Savage god of war, who loves fighting for its own sake.",
+		"summary": "Bloodthirsty god of war who fought for the Trojans until Diomedes wounded him with a spear and sent him fleeing to Olympus.",
 		"facts": [
 			"He was unpopular in Greece but greatly revered in Rome.",
 			"The planet Mars and the English month of March both come from his Roman name, Mars."
@@ -96,7 +96,7 @@
 		]
 	},
 	"myth-009": {
-		"summary": "Goddess of love and beauty, born from the sea foam.",
+		"summary": "Goddess of love and beauty who loved the hunter Adonis and, with the Trojan Anchises, bore Aeneas, ancestor of the Romans.",
 		"facts": [
 			"Her winning of the golden apple set off the chain of events that led to the Trojan War.",
 			"The planet Venus takes its English name from her Roman name, Venus."
@@ -108,7 +108,7 @@
 		]
 	},
 	"myth-010": {
-		"summary": "Lame blacksmith god who forges the weapons of Olympus.",
+		"summary": "Smith god who forged Achilles' shield and armor and caught his unfaithful wife and Ares in bed with an invisible net of chains.",
 		"facts": [
 			"His temple, standing on a hill above the Agora in Athens, is still nearly intact after more than 2,400 years.",
 			"The word volcano comes from his Roman name, Vulcan."
@@ -120,7 +120,7 @@
 		]
 	},
 	"myth-011": {
-		"summary": "Messenger of the gods, who carries their news in winged sandals.",
+		"summary": "The god who stole Apollo's cattle and made the first lyre from a tortoise shell on the day he was born, and who carried the gods' messages and the souls of the dead.",
 		"facts": [
 			"In 1902, the US Army Medical Corps adopted his staff, entwined with two snakes, as its insignia.",
 			"Mercury, the planet closest to the Sun, takes its English name from his Roman name."
@@ -132,7 +132,7 @@
 		]
 	},
 	"myth-012": {
-		"summary": "Wandering god of revelry who teaches people about wine.",
+		"summary": "God born from his father's thigh, who spread vine-growing and winemaking across the world and punished the Theban king who rejected him.",
 		"facts": [
 			"At his festival in Athens, contests of tragedy and comedy were held every year.",
 			"Bacchus, a Korean energy tonic made by Dong-A Pharmaceutical, is named after his Roman name, Bacchus."
@@ -144,7 +144,7 @@
 		]
 	},
 	"myth-013": {
-		"summary": "Quiet goddess who tends the hearth fires of homes and temples.",
+		"summary": "Goddess who turned down both Poseidon and Apollo, vowed to stay a virgin and was given the hearth at the center of every home and temple.",
 		"facts": [
 			"The eldest daughter, she was the first child Cronus swallowed and the last he spat back out.",
 			"In Rome, the fire in the Temple of Vesta was tended by six virgin priestesses."
@@ -155,7 +155,7 @@
 		]
 	},
 	"myth-014": {
-		"summary": "Lord beneath the earth, who rules over the realm of the dead.",
+		"summary": "The god who drew the underworld as his lot to rule the dead, and carried off Demeter's daughter Persephone to be his queen.",
 		"facts": [
 			"Because he granted the minerals and grain that come from the ground, he was also called Pluton, meaning “the wealthy one.”",
 			"Pluto, the English name of the dwarf planet, is his Roman name."
@@ -167,7 +167,7 @@
 		]
 	},
 	"myth-015": {
-		"summary": "Goddess of spring who was carried off to the underworld and became its queen.",
+		"summary": "Demeter's daughter, carried off while picking flowers to become queen of the underworld, who quarreled with Aphrodite over the infant Adonis.",
 		"facts": [
 			"Because she ate pomegranate seeds, she had to spend a third of every year in the underworld.",
 			"In the Eleusinian Mysteries, she was worshipped alongside her mother under the name Kore, meaning “maiden.”"
@@ -179,7 +179,7 @@
 		]
 	},
 	"myth-016": {
-		"summary": "Young god who shoots arrows that make anyone they hit fall in love.",
+		"summary": "God whose arrows kindle love, who defied his mother by falling for the princess Psyche and finally married her with the gods' blessing.",
 		"facts": [
 			"Cupid, shown as a baby with a bow on Valentine’s Day cards, is his Roman form.",
 			"Golden arrows kindle love, while blunt lead arrows drive it away."
@@ -191,7 +191,7 @@
 		]
 	},
 	"myth-017": {
-		"summary": "Winged goddess who heralds victory in war and in contests.",
+		"summary": "Winged goddess of victory who, with her mother Styx, was first to side with Zeus against the Titans and never left his side afterward.",
 		"facts": [
 			"A headless statue of her, found on the island of Samothrace in 1863, stands atop the Daru staircase in the Louvre.",
 			"The sportswear company Nike is named after her, using the English pronunciation of her name."
@@ -202,7 +202,7 @@
 		]
 	},
 	"myth-018": {
-		"summary": "Sun god who drives a fiery chariot across the sky every day.",
+		"summary": "All-seeing god of the sun who told Demeter who had taken Persephone, and who lost his son Phaethon after letting him drive the sun chariot.",
 		"facts": [
 			"The Colossus of Rhodes, one of the Seven Wonders of the Ancient World, was a bronze statue modeled on him.",
 			"Helium, an element first discovered in sunlight, takes its name from his, which is the Greek word for the sun."
@@ -214,7 +214,7 @@
 		]
 	},
 	"myth-019": {
-		"summary": "Moon goddess who drives a silver chariot across the night sky.",
+		"summary": "Moon goddess, sister of the sun and the dawn, who drove her silver chariot each night and visited the eternally sleeping shepherd Endymion.",
 		"facts": [
 			"Pausanias wrote that she bore Endymion fifty daughters.",
 			"Selenium, discovered in 1817, was named after the Moon to pair it with tellurium, which had been named after the Earth."
@@ -225,7 +225,7 @@
 		]
 	},
 	"myth-020": {
-		"summary": "Goddess of the dawn, who rises before the sun and paints the sky red.",
+		"summary": "Goddess of the dawn who opens heaven's gates for the sun each morning, and who won eternal life for the Trojan prince Tithonus but forgot to ask for eternal youth.",
 		"facts": [
 			"Homer often called her “rosy-fingered Dawn.”",
 			"The aurora, the light that shimmers across polar night skies, takes its name from her Roman name, Aurora."
@@ -237,7 +237,7 @@
 		]
 	},
 	"myth-021": {
-		"summary": "God who drove out his father with a sickle and led the Titans.",
+		"summary": "Titan who drove out the sky god with a sickle from his mother and became king, then swallowed his children and was overthrown by the youngest.",
 		"facts": [
 			"Goya’s “Saturn Devouring His Son,” painted on a wall of his house, hangs in the Prado Museum.",
 			"The planet Saturn and the English word Saturday both come from his Roman name, Saturn."
@@ -249,7 +249,7 @@
 		]
 	},
 	"myth-022": {
-		"summary": "The goddess who is the Earth itself, mother of all gods and living things.",
+		"summary": "Goddess who armed her son with a sickle against the husband who imprisoned their children, and later raised the Giants and the monster Typhon against Olympus.",
 		"facts": [
 			"She bore the sky god on her own, then took him as her mate and gave birth to the twelve Titans.",
 			"Lovelock's Gaia hypothesis, which views the Earth as a single living organism, borrows her name."
@@ -261,7 +261,7 @@
 		]
 	},
 	"myth-023": {
-		"summary": "The first god of the sky, who took the earth goddess as his mate.",
+		"summary": "Primordial sky god who first ruled the world, until he hid his children deep in the earth and was driven out by his son Cronus's sickle.",
 		"facts": [
 			"Of the eight planets, only Uranus is named after a Greek god rather than a Roman one.",
 			"The element uranium, discovered by Klaproth in 1789, was named after the planet Uranus, which had been found eight years earlier."
@@ -272,7 +272,7 @@
 		]
 	},
 	"myth-024": {
-		"summary": "A goat-legged god who roams the woods and pastures playing reed pipes.",
+		"summary": "Goat-legged god of shepherds who promised to help Athens at the battle of Marathon and once challenged Apollo to a music contest.",
 		"facts": [
 			"The word “panic,” meaning sudden terror, comes from his name.",
 			"The panpipes, an instrument made of pipes of different lengths bound together, are named after him."
@@ -284,7 +284,7 @@
 		]
 	},
 	"myth-025": {
-		"summary": "The goddess of chance who hands out good and bad fortune to mortals.",
+		"summary": "Goddess of chance, believed to decide on a whim the rise and fall of nations and the luck of people, and worshipped as a guardian by Greek and Roman cities.",
 		"facts": [
 			"She is shown holding a horn of plenty and wearing a crown shaped like city walls.",
 			"The English word “fortune” comes from her Roman name, Fortuna."
@@ -296,7 +296,7 @@
 		]
 	},
 	"myth-026": {
-		"summary": "Apollo's son, who learned healing from a centaur and could even raise the dead.",
+		"summary": "Son of Apollo who learned medicine from a centaur and even raised the dead, until Zeus struck him down with a thunderbolt.",
 		"facts": [
 			"The Hippocratic Oath begins with a vow sworn by Apollo, by him, and by his two daughters.",
 			"His serpent-entwined staff appears on the flag of the World Health Organization."
@@ -308,7 +308,7 @@
 		]
 	},
 	"myth-027": {
-		"summary": "The goddess of magic who watches over the night and the crossroads.",
+		"summary": "Goddess of magic and crossroads who carried torches to help Demeter search for her lost daughter and fought in the war against the Giants.",
 		"facts": [
 			"On the dark night at the end of each month, people would leave out food for her where three roads met.",
 			"In “Macbeth,” she appears as the leader who summons and scolds the three witches."
@@ -331,7 +331,7 @@
 		]
 	},
 	"myth-029": {
-		"summary": "The god of sleep, whose mere touch puts anyone to sleep.",
+		"summary": "God of sleep who, at Hera's request, lulled Zeus into a deep slumber during the Trojan War so the Greeks could strike back.",
 		"facts": [
 			"He is the twin of Thanatos, god of death, and lives in a cave through which Lethe, the river of forgetfulness, flows.",
 			"The English word “hypnosis” comes from his name."
@@ -343,7 +343,7 @@
 		]
 	},
 	"myth-030": {
-		"summary": "The god of death, who carries off those who have drawn their last breath.",
+		"summary": "God of death who was once chained up by Sisyphus so that no one died, and who lost Alcestis after wrestling with Heracles.",
 		"facts": [
 			"Together with the god of sleep, he carried the body of the fallen Sarpedon home to Lycia.",
 			"The English word “euthanasia” means “good (eu) death (thanatos).”"
@@ -354,7 +354,7 @@
 		]
 	},
 	"myth-031": {
-		"summary": "Three goddesses who set each person's lifespan by spinning, measuring, and cutting a thread.",
+		"summary": "Three goddesses of fate, whom even the gods could not defy, who tied the newborn Meleager's life to a log and tricked the monster Typhon with fruit.",
 		"facts": [
 			"Clotho spins the thread, Lachesis measures it, and Atropos cuts it.",
 			"Atropa, the scientific name of the poisonous plant belladonna, and the drug atropine both come from Atropos."
@@ -366,7 +366,7 @@
 		]
 	},
 	"myth-032": {
-		"summary": "Nine sisters who inspire poetry, song, and learning.",
+		"summary": "Nine sister goddesses who breathed a singer's voice into the shepherd Hesiod and turned the daughters of Pierus into magpies for challenging them in song.",
 		"facts": [
 			"The words “museum” and “music” both come from them.",
 			"Each had her own domain: Calliope for epic poetry, Clio for history, Urania for astronomy, and so on."
@@ -378,7 +378,7 @@
 		]
 	},
 	"myth-033": {
-		"summary": "The Titan who stole fire and gave it to humanity.",
+		"summary": "Titan who shaped humans from clay and stole heavenly fire for them, then suffered a long punishment until Heracles set him free.",
 		"facts": [
 			"Chained to a rock, he had his liver torn at by an eagle every day.",
 			"His name means “he who thinks ahead.”"
@@ -390,7 +390,7 @@
 		]
 	},
 	"myth-034": {
-		"summary": "The Titan condemned to hold up the sky on his shoulders.",
+		"summary": "Titan who led his kin against Zeus and was condemned to carry the sky, and who once fetched the golden apples for Heracles.",
 		"facts": [
 			"Ovid wrote that he turned to stone on seeing Medusa's head and became the Atlas Mountains.",
 			"Mercator named his book of maps after him, and the Atlantic Ocean, too, means “Sea of Atlas.”"
@@ -402,7 +402,7 @@
 		]
 	},
 	"myth-035": {
-		"summary": "The first woman, who opened a forbidden jar and unleashed misfortune on the world.",
+		"summary": "The first woman, shaped from clay by the gods to punish humans for stolen fire and given every gift, who opened a jar and let evils into the world.",
 		"facts": [
 			"The phrase “Pandora's box,” meaning a source of trouble best left untouched, comes from her story.",
 			"It became known as a box because in the 16th century Erasmus translated “jar” as “box.”"
@@ -412,7 +412,7 @@
 		]
 	},
 	"myth-036": {
-		"summary": "Greece's mightiest strongman, who carried out twelve labors.",
+		"summary": "Hero who completed all twelve labors, from slaying the Nemean lion to the many-headed water serpent, and was raised among the gods after his death.",
 		"facts": [
 			"As the son of Zeus and the mortal Alcmene, he was hated by Hera all his life.",
 			"The English word “Herculean,” meaning extremely difficult, comes from his Roman name."
@@ -424,7 +424,7 @@
 		]
 	},
 	"myth-037": {
-		"summary": "The hero who beheaded a monster by looking only at her reflection in his shield.",
+		"summary": "Hero who brought back Medusa's head and, on the way home, rescued Princess Andromeda from a sea monster.",
 		"facts": [
 			"Every year in mid-August, shooting stars shower down from the direction of his constellation.",
 			"He is the son of Danaë, princess of Argos, and Zeus, who came to her as a shower of gold."
@@ -436,7 +436,7 @@
 		]
 	},
 	"myth-038": {
-		"summary": "The hero who unwound a ball of thread as he entered a labyrinth and slew the monster inside.",
+		"summary": "Hero who entered the Cretan labyrinth to slay the Minotaur and, on his way to Athens, punished the bandit Procrustes.",
 		"facts": [
 			"The Ship of Theseus paradox, which asks whether a ship with every part replaced is still the same ship, comes from his ship.",
 			"He forgot to switch to white sails, so his father threw himself into the sea, which became known as the Aegean after him."
@@ -448,7 +448,7 @@
 		]
 	},
 	"myth-039": {
-		"summary": "The king who came up with the trick of the wooden horse and wandered for ten years before reaching home.",
+		"summary": "King of Ithaca who ended the Trojan War with the wooden horse ruse, then got past the Cyclops and the Sirens to reach home after ten years.",
 		"facts": [
 			"The English word “odyssey,” meaning a long, adventurous journey, comes from his name.",
 			"Homer's “Odyssey” tells the story of his homecoming."
@@ -460,7 +460,7 @@
 		]
 	},
 	"myth-040": {
-		"summary": "The Trojan War warrior who could not be wounded anywhere except his heel.",
+		"summary": "Greatest warrior of the Greeks, who returned to battle after losing his friend Patroclus and killed Hector, the eldest prince of Troy.",
 		"facts": [
 			"The Achilles tendon at the back of the heel is named after him.",
 			"At the wish of his mother, Thetis, he hid in the royal palace on the island of Scyros dressed as a girl."
@@ -472,7 +472,7 @@
 		]
 	},
 	"myth-041": {
-		"summary": "Leader of an expedition that set sail in search of the Golden Fleece.",
+		"summary": "Leader of an expedition who yoked fire-breathing bulls in Colchis and, with the help of the princess Medea, won the Golden Fleece.",
 		"facts": [
 			"The expedition is known as the Argonauts, after the name of their ship, the Argo.",
 			"The golden ram whose fleece he sought is said to have risen into the sky to become Aries."
@@ -484,7 +484,7 @@
 		]
 	},
 	"myth-042": {
-		"summary": "A musician whose lyre playing enchanted even wild beasts and rocks.",
+		"summary": "Musician whose lyre moved the king of the dead to release his wife, only to lose her again when he looked back at the last moment.",
 		"facts": [
 			"He is said to have been torn apart by Thracian women who worshipped Dionysus.",
 			"In 1607, Monteverdi's opera “L'Orfeo” brought his story to the stage."
@@ -496,7 +496,7 @@
 		]
 	},
 	"myth-043": {
-		"summary": "The craftsman who designed a labyrinth from which no one could escape.",
+		"summary": "Athenian craftsman who built a labyrinth for the king of Crete to hold a monster, and solved the riddle of threading a spiral shell with the help of an ant.",
 		"facts": [
 			"He made wings of wax and feathers and escaped from Crete with his son.",
 			"One theory holds that the intricate layout of the Palace of Knossos gave rise to the legend of the Labyrinth."
@@ -508,7 +508,7 @@
 		]
 	},
 	"myth-044": {
-		"summary": "A boy who flew too close to the sun until his wings melted and he fell.",
+		"summary": "Boy who escaped Crete on wings made by his father, but flew too high, so the wax melted and he fell into the sea.",
 		"facts": [
 			"In the painting traditionally attributed to Bruegel, all you can see of him is two legs sticking out of the sea.",
 			"The asteroid Icarus, which swings closer to the Sun than Mercury does, is named after him."
@@ -519,7 +519,7 @@
 		]
 	},
 	"myth-045": {
-		"summary": "A prince who escaped burning Troy and made his way to Italy.",
+		"summary": "Prince who carried his father out of burning Troy and, after long wanderings, reached Italy and became the ancestor of the Romans.",
 		"facts": [
 			"Julius Caesar's family, the Julii, claimed descent from his son Iulus.",
 			"He is the hero of Virgil's epic poem the “Aeneid.”"
@@ -531,7 +531,7 @@
 		]
 	},
 	"myth-046": {
-		"summary": "Troy's eldest prince, who fell to Achilles while defending the city.",
+		"summary": "Eldest prince of Troy, who killed Achilles' friend Patroclus and then fell to Achilles in a duel before the city gates.",
 		"facts": [
 			"The English verb “hector,” meaning to bully with loud bluster, comes from his name.",
 			"The funeral held after his body is returned brings the “Iliad” to a close."
@@ -543,7 +543,7 @@
 		]
 	},
 	"myth-047": {
-		"summary": "The Trojan prince who had to choose the most beautiful of three goddesses.",
+		"summary": "Son of King Priam who ran off to Troy with Helen, queen of Sparta, and brought the allied Greek armies down on his city.",
 		"facts": [
 			"He picked Aphrodite over Hera and Athena and won Helen of Troy as his prize.",
 			"He brought down Achilles with an arrow to the heel."
@@ -555,7 +555,7 @@
 		]
 	},
 	"myth-048": {
-		"summary": "The king of Mycenae who led the allied Greek army to Troy.",
+		"summary": "King of Mycenae who offered his own daughter as a sacrifice so the fleet could sail for Troy, and who quarreled bitterly with Achilles over a war prize.",
 		"facts": [
 			"On the day he returned home, he was murdered by his wife Clytemnestra.",
 			"The gold mask Schliemann found at Mycenae in 1876 was named after him, though it is actually older."
@@ -567,7 +567,7 @@
 		]
 	},
 	"myth-049": {
-		"summary": "A hero of Corinth who tamed the winged horse with a golden bridle from Athena.",
+		"summary": "Hero who survived every deadly task the king of Lycia set him, from a monster to the Amazons, but fell when he tried to ride his winged horse up to heaven.",
 		"facts": [
 			"He defeated the Chimera by attacking it from the sky above.",
 			"The insignia of the United Kingdom's airborne forces shows him riding Pegasus."
@@ -579,7 +579,7 @@
 		]
 	},
 	"myth-050": {
-		"summary": "He solved a riddle to become king of Thebes, then blinded himself on learning he had killed his father and married his mother.",
+		"summary": "Tragic king who solved the Sphinx's riddle and became ruler of Thebes, unaware that he had killed his father and married his mother.",
 		"facts": [
 			"He answered that the creature with one voice that walks on four feet, then two, then three is man.",
 			"Sigmund Freud named a son's attraction to his mother after him."
@@ -591,7 +591,7 @@
 		]
 	},
 	"myth-051": {
-		"summary": "A monster with snakes for hair who turned anyone who met her eyes to stone.",
+		"summary": "Snake-haired monster who turned to stone all who met her gaze, until Perseus cut off her head as she slept.",
 		"facts": [
 			"Of the three Gorgon sisters, she was the only one who could die.",
 			"The logo of the fashion brand Versace is her face."
@@ -603,7 +603,7 @@
 		]
 	},
 	"myth-052": {
-		"summary": "A monster with a bull's head and a man's body, kept in the labyrinth of Crete until Theseus killed it.",
+		"summary": "Bull-headed monster born to the queen of Crete and a white bull from the sea, kept in the labyrinth until Theseus killed it.",
 		"facts": [
 			"Apollodorus recorded his original name as Asterius.",
 			"Every nine years, Athens sent seven boys and seven girls to be devoured by him."
@@ -614,7 +614,7 @@
 		]
 	},
 	"myth-053": {
-		"summary": "The three-headed dog that guards the gate of the Underworld.",
+		"summary": "Three-headed dog that guarded the gates of the underworld so no soul could leave, until Heracles caught it bare-handed and dragged it to the surface.",
 		"facts": [
 			"In 2013, one of Pluto's small moons was named after him: Kerberos.",
 			"Spellbound by Orpheus's song, he froze with all three mouths hanging open."
@@ -626,7 +626,7 @@
 		]
 	},
 	"myth-054": {
-		"summary": "A marsh-dwelling water serpent that grew two new heads for every one cut off.",
+		"summary": "Swamp water serpent that grew two heads for each one cut off, slain by Heracles as his second labor.",
 		"facts": [
 			"Heracles' nephew Iolaus seared the severed necks with fire so they could not grow back.",
 			"Its middle head could not be killed, so it was pinned under a boulder."
@@ -638,7 +638,7 @@
 		]
 	},
 	"myth-055": {
-		"summary": "A fire-breathing monster that was lion, goat, and serpent joined in one body.",
+		"summary": "Fire-breathing monster, part lion, part goat and part serpent, that ravaged Lycia until Bellerophon, riding a winged horse, destroyed it.",
 		"facts": [
 			"In biology, an organism made of cells with different genes is called a chimera.",
 			"An ancient bronze statue of the Chimera, unearthed at Arezzo in 1553, is now in a museum in Florence."
@@ -649,7 +649,7 @@
 		]
 	},
 	"myth-056": {
-		"summary": "A monster on the road to Thebes that posed a riddle and devoured anyone who couldn't solve it.",
+		"summary": "Monster that devoured everyone who failed its riddle on the road to Thebes, and threw itself to its death when Oedipus answered correctly.",
 		"facts": [
 			"Unlike the Sphinx at Giza in Egypt, she had wings and a woman's face.",
 			"In the Boeotian dialect she was called Phix, and Mount Phikion took its name from her."
@@ -661,7 +661,7 @@
 		]
 	},
 	"myth-057": {
-		"summary": "Sea monsters whose songs lured sailors onto the rocks.",
+		"summary": "Sea monsters whose lovely song lured sailors to their deaths, but who failed against Odysseus and his crew, ears sealed and their captain tied to the mast.",
 		"facts": [
 			"Ancient Greeks pictured them with birds' bodies and women's heads; the fish tail became popular in the Middle Ages.",
 			"The alarm called a siren and the woman in the Starbucks logo both take their name from them."
@@ -673,7 +673,7 @@
 		]
 	},
 	"myth-058": {
-		"summary": "A race of giants with a single round eye in the middle of the forehead.",
+		"summary": "Race of giants with a single eye in the middle of the forehead, said to have built the massive stone walls of Tiryns and Mycenae.",
 		"facts": [
 			"They also appear as the smiths who forged Zeus's thunderbolts.",
 			"Odysseus told Polyphemus his name was “Nobody,” then put out the giant's eye."
@@ -685,7 +685,7 @@
 		]
 	},
 	"myth-059": {
-		"summary": "A winged white horse born from Medusa's blood.",
+		"summary": "Winged white horse that carried Bellerophon to defeat the Chimera and later rose to Olympus to bear Zeus's thunderbolts.",
 		"facts": [
 			"The constellation Pegasus, a great square in the fall evening sky, depicts him.",
 			"The red winged-horse logo of the oil company Mobil depicts him."
@@ -696,7 +696,7 @@
 		]
 	},
 	"myth-060": {
-		"summary": "A race that is human from the waist up and horse from the waist down.",
+		"summary": "Race that was human above the waist and horse below, who got drunk at the wedding of the Lapith king, tried to carry off the bride and started a great battle.",
 		"facts": [
 			"They are usually portrayed as wild, but Chiron was a wise teacher.",
 			"Of the 88 constellations, two take this form: Sagittarius and Centaurus."
@@ -708,7 +708,7 @@
 		]
 	},
 	"myth-061": {
-		"summary": "A six-headed monster that snatched sailors from ships passing through a narrow strait.",
+		"summary": "Six-headed monster of the strait, with fierce dogs below her waist, who snatched six of Odysseus's sailors from his ship at once.",
 		"facts": [
 			"Her home was thought to be the Strait of Messina, between Sicily and mainland Italy.",
 			"The English phrase “between Scylla and Charybdis” means being caught with no good way out."
@@ -720,7 +720,7 @@
 		]
 	},
 	"myth-062": {
-		"summary": "A whirlpool monster that gulped down the sea and spat it out again, swallowing ships.",
+		"summary": "Monster that stole and devoured Heracles' cattle, was hurled into the sea by Zeus's thunderbolt and became a ship-swallowing whirlpool.",
 		"facts": [
 			"She was said to suck down the sea three times a day.",
 			"Odysseus survived by clinging to a fig tree on the cliff."
@@ -732,7 +732,7 @@
 		]
 	},
 	"myth-063": {
-		"summary": "Monsters with birds' bodies and women's faces that swooped in to snatch away food.",
+		"summary": "Bird-bodied monsters that snatched and fouled the blind seer Phineus's food every day until the two sons of the North Wind chased them away.",
 		"facts": [
 			"Their name means “snatchers” in Greek.",
 			"The harpy eagle, a large bird of prey of Central and South American forests, takes its scientific name Harpia from them."
@@ -744,7 +744,7 @@
 		]
 	},
 	"myth-064": {
-		"summary": "The largest and fiercest of all monsters, who sent even the gods running.",
+		"summary": "The most gigantic of monsters, who sent the gods fleeing to Egypt and even cut out Zeus's sinews, but was finally struck down by his thunderbolts.",
 		"facts": [
 			"Defeated by Zeus's thunderbolts, he is said to lie pinned beneath the volcano Mount Etna in Sicily.",
 			"Some say the English word “typhoon” traces back to his name."
@@ -756,7 +756,7 @@
 		]
 	},
 	"myth-065": {
-		"summary": "A beautiful youth who fell in love with his own reflection in the water and wasted away.",
+		"summary": "Beautiful youth who spurned every suitor and, as punishment, fell in love with his own reflection in a spring and wasted away beside it.",
 		"facts": [
 			"A narcissus flower is said to have bloomed in the spot where he had been.",
 			"Narcissism, meaning self-absorption, comes from his name."
@@ -766,7 +766,7 @@
 		]
 	},
 	"myth-066": {
-		"summary": "A nymph who loved Narcissus in vain until her body faded away and only her voice remained.",
+		"summary": "Nymph who kept Hera talking to cover for Zeus's affairs, and who pined for Narcissus until only her voice remained.",
 		"facts": [
 			"As punishment from Hera, she lost the power to speak first.",
 			"Her name itself means “echo” in Greek, and the English word echo is the same word."
@@ -778,7 +778,7 @@
 		]
 	},
 	"myth-067": {
-		"summary": "The king of Phrygia who asked Dionysus to make everything he touched turn to gold.",
+		"summary": "King of Phrygia whose golden touch, granted by Dionysus, left him unable to eat or drink, until he washed the power away in the Pactolus River.",
 		"facts": [
 			"There was also a real Phrygian king named Midas in the 8th century BC, who appears in Assyrian records as Mita.",
 			"The tale of the donkey ears Apollo gave him closely resembles the Korean folktale “The King's Ears Are Donkey Ears.”"
@@ -790,7 +790,7 @@
 		]
 	},
 	"myth-068": {
-		"summary": "The king of Corinth condemned to push a boulder up a hill, only to watch it roll back down every time.",
+		"summary": "King of Corinth who tricked his way back from the underworld and lived to old age, but was finally condemned to push a boulder uphill forever.",
 		"facts": [
 			"He is said to have been punished for tattling on one of Zeus's secrets and even for chaining up the god of death.",
 			"Albert Camus reinterpreted his endless, futile labor in “The Myth of Sisyphus.”"
@@ -802,7 +802,7 @@
 		]
 	},
 	"myth-069": {
-		"summary": "The king doomed to stand forever with water and fruit right before his eyes, never able to reach them.",
+		"summary": "King so favored that he dined with the gods, who served them his own son to test them and was condemned to eternal hunger and thirst in the underworld.",
 		"facts": [
 			"His son Pelops lives on in the name of the Peloponnese, the peninsula in southern Greece.",
 			"The English word “tantalize” and the element tantalum both come from his name."
@@ -814,7 +814,7 @@
 		]
 	},
 	"myth-070": {
-		"summary": "A young woman of Lydia who challenged Athena to a weaving contest and was turned into a spider.",
+		"summary": "Lydian maiden who challenged the goddess of wisdom at weaving and wove a flawless tapestry, but angered her and was turned into a spider.",
 		"facts": [
 			"Angered by a tapestry that depicted the gods' misdeeds, the goddess struck her with a weaving shuttle.",
 			"Her name means “spider” in Greek, and the class Arachnida comes from the same word."
@@ -826,7 +826,7 @@
 		]
 	},
 	"myth-071": {
-		"summary": "A sculptor of Cyprus who fell in love with the ivory statue of a woman he had carved himself.",
+		"summary": "Cypriot sculptor who, disappointed with women, carved his ideal woman in ivory and, after praying to the goddess, received the statue as a living wife.",
 		"facts": [
 			"Aphrodite breathed life into the statue, which later came to be called Galatea.",
 			"The Pygmalion effect, the idea that high expectations actually improve performance, takes its name from this story."
@@ -836,7 +836,7 @@
 		]
 	},
 	"myth-072": {
-		"summary": "The most beautiful woman in the world, whose fate sparked the Trojan War.",
+		"summary": "The most beautiful woman in the world, whose flight across the sea with Paris brought the allied Greek fleet down on the Trojans.",
 		"facts": [
 			"The daughter of Leda and Zeus, who had taken the form of a swan, she was queen of Sparta before going to Troy.",
 			"“The face that launched a thousand ships” is a line by the English playwright Christopher Marlowe."
@@ -847,7 +847,7 @@
 		]
 	},
 	"myth-073": {
-		"summary": "The primordial gap at the very beginning, when nothing existed, from which everything is said to have come.",
+		"summary": "The primordial void that Hesiod sang of as the very first thing to exist, which gave birth to darkness and night and began the world.",
 		"facts": [
 			"Ovid pictured it as a shapeless mass in which all the elements were jumbled together.",
 			"The word “chaos,” meaning disorder, and even the word “gas” come from this name."
@@ -858,7 +858,7 @@
 		]
 	},
 	"myth-074": {
-		"summary": "The goddess who was night itself, whom even Zeus dared not cross.",
+		"summary": "Primordial goddess of night who alone gave birth to death, sleep and the Fates, and before whom even an angry Zeus backed down.",
 		"facts": [
 			"Hesiod sang that Night and Day pass each other at a bronze threshold: as one comes in, the other goes out.",
 			"Pluto's moon Nix is named after this goddess."
@@ -870,7 +870,7 @@
 		]
 	},
 	"myth-075": {
-		"summary": "The primordial sea that the earth goddess bore all on her own.",
+		"summary": "Primordial sea, born of the earth goddess alone, who fathered Nereus, the old man of the sea, and the ancestors of many monsters.",
 		"facts": [
 			"His name simply means “sea” in Greek.",
 			"The ancient Greek name for the Black Sea was Pontos Euxeinos, “the hospitable sea.”"
@@ -881,7 +881,7 @@
 		]
 	},
 	"myth-076": {
-		"summary": "An abyss lying even deeper than the underworld, used as a kind of prison.",
+		"summary": "The deepest abyss beneath the underworld, where the defeated Titans were imprisoned, and a primordial god who fathered the monster Typhon with the earth.",
 		"facts": [
 			"One theory holds that Europeans spelled the Tatars as “Tartars” partly because the name echoed this one.",
 			"It was said that an anvil dropped from the earth would take nine days to fall this far."
@@ -892,7 +892,7 @@
 		]
 	},
 	"myth-077": {
-		"summary": "The Titan of the great river believed to flow around the edge of the world like a ring.",
+		"summary": "Titan who refused to join his brothers in their war against Zeus and so escaped punishment, ruling the great river that encircles the edge of the world.",
 		"facts": [
 			"The English word “ocean” comes from his name by way of Latin.",
 			"The giant riding a seashell chariot at the center of Rome's Trevi Fountain depicts him."
@@ -903,7 +903,7 @@
 		]
 	},
 	"myth-078": {
-		"summary": "The Titan goddess who, with her partner Oceanus, gave birth to the nymphs of the world's rivers and springs.",
+		"summary": "Titan goddess who bore three thousand daughters and all the world's rivers, and raised the young Hera during the war of the gods.",
 		"facts": [
 			"The Tethys Ocean, an ancient sea from the age of the dinosaurs, is named after her.",
 			"She is a different goddess from Thetis, the sea nymph who was the mother of Achilles."
@@ -915,7 +915,7 @@
 		]
 	},
 	"myth-079": {
-		"summary": "The Titan of light, whose children were the gods of the sun, the moon, and the dawn.",
+		"summary": "Titan of light, father of the sun, moon and dawn, said to have been the first to study the movements of the heavens and work out the seasons.",
 		"facts": [
 			"The world's tallest known tree, found in California in 2006, bears his name.",
 			"His name means “the one who goes on high” in Greek."
@@ -925,7 +925,7 @@
 		]
 	},
 	"myth-080": {
-		"summary": "The Titan goddess who, with Hyperion, gave birth to the sun and the moon.",
+		"summary": "Titan goddess who bore the sun, moon and dawn with her brother, and was said to give gold and gems their dazzling shine and worth.",
 		"facts": [
 			"Her name means “divine” in Greek.",
 			"She lent her name to the hypothetical planet thought to have collided with Earth and formed the Moon."
@@ -935,7 +935,7 @@
 		]
 	},
 	"myth-081": {
-		"summary": "The Titan said to be the pillar of the northern sky and the master of inquiring intellect.",
+		"summary": "Titan said to govern the axis of the heavens, who through his daughter Asteria became the grandfather of Hecate, goddess of magic.",
 		"facts": [
 			"With his sister Phoebe he fathered Leto.",
 			"His Latin name, Polus, means the axis of the heavens, and the English word “pole” comes from the same root."
@@ -945,7 +945,7 @@
 		]
 	},
 	"myth-082": {
-		"summary": "The Titan goddess said to have handed the Delphic oracle down to her grandson.",
+		"summary": "Titan goddess who held the oracle of Delphi after Gaia and Themis and handed it down to her grandson Apollo as a birthday gift.",
 		"facts": [
 			"The mother of Leto, she was the grandmother of Apollo and Artemis.",
 			"Her name means “bright,” and Saturn's moon Phoebe is named after her."
@@ -955,7 +955,7 @@
 		]
 	},
 	"myth-083": {
-		"summary": "The Titan of the southern sky, said to govern the movements of the constellations.",
+		"summary": "Titan of the southern sky who, through his son Astraeus, became grandfather of the winds, the morning star and all the stars of heaven.",
 		"facts": [
 			"With Eurybia he fathered Astraeus, Pallas, and Perses.",
 			"His name means “ram,” and the Greeks called the constellation Aries “Krios.”"
@@ -965,7 +965,7 @@
 		]
 	},
 	"myth-084": {
-		"summary": "The Titan father of the brothers Prometheus, Epimetheus, and Atlas.",
+		"summary": "Titan who fathered sons such as Atlas and Prometheus and, through his grandson Deucalion, became a distant ancestor of humankind.",
 		"facts": [
 			"His name resembles that of Noah's son Japheth, and since ancient times some have identified the two as one figure.",
 			"Saturn's moon Iapetus, bright on one side and dark on the other, is named after him."
@@ -975,7 +975,7 @@
 		]
 	},
 	"myth-085": {
-		"summary": "The Titan goddess of memory, mother of the nine Muses.",
+		"summary": "Titan goddess of memory who spent nine nights with Zeus and then gave birth to the nine goddesses of poetry and song.",
 		"facts": [
 			"Orphic initiates were taught to drink from her spring in the underworld rather than from the river of forgetfulness.",
 			"The English word “mnemonic,” meaning a memory aid, shares the same root."
@@ -986,7 +986,7 @@
 		]
 	},
 	"myth-086": {
-		"summary": "The Titan goddess of divine law, depicted holding scales and a sword.",
+		"summary": "Titan goddess of law and justice who kept the oracle of Delphi and told the couple who survived the great flood how to bring humankind back.",
 		"facts": [
 			"The statues of Lady Justice outside courthouses carry on her image.",
 			"As Zeus's second wife, she bore the goddesses of the seasons and the goddesses of fate."
@@ -998,7 +998,7 @@
 		]
 	},
 	"myth-087": {
-		"summary": "The Titan goddess who, when her husband swallowed their children, handed him a stone wrapped in swaddling clothes in place of her youngest.",
+		"summary": "Titan goddess who handed her child-swallowing husband a stone in swaddling clothes to save her youngest son, who later rescued his siblings.",
 		"facts": [
 			"She hid her youngest child, Zeus, in a cave on the island of Crete and raised him there.",
 			"Her Roman name, Ops, means “abundance” and shares a root with the English word “opulent.”"
@@ -1009,7 +1009,7 @@
 		]
 	},
 	"myth-088": {
-		"summary": "The Titan who forgot his brother's warning and took Pandora as his wife.",
+		"summary": "Titan who forgot his brother's warning and took as his wife the woman Zeus sent him, letting evils into the world.",
 		"facts": [
 			"His name means “one who thinks too late,” or afterthought.",
 			"He handed out every ability to the animals and had nothing left for humans."
@@ -1020,7 +1020,7 @@
 		]
 	},
 	"myth-089": {
-		"summary": "The king of Crete who had a labyrinth built and shut a monster inside it.",
+		"summary": "King of Crete who ruled the Aegean with a powerful fleet and had Daedalus build a labyrinth to imprison a bull-headed monster.",
 		"facts": [
 			"After his death, he is said to have become a judge in the underworld.",
 			"Arthur Evans, who excavated Knossos in 1900, named the Minoan civilization after him."
@@ -1032,7 +1032,7 @@
 		]
 	},
 	"myth-090": {
-		"summary": "A beast with the head and wings of an eagle and the body of a lion.",
+		"summary": "Beast with an eagle's head and a lion's body, said to fight the one-eyed Arimaspians over gold and held sacred to the sun god.",
 		"facts": [
 			"Herodotus described it as a beast that guards gold in the far north.",
 			"Scania, the truck maker from Sweden, features one in its logo."

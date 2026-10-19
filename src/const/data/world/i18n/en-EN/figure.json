@@ -1,13 +1,13 @@
 {
 	"figure-001": {
-		"summary": "Ancient Greek poet who left the “Iliad” and the “Odyssey,” epics of the Trojan War.",
+		"summary": "Ancient Greek poet who composed the “Iliad,” a song of the Trojan War, and the “Odyssey,” the model for all later epics.",
 		"facts": [
 			"The English word “odyssey,” meaning a long, adventurous journey, comes from his work.",
 			"Whether he was really one person or a blend of many poets' songs is still debated."
 		]
 	},
 	"figure-002": {
-		"summary": "Ancient Greek mathematician whose name is attached to the theorem about the three sides of a right triangle.",
+		"summary": "Ancient Greek mathematician famed for the theorem relating the three sides of a right triangle, who saw number as the root of all things.",
 		"facts": [
 			"The theorem was already in use in Babylon more than a thousand years before him.",
 			"He is said to have discovered that a note's pitch is set by the ratio of string lengths."
@@ -28,14 +28,14 @@
 		]
 	},
 	"figure-005": {
-		"summary": "Ancient Greek philosopher who asked question after question until others reached the truth for themselves.",
+		"summary": "Ancient Greek philosopher who practiced the “midwife” method of questioning, leading others to discover their own ignorance.",
 		"facts": [
 			"He never wrote a single book, so we know him only through his students' accounts.",
 			"He drank hemlock in 399 BC, but he never actually said “A bad law is still the law.”"
 		]
 	},
 	"figure-006": {
-		"summary": "Ancient Greek physician who saw disease as a natural process rather than a punishment from the gods.",
+		"summary": "Ancient Greek physician who saw disease as natural rather than divine punishment and founded clinical medicine on observing and recording patients.",
 		"facts": [
 			"The oath recited at medical school graduations bears his name, though it's unclear whether he wrote it himself.",
 			"“Life is short, art is long” is the opening line of his “Aphorisms,” and by “art” he meant medicine."
@@ -49,105 +49,105 @@
 		]
 	},
 	"figure-008": {
-		"summary": "Ancient Greek philosopher who delved into everything from logic to biology and divided knowledge into distinct fields.",
+		"summary": "Ancient Greek philosopher who founded logic on the syllogism and wrote the “Metaphysics” and the “Nicomachean Ethics.”",
 		"facts": [
 			"He was a student of Plato and a teacher of Alexander the Great.",
 			"He founded the Lyceum, where he collected materials and taught."
 		]
 	},
 	"figure-009": {
-		"summary": "Ancient Greek mathematician whose “Elements” organized geometry into a single system.",
+		"summary": "Ancient Greek mathematician whose thirteen-book “Elements” organized geometry into one system and served as a textbook for over two thousand years.",
 		"facts": [
 			"Starting from five postulates, he built up theorems one step at a time.",
 			"He is said to have told Ptolemy I, “There is no royal road to geometry.”"
 		]
 	},
 	"figure-010": {
-		"summary": "Ancient Greek mathematician said to have solved the mystery of the king's crown after watching water spill over the side of his bath.",
+		"summary": "Ancient Greek mathematician who explained buoyancy and the law of the lever and worked out the volume of a sphere.",
 		"facts": [
-			"“Eureka,” the cry of sudden discovery, comes from this bathtub story.",
+			"“Eureka,” the cry of sudden discovery, comes from the story of his solving the riddle of the crown after seeing bathwater overflow.",
 			"He calculated that pi is greater than 223/71 and less than 22/7."
 		]
 	},
 	"figure-011": {
-		"summary": "Ancient Greek historian who recorded the Persian Wars as he had seen and heard them.",
+		"summary": "Ancient Greek historian who traveled widely and recorded the causes and course of the Persian Wars in his “Histories.”",
 		"facts": [
 			"The nine books of his “Histories” were later each named after one of the nine Muses.",
 			"Cicero called him the Father of History, yet also chided him for including many made-up stories."
 		]
 	},
 	"figure-012": {
-		"summary": "Han dynasty historian who saw the “Records of the Grand Historian” through to the end despite being punished with castration.",
+		"summary": "Chinese historian of the Western Han who endured castration and still completed the “Records of the Grand Historian,” the model for Chinese histories.",
 		"facts": [
 			"He perfected the biographical style of history, organized by rulers and individual figures.",
 			"Its 130 chapters, totaling over 520,000 characters, cover 2,500 years from the Yellow Emperor to Emperor Wu of Han."
 		]
 	},
 	"figure-013": {
-		"summary": "Ancient Greek astronomer who brought together the geocentric model placing Earth at the center of the universe.",
+		"summary": "Ancient Greek astronomer who perfected the geocentric model, with Earth at the center and planets moving on small circles called epicycles.",
 		"facts": [
 			"His “Almagest” remained the standard for astronomy for more than a thousand years.",
 			"In his “Geography,” he recorded the latitude and longitude of some 8,000 places."
 		]
 	},
 	"figure-014": {
-		"summary": "Persian physician whose “Canon of Medicine” brought Greek and Islamic medicine together.",
+		"summary": "Medieval Persian physician who brought Greek and Islamic medicine together in the five books of “The Canon of Medicine.”",
 		"facts": [
-			"The universities of Leuven in Belgium and Montpellier in France used it as a textbook until around 1650.",
+			"Universities across Europe still used it as a medical textbook as late as about 1650.",
 			"He also wrote “The Book of Healing,” an encyclopedia of philosophy and science."
 		]
 	},
 	"figure-015": {
-		"summary": "Medieval Italian philosopher who held that faith and reason do not contradict each other.",
+		"summary": "Medieval Italian scholastic philosopher who argued for God's existence through “five ways” and sought harmony between faith and reason.",
 		"facts": [
 			"His “Summa Theologica” was left unfinished when he laid down his pen in December 1273.",
 			"He brought Aristotle's philosophy into medieval Europe."
 		]
 	},
 	"figure-016": {
-		"summary": "Venetian merchant who traveled all the way to Yuan dynasty China and left the travelogue “The Description of the World.”",
+		"summary": "Italian explorer who journeyed from Venice to Yuan China, served Kublai Khan, and introduced the East to Europe in “The Travels.”",
 		"facts": [
 			"He dictated his stories to a writer he met in prison.",
 			"Christopher Columbus read the book too and filled its margins with notes."
 		]
 	},
 	"figure-017": {
-		"summary": "Florentine Italian poet who wrote the “Divine Comedy,” a journey through Hell, Purgatory, and Paradise.",
+		"summary": "Medieval Italian poet who wrote the “Divine Comedy,” a journey through Hell, Purgatory and Paradise, and the love poems of “La Vita Nuova.”",
 		"facts": [
 			"By writing in Italian rather than Latin, he laid the roots of the modern Italian language.",
 			"Exiled from his native Florence, he died in Ravenna, where his tomb remains."
 		]
 	},
 	"figure-018": {
-		"summary": "Seventeen-year-old girl who led the French army in the Hundred Years' War.",
+		"summary": "French soldier who, at seventeen, said she heard divine voices and led the French army, losing to England in the Hundred Years' War, to victory.",
 		"facts": [
 			"She relieved the siege of Orléans and led Charles VII to his coronation.",
 			"Burned at the stake in 1431, she was canonized 489 years later, in 1920."
 		]
 	},
 	"figure-019": {
-		"summary": "Mainz craftsman whose metal movable-type printing press made books dramatically cheaper.",
+		"summary": "German inventor who mass-cast metal type and built a press modeled on the wine press, sparking Europe's printing revolution.",
 		"facts": [
 			"In Goryeo-era Korea, the “Jikji” was printed with metal type 78 years before his 42-line Bible.",
 			"After losing a lawsuit over debts, he had to hand his print shop over to his partner, Fust."
 		]
 	},
 	"figure-020": {
-		"summary": "Florentine painter of “The Birth of Venus” and “Primavera.”",
+		"summary": "Florentine Italian painter of “The Birth of Venus” and “Primavera,” who also worked on the Sistine Chapel wall frescoes.",
 		"facts": [
 			"Backed by the Medici family, he loved to paint scenes from mythology.",
 			"“Botticelli” means “little barrel” and came from his older brother's nickname."
 		]
 	},
 	"figure-021": {
-		"summary": "Italian Renaissance painter of the “Mona Lisa” who also delved into anatomy and machines.",
+		"summary": "Italian Renaissance painter of the “Mona Lisa” and “The Last Supper,” who also studied flying machines and human anatomy.",
 		"facts": [
 			"He filled thousands of notebook pages with mirror writing that can only be read in a mirror.",
 			"After his death, the French king bought the “Mona Lisa,” which now hangs in the Louvre in Paris."
 		]
 	},
 	"figure-022": {
-		"summary": "Nuremberg painter who elevated printmaking into a fine art.",
+		"summary": "German Renaissance painter who raised printmaking to a fine art with engravings such as “Melencolia I” and “Knight, Death and the Devil.”",
 		"facts": [
 			"In 1500, at age 28, he painted a self-portrait facing straight ahead, like an image of Christ.",
 			"The familiar “Praying Hands” is a drawing he made around 1508."
@@ -161,70 +161,70 @@
 		]
 	},
 	"figure-024": {
-		"summary": "Italian sculptor who carved “David” and painted the ceiling of the Sistine Chapel.",
+		"summary": "Italian sculptor who carved the marble “David” and “Pietà” and painted the Creation scenes on the Sistine Chapel ceiling.",
 		"facts": [
 			"He saw himself as a sculptor rather than a painter and took on the ceiling only reluctantly.",
 			"Though he had assistants, he painted most of the ceiling himself over four years."
 		]
 	},
 	"figure-025": {
-		"summary": "Italian Renaissance painter who created “The School of Athens” and died at just 37.",
+		"summary": "Italian Renaissance painter who filled a Vatican room with philosophers in “The School of Athens” and painted the “Sistine Madonna.”",
 		"facts": [
 			"He was especially renowned for his paintings of the Madonna and Child.",
 			"He is buried in the Pantheon in Rome, and his epitaph says Nature feared being outdone by him."
 		]
 	},
 	"figure-026": {
-		"summary": "Early Joseon painter known for her delicate depictions of insects among grasses and of grapes.",
+		"summary": "Early Joseon Korean painter known for delicate paintings of insects and flowers, who also excelled at poetry and calligraphy.",
 		"facts": [
 			"Her portrait has appeared on the 50,000-won note since 2009.",
 			"Her son, the scholar Yi I (Yulgok), is on the 5,000-won note, making them a mother and son who both appear on Korean banknotes."
 		]
 	},
 	"figure-027": {
-		"summary": "Joseon admiral who defended the seas during the Imjin War, leading the way with his turtle ships.",
+		"summary": "Joseon Korean admiral who defeated the Japanese navy in the Imjin War with turtle ships and the crane-wing formation, as at Hansando.",
 		"facts": [
 			"At Myeongnyang, he held off a large fleet with just 13 ships.",
 			"He recorded seven years of events in his “War Diary” (“Nanjung Ilgi”)."
 		]
 	},
 	"figure-028": {
-		"summary": "Spanish novelist whose “Don Quixote” portrays an old country gentleman obsessed with tales of chivalry.",
+		"summary": "Spanish novelist who opened the era of the modern novel with “Don Quixote,” the adventures of a country gentleman obsessed with chivalric tales.",
 		"facts": [
 			"He lost the use of his left hand at the Battle of Lepanto in 1571, earning the nickname “the one-handed man of Lepanto.”",
 			"His face appears on Spain's 10-, 20-, and 50-cent euro coins."
 		]
 	},
 	"figure-029": {
-		"summary": "Elizabethan English playwright who wrote “Hamlet” and “Romeo and Juliet.”",
+		"summary": "Elizabethan English playwright who wrote the four great tragedies, including “Hamlet” and “Macbeth,” as well as “Romeo and Juliet.”",
 		"facts": [
 			"He left nearly 40 plays and 154 sonnets.",
 			"April 23, World Book Day, is the date recorded as the day both he and Miguel de Cervantes died."
 		]
 	},
 	"figure-030": {
-		"summary": "Italian astronomer who discovered four moons of Jupiter with his telescope.",
+		"summary": "Italian astronomer whose homemade telescope revealed four moons of Jupiter and the phases of Venus, supporting heliocentrism.",
 		"facts": [
 			"His experiments on falling objects opened the way to modern physics.",
 			"The story that he muttered “And yet it moves” after his 1633 trial by the Inquisition is a later legend."
 		]
 	},
 	"figure-031": {
-		"summary": "German astronomer who discovered the three laws showing that planets travel in ellipses.",
+		"summary": "German astronomer who published the three laws of planetary motion, starting with elliptical orbits, in works such as “Astronomia nova.”",
 		"facts": [
 			"He arrived at his laws by poring over the observations left by his collaborator Brahe.",
 			"His novel “Somnium” (“The Dream”), about a journey to the Moon, has earned him a place as a distant ancestor of science fiction."
 		]
 	},
 	"figure-032": {
-		"summary": "Dutch painter of “The Night Watch,” known for his dramatic use of light and shadow.",
+		"summary": "Dutch painter who used dramatic light and shadow in “The Night Watch,” a militia portrait, and “The Anatomy Lesson of Dr. Nicolaes Tulp.”",
 		"facts": [
 			"He left about 80 self-portraits across paintings, prints, and drawings.",
 			"He went bankrupt in 1656 and had to auction off his house and collection."
 		]
 	},
 	"figure-033": {
-		"summary": "Painter from Delft in the Netherlands who created “Girl with a Pearl Earring.”",
+		"summary": "Dutch painter of quiet interiors lit by window light, such as “Girl with a Pearl Earring” and “The Milkmaid.”",
 		"facts": [
 			"Only about 34 paintings are accepted as authentic.",
 			"The 2003 film “Girl with a Pearl Earring” imagines the story of the girl in the painting."
@@ -245,63 +245,63 @@
 		]
 	},
 	"figure-036": {
-		"summary": "Venetian composer of the concertos “The Four Seasons,” nicknamed the Red Priest.",
+		"summary": "Italian composer nicknamed “the Red Priest,” who wrote “The Four Seasons,” violin concertos depicting spring, summer, autumn and winter.",
 		"facts": [
 			"He taught music to girls at a school attached to an orphanage.",
 			"He wrote some 500 concertos, many of them for the girls at this school."
 		]
 	},
 	"figure-037": {
-		"summary": "German Baroque composer of the “St. Matthew Passion” and “The Well-Tempered Clavier.”",
+		"summary": "German Baroque composer of the “St Matthew Passion,” “The Well-Tempered Clavier” and the “Brandenburg Concertos.”",
 		"facts": [
 			"During his first few years in Leipzig, he wrote a new cantata every week.",
 			"He had 20 children, and four of his sons, including Carl Philipp Emanuel, became composers."
 		]
 	},
 	"figure-038": {
-		"summary": "German-born composer who made his career in England and wrote the oratorio “Messiah.”",
+		"summary": "German-born composer who wrote “Water Music” and “Music for the Royal Fireworks” for the British crown and the oratorio “Messiah.”",
 		"facts": [
 			"Its “Hallelujah” chorus still rings out every year during the holiday season.",
 			"He ran his own opera company in London."
 		]
 	},
 	"figure-039": {
-		"summary": "Engineer who cut the heat loss of the steam engine and sped up the Industrial Revolution.",
+		"summary": "British inventor who greatly improved Newcomen's steam engine and spread it through factories and mines, speeding the Industrial Revolution.",
 		"facts": [
 			"Adding a separate condenser saved a great deal of fuel.",
 			"The watt (W), the unit of power printed on household appliances, is named after him."
 		]
 	},
 	"figure-040": {
-		"summary": "Austrian composer who shaped the form of the symphony at the court of the Esterházy family.",
+		"summary": "Austrian composer called the “Father of the Symphony,” who shaped the symphony and string quartet as music director at the Esterházy court.",
 		"facts": [
 			"He wrote 104 symphonies; No. 94 is called the “Surprise” for the sudden loud chord that breaks a quiet passage.",
 			"The melody of Germany's current national anthem comes from a song he composed for the emperor in 1797."
 		]
 	},
 	"figure-041": {
-		"summary": "Swedish biologist who established the system of naming living things with two words, genus and species.",
+		"summary": "Swedish biologist called the father of taxonomy, who established binomial nomenclature, naming each species by genus and species.",
 		"facts": [
 			"In “Systema Naturae,” he classified plants and animals into groups.",
 			"He also gave humans the name Homo sapiens."
 		]
 	},
 	"figure-042": {
-		"summary": "Swiss mathematician who kept churning out papers even after going blind, leaving more than 800 in all.",
+		"summary": "Swiss mathematician who wrote the base of natural logarithms as e and found the formula linking a polyhedron's vertices, edges and faces.",
 		"facts": [
 			"He popularized the notation for functions and the symbol for pi.",
 			"By solving the Seven Bridges of Königsberg problem, he founded graph theory."
 		]
 	},
 	"figure-043": {
-		"summary": "German philosopher whose “Critique of Pure Reason” examined the limits of what humans can know.",
+		"summary": "German philosopher who examined the grounds of knowledge and morality in his three Critiques: of Pure Reason, Practical Reason and Judgment.",
 		"facts": [
 			"His walks were said to be so punctual that neighbors set their clocks by them.",
 			"His hometown, which he barely left all his life, is now Kaliningrad in Russia."
 		]
 	},
 	"figure-044": {
-		"summary": "Austrian composer who was writing music at age five and died at 35.",
+		"summary": "Austrian composer of the Viennese Classical school who began composing at five and left over 600 works, including the “Jupiter” Symphony.",
 		"facts": [
 			"His operas include “The Magic Flute” and “The Marriage of Figaro.”",
 			"He never finished his last work, the “Requiem.”"
@@ -315,70 +315,70 @@
 		]
 	},
 	"figure-046": {
-		"summary": "English doctor who developed smallpox vaccination using cowpox.",
+		"summary": "English physician who noticed that milkmaids rarely caught smallpox and developed cowpox vaccination in 1796.",
 		"facts": [
 			"In Joseon Korea, Ji Seok-yeong learned this cowpox method and gave the first vaccinations in 1879.",
 			"The word “vaccine” comes from the Latin word for cow."
 		]
 	},
 	"figure-047": {
-		"summary": "Swiss educator who took in war orphans and called for nurturing the head, heart, and hand together.",
+		"summary": "Swiss educator who cared for war orphans in Stans and taught head, heart and hand together, laying the foundations of modern primary education.",
 		"facts": [
 			"He founded schools for poor children several times.",
 			"Froebel, the creator of the kindergarten, also learned from him."
 		]
 	},
 	"figure-048": {
-		"summary": "Joseon genre painter who captured the daily lives of ordinary people, from ssireum wrestling to village schoolrooms.",
+		"summary": "Late Joseon Korean painter famous for genre scenes that captured everyday life with humor, such as “Ssireum,” “Village School” and “Dancing Boy.”",
 		"facts": [
 			"As a court painter at the Dohwaseo, he also painted portraits of the king.",
 			"Danwon-gu, a district of Ansan in Gyeonggi Province, is named after his pen name, Danwon."
 		]
 	},
 	"figure-049": {
-		"summary": "German composer who completed his Ninth Symphony after he had become almost completely deaf.",
+		"summary": "German composer of the “Eroica” Symphony and the “Moonlight” and “Pathétique” piano sonatas, who kept composing after going deaf.",
 		"facts": [
 			"His Fifth Symphony is nicknamed “Fate.”",
 			"The melody of the Ninth's final movement became the anthem of the European Union."
 		]
 	},
 	"figure-050": {
-		"summary": "German mathematician who, as a child, is said to have added up the numbers from 1 to 100 in an instant.",
+		"summary": "German mathematician called the “Prince of Mathematicians,” who wrote the number-theory classic “Disquisitiones Arithmeticae” and refined the normal distribution and least squares.",
 		"facts": [
 			"He found how to construct a regular 17-sided polygon with a straightedge and compass.",
 			"He calculated the orbit of the lost asteroid Ceres, allowing astronomers to find it again in 1801."
 		]
 	},
 	"figure-051": {
-		"summary": "German explorer who roamed South America and saw nature as a web of interconnected parts.",
+		"summary": "German explorer who spent five years exploring South America and described nature as one interwoven system in “Cosmos.”",
 		"facts": [
 			"He gathered data while traveling up and down the Orinoco River and the Andes.",
 			"The ocean current flowing along South America's west coast bears his name."
 		]
 	},
 	"figure-052": {
-		"summary": "The “King of Song,” who wrote “Erlkönig” and “The Trout” and died at just 31.",
+		"summary": "Austrian composer called the “King of Song,” who wrote “Erlkönig,” “The Trout” and the song cycle “Winterreise.”",
 		"facts": [
 			"He wrote more than 600 songs, and his friends called their gatherings to hear his music Schubertiads.",
 			"His Symphony No. 8 stops after two movements and is known as the “Unfinished.”"
 		]
 	},
 	"figure-053": {
-		"summary": "French teacher who lost his sight after injuring his eye at age three and invented a six-dot writing system at 15.",
+		"summary": "French educator who lost his sight after an accident at three and, at fifteen, devised a tactile script of six raised dots for the blind.",
 		"facts": [
 			"Hunmaeng Jeongeum, the Korean braille created by Park Du-seong in 1926, also follows this six-dot system.",
 			"He took his cue from a 12-dot “night writing” system designed for the military but rejected."
 		]
 	},
 	"figure-054": {
-		"summary": "The 16th president of the United States, who led the Union through the Civil War and proclaimed the emancipation of slaves.",
+		"summary": "American politician and 16th president who issued the Emancipation Proclamation during the Civil War and preserved the Union.",
 		"facts": [
 			"At Gettysburg, he spoke of government “of the people, by the people, for the people.”",
 			"In 1865, just five days after the Confederate surrender, he was shot at Ford's Theatre and died."
 		]
 	},
 	"figure-055": {
-		"summary": "English physicist who discovered electromagnetic induction, producing electricity from magnets.",
+		"summary": "British physicist who discovered electromagnetic induction, laying the basis for generators and motors, and formulated the laws of electrolysis.",
 		"facts": [
 			"Starting out as a bookbinder's apprentice, he went on to join the Royal Institution.",
 			"He started the Christmas science lectures for children."
@@ -392,7 +392,7 @@
 		]
 	},
 	"figure-057": {
-		"summary": "Danish writer of fairy tales such as “The Little Mermaid” and “The Ugly Duckling.”",
+		"summary": "Danish writer of some 150 fairy tales, including “The Little Mermaid,” “The Ugly Duckling” and “The Little Match Girl.”",
 		"facts": [
 			"Born in Odense as the son of a poor shoemaker, he went to Copenhagen alone at 14.",
 			"In 2022, Suzy Lee became the first Korean to win the Hans Christian Andersen Award, named after him."
@@ -413,21 +413,21 @@
 		]
 	},
 	"figure-060": {
-		"summary": "English novelist whose “Pride and Prejudice” depicts marriage and class among the country gentry.",
+		"summary": "English novelist who wittily portrayed love and marriage among the country gentry in “Pride and Prejudice” and “Sense and Sensibility.”",
 		"facts": [
 			"During her lifetime, she published her books anonymously.",
 			"Her portrait appears on the British £10 note."
 		]
 	},
 	"figure-061": {
-		"summary": "French novelist who wrote “Les Misérables” and “Notre-Dame de Paris.”",
+		"summary": "French novelist who wrote “Les Misérables” and “The Hunchback of Notre-Dame” and led the Romantic movement with his play “Hernani.”",
 		"facts": [
 			"For standing up to those in power, he spent 19 years in exile.",
 			"More than two million people turned out for his funeral."
 		]
 	},
 	"figure-062": {
-		"summary": "Russian chemist who arranged the elements in a table by their properties and even predicted the gaps.",
+		"summary": "Russian chemist who in 1869 built a periodic table ordered by atomic weight and predicted the properties of elements not yet found.",
 		"facts": [
 			"Gallium, scandium, and germanium were later discovered and filled the spaces he had left empty.",
 			"Element 101 bears his name."
@@ -448,49 +448,49 @@
 		]
 	},
 	"figure-065": {
-		"summary": "Friar who grew peas in a monastery garden and discovered the laws of heredity.",
+		"summary": "Czech biologist called the father of genetics, who crossbred peas in a monastery garden and found the laws of dominance, segregation and independent assortment.",
 		"facts": [
 			"Over eight years, he observed tens of thousands of pea plants.",
 			"During his lifetime, his paper received almost no attention."
 		]
 	},
 	"figure-066": {
-		"summary": "Swedish inventor who created dynamite and left a will directing that his fortune fund a prize.",
+		"summary": "Swedish inventor who made a fortune from dynamite and left it in his will to found yearly prizes for those who benefit humankind.",
 		"facts": [
 			"He found a way to handle nitroglycerin safely.",
 			"The prizes named in his will cover five fields: physics, chemistry, physiology or medicine, literature, and peace."
 		]
 	},
 	"figure-067": {
-		"summary": "American author of “The Adventures of Tom Sawyer” and “Adventures of Huckleberry Finn.”",
+		"summary": "American novelist called the father of American literature, author of “The Adventures of Tom Sawyer” and “Adventures of Huckleberry Finn.”",
 		"facts": [
 			"He worked as a riverboat pilot on Mississippi River steamboats.",
 			"His pen name came from a boatman's call announcing that the water was two fathoms (about 3.7 meters) deep."
 		]
 	},
 	"figure-068": {
-		"summary": "Russian writer of “Crime and Punishment” and “The Brothers Karamazov.”",
+		"summary": "Russian novelist who probed guilt, redemption and faith in “Crime and Punishment” and “The Brothers Karamazov.”",
 		"facts": [
 			"Moments before his execution, his sentence was commuted, and he was exiled to Siberia.",
 			"Hounded by debt, he dictated “The Gambler” in less than a month, and the stenographer who took it down later became his wife."
 		]
 	},
 	"figure-069": {
-		"summary": "Giant of Russian literature who wrote “War and Peace” and “Anna Karenina.”",
+		"summary": "Russian novelist who wrote “War and Peace,” set during Napoleon's invasion of Russia, and “Anna Karenina.”",
 		"facts": [
 			"Born into a family of counts, he set up a school for peasants on his estate.",
 			"At 82, he secretly left home and died in the stationmaster's house at the rural Astapovo station."
 		]
 	},
 	"figure-070": {
-		"summary": "English nurse called “the Lady with the Lamp,” who transformed military field hospitals during the Crimean War.",
+		"summary": "British nurse who transformed hygiene at the Scutari military hospital in the Crimean War and founded a modern nursing school in London.",
 		"facts": [
 			"She charted causes of death in rose-shaped diagrams to push through sanitary reform in military hospitals.",
 			"Her birthday, May 12, is International Nurses Day."
 		]
 	},
 	"figure-071": {
-		"summary": "Italian composer of operas such as “Aida” and “La Traviata.”",
+		"summary": "Italian composer whose operas, such as “Rigoletto,” “La traviata” and “Aida,” swept the 19th-century stage.",
 		"facts": [
 			"Italians still sing the “Chorus of the Hebrew Slaves” almost as a second national anthem.",
 			"In his later years, he founded a rest home for poor musicians."
@@ -504,70 +504,70 @@
 		]
 	},
 	"figure-073": {
-		"summary": "German Romantic composer who spent more than 20 years refining his First Symphony.",
+		"summary": "German Romantic composer of the “Hungarian Dances,” four symphonies and “A German Requiem.”",
 		"facts": [
 			"He wrote his “Lullaby” in 1868 when his friend Bertha Faber's second son was born.",
 			"He shared a deep, lifelong bond with Robert and Clara Schumann."
 		]
 	},
 	"figure-074": {
-		"summary": "French painter whose “Impression, Sunrise” gave Impressionism its name.",
+		"summary": "French painter whose “Impression, Sunrise” gave Impressionism its name and who painted “Woman with a Parasol.”",
 		"facts": [
 			"He painted the same subject again and again as the time of day and the light changed.",
 			"He spent his final years painting the water lilies in his garden at Giverny."
 		]
 	},
 	"figure-075": {
-		"summary": "French sculptor of “The Thinker” and “The Burghers of Calais.”",
+		"summary": "French sculptor who opened the way to modern sculpture with “The Thinker,” “The Burghers of Calais” and “The Kiss.”",
 		"facts": [
 			"He worked on “The Gates of Hell” for more than 30 years.",
 			"“The Thinker” was originally made as “The Poet,” meant to sit atop “The Gates of Hell.”"
 		]
 	},
 	"figure-076": {
-		"summary": "French painter who painted apples and Mont Sainte-Victoire over and over.",
+		"summary": "French Post-Impressionist painter of “The Card Players” and the Mont Sainte-Victoire series, who paved the way for Cubism.",
 		"facts": [
 			"He advised treating nature in terms of the cylinder, the sphere, and the cone.",
 			"Pablo Picasso and Henri Matisse are said to have called him “the father of us all.”"
 		]
 	},
 	"figure-077": {
-		"summary": "Russian composer of the ballets “Swan Lake” and “The Nutcracker.”",
+		"summary": "Russian composer of the ballets “Swan Lake,” “The Nutcracker” and “The Sleeping Beauty” and the “Pathétique” Symphony.",
 		"facts": [
 			"In the “1812 Overture,” he even wrote cannon fire into the score.",
 			"For 13 years, he was supported by a patron whom he had agreed never to meet."
 		]
 	},
 	"figure-078": {
-		"summary": "America's great inventor, who brought the world the incandescent light bulb and the phonograph.",
+		"summary": "American inventor who gave the world the phonograph, a long-lasting incandescent light bulb and the Kinetoscope motion-picture viewer.",
 		"facts": [
 			"Over his lifetime, he registered 1,093 patents in the United States alone.",
 			"The first electric lights in Korea, switched on in 1887 at Geoncheonggung inside Gyeongbokgung Palace, used equipment from Edison's company."
 		]
 	},
 	"figure-079": {
-		"summary": "French novelist who wrote “Twenty Thousand Leagues Under the Seas” and “Around the World in Eighty Days.”",
+		"summary": "French novelist who pioneered scientific adventure fiction with “Twenty Thousand Leagues Under the Seas,” “Around the World in Eighty Days” and “Journey to the Center of the Earth.”",
 		"facts": [
 			"He drew on scientific knowledge to write novels about submarines and voyages to the Moon.",
 			"According to UNESCO's count, he is the most translated author after Agatha Christie."
 		]
 	},
 	"figure-080": {
-		"summary": "Czech nationalist composer who wrote the symphony “From the New World.”",
+		"summary": "Czech nationalist composer of Symphony No. 9 “From the New World,” the “Slavonic Dances” and a celebrated cello concerto.",
 		"facts": [
 			"He lived in New York City as director of the National Conservatory of Music of America.",
 			"He wove the folk melodies of his homeland into orchestral music."
 		]
 	},
 	"figure-081": {
-		"summary": "Engineer who patented a three-wheeled automobile powered by a gasoline engine in 1886.",
+		"summary": "German inventor who in 1886 built a three-wheeled car powered by a gasoline engine and received the world's first automobile patent.",
 		"facts": [
 			"His wife proved the car's practicality by driving it more than 100 kilometers.",
 			"The “Benz” in the Mercedes-Benz brand is his surname."
 		]
 	},
 	"figure-082": {
-		"summary": "Dutch painter of “The Starry Night” and his sunflowers.",
+		"summary": "Dutch Post-Impressionist painter of “The Starry Night” and the “Sunflowers” series, with bold brushstrokes and vivid color.",
 		"facts": [
 			"In little more than ten years, he produced over 2,000 works.",
 			"Hundreds of letters he exchanged with his brother Theo survive."
@@ -581,35 +581,35 @@
 		]
 	},
 	"figure-084": {
-		"summary": "English mathematician who foresaw that machines could do more than crunch numbers.",
+		"summary": "English mathematician who, in her notes on Babbage's Analytical Engine, foresaw that machines could go beyond numbers, even to music.",
 		"facts": [
 			"She wrote out a calculation procedure for Charles Babbage's Analytical Engine and is called the first programmer.",
 			"The programming language Ada, named by the U.S. Department of Defense in 1979, honors her."
 		]
 	},
 	"figure-085": {
-		"summary": "German physicist who discovered a new kind of ray and named it X because its nature was unknown.",
+		"summary": "German physicist who discovered X-rays, able to pass through black paper, during cathode-ray tube experiments in 1895, opening the way to medical imaging.",
 		"facts": [
 			"An image of his wife's hand became the first X-ray of the human body.",
 			"He received the first Nobel Prize in Physics in 1901 and never patented the rays."
 		]
 	},
 	"figure-086": {
-		"summary": "German physicist who proved by experiment that electromagnetic waves really exist.",
+		"summary": "German physicist who generated and detected radio waves with a spark-gap apparatus, proving the electromagnetic waves Maxwell had predicted.",
 		"facts": [
 			"The unit Hz, used for FM radio frequencies, is named after him.",
 			"He died young, at just 36."
 		]
 	},
 	"figure-087": {
-		"summary": "English surgeon who drastically cut deaths from infection by disinfecting surgical instruments and wounds.",
+		"summary": "British surgeon who introduced antiseptic surgery, disinfecting instruments and wounds with carbolic acid and sharply reducing deaths from infection.",
 		"facts": [
 			"He took his cue for antiseptic surgery from Louis Pasteur's germ theory.",
 			"The mouthwash Listerine is named after him."
 		]
 	},
 	"figure-088": {
-		"summary": "German poet who left us “Faust” and “The Sorrows of Young Werther.”",
+		"summary": "German poet who stirred Europe with “The Sorrows of Young Werther” and led Weimar Classicism with Schiller.",
 		"facts": [
 			"He worked on “Faust” over a span of 60 years.",
 			"The Goethe-Institut, which teaches German, is named after him and has a branch in Seoul."
@@ -623,91 +623,91 @@
 		]
 	},
 	"figure-090": {
-		"summary": "Joseon scholar who created the Chusa style of calligraphy and painted “Sehando.”",
+		"summary": "Late Joseon Korean calligrapher who studied ancient inscriptions with Qing scholars and created an original script mixing thick and thin strokes.",
 		"facts": [
 			"While in exile on Jeju, he painted “Sehando” for one of his disciples.",
 			"By deciphering a stone monument on Bukhansan, he identified it as a border-inspection stele of King Jinheung of Silla."
 		]
 	},
 	"figure-091": {
-		"summary": "Architect who left Barcelona with flowing, curved buildings that avoid straight lines, such as Park Güell and Casa Milà.",
+		"summary": "Spanish architect who left Barcelona buildings full of curves and tile mosaics, such as Park Güell, Casa Milà and Casa Batlló.",
 		"facts": [
 			"The Sagrada Família is still under construction a century after his death.",
 			"In February 2026, its central Tower of Jesus Christ was topped out at 172.5 meters."
 		]
 	},
 	"figure-092": {
-		"summary": "Austrian painter of “The Kiss,” gleaming with gold leaf.",
+		"summary": "Austrian painter of “The Kiss” and “Portrait of Adele Bloch-Bauer I,” shimmering with gold leaf.",
 		"facts": [
 			"Turning his back on the established art world, he co-founded the Vienna Secession.",
 			"His gold-leaf technique was inspired by the Byzantine mosaics of Ravenna."
 		]
 	},
 	"figure-093": {
-		"summary": "German physicist who opened the door to quantum theory with the idea that energy comes in discrete packets.",
+		"summary": "German physicist who proposed that energy comes in discrete quanta to explain black-body radiation and won the 1918 Nobel Prize in Physics.",
 		"facts": [
 			"The hypothesis he put forward in 1900 became the starting point of quantum mechanics.",
 			"Since 2019, the kilogram has been defined by the value of the constant named after him."
 		]
 	},
 	"figure-094": {
-		"summary": "Polish-born scientist who discovered polonium and radium and won Nobel Prizes in two different fields.",
+		"summary": "Polish-born physicist who discovered the radioactive elements polonium and radium and won Nobel Prizes in both physics and chemistry.",
 		"facts": [
 			"Together with her husband, Pierre, she coined the term “radioactivity.”",
 			"During World War I, she sent mobile X-ray vehicles to the front lines."
 		]
 	},
 	"figure-095": {
-		"summary": "German-born physicist whose theory of relativity reshaped our understanding of time and space.",
+		"summary": "German-born physicist who transformed our ideas of space and time with special and general relativity and the equation E=mc².",
 		"facts": [
 			"He won the Nobel Prize not for relativity but for the photoelectric effect.",
 			"He wrote his papers while working as a patent office examiner."
 		]
 	},
 	"figure-096": {
-		"summary": "Danish physicist who proposed an atomic model in which electrons stay only in fixed orbits.",
+		"summary": "Danish physicist who proposed an atomic model in which electrons stay in fixed orbits and won the 1922 Nobel Prize in Physics.",
 		"facts": [
 			"He founded an institute in Copenhagen that trained young physicists.",
 			"He debated quantum mechanics with Albert Einstein for years."
 		]
 	},
 	"figure-097": {
-		"summary": "Indian mathematician who produced thousands of formulas without ever having formal training in mathematics.",
+		"summary": "Indian mathematician who, with almost no formal training, found thousands of formulas on infinite series, partitions of numbers and more on his own.",
 		"facts": [
 			"A letter he sent to the British mathematician Hardy led to his going to Cambridge.",
 			"He died at 32, and his life became the film “The Man Who Knew Infinity.”"
 		]
 	},
 	"figure-098": {
-		"summary": "British mathematician who worked out a computing machine in theory before one was ever built.",
+		"summary": "British mathematician who devised an imaginary machine defining computability, laying the theoretical foundation of computer science.",
 		"facts": [
 			"With his colleagues at Bletchley Park, he cracked Germany's Enigma code.",
 			"He proposed the Turing test for judging whether a machine can think, and his face appears on the British £50 note."
 		]
 	},
 	"figure-099": {
-		"summary": "American biologist who discovered genes that jump from place to place in corn.",
+		"summary": "American biologist who studied the speckled kernels of maize and discovered transposons, genes that move around on chromosomes.",
 		"facts": [
 			"Her work was so far ahead of its time that it went unrecognized when first presented.",
 			"In 1983, some 30 years after her discovery, she won the Nobel Prize in Physiology or Medicine on her own."
 		]
 	},
 	"figure-100": {
-		"summary": "British bacteriologist who noticed penicillin in a dish where mold had grown.",
+		"summary": "British medical scientist who in 1928 found a bacteria-killing substance from a mold, opening the way to penicillin, the first antibiotic.",
 		"facts": [
 			"Back from vacation, he found that bacteria had died only in the area around the mold.",
 			"In 1945, he shared the Nobel Prize with Florey and Chain, who turned penicillin into a drug."
 		]
 	},
 	"figure-101": {
-		"summary": "Two American inventors who made the first powered flight at Kitty Hawk in 1903.",
+		"summary": "Two American inventors who made the first powered flight in 1903 near Kitty Hawk in the Flyer, an airplane they built themselves.",
 		"facts": [
 			"They built airplanes while running a bicycle shop.",
 			"The first flight lasted 12 seconds and covered 36 meters."
 		]
 	},
 	"figure-102": {
-		"summary": "Norwegian explorer who became the first person to reach the South Pole, in 1911.",
+		"summary": "Norwegian explorer who reached the South Pole first in 1911, more than a month ahead of Scott's expedition.",
 		"facts": [
 			"Using dog sleds was the key to beating his rival.",
 			"He was also the first to sail through the Northwest Passage."
@@ -721,91 +721,91 @@
 		]
 	},
 	"figure-104": {
-		"summary": "American astronaut who became the first person to set foot on the Moon, with Apollo 11 in 1969.",
+		"summary": "American astronaut who, as commander of Apollo 11 in 1969, landed in the Sea of Tranquility and became the first person to walk on the Moon.",
 		"facts": [
 			"He left behind the words “one small step for a man.”",
 			"He had been a Navy pilot and a test pilot."
 		]
 	},
 	"figure-105": {
-		"summary": "Spanish painter who pioneered Cubism, breaking subjects apart and reassembling them from multiple angles.",
+		"summary": "Spanish painter who founded Cubism with Braque and changed the course of modern art with “Les Demoiselles d'Avignon.”",
 		"facts": [
 			"With “Guernica,” he exposed the horrors of aerial bombing.",
 			"He also painted “Massacre in Korea,” about the Korean War."
 		]
 	},
 	"figure-106": {
-		"summary": "French painter who led Fauvism, which put intense color front and center.",
+		"summary": "French painter who led Fauvism with bold pure colors in works such as “Woman with a Hat” and “The Dance.”",
 		"facts": [
 			"In his final years, when illness limited him, he worked by cutting out and pasting colored paper.",
 			"He originally worked at a law office before turning to painting."
 		]
 	},
 	"figure-107": {
-		"summary": "Mexican painter who returned again and again to her own face and the pain left by a traffic accident.",
+		"summary": "Mexican painter who poured the lifelong pain left by a bus accident into intense self-portraits such as “The Broken Column.”",
 		"facts": [
 			"A little over a third of her works are self-portraits.",
 			"Her life became the 2002 film “Frida,” starring Salma Hayek."
 		]
 	},
 	"figure-108": {
-		"summary": "Modern Korean painter who drew bulls and children in bold, powerful lines.",
+		"summary": "Modern Korean painter of powerful bull paintings such as “White Ox” and “Bull,” and of works longing for his separated family.",
 		"facts": [
 			"Being poor, he even painted on the silver foil from cigarette packs.",
 			"In Seogwipo on Jeju, where he stayed as a war refugee in 1951, a street and an art museum bear his name."
 		]
 	},
 	"figure-109": {
-		"summary": "Italian doctor who created a way of teaching that lets children choose and try things for themselves.",
+		"summary": "Italian educator who created a method in which children choose their own learning materials, spreading it to kindergartens worldwide.",
 		"facts": [
 			"She was one of the first women in Italy to become a physician.",
 			"She refined her method at a children’s house she opened in a poor district of Rome."
 		]
 	},
 	"figure-110": {
-		"summary": "Bengali poet who, with “Gitanjali,” became the first Asian to win the Nobel Prize in Literature.",
+		"summary": "Indian poet who in 1913 became the first Asian to win the Nobel Prize in Literature, for his Bengali verse collection “Gitanjali.”",
 		"facts": [
 			"In 1929 he wrote a short poem for the Dong-A Ilbo comparing Korea to “the lamp of the East.”",
 			"He wrote the songs that became the national anthems of both India and Bangladesh."
 		]
 	},
 	"figure-111": {
-		"summary": "Writer who skewered old China in “The True Story of Ah Q” and “A Madman’s Diary.”",
+		"summary": "Chinese writer who mocked old feudal attitudes in “A Madman's Diary” and “The True Story of Ah Q,” opening modern Chinese literature.",
 		"facts": [
 			"He was studying medicine when he took up the pen, deciding to heal people through writing instead.",
 			"His real name was Zhou Shuren; the name he is known by is a pen name."
 		]
 	},
 	"figure-112": {
-		"summary": "American author of lean, hard-edged prose who wrote “The Old Man and the Sea.”",
+		"summary": "American novelist who wrote “The Old Man and the Sea,” “A Farewell to Arms” and “For Whom the Bell Tolls” in short, hard-edged prose.",
 		"facts": [
 			"He served as an ambulance driver in World War I and as a war correspondent in World War II.",
 			"He won both the Nobel Prize in Literature and the Pulitzer Prize."
 		]
 	},
 	"figure-113": {
-		"summary": "French novelist and pilot who wrote “The Little Prince.”",
+		"summary": "French novelist who wrote “The Little Prince” as well as “Night Flight” and “Wind, Sand and Stars,” drawn from his life as a pilot.",
 		"facts": [
 			"As an airmail pilot, he flew over the desert and the Andes.",
 			"He set out on a reconnaissance flight and never came back, lost over the Mediterranean."
 		]
 	},
 	"figure-114": {
-		"summary": "Jewish girl who recorded more than two years of life in hiding in a diary she got for her 13th birthday.",
+		"summary": "German-born Jewish writer whose diary of life in hiding from the Nazis became one of the best-known records of the Holocaust.",
 		"facts": [
 			"Eight people hid in the back rooms of a building in Amsterdam, and only her father survived.",
 			"Published by her father in 1947, the diary has since been translated into more than 70 languages."
 		]
 	},
 	"figure-115": {
-		"summary": "American activist who, unable to see or hear, graduated from college and campaigned for the rights of people with disabilities.",
+		"summary": "American activist who became the first deafblind person to earn a bachelor's degree and championed disability rights with her memoir The Story of My Life.",
 		"facts": [
 			"She learned language from her teacher, Anne Sullivan, who spelled words into the palm of her hand.",
 			"The dog she was given in Japan in 1937 was the first Akita ever taken overseas."
 		]
 	},
 	"figure-116": {
-		"summary": "Indian lawyer who fought discrimination in South Africa for 21 years, then came home to lead a nonviolent independence movement.",
+		"summary": "Indian activist who shook British rule with the nonviolent resistance he called satyagraha and the 1942 Quit India movement.",
 		"facts": [
 			"In 1930 he walked about 390 kilometers in 24 days to protest the salt tax.",
 			"His face appears on the front of the Indian rupee notes in use today."
@@ -840,7 +840,7 @@
 		]
 	},
 	"figure-121": {
-		"summary": "Independence activist who led the Korean Provisional Government and wrote “Baekbeom Ilji.”",
+		"summary": "Korean independence activist who, as president of the Provisional Government, founded the Korean Liberation Army and wrote the memoir Baekbeom Ilji.",
 		"facts": [
 			"He founded the Korean Patriotic Organization and directed the attacks carried out by Lee Bong-chang and Yun Bong-gil.",
 			"In 1949 he was shot dead by An Du-hui at Gyeonggyojang."
@@ -854,28 +854,28 @@
 		]
 	},
 	"figure-123": {
-		"summary": "King of Macedon who took the throne at 20 and pushed all the way from Greece to India.",
+		"summary": "Ancient Macedonian conqueror who toppled the Persian Empire at the Battle of Gaugamela and extended his realm to the Indus.",
 		"facts": [
 			"He founded about twenty cities named after himself, including Alexandria in Egypt.",
 			"He was tutored by Aristotle and died suddenly of illness in Babylon at 32."
 		]
 	},
 	"figure-124": {
-		"summary": "General who conquered Gaul, crossed the Rubicon, and became Rome’s most powerful man.",
+		"summary": "Ancient Roman general who conquered Gaul in an eight-year campaign, recorded it in his Commentaries on the Gallic War, and became dictator for life.",
 		"facts": [
 			"“The die is cast” is said to be what he declared as he led his army across the Rubicon.",
 			"The month of July is named after him, and the calendar he reformed was used in Europe for more than 1,600 years."
 		]
 	},
 	"figure-125": {
-		"summary": "Last pharaoh of Egypt, who allied with two of Rome’s most powerful men to keep her kingdom alive.",
+		"summary": "Last pharaoh of ancient Egypt, who allied first with Julius Caesar and then Mark Antony to keep the Ptolemaic dynasty in power for 21 years.",
 		"facts": [
 			"Plutarch wrote that she was the first ruler of her dynasty to learn the Egyptian language.",
 			"After defeat at the Battle of Actium she took her own life, and Egypt became Roman territory."
 		]
 	},
 	"figure-126": {
-		"summary": "Carthaginian general who crossed the Alps with elephants and marched to the very doorstep of Rome.",
+		"summary": "Ancient Carthaginian general who, in the Second Punic War, led elephants over the Alps and fought on Italian soil for 15 years.",
 		"facts": [
 			"At the Battle of Cannae he surrounded and destroyed a Roman army nearly twice the size of his own.",
 			"That encirclement tactic is still taught at military academies today."
@@ -889,140 +889,140 @@
 		]
 	},
 	"figure-128": {
-		"summary": "Teacher of mathematics and astronomy in Alexandria, the earliest female mathematician whose life is well documented.",
+		"summary": "Female mathematician of ancient Egypt who led the Neoplatonist school of Alexandria and taught mathematics and astronomy there.",
 		"facts": [
 			"She edited Book 3 of Ptolemy’s “Almagest” and wrote commentaries on Diophantus.",
 			"In 415 she was caught up in a power struggle between the governor and the bishop and was murdered by a Christian mob."
 		]
 	},
 	"figure-129": {
-		"summary": "Roman physician who learned the inner body by treating gladiators and set the standard for European medicine for over 1,300 years.",
+		"summary": "Ancient Roman physician who, by dissecting apes and pigs, showed how nerves and arteries work and set the standard for European medicine for over 1,300 years.",
 		"facts": [
 			"Born in Pergamon, in what is now Turkey, he became personal physician to a Roman emperor.",
 			"His knowledge came from animal dissection and was often wrong, yet it went largely unchallenged until Andreas Vesalius."
 		]
 	},
 	"figure-130": {
-		"summary": "Athenian statesman who built the Parthenon and brought democracy to its height.",
+		"summary": "Statesman of ancient Athens who led the building of the Parthenon and, with Delian League funds, ushered in democracy's golden age.",
 		"facts": [
 			"He paid jurors a daily wage so that even poor citizens could serve in court.",
 			"He died of a plague that swept Athens during the war with Sparta."
 		]
 	},
 	"figure-131": {
-		"summary": "First king of kings of Persia, who united the ancient Near East yet let conquered peoples keep their own faiths.",
+		"summary": "Ancient Persian king who conquered Media, Lydia and the Neo-Babylonian Empire in turn to found the Achaemenid Empire.",
 		"facts": [
 			"The Bible says he sent the Jews held captive in Babylon back to their homeland.",
 			"A replica of the clay cylinder inscribed with his decree has stood at the United Nations headquarters since 1971."
 		]
 	},
 	"figure-132": {
-		"summary": "Emperor who united seven rival states into a single realm for the first time.",
+		"summary": "First ruler to unify China, who conquered the six rival Warring States and had scattered walls joined into the Great Wall.",
 		"facts": [
 			"He standardized the script, weights and measures, and even the width of cart axles.",
 			"The pits beside his tomb are believed to hold more than 8,000 life-size figures of the Terracotta Army."
 		]
 	},
 	"figure-133": {
-		"summary": "Chancellor who came out of retirement after three visits to his thatched cottage and became the pillar of the state of Shu.",
+		"summary": "Chancellor of Shu Han in China who forged the alliance with Sun Quan that led to the Battle of Red Cliffs and, after submitting his Chu Shi Biao, led five northern expeditions.",
 		"facts": [
 			"From his thatched cottage, he laid out a plan in advance to divide the realm into three.",
 			"Legend says dumplings began when he offered sacrifices of dough shaped like human heads instead of real ones."
 		]
 	},
 	"figure-134": {
-		"summary": "Thinker who held that human nature is inherently good and that the people matter more than the ruler.",
+		"summary": "Confucian thinker of China's Warring States period who taught that human nature is innately good and urged benevolent rule that puts the people first.",
 		"facts": [
 			"He explained innate goodness by saying anyone who sees a child about to fall into a well rushes over in alarm.",
 			"The story of his mother moving house three times for his sake is a famous Chinese proverb."
 		]
 	},
 	"figure-135": {
-		"summary": "General of the state of Wu, traditionally credited with “The Art of War,” which says winning without fighting is best.",
+		"summary": "General of the state of Wu in China's Spring and Autumn period, traditionally credited with The Art of War, whose 13 chapters prize winning without fighting.",
 		"facts": [
 			"The book contains the line “Know the enemy and know yourself, and in a hundred battles you will never be in peril.”",
 			"Drilling the king of Wu’s palace women, he is said to have beheaded the king’s two favorite concubines when they kept laughing."
 		]
 	},
 	"figure-136": {
-		"summary": "Thinker who preached impartial love for all, friend and foe alike, and traveled around trying to stop wars of aggression.",
+		"summary": "Chinese thinker of the Warring States period who founded a school preaching impartial universal love and opposing wars of aggression.",
 		"facts": [
 			"He and his disciples mastered the art of defending city walls and sided with weak states under attack.",
 			"His school once rivaled Confucianism but vanished after the Qin dynasty."
 		]
 	},
 	"figure-137": {
-		"summary": "Poet of the state of Chu who was banished for his concern for his country and threw himself into a river.",
+		"summary": "Poet of the Warring States kingdom of Chu in China who poured his worry for his country into works like Li Sao and Tianwen, becoming the central author of the Chu Ci.",
 		"facts": [
 			"“Li Sao” in the “Chu Ci” is a long ancient Chinese poem of 373 lines and nearly 2,500 characters.",
 			"Throwing sticky rice into rivers and racing dragon boats at the Duanwu Festival are said to come from efforts to save him."
 		]
 	},
 	"figure-138": {
-		"summary": "Tang dynasty poet of wine and the moon, known as the Immortal of Poetry.",
+		"summary": "Tang dynasty Chinese poet called the Immortal of Poetry for bold verses such as Quiet Night Thoughts, on the moon and homesickness, and Bring in the Wine.",
 		"facts": [
 			"He left more than a thousand poems and was famous for composing on the spot.",
 			"Legend says he drowned trying to grab the moon’s reflection in a river."
 		]
 	},
 	"figure-139": {
-		"summary": "Tang dynasty poet who recorded the hardships of ordinary people in wartime and is known as the Sage of Poetry.",
+		"summary": "Tang dynasty Chinese poet called the Sage of Poetry for depicting the suffering of ordinary people in the An Lushan Rebellion in poems like The Officer at Shihao.",
 		"facts": [
 			"“The nation is broken, but mountains and rivers remain” is the opening line of “Spring View,” written in war-torn Chang’an.",
 			"In 1481, under King Seongjong of Joseon, his poems were translated into Hangul in “Dusi Eonhae.”"
 		]
 	},
 	"figure-140": {
-		"summary": "Master calligrapher of the Eastern Jin who raised handwriting to an art and is known as the Sage of Calligraphy.",
+		"summary": "Calligrapher of China's Eastern Jin who refined regular, running and cursive scripts, set the model for later calligraphy and was called the Sage of Calligraphy.",
 		"facts": [
 			"His most famous work is the “Preface to the Orchid Pavilion Poems,” written at a gathering of friends at the Orchid Pavilion.",
 			"The original is said to have been buried with Emperor Taizong of Tang, and only copies survive today."
 		]
 	},
 	"figure-141": {
-		"summary": "General descended from Gaya royalty who led Silla’s unification of the Three Kingdoms.",
+		"summary": "Silla general who crushed Gyebaek's last stand at Hwangsanbeol in 660, bringing down Baekje and leading the unification of the Three Kingdoms of Korea.",
 		"facts": [
 			"Raised as a hwarang, he joined King Muyeol and King Munmu in conquering Baekje and then Goguryeo.",
 			"He died during the Silla–Tang War and, rare for a subject, was posthumously honored as King Heungmu the Great."
 		]
 	},
 	"figure-142": {
-		"summary": "Silla man of letters who went to Tang China at 12 and passed the civil service exam there.",
+		"summary": "Silla writer who passed the Tang examination for foreigners and left the collection Gyewon Pilgyeong, regarded as the founder of Korean literature in Chinese.",
 		"facts": [
 			"Legend says the rebel leader Huang Chao was so shaken reading his “Proclamation Against Huang Chao” that he fell off his seat.",
 			"He submitted some ten reform proposals to Queen Jinseong and was promoted to achan, but in the end he withdrew to Haeinsa Temple on Mount Gaya."
 		]
 	},
 	"figure-143": {
-		"summary": "Founder of the Mongol Empire, who united the tribes of the Mongolian steppe and was proclaimed supreme ruler in 1206.",
+		"summary": "Mongolian conqueror who united the steppe tribes and, striking Western Xia, the Jin and Khwarazm, launched the Mongol Empire.",
 		"facts": [
 			"He organized his army into units of ten, a hundred, and a thousand, and the relay-station network he built spread across the whole empire in his son’s time.",
 			"He brought the Uyghur script to the then-unwritten Mongols so their laws could be recorded."
 		]
 	},
 	"figure-144": {
-		"summary": "Fifth supreme ruler of the Mongols, who founded the Yuan dynasty in China and made Dadu (today’s Beijing) his capital.",
+		"summary": "Fifth Mongol emperor who founded the Yuan dynasty in 1271 and destroyed the Southern Song in 1279 to rule all of China.",
 		"facts": [
 			"He is said to have kept Marco Polo at his court and in his service for many years.",
 			"He married his daughter to King Chungnyeol of Goryeo and, drawing on Goryeo troops, invaded Japan twice without success."
 		]
 	},
 	"figure-145": {
-		"summary": "Tang dynasty monk who crossed the desert alone to India in search of scriptures and made it back.",
+		"summary": "Tang dynasty Chinese monk who studied at India's Nalanda monastery and on his return wrote the travel record Great Tang Records on the Western Regions.",
 		"facts": [
 			"He returned after 17 years carrying 657 Buddhist texts and spent the rest of his life translating them.",
 			"His journey, greatly embellished, became the monk Tang Sanzang in “Journey to the West.”"
 		]
 	},
 	"figure-146": {
-		"summary": "Italian friar born to a rich family who gave up his wealth and chose poverty.",
+		"summary": "Italian friar who founded the Order of Friars Minor devoted to poverty and wrote the Canticle of the Sun, calling the sun his brother.",
 		"facts": [
 			"San Francisco took its name from a mission named after him.",
 			"Pope Francis, elected in 2013, took his name."
 		]
 	},
 	"figure-147": {
-		"summary": "Twelfth-century abbess of a convent on the Rhine who wrote down her visions and composed sacred chants.",
+		"summary": "Medieval German composer and abbess who recorded her visions in Scivias and founded the convent of Rupertsberg on the Rhine.",
 		"facts": [
 			"Sixty-nine of her chants survive, along with the music for a work considered the oldest morality play.",
 			"She also wrote two books on medicinal herbs and illnesses."
@@ -1036,7 +1036,7 @@
 		]
 	},
 	"figure-149": {
-		"summary": "Poet who poured his love for Laura into sonnets and opened the door to the Renaissance.",
+		"summary": "Italian poet whose Canzoniere, 366 poems of love for Laura, spread the sonnet form across Europe.",
 		"facts": [
 			"He hunted down forgotten ancient manuscripts and is called the father of humanism.",
 			"The idea of the thousand years after Rome as a “Dark Age” began with him."
@@ -1050,49 +1050,49 @@
 		]
 	},
 	"figure-151": {
-		"summary": "Prague theologian who challenged the Church’s wrongs a century before Martin Luther and was burned at the stake.",
+		"summary": "Czech church reformer who denounced the sale of indulgences and papal power and was burned at the stake by the Council of Constance in 1415.",
 		"facts": [
 			"He preached in Czech and is believed to have written the spelling treatise that gave rise to the háček (ˇ).",
 			"The wars waged by his followers went on for nearly 15 years."
 		]
 	},
 	"figure-152": {
-		"summary": "Medieval debater who insisted that even faith must be questioned and brought logic into theology.",
+		"summary": "Medieval French philosopher who won fame in Paris by proposing conceptualism, a middle path between realism and nominalism in the debate on universals.",
 		"facts": [
 			"His letters with his student Héloïse survive as one of the Middle Ages’ most famous love stories.",
 			"His method of setting arguments for and against side by side became the basis of university teaching."
 		]
 	},
 	"figure-153": {
-		"summary": "Goryeo man of letters who stayed with King Chungseon at the Mangwondang library in Yuan China, mingling with Chinese scholars.",
+		"summary": "Goryeo man of letters who wrote Yeogong Paeseol, a collection of anecdotes and poetry criticism, and spread Neo-Confucianism after mixing with Yuan scholars.",
 		"facts": [
 			"He left “Soakbu,” which renders 17 Goryeo folk songs as classical Chinese poems of seven-character quatrains.",
 			"His portrait, painted by the Yuan artist Chen Jianru, is designated a National Treasure."
 		]
 	},
 	"figure-154": {
-		"summary": "Scholar who copied Zhu Xi’s books in Yuan China and first brought Neo-Confucianism to Goryeo.",
+		"summary": "Goryeo Confucian scholar who hand-copied Zhu Xi's writings in Yuan China, brought back portraits of Confucius and Zhu Xi, and first introduced Neo-Confucianism to Korea.",
 		"facts": [
 			"He set up a scholarship fund called Seomhakjeon to revive the declining national academy.",
 			"Sosu Seowon, Korea’s first private Confucian academy, enshrines him and became a World Heritage Site in 2019."
 		]
 	},
 	"figure-155": {
-		"summary": "Loyal Goryeo official who refused to the end to back a new dynasty and was killed on Seonjuk Bridge.",
+		"summary": "Late Goryeo statesman who sailed to Japan to bring home thousands of captives seized by pirates and founded five schools in the capital Gaeseong.",
 		"facts": [
 			"“Dansimga,” which opens with “Though I die and die again,” is said to have been his reply.",
 			"Deeply versed in Neo-Confucianism, he is called the founder of the School of Principle in Korea."
 		]
 	},
 	"figure-156": {
-		"summary": "Genoese sailor who crossed the Atlantic believing that sailing west would bring him to India.",
+		"summary": "Italian explorer from Genoa who crossed the Atlantic four times and opened the sea route linking Europe and the Americas.",
 		"facts": [
 			"Backed by the Spanish crown, he set out with three ships and in 1492 reached an island in the West Indies.",
 			"He believed until his death that he had reached India, which is why Native Americans are still called Indians."
 		]
 	},
 	"figure-157": {
-		"summary": "Portuguese sailor who led the first fleet to sail all the way around the world.",
+		"summary": "Portuguese explorer who, backed by the Spanish king, led a fleet of five ships on the first voyage around the world.",
 		"facts": [
 			"After passing through the strait at the tip of South America, he named the calm ocean he found the Pacific.",
 			"He himself was killed in battle in the Philippines, and only one ship and 18 men made it home."
@@ -1113,14 +1113,14 @@
 		]
 	},
 	"figure-160": {
-		"summary": "Leader of the second wave of the Reformation, who championed predestination from his base in Geneva.",
+		"summary": "French reformer who made Geneva the base of the Reformed church and taught predestination, laying the roots of Presbyterianism.",
 		"facts": [
 			"He systematized Protestant theology in “Institutes of the Christian Religion.”",
 			"His teachings spread to the Netherlands, Scotland, and America."
 		]
 	},
 	"figure-161": {
-		"summary": "Humanist from Rotterdam who poked fun at the Church and scholars alike in “The Praise of Folly.”",
+		"summary": "Dutch scholar called the Prince of the Humanists, who satirized the hypocrisy of churchmen and scholars in In Praise of Folly.",
 		"facts": [
 			"His new edition of the New Testament from the Greek original helped light the spark of the Reformation.",
 			"Yet he clashed bitterly with Martin Luther over human free will."
@@ -1134,49 +1134,49 @@
 		]
 	},
 	"figure-163": {
-		"summary": "Florentine official long vilified for advising rulers to protect the state rather than be good.",
+		"summary": "Diplomat of the Florentine Republic whose The Prince, a cold analysis of how power really works, opened the way to modern political science.",
 		"facts": [
 			"In “The Prince” he wrote that it is safer to be feared than loved.",
 			"He himself supported the republic and wrote his books in the countryside after being forced out of office."
 		]
 	},
 	"figure-164": {
-		"summary": "Last monarch of the Tudor dynasty, who never married and ushered in England’s golden age.",
+		"summary": "Last Tudor monarch of England, who firmly established the Church of England and presided over a golden age when Shakespeare flourished.",
 		"facts": [
 			"She defeated the Spanish fleet known as the Invincible Armada.",
 			"The U.S. state of Virginia is named after her, the “Virgin Queen.”"
 		]
 	},
 	"figure-165": {
-		"summary": "Anatomist who dissected human bodies himself and corrected the errors of a thousand-year-old medical canon.",
+		"summary": "Physician from Brussels called the father of modern anatomy, who taught at the University of Padua by dissecting bodies himself in front of students.",
 		"facts": [
 			"The accurate illustrations in “On the Fabric of the Human Body” became the model for later anatomical drawings.",
 			"His teachers resented him for contradicting Galen."
 		]
 	},
 	"figure-166": {
-		"summary": "Italian painter who built form with color rather than line and perfected the Venetian style.",
+		"summary": "Italian painter who perfected the color-driven Venetian style in works like the Assumption of the Virgin and the Venus of Urbino.",
 		"facts": [
 			"Emperors and popes competed to have him paint their portraits.",
 			"He lived to nearly 90 and never put down his brush."
 		]
 	},
 	"figure-167": {
-		"summary": "Painter from Crete who depicted Toledo with elongated figures and cold, eerie light.",
+		"summary": "Cretan-born painter who made his name in Toledo with elongated figures and cold light, as in The Burial of the Count of Orgaz.",
 		"facts": [
 			"His name is a nickname mixing Spanish and Italian that means “the Greek.”",
 			"Dismissed as bizarre in his own day, he was rediscovered 300 years later by the Expressionists."
 		]
 	},
 	"figure-168": {
-		"summary": "Wandering physician who urged people to learn from miners and barbers instead of old books.",
+		"summary": "Swiss physician who is thought to have first given zinc its name and wrote a book observing miners' diseases and the effects of metals on the body.",
 		"facts": [
 			"He left the saying “All things are poison, and nothing is without poison; only the dose decides.”",
 			"He tried to treat illness with metals and minerals, bringing chemistry into medicine."
 		]
 	},
 	"figure-169": {
-		"summary": "Former monk and storyteller who mocked the Church and the schools wholesale through the comic adventures of a father and son who were giants.",
+		"summary": "French Renaissance novelist who satirized church and schools in Pantagruel and Gargantua, comic tales of a father and son who are giants.",
 		"facts": [
 			"In 1543 the Sorbonne’s faculty of theology condemned two of his giant books and banned them.",
 			"The English word “gargantuan” comes from his giant Gargantua."
@@ -1190,21 +1190,21 @@
 		]
 	},
 	"figure-171": {
-		"summary": "Flemish painter who used oil-based paints to capture even the textures of glass and fur.",
+		"summary": "Flemish painter who completed the Ghent Altarpiece, The Adoration of the Mystic Lamb, and brought oil painting to new heights.",
 		"facts": [
 			"In “The Arnolfini Portrait,” tiny figures are reflected in a convex mirror.",
 			"Above the mirror he wrote “Jan van Eyck was here.”"
 		]
 	},
 	"figure-172": {
-		"summary": "Painter whose hellscapes teeming with monsters, eggs, and musical instruments have remained a riddle for 500 years.",
+		"summary": "Dutch painter who filled works like The Haywain Triptych and The Temptation of Saint Anthony with monsters and bizarre creatures.",
 		"facts": [
 			"When the panels of “The Garden of Earthly Delights” are closed, a gray globe appears on the outside.",
 			"Only about 25 of his paintings survive, and not a single letter."
 		]
 	},
 	"figure-173": {
-		"summary": "Portrait painter who recorded the faces of the king and his courtiers at the court of Henry VIII.",
+		"summary": "German painter who served as court painter to Henry VIII and left famous portraits of Thomas More and Erasmus.",
 		"facts": [
 			"The distorted smear at the bottom of “The Ambassadors” turns into a skull when viewed from an angle.",
 			"Henry VIII married Anne after seeing his portrait of her, and the marriage ended after just six months."
@@ -1218,14 +1218,14 @@
 		]
 	},
 	"figure-175": {
-		"summary": "Preacher who shook Florence for four years, urging people to burn their luxuries.",
+		"summary": "Italian Dominican friar who led a theocratic republic in Florence after the Medici were driven out, condemning luxury and church corruption.",
 		"facts": [
 			"He staged the “Bonfire of the Vanities,” piling mirrors, paintings, and books in a square and setting them alight.",
 			"After defying the pope, he was hanged and burned in that same square."
 		]
 	},
 	"figure-176": {
-		"summary": "Sultan who led the Ottoman Empire to its height, expanding its lands so far that he besieged Vienna.",
+		"summary": "Ottoman sultan who crushed Hungary at the Battle of Mohács and dominated the Mediterranean, leading the empire to its peak.",
 		"facts": [
 			"In Turkey he is called “Kanuni” (the Lawgiver) for overhauling the law.",
 			"He wrote poetry, learned goldsmithing, and left a famous mosque in Istanbul."
@@ -1239,35 +1239,35 @@
 		]
 	},
 	"figure-178": {
-		"summary": "French absolute monarch who built the Palace of Versailles and reigned for more than 72 years.",
+		"summary": "French monarch who built the Palace of Versailles, reigned over 72 years, and perfected absolute monarchy by binding the nobles to his court.",
 		"facts": [
 			"There is no reliable record that he ever actually said “I am the state.”",
 			"His role as the sun god Apollo in a 1653 ballet became the basis of his Sun King image."
 		]
 	},
 	"figure-179": {
-		"summary": "Reforming Russian ruler who traveled to Western Europe in disguise to learn shipbuilding firsthand.",
+		"summary": "Russian reforming tsar who defeated Sweden in the Northern War and built a navy, raising his country to the ranks of Europe's powers.",
 		"facts": [
 			"He built a new capital, Saint Petersburg, on marshland.",
 			"He taxed nobles’ long beards to push Western-style dress."
 		]
 	},
 	"figure-180": {
-		"summary": "Puritan general who had the king beheaded and briefly ruled a kingless England.",
+		"summary": "English soldier who led Parliament's forces in the Civil War, had Charles I executed, and ruled the country as Lord Protector.",
 		"facts": [
 			"He built a new cavalry force that crushed the king’s army.",
 			"After his death, when the monarchy returned, his body was dug up and executed again."
 		]
 	},
 	"figure-181": {
-		"summary": "Lens-grinding philosopher who, after being cast out of the Jewish community, argued that God and nature are one and the same.",
+		"summary": "Dutch philosopher who argued for freedom of thought and expression in his Theological-Political Treatise and developed a pantheist view of God and nature.",
 		"facts": [
 			"He wrote the “Ethics” like a geometry textbook, with definitions and proofs.",
 			"He turned down a university professorship and made his living grinding lenses."
 		]
 	},
 	"figure-182": {
-		"summary": "English thinker, called the father of liberalism, who held that the human mind starts out as a blank slate.",
+		"summary": "English philosopher who argued in An Essay Concerning Human Understanding that the mind starts as a blank slate, laying the foundations of empiricism.",
 		"facts": [
 			"He wrote that if a government fails to protect its citizens’ life, liberty, and property, they may replace it.",
 			"The “long train of abuses” phrase in the U.S. Declaration of Independence was lifted straight from his “Two Treatises of Government.”"
@@ -1281,63 +1281,63 @@
 		]
 	},
 	"figure-184": {
-		"summary": "German mathematician and philosopher who invented calculus independently of Isaac Newton.",
+		"summary": "German mathematician and philosopher who developed calculus independently of Newton, built a calculator that could multiply and divide, and proposed the theory of monads.",
 		"facts": [
 			"The integral sign and the dx notation we use today are his.",
 			"He refined binary notation, writing numbers with 0 and 1, laying the groundwork for modern computing."
 		]
 	},
 	"figure-185": {
-		"summary": "French mathematician who built a calculating machine at 18 to help his father with tax calculations.",
+		"summary": "French mathematician who built a gear-driven calculator at 18 and showed that pressure in a fluid is transmitted equally in all directions.",
 		"facts": [
 			"The hectopascal (hPa), the pressure unit heard in weather forecasts, comes from his name.",
 			"After he died at 39, his notes were published as “Pensées,” which includes the “thinking reed.”"
 		]
 	},
 	"figure-186": {
-		"summary": "French lawyer who scribbled in a book’s margin that it was too narrow to contain his proof.",
+		"summary": "French lawyer and mathematician who laid the foundations of probability theory in letters with Pascal and independently developed coordinate geometry.",
 		"facts": [
-			"That one line kept mathematicians busy for 358 years.",
+			"A single note in a book's margin, saying the margin was too narrow to hold the proof, kept mathematicians busy for 358 years.",
 			"Andrew Wiles finally solved it in 1994."
 		]
 	},
 	"figure-187": {
-		"summary": "Chemist whose name is attached to the law that a gas’s volume is inversely proportional to its pressure.",
+		"summary": "Irish chemist, often called the father of modern chemistry, who found that a gas's volume is inversely proportional to its pressure.",
 		"facts": [
 			"Born in Ireland, he carried out experiments with a vacuum pump at Oxford.",
 			"He wrote “The Sceptical Chymist,” which separated chemistry from alchemy."
 		]
 	},
 	"figure-188": {
-		"summary": "Physician who used calculation to prove that blood circulates through the body and returns to where it started.",
+		"summary": "English physician who proved in On the Motion of the Heart and Blood that the heart pumps blood around the body in a circuit.",
 		"facts": [
 			"He calculated that the heart pumps out more blood in half an hour than the body holds in total.",
 			"This toppled Galen’s explanation, which had stood for 1,400 years."
 		]
 	},
 	"figure-189": {
-		"summary": "Court painter who layered mirrors and gazes to pull the viewer into the picture.",
+		"summary": "Spanish court painter to Philip IV who painted The Surrender of Breda and the Portrait of Pope Innocent X.",
 		"facts": [
 			"“Las Meninas” shows the painter himself and the king and queen in a single scene.",
 			"He painted dwarfs and jesters at the same eye level as royalty."
 		]
 	},
 	"figure-190": {
-		"summary": "Flemish painter who led Baroque art with lush flesh and swirling, dynamic bodies.",
+		"summary": "Flemish painter of The Descent from the Cross in Antwerp Cathedral and the Marie de' Medici cycle.",
 		"facts": [
 			"He traveled between countries as a diplomatic envoy and was knighted.",
 			"The English word “Rubenesque,” meaning plump and full-figured, comes from his name."
 		]
 	},
 	"figure-191": {
-		"summary": "Painter who cast a single shaft of light into darkness and painted saints like ordinary people from the market.",
+		"summary": "Italian Baroque painter whose The Calling of Saint Matthew uses a single shaft of light in darkness to create dramatic chiaroscuro.",
 		"facts": [
 			"He used people straight off the street as models, provoking a backlash from the Church.",
 			"After killing a man in a brawl, he kept painting while on the run and died at 38."
 		]
 	},
 	"figure-192": {
-		"summary": "Enlightenment polemicist who wrote “Candide” and attacked Church and king with nothing but his pen.",
+		"summary": "French philosopher who attacked religious intolerance and despotism in Candide, his satire of optimism, and the Philosophical Letters.",
 		"facts": [
 			"Even when locked in the Bastille and exiled to England, he never stopped writing.",
 			"He spent three years getting the verdict overturned for Calas, a Protestant who had been broken on the wheel."
@@ -1365,35 +1365,35 @@
 		]
 	},
 	"figure-196": {
-		"summary": "American Founding Father who proved lightning is electricity with a key tied to a kite.",
+		"summary": "American inventor and statesman who showed with his kite that lightning is electricity, helped draft the Declaration of Independence and secured the alliance with France.",
 		"facts": [
 			"He invented the lightning rod, bifocals, and a stove, yet never took out a patent.",
 			"His face is on the $100 bill, but he was never president of the United States."
 		]
 	},
 	"figure-197": {
-		"summary": "Commander who led the War of Independence and became the first president of the United States.",
+		"summary": "American statesman who, as commander of the Continental Army, won the British surrender at Yorktown and became the first U.S. president.",
 		"facts": [
 			"He stepped down after two terms of his own accord, setting the custom of a term limit.",
 			"His face is on the $1 bill, and the capital, Washington, D.C., is named after him."
 		]
 	},
 	"figure-198": {
-		"summary": "Third president of the United States, who drafted the Declaration of Independence.",
+		"summary": "Third U.S. president, who drafted the Declaration of Independence and wrote the Virginia Statute for Religious Freedom.",
 		"facts": [
 			"He bought Louisiana from France, doubling the size of the country.",
 			"He founded the University of Virginia and designed its buildings himself."
 		]
 	},
 	"figure-199": {
-		"summary": "British naval captain who charted the Pacific on three voyages across it.",
+		"summary": "British explorer who made the first recorded European contact with Australia's east coast and precisely charted the coast of New Zealand.",
 		"facts": [
 			"By feeding his crews fresh vegetables, he lost almost no one to scurvy even on long voyages.",
 			"He was killed in a clash with the islanders in Hawaii."
 		]
 	},
 	"figure-200": {
-		"summary": "Musician-turned-astronomer who discovered Uranus with a telescope he made himself.",
+		"summary": "German-born astronomer who discovered Uranus with a telescope he ground himself and catalogued more than 2,000 nebulae.",
 		"facts": [
 			"Born in Hanover, he moved to England, playing the organ by day and watching the sky by night.",
 			"In 1800 he measured that the region beyond the red end of a prism’s spectrum was hotter, discovering infrared light."
@@ -1407,14 +1407,14 @@
 		]
 	},
 	"figure-202": {
-		"summary": "Inventor of the first battery, a stack of zinc and copper discs separated by cloth soaked in salt water.",
+		"summary": "Italian physicist who built the first battery by stacking zinc and copper with brine-soaked cloth, and was first to isolate methane.",
 		"facts": [
 			"The volt (V), the unit of voltage, is named after him.",
 			"He demonstrated it in person before Napoleon and was later made a count."
 		]
 	},
 	"figure-203": {
-		"summary": "Draper who used lenses he made himself to become the first to see microorganisms in a drop of water.",
+		"summary": "Dutch draper turned scientist, called the father of microbiology, who was first to see bacteria, protists and sperm cells through lenses he made himself.",
 		"facts": [
 			"He never attended university and knew no Latin, yet he sent around 560 letters to the Royal Society and others.",
 			"He never revealed how he made his lenses."
@@ -1428,21 +1428,21 @@
 		]
 	},
 	"figure-205": {
-		"summary": "English astronomer who used calculation to predict a comet that returns every 75 to 76 years.",
+		"summary": "English astronomer who predicted the return of a comet every 75 to 76 years and compiled the first catalogue of 341 southern-sky stars.",
 		"facts": [
 			"He paid out of his own pocket to publish Isaac Newton’s “Principia.”",
 			"The comet returned as predicted 16 years after his death."
 		]
 	},
 	"figure-206": {
-		"summary": "Pioneer of fluid dynamics who showed that pressure drops where a fluid flows faster.",
+		"summary": "Swiss mathematician and physicist whose Hydrodynamica showed that the faster a fluid flows, the lower its pressure.",
 		"facts": [
 			"This principle is used to explain why airplane wings generate lift.",
 			"When he shared a Paris Academy prize with his father, his father reportedly threw him out of the house."
 		]
 	},
 	"figure-207": {
-		"summary": "Minister who showed that plants revive air in which a candle has gone out, and who isolated oxygen.",
+		"summary": "English chemist and minister who collected oxygen by heating mercury oxide and was first to isolate several gases, including ammonia and nitric oxide.",
 		"facts": [
 			"He made the first carbonated water by dissolving carbon dioxide in water.",
 			"After his house was burned for his support of the French Revolution, he moved to America."
@@ -1456,49 +1456,49 @@
 		]
 	},
 	"figure-209": {
-		"summary": "Author of “Robinson Crusoe,” about a man who survived alone on a deserted island for 28 years.",
+		"summary": "English novelist who helped found the modern novel with Robinson Crusoe, the tale of a man who survived 28 years on a desert island.",
 		"facts": [
 			"He is said to have drawn on the story of a real sailor who was marooned on a deserted island.",
 			"He published his first novel when he was nearly 60."
 		]
 	},
 	"figure-210": {
-		"summary": "English poet who completed “Paradise Lost” after going blind by dictating it to others.",
+		"summary": "English poet who, after going blind, dictated Paradise Lost, his epic of humanity's fall.",
 		"facts": [
 			"He told the story of Adam and Eve’s expulsion from Paradise in a poem of more than 10,000 lines.",
 			"He also wrote “Areopagitica,” which argued for publishing without censorship."
 		]
 	},
 	"figure-211": {
-		"summary": "Master of comedy who got laughs by putting hypocrites, misers, and pompous doctors on stage.",
+		"summary": "French playwright who perfected classical comedy, mocking hypocrisy and greed in The Miser and The Misanthrope.",
 		"facts": [
 			"“Tartuffe” was barred from the stage for five years because of opposition from the Church.",
 			"He collapsed on stage while performing “The Imaginary Invalid” and died that night."
 		]
 	},
 	"figure-212": {
-		"summary": "Author of “William Tell,” who put characters crying out for freedom on the stage.",
+		"summary": "German playwright who wrote freedom-loving dramas such as William Tell and Don Carlos and led Weimar Classicism with Goethe.",
 		"facts": [
 			"His poem “Ode to Joy” became the text of Ludwig van Beethoven’s Ninth Symphony, whose melody is the anthem of the European Union.",
 			"While at military school, he secretly wrote his first play, “The Robbers.”"
 		]
 	},
 	"figure-213": {
-		"summary": "Twenty-second king of Joseon, who founded the Gyujanggak library and hired talent regardless of social status.",
+		"summary": "22nd ruler of Joseon, who founded the Gyujanggak royal library, appointed even scholars born to concubines, and created the Jangyongyeong royal guard.",
 		"facts": [
 			"The crane designed by Jeong Yak-yong greatly cut the labor and time needed to build Hwaseong Fortress in Suwon.",
 			"He moved the tomb of his father, Crown Prince Sado, to Suwon and visited it thirteen times in eleven years."
 		]
 	},
 	"figure-214": {
-		"summary": "Joseon official said to have written a novel in Hangul to comfort his mother while in exile in Seoncheon.",
+		"summary": "Joseon novelist who wrote Sassi Namjeonggi, read as an allegory of King Sukjong's deposing of Queen Inhyeon, and the critical essays Seopo Manpil.",
 		"facts": [
 			"“The Cloud Dream of the Nine” uses a single night’s dream to show the emptiness of wealth and glory.",
 			"He argued that only writing in the Korean language was true writing."
 		]
 	},
 	"figure-215": {
-		"summary": "Scholar of the Northern Learning school who argued that the Earth rotates and that China was not the center of the world.",
+		"summary": "Late Joseon Silhak scholar of the Northern Learning school who set out the Earth's rotation and an infinite universe in his Uisan Mundap.",
 		"facts": [
 			"In Beijing he met Western missionaries and saw their astronomical instruments.",
 			"He built an armillary sphere at home to observe the stars."
@@ -1512,21 +1512,21 @@
 		]
 	},
 	"figure-217": {
-		"summary": "Painter and critic who brought Western shading techniques into Joseon landscape painting early on.",
+		"summary": "Late Joseon painter and critic who brought Western-style shading and perspective to landscape painting in Entrance to Yeongtong Valley.",
 		"facts": [
 			"He taught the young Kim Hong-do, and Sin Wi also studied painting under him.",
 			"He entered government service after 60 and even traveled to China as part of an envoy mission."
 		]
 	},
 	"figure-218": {
-		"summary": "French conqueror who rose from junior officer on Corsica all the way to emperor.",
+		"summary": "French emperor who crushed the Austrian and Russian armies at Austerlitz and brought most of Europe under his control.",
 		"facts": [
 			"He placed the crown on his own head, and the civil code he created still underpins the laws of many countries.",
 			"After the failed Russian campaign and defeat at Waterloo, he ended his days confined on an island in the Atlantic."
 		]
 	},
 	"figure-219": {
-		"summary": "Chancellor who drove the unification of Germany, declaring that the nation would be united not by speeches but by iron and blood.",
+		"summary": "Prussian statesman who pushed a military build-up with his \"blood and iron\" speech, founded the German Empire in 1871 and became its first chancellor.",
 		"facts": [
 			"He fought three wars to bind the scattered German states into one.",
 			"To head off socialism, he created the world’s first health insurance and pension programs."
@@ -1540,49 +1540,49 @@
 		]
 	},
 	"figure-221": {
-		"summary": "Philosopher who declared “God is dead” and spoke of people who create their own values.",
+		"summary": "German philosopher who set out the ideas of the Übermensch and eternal recurrence in Thus Spoke Zarathustra.",
 		"facts": [
 			"He became a professor at 24 but left because of illness, then wandered between mountains and seaside towns writing.",
 			"His sister compiled his unpublished notes into “The Will to Power,” and the Nazis later co-opted him."
 		]
 	},
 	"figure-222": {
-		"summary": "Pessimist philosopher who saw the world as an endless will and the suffering that comes with it.",
+		"summary": "German pessimist philosopher who saw the world as endless will and suffering in The World as Will and Representation.",
 		"facts": [
 			"He brought Indian philosophy into Western thought in earnest.",
 			"He scheduled his lectures at the same hour as G. W. F. Hegel’s and was humiliated when only five students showed up."
 		]
 	},
 	"figure-223": {
-		"summary": "Culminating figure of idealism, who held that the world advances to higher stages through contradiction.",
+		"summary": "German idealist philosopher who built a dialectical view of history in The Phenomenology of Spirit and the Philosophy of Right.",
 		"facts": [
 			"His dialectic was taken up by Karl Marx, who turned it on its head.",
 			"He wrote, “The owl of Minerva spreads its wings only with the falling of dusk.”"
 		]
 	},
 	"figure-224": {
-		"summary": "Liberator who freed six South American nations from Spain.",
+		"summary": "Venezuelan soldier who freed his homeland at the Battle of Carabobo and became the first president of Gran Colombia.",
 		"facts": [
 			"He crossed the Andes in a surprise attack and liberated Colombia.",
 			"The country of Bolivia and Venezuela’s currency, the bolívar, are both named after him."
 		]
 	},
 	"figure-225": {
-		"summary": "General who led a thousand redshirts and unified Italy starting from the south.",
+		"summary": "Italian soldier who led the red-shirted Expedition of the Thousand to take Sicily and Naples, paving the way for Italian unification.",
 		"facts": [
 			"He handed the lands he had won over to the king unconditionally and went back to farming on an island.",
 			"In South America, too, he fought for rebels in southern Brazil and for Uruguay."
 		]
 	},
 	"figure-226": {
-		"summary": "British monarch who reigned for 63 years and whose very name came to stand for an entire era.",
+		"summary": "British monarch who reigned over 63 years at the height of the British Empire and took the title Empress of India in 1876.",
 		"facts": [
 			"The white dress she wore at her 1840 wedding started the fashion for white wedding gowns.",
 			"After her husband died, she wore only black for 40 years."
 		]
 	},
 	"figure-227": {
-		"summary": "British philosopher who insisted that no one's liberty may be restricted unless they harm others.",
+		"summary": "British philosopher who argued in “On Liberty” that no one's freedom may be restricted unless they harm others.",
 		"facts": [
 			"The popular saying “Better a hungry Socrates than a well-fed pig” comes from a passage in his “Utilitarianism.”",
 			"In 1867 he proposed an amendment in the House of Commons to replace the word “man” with “person” in the electoral reform bill."
@@ -1596,7 +1596,7 @@
 		]
 	},
 	"figure-229": {
-		"summary": "American poet who, from around age 28, rarely left her house and wrote nearly 1,800 poems.",
+		"summary": "American poet who left nearly 1,800 short, dash-filled poems such as “Because I could not stop for Death.”",
 		"facts": [
 			"Only about ten of her poems appeared in print during her lifetime.",
 			"After her death, her younger sister found bundles of them in a drawer and shared them with the world."
@@ -1624,7 +1624,7 @@
 		]
 	},
 	"figure-233": {
-		"summary": "French writer who exposed human vanity and the seamy side of life in some 300 short stories.",
+		"summary": "French novelist who wrote “A Woman's Life” and the story “Boule de Suif,” leaving some 300 short stories.",
 		"facts": [
 			"“The Necklace” tells of ten years spent paying off a debt, all because of one fake necklace.",
 			"He learned to write from Gustave Flaubert and, at Flaubert's home, mingled with Émile Zola and Ivan Turgenev."
@@ -1652,35 +1652,35 @@
 		]
 	},
 	"figure-237": {
-		"summary": "British novelist who pioneered the historical novel, setting his stories among medieval knights and the Highlands of Scotland.",
+		"summary": "British novelist who pioneered the historical novel, depicting medieval knights and Highland glens in works like “Ivanhoe.”",
 		"facts": [
 			"Edinburgh's major rail hub, Waverley Station, is named after the series that began with his first novel, “Waverley.”",
 			"When a printing firm he co-owned collapsed in 1826, he was left £130,000 in debt and kept writing until his death."
 		]
 	},
 	"figure-238": {
-		"summary": "British Romantic poet whose brooding rebel heroes set all of Europe ablaze.",
+		"summary": "British Romantic poet who set Europe ablaze with “Childe Harold's Pilgrimage” and “Don Juan.”",
 		"facts": [
 			"He joined the Greek War of Independence and died of a fever.",
 			"Ada Lovelace, often called the first computer programmer, was his daughter."
 		]
 	},
 	"figure-239": {
-		"summary": "British Romantic poet who longed for the west wind to sweep away the old world.",
+		"summary": "British Romantic poet who sang of tyranny's fall and of liberation in “Ozymandias” and the verse drama “Prometheus Unbound.”",
 		"facts": [
 			"“If Winter comes, can Spring be far behind?” is the closing line of his “Ode to the West Wind.”",
 			"He drowned at 29 when his boat capsized off the coast of Italy."
 		]
 	},
 	"figure-240": {
-		"summary": "British Romantic poet who declared that “Beauty is truth” and died at just 25.",
+		"summary": "British Romantic poet who wrote “Beauty is truth” in “Ode on a Grecian Urn” and died at twenty-five.",
 		"facts": [
 			"He earned his apothecary's license but gave up medicine to become a poet.",
 			"He asked that his gravestone bear not his name but the words “Here lies one whose name was writ in water.”"
 		]
 	},
 	"figure-241": {
-		"summary": "English Lake District poet who reinvented poetry with daffodils in the fields and the plain speech of country people.",
+		"summary": "British poet who opened the Romantic age by publishing “Lyrical Ballads” with Coleridge in the plain speech of country folk.",
 		"facts": [
 			"The line “The Child is father of the Man” comes from his poem “My Heart Leaps Up,” also known as “The Rainbow.”",
 			"“Daffodils” grew out of a scene he saw in 1802 while walking with his sister Dorothy along the shore of Ullswater."
@@ -1701,7 +1701,7 @@
 		]
 	},
 	"figure-244": {
-		"summary": "Hungarian composer who thrilled Europe by making a single piano sound like an entire orchestra.",
+		"summary": "Hungarian composer of the “Hungarian Rhapsodies” and “Liebesträume” who thrilled Europe with a single piano.",
 		"facts": [
 			"Calling a solo concert a “recital” began with his 1840 performances in London.",
 			"He taught his students without charging them any fees."
@@ -1715,21 +1715,21 @@
 		]
 	},
 	"figure-246": {
-		"summary": "German composer who gave up performing after his finger became paralyzed and turned to composing and music criticism.",
+		"summary": "German composer of “Scenes from Childhood,” which includes “Träumerei,” and the song cycle “Dichterliebe.”",
 		"facts": [
 			"As a critic, he hailed 21-year-old Frédéric Chopin and 20-year-old Johannes Brahms as geniuses, introducing them to the world.",
 			"He even went to court for the right to marry his teacher's daughter."
 		]
 	},
 	"figure-247": {
-		"summary": "German pianist and composer who first took the stage at nine and kept performing for more than 60 years.",
+		"summary": "German pianist and composer who first took the stage at nine, performed for over 60 years and brought the music of her husband Robert and of Brahms to audiences.",
 		"facts": [
 			"She toured all over Europe while raising eight children.",
 			"Before the euro, her portrait appeared on Germany's 100-mark banknote starting in 1989."
 		]
 	},
 	"figure-248": {
-		"summary": "Italian violinist and composer about whom rumors spread that he had sold his soul to the devil.",
+		"summary": "Italian composer of the Violin Concerto No. 2 with its “La Campanella,” rumored to have sold his soul to the devil.",
 		"facts": [
 			"He would nick his strings so they snapped mid-performance, then finish the piece on the strings that were left.",
 			"The last of his “24 Caprices” was reworked into sets of variations by Franz Liszt, Johannes Brahms, and Sergei Rachmaninoff."
@@ -1750,14 +1750,14 @@
 		]
 	},
 	"figure-251": {
-		"summary": "French painter who loved to capture the weary gestures of ballerinas backstage.",
+		"summary": "French painter who loved depicting ballerinas' weary poses in rehearsal rooms and backstage, as in “The Dance Class.”",
 		"facts": [
 			"He dressed his wax sculpture “Little Dancer Aged Fourteen” in a real tutu and ribbon.",
 			"Unlike his fellow painters, he preferred interiors and artificial light to the outdoors."
 		]
 	},
 	"figure-252": {
-		"summary": "French Impressionist painter who captured people laughing and dancing in the sunlight in warm, glowing colors.",
+		"summary": "French Impressionist who captured people dancing in the sunlight in warm colors, as in “Bal du moulin de la Galette.”",
 		"facts": [
 			"He started out at 13 painting designs on dishes at a porcelain factory.",
 			"Even after his hands stiffened, he kept painting with brushes his assistants placed in his grip."
@@ -1771,14 +1771,14 @@
 		]
 	},
 	"figure-254": {
-		"summary": "French painter who quit his job as a stockbroker and moved to Tahiti to paint in bold, pure colors.",
+		"summary": "French painter who quit stockbroking for Tahiti and left vividly colored works like “Tahitian Women.”",
 		"facts": [
 			"He spent nine weeks with Vincent van Gogh in Arles before a bitter quarrel drove them apart.",
 			"The hero of W. Somerset Maugham's novel “The Moon and Sixpence” is modeled on his life."
 		]
 	},
 	"figure-255": {
-		"summary": "French painter who, instead of mixing colors on the palette, applied them in tiny dots that blend in the viewer's eye.",
+		"summary": "French painter who founded pointillism, placing tiny dots of unmixed color so they blend in the viewer's eye.",
 		"facts": [
 			"He spent two years on a single painting, “A Sunday Afternoon on the Island of La Grande Jatte.”",
 			"He died at 31 of an illness whose cause remains unclear."
@@ -1827,7 +1827,7 @@
 		]
 	},
 	"figure-262": {
-		"summary": "Italian scientist who proposed that equal volumes of gas at the same temperature and pressure contain the same number of molecules.",
+		"summary": "Italian chemist who formulated the law that equal volumes of gas at the same temperature and pressure contain the same number of molecules.",
 		"facts": [
 			"His name lives on in Avogadro's number, the number of particles in one mole, familiar from high-school chemistry.",
 			"Ignored in his lifetime, his idea was accepted only in 1860, four years after his death."
@@ -1848,7 +1848,7 @@
 		]
 	},
 	"figure-265": {
-		"summary": "British missionary and explorer who trekked through the interior of Africa, filling in the blank spaces on the map.",
+		"summary": "British missionary and explorer who became the first European to cross south-central Africa on foot from the Atlantic to the Indian Ocean.",
 		"facts": [
 			"The first European to see a vast waterfall there, he named it Victoria Falls after the queen.",
 			"After all contact with him was lost, he was found at Ujiji in 1871 by the journalist Henry Morton Stanley."
@@ -1904,17 +1904,17 @@
 		]
 	},
 	"figure-273": {
-		"summary": "British mathematician who designed calculating machines driven by gears and punched cards.",
+		"summary": "British mathematician called the father of the computer for designing the Analytical Engine, driven by punched cards.",
 		"facts": [
 			"Short of money and technology, he never finished them in his lifetime.",
 			"In 1991, London's Science Museum built a Difference Engine to his design, and it calculated correctly to 31 digits."
 		]
 	},
 	"figure-274": {
-		"summary": "French entomologist who, instead of pinning insects to boards, watched them alive in the fields.",
+		"summary": "French entomologist who, from 1879, published the ten volumes of “Souvenirs entomologiques,” vividly recording insects' lives and habits.",
 		"facts": [
 			"He uncovered the habits of dung beetles and hunting wasps through observation alone.",
-			"Over 30 years starting in 1879, he published the ten volumes of “Souvenirs entomologiques” (“Entomological Memories”)."
+			"Instead of pinning specimens, he studied insects by watching them alive in the fields."
 		]
 	},
 	"figure-275": {
@@ -1939,21 +1939,21 @@
 		]
 	},
 	"figure-278": {
-		"summary": "American rights activist who fought for more than 50 years to win women the right to vote.",
+		"summary": "American activist who led the National American Woman Suffrage Association and fought for women's right to vote for over 50 years.",
 		"facts": [
 			"After voting in the 1872 presidential election, she was arrested and fined $100, which she never paid.",
 			"In 1979 she became the first real woman to appear on a U.S. one-dollar coin."
 		]
 	},
 	"figure-279": {
-		"summary": "American orator born into slavery who secretly taught himself to read, escaped, and campaigned to abolish slavery.",
+		"summary": "American activist who escaped slavery and campaigned for abolition through speeches and his newspaper “The North Star.”",
 		"facts": [
 			"His autobiography became a bestseller and exposed the reality of slavery.",
 			"He met Abraham Lincoln to press for fair treatment of Black soldiers."
 		]
 	},
 	"figure-280": {
-		"summary": "American itinerant preacher who, after gaining her freedom from slavery, traveled the country speaking out for the rights of Black women.",
+		"summary": "American activist whose 1851 speech at the women's rights convention in Akron, Ohio, gave voice to Black women.",
 		"facts": [
 			"Born into slavery, she sued a white man and won back her son, who had been sold away.",
 			"Her famous line “Ain't I a Woman?” appears only in a version published 12 years later."
@@ -1967,9 +1967,9 @@
 		]
 	},
 	"figure-282": {
-		"summary": "Regent of late Joseon who placed his young son on the throne and ruled the country with an iron grip for ten years.",
+		"summary": "Late-Joseon statesman who ruled for ten years in place of his son Gojong, rebuilding Gyeongbokgung and closing all but 47 Confucian academies.",
 		"facts": [
-			"He shut down all but 47 Confucian academies (seowon), but stirred up resentment by rebuilding Gyeongbokgung Palace and issuing the inflated dangbaekjeon coin.",
+			"The dangbaekjeon coins he minted to pay for the palace work sent prices soaring and stirred public resentment.",
 			"After the 1871 U.S. expedition to Korea (Sinmiyangyo), he erected anti-foreign steles nationwide and closed the country's doors."
 		]
 	},
@@ -1981,7 +1981,7 @@
 		]
 	},
 	"figure-284": {
-		"summary": "Journalist who published Korea's first privately run newspaper, “The Independent,” in Hangul and English.",
+		"summary": "Korean journalist who in 1896 launched “The Independent,” Korea's first privately run newspaper, in Hangul and English editions.",
 		"facts": [
 			"After taking part in the Gapsin Coup, he went to the United States and became the first Korean to earn a medical degree.",
 			"He founded the Independence Club and built Independence Gate, and the paper's launch date, April 7, became Korea's Newspaper Day."
@@ -2030,7 +2030,7 @@
 		]
 	},
 	"figure-291": {
-		"summary": "American chemist who used quantum mechanics to explain how atoms bond together.",
+		"summary": "American chemist who explained how atoms bond using quantum mechanics in “The Nature of the Chemical Bond.”",
 		"facts": [
 			"He is the only person to have won both the Nobel Prize in Chemistry and the Nobel Peace Prize without sharing either one.",
 			"In 1970 he published a book urging large doses of vitamin C to ward off colds, putting him at odds with the scientific community."
@@ -2086,7 +2086,7 @@
 		]
 	},
 	"figure-299": {
-		"summary": "Japanese bacteriologist who caught yellow fever while researching it and died in Africa.",
+		"summary": "Japanese bacteriologist who found the syphilis bacterium in the brains of paralytic patients and died in Africa while studying yellow fever.",
 		"facts": [
 			"His left hand, fused by a burn from a hearth at age two, was restored by surgery when he was about 15, which inspired him to become a doctor.",
 			"His portrait was on Japan's 1,000-yen note from 2004 until it was replaced on the new notes in 2024."
@@ -2100,28 +2100,28 @@
 		]
 	},
 	"figure-301": {
-		"summary": "Dutch painter who built his canvases from nothing but vertical and horizontal lines and red, blue, and yellow.",
+		"summary": "Dutch painter who built canvases from vertical and horizontal lines and the three primary colors alone, as in “Composition with Red, Blue and Yellow.”",
 		"facts": [
 			"He painted trees in ever simpler forms until only lines and planes remained.",
 			"In 1965, Yves Saint Laurent transferred that grid directly onto a dress."
 		]
 	},
 	"figure-302": {
-		"summary": "Russian painter who opened the door to abstract art with pictures in which nothing recognizable is depicted.",
+		"summary": "Russian painter who opened the door to abstract art with unrecognizable images such as his “Composition” series.",
 		"facts": [
 			"The turning point reportedly came when one of his own paintings, hung upside down, struck him as more beautiful.",
 			"He felt he could hear a sound in every color and gave his works titles drawn from musical terms."
 		]
 	},
 	"figure-303": {
-		"summary": "Spanish Surrealist painter who brought dreamscapes to the canvas with his melting clocks.",
+		"summary": "Spanish Surrealist who brought dreamscapes to canvas with the melting clocks of “The Persistence of Memory.”",
 		"facts": [
 			"His upturned mustache followed him everywhere like a trademark.",
 			"In 1969 he designed the flower-shaped logo for Chupa Chups lollipops."
 		]
 	},
 	"figure-304": {
-		"summary": "Dutch printmaker who depicted endlessly climbing staircases and hands drawing each other.",
+		"summary": "Dutch printmaker who created the endless staircase of “Ascending and Descending” and the self-drawing “Drawing Hands.”",
 		"facts": [
 			"In “Reptiles,” a lizard crawls out of a patterned sheet of paper and then back into it.",
 			"His endless staircase was inspired by an optical illusion devised by the Penroses, father and son."
@@ -2163,14 +2163,14 @@
 		]
 	},
 	"figure-310": {
-		"summary": "Russian pianist and composer whose enormous hands let him write chords others could not reach.",
+		"summary": "Russian pianist and composer of the “Rhapsody on a Theme of Paganini” and the Piano Concerto No. 3.",
 		"facts": [
 			"After his First Symphony was savaged by critics, he could not compose for more than three years, until treatment helped him produce his Piano Concerto No. 2.",
 			"Fleeing the revolution, he moved to the United States and made his living as a performer."
 		]
 	},
 	"figure-311": {
-		"summary": "British filmmaker who made the world laugh and cry without a word as the Tramp in a bowler hat with a cane.",
+		"summary": "British filmmaker who mocked Hitler in “The Great Dictator” and made the world laugh and cry as the bowler-hatted Tramp.",
 		"facts": [
 			"In “Modern Times,” he created the unforgettable scene of being swallowed up by a giant machine.",
 			"Branded a communist, he was denied reentry into the United States in 1952."
@@ -2247,7 +2247,7 @@
 		]
 	},
 	"figure-322": {
-		"summary": "Indian politician who fought for independence alongside Mahatma Gandhi and became the country's first prime minister.",
+		"summary": "Indian statesman who, as the first prime minister after independence in 1947, laid the nation's foundations over 17 years.",
 		"facts": [
 			"From 1930, he wrote 196 letters from prison to his daughter Indira, which became “Glimpses of World History.”",
 			"He led the policy of non-alignment, taking neither side in the Cold War."
@@ -2268,7 +2268,7 @@
 		]
 	},
 	"figure-325": {
-		"summary": "Special envoy of the Korean Empire who set out for The Hague, where the international Peace Conference was being held.",
+		"summary": "Korean independence activist who carried Emperor Gojong's credentials to the 1907 Hague Peace Conference to declare the Eulsa Treaty invalid.",
 		"facts": [
 			"Because of Japanese obstruction, he was barred from entering the conference.",
 			"The lodging where he died became a memorial museum, and his remains were returned to his homeland only in 1963."
@@ -2282,84 +2282,84 @@
 		]
 	},
 	"figure-327": {
-		"summary": "Leader who founded schools and organizations, believing the nation could be regained only by first nurturing its people.",
+		"summary": "Korean independence activist who helped found the New People's Association and Daeseong School in Pyongyang, insisting the nation be won back by training capable people.",
 		"facts": [
 			"He founded the Young Korean Academy (Heungsadan), and Seoul's Dosan-daero avenue and Dosan Park are named after his pen name, Dosan.",
 			"Putting honesty above all else, he urged, “Do not lie, even if it costs you your life.”"
 		]
 	},
 	"figure-328": {
-		"summary": "Leader who reorganized Donghak as Cheondogyo and spearheaded the March 1st Movement.",
+		"summary": "Korean religious leader who renamed Donghak as Cheondogyo in 1905 and spearheaded preparations for the March 1st Movement.",
 		"facts": [
 			"He headed the 33 national representatives who signed the Declaration of Independence.",
 			"Bosung College, taken over in 1910 by the Cheondogyo he led, later became Korea University."
 		]
 	},
 	"figure-329": {
-		"summary": "Buddhist monk and poet whose 1926 collection “The Silence of Love” sang of parting and longing.",
+		"summary": "Korean Buddhist monk and poet whose 1926 collection “The Silence of Love” sang of parting and longing.",
 		"facts": [
 			"He copied his prison essay “On the Independence of Joseon” onto tissue paper and smuggled it out.",
 			"He reportedly built his house, Simujang, facing north so he would not have to look at the Japanese Government-General building."
 		]
 	},
 	"figure-330": {
-		"summary": "Poet of the Japanese colonial period who left behind “Prologue,” which opens, “Until the day I die, let me look up to the sky.”",
+		"summary": "Korean poet of the Japanese colonial period who left behind “Prologue,” which opens, “Until the day I die, let me look up to the sky.”",
 		"facts": [
 			"Arrested while studying in Japan, he died in Fukuoka Prison at the age of 27.",
 			"His posthumous collection was published in 1948, and the 2016 film “Dongju” portrayed his life."
 		]
 	},
 	"figure-331": {
-		"summary": "Painter regarded as Korea's first female Western-style painter, who also gave women a voice in her writing.",
+		"summary": "Korea's first female Western-style painter, who held a solo oil-painting exhibition in Seoul in 1921 and spoke out for women in her “Divorce Confession.”",
 		"facts": [
 			"She serialized a travelogue of her journey through Europe and America in the magazine “Samcheolli.”",
 			"After her divorce, amid condemnation and poverty, she died at 52 in 1948 in a hospital ward for people with no next of kin."
 		]
 	},
 	"figure-332": {
-		"summary": "Children's author who popularized the Korean word “eorini,” a respectful term for children, and created Children's Day.",
+		"summary": "Korean children's author who popularized “eorini,” a respectful word for children, and founded the Saekdonghoe society to create Children's Day.",
 		"facts": [
 			"He published the magazine “Eorini” (“Children”) and toured the country telling fairy tales aloud.",
 			"The first Children's Day was May 1, 1923, and in 1946 it was moved to May 5."
 		]
 	},
 	"figure-333": {
-		"summary": "Commander of the Northern Military Administration Office who dealt the Japanese army a crushing defeat at Cheongsanri.",
+		"summary": "Korean independence fighter who led the Northern Military Administration Office's troops to a crushing victory over the Japanese at Cheongsanri in 1920.",
 		"facts": [
 			"At 17 he freed his family's slaves and gave away land to them.",
 			"In 1930 in Manchuria, he was shot dead by Park Sang-sil, a member of the Goryeo Communist Youth Association."
 		]
 	},
 	"figure-334": {
-		"summary": "Former hunter turned commander who lured the Japanese army into the valley of Bongo-dong and won a major victory.",
+		"summary": "Former hunter turned Korean independence fighter who lured the Japanese army into the Bongo-dong valley in 1920 and won a major victory.",
 		"facts": [
 			"He led righteous armies with marksmanship honed by hunting, and he was portrayed in the 2019 film “The Battle: Roar to Victory.”",
 			"He was forcibly relocated to Central Asia in 1937, and his remains were brought back to Daejeon National Cemetery in 2021."
 		]
 	},
 	"figure-335": {
-		"summary": "Elder statesman who led the Independence Club and the Manmin Gongdonghoe (People's Assembly) and mentored young people through the YMCA.",
+		"summary": "Korean independence activist who led the Independence Club and the Manmin Gongdonghoe (People's Assembly) and trained young people at the YMCA.",
 		"facts": [
 			"In 1927 he was chosen as the first president of the Singanhoe, which united left and right.",
 			"His funeral was held as a public “social funeral” that drew crowds of 100,000."
 		]
 	},
 	"figure-336": {
-		"summary": "Nationalist educator who poured the fortune he made in trade into founding Osan School.",
+		"summary": "Korean educator who poured the fortune he made selling brassware into founding Osan School in Jeongju in 1907.",
 		"facts": [
 			"During the March 1st Movement, he signed as one of the 33 national representatives.",
 			"He asked in his will that his body be used to teach students, but the Japanese colonial authorities blocked it."
 		]
 	},
 	"figure-337": {
-		"summary": "Historian who wrote “The Painful History of Korea,” arguing that even when a nation is lost, its history endures.",
+		"summary": "Korean historian who wrote “The Painful History of Korea” in 1915, arguing that even when a nation is lost, its history endures.",
 		"facts": [
 			"In “The Bloody History of the Korean Independence Movement,” he documented the atrocities surrounding the March 1st Movement.",
 			"He served as the second president of the Provisional Government of the Republic of Korea."
 		]
 	},
 	"figure-338": {
-		"summary": "Leader who formed the Committee for the Preparation of Korean Independence right after liberation to lay the groundwork for a new nation.",
+		"summary": "Korean politician who founded the New Korea Youth Party, sent a delegate to the Paris Peace Conference and set up the independence preparation committee right after liberation.",
 		"facts": [
 			"While striving to unite left and right, he was assassinated in Hyehwa-dong, Seoul, in 1947.",
 			"As president of the Joseon Jungang Ilbo, he bore the consequences when the paper erased the Japanese flag from an athlete's photo."

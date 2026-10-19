@@ -517,7 +517,11 @@
                 "testDesc": "立即检查通知能否正常收到",
                 "testSend": "发送",
                 "bgm": "背景音乐",
-                "bgmDesc": "答题、游戏、学习时播放丛林背景音乐"
+                "bgmDesc": "答题、游戏、学习时播放丛林背景音乐",
+                "volume": "音效音量",
+                "volumeLow": "小",
+                "volumeMid": "中",
+                "volumeHigh": "大"
             },
             "toast": {
                 "soundOn": "音效已开启",
@@ -1023,12 +1027,13 @@
                 "permMsg": "请在设置中允许通知权限。",
                 "alarmOn": "已开启今日测验提醒",
                 "alarmOff": "已关闭今日测验提醒",
-                "start": "开始今日测验",
+                "start": "开始测验",
+                "topicsLabel": "今日主题",
                 "guideTitle": "今日测验这样用",
                 "guide": {
                     "count": "从全部主题中出{{count}}题，还会混入待复习的错题。",
-                    "once": "每天一次，不限时，慢慢答。",
-                    "result": "答完即可查看结果和解析！"
+                    "image": "带图片的题目会连同图片一起出现。",
+                    "result": "每天一次！答完即可查看结果和解析。"
                 }
             },
             "wrong": {

@@ -5,10 +5,10 @@ import React, { useEffect, useRef } from 'react';
 import { Platform, View, ActivityIndicator, Text, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { RewardedAd, TestIds, RewardedAdEventType, AdEventType } from 'react-native-google-mobile-ads';
-import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
+import AdGuardService from '@/src/services/ads/AdGuardService';
+import { ensureAudioMode } from '@/src/utils/SoundUtils';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
-import { skipAppOpenOnNextResume } from '@/src/services/AppOpenAdService';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const AD_UNIT_ID = resolveAdUnitId(
@@ -33,8 +33,6 @@ const AdmobRewardAd: React.FC<{
 		rewardedRef.current = false;
 
 		const unsubscribeLoaded = ad.addAdEventListener(RewardedAdEventType.LOADED, () => {
-			// 보상형을 닫고 돌아오는 복귀에 앱 열기 광고가 붙지 않게 (안드로이드는 전체화면 광고도 background 로 잡힌다)
-			skipAppOpenOnNextResume();
 			ad.show();
 		});
 
@@ -44,6 +42,8 @@ const AdmobRewardAd: React.FC<{
 		});
 
 		const unsubscribeClosed = ad.addAdEventListener(AdEventType.CLOSED, () => {
+			// 광고 SDK 가 소재를 틀며 iOS 오디오 세션을 ambient(무음 스위치를 따름)로 바꿔 둔다 — 닫히면 되돌린다
+			ensureAudioMode().catch(() => {});
 			if (!rewardedRef.current) {
 				// 보상 없이 닫은 경우
 				onClosed();
@@ -52,7 +52,7 @@ const AdmobRewardAd: React.FC<{
 
 		// 클릭은 하루 광고 클릭 수에 함께 센다
 		const unsubscribeClicked = ad.addAdEventListener(AdEventType.CLICKED, () => {
-			void recordAdClick();
+			AdGuardService.registerClick('rewarded');
 		});
 
 		const unsubscribeFailed = ad.addAdEventListener(AdEventType.ERROR, (error) => {
@@ -60,11 +60,11 @@ const AdmobRewardAd: React.FC<{
 			onFailed();
 		});
 
-		// 오늘 광고 클릭 상한에 걸렸으면 보상형도 띄우지 않는다 → 실패로 돌려보낸다
+		// 클릭 어뷰징 차단 중이면 보상형도 띄우지 않는다 → 실패로 돌려보낸다
 		let active = true;
-		void isAdClickCapped().then((capped) => {
+		void AdGuardService.init().then(() => {
 			if (!active) return;
-			if (capped) onFailed();
+			if (AdGuardService.isBlocked('rewarded')) onFailed();
 			else ad.load();
 		});
 

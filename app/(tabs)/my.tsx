@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Linking, Image, Platform, FlatList, AppState } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Linking, Image, Platform, FlatList, AppState, Animated } from 'react-native';
 import { useScrollToTop } from '@react-navigation/native';
 import { router, useFocusEffect } from 'expo-router';
 import DeviceInfo from 'react-native-device-info';
@@ -11,7 +11,8 @@ import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import { showAlert } from '@/src/screens/common/modal/ConfirmModal';
 
-import { setSoundEnabled, isSoundEnabled, playCorrect } from '@/src/utils/SoundUtils';
+import { setSoundEnabled, isSoundEnabled, playCorrect, getSoundVolume, setSoundVolume, type SoundVolume } from '@/src/utils/SoundUtils';
+import { hapticSelection } from '@/src/utils/HapticUtils';
 import { resetCharacterGuideSeen } from '@/src/screens/common/CharacterGuide';
 import { setBgmEnabled, isBgmEnabled } from '@/src/utils/BgmUtils';
 import Colors, { withAlpha, getThemeMode, isDark, type ThemeMode } from '@/src/const/ConstColors';
@@ -27,7 +28,7 @@ import LeagueService from '@/src/services/LeagueService';
 import TestHistoryService from '@/src/services/TestHistoryService';
 import RankingService from '@/src/services/RankingService';
 import { RequestNotificationPermission, CancelDailyWordReminder, SendTestNotification } from '@/src/utils/NotifactionHelper';
-import { FadeInUp } from '@/src/screens/common/anim/Motion';
+import { FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import DailyAlarmModal from '@/src/screens/modal/DailyAlarmModal';
 import ResetConfirmModal from '@/src/screens/modal/ResetConfirmModal';
 import LanguagePickerModal from '@/src/screens/modal/LanguagePickerModal';
@@ -64,6 +65,45 @@ const SubHead: React.FC<{ label: string; icon: string; tint?: string }> = ({ lab
 	</View>
 );
 
+/** 효과음 크기 3단계 — 왼쪽부터 작게·보통·크게 */
+const VOLUME_OPTIONS = [
+	{ key: 'low', labelKey: 'settings.notification.volumeLow' },
+	{ key: 'mid', labelKey: 'settings.notification.volumeMid' },
+	{ key: 'high', labelKey: 'settings.notification.volumeHigh' },
+] as const satisfies readonly { key: SoundVolume; labelKey: string }[];
+const VOLUME_SEG_W = scaleWidth(56);
+
+/** 효과음 크기 세그먼트 — 선택 표시(알약)가 고른 칸으로 미끄러져 간다 */
+const VolumeSegment: React.FC<{ value: SoundVolume; onChange: (v: SoundVolume) => void }> = ({ value, onChange }) => {
+	const { t } = useTranslation();
+	const reduceMotion = useReducedMotion();
+	const index = VOLUME_OPTIONS.findIndex((o) => o.key === value);
+	const x = useRef(new Animated.Value(index * VOLUME_SEG_W)).current;
+	useEffect(() => {
+		const to = index * VOLUME_SEG_W;
+		if (reduceMotion) {
+			x.setValue(to);
+			return;
+		}
+		const anim = Animated.spring(x, { toValue: to, useNativeDriver: true, friction: 8, tension: 120 });
+		anim.start();
+		return () => anim.stop();
+	}, [index, reduceMotion, x]);
+	return (
+		<View style={styles.segment} accessibilityRole="radiogroup" accessibilityLabel={t('settings.notification.volume')}>
+			<Animated.View pointerEvents="none" style={[styles.segmentThumb, { transform: [{ translateX: x }] }]} />
+			{VOLUME_OPTIONS.map((o) => {
+				const on = o.key === value;
+				return (
+					<TouchableOpacity key={o.key} style={styles.segmentBtn} activeOpacity={0.7} onPress={() => onChange(o.key)} accessibilityRole="radio" accessibilityState={{ selected: on }}>
+						<Text style={[styles.segmentText, on && styles.segmentTextOn]} numberOfLines={1}>{t(o.labelKey)}</Text>
+					</TouchableOpacity>
+				);
+			})}
+		</View>
+	);
+};
+
 /**
  * 설정 (통합 세계 상식 퀴즈)
  * - 알림 / 데이터 초기화 / 정보
@@ -83,6 +123,15 @@ const Setting = () => {
 	const [theme, setTheme] = useState<ThemeMode>(() => getThemeMode());
 	const [soundOn, setSoundOn] = useState(() => isSoundEnabled());
 	const [bgmOn, setBgmOn] = useState(() => isBgmEnabled());
+	const [volume, setVolume] = useState<SoundVolume>(() => getSoundVolume());
+	/** 크기를 고르면 그 크기로 바로 들려준다 — 소리 자체가 피드백이라 토스트는 띄우지 않는다 */
+	const changeVolume = (v: SoundVolume) => {
+		if (v === volume) return;
+		hapticSelection();
+		setVolume(v);
+		setSoundVolume(v);
+		playCorrect();
+	};
 
 	const toggleSound = (v: boolean) => {
 		setSoundOn(v);
@@ -389,6 +438,15 @@ const Setting = () => {
 							</TouchableOpacity>
 							<Switch value={soundOn} onValueChange={toggleSound} trackColor={{ true: Colors.primary, false: isDark() ? Colors.textMuted : Colors.borderStrong }} thumbColor={isDark() ? Colors.textStrong : Colors.textInverse} ios_backgroundColor={isDark() ? Colors.textMuted : undefined} />
 						</View>
+						{/* 효과음 크기 — 효과음이 켜져 있을 때만, 위 행의 제목 줄과 왼쪽을 맞춰 한 설정으로 읽히게 */}
+						{soundOn && (
+							<FadeInUp distance={8} duration={260}>
+								<View style={styles.volumeRow}>
+									<Text style={styles.volumeLabel} numberOfLines={1} ellipsizeMode="tail">{t('settings.notification.volume')}</Text>
+									<VolumeSegment value={volume} onChange={changeVolume} />
+								</View>
+							</FadeInUp>
+						)}
 						<View style={[styles.row, styles.rowBorder]}>
 							<View style={[styles.rowIcon, { backgroundColor: Colors.primaryBg }]}>
 								<IconComponent type="materialIcons" name="music-note" size={scaledSize(20)} color={Colors.primary} />
@@ -754,6 +812,14 @@ const styles = themed(() => StyleSheet.create({
 	rowDesc: { fontSize: Typography.footnote, color: Colors.textSecondary, marginTop: SpacingV.xs },
 	// 효과음 미리듣기 버튼
 	soundTestBtn: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs, marginRight: Spacing.sm, paddingHorizontal: Spacing.md, paddingVertical: SpacingV.xs, borderRadius: Radius.pill, borderWidth: 1, borderColor: Colors.border, backgroundColor: Colors.surfaceAlt },
+	// 효과음 크기 행 — 왼쪽은 위 행 제목(아이콘 38 + 간격) 시작점, 위쪽은 위 행과 붙여 한 설정으로 묶는다
+	volumeRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.md, paddingLeft: Spacing.lg + scaleWidth(38) + Spacing.md, paddingRight: Spacing.lg, paddingBottom: SpacingV.md },
+	volumeLabel: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary },
+	segment: { flexDirection: 'row', padding: Spacing.xxs, borderRadius: Radius.pill, backgroundColor: Colors.surfaceAlt, borderWidth: 1, borderColor: Colors.border },
+	segmentThumb: { position: 'absolute', top: Spacing.xxs, bottom: Spacing.xxs, left: Spacing.xxs, width: VOLUME_SEG_W, borderRadius: Radius.pill, backgroundColor: Colors.primary },
+	segmentBtn: { width: VOLUME_SEG_W, alignItems: 'center', justifyContent: 'center', paddingVertical: SpacingV.xs },
+	segmentText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.textSecondary },
+	segmentTextOn: { color: Colors.textInverse },
 	soundTestText: { fontSize: Typography.footnote, fontWeight: '800', color: Colors.primary },
 	versionText: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary },
 	appIcon: { width: scaleWidth(40), height: scaleWidth(40), borderRadius: Radius.md, marginRight: Spacing.md },

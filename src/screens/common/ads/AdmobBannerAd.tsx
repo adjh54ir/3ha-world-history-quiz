@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { BannerAd, BannerAdSize, TestIds, useForeground } from 'react-native-google-mobile-ads';
+import React from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
 import analytics from '@react-native-firebase/analytics';
 import DeviceInfo from 'react-native-device-info';
 import { themed } from '@/src/utils/ThemedStyles';
 import DateUtils from '@/src/utils/DateUtils';
-import { isAdClickCapped, recordAdClick } from '@/src/services/AdClickGuard';
-import { markBannerSettled, skipAppOpenOnNextResume } from '@/src/services/AppOpenAdService';
+import AdGuardService, { useAdGuardBlocked } from '@/src/services/ads/AdGuardService';
+import { USE_TEST_ADS, resolveAdUnitId } from './adUnitId';
 
-type AdUnitIdType = string;
-
-// ponytail: 배너는 당분간 운영 빌드에서도 테스트 유닛만 띄운다 (수익 없음).
-// 운영 유닛으로 돌릴 때는 resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.BANNER) 로 되돌린다 (adUnitId.ts, @env)
-const AD_UNIT_ID: AdUnitIdType = TestIds.BANNER;
+// 앵커드 어댑티브 배너 전용 테스트 유닛 — 고정 배너 유닛(BANNER)은 어댑티브 크기로 부르면 채워지지 않을 때가 있다
+const AD_UNIT_ID = resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.ADAPTIVE_BANNER);
 
 interface AdmobBannerAdProps {
 	paramMarginTop?: number;
@@ -25,45 +23,15 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 	paramMarginBottom = 6,
 	visible = true, // 표시 여부
 }) => {
-	const bannerRef = useRef<BannerAd | null>(null);
-	const retryTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-	// 오늘 광고 클릭 상한(AdClickGuard)에 걸렸는지 — 확인 전(null)·상한 도달(true)이면 배너를 그리지 않는다
-	const [capped, setCapped] = useState<boolean | null>(null);
-	const refreshCap = useCallback(() => {
-		void isAdClickCapped().then(setCapped);
-	}, []);
+	// 클릭 어뷰징 차단 여부 — 배너 클릭 하루 5회(또는 광고 통합 5회) 이상이면 24시간 숨김
+	const adBlocked = useAdGuardBlocked('banner');
 
-	useEffect(() => {
-		refreshCap();
-		return () => clearTimeout(retryTimer.current);
-	}, [refreshCap]);
-
-	// 배너를 안 띄우는 날은 시작 광고 대기(스플래시)를 붙잡지 않는다
-	useEffect(() => {
-		if (capped) markBannerSettled();
-	}, [capped]);
-
-	// 로드 실패(오프라인 시작 등) 시 30초 뒤 재요청 — 빈 배너로 남지 않게
-	const handleAdFailed = (e: Error) => {
-		markBannerSettled();
-		console.warn('❌ [AdMob] 배너 로드 실패:', AD_UNIT_ID, e);
-		clearTimeout(retryTimer.current);
-		retryTimer.current = setTimeout(() => bannerRef.current?.load(), 30000);
-	};
-
-	useForeground(() => {
-		// 날짜가 바뀌었으면 상한이 풀린다
-		refreshCap();
-		if (Platform.OS === 'ios') {
-			bannerRef.current?.load();
-		}
-	});
+	// useForeground(→ banner.load()) 는 앱이 앞으로 올 때마다 광고를 강제로 다시 불러온다(노출 없는 요청이 쌓인다).
+	// 로드 실패 뒤 수동 재요청도 하지 않는다 — 갱신은 AdMob 콘솔의 자동 새로고침 설정에만 맡긴다.
 
 	// 배너 onAdOpened 는 사용자가 배너를 눌러 광고 랜딩이 열릴 때 온다 → 클릭으로 센다
 	const handleAdOpened = async () => {
-		// 광고 랜딩에서 돌아올 때 앱 열기 광고가 바로 붙지 않게
-		skipAppOpenOnNextResume();
-		void recordAdClick().then(refreshCap);
+		AdGuardService.registerClick('banner');
 		try {
 			const instanceId = await analytics().getAppInstanceId();
 			await analytics().logEvent('ad_banner_opened', {
@@ -85,7 +53,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 		}
 	};
 
-	if (capped !== false) return null;
+	// 클릭 어뷰징 차단 중에는 요청 자체를 하지 않는다 (렌더 제거 → 노출/요청 0)
+	if (adBlocked) return null;
 
 	return (
 		<View
@@ -99,14 +68,17 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 				},
 			]}>
 			<BannerAd
-				ref={bannerRef}
 				unitId={AD_UNIT_ID}
 				size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-				// 첫 배너가 그려진 뒤에 스플래시를 걷는다 (빈 자리가 보였다가 광고가 툭 들어오지 않게)
-				onAdLoaded={markBannerSettled}
 				onAdOpened={handleAdOpened}
-				onAdFailedToLoad={handleAdFailed}
+				onAdFailedToLoad={(e: unknown) => { if (__DEV__) console.warn('❌ [AdMob] 배너 로드 실패:', AD_UNIT_ID, e); }}
 			/>
+			{/* 테스트 유닛 표시 — 운영(스토어) 설치에서는 USE_TEST_ADS 가 false 라 그려지지 않는다 */}
+			{USE_TEST_ADS && (
+				<View style={styles.badge} pointerEvents="none">
+					<Text style={styles.badgeText}>TEST AD</Text>
+				</View>
+			)}
 		</View>
 	);
 };
@@ -117,7 +89,10 @@ const styles = themed(() => StyleSheet.create({
 		width: '100%',
 		alignItems: 'center',
 		backgroundColor: 'transparent',
-			},
+	},
+	// 개발용 표시라 테마를 따르지 않는다 — 어느 배경 위에서도 읽히는 고정 대비
+	badge: { position: 'absolute', top: 0, left: 0, paddingHorizontal: 4, paddingVertical: 1, backgroundColor: '#D32F2F', borderBottomRightRadius: 4 },
+	badgeText: { color: '#FFFFFF', fontSize: 9, fontWeight: '700' },
 }));
 
 export default React.memo(AdmobBannerAd);

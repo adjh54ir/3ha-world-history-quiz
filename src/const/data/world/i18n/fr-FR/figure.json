@@ -1,13 +1,13 @@
 {
 	"figure-001": {
-		"summary": "Poète grec de l'Antiquité, auteur de l'« Iliade » et de l'« Odyssée », qui chantent la guerre de Troie.",
+		"summary": "Poète grec de l'Antiquité, auteur de l'« Iliade », qui chante la guerre de Troie, et de l'« Odyssée », modèle de toute épopée.",
 		"facts": [
 			"Le mot « odyssée », qui désigne un long voyage plein d'aventures, vient de son œuvre.",
 			"On débat encore pour savoir s'il a réellement existé ou si ses poèmes rassemblent les chants de plusieurs auteurs."
 		]
 	},
 	"figure-002": {
-		"summary": "Mathématicien grec de l'Antiquité qui a donné son nom au théorème sur les trois côtés du triangle rectangle.",
+		"summary": "Mathématicien grec de l'Antiquité, célèbre pour le théorème liant les trois côtés du triangle rectangle, qui voyait dans le nombre le principe de toute chose.",
 		"facts": [
 			"Ce théorème était pourtant déjà utilisé à Babylone plus de mille ans avant lui.",
 			"On lui attribue la découverte que la hauteur d'un son dépend du rapport des longueurs de corde."
@@ -28,14 +28,14 @@
 		]
 	},
 	"figure-005": {
-		"summary": "Philosophe grec de l'Antiquité qui, à force de questions, amenait ses interlocuteurs à trouver la vérité par eux-mêmes.",
+		"summary": "Philosophe grec de l'Antiquité qui pratiquait la maïeutique, un art du questionnement amenant l'autre à découvrir sa propre ignorance.",
 		"facts": [
 			"Il n'a laissé aucun écrit : on ne le connaît que par les récits de ses disciples.",
 			"Il but la ciguë en 399 av. J.-C., mais la formule « une loi injuste reste la loi » qu'on lui prête n'est pas de lui."
 		]
 	},
 	"figure-006": {
-		"summary": "Médecin grec de l'Antiquité qui voyait dans la maladie un phénomène naturel et non une punition divine.",
+		"summary": "Médecin grec de l'Antiquité qui vit dans la maladie une cause naturelle et non un châtiment divin, et fonda la médecine clinique sur l'observation des malades.",
 		"facts": [
 			"Le serment prononcé par les jeunes médecins porte son nom, mais rien ne prouve qu'il l'ait écrit lui-même.",
 			"« La vie est courte, l'art est long » ouvre ses « Aphorismes », et « l'art » y désignait la médecine."
@@ -49,105 +49,105 @@
 		]
 	},
 	"figure-008": {
-		"summary": "Philosophe grec de l'Antiquité qui explora tous les savoirs, de la logique à la biologie, et les répartit en disciplines.",
+		"summary": "Philosophe grec de l'Antiquité qui fonda la logique sur le syllogisme et laissa la « Métaphysique » et l'« Éthique à Nicomaque ».",
 		"facts": [
 			"Élève de Platon, il fut le précepteur d'Alexandre le Grand.",
 			"Il fonda le Lycée, où il rassemblait des documents et enseignait."
 		]
 	},
 	"figure-009": {
-		"summary": "Mathématicien grec de l'Antiquité qui, avec ses « Éléments », fit de la géométrie un système cohérent.",
+		"summary": "Mathématicien grec de l'Antiquité dont les treize livres des « Éléments » firent de la géométrie un système, manuel scolaire pendant plus de deux mille ans.",
 		"facts": [
 			"Partant de cinq postulats, il bâtit ses théorèmes un à un.",
 			"Il aurait dit à Ptolémée Ier : « Il n'y a pas de voie royale en géométrie. »"
 		]
 	},
 	"figure-010": {
-		"summary": "Mathématicien grec de l'Antiquité qui aurait percé le secret d'une couronne en voyant l'eau déborder de son bain.",
+		"summary": "Mathématicien grec de l'Antiquité qui énonça le principe de la poussée des corps plongés dans l'eau et la loi du levier, et calcula le volume de la sphère.",
 		"facts": [
-			"Le cri « Eurêka ! », que l'on pousse en faisant une découverte, vient de cette anecdote du bain.",
+			"Le cri de la découverte « Eurêka ! » vient de l'anecdote où il perça le secret de la couronne en voyant déborder l'eau de son bain.",
 			"Il calcula que π est supérieur à 223/71 et inférieur à 22/7."
 		]
 	},
 	"figure-011": {
-		"summary": "Historien grec de l'Antiquité qui relata les guerres médiques d'après ce qu'il avait vu et entendu.",
+		"summary": "Historien grec de l'Antiquité qui parcourut de nombreux pays et consigna dans ses « Histoires » les causes et le cours des guerres médiques.",
 		"facts": [
 			"Plus tard, chacun des neuf livres de ses « Histoires » reçut le nom de l'une des neuf Muses.",
 			"Cicéron le surnomma le père de l'histoire, tout en lui reprochant ses nombreuses fables."
 		]
 	},
 	"figure-012": {
-		"summary": "Historien de la dynastie Han qui, bien que condamné à la castration, mena à terme ses « Mémoires historiques ».",
+		"summary": "Historien chinois des Han occidentaux qui, malgré l'humiliation de la castration, acheva les « Mémoires historiques », modèle de l'histoire chinoise.",
 		"facts": [
 			"Il porta à sa perfection la forme annales-biographies, qui organise le récit par souverains et par personnages.",
 			"Ses 130 chapitres, soit plus de 520 000 caractères, couvrent 2 500 ans, de l'Empereur Jaune à l'empereur Wu des Han."
 		]
 	},
 	"figure-013": {
-		"summary": "Astronome grec de l'Antiquité qui fit la synthèse du géocentrisme, plaçant la Terre au centre de l'univers.",
+		"summary": "Astronome grec de l'Antiquité qui perfectionna le géocentrisme, plaçant la Terre au centre et faisant tourner les planètes sur de petits cercles, les épicycles.",
 		"facts": [
 			"Son « Almageste » fit autorité en astronomie pendant plus de mille ans.",
 			"Dans sa « Géographie », il consigna la latitude et la longitude de quelque 8 000 lieux."
 		]
 	},
 	"figure-014": {
-		"summary": "Médecin persan qui, dans son « Canon de la médecine », réunit les savoirs médicaux grec et islamique.",
+		"summary": "Médecin persan du Moyen Âge qui réunit les médecines grecque et islamique dans les cinq livres du « Canon de la médecine ».",
 		"facts": [
-			"Les universités de Louvain, en Belgique, et de Montpellier, en France, s'en servirent comme manuel jusque vers 1650.",
+			"De nombreuses universités européennes s'en servirent encore comme manuel de médecine jusque vers 1650.",
 			"Il a aussi laissé une encyclopédie philosophique et scientifique, le « Livre de la guérison »."
 		]
 	},
 	"figure-015": {
-		"summary": "Philosophe italien du Moyen Âge pour qui la foi et la raison ne se contredisent pas.",
+		"summary": "Philosophe scolastique italien du Moyen Âge qui démontra l'existence de Dieu par les « cinq voies » et chercha l'accord de la foi et de la raison.",
 		"facts": [
 			"Sa « Somme théologique » resta inachevée lorsqu'il posa la plume en décembre 1273.",
 			"Il fit entrer la philosophie d'Aristote dans l'Europe médiévale."
 		]
 	},
 	"figure-016": {
-		"summary": "Marchand vénitien qui voyagea jusqu'à la Chine des Yuan et en tira « Le Devisement du monde ».",
+		"summary": "Explorateur italien parti de Venise jusqu'à la Chine des Yuan, au service de Kubilai Khan, qui fit connaître l'Orient avec « Le Devisement du monde ».",
 		"facts": [
 			"Il dicta son récit à un écrivain rencontré en prison.",
 			"Christophe Colomb lut lui aussi ce livre et en couvrit les marges d'annotations."
 		]
 	},
 	"figure-017": {
-		"summary": "Poète italien originaire de Florence, auteur de la « Divine Comédie », voyage à travers l'Enfer, le Purgatoire et le Paradis.",
+		"summary": "Poète italien du Moyen Âge, auteur de la « Divine Comédie », voyage en Enfer, au Purgatoire et au Paradis, et des poèmes d'amour de la « Vita nuova ».",
 		"facts": [
 			"Il l'écrivit en italien et non en latin, posant les bases de l'italien moderne.",
 			"Banni de sa ville natale, Florence, il mourut à Ravenne, où se trouve sa tombe."
 		]
 	},
 	"figure-018": {
-		"summary": "Jeune fille de dix-sept ans qui mena l'armée française pendant la guerre de Cent Ans.",
+		"summary": "Combattante française de dix-sept ans qui, disant entendre des voix divines, mena à la victoire l'armée française malmenée par l'Angleterre pendant la guerre de Cent Ans.",
 		"facts": [
 			"Elle délivra Orléans et conduisit Charles VII jusqu'à son sacre.",
 			"Brûlée vive en 1431, elle fut canonisée 489 ans plus tard, en 1920."
 		]
 	},
 	"figure-019": {
-		"summary": "Artisan de Mayence dont la presse à caractères métalliques fit chuter le prix des livres.",
+		"summary": "Inventeur allemand qui fondit des caractères métalliques en série et construisit une presse inspirée du pressoir à vin, déclenchant la révolution de l'imprimerie en Europe.",
 		"facts": [
 			"En Corée, sous la dynastie Goryeo, le « Jikji » fut imprimé en caractères métalliques soixante-dix-huit ans avant sa Bible à 42 lignes.",
 			"Après avoir perdu un procès pour dettes, il dut céder son atelier à son associé Fust."
 		]
 	},
 	"figure-020": {
-		"summary": "Peintre florentin de « La Naissance de Vénus » et du « Printemps ».",
+		"summary": "Peintre italien de Florence, auteur de « La Naissance de Vénus » et du « Printemps », qui participa aussi aux fresques murales de la chapelle Sixtine.",
 		"facts": [
 			"Protégé des Médicis, il aimait peindre des sujets mythologiques.",
 			"« Botticelli » signifie « petit tonneau » : c'était à l'origine le surnom de son frère aîné."
 		]
 	},
 	"figure-021": {
-		"summary": "Peintre de la Renaissance italienne qui réalisa « La Joconde » et s'intéressa aussi à l'anatomie et aux machines.",
+		"summary": "Peintre italien de la Renaissance, auteur de « La Joconde » et de « La Cène », qui étudia aussi les machines volantes et l'anatomie humaine.",
 		"facts": [
 			"Il a laissé des milliers de pages de carnets écrites en miroir, qu'on ne peut lire qu'avec une glace.",
 			"Après sa mort, le roi de France acheta « La Joconde », aujourd'hui exposée au musée du Louvre, à Paris."
 		]
 	},
 	"figure-022": {
-		"summary": "Peintre de Nuremberg qui éleva la gravure au rang d'art.",
+		"summary": "Peintre allemand de la Renaissance qui éleva la gravure au rang d'art avec des burins comme « Melencolia I » et « Le Chevalier, la Mort et le Diable ».",
 		"facts": [
 			"En 1500, à vingt-huit ans, il se peignit de face, à la manière du Christ.",
 			"Le célèbre dessin des « Mains en prière » est une étude qu'il réalisa vers 1508."
@@ -161,70 +161,70 @@
 		]
 	},
 	"figure-024": {
-		"summary": "Sculpteur italien qui tailla le « David » et peignit le plafond de la chapelle Sixtine.",
+		"summary": "Sculpteur italien qui tailla dans le marbre le « David » et la « Pietà » et peignit la Création au plafond de la chapelle Sixtine.",
 		"facts": [
 			"Se considérant sculpteur plus que peintre, il n'accepta la fresque du plafond qu'à contrecœur.",
 			"Bien qu'aidé d'assistants, il peignit lui-même l'essentiel du plafond, en quatre ans."
 		]
 	},
 	"figure-025": {
-		"summary": "Peintre de la Renaissance italienne, auteur de « L'École d'Athènes », mort à trente-sept ans.",
+		"summary": "Peintre italien de la Renaissance qui réunit les philosophes dans « L'École d'Athènes » au Vatican et peignit la « Madone Sixtine ».",
 		"facts": [
 			"Ses Vierges à l'Enfant firent tout particulièrement sa renommée.",
 			"Inhumé au Panthéon de Rome, il a pour épitaphe une phrase disant que la nature craignit d'être vaincue par lui."
 		]
 	},
 	"figure-026": {
-		"summary": "Peintre coréenne du début de l'ère Joseon, qui représenta avec finesse insectes, herbes et grappes de raisin.",
+		"summary": "Peintre coréenne du début de Joseon, réputée pour ses délicates peintures d'insectes et de fleurs, également douée pour la poésie et la calligraphie.",
 		"facts": [
 			"Son portrait figure depuis 2009 sur le billet de 50 000 wons.",
 			"Son fils, le lettré Yi I (Yulgok), figure sur le billet de 5 000 wons : la mère et le fils ornent tous deux des billets."
 		]
 	},
 	"figure-027": {
-		"summary": "Général de Joseon qui défendit les mers pendant la guerre d'Imjin, ses bateaux-tortues en première ligne.",
+		"summary": "Amiral coréen de Joseon qui, pendant la guerre d'Imjin, battit la flotte japonaise avec ses bateaux-tortues et sa formation en aile de grue, comme à Hansando.",
 		"facts": [
 			"À Myeongnyang, avec seulement treize navires, il repoussa une grande flotte.",
 			"Il consigna sept années de guerre dans son « Journal de guerre » (Nanjung ilgi)."
 		]
 	},
 	"figure-028": {
-		"summary": "Romancier espagnol, auteur de « Don Quichotte », l'histoire d'un vieil hidalgo de campagne fou de romans de chevalerie.",
+		"summary": "Romancier espagnol qui ouvrit l'ère du roman moderne avec « Don Quichotte », les aventures d'un hidalgo de campagne féru de romans de chevalerie.",
 		"facts": [
 			"Ayant perdu l'usage de la main gauche à la bataille de Lépante en 1571, il fut surnommé « le manchot de Lépante ».",
 			"Son visage figure sur les pièces espagnoles de 10, 20 et 50 centimes d'euro."
 		]
 	},
 	"figure-029": {
-		"summary": "Dramaturge anglais de l'époque élisabéthaine, auteur d'« Hamlet » et de « Roméo et Juliette ».",
+		"summary": "Dramaturge anglais de l'ère élisabéthaine, auteur des quatre grandes tragédies, dont « Hamlet » et « Macbeth », et de « Roméo et Juliette ».",
 		"facts": [
 			"Il a laissé près de quarante pièces et 154 sonnets.",
 			"La Journée mondiale du livre, le 23 avril, tombe à la date retenue pour sa mort comme pour celle de Miguel de Cervantes."
 		]
 	},
 	"figure-030": {
-		"summary": "Astronome italien qui découvrit à la lunette quatre satellites de Jupiter.",
+		"summary": "Astronome italien dont la lunette artisanale révéla quatre lunes de Jupiter et les phases de Vénus, à l'appui de l'héliocentrisme.",
 		"facts": [
 			"En étudiant la chute des corps par l'expérience, il ouvrit la voie à la physique moderne.",
 			"La phrase « Et pourtant elle tourne », qu'il aurait prononcée après son procès de 1633, est une légende apparue plus tard."
 		]
 	},
 	"figure-031": {
-		"summary": "Astronome allemand qui découvrit les trois lois selon lesquelles les planètes décrivent des ellipses.",
+		"summary": "Astronome allemand qui publia, notamment dans l'« Astronomia nova », les trois lois du mouvement des planètes, à commencer par les orbites elliptiques.",
 		"facts": [
 			"Il tira ces lois des observations laissées par Tycho Brahe, avec qui il avait travaillé.",
 			"Son récit « Le Songe », un voyage vers la Lune, fait de lui un lointain ancêtre de la science-fiction."
 		]
 	},
 	"figure-032": {
-		"summary": "Peintre néerlandais de « La Ronde de nuit », maître des contrastes saisissants entre ombre et lumière.",
+		"summary": "Peintre néerlandais qui joua du clair-obscur dans « La Ronde de nuit », portrait d'une milice, et « La Leçon d'anatomie du docteur Tulp ».",
 		"facts": [
 			"Il a laissé environ quatre-vingts autoportraits, peintures, gravures et dessins confondus.",
 			"Ruiné en 1656, il dut vendre aux enchères sa maison et toutes ses collections."
 		]
 	},
 	"figure-033": {
-		"summary": "Peintre de Delft, aux Pays-Bas, auteur de « La Jeune Fille à la perle ».",
+		"summary": "Peintre néerlandais d'intérieurs baignés de la lumière d'une fenêtre, comme « La Jeune Fille à la perle » et « La Laitière ».",
 		"facts": [
 			"Seuls trente-quatre tableaux environ lui sont attribués avec certitude.",
 			"Le film « La Jeune Fille à la perle » (2003) imagine l'histoire du modèle de ce tableau."
@@ -245,63 +245,63 @@
 		]
 	},
 	"figure-036": {
-		"summary": "Compositeur vénitien surnommé le Prêtre roux, auteur des concertos des « Quatre Saisons ».",
+		"summary": "Compositeur italien surnommé « le Prêtre roux », auteur des « Quatre Saisons », concertos pour violon peignant le printemps, l'été, l'automne et l'hiver.",
 		"facts": [
 			"Il enseignait la musique aux jeunes filles d'une école rattachée à un orphelinat.",
 			"Il a laissé quelque cinq cents concertos, dont beaucoup furent écrits pour les élèves de cette école."
 		]
 	},
 	"figure-037": {
-		"summary": "Compositeur baroque allemand, auteur de la « Passion selon saint Matthieu » et du « Clavier bien tempéré ».",
+		"summary": "Compositeur allemand de l'époque baroque, auteur de la « Passion selon saint Matthieu », du « Clavier bien tempéré » et des « Concertos brandebourgeois ».",
 		"facts": [
 			"Durant ses premières années à Leipzig, il composa une nouvelle cantate chaque semaine.",
 			"Il eut vingt enfants, dont quatre fils devinrent compositeurs, parmi lesquels Carl Philipp Emanuel."
 		]
 	},
 	"figure-038": {
-		"summary": "Compositeur né en Allemagne et établi en Angleterre, auteur de l'oratorio « Le Messie ».",
+		"summary": "Compositeur d'origine allemande qui écrivit « Water Music » et « Music for the Royal Fireworks » pour la couronne anglaise, ainsi que l'oratorio « Le Messie ».",
 		"facts": [
 			"Son « Hallelujah » retentit encore à chaque fin d'année.",
 			"À Londres, il dirigea lui-même un théâtre d'opéra."
 		]
 	},
 	"figure-039": {
-		"summary": "Ingénieur qui réduisit les pertes de chaleur de la machine à vapeur et accéléra la révolution industrielle.",
+		"summary": "Inventeur britannique qui perfectionna nettement la machine à vapeur de Newcomen et la répandit dans les usines et les mines, accélérant la révolution industrielle.",
 		"facts": [
 			"En ajoutant un condenseur séparé, il fit économiser beaucoup de combustible.",
 			"Le watt (W), unité de puissance inscrite sur les appareils électriques, vient de son nom."
 		]
 	},
 	"figure-040": {
-		"summary": "Compositeur autrichien qui fixa la forme de la symphonie à la cour des Esterházy.",
+		"summary": "Compositeur autrichien surnommé « le père de la symphonie », qui fixa la forme de la symphonie et du quatuor à cordes comme maître de chapelle des Esterházy.",
 		"facts": [
 			"Il écrivit 104 symphonies ; la n° 94, calme puis soudain éclatante, est surnommée « La Surprise ».",
 			"La mélodie de l'actuel hymne national allemand vient d'un chant qu'il composa en 1797 pour l'empereur."
 		]
 	},
 	"figure-041": {
-		"summary": "Biologiste suédois qui instaura la nomenclature binominale, désignant chaque être vivant par un nom de genre et un nom d'espèce.",
+		"summary": "Biologiste suédois surnommé le père de la taxinomie, qui établit la nomenclature binominale, associant nom de genre et nom d'espèce.",
 		"facts": [
 			"Dans son « Systema naturae », il classa plantes et animaux.",
 			"Il donna aussi à l'être humain le nom d'Homo sapiens."
 		]
 	},
 	"figure-042": {
-		"summary": "Mathématicien suisse qui continua de publier même devenu aveugle, au point de laisser plus de 800 articles.",
+		"summary": "Mathématicien suisse qui nota e la base des logarithmes naturels et trouva la formule liant sommets, arêtes et faces d'un polyèdre.",
 		"facts": [
 			"Il popularisa la notation des fonctions et le symbole π.",
 			"En résolvant le problème des ponts de Königsberg, il fonda la théorie des graphes."
 		]
 	},
 	"figure-043": {
-		"summary": "Philosophe allemand qui, dans la « Critique de la raison pure », examina les limites de ce que l'homme peut connaître.",
+		"summary": "Philosophe allemand qui examina les fondements de la connaissance et de la morale dans ses trois Critiques : de la raison pure, de la raison pratique et du jugement.",
 		"facts": [
 			"Ses promenades étaient si ponctuelles, dit-on, que ses voisins réglaient leur montre sur lui.",
 			"Sa ville natale, qu'il ne quitta presque jamais, est aujourd'hui Kaliningrad, en Russie."
 		]
 	},
 	"figure-044": {
-		"summary": "Compositeur autrichien qui écrivait déjà de la musique à cinq ans et mourut à trente-cinq.",
+		"summary": "Compositeur autrichien du classicisme viennois qui commença à composer à cinq ans et laissa plus de 600 œuvres, dont la symphonie « Jupiter ».",
 		"facts": [
 			"Il a laissé les opéras « La Flûte enchantée » et « Les Noces de Figaro ».",
 			"Sa dernière œuvre, le « Requiem », resta inachevée."
@@ -315,70 +315,70 @@
 		]
 	},
 	"figure-046": {
-		"summary": "Médecin anglais qui mit au point la vaccination contre la variole à partir de la vaccine, une maladie de la vache.",
+		"summary": "Médecin anglais qui, remarquant que les trayeuses attrapaient rarement la variole, mit au point la vaccination par la vaccine en 1796.",
 		"facts": [
 			"Dans la Corée de Joseon, Ji Seok-yeong apprit cette méthode et pratiqua la première vaccination en 1879.",
 			"Le mot « vaccin » vient du latin désignant la vache."
 		]
 	},
 	"figure-047": {
-		"summary": "Pédagogue suisse qui recueillit des orphelins de guerre et voulait former à la fois la tête, le cœur et la main.",
+		"summary": "Pédagogue suisse qui recueillit des orphelins de guerre à Stans et éduqua ensemble la tête, le cœur et la main, posant les bases de l'école primaire moderne.",
 		"facts": [
 			"Il fonda à plusieurs reprises des écoles pour les enfants pauvres.",
 			"Friedrich Fröbel, le créateur du jardin d'enfants, fut lui aussi son élève."
 		]
 	},
 	"figure-048": {
-		"summary": "Peintre de genre de Joseon qui dépeignit la vie quotidienne du peuple, de la lutte ssireum à l'école de village.",
+		"summary": "Peintre coréen de la fin de Joseon, célèbre pour ses scènes de genre pleines d'humour sur la vie du peuple, comme « La Lutte », « L'École du village » et « L'Enfant danseur ».",
 		"facts": [
 			"Peintre officiel du Dohwaseo, il réalisa aussi le portrait du roi.",
 			"Son nom de plume, Danwon, a été donné à l'arrondissement de Danwon, à Ansan, dans la province de Gyeonggi."
 		]
 	},
 	"figure-049": {
-		"summary": "Compositeur allemand qui acheva sa Neuvième Symphonie alors qu'il était devenu presque sourd.",
+		"summary": "Compositeur allemand de la symphonie « Héroïque » et des sonates pour piano « Clair de lune » et « Pathétique », qui continua à composer devenu sourd.",
 		"facts": [
 			"Sa Cinquième Symphonie est surnommée « le Destin ».",
 			"La mélodie du dernier mouvement de la Neuvième est devenue l'hymne de l'Union européenne."
 		]
 	},
 	"figure-050": {
-		"summary": "Mathématicien allemand qui, enfant, aurait additionné d'un seul coup les nombres de 1 à 100.",
+		"summary": "Mathématicien allemand surnommé le « prince des mathématiciens », auteur des « Disquisitiones arithmeticae » et artisan de la loi normale et des moindres carrés.",
 		"facts": [
 			"Il trouva comment construire un heptadécagone régulier à la règle et au compas.",
 			"En calculant l'orbite de l'astéroïde Cérès, perdu de vue, il permit de le retrouver en 1801."
 		]
 	},
 	"figure-051": {
-		"summary": "Explorateur allemand qui sillonna l'Amérique du Sud et vit la nature comme un réseau de liens.",
+		"summary": "Explorateur allemand qui parcourut l'Amérique du Sud pendant cinq ans et décrivit la nature comme un tout interconnecté dans « Cosmos ».",
 		"facts": [
 			"Il recueillit ses données en remontant l'Orénoque et en parcourant les Andes.",
 			"Un courant marin qui longe la côte ouest de l'Amérique du Sud porte son nom."
 		]
 	},
 	"figure-052": {
-		"summary": "Roi du lied, auteur du « Roi des aulnes » et de « La Truite », mort à trente et un ans.",
+		"summary": "Compositeur autrichien surnommé le « roi du lied », auteur du « Roi des aulnes », de « La Truite » et du cycle « Le Voyage d'hiver ».",
 		"facts": [
 			"Il écrivit plus de 600 lieder, et ses amis appelaient « schubertiades » les soirées consacrées à sa musique.",
 			"Sa Huitième Symphonie, arrêtée après deux mouvements, est dite « Inachevée »."
 		]
 	},
 	"figure-053": {
-		"summary": "Professeur français devenu aveugle après un accident à trois ans, qui inventa à quinze ans une écriture à six points.",
+		"summary": "Pédagogue français, aveugle depuis un accident à trois ans, qui inventa à quinze ans une écriture tactile à six points en relief pour les non-voyants.",
 		"facts": [
 			"Le braille coréen hunmaengjeongeum, créé en 1926 par Park Du-seong, reprend lui aussi ce système à six points.",
 			"Il s'inspira d'une écriture nocturne à douze points, conçue pour l'armée puis rejetée."
 		]
 	},
 	"figure-054": {
-		"summary": "Seizième président des États-Unis, qui dirigea le pays pendant la guerre de Sécession et proclama l'émancipation des esclaves.",
+		"summary": "Homme politique américain, seizième président, qui proclama l'émancipation des esclaves pendant la guerre de Sécession et préserva l'Union.",
 		"facts": [
 			"À Gettysburg, il parla du « gouvernement du peuple, par le peuple, pour le peuple ».",
 			"En 1865, cinq jours après la reddition de l'armée sudiste, il fut abattu au théâtre Ford."
 		]
 	},
 	"figure-055": {
-		"summary": "Physicien britannique qui découvrit l'induction électromagnétique, produisant de l'électricité à l'aide d'un aimant.",
+		"summary": "Physicien britannique qui découvrit l'induction électromagnétique, base des générateurs et des moteurs, et formula les lois de l'électrolyse.",
 		"facts": [
 			"Apprenti relieur à ses débuts, il entra ensuite à la Royal Institution.",
 			"Il lança les conférences scientifiques de Noël destinées aux enfants."
@@ -392,7 +392,7 @@
 		]
 	},
 	"figure-057": {
-		"summary": "Écrivain danois, auteur des contes « La Petite Sirène » et « Le Vilain Petit Canard ».",
+		"summary": "Écrivain danois auteur de quelque 150 contes, dont « La Petite Sirène », « Le Vilain Petit Canard » et « La Petite Fille aux allumettes ».",
 		"facts": [
 			"Fils d'un pauvre cordonnier d'Odense, il partit seul pour Copenhague à quatorze ans.",
 			"En 2022, Suzy Lee est devenue la première Coréenne à recevoir le prix Hans-Christian-Andersen, qui porte son nom."
@@ -413,21 +413,21 @@
 		]
 	},
 	"figure-060": {
-		"summary": "Romancière anglaise qui, dans « Orgueil et Préjugés », dépeignit le mariage et les rangs sociaux dans les demeures de campagne.",
+		"summary": "Romancière anglaise qui peignit avec esprit l'amour et le mariage dans la petite noblesse de campagne, dans « Orgueil et Préjugés » et « Raison et Sentiments ».",
 		"facts": [
 			"De son vivant, elle publia ses livres sans révéler son nom.",
 			"Son portrait figure sur le billet britannique de 10 livres."
 		]
 	},
 	"figure-061": {
-		"summary": "Romancier français, auteur des « Misérables » et de « Notre-Dame de Paris ».",
+		"summary": "Romancier français, auteur des « Misérables » et de « Notre-Dame de Paris », qui mena le mouvement romantique avec sa pièce « Hernani ».",
 		"facts": [
 			"Opposant au pouvoir en place, il passa dix-neuf ans en exil.",
 			"Plus de deux millions de personnes se pressèrent à ses funérailles."
 		]
 	},
 	"figure-062": {
-		"summary": "Chimiste russe qui rangea les éléments dans un tableau selon leurs propriétés et prédit même ceux qui manquaient.",
+		"summary": "Chimiste russe qui dressa en 1869 un tableau périodique classé par masse atomique et prédit les propriétés d'éléments encore inconnus.",
 		"facts": [
 			"Le gallium, le scandium et le germanium, découverts par la suite, vinrent occuper les cases qu'il avait laissées vides.",
 			"L'élément de numéro atomique 101 porte son nom."
@@ -448,49 +448,49 @@
 		]
 	},
 	"figure-065": {
-		"summary": "Moine qui découvrit les lois de l'hérédité en cultivant des pois dans le jardin de son monastère.",
+		"summary": "Biologiste tchèque surnommé le père de la génétique, qui croisa des pois dans le jardin d'un monastère et découvrit les lois de dominance, de ségrégation et d'indépendance.",
 		"facts": [
 			"Pendant huit ans, il observa des dizaines de milliers de plants de pois.",
 			"De son vivant, ses travaux passèrent presque inaperçus."
 		]
 	},
 	"figure-066": {
-		"summary": "Inventeur suédois de la dynamite qui demanda par testament que sa fortune serve à créer des prix.",
+		"summary": "Inventeur suédois qui fit fortune grâce à la dynamite et légua ses biens pour créer des prix annuels récompensant les bienfaiteurs de l'humanité.",
 		"facts": [
 			"Il trouva comment manipuler la nitroglycérine sans danger.",
 			"Son testament prévoyait cinq prix : physique, chimie, physiologie ou médecine, littérature et paix."
 		]
 	},
 	"figure-067": {
-		"summary": "Romancier américain, auteur des « Aventures de Tom Sawyer » et des « Aventures de Huckleberry Finn ».",
+		"summary": "Romancier américain surnommé le père de la littérature américaine, auteur des « Aventures de Tom Sawyer » et des « Aventures de Huckleberry Finn ».",
 		"facts": [
 			"Il fut pilote de bateau à vapeur sur le Mississippi.",
 			"Son pseudonyme reprend le cri des mariniers annonçant une profondeur de deux brasses (environ 3,7 mètres)."
 		]
 	},
 	"figure-068": {
-		"summary": "Romancier russe, auteur de « Crime et Châtiment » et des « Frères Karamazov ».",
+		"summary": "Romancier russe qui sonda la faute, la rédemption et la foi dans « Crime et Châtiment » et « Les Frères Karamazov ».",
 		"facts": [
 			"Sa condamnation à mort fut commuée au dernier moment, et il fut déporté en Sibérie.",
 			"Pressé par ses dettes, il dicta « Le Joueur » en moins d'un mois à une sténographe qui devint ensuite sa femme."
 		]
 	},
 	"figure-069": {
-		"summary": "Géant de la littérature russe, auteur de « Guerre et Paix » et d'« Anna Karénine ».",
+		"summary": "Romancier russe, auteur de « Guerre et Paix », sur fond d'invasion napoléonienne de la Russie, et d'« Anna Karénine ».",
 		"facts": [
 			"Issu d'une famille de comtes, il ouvrit une école pour les paysans sur son domaine.",
 			"À quatre-vingt-deux ans, il quitta secrètement sa maison et mourut chez le chef de la petite gare d'Astapovo."
 		]
 	},
 	"figure-070": {
-		"summary": "Infirmière britannique surnommée la Dame à la lampe, qui transforma les hôpitaux de campagne de la guerre de Crimée.",
+		"summary": "Infirmière britannique qui transforma l'hygiène de l'hôpital militaire de Scutari pendant la guerre de Crimée et fonda une école d'infirmières moderne à Londres.",
 		"facts": [
 			"En représentant les causes de décès par un diagramme en forme de rose, elle imposa une réforme de l'hygiène dans les hôpitaux militaires.",
 			"Le 12 mai, jour de sa naissance, est la Journée internationale des infirmières."
 		]
 	},
 	"figure-071": {
-		"summary": "Compositeur italien d'opéras tels qu'« Aida » et « La Traviata ».",
+		"summary": "Compositeur italien dont les opéras, comme « Rigoletto », « La traviata » et « Aida », triomphèrent sur les scènes du XIXe siècle.",
 		"facts": [
 			"Les Italiens chantent encore le « Chœur des esclaves hébreux » comme un second hymne national.",
 			"À la fin de sa vie, il fonda une maison de retraite pour musiciens pauvres."
@@ -504,70 +504,70 @@
 		]
 	},
 	"figure-073": {
-		"summary": "Compositeur romantique allemand qui peaufina sa Première Symphonie pendant plus de vingt ans.",
+		"summary": "Compositeur romantique allemand, auteur des « Danses hongroises », de quatre symphonies et d'« Un requiem allemand ».",
 		"facts": [
 			"Il composa sa « Berceuse » en 1868, pour la naissance du deuxième fils de son amie Bertha Faber.",
 			"Il resta lié toute sa vie au couple Schumann."
 		]
 	},
 	"figure-074": {
-		"summary": "Peintre français dont le tableau « Impression, soleil levant » a donné son nom à l'impressionnisme.",
+		"summary": "Peintre français dont « Impression, soleil levant » donna son nom à l'impressionnisme, auteur de « La Femme à l'ombrelle ».",
 		"facts": [
 			"Il peignit le même motif à maintes reprises, selon l'heure et la lumière.",
 			"Il consacra la fin de sa vie à peindre les nymphéas de son jardin de Giverny."
 		]
 	},
 	"figure-075": {
-		"summary": "Sculpteur français du « Penseur » et des « Bourgeois de Calais ».",
+		"summary": "Sculpteur français qui ouvrit la voie à la sculpture moderne avec « Le Penseur », « Les Bourgeois de Calais » et « Le Baiser ».",
 		"facts": [
 			"Il travailla plus de trente ans à « La Porte de l'Enfer ».",
 			"« Le Penseur » fut d'abord conçu comme « Le Poète », assis au sommet de « La Porte de l'Enfer »."
 		]
 	},
 	"figure-076": {
-		"summary": "Peintre français qui peignit inlassablement des pommes et la montagne Sainte-Victoire.",
+		"summary": "Peintre postimpressionniste français, auteur des « Joueurs de cartes » et de la série de la montagne Sainte-Victoire, qui ouvrit la voie au cubisme.",
 		"facts": [
 			"Il conseillait de traiter la nature par le cylindre, la sphère et le cône.",
 			"Pablo Picasso et Henri Matisse l'auraient appelé « notre père à tous »."
 		]
 	},
 	"figure-077": {
-		"summary": "Compositeur russe des ballets « Le Lac des cygnes » et « Casse-Noisette ».",
+		"summary": "Compositeur russe des ballets « Le Lac des cygnes », « Casse-Noisette » et « La Belle au bois dormant », et de la symphonie « Pathétique ».",
 		"facts": [
 			"Dans l'« Ouverture 1812 », il alla jusqu'à noter des coups de canon sur la partition.",
 			"Pendant treize ans, il fut soutenu par une mécène qu'il s'était engagé à ne jamais rencontrer."
 		]
 	},
 	"figure-078": {
-		"summary": "Le « roi des inventeurs » américain, qui a donné au monde l'ampoule à incandescence et le phonographe.",
+		"summary": "Inventeur américain qui offrit au monde le phonographe, une ampoule à incandescence durable et le kinétoscope, visionneuse d'images animées.",
 		"facts": [
 			"Il déposa au cours de sa vie 1 093 brevets rien qu'aux États-Unis.",
 			"En 1887, les premières lampes électriques de Corée, allumées au Geoncheonggung, dans le palais Gyeongbokgung, venaient elles aussi de sa compagnie."
 		]
 	},
 	"figure-079": {
-		"summary": "Romancier français, auteur de « Vingt Mille Lieues sous les mers » et du « Tour du monde en quatre-vingts jours ».",
+		"summary": "Romancier français, pionnier du roman d'aventures scientifiques avec « Vingt Mille Lieues sous les mers », « Le Tour du monde en quatre-vingts jours » et « Voyage au centre de la Terre ».",
 		"facts": [
 			"Il mit ses connaissances scientifiques au service de romans sur le sous-marin et le voyage vers la Lune.",
 			"Selon l'UNESCO, c'est l'auteur le plus traduit après Agatha Christie."
 		]
 	},
 	"figure-080": {
-		"summary": "Compositeur tchèque de l'école nationale, auteur de la symphonie « Du Nouveau Monde ».",
+		"summary": "Compositeur tchèque de l'école nationale, auteur de la Symphonie n° 9 « Du Nouveau Monde », des « Danses slaves » et d'un célèbre concerto pour violoncelle.",
 		"facts": [
 			"Directeur d'un conservatoire américain, il vécut à New York.",
 			"Il intégra à l'orchestre les mélodies populaires de son pays natal."
 		]
 	},
 	"figure-081": {
-		"summary": "Ingénieur qui fit breveter en 1886 une automobile à trois roues dotée d'un moteur à essence.",
+		"summary": "Inventeur allemand qui construisit en 1886 une voiture à trois roues mue par un moteur à essence et obtint le premier brevet automobile au monde.",
 		"facts": [
 			"Sa femme parcourut une centaine de kilomètres au volant pour prouver l'utilité de l'automobile.",
 			"Le « Benz » de la marque Mercedes-Benz, c'est son nom de famille."
 		]
 	},
 	"figure-082": {
-		"summary": "Peintre néerlandais de « La Nuit étoilée » et des tournesols.",
+		"summary": "Peintre postimpressionniste néerlandais de « La Nuit étoilée » et de la série des « Tournesols », aux touches épaisses et aux couleurs intenses.",
 		"facts": [
 			"En un peu plus de dix ans, il laissa plus de 2 000 œuvres.",
 			"Des centaines de lettres échangées avec son frère Theo ont été conservées."
@@ -581,35 +581,35 @@
 		]
 	},
 	"figure-084": {
-		"summary": "Mathématicienne anglaise qui entrevit qu'une machine pourrait faire bien plus que calculer.",
+		"summary": "Mathématicienne anglaise qui, dans ses notes sur la machine analytique de Babbage, prédit que les machines pourraient dépasser les nombres, jusqu'à la musique.",
 		"facts": [
 			"Elle rédigea une procédure de calcul pour la machine analytique de Charles Babbage, ce qui lui vaut d'être appelée la première programmeuse.",
 			"Le langage de programmation Ada, baptisé ainsi en 1979 par le département de la Défense des États-Unis, lui rend hommage."
 		]
 	},
 	"figure-085": {
-		"summary": "Physicien allemand qui découvrit un rayonnement inconnu, qu'il baptisa X faute d'en connaître la nature.",
+		"summary": "Physicien allemand qui découvrit en 1895, en étudiant les tubes cathodiques, les rayons X capables de traverser le papier noir, ouvrant la voie à l'imagerie médicale.",
 		"facts": [
 			"Le cliché de la main de sa femme fut la première image de l'intérieur du corps humain.",
 			"Il reçut en 1901 le premier prix Nobel de physique et ne déposa aucun brevet sur ces rayons."
 		]
 	},
 	"figure-086": {
-		"summary": "Physicien allemand qui prouva par l'expérience que les ondes électromagnétiques existent bel et bien.",
+		"summary": "Physicien allemand qui produisit et détecta des ondes radio grâce à un éclateur, prouvant l'existence des ondes électromagnétiques prédites par Maxwell.",
 		"facts": [
 			"Le hertz (Hz), unité qui sert à indiquer les fréquences de la radio FM, porte son nom.",
 			"Il mourut jeune, à trente-six ans."
 		]
 	},
 	"figure-087": {
-		"summary": "Chirurgien britannique qui, en désinfectant instruments et plaies, fit chuter les décès dus aux infections.",
+		"summary": "Chirurgien britannique qui introduisit l'antisepsie, désinfectant instruments et plaies à l'acide phénique, et fit chuter les décès par infection.",
 		"facts": [
 			"Il trouva l'idée de l'antisepsie dans la théorie des germes de Louis Pasteur.",
 			"Le bain de bouche Listerine porte son nom."
 		]
 	},
 	"figure-088": {
-		"summary": "Poète allemand, auteur de « Faust » et des « Souffrances du jeune Werther ».",
+		"summary": "Poète allemand qui bouleversa l'Europe avec « Les Souffrances du jeune Werther » et mena avec Schiller le classicisme de Weimar.",
 		"facts": [
 			"Il travailla à « Faust » pendant soixante ans.",
 			"Le Goethe-Institut, qui enseigne l'allemand, porte son nom ; il en existe un à Séoul."
@@ -623,91 +623,91 @@
 		]
 	},
 	"figure-090": {
-		"summary": "Érudit de Joseon qui forgea le style calligraphique chusache et laissa le tableau « Sehando ».",
+		"summary": "Calligraphe coréen de la fin de Joseon qui étudia l'épigraphie avec des lettrés Qing et créa un style original mêlant traits épais et fins.",
 		"facts": [
 			"Exilé à Jeju, il peignit « Sehando » pour l'offrir à un disciple.",
 			"En déchiffrant une stèle du mont Bukhansan, il établit qu'il s'agissait d'une stèle d'inspection du roi Jinheung de Silla."
 		]
 	},
 	"figure-091": {
-		"summary": "Architecte qui laissa à Barcelone des édifices tout en courbes, fuyant la ligne droite, comme le parc Güell et la Casa Milà.",
+		"summary": "Architecte espagnol qui laissa à Barcelone des édifices tout en courbes et en mosaïques, comme le parc Güell, la Casa Milà et la Casa Batlló.",
 		"facts": [
 			"La Sagrada Família est toujours en construction, cent ans après sa mort.",
 			"En février 2026, la tour centrale, dédiée à Jésus, a atteint sa hauteur définitive de 172,5 mètres."
 		]
 	},
 	"figure-092": {
-		"summary": "Peintre autrichien du « Baiser », rehaussé de feuille d'or.",
+		"summary": "Peintre autrichien du « Baiser » et du « Portrait d'Adele Bloch-Bauer I », scintillants de feuilles d'or.",
 		"facts": [
 			"Rompant avec le milieu artistique établi, il fonda la Sécession.",
 			"Sa technique de la feuille d'or s'inspire des mosaïques byzantines de Ravenne."
 		]
 	},
 	"figure-093": {
-		"summary": "Physicien allemand qui ouvrit la voie à la théorie quantique en supposant que l'énergie se divise en petits grains.",
+		"summary": "Physicien allemand qui, pour expliquer le rayonnement du corps noir, proposa que l'énergie se divise en quanta, et reçut le prix Nobel de physique 1918.",
 		"facts": [
 			"L'hypothèse qu'il avança en 1900 fut le point de départ de la mécanique quantique.",
 			"Depuis 2019, le kilogramme est défini à partir de la valeur de la constante qui porte son nom."
 		]
 	},
 	"figure-094": {
-		"summary": "Scientifique d'origine polonaise qui découvrit le polonium et le radium, et reçut le prix Nobel dans deux disciplines.",
+		"summary": "Physicienne d'origine polonaise qui découvrit les éléments radioactifs polonium et radium et reçut les prix Nobel de physique et de chimie.",
 		"facts": [
 			"Avec son mari Pierre, elle forgea le mot « radioactivité ».",
 			"Pendant la Première Guerre mondiale, elle envoya au front des voitures radiologiques mobiles."
 		]
 	},
 	"figure-095": {
-		"summary": "Physicien d'origine allemande dont la théorie de la relativité a bouleversé notre conception du temps et de l'espace.",
+		"summary": "Physicien d'origine allemande qui bouleversa les notions d'espace et de temps avec la relativité restreinte et générale et l'équation E=mc².",
 		"facts": [
 			"Il reçut le prix Nobel non pour la relativité, mais pour l'effet photoélectrique.",
 			"Il écrivit ses articles alors qu'il était examinateur à l'Office des brevets."
 		]
 	},
 	"figure-096": {
-		"summary": "Physicien danois qui proposa un modèle d'atome où les électrons ne circulent que sur des orbites bien définies.",
+		"summary": "Physicien danois qui proposa un modèle d'atome où les électrons restent sur des orbites fixes et reçut le prix Nobel de physique 1922.",
 		"facts": [
 			"Il fonda à Copenhague un institut où il forma de jeunes physiciens.",
 			"Il débattit longuement de la mécanique quantique avec Albert Einstein."
 		]
 	},
 	"figure-097": {
-		"summary": "Mathématicien indien qui, sans véritable formation, produisit des milliers de formules.",
+		"summary": "Mathématicien indien qui, presque sans formation, découvrit seul des milliers de formules sur les séries infinies, les partitions d'entiers et bien d'autres sujets.",
 		"facts": [
 			"Une lettre envoyée au mathématicien britannique G. H. Hardy le mena jusqu'à Cambridge.",
 			"Mort à trente-deux ans, il a inspiré le film « L'Homme qui défiait l'infini »."
 		]
 	},
 	"figure-098": {
-		"summary": "Mathématicien britannique qui conçut en théorie la machine à calculer avant qu'elle n'existe.",
+		"summary": "Mathématicien britannique qui imagina une machine abstraite définissant la calculabilité, posant les bases théoriques de l'informatique.",
 		"facts": [
 			"À Bletchley Park, avec ses collègues, il perça le code allemand Enigma.",
 			"Il proposa le test de Turing pour juger si une machine pense, et son visage figure sur le billet britannique de 50 livres."
 		]
 	},
 	"figure-099": {
-		"summary": "Biologiste américaine qui découvrit, chez le maïs, des gènes capables de changer de place.",
+		"summary": "Biologiste américaine qui étudia les grains tachetés du maïs et découvrit les transposons, des gènes capables de se déplacer sur les chromosomes.",
 		"facts": [
 			"Trop en avance sur son temps, elle ne fut pas reconnue lorsqu'elle publia ses travaux.",
 			"En 1983, plus de trente ans après sa découverte, elle reçut seule le prix Nobel de physiologie ou médecine."
 		]
 	},
 	"figure-100": {
-		"summary": "Bactériologiste britannique qui repéra la pénicilline dans une boîte de culture envahie par une moisissure.",
+		"summary": "Médecin britannique qui découvrit en 1928 une substance bactéricide produite par une moisissure, ouvrant la voie à la pénicilline, premier antibiotique.",
 		"facts": [
 			"À son retour de vacances, il constata que les bactéries n'étaient mortes qu'autour de la moisissure.",
 			"En 1945, il partagea le prix Nobel avec Florey et Chain, qui avaient fait de la pénicilline un médicament."
 		]
 	},
 	"figure-101": {
-		"summary": "Deux inventeurs américains qui réussirent le premier vol motorisé en 1903, à Kitty Hawk.",
+		"summary": "Deux inventeurs américains qui réussirent en 1903, près de Kitty Hawk, le premier vol motorisé à bord du Flyer, un avion de leur fabrication.",
 		"facts": [
 			"Ils construisaient leurs avions tout en tenant un magasin de cycles.",
 			"Le premier vol dura douze secondes, sur trente-six mètres."
 		]
 	},
 	"figure-102": {
-		"summary": "Explorateur norvégien qui fut le premier à atteindre le pôle Sud, en 1911.",
+		"summary": "Explorateur norvégien qui atteignit le premier le pôle Sud en 1911, plus d'un mois avant l'expédition de Scott.",
 		"facts": [
 			"Le recours aux traîneaux à chiens fut la clé de son avance sur son rival.",
 			"Il fut aussi le premier à franchir le passage du Nord-Ouest en bateau."
@@ -721,91 +721,91 @@
 		]
 	},
 	"figure-104": {
-		"summary": "Astronaute américain qui fut le premier à poser le pied sur la Lune, en 1969, avec Apollo 11.",
+		"summary": "Astronaute américain qui, commandant d'Apollo 11 en 1969, se posa dans la mer de la Tranquillité et fut le premier homme à marcher sur la Lune.",
 		"facts": [
 			"Il prononça la phrase « C'est un petit pas pour l'homme ».",
 			"Il avait été pilote de l'aéronavale puis pilote d'essai."
 		]
 	},
 	"figure-105": {
-		"summary": "Peintre espagnol qui fonda le cubisme, où le sujet est décomposé selon plusieurs angles puis recomposé.",
+		"summary": "Peintre espagnol qui fonda le cubisme avec Braque et changea le cours de l'art moderne avec « Les Demoiselles d'Avignon ».",
 		"facts": [
 			"Avec « Guernica », il dénonça les horreurs du bombardement.",
 			"Il peignit aussi « Massacre en Corée », consacré à la guerre de Corée."
 		]
 	},
 	"figure-106": {
-		"summary": "Peintre français, chef de file du fauvisme, qui faisait la part belle aux couleurs éclatantes.",
+		"summary": "Peintre français qui mena le fauvisme aux couleurs pures et audacieuses, avec des œuvres comme « La Femme au chapeau » et « La Danse ».",
 		"facts": [
 			"À la fin de sa vie, malade, il travaillait en découpant et en collant des papiers de couleur.",
 			"Il travaillait d'abord dans un cabinet juridique avant de se tourner vers la peinture."
 		]
 	},
 	"figure-107": {
-		"summary": "Peintre mexicaine qui représenta sans relâche la douleur de son accident de la route et son propre visage.",
+		"summary": "Peintre mexicaine qui exprima avec force, dans des autoportraits comme « La Colonne brisée », la douleur de toute une vie après un accident.",
 		"facts": [
 			"Un peu plus d'un tiers de ses œuvres sont des autoportraits.",
 			"Sa vie a inspiré le film « Frida » (2002), avec Salma Hayek dans le rôle-titre."
 		]
 	},
 	"figure-108": {
-		"summary": "Peintre coréen moderne qui représenta des bœufs et des enfants d'un trait épais et vigoureux.",
+		"summary": "Peintre coréen moderne, auteur de puissants taureaux comme « Bœuf blanc » et « Taureau », et d'œuvres disant la nostalgie de sa famille séparée.",
 		"facts": [
 			"Trop pauvre, il dessinait même sur le papier d'aluminium des paquets de cigarettes.",
 			"À Seogwipo, sur l'île de Jeju, où il se réfugia en 1951, une rue et un musée portent son nom."
 		]
 	},
 	"figure-109": {
-		"summary": "Médecin italienne qui a conçu une pédagogie où l'enfant choisit et expérimente par lui-même.",
+		"summary": "Pédagogue italienne qui créa une méthode où l'enfant choisit lui-même son matériel, répandue dans les écoles maternelles du monde entier.",
 		"facts": [
 			"Elle fut l'une des premières femmes médecins d'Italie.",
 			"Elle affina sa méthode en ouvrant une maison des enfants dans un quartier pauvre de Rome."
 		]
 	},
 	"figure-110": {
-		"summary": "Poète bengali devenu, avec « Gitanjali », le premier Asiatique lauréat du prix Nobel de littérature.",
+		"summary": "Poète indien qui devint en 1913 le premier Asiatique lauréat du prix Nobel de littérature, pour son recueil bengali « Gitanjali ».",
 		"facts": [
 			"En 1929, il offrit au quotidien Dong-A Ilbo un court poème comparant la Corée à une « lampe de l'Orient ».",
 			"Les hymnes nationaux de l'Inde et du Bangladesh sont tous deux des chansons de sa plume."
 		]
 	},
 	"figure-111": {
-		"summary": "Écrivain qui a fustigé la vieille Chine avec « La Véritable Histoire d'Ah Q » et « Le Journal d'un fou ».",
+		"summary": "Écrivain chinois qui railla les vieilles mentalités féodales dans le « Journal d'un fou » et « La Véritable Histoire d'Ah Q », ouvrant la littérature chinoise moderne.",
 		"facts": [
 			"Étudiant en médecine, il prit la plume en se disant qu'il guérirait les gens par l'écriture.",
 			"Il s'appelait en réalité Zhou Shuren : le nom sous lequel on le connaît est un pseudonyme."
 		]
 	},
 	"figure-112": {
-		"summary": "Écrivain américain au style sobre et ciselé, auteur du « Vieil Homme et la Mer ».",
+		"summary": "Romancier américain qui écrivit « Le Vieil Homme et la Mer », « L'Adieu aux armes » et « Pour qui sonne le glas » d'une prose brève et sèche.",
 		"facts": [
 			"Il fut ambulancier pendant la Première Guerre mondiale, puis correspondant de guerre pendant la Seconde.",
 			"Il a reçu à la fois le prix Nobel de littérature et le prix Pulitzer."
 		]
 	},
 	"figure-113": {
-		"summary": "Romancier et aviateur français, auteur du « Petit Prince ».",
+		"summary": "Romancier français, auteur du « Petit Prince » ainsi que de « Vol de nuit » et de « Terre des hommes », tirés de sa vie d'aviateur.",
 		"facts": [
 			"Pilote de l'Aéropostale, il a survolé le désert et la Cordillère des Andes.",
 			"Parti en mission de reconnaissance, il disparut au-dessus de la Méditerranée."
 		]
 	},
 	"figure-114": {
-		"summary": "Jeune fille juive qui, dans le journal reçu pour ses 13 ans, raconta plus de deux ans de vie dans la clandestinité.",
+		"summary": "Écrivaine juive née en Allemagne dont le journal de sa vie cachée face aux nazis est devenu l'un des témoignages les plus célèbres de la Shoah.",
 		"facts": [
 			"Huit personnes se cachaient dans l'annexe d'un immeuble d'Amsterdam ; seul son père a survécu.",
 			"Publié par son père en 1947, son journal a depuis été traduit dans plus de 70 langues."
 		]
 	},
 	"figure-115": {
-		"summary": "Militante américaine, aveugle et sourde, qui obtint un diplôme universitaire et défendit les droits des personnes handicapées.",
+		"summary": "Militante américaine, première personne sourde et aveugle diplômée d'une licence, qui défendit les droits des handicapés avec son autobiographie Sourde, muette, aveugle.",
 		"facts": [
 			"Elle apprit à communiquer avec son institutrice Anne Sullivan, qui lui traçait les lettres dans la paume.",
 			"Le chien qu'on lui offrit au Japon en 1937 fut le premier akita à traverser l'océan."
 		]
 	},
 	"figure-116": {
-		"summary": "Avocat indien qui lutta 21 ans contre les discriminations en Afrique du Sud avant de mener chez lui un mouvement d'indépendance non violent.",
+		"summary": "Militant indien qui ébranla la domination britannique par la résistance non violente qu'il appelait satyagraha et par le mouvement Quit India de 1942.",
 		"facts": [
 			"En 1930, pour protester contre l'impôt sur le sel, il marcha environ 390 kilomètres pendant 24 jours.",
 			"Son visage figure aujourd'hui au recto des billets de roupie indienne."
@@ -840,7 +840,7 @@
 		]
 	},
 	"figure-121": {
-		"summary": "Militant de l'indépendance à la tête du gouvernement provisoire de la République de Corée, auteur du « Baekbeom ilji ».",
+		"summary": "Militant indépendantiste coréen qui, président du gouvernement provisoire, créa l'Armée de libération coréenne et écrivit ses mémoires Baekbeom Ilji.",
 		"facts": [
 			"Il fonda l'Organisation patriotique coréenne et commandita les attentats de Lee Bong-chang et de Yun Bong-gil.",
 			"En 1949, il fut abattu par Ahn Doo-hee dans sa résidence de Gyeonggyojang."
@@ -854,28 +854,28 @@
 		]
 	},
 	"figure-123": {
-		"summary": "Roi de Macédoine monté sur le trône à 20 ans, qui poussa ses conquêtes de la Grèce jusqu'à l'Inde.",
+		"summary": "Conquérant macédonien antique qui abattit l'Empire perse à la bataille de Gaugamèles et étendit son royaume jusqu'à l'Indus.",
 		"facts": [
 			"Il fonda une vingtaine de villes portant son nom, dont Alexandrie en Égypte.",
 			"Élève d'Aristote, il mourut subitement de maladie à Babylone, à 32 ans."
 		]
 	},
 	"figure-124": {
-		"summary": "Général qui soumit la Gaule et franchit le Rubicon pour devenir le premier homme de Rome.",
+		"summary": "Général romain qui conquit la Gaule en huit ans de campagne, la raconta dans ses Commentaires sur la guerre des Gaules et devint dictateur à vie.",
 		"facts": [
 			"Selon la tradition, il aurait lancé « Le sort en est jeté » en franchissant le Rubicon à la tête de son armée.",
 			"Le mois de juillet (July en anglais) tient son nom de lui, et le calendrier qu'il réforma resta en usage en Europe plus de 1 600 ans."
 		]
 	},
 	"figure-125": {
-		"summary": "Dernière souveraine de l'Égypte pharaonique, qui s'allia à deux hommes forts de Rome pour sauver son royaume.",
+		"summary": "Dernière pharaonne de l'Égypte antique, alliée tour à tour à César et à Marc Antoine pour maintenir 21 ans la dynastie ptolémaïque au pouvoir.",
 		"facts": [
 			"D'après Plutarque, elle fut la première de sa dynastie à apprendre la langue égyptienne.",
 			"Après la défaite d'Actium, elle se donna la mort et l'Égypte devint une province romaine."
 		]
 	},
 	"figure-126": {
-		"summary": "Général carthaginois qui franchit les Alpes avec ses éléphants et mena ses troupes jusqu'aux portes de Rome.",
+		"summary": "Général carthaginois qui, pendant la deuxième guerre punique, fit franchir les Alpes à ses éléphants et combattit 15 ans en Italie.",
 		"facts": [
 			"À la bataille de Cannes, il encercla et anéantit une armée romaine presque deux fois plus nombreuse.",
 			"Cette manœuvre d'encerclement est encore enseignée dans les écoles militaires."
@@ -889,140 +889,140 @@
 		]
 	},
 	"figure-128": {
-		"summary": "Professeure de mathématiques et d'astronomie à Alexandrie, plus ancienne mathématicienne dont la vie nous soit bien connue.",
+		"summary": "Mathématicienne de l'Égypte antique qui dirigea l'école néoplatonicienne d'Alexandrie et y enseigna mathématiques et astronomie.",
 		"facts": [
 			"Elle révisa le livre III de l'« Almageste » de Ptolémée et commenta l'œuvre de Diophante.",
 			"En 415, prise dans la lutte de pouvoir entre le préfet et l'évêque, elle fut tuée par une foule chrétienne."
 		]
 	},
 	"figure-129": {
-		"summary": "Médecin romain qui apprit l'anatomie en soignant des gladiateurs et fit autorité dans la médecine européenne pendant plus de 1 300 ans.",
+		"summary": "Médecin romain qui, en disséquant singes et porcs, montra le rôle des nerfs et des artères et fit autorité dans la médecine européenne plus de 1 300 ans.",
 		"facts": [
 			"Né à Pergame, dans l'actuelle Turquie, il devint le médecin personnel de l'empereur romain.",
 			"Tirées de dissections d'animaux, ses connaissances comportaient bien des erreurs, mais elles ne furent guère remises en cause avant André Vésale."
 		]
 	},
 	"figure-130": {
-		"summary": "Homme d'État athénien qui fit bâtir le Parthénon et porta la démocratie à son apogée.",
+		"summary": "Homme d'État de l'Athènes antique qui fit bâtir le Parthénon et, grâce au trésor de la ligue de Délos, ouvrit l'âge d'or de la démocratie.",
 		"facts": [
 			"Il fit verser une indemnité journalière aux jurés pour que même les citoyens pauvres puissent siéger aux procès.",
 			"Il mourut de l'épidémie qui frappa Athènes pendant la guerre contre Sparte."
 		]
 	},
 	"figure-131": {
-		"summary": "Fondateur de l'Empire perse, qui unifia l'Orient tout en laissant les peuples conquis libres de leur foi.",
+		"summary": "Roi perse antique qui conquit tour à tour la Médie, la Lydie et l'Empire néo-babylonien pour fonder l'Empire achéménide.",
 		"facts": [
 			"Selon la Bible, il permit aux Juifs captifs à Babylone de rentrer chez eux.",
 			"Depuis 1971, une réplique du cylindre d'argile portant sa proclamation est exposée au siège de l'ONU."
 		]
 	},
 	"figure-132": {
-		"summary": "Empereur qui, le premier, réunit en un seul État les sept royaumes rivaux.",
+		"summary": "Premier souverain à unifier la Chine, qui soumit les six autres Royaumes combattants et fit relier d'anciens remparts pour former la Grande Muraille.",
 		"facts": [
 			"Il unifia l'écriture, les poids et mesures, et jusqu'à l'écartement des essieux des chars.",
 			"On estime que plus de 8 000 soldats de terre cuite grandeur nature sont enterrés dans les fosses voisines de son tombeau."
 		]
 	},
 	"figure-133": {
-		"summary": "Chancelier qui, convaincu par trois visites successives de son seigneur, sortit de sa retraite pour devenir le pilier du royaume de Shu.",
+		"summary": "Chancelier du Shu Han chinois qui noua l'alliance avec Sun Quan menant à la bataille de la Falaise rouge, puis présenta son Chu Shi Biao et mena cinq expéditions vers le nord.",
 		"facts": [
 			"Dès sa chaumière, il avait exposé un plan de partage de l'empire en trois.",
 			"Selon la légende, les mantou seraient nés le jour où, pour un sacrifice, il fit modeler des têtes en pâte de farine à la place de têtes humaines."
 		]
 	},
 	"figure-134": {
-		"summary": "Penseur pour qui l'homme est naturellement bon et le peuple plus précieux que le souverain.",
+		"summary": "Penseur confucéen chinois des Royaumes combattants qui enseigna la bonté innée de la nature humaine et prôna un gouvernement bienveillant fondé sur le peuple.",
 		"facts": [
 			"Pour illustrer cette bonté innée, il disait que quiconque voit un enfant sur le point de tomber dans un puits se précipite aussitôt.",
 			"L'histoire de sa mère, qui déménagea trois fois pour bien l'élever, est restée célèbre sous le nom des « trois déménagements de la mère de Mencius »."
 		]
 	},
 	"figure-135": {
-		"summary": "Général du royaume de Wu à qui l'on attribue « L'Art de la guerre », pour qui la victoire suprême est de vaincre sans combattre.",
+		"summary": "Général du royaume de Wu à l'époque des Printemps et Automnes, à qui l'on attribue L'Art de la guerre, traité en 13 chapitres qui place au-dessus de tout la victoire sans combat.",
 		"facts": [
 			"On y trouve la maxime : « Qui connaît l'ennemi et se connaît lui-même ne sera jamais en péril, même en cent batailles. »",
 			"Chargé d'entraîner les dames de la cour du roi de Wu, il aurait fait décapiter les deux favorites du roi qui ne faisaient que rire."
 		]
 	},
 	"figure-136": {
-		"summary": "Penseur qui prêchait un amour universel, sans distinction entre les siens et les autres, et parcourait le pays pour empêcher les guerres d'agression.",
+		"summary": "Penseur chinois des Royaumes combattants qui fonda une école prônant l'amour universel sans distinction et le refus des guerres d'agression.",
 		"facts": [
 			"Avec ses disciples, il maîtrisait l'art de défendre les places fortes et se rangeait aux côtés des États faibles attaqués.",
 			"Son école rivalisa un temps avec le confucianisme, puis disparut après la dynastie Qin."
 		]
 	},
 	"figure-137": {
-		"summary": "Poète du royaume de Chu qui, banni pour s'être inquiété du sort de son pays, se jeta dans un fleuve.",
+		"summary": "Poète du royaume de Chu, en Chine des Royaumes combattants, qui exprima son inquiétude pour son pays dans le Li Sao et le Tianwen, au cœur des Chants de Chu.",
 		"facts": [
 			"Le « Li Sao », dans les « Chants de Chu », est un long poème de la Chine antique de 373 vers et près de 2 500 caractères.",
 			"On dit que la coutume de jeter du riz gluant dans le fleuve et de faire courir des bateaux-dragons lors de la fête de Duanwu vient des efforts pour le repêcher."
 		]
 	},
 	"figure-138": {
-		"summary": "Poète de la dynastie Tang qui chantait le vin et la lune, surnommé l'« Immortel de la poésie ».",
+		"summary": "Poète chinois des Tang surnommé l'Immortel de la poésie pour ses vers fougueux, comme Pensées par une nuit calme, sur la lune et le mal du pays, ou Que vienne le vin.",
 		"facts": [
 			"Il a laissé plus de mille poèmes et était célèbre pour composer d'un seul jet.",
 			"La légende veut qu'il se soit noyé en voulant attraper le reflet de la lune dans le fleuve."
 		]
 	},
 	"figure-139": {
-		"summary": "Poète de la dynastie Tang qui consigna la vie du peuple éprouvé par la guerre, surnommé le « Saint de la poésie ».",
+		"summary": "Poète chinois des Tang surnommé le Sage de la poésie pour avoir dépeint, dans des poèmes comme L'Officier de Shihao, les souffrances du peuple pendant la révolte d'An Lushan.",
 		"facts": [
 			"« Le pays est en ruine, mais les montagnes et les fleuves demeurent » ouvre « Vue de printemps », écrit à Chang'an en pleine guerre civile.",
 			"En 1481, sous le roi Seongjong de Joseon, parut le « Dusi eonhae », traduction de ses poèmes en hangeul."
 		]
 	},
 	"figure-140": {
-		"summary": "Maître calligraphe des Jin orientaux, surnommé le « Saint de la calligraphie » pour avoir élevé l'écriture au rang d'art.",
+		"summary": "Calligraphe chinois des Jin orientaux qui perfectionna les écritures régulière, courante et cursive, fixa le modèle de la calligraphie et fut surnommé le Sage de la calligraphie.",
 		"facts": [
 			"Son œuvre la plus célèbre est la « Préface au recueil du pavillon des Orchidées », écrite lors d'une réunion entre amis à Lanting.",
 			"L'original aurait été enterré avec l'empereur Taizong des Tang : il n'en reste aujourd'hui que des copies."
 		]
 	},
 	"figure-141": {
-		"summary": "Général issu de la famille royale de Gaya qui mena Silla à l'unification des Trois Royaumes.",
+		"summary": "Général de Silla qui brisa à Hwangsanbeol en 660 la dernière résistance de Gyebaek, abattit le Baekje et mena l'unification des Trois Royaumes de Corée.",
 		"facts": [
 			"Formé parmi les hwarang, il abattit successivement Baekje puis Goguryeo aux côtés des rois Muyeol et Munmu.",
 			"Mort pendant la guerre entre Silla et les Tang, il reçut à titre posthume le titre de « grand roi Heungmu », un honneur rare pour un sujet."
 		]
 	},
 	"figure-142": {
-		"summary": "Lettré de Silla parti à 12 ans en Chine des Tang, où il réussit les examens impériaux.",
+		"summary": "Lettré de Silla reçu à l'examen des Tang pour étrangers, auteur du recueil Gyewon Pilgyeong et considéré comme le père de la littérature coréenne en chinois classique.",
 		"facts": [
 			"On raconte que le chef rebelle Huang Chao, en lisant la « Proclamation contre Huang Chao », tomba de sa chaise de saisissement.",
 			"Il présenta à la reine Jinseong une dizaine de propositions de réforme et fut élevé au rang d'achan, mais finit par se retirer au temple Haeinsa, sur le mont Gaya."
 		]
 	},
 	"figure-143": {
-		"summary": "Fondateur de l'Empire mongol, qui unifia les tribus de la steppe et fut proclamé souverain suprême en 1206.",
+		"summary": "Conquérant mongol qui unifia les tribus de la steppe et, frappant les Xia occidentaux, les Jin et le Khwarezm, fonda l'Empire mongol.",
 		"facts": [
 			"Il organisa son armée en unités de dix, cent et mille hommes, et le réseau de relais qu'il créa s'étendit à tout l'empire sous son fils.",
 			"Il fit adopter l'écriture ouïghoure par les Mongols, qui n'avaient pas d'écriture, afin de mettre les lois par écrit."
 		]
 	},
 	"figure-144": {
-		"summary": "Cinquième souverain suprême des Mongols, qui fonda la dynastie Yuan en Chine et fit de Dadu (l'actuelle Pékin) sa capitale.",
+		"summary": "Cinquième empereur mongol, qui fonda la dynastie Yuan en 1271 et anéantit les Song du Sud en 1279 pour régner sur toute la Chine.",
 		"facts": [
 			"Il aurait gardé Marco Polo à sa cour à son service pendant de longues années.",
 			"Il donna sa fille en mariage au roi Chungnyeol de Goryeo et, avec des troupes de Goryeo, attaqua par deux fois le Japon, sans succès."
 		]
 	},
 	"figure-145": {
-		"summary": "Moine de la dynastie Tang qui traversa seul le désert jusqu'en Inde pour en rapporter les écritures saintes.",
+		"summary": "Moine chinois des Tang qui étudia au monastère indien de Nalanda et, à son retour, écrivit le récit de voyage Mémoires sur les contrées occidentales.",
 		"facts": [
 			"Revenu au bout de 17 ans avec 657 textes bouddhiques, il les traduisit jusqu'à sa mort.",
 			"Son voyage, enjolivé, a donné naissance au moine Tripitaka du « Voyage vers l'Ouest »."
 		]
 	},
 	"figure-146": {
-		"summary": "Religieux italien, fils de riche marchand, qui renonça à tous ses biens pour embrasser la pauvreté.",
+		"summary": "Religieux italien qui fonda l'ordre des Frères mineurs voué à la pauvreté et composa le Cantique des créatures, où le soleil est appelé frère.",
 		"facts": [
 			"La ville américaine de San Francisco tient son nom d'une mission qui lui était dédiée.",
 			"Le pape François, élu en 2013, a choisi son nom en hommage."
 		]
 	},
 	"figure-147": {
-		"summary": "Abbesse d'un monastère des bords du Rhin au XIIe siècle, qui mit ses visions par écrit et composa des chants sacrés.",
+		"summary": "Compositrice et abbesse allemande du Moyen Âge qui consigna ses visions dans le Scivias et fonda le couvent du Rupertsberg sur le Rhin.",
 		"facts": [
 			"On conserve 69 de ses chants ainsi que la partition d'une œuvre considérée comme le plus ancien drame moral.",
 			"Elle écrivit aussi deux livres sur les plantes médicinales et les maladies."
@@ -1036,7 +1036,7 @@
 		]
 	},
 	"figure-149": {
-		"summary": "Poète qui chanta son amour pour Laure dans ses sonnets et ouvrit la voie à la Renaissance.",
+		"summary": "Poète italien dont le Canzoniere, 366 poèmes d'amour pour Laure, répandit le sonnet dans toute l'Europe.",
 		"facts": [
 			"Infatigable chasseur de manuscrits antiques oubliés, il est surnommé le père de l'humanisme.",
 			"L'idée que les mille ans qui suivirent Rome furent un âge obscur remonte à lui."
@@ -1050,49 +1050,49 @@
 		]
 	},
 	"figure-151": {
-		"summary": "Théologien de Prague, brûlé vif pour avoir dénoncé les dérives de l'Église un siècle avant Martin Luther.",
+		"summary": "Réformateur religieux tchèque qui dénonça la vente des indulgences et le pouvoir papal, et fut brûlé vif par le concile de Constance en 1415.",
 		"facts": [
 			"Il prêchait en tchèque et passe pour l'auteur du traité d'orthographe à l'origine du háček (ˇ).",
 			"Les guerres menées par ses partisans durèrent près de 15 ans."
 		]
 	},
 	"figure-152": {
-		"summary": "Polémiste médiéval qui fit entrer la logique dans la théologie, estimant que la foi elle-même doit être questionnée.",
+		"summary": "Philosophe français du Moyen Âge, célèbre à Paris pour avoir proposé, dans la querelle des universaux, un conceptualisme entre réalisme et nominalisme.",
 		"facts": [
 			"Ses lettres échangées avec son élève Héloïse sont restées l'un des plus célèbres témoignages amoureux du Moyen Âge.",
 			"Sa méthode, qui confronte les arguments pour et contre, a inspiré l'enseignement universitaire."
 		]
 	},
 	"figure-153": {
-		"summary": "Lettré de Goryeo qui suivit le roi Chungseon à la bibliothèque Mangwondang des Yuan et y fréquenta les savants chinois.",
+		"summary": "Lettré de Goryeo, auteur du Yeogong Paeseol, recueil d'anecdotes et de critique poétique, qui diffusa le néoconfucianisme après avoir fréquenté des savants Yuan.",
 		"facts": [
 			"Il a laissé le « Soakbu », où il transposa 17 chansons populaires de Goryeo en quatrains chinois classiques de sept caractères.",
 			"Son portrait, peint par l'artiste Yuan Chen Jianru, est classé trésor national."
 		]
 	},
 	"figure-154": {
-		"summary": "Lettré qui recopia les ouvrages de Zhu Xi chez les Yuan et fut le premier à introduire le néoconfucianisme à Goryeo.",
+		"summary": "Lettré confucéen de Goryeo qui recopia de sa main les écrits de Zhu Xi chez les Yuan, rapporta des portraits de Confucius et de Zhu Xi et introduisit le néoconfucianisme en Corée.",
 		"facts": [
 			"Il créa une bourse d'études, le seomhakjeon, pour relancer l'académie nationale en déclin.",
 			"Sosu seowon, la première académie confucéenne de Corée, lui rend hommage ; elle a été inscrite au patrimoine mondial en 2019."
 		]
 	},
 	"figure-155": {
-		"summary": "Fidèle serviteur de Goryeo qui refusa jusqu'au bout la nouvelle dynastie et fut assassiné sur le pont Seonjuk.",
+		"summary": "Homme d'État de la fin de Goryeo qui ramena du Japon des milliers de captifs enlevés par les pirates et fonda cinq écoles à Gaeseong, la capitale.",
 		"facts": [
 			"Le « Chant du cœur loyal », qui commence par « Que ce corps meure et meure encore », passe pour être sa réponse.",
 			"Grand connaisseur du néoconfucianisme, il est considéré comme le fondateur de l'école de la raison (理學) en Corée."
 		]
 	},
 	"figure-156": {
-		"summary": "Marin génois qui traversa l'Atlantique, persuadé d'atteindre l'Inde en naviguant vers l'ouest.",
+		"summary": "Explorateur italien né à Gênes qui traversa quatre fois l'Atlantique et ouvrit la route maritime reliant l'Europe aux Amériques.",
 		"facts": [
 			"Avec le soutien de la couronne espagnole, il partit avec trois navires et aborda en 1492 une île des Indes occidentales.",
 			"Jusqu'à sa mort, il crut avoir atteint l'Inde : c'est pourquoi les peuples autochtones sont encore appelés « Indiens »."
 		]
 	},
 	"figure-157": {
-		"summary": "Navigateur portugais à la tête de la première flotte à avoir fait le tour du monde.",
+		"summary": "Explorateur portugais qui, soutenu par le roi d'Espagne, mena une flotte de cinq navires dans le premier voyage autour du monde.",
 		"facts": [
 			"Sorti du détroit à la pointe de l'Amérique du Sud, il baptisa « Pacifique » l'océan calme qui s'ouvrait devant lui.",
 			"Lui-même périt au combat aux Philippines ; seuls un navire et 18 hommes revinrent."
@@ -1113,14 +1113,14 @@
 		]
 	},
 	"figure-160": {
-		"summary": "Chef de file de la seconde vague de la Réforme, qui défendit la prédestination depuis Genève.",
+		"summary": "Réformateur français qui fit de Genève le foyer de l'Église réformée et enseigna la prédestination, à l'origine du presbytérianisme.",
 		"facts": [
 			"Avec l'« Institution de la religion chrétienne », il donna à la théologie protestante un exposé systématique.",
 			"Sa doctrine se répandit aux Pays-Bas, en Écosse et aux États-Unis."
 		]
 	},
 	"figure-161": {
-		"summary": "Humaniste originaire de Rotterdam qui, dans l'« Éloge de la folie », se moqua aussi bien de l'Église que des savants.",
+		"summary": "Savant néerlandais surnommé le prince des humanistes, qui railla l'hypocrisie des clercs et des savants dans l'Éloge de la folie.",
 		"facts": [
 			"Son édition du Nouveau Testament établie d'après le texte grec contribua à allumer la Réforme.",
 			"Il s'opposa pourtant vivement à Martin Luther sur la question du libre arbitre."
@@ -1134,49 +1134,49 @@
 		]
 	},
 	"figure-163": {
-		"summary": "Fonctionnaire florentin longtemps honni pour avoir préféré au prince vertueux le prince qui protège l'État.",
+		"summary": "Diplomate de la République florentine dont Le Prince, analyse froide des réalités du pouvoir, ouvrit la voie à la science politique moderne.",
 		"facts": [
 			"Dans « Le Prince », il écrit qu'il est plus sûr d'être craint que d'être aimé.",
 			"Lui-même était pourtant républicain ; chassé de ses fonctions, il écrivit à la campagne."
 		]
 	},
 	"figure-164": {
-		"summary": "Dernière souveraine de la dynastie Tudor, restée célibataire toute sa vie, qui ouvrit l'âge d'or de l'Angleterre.",
+		"summary": "Dernière souveraine Tudor d'Angleterre, qui établit durablement l'Église anglicane et présida à l'âge d'or où brilla Shakespeare.",
 		"facts": [
 			"Elle vainquit la flotte espagnole surnommée l'Invincible Armada.",
 			"L'État américain de Virginie doit son nom à celle qu'on appelait la « Reine vierge »."
 		]
 	},
 	"figure-165": {
-		"summary": "Anatomiste qui disséqua lui-même des corps humains et corrigea les erreurs d'un manuel de médecine vieux de mille ans.",
+		"summary": "Médecin bruxellois surnommé le père de l'anatomie moderne, qui enseignait à l'université de Padoue en disséquant lui-même devant ses élèves.",
 		"facts": [
 			"Grâce à la précision de ses planches, « La Fabrique du corps humain » servit de modèle aux atlas anatomiques ultérieurs.",
 			"Ses maîtres lui en voulurent d'avoir contredit Galien."
 		]
 	},
 	"figure-166": {
-		"summary": "Peintre italien qui modelait les formes par la couleur plutôt que par le trait, portant l'école vénitienne à son sommet.",
+		"summary": "Peintre italien qui porta à son sommet la peinture vénitienne fondée sur la couleur, avec l'Assomption de la Vierge ou la Vénus d'Urbin.",
 		"facts": [
 			"Empereurs et papes se disputaient ses portraits.",
 			"Il vécut jusqu'à près de 90 ans sans jamais lâcher le pinceau."
 		]
 	},
 	"figure-167": {
-		"summary": "Peintre né en Crète qui représenta Tolède avec des figures étirées et une lumière froide.",
+		"summary": "Peintre né en Crète qui s'illustra à Tolède par ses figures allongées et sa lumière froide, comme dans L'Enterrement du comte d'Orgaz.",
 		"facts": [
 			"Son nom, un surnom mêlant espagnol et italien, signifie « le Grec ».",
 			"Jugé bizarre et délaissé de son vivant, il fut redécouvert 300 ans plus tard par les peintres expressionnistes."
 		]
 	},
 	"figure-168": {
-		"summary": "Médecin itinérant qui exhortait à apprendre auprès des mineurs et des barbiers plutôt que dans les vieux livres.",
+		"summary": "Médecin suisse qui aurait le premier donné son nom au zinc et écrivit un ouvrage sur les maladies des mineurs et les effets des métaux sur le corps.",
 		"facts": [
 			"On lui doit la maxime : « Tout est poison, rien n'est sans poison ; seule la dose fait le poison. »",
 			"En soignant les maladies par les métaux et les minéraux, il fit entrer la chimie dans la médecine."
 		]
 	},
 	"figure-169": {
-		"summary": "Ancien moine conteur qui, à travers les aventures burlesques d'un géant et de son fils, tourna en ridicule l'Église et l'école tout entières.",
+		"summary": "Romancier français de la Renaissance qui satirisa l'Église et l'école dans Pantagruel et Gargantua, aventures burlesques d'un père et d'un fils géants.",
 		"facts": [
 			"En 1543, la faculté de théologie de la Sorbonne condamna et interdit deux de ses livres de géants.",
 			"Le mot anglais gargantuan (« colossal ») vient de son géant Gargantua."
@@ -1190,21 +1190,21 @@
 		]
 	},
 	"figure-171": {
-		"summary": "Peintre flamand qui, avec des pigments liés à l'huile, rendit jusqu'au grain du verre et de la fourrure.",
+		"summary": "Peintre flamand qui acheva le retable de Gand, L'Adoration de l'Agneau mystique, et porta la peinture à l'huile à un niveau inédit.",
 		"facts": [
 			"Dans « Les Époux Arnolfini », de minuscules personnages se reflètent dans le miroir convexe.",
 			"Au-dessus de ce miroir, il a inscrit « Jan van Eyck fut ici »."
 		]
 	},
 	"figure-172": {
-		"summary": "Peintre d'un enfer où grouillent monstres, œufs et instruments de musique, resté une énigme depuis 500 ans.",
+		"summary": "Peintre néerlandais qui peupla de monstres et de créatures étranges des œuvres comme Le Chariot de foin et La Tentation de saint Antoine.",
 		"facts": [
 			"Volets fermés, « Le Jardin des délices » laisse apparaître une Terre grise.",
 			"On ne lui connaît qu'environ 25 tableaux, et pas une seule lettre."
 		]
 	},
 	"figure-173": {
-		"summary": "Portraitiste qui fixa pour la postérité les visages du roi et de ses courtisans à la cour d'Henri VIII.",
+		"summary": "Peintre allemand qui fut peintre de cour d'Henri VIII et laissa de célèbres portraits de Thomas More et d'Érasme.",
 		"facts": [
 			"Dans « Les Ambassadeurs », la tache déformée en bas du tableau devient un crâne quand on la regarde de biais.",
 			"Henri VIII épousa Anne de Clèves sur la foi de son portrait, et s'en sépara au bout de six mois."
@@ -1218,14 +1218,14 @@
 		]
 	},
 	"figure-175": {
-		"summary": "Prédicateur qui ébranla Florence pendant quatre ans en appelant à brûler le luxe.",
+		"summary": "Frère dominicain italien qui dirigea à Florence une république théocratique après l'expulsion des Médicis, fustigeant le luxe et la corruption de l'Église.",
 		"facts": [
 			"Il organisa le « bûcher des vanités », où miroirs, tableaux et livres furent entassés et incendiés sur la place publique.",
 			"Entré en conflit avec le pape, il fut pendu puis brûlé sur cette même place."
 		]
 	},
 	"figure-176": {
-		"summary": "Sultan qui mena l'Empire ottoman à son apogée, étendant ses conquêtes jusqu'à assiéger Vienne.",
+		"summary": "Sultan ottoman qui écrasa la Hongrie à la bataille de Mohács et domina la Méditerranée, menant l'empire à son apogée.",
 		"facts": [
 			"En Turquie, on le surnomme « Kanuni » (le Législateur) pour avoir réorganisé les lois.",
 			"Il composait des poèmes, apprit l'orfèvrerie et laissa à Istanbul une mosquée célèbre."
@@ -1239,35 +1239,35 @@
 		]
 	},
 	"figure-178": {
-		"summary": "Monarque absolu de France qui fit bâtir Versailles et régna plus de 72 ans.",
+		"summary": "Monarque français qui fit construire Versailles, régna plus de 72 ans et acheva la monarchie absolue en attachant la noblesse à sa cour.",
 		"facts": [
 			"Aucun document fiable n'atteste qu'il ait réellement prononcé « L'État, c'est moi ».",
 			"En 1653, il dansa le rôle du dieu solaire Apollon dans un ballet, ce qui fonda son image de Roi-Soleil."
 		]
 	},
 	"figure-179": {
-		"summary": "Souverain réformateur russe qui partit incognito en Europe occidentale apprendre à construire des navires.",
+		"summary": "Tsar réformateur russe qui vainquit la Suède lors de la guerre du Nord et créa une marine, hissant son pays au rang des puissances européennes.",
 		"facts": [
 			"Il fonda sur des marécages une nouvelle capitale, Saint-Pétersbourg.",
 			"Il taxa la longue barbe des nobles pour imposer la tenue à l'occidentale."
 		]
 	},
 	"figure-180": {
-		"summary": "Général puritain qui fit décapiter le roi et gouverna un temps une Angleterre sans monarque.",
+		"summary": "Militaire anglais qui mena les forces du Parlement pendant la guerre civile, fit exécuter Charles Ier et gouverna le pays comme lord-protecteur.",
 		"facts": [
 			"Il réorganisa la cavalerie et écrasa l'armée royale.",
 			"Après sa mort, au retour de la monarchie, son corps fut exhumé pour être exécuté une seconde fois."
 		]
 	},
 	"figure-181": {
-		"summary": "Philosophe polisseur de lentilles qui, chassé de la communauté juive, affirma que Dieu et la Nature ne font qu'un.",
+		"summary": "Philosophe néerlandais qui défendit la liberté de penser et de s'exprimer dans son Traité théologico-politique et développa une vision panthéiste.",
 		"facts": [
 			"Il rédigea l'« Éthique » à la manière d'un manuel de géométrie, avec définitions et démonstrations.",
 			"Il refusa une chaire universitaire et gagna sa vie en polissant des lentilles."
 		]
 	},
 	"figure-182": {
-		"summary": "Penseur anglais considéré comme le père du libéralisme, pour qui l'esprit humain naît comme une page blanche.",
+		"summary": "Philosophe anglais qui soutint dans l'Essai sur l'entendement humain que l'esprit naît table rase, posant les bases de l'empirisme.",
 		"facts": [
 			"Il écrivit qu'un gouvernement incapable de protéger la vie, la liberté et la propriété des citoyens peut être renversé.",
 			"La formule « longue suite d'abus » de la Déclaration d'indépendance américaine est reprise mot pour mot de ses « Deux Traités du gouvernement »."
@@ -1281,63 +1281,63 @@
 		]
 	},
 	"figure-184": {
-		"summary": "Mathématicien et philosophe allemand qui inventa le calcul infinitésimal indépendamment d'Isaac Newton.",
+		"summary": "Mathématicien et philosophe allemand qui créa le calcul infinitésimal indépendamment de Newton, construisit une machine à multiplier et diviser et proposa la monadologie.",
 		"facts": [
 			"Le signe d'intégrale et la notation dx que nous utilisons aujourd'hui sont de lui.",
 			"En perfectionnant le système binaire, qui écrit les nombres avec des 0 et des 1, il posa les bases du calcul informatique."
 		]
 	},
 	"figure-185": {
-		"summary": "Mathématicien français qui, à 18 ans, inventa une machine à calculer pour aider son père dans ses calculs d'impôts.",
+		"summary": "Mathématicien français qui construisit à 18 ans une machine à calculer à engrenages et montra que la pression d'un fluide se transmet également dans toutes les directions.",
 		"facts": [
 			"L'hectopascal (hPa), unité de pression atmosphérique des bulletins météo, vient de son nom.",
 			"Après sa mort à 39 ans parurent ses « Pensées », où figure le « roseau pensant »."
 		]
 	},
 	"figure-186": {
-		"summary": "Juriste français qui nota en marge d'un livre que cette marge était trop étroite pour contenir sa démonstration.",
+		"summary": "Juriste et mathématicien français qui posa les bases du calcul des probabilités dans ses lettres avec Pascal et développa indépendamment la géométrie analytique.",
 		"facts": [
-			"Cette simple ligne a tenu les mathématiciens en haleine pendant 358 ans.",
+			"Une simple note en marge d'un livre, disant que la marge était trop étroite pour la démonstration, a tenu les mathématiciens en haleine pendant 358 ans.",
 			"En 1994, Andrew Wiles en est enfin venu à bout."
 		]
 	},
 	"figure-187": {
-		"summary": "Chimiste qui a donné son nom à la loi selon laquelle le volume d'un gaz est inversement proportionnel à sa pression.",
+		"summary": "Chimiste irlandais, souvent appelé le père de la chimie moderne, qui établit que le volume d'un gaz est inversement proportionnel à sa pression.",
 		"facts": [
 			"Né en Irlande, il mena ses expériences à Oxford à l'aide d'une pompe à vide.",
 			"Il écrivit « Le Chimiste sceptique », qui sépara la chimie de l'alchimie."
 		]
 	},
 	"figure-188": {
-		"summary": "Médecin qui démontra par le calcul que le sang fait le tour du corps et revient à son point de départ.",
+		"summary": "Médecin anglais qui prouva dans De motu cordis que le cœur fait circuler le sang dans tout le corps.",
 		"facts": [
 			"Il calcula que le cœur expulse en une demi-heure plus de sang que n'en contient le corps entier.",
 			"L'explication de Galien, en vigueur depuis 1 400 ans, s'effondra ainsi."
 		]
 	},
 	"figure-189": {
-		"summary": "Peintre de cour qui, en jouant sur les miroirs et les regards, attire le spectateur à l'intérieur du tableau.",
+		"summary": "Peintre de cour espagnol de Philippe IV, auteur de La Reddition de Bréda et du Portrait du pape Innocent X.",
 		"facts": [
 			"« Les Ménines » réunissent sur une même toile le peintre lui-même et le couple royal.",
 			"Il peignait nains et bouffons à la même hauteur de regard que les membres de la famille royale."
 		]
 	},
 	"figure-190": {
-		"summary": "Peintre flamand, chef de file de l'art baroque, aux chairs généreuses et aux corps pris dans un tourbillon de mouvement.",
+		"summary": "Peintre flamand de La Descente de croix de la cathédrale d'Anvers et du cycle de Marie de Médicis.",
 		"facts": [
 			"Envoyé en mission diplomatique dans plusieurs pays, il fut fait chevalier.",
 			"Le mot anglais Rubenesque, qui désigne des formes plantureuses, vient de son nom."
 		]
 	},
 	"figure-191": {
-		"summary": "Peintre qui jetait un unique rai de lumière dans l'obscurité et représentait les saints comme des gens du marché.",
+		"summary": "Peintre baroque italien dont La Vocation de saint Matthieu crée un clair-obscur dramatique par un seul rai de lumière dans l'ombre.",
 		"facts": [
 			"Il prenait pour modèles des gens de la rue, ce qui lui valut l'hostilité de l'Église.",
 			"Après avoir tué un homme dans une rixe, il peignit en fuyant, avant de mourir à 38 ans."
 		]
 	},
 	"figure-192": {
-		"summary": "Polémiste des Lumières, auteur de « Candide », qui s'en prit à l'Église et au roi avec sa seule plume.",
+		"summary": "Philosophe français qui attaqua l'intolérance religieuse et le despotisme dans Candide, satire de l'optimisme, et les Lettres philosophiques.",
 		"facts": [
 			"Embastillé puis exilé en Angleterre, il n'a jamais cessé d'écrire.",
 			"Il se battit trois ans pour faire casser le jugement du protestant Calas, supplicié sur la roue."
@@ -1365,35 +1365,35 @@
 		]
 	},
 	"figure-196": {
-		"summary": "Père fondateur des États-Unis qui démontra, à l'aide d'une clé suspendue à un cerf-volant, que la foudre est de l'électricité.",
+		"summary": "Inventeur et homme politique américain qui montra avec son cerf-volant que la foudre est électrique, participa à la Déclaration d'indépendance et obtint l'alliance avec la France.",
 		"facts": [
 			"Il inventa le paratonnerre, les lunettes à double foyer et un poêle, sans jamais déposer de brevet.",
 			"Son visage orne le billet de 100 dollars, mais il n'a jamais été président des États-Unis."
 		]
 	},
 	"figure-197": {
-		"summary": "Commandant en chef de la guerre d'indépendance, devenu le premier président des États-Unis.",
+		"summary": "Homme d'État américain qui, à la tête de l'Armée continentale, obtint la reddition britannique à Yorktown et devint le premier président des États-Unis.",
 		"facts": [
 			"Il se retira de lui-même après deux mandats, instaurant la tradition de la limite des mandats.",
 			"Son visage figure sur le billet d'un dollar, et la capitale fédérale, Washington, porte son nom."
 		]
 	},
 	"figure-198": {
-		"summary": "Troisième président des États-Unis, rédacteur de la Déclaration d'indépendance.",
+		"summary": "Troisième président des États-Unis, rédacteur de la Déclaration d'indépendance et du Statut de Virginie pour la liberté religieuse.",
 		"facts": [
 			"En achetant la Louisiane à la France, il doubla la superficie du pays.",
 			"Il fonda l'université de Virginie et en dessina lui-même les bâtiments."
 		]
 	},
 	"figure-199": {
-		"summary": "Capitaine de la marine britannique qui traversa trois fois le Pacifique en dressant des cartes marines.",
+		"summary": "Explorateur britannique qui fut le premier Européen à reconnaître la côte est de l'Australie et cartographia avec précision les côtes de la Nouvelle-Zélande.",
 		"facts": [
 			"En nourrissant ses équipages de légumes frais, il ne perdit presque aucun homme du scorbut malgré de longues traversées.",
 			"Il fut tué à Hawaï lors d'un affrontement avec les habitants."
 		]
 	},
 	"figure-200": {
-		"summary": "Astronome, ancien musicien, qui découvrit Uranus avec un télescope dont il avait poli lui-même les miroirs.",
+		"summary": "Astronome d'origine allemande qui découvrit Uranus avec un télescope poli de ses mains et catalogua plus de 2 000 nébuleuses.",
 		"facts": [
 			"Né à Hanovre, il s'installa en Angleterre, où il jouait de l'orgue le jour et observait le ciel la nuit.",
 			"En 1800, il constata qu'au-delà du rouge du spectre d'un prisme la température était plus élevée, découvrant ainsi l'infrarouge."
@@ -1407,14 +1407,14 @@
 		]
 	},
 	"figure-202": {
-		"summary": "Inventeur de la première pile électrique, faite de disques de zinc et de cuivre empilés avec des tissus imbibés d'eau salée.",
+		"summary": "Physicien italien qui construisit la première pile en empilant zinc et cuivre séparés de tissu imbibé de saumure, et fut le premier à isoler le méthane.",
 		"facts": [
 			"Le volt (V), unité de tension électrique, vient de son nom.",
 			"Il fit une démonstration devant Napoléon Bonaparte et fut plus tard fait comte."
 		]
 	},
 	"figure-203": {
-		"summary": "Drapier qui, grâce à des lentilles de sa fabrication, fut le premier à observer les micro-organismes d'une goutte d'eau.",
+		"summary": "Drapier néerlandais devenu savant, surnommé le père de la microbiologie, qui observa le premier bactéries, protistes et spermatozoïdes avec des lentilles de sa fabrication.",
 		"facts": [
 			"Sans être allé à l'université ni savoir le latin, il envoya quelque 560 lettres, notamment à la Royal Society.",
 			"Il ne révéla jamais sa façon de fabriquer ses lentilles."
@@ -1428,21 +1428,21 @@
 		]
 	},
 	"figure-205": {
-		"summary": "Astronome anglais qui prédit par le calcul le retour d'une comète revenant tous les 75 à 76 ans.",
+		"summary": "Astronome anglais qui prédit le retour d'une comète tous les 75 à 76 ans et dressa le premier catalogue de 341 étoiles du ciel austral.",
 		"facts": [
 			"Il publia à ses frais les « Principia » d'Isaac Newton.",
 			"La comète revint comme prévu, 16 ans après sa mort."
 		]
 	},
 	"figure-206": {
-		"summary": "Pionnier de la mécanique des fluides, qui montra que la pression diminue là où l'écoulement est rapide.",
+		"summary": "Mathématicien et physicien suisse dont l'Hydrodynamica montra que plus un fluide s'écoule vite, plus sa pression est basse.",
 		"facts": [
 			"On recourt à ce principe pour expliquer la portance des ailes d'avion.",
 			"On raconte que, lorsqu'il partagea un prix de l'Académie des sciences de Paris avec son père, celui-ci le chassa de la maison."
 		]
 	},
 	"figure-207": {
-		"summary": "Pasteur qui montra que les plantes régénèrent l'air dans lequel une bougie s'est éteinte, et qui isola l'oxygène.",
+		"summary": "Chimiste et pasteur anglais qui recueillit l'oxygène en chauffant de l'oxyde de mercure et isola le premier plusieurs gaz, dont l'ammoniac et le monoxyde d'azote.",
 		"facts": [
 			"En dissolvant du dioxyde de carbone dans l'eau, il fabriqua la première eau gazeuse.",
 			"Partisan de la Révolution française, il vit sa maison incendiée et émigra aux États-Unis."
@@ -1456,49 +1456,49 @@
 		]
 	},
 	"figure-209": {
-		"summary": "Auteur de « Robinson Crusoé », l'histoire d'un homme qui survécut seul 28 ans sur une île déserte.",
+		"summary": "Romancier anglais qui ouvrit la voie au roman moderne avec Robinson Crusoé, l'histoire d'un homme qui survécut 28 ans sur une île déserte.",
 		"facts": [
 			"Il se serait inspiré de l'histoire vraie d'un marin abandonné sur une île déserte.",
 			"Il publia son premier roman à près de 60 ans."
 		]
 	},
 	"figure-210": {
-		"summary": "Poète anglais qui, devenu aveugle, acheva « Le Paradis perdu » en le dictant.",
+		"summary": "Poète anglais qui, devenu aveugle, dicta Le Paradis perdu, son épopée de la chute de l'homme.",
 		"facts": [
 			"Il y raconte en plus de 10 000 vers l'expulsion d'Adam et Ève du paradis.",
 			"Il est aussi l'auteur de l'« Areopagitica », plaidoyer pour une presse libre de toute censure."
 		]
 	},
 	"figure-211": {
-		"summary": "Maître de la comédie qui fit rire en portant à la scène hypocrites, avares et médecins pédants.",
+		"summary": "Dramaturge français qui porta la comédie classique à sa perfection, raillant l'hypocrisie et l'avarice dans L'Avare et Le Misanthrope.",
 		"facts": [
 			"« Tartuffe » fut interdit pendant cinq ans sous la pression de l'Église.",
 			"Pris d'un malaise en scène alors qu'il jouait « Le Malade imaginaire », il mourut le soir même."
 		]
 	},
 	"figure-212": {
-		"summary": "Auteur de « Guillaume Tell », qui fit monter sur scène des héros épris de liberté.",
+		"summary": "Dramaturge allemand, auteur de drames de la liberté comme Guillaume Tell et Don Carlos, qui mena le classicisme de Weimar avec Goethe.",
 		"facts": [
 			"Son poème « Ode à la joie » est devenu le texte de la Neuvième Symphonie de Ludwig van Beethoven, dont la mélodie est l'hymne de l'Union européenne.",
 			"Élève d'une école militaire, il écrivit en cachette sa première pièce, « Les Brigands »."
 		]
 	},
 	"figure-213": {
-		"summary": "22e roi de Joseon, qui fonda le Kyujanggak et recruta les talents sans considération de naissance.",
+		"summary": "22e souverain de Joseon, qui fonda la bibliothèque royale Kyujanggak, promut même des lettrés nés de concubines et créa la garde royale Jangyongyeong.",
 		"facts": [
 			"La grue conçue par Jeong Yak-yong réduisit fortement la main-d'œuvre et le temps nécessaires à la construction de la forteresse de Hwaseong, à Suwon.",
 			"Il transféra à Suwon le tombeau de son père, le prince héritier Sado, et s'y rendit treize fois en onze ans."
 		]
 	},
 	"figure-214": {
-		"summary": "Lettré-fonctionnaire de Joseon qui aurait écrit un roman en hangeul pour consoler sa mère pendant son exil à Seoncheon.",
+		"summary": "Romancier de Joseon, auteur du Sassi Namjeonggi, lu comme une allégorie de la déposition de la reine Inhyeon par le roi Sukjong, et des essais Seopo Manpil.",
 		"facts": [
 			"« Le Rêve des neuf nuages » montre, à travers le songe d'une seule nuit, la vanité des richesses et des honneurs.",
 			"Il soutenait que seule une œuvre écrite dans notre propre langue, le coréen, est véritable."
 		]
 	},
 	"figure-215": {
-		"summary": "Lettré de l'école du Bukhak qui affirma que la Terre tourne et que la Chine n'est pas le centre du monde.",
+		"summary": "Lettré du Silhak de la fin de Joseon, de l'école du Savoir du Nord, qui exposa dans son Uisan Mundap la rotation de la Terre et un univers infini.",
 		"facts": [
 			"À Pékin, il rencontra des missionnaires occidentaux et découvrit leurs instruments astronomiques.",
 			"Il fabriqua chez lui une sphère armillaire pour observer les étoiles."
@@ -1512,21 +1512,21 @@
 		]
 	},
 	"figure-217": {
-		"summary": "Peintre et critique qui introduisit très tôt le clair-obscur occidental dans la peinture de paysage de Joseon.",
+		"summary": "Peintre et critique de la fin de Joseon qui introduisit ombres et perspective à l'occidentale dans le paysage avec L'Entrée de la vallée de Yeongtong.",
 		"facts": [
 			"Il fut le maître du jeune Kim Hong-do, et Sin Wi apprit lui aussi la peinture auprès de lui.",
 			"Entré dans l'administration après 60 ans, il participa même à une ambassade en Chine."
 		]
 	},
 	"figure-218": {
-		"summary": "Conquérant français qui, de modeste officier corse, se hissa jusqu'au trône impérial.",
+		"summary": "Empereur des Français qui écrasa les armées autrichienne et russe à Austerlitz et soumit la majeure partie de l'Europe.",
 		"facts": [
 			"Il posa lui-même la couronne sur sa tête, et le Code civil qu'il fit adopter reste le fondement du droit de nombreux pays.",
 			"Après l'échec de la campagne de Russie et la défaite de Waterloo, il finit ses jours prisonnier sur une île de l'Atlantique."
 		]
 	},
 	"figure-219": {
-		"summary": "Chancelier qui imposa l'unification allemande « par le fer et par le sang » plutôt que par les discours.",
+		"summary": "Homme d'État prussien qui imposa le réarmement par son discours « le fer et le sang », fonda l'Empire allemand en 1871 et en devint le premier chancelier.",
 		"facts": [
 			"Au prix de trois guerres, il réunit les États germaniques dispersés.",
 			"Pour contenir le socialisme, il créa les premières assurances maladie et retraite au monde."
@@ -1540,49 +1540,49 @@
 		]
 	},
 	"figure-221": {
-		"summary": "Philosophe qui proclama « Dieu est mort » et appela l'homme à créer lui-même ses valeurs.",
+		"summary": "Philosophe allemand qui exposa le surhomme et l'éternel retour dans Ainsi parlait Zarathoustra.",
 		"facts": [
 			"Professeur à 24 ans, il dut renoncer pour raisons de santé et écrivit en allant de la montagne au bord de mer.",
 			"Sa sœur compila ses écrits posthumes sous le titre « La Volonté de puissance », et les nazis le récupérèrent plus tard."
 		]
 	},
 	"figure-222": {
-		"summary": "Philosophe pessimiste qui voyait le monde comme un vouloir sans fin, accompagné de la souffrance qu'il engendre.",
+		"summary": "Philosophe pessimiste allemand qui vit le monde comme volonté sans fin et souffrance dans Le Monde comme volonté et comme représentation.",
 		"facts": [
 			"Il fut le premier à introduire sérieusement la philosophie indienne en Occident.",
 			"Il programma ses cours aux mêmes heures que ceux de Georg Wilhelm Friedrich Hegel et se ridiculisa : cinq étudiants seulement vinrent l'écouter."
 		]
 	},
 	"figure-223": {
-		"summary": "Philosophe qui porta l'idéalisme à son achèvement, pour qui le monde progresse vers un stade supérieur en passant par la contradiction.",
+		"summary": "Philosophe idéaliste allemand qui bâtit une vision dialectique de l'histoire dans la Phénoménologie de l'esprit et les Principes de la philosophie du droit.",
 		"facts": [
 			"Karl Marx reprit sa dialectique en la renversant.",
 			"On lui doit la formule : « La chouette de Minerve ne prend son envol qu'à la tombée du crépuscule. »"
 		]
 	},
 	"figure-224": {
-		"summary": "Libérateur qui arracha six pays d'Amérique du Sud à la domination de l'Espagne.",
+		"summary": "Militaire vénézuélien qui libéra sa patrie à la bataille de Carabobo et devint le premier président de la Grande Colombie.",
 		"facts": [
 			"Il franchit la Cordillère des Andes pour une attaque surprise qui libéra la Colombie.",
 			"La Bolivie et le bolívar, la monnaie du Venezuela, doivent leur nom au sien."
 		]
 	},
 	"figure-225": {
-		"summary": "Général qui, à la tête de mille chemises rouges, unifia l'Italie en remontant depuis le sud.",
+		"summary": "Militaire italien qui mena l'expédition des Mille en chemises rouges pour prendre la Sicile et Naples, ouvrant la voie à l'unité italienne.",
 		"facts": [
 			"Il remit sans condition au roi les terres conquises et retourna cultiver la terre sur son île.",
 			"En Amérique du Sud, il combattit aussi aux côtés des rebelles du sud du Brésil et de l'Uruguay."
 		]
 	},
 	"figure-226": {
-		"summary": "Souveraine britannique au règne de 63 ans, dont le nom en est venu à désigner toute une époque.",
+		"summary": "Souveraine britannique qui régna plus de 63 ans à l'apogée de l'Empire britannique et prit en 1876 le titre d'impératrice des Indes.",
 		"facts": [
 			"La robe blanche qu'elle porta à son mariage en 1840 lança la mode de la robe de mariée blanche.",
 			"Après la mort de son mari, elle ne porta plus que du noir pendant 40 ans."
 		]
 	},
 	"figure-227": {
-		"summary": "Philosophe britannique qui posa en principe qu'on ne peut restreindre la liberté d'un individu tant qu'il ne nuit pas à autrui.",
+		"summary": "Philosophe britannique qui posa dans « De la liberté » qu'on ne peut restreindre la liberté d'un individu tant qu'il ne nuit pas à autrui.",
 		"facts": [
 			"La formule « Mieux vaut être Socrate insatisfait qu'un porc satisfait » vient d'un passage de son « Utilitarisme ».",
 			"En 1867, à la Chambre des communes, il proposa un amendement remplaçant « homme » par « personne » dans la loi électorale."
@@ -1596,7 +1596,7 @@
 		]
 	},
 	"figure-229": {
-		"summary": "Poétesse américaine qui, dès 28 ans environ, ne quitta presque plus sa maison et écrivit près de 1 800 poèmes.",
+		"summary": "Poétesse américaine qui laissa près de 1 800 poèmes brefs, ponctués de tirets, comme « Parce que je ne pouvais m'arrêter pour la Mort ».",
 		"facts": [
 			"De son vivant, une dizaine de ses poèmes à peine furent imprimés.",
 			"Après sa mort, sa sœur cadette découvrit des liasses de poèmes dans un tiroir et les fit connaître au monde."
@@ -1624,7 +1624,7 @@
 		]
 	},
 	"figure-233": {
-		"summary": "Romancier français qui peignit la vanité et les bas-fonds de l'âme humaine dans quelque 300 nouvelles.",
+		"summary": "Romancier français, auteur d'« Une vie » et de la nouvelle « Boule de suif », qui laissa quelque 300 nouvelles.",
 		"facts": [
 			"« La Parure » raconte dix ans de dettes remboursées à cause d'un seul collier, qui se révèle faux.",
 			"Élève de Gustave Flaubert en écriture, il fréquentait chez lui Émile Zola et Ivan Tourgueniev."
@@ -1652,35 +1652,35 @@
 		]
 	},
 	"figure-237": {
-		"summary": "Romancier britannique qui inventa le roman historique en prenant pour décor les chevaliers du Moyen Âge et les Highlands d'Écosse.",
+		"summary": "Romancier britannique qui fonda le roman historique en peignant chevaliers médiévaux et Highlands écossais, notamment dans « Ivanhoé ».",
 		"facts": [
 			"La grande gare d'Édimbourg, Waverley, tire son nom de la série ouverte par son premier roman, « Waverley ».",
 			"En 1826, la faillite de l'imprimerie dont il était associé lui laissa 130 000 livres de dettes, et il écrivit jusqu'à sa mort pour les rembourser."
 		]
 	},
 	"figure-238": {
-		"summary": "Poète romantique britannique qui enflamma l'Europe en chantant le rebelle mélancolique.",
+		"summary": "Poète romantique britannique qui enflamma l'Europe avec « Le Pèlerinage de Childe Harold » et « Don Juan ».",
 		"facts": [
 			"Engagé dans la guerre d'indépendance grecque, il mourut de la fièvre.",
 			"Ada Lovelace, souvent présentée comme la première programmeuse, était sa fille."
 		]
 	},
 	"figure-239": {
-		"summary": "Poète romantique britannique qui souhaitait que le vent emporte le vieux monde.",
+		"summary": "Poète romantique britannique qui chanta la chute des tyrans et la libération dans « Ozymandias » et le drame lyrique « Prométhée délivré ».",
 		"facts": [
 			"« Si l'hiver vient, le printemps peut-il être loin ? » est le dernier vers de son « Ode au vent d'ouest ».",
 			"Il mourut à 29 ans, son bateau ayant chaviré au large des côtes d'Italie."
 		]
 	},
 	"figure-240": {
-		"summary": "Poète romantique britannique qui écrivit que « la beauté est vérité » et mourut à 25 ans.",
+		"summary": "Poète romantique britannique qui écrivit « La beauté est vérité » dans l'« Ode sur une urne grecque » et mourut à vingt-cinq ans.",
 		"facts": [
 			"Il obtint son diplôme d'apothicaire, mais renonça à la médecine pour devenir poète.",
 			"Il fit graver sur sa tombe, à la place de son nom : « Ici repose celui dont le nom fut écrit dans l'eau »."
 		]
 	},
 	"figure-241": {
-		"summary": "Poète britannique de la région des Lacs qui renouvela la poésie avec les narcisses des champs et la langue des gens de la campagne.",
+		"summary": "Poète britannique qui ouvrit l'ère romantique en publiant avec Coleridge les « Ballades lyriques », écrites dans la langue des gens de la campagne.",
 		"facts": [
 			"La formule « L'enfant est le père de l'homme » vient de son poème « L'Arc-en-ciel ».",
 			"« Les Jonquilles » est né d'un paysage aperçu en 1802 lors d'une promenade avec sa sœur Dorothy au bord du lac Ullswater."
@@ -1701,7 +1701,7 @@
 		]
 	},
 	"figure-244": {
-		"summary": "Compositeur hongrois qui enthousiasma l'Europe en tirant d'un seul piano la puissance d'un orchestre.",
+		"summary": "Compositeur hongrois des « Rhapsodies hongroises » et des « Rêves d'amour », qui enthousiasma l'Europe avec un seul piano.",
 		"facts": [
 			"C'est à partir de ses concerts de 1840 à Londres qu'on appela « récital » un concert donné par un seul interprète.",
 			"Il enseignait sans faire payer ses élèves."
@@ -1715,21 +1715,21 @@
 		]
 	},
 	"figure-246": {
-		"summary": "Compositeur allemand qui, les doigts paralysés, renonça à la carrière d'interprète pour se tourner vers la composition et la critique.",
+		"summary": "Compositeur allemand des « Scènes d'enfants », dont fait partie « Rêverie », et du cycle de lieder « Les Amours du poète ».",
 		"facts": [
 			"Dans ses critiques, il salua comme des génies Frédéric Chopin, alors âgé de 21 ans, et Johannes Brahms, qui en avait 20.",
 			"Il alla jusqu'au procès pour pouvoir épouser la fille de son professeur."
 		]
 	},
 	"figure-247": {
-		"summary": "Pianiste et compositrice allemande montée sur scène à 9 ans, qui joua en concert pendant plus de 60 ans.",
+		"summary": "Pianiste et compositrice allemande montée sur scène à neuf ans, qui joua plus de 60 ans et fit connaître les œuvres de son mari Robert et de Brahms.",
 		"facts": [
 			"Tout en élevant huit enfants, elle parcourut l'Europe en tournée.",
 			"Avant l'euro, son portrait figura à partir de 1989 sur le billet allemand de 100 marks."
 		]
 	},
 	"figure-248": {
-		"summary": "Violoniste et compositeur italien dont on murmurait qu'il avait vendu son âme au diable.",
+		"summary": "Compositeur italien du Concerto pour violon no 2 et de sa « Campanella », dont on disait qu'il avait vendu son âme au diable.",
 		"facts": [
 			"Il entaillait ses cordes pour qu'elles cassent en plein concert, puis terminait le morceau sur celles qui restaient.",
 			"Le dernier de ses « 24 Caprices » a inspiré des variations à Franz Liszt, Johannes Brahms et Sergueï Rachmaninov."
@@ -1750,14 +1750,14 @@
 		]
 	},
 	"figure-251": {
-		"summary": "Peintre français qui aimait représenter les gestes las des ballerines dans les coulisses.",
+		"summary": "Peintre français qui aimait saisir les gestes las des danseuses en répétition et en coulisses, comme dans « La Classe de danse ».",
 		"facts": [
 			"Il habilla sa sculpture en cire « Petite Danseuse de quatorze ans » d'un vrai tutu et d'un vrai ruban.",
 			"Contrairement à ses camarades, il préférait l'intérieur et la lumière artificielle au plein air."
 		]
 	},
 	"figure-252": {
-		"summary": "Peintre impressionniste français qui saisit, dans des couleurs chaudes, des gens qui rient et dansent au soleil.",
+		"summary": "Peintre impressionniste français qui saisit en couleurs chaudes des gens dansant au soleil, comme dans le « Bal du moulin de la Galette ».",
 		"facts": [
 			"Il débuta à 13 ans dans une manufacture de porcelaine, à peindre des motifs sur la vaisselle.",
 			"Même les mains paralysées, il continua de peindre avec le pinceau qu'un assistant lui glissait entre les doigts."
@@ -1771,14 +1771,14 @@
 		]
 	},
 	"figure-254": {
-		"summary": "Peintre français qui quitta son métier d'agent de change pour s'installer à Tahiti et peindre en couleurs pures.",
+		"summary": "Peintre français qui quitta la Bourse pour Tahiti et laissa des toiles aux couleurs pures comme « Femmes de Tahiti ».",
 		"facts": [
 			"À Arles, il vécut neuf semaines avec Vincent van Gogh avant une violente dispute qui les sépara.",
 			"Le héros du roman de Somerset Maugham « La Lune et soixante-quinze centimes » s'inspire de sa vie."
 		]
 	},
 	"figure-255": {
-		"summary": "Peintre français qui, au lieu de mélanger les couleurs sur sa palette, les posait en petits points pour que l'œil les mélange.",
+		"summary": "Peintre français qui fonda le pointillisme, juxtaposant de petits points de couleur pure qui se mêlent dans l'œil.",
 		"facts": [
 			"Il consacra deux ans à un seul tableau, « Un dimanche après-midi à l'Île de la Grande Jatte ».",
 			"Il mourut à 31 ans d'une maladie dont la cause reste incertaine."
@@ -1827,7 +1827,7 @@
 		]
 	},
 	"figure-262": {
-		"summary": "Savant italien selon qui, à température et pression égales, des volumes égaux de gaz contiennent le même nombre de molécules.",
+		"summary": "Chimiste italien qui formula la loi selon laquelle des volumes égaux de gaz, à température et pression égales, contiennent le même nombre de molécules.",
 		"facts": [
 			"Son nom reste attaché au nombre d'entités contenues dans une mole, que l'on apprend en cours de chimie au lycée.",
 			"Ignoré de son vivant, il ne fut reconnu qu'en 1860, quatre ans après sa mort."
@@ -1848,7 +1848,7 @@
 		]
 	},
 	"figure-265": {
-		"summary": "Missionnaire et explorateur britannique qui parcourut à pied l'intérieur de l'Afrique pour combler les blancs de la carte.",
+		"summary": "Missionnaire et explorateur britannique, premier Européen à traverser à pied l'Afrique centrale australe, de l'Atlantique à l'océan Indien.",
 		"facts": [
 			"Premier Européen à voir une immense cataracte, il la baptisa « Chutes Victoria » en l'honneur de la reine.",
 			"Sans nouvelles de lui pendant longtemps, on le retrouva en 1871 à Ujiji, où le journaliste Stanley le rejoignit."
@@ -1904,17 +1904,17 @@
 		]
 	},
 	"figure-273": {
-		"summary": "Mathématicien britannique qui conçut une machine à calculer actionnée par des engrenages et des cartes perforées.",
+		"summary": "Mathématicien britannique surnommé le père de l'ordinateur pour avoir conçu la machine analytique, commandée par cartes perforées.",
 		"facts": [
 			"Faute d'argent et de moyens techniques, il ne put l'achever de son vivant.",
 			"La machine à différences construite en 1991 par le Science Museum de Londres d'après ses plans calculait juste jusqu'à 31 chiffres."
 		]
 	},
 	"figure-274": {
-		"summary": "Entomologiste français qui, au lieu d'épingler les insectes, les observait vivants dans les champs.",
+		"summary": "Entomologiste français qui publia à partir de 1879 les dix volumes des « Souvenirs entomologiques », chronique vivante de la vie des insectes.",
 		"facts": [
 			"Il élucida les mœurs du bousier et des guêpes chasseresses par la seule observation.",
-			"De 1879 et pendant 30 ans, il publia les dix volumes de ses « Souvenirs entomologiques »."
+			"Plutôt que d'épingler des spécimens, il étudiait les insectes en les observant vivants dans les champs."
 		]
 	},
 	"figure-275": {
@@ -1939,21 +1939,21 @@
 		]
 	},
 	"figure-278": {
-		"summary": "Militante américaine des droits humains qui se battit plus de 50 ans pour obtenir le droit de vote des femmes.",
+		"summary": "Militante américaine qui présida la National American Woman Suffrage Association et réclama le droit de vote des femmes pendant plus de 50 ans.",
 		"facts": [
 			"Arrêtée pour avoir voté à la présidentielle de 1872, elle fut condamnée à 100 dollars d'amende et refusa jusqu'au bout de les payer.",
 			"En 1979, elle fut la première femme réelle à figurer sur une pièce américaine d'un dollar."
 		]
 	},
 	"figure-279": {
-		"summary": "Orateur américain né esclave qui apprit à lire en cachette, s'enfuit et réclama l'abolition de l'esclavage.",
+		"summary": "Militant américain qui, après avoir fui l'esclavage, réclama son abolition par ses discours et son journal « The North Star ».",
 		"facts": [
 			"Le récit de sa vie devint un best-seller et révéla la réalité de l'esclavage.",
 			"Il rencontra Abraham Lincoln pour défendre le traitement des soldats noirs."
 		]
 	},
 	"figure-280": {
-		"summary": "Prédicatrice itinérante américaine qui, une fois libérée de l'esclavage, sillonna le pays pour défendre les droits des femmes noires.",
+		"summary": "Militante américaine dont le discours de 1851 à la convention des droits des femmes d'Akron, dans l'Ohio, fit entendre la voix des femmes noires.",
 		"facts": [
 			"Née esclave, elle intenta un procès à un Blanc et récupéra son fils qui avait été vendu.",
 			"La célèbre phrase « Ne suis-je pas une femme ? » ne figure que dans une version publiée douze ans plus tard."
@@ -1967,9 +1967,9 @@
 		]
 	},
 	"figure-282": {
-		"summary": "Régent de la fin de Joseon qui plaça son jeune fils sur le trône et tint le pays d'une main de fer pendant dix ans.",
+		"summary": "Homme d'État de la fin de Joseon qui gouverna dix ans à la place de son fils Gojong, rebâtit le Gyeongbokgung et ne conserva que 47 académies confucéennes.",
 		"facts": [
-			"Il ne laissa subsister que 47 académies confucéennes (seowon), mais la reconstruction du palais Gyeongbokgung et la monnaie dangbaekjeon suscitèrent la colère.",
+			"Les pièces dangbaekjeon frappées pour financer le chantier du palais firent flamber les prix et suscitèrent la colère du peuple.",
 			"Après l'expédition américaine de 1871 (Sinmiyangyo), il fit dresser dans tout le pays des stèles contre la paix avec l'étranger et ferma le pays."
 		]
 	},
@@ -1981,7 +1981,7 @@
 		]
 	},
 	"figure-284": {
-		"summary": "Journaliste qui publia en hangeul et en anglais le « Dongnip Sinmun », premier journal privé de Corée.",
+		"summary": "Journaliste coréen qui lança en 1896 le « Dongnip Sinmun », premier journal privé du pays, en éditions hangeul et anglaise.",
 		"facts": [
 			"Mêlé au coup d'État de Gapsin, il partit aux États-Unis et devint le premier Coréen docteur en médecine.",
 			"Il fonda le Club de l'indépendance, qui érigea la porte de l'Indépendance, et le 7 avril, date de création du journal, est devenu en Corée la Journée de la presse."
@@ -2030,7 +2030,7 @@
 		]
 	},
 	"figure-291": {
-		"summary": "Chimiste américain qui expliqua par la mécanique quantique comment les atomes se lient entre eux.",
+		"summary": "Chimiste américain qui expliqua par la mécanique quantique comment les atomes se lient, dans « The Nature of the Chemical Bond ».",
 		"facts": [
 			"Il est la seule personne à avoir reçu deux prix Nobel, de chimie et de la paix, sans les partager avec personne.",
 			"En 1970, il publia un livre recommandant de fortes doses de vitamine C contre le rhume, ce qui l'opposa au monde scientifique."
@@ -2086,7 +2086,7 @@
 		]
 	},
 	"figure-299": {
-		"summary": "Bactériologiste japonais qui mourut en Afrique de la fièvre jaune, la maladie même qu'il étudiait.",
+		"summary": "Bactériologiste japonais qui découvrit l'agent de la syphilis dans le cerveau de patients paralytiques et mourut en Afrique en étudiant la fièvre jaune.",
 		"facts": [
 			"Sa main gauche, brûlée dans un foyer à 2 ans et restée raide, fut rendue utilisable par une opération vers 15 ans, ce qui lui donna l'envie de devenir médecin.",
 			"Son portrait orna le billet japonais de 1 000 yens à partir de 2004, avant d'être remplacé lors des nouveaux billets de 2024."
@@ -2100,28 +2100,28 @@
 		]
 	},
 	"figure-301": {
-		"summary": "Peintre néerlandais qui composait ses toiles avec des lignes verticales et horizontales et seulement du rouge, du bleu et du jaune.",
+		"summary": "Peintre néerlandais qui composa ses toiles de lignes verticales et horizontales et des seules trois couleurs primaires, comme dans « Composition en rouge, bleu et jaune ».",
 		"facts": [
 			"En simplifiant peu à peu ses arbres, il finit par ne garder que des lignes et des plans.",
 			"En 1965, Yves Saint Laurent transposa tel quel son quadrillage sur une robe."
 		]
 	},
 	"figure-302": {
-		"summary": "Peintre russe qui ouvrit la voie à l'art abstrait avec des tableaux où l'on ne peut reconnaître ce qui est représenté.",
+		"summary": "Peintre russe qui ouvrit la voie à l'art abstrait avec des tableaux sans sujet reconnaissable, comme la série des « Compositions ».",
 		"facts": [
 			"Tout serait parti d'une de ses toiles accrochée à l'envers, qu'il trouva plus belle ainsi.",
 			"Il avait l'impression d'entendre un son pour chaque couleur et donnait à ses œuvres des titres empruntés à la musique."
 		]
 	},
 	"figure-303": {
-		"summary": "Peintre surréaliste espagnol qui transposa sur la toile des paysages de rêve avec ses montres molles.",
+		"summary": "Peintre surréaliste espagnol qui porta le rêve sur la toile avec les montres molles de « La Persistance de la mémoire ».",
 		"facts": [
 			"Sa moustache aux pointes relevées le suivait partout comme une marque de fabrique.",
 			"En 1969, il dessina le logo en forme de fleur des sucettes Chupa Chups."
 		]
 	},
 	"figure-304": {
-		"summary": "Graveur néerlandais qui représenta des escaliers qui montent sans fin et des mains qui se dessinent l'une l'autre.",
+		"summary": "Graveur néerlandais auteur de l'escalier sans fin de « Montée et Descente » et des « Mains dessinant » qui se dessinent l'une l'autre.",
 		"facts": [
 			"Dans « Reptiles », des lézards sortent du motif, rampent hors de la feuille puis y rentrent.",
 			"Son escalier sans fin s'inspire d'une illusion d'optique imaginée par les Penrose, père et fils."
@@ -2163,14 +2163,14 @@
 		]
 	},
 	"figure-310": {
-		"summary": "Pianiste et compositeur russe qui, grâce à ses grandes mains, écrivit des accords que d'autres ne pouvaient atteindre.",
+		"summary": "Pianiste et compositeur russe, auteur de la « Rhapsodie sur un thème de Paganini » et du Concerto pour piano no 3.",
 		"facts": [
 			"Éreinté par la critique pour sa première symphonie, il resta plus de trois ans sans composer, puis, après une thérapie, livra son Concerto pour piano no 2.",
 			"Fuyant la révolution, il partit aux États-Unis et vécut de ses concerts."
 		]
 	},
 	"figure-311": {
-		"summary": "Cinéaste britannique dont le vagabond au chapeau melon et à la canne fit rire et pleurer le monde sans un mot.",
+		"summary": "Cinéaste britannique qui ridiculisa Hitler dans « Le Dictateur » et fit rire et pleurer le monde sous le chapeau melon du vagabond.",
 		"facts": [
 			"Dans « Les Temps modernes », il signa la scène où il est happé par une gigantesque machine.",
 			"Accusé d'être communiste, il se vit refuser en 1952 le retour aux États-Unis."
@@ -2247,7 +2247,7 @@
 		]
 	},
 	"figure-322": {
-		"summary": "Homme politique indien qui mena la lutte pour l'indépendance aux côtés de Mahatma Gandhi et devint le premier chef du gouvernement du pays.",
+		"summary": "Homme d'État indien qui, premier chef du gouvernement après l'indépendance de 1947, posa pendant 17 ans les bases du pays.",
 		"facts": [
 			"Les 196 lettres écrites en prison à sa fille Indira à partir de 1930 devinrent « Glimpses of World History », un regard sur l'histoire du monde.",
 			"Il conduisit une politique de non-alignement, sans prendre parti pour aucun camp."
@@ -2268,7 +2268,7 @@
 		]
 	},
 	"figure-325": {
-		"summary": "Émissaire spécial de l'Empire coréen parti pour La Haye, où se tenait la Conférence internationale de la paix.",
+		"summary": "Militant indépendantiste coréen qui porta en 1907 les lettres de créance de l'empereur Gojong à la conférence de La Haye pour dénoncer la nullité du traité d'Eulsa.",
 		"facts": [
 			"L'obstruction japonaise l'empêcha d'entrer dans la salle des séances.",
 			"Le logement où il mourut est devenu un musée, et sa dépouille ne revint au pays qu'en 1963."
@@ -2282,84 +2282,84 @@
 		]
 	},
 	"figure-327": {
-		"summary": "Dirigeant qui fonda écoles et associations, convaincu qu'il fallait d'abord former les hommes pour reconquérir le pays.",
+		"summary": "Militant indépendantiste coréen qui cofonda la Nouvelle Association du peuple et l'école Daeseong à Pyongyang, convaincu qu'il fallait former des hommes pour reconquérir le pays.",
 		"facts": [
 			"Il fonda la Heungsadan, et l'avenue Dosan-daero comme le parc Dosan, à Séoul, tiennent leur nom de son nom de plume.",
 			"Plaçant l'honnêteté avant tout, il disait : « Même s'il faut en mourir, ne mentez pas. »"
 		]
 	},
 	"figure-328": {
-		"summary": "Dirigeant qui refonda le Donghak sous le nom de Cheondogyo et prit la tête du mouvement du 1er Mars.",
+		"summary": "Chef religieux coréen qui rebaptisa le Donghak en Cheondogyo en 1905 et mena la préparation du mouvement du 1er Mars.",
 		"facts": [
 			"Il était à la tête des 33 représentants de la nation qui signèrent la Déclaration d'indépendance.",
 			"L'école Bosung, reprise en 1910 par le Cheondogyo qu'il dirigeait, est devenue plus tard l'université de Corée."
 		]
 	},
 	"figure-329": {
-		"summary": "Moine et poète qui chanta la séparation et l'attente dans son recueil « Le Silence de l'aimé », paru en 1926.",
+		"summary": "Moine et poète coréen qui chanta la séparation et l'attente dans son recueil « Le Silence de l'aimé », paru en 1926.",
 		"facts": [
 			"Il recopia sur du papier hygiénique sa « Lettre sur l'indépendance de Joseon », écrite en prison, et la fit sortir en cachette.",
 			"On raconte qu'il orienta sa maison, Simujang, vers le nord pour ne pas avoir à faire face au bâtiment du Gouvernement général japonais."
 		]
 	},
 	"figure-330": {
-		"summary": "Poète de l'occupation japonaise, auteur du « Prologue » qui commence par « Jusqu'au jour de ma mort, levant les yeux vers le ciel ».",
+		"summary": "Poète coréen de l'occupation japonaise, auteur du « Prologue » qui commence par « Jusqu'au jour de ma mort, levant les yeux vers le ciel ».",
 		"facts": [
 			"Arrêté pendant ses études au Japon, il mourut à 27 ans à la prison de Fukuoka.",
 			"Son recueil posthume parut en 1948, et en 2016 le film « Dongju » retraça sa vie."
 		]
 	},
 	"figure-331": {
-		"summary": "Peintre considérée comme la première femme peintre de style occidental en Corée, qui fit aussi entendre la voix des femmes par ses écrits.",
+		"summary": "Première femme peintre de style occidental de Corée, qui exposa ses huiles à Séoul en 1921 et fit entendre la voix des femmes dans sa « Confession de divorce ».",
 		"facts": [
 			"Elle publia en feuilleton dans la revue « Samcheolli » le récit de ses voyages en Europe et en Amérique.",
 			"Après son divorce, accablée de critiques et de pauvreté, elle mourut à 52 ans en 1948 dans un service hospitalier pour personnes sans famille."
 		]
 	},
 	"figure-332": {
-		"summary": "Auteur pour la jeunesse qui popularisa le mot coréen « eorini » pour désigner les enfants et créa la Journée des enfants.",
+		"summary": "Auteur coréen pour la jeunesse qui popularisa le mot « eorini » pour désigner les enfants et fonda la société Saekdonghoe pour créer la Journée des enfants.",
 		"facts": [
 			"Il fonda la revue « Eorini » et parcourut tout le pays pour raconter des contes à voix haute.",
 			"La première Journée des enfants eut lieu le 1er mai 1923 ; elle fut fixée au 5 mai en 1946."
 		]
 	},
 	"figure-333": {
-		"summary": "Commandant de l'Armée administrative du Nord qui infligea une lourde défaite aux troupes japonaises à Cheongsanri.",
+		"summary": "Militant indépendantiste coréen qui mena en 1920 les troupes de l'Armée administrative du Nord à une lourde victoire sur les Japonais à Cheongsanri.",
 		"facts": [
 			"À 17 ans, il affranchit les esclaves de sa famille et leur distribua des terres.",
 			"En 1930, il fut abattu en Mandchourie par Park Sang-sil, membre de la Jeunesse communiste de Corée."
 		]
 	},
 	"figure-334": {
-		"summary": "Commandant, ancien chasseur, qui attira l'armée japonaise dans la vallée de Bongo-dong et y remporta une grande victoire.",
+		"summary": "Ancien chasseur devenu militant indépendantiste coréen, qui attira en 1920 l'armée japonaise dans la vallée de Bongo-dong et y remporta une grande victoire.",
 		"facts": [
 			"Fort de son adresse au tir acquise à la chasse, il mena une armée de justes ; le film « La Bataille de Bongo-dong » (2019) l'a mis en scène.",
 			"Déporté de force en Asie centrale en 1937, il vit sa dépouille rapatriée en 2021 au cimetière national de Daejeon."
 		]
 	},
 	"figure-335": {
-		"summary": "Figure respectée qui mena le Club de l'indépendance et l'assemblée populaire Manmin Gongdonghoe et forma la jeunesse au sein de la YMCA.",
+		"summary": "Militant indépendantiste coréen qui mena le Club de l'indépendance et l'assemblée populaire Manmin Gongdonghoe et forma la jeunesse au sein de la YMCA.",
 		"facts": [
 			"En 1927, il fut porté à la présidence du Singanhoe, front uni de la gauche et de la droite.",
 			"Ses obsèques publiques rassemblèrent une foule de 100 000 personnes."
 		]
 	},
 	"figure-336": {
-		"summary": "Éducateur patriote qui consacra la fortune amassée dans le commerce à fonder l'école Osan.",
+		"summary": "Éducateur coréen qui consacra la fortune amassée dans le commerce de la dinanderie à fonder l'école Osan à Jeongju en 1907.",
 		"facts": [
 			"Lors du mouvement du 1er Mars, il signa parmi les 33 représentants de la nation.",
 			"Il avait demandé que son corps serve à l'enseignement des élèves, mais les autorités japonaises s'y opposèrent."
 		]
 	},
 	"figure-337": {
-		"summary": "Historien qui écrivit une « Histoire douloureuse de la Corée », convaincu que l'histoire survit même quand le pays disparaît.",
+		"summary": "Historien coréen qui écrivit en 1915 une « Histoire douloureuse de la Corée », convaincu que l'histoire survit même quand le pays disparaît.",
 		"facts": [
 			"Dans son « Histoire sanglante du mouvement d'indépendance coréen », il consigna les atrocités subies lors du mouvement du 1er Mars.",
 			"Il fut le deuxième président du gouvernement provisoire de la république de Corée."
 		]
 	},
 	"figure-338": {
-		"summary": "Dirigeant qui, au lendemain de la libération, mit sur pied le Comité de préparation de l'indépendance pour préparer le nouvel État.",
+		"summary": "Homme politique coréen qui fonda le Parti de la jeunesse de la Nouvelle Corée, envoya un délégué à la conférence de la paix de Paris et créa le Comité de préparation de l'indépendance au lendemain de la libération.",
 		"facts": [
 			"Il s'efforçait de rassembler gauche et droite lorsqu'il fut assassiné en 1947 à Hyehwa-dong, à Séoul.",
 			"Directeur du Joseon Jungang Ilbo, il assuma les conséquences de l'affaire du drapeau japonais effacé."

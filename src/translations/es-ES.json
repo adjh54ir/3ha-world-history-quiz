@@ -527,7 +527,11 @@
                 "testDesc": "Comprueba ahora que los avisos llegan bien",
                 "testSend": "Enviar",
                 "bgm": "Música de fondo",
-                "bgmDesc": "Música de selva en quizzes, juegos y estudio"
+                "bgmDesc": "Música de selva en quizzes, juegos y estudio",
+                "volume": "Volumen de efectos",
+                "volumeLow": "Bajo",
+                "volumeMid": "Medio",
+                "volumeHigh": "Alto"
             },
             "toast": {
                 "soundOn": "Efectos activados",
@@ -1035,12 +1039,13 @@
                 "permMsg": "Activa las notificaciones en Ajustes.",
                 "alarmOn": "Aviso del quiz del día activado",
                 "alarmOff": "Aviso del quiz del día desactivado",
-                "start": "Empezar el quiz del día",
+                "start": "Empezar el quiz",
+                "topicsLabel": "Temas de hoy",
                 "guideTitle": "Cómo funciona el quiz del día",
                 "guide": {
                     "count": "{{count}} preguntas de todos los temas, con fallos para repasar.",
-                    "once": "Una vez al día, sin límite de tiempo y con calma.",
-                    "result": "¡Al terminar verás el resultado y las explicaciones!"
+                    "image": "Las preguntas con imagen se muestran junto a ella.",
+                    "result": "¡Una vez al día! Al terminar verás resultado y explicaciones."
                 }
             },
             "wrong": {

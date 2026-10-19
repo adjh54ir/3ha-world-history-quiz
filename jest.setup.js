@@ -24,3 +24,6 @@ jest.mock('@notifee/react-native', () => ({
 	RepeatFrequency: { DAILY: 0, WEEKLY: 1 },
 	TriggerType: { TIMESTAMP: 0 },
 }));
+
+/* react-native-device-info 네이티브 모듈 목 — 광고 유닛 판정(adUnitId)이 import 시점에 설치 경로를 읽는다 */
+jest.mock('react-native-device-info', () => require('react-native-device-info/jest/react-native-device-info-mock'));

@@ -1,209 +1,209 @@
 {
 	"olympic-1896": {
-		"summary": "Primeros Juegos de la era moderna, con los que Coubertin revivió los antiguos y en los que compitieron 241 atletas de 14 países.",
+		"summary": "Primeros Juegos modernos, celebrados en Atenas (Grecia), donde Coubertin revivió las competiciones antiguas con 241 atletas de 14 países.",
 		"facts": [
 			"Los ganadores no recibían una medalla de oro, sino una de plata y una rama de olivo.",
 			"Spyridon Louis, que había sido aguador, ganó el primer maratón de la historia."
 		]
 	},
 	"olympic-1900": {
-		"summary": "Juegos celebrados como acto paralelo de la Exposición Universal, que se prolongaron de mayo a octubre.",
+		"summary": "Juegos celebrados en París (Francia) como actividad paralela de la Exposición Universal, que se alargaron de mayo a octubre.",
 		"facts": [
 			"Las mujeres compitieron por primera vez, y la tenista Charlotte Cooper fue la primera campeona individual.",
 			"En algunas pruebas, los participantes compitieron sin saber que estaban en unos Juegos Olímpicos."
 		]
 	},
 	"olympic-1904": {
-		"summary": "Primeros Juegos celebrados fuera de Europa, en América.",
+		"summary": "Juegos celebrados en San Luis (Estados Unidos) junto a la Exposición Universal, los primeros fuera de Europa.",
 		"facts": [
 			"De los 648 atletas, más de 520 eran del país anfitrión.",
 			"Por primera vez se entregaron medallas de oro, plata y bronce como se hace hoy."
 		]
 	},
 	"olympic-1908": {
-		"summary": "Juegos que la ciudad asumió tras la renuncia de Roma por una erupción volcánica y que estrenaron la distancia actual del maratón.",
+		"summary": "Juegos que asumió Londres (Reino Unido) después de que Roma renunciara tras la erupción del Vesubio.",
 		"facts": [
 			"Al trazar el recorrido con salida en el castillo de Windsor y llegada ante el palco real, salieron 42,195 kilómetros.",
 			"Esa distancia se fijó como oficial del maratón en 1921 y sigue vigente hoy."
 		]
 	},
 	"olympic-1912": {
-		"summary": "Juegos que estrenaron el cronometraje electrónico en atletismo y en los que Japón compitió como primer país asiático.",
+		"summary": "Juegos celebrados en Estocolmo (Suecia), con el primer cronometraje eléctrico, donde Jim Thorpe ganó el pentatlón y el decatlón.",
 		"facts": [
 			"En 1913, al año siguiente, Coubertin diseñó los aros olímpicos, que representan los cinco continentes.",
-			"Jim Thorpe ganó a la vez el pentatlón y el decatlón."
+			"Japón fue el primer país asiático en participar."
 		]
 	},
 	"olympic-1920": {
-		"summary": "Juegos que volvieron tras la Primera Guerra Mundial sin invitar a los países derrotados, como Alemania y Austria.",
+		"summary": "Juegos celebrados en Amberes (Bélgica), los primeros tras la Primera Guerra Mundial, sin invitar a los vencidos como Alemania y Austria.",
 		"facts": [
 			"Se izó por primera vez la bandera olímpica y se soltaron palomas como símbolo de paz.",
 			"El belga Victor Boin pronunció el primer juramento olímpico de los deportistas."
 		]
 	},
 	"olympic-1924": {
-		"summary": "Primeros Juegos con una villa olímpica construida junto a las sedes para alojar a los atletas.",
+		"summary": "Juegos organizados por segunda vez en París (Francia), los primeros en alojar a los atletas en una villa junto al estadio.",
 		"facts": [
 			"La película «Carros de fuego» narra la historia de los atletas británicos de estos Juegos.",
 			"Se usó por primera vez el lema «Más rápido, más alto, más fuerte»."
 		]
 	},
 	"olympic-1928": {
-		"summary": "Primeros Juegos en los que se encendió la llama olímpica en lo alto de una torre del estadio.",
+		"summary": "Juegos celebrados en Ámsterdam (Países Bajos), donde por primera vez ardió una llama en lo alto de una torre del estadio y debutó el atletismo femenino.",
 		"facts": [
 			"Coca-Cola se convirtió en patrocinador oficial por primera vez y lo sigue siendo hoy.",
 			"Se consolidó el orden de desfile con la delegación de Grecia en cabeza."
 		]
 	},
 	"olympic-1932": {
-		"summary": "Juegos en los que, por la Gran Depresión, participaron menos de la mitad de los atletas de la edición anterior.",
+		"summary": "Juegos celebrados en Los Ángeles (Estados Unidos) en plena Gran Depresión, con menos de la mitad de atletas que la edición anterior.",
 		"facts": [
 			"Se instauró la ceremonia de izar la bandera y tocar el himno del país del campeón.",
 			"Los hombres se alojaron en cabañas de la villa olímpica, y las 126 atletas, aparte, en un hotel."
 		]
 	},
 	"olympic-1936": {
-		"summary": "Juegos que estrenaron el relevo de la antorcha olímpica y las retransmisiones por televisión.",
+		"summary": "Juegos celebrados en Berlín, capital de la Alemania nazi, donde nacieron el relevo de la antorcha y las retransmisiones por televisión.",
 		"facts": [
 			"Sohn Kee-chung ganó el maratón corriendo con la bandera japonesa en el pecho.",
 			"Jesse Owens ganó los 100 metros, los 200 metros, el salto de longitud y el relevo."
 		]
 	},
 	"olympic-1948": {
-		"summary": "Juegos que volvieron a celebrarse 12 años después, tras la Segunda Guerra Mundial.",
+		"summary": "Juegos celebrados en Londres (Reino Unido) doce años después de los anteriores, tras la Segunda Guerra Mundial, sin invitar a Alemania ni a Japón.",
 		"facts": [
 			"Corea del Sur participó por primera vez en unos Juegos de verano con su propia bandera, la Taegukgi.",
 			"El halterófilo Kim Sung-jip logró el bronce, la primera medalla olímpica conseguida bajo la bandera surcoreana."
 		]
 	},
 	"olympic-1952": {
-		"summary": "Juegos del debut de la Unión Soviética, que empezó a disputarle el medallero a Estados Unidos.",
+		"summary": "Juegos celebrados en Helsinki (Finlandia), donde debutó la Unión Soviética e inició su rivalidad con Estados Unidos en el medallero.",
 		"facts": [
 			"Israel y la República Popular China también participaron por primera vez.",
 			"El checoslovaco Zátopek arrasó en tres pruebas de fondo."
 		]
 	},
 	"olympic-1956": {
-		"summary": "Primeros Juegos celebrados en el hemisferio sur, inaugurados a finales de noviembre.",
+		"summary": "Primeros Juegos del hemisferio sur, celebrados en Melbourne (Australia) y boicoteados por varios países por la revolución húngara y la crisis de Suez.",
 		"facts": [
 			"Por las normas de cuarentena, la hípica se disputó cinco meses antes en Estocolmo.",
 			"Nació la tradición de que los atletas entren mezclados, sin separarse por países, en la ceremonia de clausura."
 		]
 	},
 	"olympic-1960": {
-		"summary": "Juegos con pruebas en ruinas antiguas como la basílica de Majencio y las termas de Caracalla.",
+		"summary": "Juegos celebrados en Roma (Italia), donde Abebe Bikila ganó descalzo el maratón y dio a Etiopía su primer oro.",
 		"facts": [
-			"Abebe ganó el maratón corriendo descalzo y dio a Etiopía su primer oro.",
+			"Algunas pruebas se disputaron en ruinas antiguas como la basílica de Majencio y las termas de Caracalla.",
 			"Justo después de los Juegos, la misma ciudad acogió los primeros Juegos Paralímpicos."
 		]
 	},
 	"olympic-1964": {
-		"summary": "Primeros Juegos celebrados en Asia, nueve días después de que empezara a circular el Shinkansen.",
+		"summary": "Primeros Juegos en Asia, celebrados en Tokio (Japón), nueve días después de que empezara a circular el Shinkansen.",
 		"facts": [
 			"Se retransmitieron en directo a Estados Unidos, al otro lado del océano, gracias al satélite geoestacionario Syncom 3.",
 			"El judo y el voleibol, muy populares en Japón, entraron por primera vez como deportes oficiales."
 		]
 	},
 	"olympic-1968": {
-		"summary": "Juegos disputados en la altura, a 2240 metros sobre el nivel del mar.",
+		"summary": "Juegos celebrados en Ciudad de México, la elevada capital de México, donde unos medallistas negros alzaron el puño en el podio.",
 		"facts": [
 			"El salto de longitud de 8,90 metros de Bob Beamon fue récord mundial durante 23 años.",
 			"Después de que Fosbury ganara saltando de espaldas, esa técnica se convirtió en la estándar del salto de altura."
 		]
 	},
 	"olympic-1972": {
-		"summary": "Juegos en los que la toma de rehenes en la villa olímpica detuvo la competición durante 34 horas.",
+		"summary": "Juegos celebrados en Múnich (Alemania Occidental), donde un comando palestino atacó la villa de los atletas y murieron 11 miembros del equipo israelí.",
 		"facts": [
 			"El nadador Mark Spitz ganó siete medallas de oro.",
 			"El perro salchicha Waldi fue la primera mascota olímpica oficial."
 		]
 	},
 	"olympic-1976": {
-		"summary": "Juegos en los que una gimnasta de 14 años obtuvo el primer 10 perfecto de la historia olímpica.",
+		"summary": "Juegos celebrados en Montreal (Canadá), donde Nadia Comăneci, de 14 años, logró el primer 10 perfecto en gimnasia.",
 		"facts": [
 			"Yang Jung-mo ganó en lucha el primer oro olímpico de Corea del Sur.",
 			"Como el marcador no podía mostrar 10.00, el 10 de Comăneci apareció como 1.00."
 		]
 	},
 	"olympic-1980": {
-		"summary": "Juegos de los que se ausentaron 66 países por el boicot encabezado por Estados Unidos.",
+		"summary": "Juegos celebrados en Moscú (Unión Soviética), sin unos 60 países por un boicot encabezado por Estados Unidos.",
 		"facts": [
 			"Misha, el oso mascota, derramó una lágrima en el mosaico humano de la ceremonia de clausura.",
 			"Corea del Sur, Japón y Alemania Occidental tampoco acudieron, en protesta por la invasión de Afganistán."
 		]
 	},
 	"olympic-1984": {
-		"summary": "Juegos que la Unión Soviética y otros 14 países del bloque del Este boicotearon en respuesta.",
+		"summary": "Juegos celebrados en Los Ángeles (Estados Unidos), a los que la Unión Soviética y el bloque del Este no acudieron en represalia.",
 		"facts": [
 			"Se consideran los primeros Juegos que cerraron con beneficios gracias al patrocinio empresarial.",
 			"Carl Lewis ganó cuatro pruebas de atletismo."
 		]
 	},
 	"olympic-1988": {
-		"summary": "Primeros Juegos celebrados en Corea del Sur, que reunieron a 159 países y territorios, la cifra más alta hasta entonces.",
+		"summary": "Juegos celebrados en Seúl (Corea del Sur), que reunieron al Este y al Oeste por primera vez en doce años, con 159 países y territorios.",
 		"facts": [
-			"Por primera vez en 12 años participaron juntos los bloques del Este y del Oeste.",
+			"Ben Johnson ganó los 100 metros, pero perdió el oro por dopaje.",
 			"En la ceremonia de apertura, un niño cruzó el estadio vacío haciendo rodar un aro."
 		]
 	},
 	"olympic-1992": {
-		"summary": "Primeros Juegos de verano tras la disolución de la Unión Soviética y la reunificación alemana.",
+		"summary": "Juegos celebrados en Barcelona (España) tras la Guerra Fría, donde las antiguas repúblicas soviéticas compitieron como un solo Equipo Unificado.",
 		"facts": [
-			"Las antiguas repúblicas soviéticas compitieron juntas como Equipo Unificado.",
+			"El «Dream Team» de estrellas estadounidenses de la NBA ganó el oro en baloncesto.",
 			"Hwang Young-cho ganó el maratón y se colgó el oro 56 años después de Sohn Kee-chung."
 		]
 	},
 	"olympic-1996": {
-		"summary": "Juegos del centenario del olimpismo moderno, en los que Muhammad Ali encendió el pebetero.",
+		"summary": "Juegos del centenario de la era moderna, celebrados en Atlanta (Estados Unidos), donde Muhammad Ali encendió el pebetero.",
 		"facts": [
 			"Un atentado con bomba en un parque causó dos muertos, pero la competición siguió adelante.",
 			"El vóley playa y el sóftbol se convirtieron por primera vez en deportes oficiales."
 		]
 	},
 	"olympic-2000": {
-		"summary": "Juegos en los que el triatlón debutó en las aguas frente a la Ópera.",
+		"summary": "Juegos celebrados en Sídney (Australia), donde las delegaciones de las dos Coreas desfilaron juntas bajo la bandera de la unificación por primera vez en la ceremonia de apertura.",
 		"facts": [
-			"Las delegaciones de Corea del Sur y Corea del Norte desfilaron juntas en la inauguración.",
+			"El triatlón debutó en las aguas frente a la Ópera.",
 			"El taekwondo entró como deporte oficial y Corea del Sur ganó tres oros."
 		]
 	},
 	"olympic-2004": {
-		"summary": "Juegos que volvieron, 108 años después, a la ciudad que acogió los primeros Juegos modernos.",
+		"summary": "Juegos que volvieron a Atenas (Grecia), cuna de los Juegos modernos, 108 años después.",
 		"facts": [
 			"El lanzamiento de peso se disputó en el estadio de la antigua Olimpia.",
 			"El maratón salió de la antigua llanura de Maratón."
 		]
 	},
 	"olympic-2008": {
-		"summary": "Juegos en los que China encabezó por primera vez el medallero de oros.",
+		"summary": "Juegos celebrados en Pekín (China), donde el anfitrión encabezó por primera vez el medallero de oros, por delante de Estados Unidos.",
 		"facts": [
 			"Bolt batió los récords mundiales de 100 y 200 metros.",
 			"Phelps ganó ocho oros en unos mismos Juegos."
 		]
 	},
 	"olympic-2012": {
-		"summary": "Juegos con los que una misma ciudad fue sede olímpica por tercera vez, algo inédito hasta entonces.",
+		"summary": "Juegos celebrados en Londres (Reino Unido), la primera ciudad en organizarlos por tercera vez.",
 		"facts": [
 			"Fueron los primeros Juegos en los que todos los países participantes llevaron al menos una mujer.",
 			"Con la llegada del boxeo femenino, fueron los primeros con mujeres en todos los deportes."
 		]
 	},
 	"olympic-2016": {
-		"summary": "Primeros Juegos celebrados en América del Sur, con la ceremonia de apertura en el estadio de Maracaná.",
+		"summary": "Primeros Juegos en Sudamérica, celebrados en Río de Janeiro (Brasil), donde compitió por primera vez un equipo de atletas refugiados.",
 		"facts": [
-			"Diez atletas de Sudán del Sur, Siria y otros países compitieron por primera vez como equipo de refugiados.",
+			"La ceremonia de apertura se celebró en el estadio de fútbol de Maracaná.",
 			"El golf volvió como deporte oficial 112 años después."
 		]
 	},
 	"olympic-2020": {
-		"summary": "Juegos aplazados un año por una pandemia y celebrados en 2021.",
+		"summary": "Juegos aplazados un año por la COVID-19 y celebrados en Tokio (Japón) en 2021, casi sin público.",
 		"facts": [
-			"Por la COVID-19, la mayoría de las pruebas se disputaron sin público.",
+			"Tokio fue la primera ciudad asiática en organizar dos veces los Juegos de verano.",
 			"El skateboarding y el surf debutaron como deportes oficiales."
 		]
 	},
 	"olympic-2024": {
-		"summary": "Juegos cuya ceremonia de apertura se celebró sobre un río en lugar de en un estadio.",
+		"summary": "Juegos que volvieron a París (Francia) cien años después, con una ceremonia de apertura en barcos por el Sena.",
 		"facts": [
 			"El tiro con arco femenino de Corea del Sur ganó el oro por equipos por décima vez consecutiva.",
 			"El breaking se disputó por primera vez como deporte oficial."

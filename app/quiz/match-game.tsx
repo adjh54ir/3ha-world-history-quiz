@@ -14,7 +14,7 @@ import { LearnType } from '@/src/types/data/LearnType';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { playFlip, playMatch, playWrong, playFinish } from '@/src/utils/SoundUtils';
-import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
+import { startBgm, stopBgm, fadeOutBgm } from '@/src/utils/BgmUtils';
 import { Image as ExpoImage } from 'expo-image';
 import { FEATURE_ILLUSTRATIONS } from '@/src/const/ConstFeatureIllustrationAssets';
 import { themed } from '@/src/utils/ThemedStyles';
@@ -92,7 +92,7 @@ const MatchGame = () => {
 
 	// 배경음악 — 시계가 도는 동안만 긴박한 트랙, 다 맞추면/이탈하면 정지
 	useEffect(() => {
-		if (done) stopBgm();
+		if (done) fadeOutBgm(); // 다 맞추면 뚝 끊지 않고 줄이며 멈춘다
 		else startBgm('time');
 	}, [done]);
 	useEffect(() => () => stopBgm(), []);

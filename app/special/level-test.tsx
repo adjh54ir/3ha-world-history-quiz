@@ -18,7 +18,7 @@ import { Spacing, SpacingV, Radius, Typography, CardSurface, Layout, Border } fr
 import { AnimatedProgress, FadeInUp, useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { scaleArt, scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
 import { playFinish, playCorrect, playWrong } from '@/src/utils/SoundUtils';
-import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
+import { startBgm, stopBgm, fadeOutBgm } from '@/src/utils/BgmUtils';
 import LearnHubService from '@/src/services/LearnHubService';
 import TestHistoryService, { LevelTestRecord } from '@/src/services/TestHistoryService';
 import DateUtils from '@/src/utils/DateUtils';
@@ -103,6 +103,7 @@ const LevelTest = () => {
 	// 배경음악 — 문제 풀이 중에만 재생, 시작 전/결과/이탈 시 정지 (메모리 정리)
 	useEffect(() => {
 		if (started && !finished) startBgm('quiz');
+		else if (finished) fadeOutBgm(); // 결과로 넘어갈 때는 줄이며 멈춘다
 		else stopBgm();
 	}, [started, finished]);
 	// 언마운트 시 배경음 정리

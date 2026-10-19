@@ -529,7 +529,11 @@
                 "testDesc": "Check right now that notifications arrive",
                 "testSend": "Send",
                 "bgm": "Background music",
-                "bgmDesc": "Play jungle music during quizzes, games and study"
+                "bgmDesc": "Play jungle music during quizzes, games and study",
+                "volume": "Sound volume",
+                "volumeLow": "Low",
+                "volumeMid": "Medium",
+                "volumeHigh": "High"
             },
             "toast": {
                 "soundOn": "Sound effects on",
@@ -1041,12 +1045,13 @@
                 "permMsg": "Please allow notifications in Settings.",
                 "alarmOn": "Daily quiz reminder on",
                 "alarmOff": "Daily quiz reminder off",
-                "start": "Start today's quiz",
+                "start": "Start quiz",
+                "topicsLabel": "Today's topics",
                 "guideTitle": "How Today's Quiz Works",
                 "guide": {
                     "count": "{{count}} questions from all topics, plus some mistakes to review.",
-                    "once": "Once a day, no time limit. Take it easy.",
-                    "result": "See your results and explanations right after!"
+                    "image": "Questions with a picture show it right on screen.",
+                    "result": "Once a day! See results and explanations right after."
                 }
             },
             "wrong": {

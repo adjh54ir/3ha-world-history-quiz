@@ -33,3 +33,12 @@ export const GOOGLE_ADMOV_IOS_OPEN_APP = process.env.EXPO_PUBLIC_GOOGLE_ADMOV_IO
 export const GOOGLE_ADMOV_ANDROID_NATIVE_ADVANCED = process.env.EXPO_PUBLIC_GOOGLE_ADMOV_ANDROID_NATIVE_ADVANCED ?? '';
 export const GOOGLE_ADMOV_IOS_NATIVE_ADVANCED = process.env.EXPO_PUBLIC_GOOGLE_ADMOV_IOS_NATIVE_ADVANCED ?? '';
 
+/**
+ * AdMob 테스트 기기 ID (쉼표 구분) — 스토어로 받은 검수 기기(Play 내부 테스트 등)용.
+ * 적어 두면 운영 유닛으로도 테스트 광고만 받는다(무효 트래픽 방지). ID 는 AdMob SDK 가 Xcode·logcat 콘솔에 찍어 준다.
+ */
+export const ADMOB_TEST_DEVICES: string[] = (process.env.EXPO_PUBLIC_ADMOB_TEST_DEVICES ?? '')
+	.split(',')
+	.map((id) => id.trim())
+	.filter(Boolean);
+

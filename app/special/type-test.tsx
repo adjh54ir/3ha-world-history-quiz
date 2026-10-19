@@ -21,7 +21,7 @@ import { FadeInUp } from '@/src/screens/common/anim/Motion';
 import { scaleArt, scaledSize, scaleHeight, scaleWidth, screenWidth, isTablet } from '@/src/utils';
 import { useToast } from '@/src/context/ToastContext';
 import { playFinish, playPop } from '@/src/utils/SoundUtils';
-import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
+import { startBgm, stopBgm, fadeOutBgm } from '@/src/utils/BgmUtils';
 import TestHistoryService, { TypeTestRecord } from '@/src/services/TestHistoryService';
 import DateUtils from '@/src/utils/DateUtils';
 import { Image as ExpoImage } from 'expo-image';
@@ -75,6 +75,7 @@ const TypeTest = () => {
 	// 배경음악 — 문항을 고르는 동안만 재생, 시작 전/결과/이탈 시 정지
 	useEffect(() => {
 		if (started && !resultKey) startBgm('quiz');
+		else if (resultKey) fadeOutBgm(); // 결과로 넘어갈 때는 줄이며 멈춘다
 		else stopBgm();
 	}, [started, resultKey]);
 	useEffect(() => () => stopBgm(), []);

@@ -54,7 +54,7 @@ import BottomButton from '@/src/screens/common/atomic/BottomButton';
 import ScrollTopButton, { useScrollTop } from '@/src/screens/common/atomic/ScrollTopButton';
 import { playCorrect, playWrong, playFinish, playTimeout, playCombo, playTick, playWhoosh, playPop, isSoundEnabled, setSoundEnabled } from '@/src/utils/SoundUtils';
 import { useToast } from '@/src/context/ToastContext';
-import { startBgm, stopBgm } from '@/src/utils/BgmUtils';
+import { startBgm, stopBgm, fadeOutBgm } from '@/src/utils/BgmUtils';
 import { categoryIcon, compareDifficultyLabels, difficultyIcon, sortByLevelAsc, DIFFICULTY_LABELS } from '@/src/const/ConstQuizMeta';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import DonutChart from '@/src/screens/common/atomic/DonutChart';
@@ -77,6 +77,8 @@ const MIN_RESTART_LOADING_MS = 600;
 const ADAPTIVE_COMBO = 3;
 /** 진행바 세그먼트가 너무 잘게 쪼개지지 않는 최대 문항 수 (타임 챌린지 같은 대량 출제는 표시하지 않음) */
 const LEVEL_STRIP_MAX = 20;
+/** 문제 글이 이 글자 수를 넘으면 한 단계 작은 글씨로 — 설명 보고 맞히기 문항이 40~80자다 */
+const PROMPT_LONG = 40;
 /** 난이도별 진행바 농도 — 헤더(accent 배경) 위 흰색 알파로 표현해 새 색을 만들지 않는다 */
 const LEVEL_ALPHA = localized((): Record<string, string> => ({ [DIFFICULTY_LABELS[1]]: '59', [DIFFICULTY_LABELS[2]]: '8C', [DIFFICULTY_LABELS[3]]: 'BF', [DIFFICULTY_LABELS[4]]: 'FF' }));
 
@@ -479,7 +481,9 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	// 배경음악(BGM) — 퀴즈 진행 중에만 반복 재생, 타임챌린지는 긴박한 트랙. 시작 전/종료/이탈 시 정지.
 	useEffect(() => {
 		if (showStartModal || finished || questions.length === 0) {
-			stopBgm();
+			// 결과 화면으로 넘어갈 때는 뚝 끊지 않고 줄이며 멈춘다(결과 연출로 자연스럽게 이어지게)
+			if (finished) fadeOutBgm();
+			else stopBgm();
 			return;
 		}
 		startBgm(timed ? 'time' : 'quiz');
@@ -685,7 +689,8 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			setCombo(nextCombo);
 			setBestCombo((b) => Math.max(b, nextCombo));
 			// 타임챌린지 콤보 사운드 — 2콤보부터 시작해 2·5·8·11…로 보상(정답음과 겹치지 않게 절제, 더 자주 체감)
-			if (timed && nextCombo >= 2 && (nextCombo - 2) % 3 === 0) playCombo();
+			// 일반 퀴즈(오늘의 퀴즈·O/X 등)는 3연속 정답마다(3·6·9…) — 문항 사이가 길어 2콤보는 너무 잦게 들린다
+			if (timed ? nextCombo >= 2 && (nextCombo - 2) % 3 === 0 : nextCombo % 3 === 0) playCombo();
 			if (nextCombo >= 2) {
 				comboAnimationRef.current?.stop();
 				comboScale.setValue(0);
@@ -1504,16 +1509,16 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						<View style={[styles.promptFrame, presentation.variant === 'chat' && styles.promptFrameChat, presentation.variant === 'sentence' && styles.promptFrameSentence]}>
 							{current.imageRef ? (
 								<>
-									{/* 그림이 곧 문제인 문항은 크게, 문제 글을 거드는 그림은 작게 — 보기가 첫 화면 밖으로 밀리지 않게 */}
-									<EntryImage imageRef={current.imageRef} width={Math.min(screenWidth - scaleWidth(96), current.guide.includes(current.prompt) ? (isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176)) : (isWideImageRef(current.imageRef) ? scaleArt(160) : scaleArt(120)))} fetchWidth={isTablet ? 640 : 420} />
+									{/* 그림이 곧 문제인 문항은 크게, 문제 글을 거드는 그림은 작게 — 보기가 첫 화면 밖으로 밀리지 않게. 작은 국기·별자리는 눌러서 카드 폭까지 키운다 */}
+									<EntryImage imageRef={current.imageRef} width={Math.min(screenWidth - scaleWidth(96), current.guide.includes(current.prompt) ? (isWideImageRef(current.imageRef) ? scaleArt(210) : scaleArt(176)) : (isWideImageRef(current.imageRef) ? scaleArt(160) : scaleArt(120)))} fetchWidth={isTablet ? 640 : 420} zoomable />
 									{/* 그림 문항은 prompt 가 발문 그 자체다(OX 는 발문에 감싸 들어간다). 발문에 없는 글이면
 									    그림이 곁들임일 뿐인 문항(신화 로마 이름 등)이라 문제 글도 함께 보여 준다 */}
-									{!current.guide.includes(current.prompt) && <Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, styles.promptWithImage]}>{current.prompt}</Text>}
+									{!current.guide.includes(current.prompt) && <Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, current.prompt.length > PROMPT_LONG && styles.promptTextLong, styles.promptWithImage]}>{current.prompt}</Text>}
 									{!!current.subPrompt && <Text style={styles.subPromptText}>{current.subPrompt}</Text>}
 								</>
 							) : (
 								<>
-									<Text lineBreakStrategyIOS="hangul-word" style={styles.promptText}>{current.prompt}</Text>
+									<Text lineBreakStrategyIOS="hangul-word" style={[styles.promptText, current.prompt.length > PROMPT_LONG && styles.promptTextLong]}>{current.prompt}</Text>
 									{!!current.subPrompt && <Text style={styles.subPromptText}>{current.subPrompt}</Text>}
 								</>
 							)}
@@ -1885,6 +1890,8 @@ const styles = themed(() => StyleSheet.create({
 	promptFrameChat: { alignItems: 'center', backgroundColor: 'transparent', paddingHorizontal: Spacing.xs },
 	promptFrameSentence: { backgroundColor: Colors.surfaceAlt, borderRadius: Radius.lg, padding: Spacing.md, borderWidth: 1, borderColor: Colors.border },
 	promptText: { fontSize: Typography.h2, fontWeight: '900', color: Colors.primary, textAlign: 'center', lineHeight: scaleHeight(33) },
+	/** 설명을 보고 이름을 맞히는 문항처럼 문제 글이 긴 경우 — h2 로 두면 보기가 첫 화면 밖으로 밀린다 */
+	promptTextLong: { fontSize: Typography.title, fontWeight: '800', lineHeight: scaleHeight(27) },
 	promptWithImage: { marginTop: SpacingV.md },
 	subPromptText: { fontSize: Typography.callout, color: Colors.textSecondary, marginTop: SpacingV.sm, textAlign: 'center', lineHeight: scaleHeight(22) },
 
