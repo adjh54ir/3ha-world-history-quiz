@@ -16,6 +16,7 @@ export const OPEN_SOURCE_LIBS: OpenSourceLib[] = [
 	{ name: '@react-native-community/datetimepicker', version: '8.6.0', license: 'MIT', url: 'https://github.com/react-native-datetimepicker/datetimepicker' },
 	{ name: '@react-native-firebase/analytics', version: '24.1.1', license: 'Apache-2.0', url: 'https://github.com/invertase/react-native-firebase/tree/main/packages/analytics' },
 	{ name: '@react-native-firebase/app', version: '24.1.1', license: 'Apache-2.0', url: 'https://github.com/invertase/react-native-firebase/tree/main/packages/app' },
+	{ name: '@react-native-firebase/crashlytics', version: '24.1.1', license: 'Apache-2.0', url: 'https://github.com/invertase/react-native-firebase/tree/main/packages/crashlytics' },
 	{ name: '@react-navigation/bottom-tabs', version: '7.18.3', license: 'MIT', url: 'https://github.com/react-navigation/react-navigation' },
 	{ name: '@react-navigation/elements', version: '2.9.26', license: 'MIT', url: 'https://github.com/react-navigation/react-navigation' },
 	{ name: '@react-navigation/native', version: '7.3.4', license: 'MIT', url: 'https://github.com/react-navigation/react-navigation' },

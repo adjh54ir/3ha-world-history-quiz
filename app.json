@@ -165,7 +165,8 @@
             "useFrameworks": "static",
             "forceStaticLinking": [
               "RNFBAnalytics",
-              "RNFBApp"
+              "RNFBApp",
+              "RNFBCrashlytics"
             ]
           },
           "android": {
@@ -174,6 +175,7 @@
         }
       ],
       "expo-asset",
+      "@react-native-firebase/crashlytics",
       [
         "react-native-google-mobile-ads",
         {

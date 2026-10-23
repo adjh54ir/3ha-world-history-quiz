@@ -88,6 +88,7 @@ platform :ios do
       changelog: ENV["CHANGELOG"] || "버그 수정 및 개선",
       distribute_external: false
     )
+    upload_dsyms
   end
 
   desc "Firebase App Distribution 배포 (iOS)"
@@ -120,7 +121,13 @@ platform :ios do
     frameit(silver: true, path: "./fastlane/screenshots") rescue UI.message("frameit 생략")
   end
 
-  desc "iOS: 빌드→TestFlight (CI 풀 파이프라인)"
+  desc "최신 dSYM 다운로드 후 Crashlytics 업로드"
+  lane :upload_dsyms do
+    download_dsyms(version: read_app_version) rescue UI.message("download_dsyms 생략")
+    upload_symbols_to_crashlytics(gsp_path: "./GoogleService-Info.plist") rescue UI.message("dSYM 업로드 생략")
+  end
+
+  desc "iOS: 빌드→TestFlight→dSYM (CI 풀 파이프라인)"
   lane :ci do
     beta
   end

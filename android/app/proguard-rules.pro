@@ -47,9 +47,11 @@
 -keep class app.notifee.core.** { *; }
 -keep interface app.notifee.core.** { *; }
 
-# ────────────────────────────── Firebase (Analytics)
+# ────────────────────────────── Firebase (Analytics / Crashlytics)
 -keep class io.invertase.firebase.** { *; }
 -dontwarn io.invertase.firebase.**
+# Crashlytics 가 심볼을 붙일 수 있도록 예외 클래스명은 지우지 않는다
+-keep public class * extends java.lang.Exception
 
 # ────────────────────────────── 광고 (Google Mobile Ads)
 -keep class com.google.android.gms.ads.** { *; }
