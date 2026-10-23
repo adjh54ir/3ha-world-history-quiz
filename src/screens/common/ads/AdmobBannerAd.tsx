@@ -2,12 +2,10 @@ import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { GOOGLE_ADMOV_ANDROID_BANNER, GOOGLE_ADMOV_IOS_BANNER } from '@env';
-import analytics from '@react-native-firebase/analytics';
-import DeviceInfo from 'react-native-device-info';
 import { themed } from '@/src/utils/ThemedStyles';
-import DateUtils from '@/src/utils/DateUtils';
 import AdGuardService, { useAdGuardBlocked } from '@/src/services/ads/AdGuardService';
 import { USE_TEST_ADS, resolveAdUnitId } from './adUnitId';
+import { logAdClick } from './adLogEvent';
 
 // 앵커드 어댑티브 배너 전용 테스트 유닛 — 고정 배너 유닛(BANNER)은 어댑티브 크기로 부르면 채워지지 않을 때가 있다
 const AD_UNIT_ID = resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_BANNER, android: GOOGLE_ADMOV_ANDROID_BANNER }), TestIds.ADAPTIVE_BANNER);
@@ -30,27 +28,8 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 	// 로드 실패 뒤 수동 재요청도 하지 않는다 — 갱신은 AdMob 콘솔의 자동 새로고침 설정에만 맡긴다.
 
 	// 배너 onAdOpened 는 사용자가 배너를 눌러 광고 랜딩이 열릴 때 온다 → 클릭으로 센다
-	const handleAdOpened = async () => {
+	const handleAdOpened = () => {
 		AdGuardService.registerClick('banner');
-		try {
-			const instanceId = await analytics().getAppInstanceId();
-			await analytics().logEvent('ad_banner_opened', {
-				ad_platform: 'admob',
-				ad_format: 'banner',
-				ad_unit_id: AD_UNIT_ID,
-				app_name: DeviceInfo.getApplicationName(),
-				app_version: DeviceInfo.getVersion(),
-				build_number: DeviceInfo.getBuildNumber(),
-				device_platform: Platform.OS,
-				device_model: DeviceInfo.getModel(),
-				device_brand: DeviceInfo.getBrand(),
-				system_version: DeviceInfo.getSystemVersion(),
-				app_instance_id: instanceId,
-				timestamp: DateUtils.toISOString(),
-			});
-		} catch (error) {
-			console.error('🔥 Failed to log ad click:', error);
-		}
 	};
 
 	// 클릭 어뷰징 차단 중에는 요청 자체를 하지 않는다 (렌더 제거 → 노출/요청 0)
@@ -71,6 +50,7 @@ const AdmobBannerAd: React.FC<AdmobBannerAdProps> = ({
 				unitId={AD_UNIT_ID}
 				size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
 				onAdOpened={handleAdOpened}
+				onAdClicked={() => void logAdClick('banner', AD_UNIT_ID)}
 				onAdFailedToLoad={(e: unknown) => { if (__DEV__) console.warn('❌ [AdMob] 배너 로드 실패:', AD_UNIT_ID, e); }}
 			/>
 			{/* 테스트 유닛 표시 — 운영(스토어) 설치에서는 USE_TEST_ADS 가 false 라 그려지지 않는다 */}

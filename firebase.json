@@ -1,6 +1,3 @@
 {
-  "react-native": {
-    "crashlytics_debug_enabled": true,
-    "firebase_crashlytics_enabled": true
-  }
+  "react-native": {}
 }

@@ -9,6 +9,7 @@ import AdGuardService from '@/src/services/ads/AdGuardService';
 import { ensureAudioMode } from '@/src/utils/SoundUtils';
 import Colors from '@/src/const/ConstColors';
 import { resolveAdUnitId } from './adUnitId';
+import { logAdClick } from './adLogEvent';
 import { themed } from '@/src/utils/ThemedStyles';
 
 const AD_UNIT_ID = resolveAdUnitId(
@@ -53,6 +54,7 @@ const AdmobRewardAd: React.FC<{
 		// 클릭은 하루 광고 클릭 수에 함께 센다
 		const unsubscribeClicked = ad.addAdEventListener(AdEventType.CLICKED, () => {
 			AdGuardService.registerClick('rewarded');
+			void logAdClick('rewarded', AD_UNIT_ID);
 		});
 
 		const unsubscribeFailed = ad.addAdEventListener(AdEventType.ERROR, (error) => {

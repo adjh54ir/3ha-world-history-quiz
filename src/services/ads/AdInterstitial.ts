@@ -13,7 +13,7 @@ import { GOOGLE_ADMOV_ANDROID_FRONT, GOOGLE_ADMOV_ANDROID_OPEN_APP, GOOGLE_ADMOV
 
 import AdGuardService from './AdGuardService';
 import { resolveAdUnitId } from '@/src/screens/common/ads/adUnitId';
-import { logAdEvent } from '@/src/screens/common/ads/adLogEvent';
+import { logAdClick, type AdClickFormat } from '@/src/screens/common/ads/adLogEvent';
 import { ensureAudioMode } from '@/src/utils/SoundUtils';
 
 const AD_UNIT_ID = resolveAdUnitId(Platform.select({ ios: GOOGLE_ADMOV_IOS_FRONT, android: GOOGLE_ADMOV_ANDROID_FRONT }), TestIds.INTERSTITIAL);
@@ -43,7 +43,7 @@ export const loadInterstitialAd = async (timeoutMs: number = LOAD_TIMEOUT_MS, ap
 	if (AdGuardService.isBlocked('interstitial')) return null;
 
 	const unitId = appOpen ? APP_OPEN_UNIT_ID : AD_UNIT_ID;
-	const format = appOpen ? 'app_open' : 'interstitial';
+	const format: AdClickFormat = appOpen ? 'app_open' : 'interstitial';
 	const ad = (appOpen ? AppOpenAd : InterstitialAd).createForAdRequest(unitId);
 
 	return new Promise<LoadedAd | null>((resolve) => {
@@ -70,9 +70,8 @@ export const loadInterstitialAd = async (timeoutMs: number = LOAD_TIMEOUT_MS, ap
 };
 
 /** 받아 둔 광고를 띄우고 닫힐 때까지 기다린다 */
-const showLoaded = (ad: InterstitialAd | AppOpenAd, format: string, unitId: string): Promise<boolean> =>
+const showLoaded = (ad: InterstitialAd | AppOpenAd, format: AdClickFormat, unitId: string): Promise<boolean> =>
 	new Promise<boolean>((resolve) => {
-		const log = { adFormat: format, adUnitId: unitId };
 		let shown = false;
 		let settled = false;
 		const finish = () => {
@@ -89,12 +88,11 @@ const showLoaded = (ad: InterstitialAd | AppOpenAd, format: string, unitId: stri
 				case AdEventType.OPENED:
 					shown = true;
 					AdGuardService.registerShow('interstitial');
-					void logAdEvent(`ad_${format}_opened`, log);
 					break;
 				case AdEventType.CLICKED:
 					// 하루 클릭 한도를 넘기면 이 형식(과 전체)을 내린다 — AdMob 무효 트래픽 보호
 					AdGuardService.registerClick('interstitial');
-					void logAdEvent(`ad_${format}_clicked`, log);
+					void logAdClick(format, unitId);
 					break;
 				case AdEventType.CLOSED:
 				case AdEventType.ERROR:
