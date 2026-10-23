@@ -161,7 +161,7 @@
         "expo-build-properties",
         {
           "ios": {
-            "deploymentTarget": "16.0",
+            "deploymentTarget": "16.4",
             "useFrameworks": "static",
             "forceStaticLinking": [
               "RNFBAnalytics",
@@ -183,7 +183,9 @@
       ],
       "@react-native-community/datetimepicker",
       "expo-localization",
-      "expo-sharing"
+      "expo-sharing",
+      "expo-image",
+      "expo-status-bar"
     ],
     "extra": {
       "router": {},

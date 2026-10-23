@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, ScrollView, Keyboard, KeyboardAvoidingView, ActivityIndicator } from 'react-native';
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
-import { useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop } from 'expo-router/react-navigation';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import DomainIcon from '@/src/screens/common/atomic/DomainIcon';
 import FilterOptionSheet from '@/src/screens/common/atomic/filter-option-sheet';
@@ -397,7 +397,7 @@ const SearchTab = () => {
 				extraData={bmUids}
 				onEndReached={loadMore}
 				onEndReachedThreshold={0.6}
-				ListFooterComponent={hasMore ? <ActivityIndicator style={styles.footerLoader} color={scopeAccent} /> : null}
+				ListFooterComponent={hasMore ? <ActivityIndicator style={styles.footerLoader} color={scopeAccent} /> : undefined}
 				keyExtractor={(c) => c.uid}
 				renderItem={renderItem}
 				numColumns={COLS}

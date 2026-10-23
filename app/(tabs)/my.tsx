@@ -2,8 +2,9 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Switch, Linking, Image, Platform, FlatList, AppState, Animated } from 'react-native';
-import { useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop } from 'expo-router/react-navigation';
 import { router, useFocusEffect } from 'expo-router';
+import { Image as RemoteImage } from 'expo-image';
 import DeviceInfo from 'react-native-device-info';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee, { AuthorizationStatus } from '@notifee/react-native';
@@ -35,7 +36,7 @@ import LanguagePickerModal from '@/src/screens/modal/LanguagePickerModal';
 import OnboardingService, { INTEREST_OPTIONS, type Interest } from '@/src/services/OnboardingService';
 import { shareApp as appShare, openStoreReview } from '@/src/utils/AppShare';
 import { openContactMail } from '@/src/utils/ReportIssue';
-import { COMMON_APPS_DATA, appStoreUrl, isNewApp } from '@/src/const/common/CommonAppsData';
+import { appIconUrl, appStoreUrl, fetchCommonApps, isNewApp, localizedApp } from '@/src/const/common/CommonAppsData';
 import { CommonType } from '@/src/types/CommonType';
 import { useToast } from '@/src/context/ToastContext';
 import { setThemeMode } from '@/src/utils/ThemeReload';
@@ -115,7 +116,7 @@ const THEME_OPTIONS = [
 ] as const satisfies readonly { key: ThemeMode; labelKey: string; descKey: string; icon: string }[];
 
 const Setting = () => {
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const [reminderOn, setReminderOn] = useState(false);
 	const [showAlarm, setShowAlarm] = useState(false);
 	const [showLang, setShowLang] = useState(false);
@@ -166,7 +167,12 @@ const Setting = () => {
 
 	// 함께 쓰기 좋은 상식·퀴즈 앱만 노출 (수픽·한국어 상식 퀴즈·한자 급수 퀴즈·무한 수학 퀴즈·냥픽·멍픽)
 	const RELATED_APP_IDS = [3, 24, 23, 19, 8, 6];
-	const previewApps = RELATED_APP_IDS.map((id) => COMMON_APPS_DATA.Apps.find((a) => a.id === id)).filter(Boolean) as typeof COMMON_APPS_DATA.Apps;
+	// 목록은 Supabase Storage 에서 받는다 — 받기 전·실패 시에는 두 앱 구역을 통째로 숨긴다(탭에 다시 들어오면 리마운트되며 새로 묻는다)
+	const [apps, setApps] = useState<CommonType.AppItem[]>([]);
+	useEffect(() => {
+		fetchCommonApps().then(setApps, () => { });
+	}, []);
+	const previewApps = RELATED_APP_IDS.map((id) => apps.find((a) => a.id === id)).filter((a): a is CommonType.AppItem => !!a);
 	const openStore = (app: CommonType.AppItem) => {
 		const url = appStoreUrl(app);
 		if (!url) {
@@ -665,51 +671,61 @@ const Setting = () => {
 							</TouchableOpacity>
 						)}
 					</View>
-					{/* 함께하면 좋은 퀴즈 앱 */}
-					<SubHead label={t('settings.section.relatedApps')} icon="apps" />
-					<View style={styles.card}>
-						{/* 태블릿은 2열 — 첫 줄(열 수만큼)은 윗선 없이 */}
-						<AdaptiveGrid columns={APP_COLS}>
-						{previewApps.map((app, i) => (
-							<TouchableOpacity key={app.id} style={[styles.row, i >= APP_COLS && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
-								<Image source={app.icon} style={styles.appIcon} />
-								<View style={styles.rowBody}>
-									<Text style={styles.rowLabel} numberOfLines={1}>{app.title}</Text>
-									<Text style={styles.rowDesc} numberOfLines={2}>{app.desc}</Text>
-								</View>
-								<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
-							</TouchableOpacity>
-						))}
-						</AdaptiveGrid>
-					</View>
-
-					{/* 제작자 앱 더보기 — 설정 화면 맨 아래 앱 목록(가로 스크롤) */}
-					<SubHead label={t('settings.section.moreApps')} icon="apps" />
-					<View style={styles.footerAppWrapper}>
-						<FlatList
-							horizontal
-							data={COMMON_APPS_DATA.Apps}
-							keyExtractor={(item) => item.id.toString()}
-							showsHorizontalScrollIndicator={false}
-							contentContainerStyle={styles.footerAppList}
-							renderItem={({ item }) => (
-								<TouchableOpacity style={styles.footerAppCard} activeOpacity={0.85} onPress={() => openStore(item)}>
-									<View style={styles.footerAppIconBox}>
-										<View style={styles.footerAppIconWrapper}>
-											<Image source={item.icon} style={styles.footerAppIcon} resizeMode="contain" />
+					{/* 함께하면 좋은 퀴즈 앱 · 제작자 앱 더보기 — 목록을 받은 뒤에만 살며시 올라온다 */}
+					{apps.length > 0 && (
+						<FadeInUp distance={8} duration={260}>
+							<SubHead label={t('settings.section.relatedApps')} icon="apps" />
+							<View style={styles.card}>
+								{/* 태블릿은 2열 — 첫 줄(열 수만큼)은 윗선 없이 */}
+								<AdaptiveGrid columns={APP_COLS}>
+								{previewApps.map((app, i) => {
+									const text = localizedApp(app, i18n.language);
+									return (
+									<TouchableOpacity key={app.id} style={[styles.row, i >= APP_COLS && styles.rowBorder]} activeOpacity={0.7} onPress={() => openStore(app)}>
+										<RemoteImage source={{ uri: appIconUrl(app) }} style={styles.appIcon} contentFit="cover" transition={200} />
+										<View style={styles.rowBody}>
+											<Text style={styles.rowLabel} numberOfLines={1}>{text.title}</Text>
+											<Text style={styles.rowDesc} numberOfLines={2}>{text.desc}</Text>
 										</View>
-										{isNewApp(item) && (
-											<View style={styles.footerNewBadge}>
-												<Text style={styles.footerNewBadgeText}>NEW</Text>
+										<IconComponent type="materialIcons" name="open-in-new" size={scaledSize(20)} color={Colors.textMuted} />
+									</TouchableOpacity>
+									);
+								})}
+								</AdaptiveGrid>
+							</View>
+
+							{/* 제작자 앱 더보기 — 설정 화면 맨 아래 앱 목록(가로 스크롤) */}
+							<SubHead label={t('settings.section.moreApps')} icon="apps" />
+							<View style={styles.footerAppWrapper}>
+								<FlatList
+									horizontal
+									data={apps}
+									keyExtractor={(item) => item.id.toString()}
+									showsHorizontalScrollIndicator={false}
+									contentContainerStyle={styles.footerAppList}
+									renderItem={({ item }) => {
+										const text = localizedApp(item, i18n.language);
+										return (
+										<TouchableOpacity style={styles.footerAppCard} activeOpacity={0.85} onPress={() => openStore(item)}>
+											<View style={styles.footerAppIconBox}>
+												<View style={styles.footerAppIconWrapper}>
+													<RemoteImage source={{ uri: appIconUrl(item) }} style={styles.footerAppIcon} contentFit="contain" transition={200} />
+												</View>
+												{isNewApp(item) && (
+													<View style={styles.footerNewBadge}>
+														<Text style={styles.footerNewBadgeText}>NEW</Text>
+													</View>
+												)}
 											</View>
-										)}
-									</View>
-									<Text style={styles.footerAppTitle} numberOfLines={1}>{item.title}</Text>
-									<Text style={styles.footerAppDesc} numberOfLines={2}>{item.desc}</Text>
-								</TouchableOpacity>
-							)}
-						/>
-					</View>
+											<Text style={styles.footerAppTitle} numberOfLines={1}>{text.title}</Text>
+											<Text style={styles.footerAppDesc} numberOfLines={2}>{text.desc}</Text>
+										</TouchableOpacity>
+										);
+									}}
+								/>
+							</View>
+						</FadeInUp>
+					)}
 
 				</FadeInUp>
 			</ScrollView>

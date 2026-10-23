@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, type ScrollViewInstance } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -67,7 +67,7 @@ const LearningReportCard: React.FC<Props> = ({ style, variant = 'study' }) => {
 	const [selectedDate, setSelectedDate] = useState<string | null>(DateUtils.getLocalDateString());
 	const [showRangePicker, setShowRangePicker] = useState(false);
 	// 막대 그래프는 오늘이 맨 오른쪽 → 기간이 바뀌면 끝으로 붙여 오늘이 먼저 보이게 한다
-	const barsRef = useRef<ScrollView>(null);
+	const barsRef = useRef<ScrollViewInstance>(null);
 	const [rangeDraft, setRangeDraft] = useState<{ start: string; end: string | null }>({ start: '', end: null });
 
 	useFocusEffect(

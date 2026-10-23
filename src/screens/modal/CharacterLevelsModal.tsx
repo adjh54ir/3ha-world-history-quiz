@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, type ScrollViewInstance } from 'react-native';
 import { Image as ExpoImage } from 'expo-image';
 import { useTranslation } from 'react-i18next';
 import BottomSheet from '@/src/screens/common/atomic/BottomSheet';
@@ -44,7 +44,7 @@ const CharacterLevelsModal: React.FC<Props> = ({ visible, onClose, initialTab = 
 	const { t } = useTranslation();
 	const [tab, setTab] = useState(initialTab);
 	// 탭을 바꾸면 목록 맨 위부터 보여 준다
-	const gridRef = useRef<ScrollView>(null);
+	const gridRef = useRef<ScrollViewInstance>(null);
 	useScrollTopOnChange(gridRef, [tab]);
 	const [previewKey, setPreviewKey] = useState<string | null>(null);
 	const [score, setScore] = useState(0);
@@ -239,7 +239,7 @@ const styles = themed(() => StyleSheet.create({
 	cellLocked: { opacity: 0.75 },
 	cellImgWrap: { width: scaleArt(56), height: scaleArt(56), alignItems: 'center', justifyContent: 'center' },
 	cellImg: { width: scaleArt(50), height: scaleArt(50), borderRadius: Radius.lg },
-	cellLock: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
+	cellLock: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center' },
 	cellTitle: { fontSize: Typography.footnote, lineHeight: scaleHeight(16), fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.sm, textAlign: 'center' },
 	cellReq: { fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xs, textAlign: 'center' },
 }));

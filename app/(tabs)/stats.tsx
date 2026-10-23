@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, LayoutAnimation, Animated, Easing } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useIsFocused, useScrollToTop } from '@react-navigation/native';
+import { useIsFocused, useScrollToTop } from 'expo-router/react-navigation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect, router, useLocalSearchParams } from 'expo-router';
 import FitText from '@/src/screens/common/atomic/FitText';

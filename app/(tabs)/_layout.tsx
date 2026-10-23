@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
+import type { ColorValue } from 'react-native';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -7,6 +8,9 @@ import { isTablet, scaledSize, scaleWidth, screenWidth } from '@/src/utils';
 import Colors from '@/src/const/ConstColors';
 import { bodyFont, Layout, SpacingV, Typography } from '@/src/const/ConstDesign';
 import { useTranslation } from 'react-i18next';
+
+// 안드로이드 뒤로가기 시 홈 탭으로 돌아가도록 홈을 기준 탭으로 둔다 (첫 진입은 app/index.tsx 의 Redirect)
+export const unstable_settings = { anchor: 'home' };
 
 /**
  * 하단 탭 — 홈 / 챌린지 / 통계 / MY
@@ -18,12 +22,11 @@ export default function TabsLayout() {
 	const { t } = useTranslation();
 	const tabIcon =
 		(name: string) =>
-		({ color }: { color: string }) =>
+		({ color }: { color: ColorValue }) =>
 			<IconComponent type="materialIcons" name={name} color={color} size={scaledSize(22)} />;
 
 	return (
 		<Tabs
-			initialRouteName="home"
 			// 탭 화면 초기화는 각 화면의 withRemountOnFocus 가 담당한다
 			//  (여기서 또 리마운트하면 탭 전환 1회에 마운트 이펙트가 두 번 돈다)
 			screenOptions={{

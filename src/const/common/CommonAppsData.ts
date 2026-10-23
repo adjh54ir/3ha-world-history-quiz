@@ -1,316 +1,41 @@
 import { Platform } from 'react-native';
 
-import i18n from '@/src/translations';
+import type { Language } from '@/src/hooks/language/schema';
 import { CommonType } from '@/src/types/CommonType';
 import DateUtils from '@/src/utils/DateUtils';
 
-export const COMMON_APPS_DATA: {
-	Apps: CommonType.AppItem[];
-} = {
-	Apps: [
-		{
-			id: 32,
-			icon: require('@/src/assets/appicons/main_dinosaurquiz.webp'),
-			title: i18n.t('apps.dinosaurquiz.title'),
-			desc: i18n.t('apps.dinosaurquiz.desc'),
-			category: 'quiz',
-			releasedAt: '2026-10-18',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.dinosaurquiz',
-			ios: 'https://apps.apple.com/kr/app/id6822555212',
-		},
-		{
-			id: 31,
-			icon: require('@/src/assets/appicons/main_familyevent.webp'),
-			title: i18n.t('apps.familyevent.title'),
-			desc: i18n.t('apps.familyevent.desc'),
-			category: 'utility',
-			// 출시일 미정 — 실제 스토어 출시일로 고쳐 주세요
-			releasedAt: '2026-10-01',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.familyevent',
-			ios: 'https://apps.apple.com/kr/app/id6814714209',
-		},
-		{
-			id: 30,
-			icon: require('@/src/assets/appicons/main_lifehanja.webp'),
-			title: i18n.t('apps.lifehanja.title'),
-			desc: i18n.t('apps.lifehanja.desc'),
-			category: 'quiz',
-			// 출시 전 — 실제 스토어 출시일로 고쳐 주세요
-			releasedAt: '2026-10-01',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.lifehanja',
-			ios: 'https://apps.apple.com/kr/app/id6815041813',
-		},
-		{
-			id: 29,
-			icon: require('@/src/assets/appicons/main_birthdaylog.webp'),
-			title: i18n.t('apps.birthdaylog.title'),
-			desc: i18n.t('apps.birthdaylog.desc'),
-			category: 'utility',
-			// 출시일 미정 — 오늘 날짜로 넣어 둠, 실제 스토어 출시일로 고쳐 주세요
-			releasedAt: '2026-09-30',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.birthdaylog',
-			ios: 'https://apps.apple.com/kr/app/id6815043532',
-		},
-		{
-			id: 28,
-			icon: require('@/src/assets/appicons/main_jptravel.webp'),
-			title: i18n.t('apps.jptravel.title'),
-			desc: i18n.t('apps.jptravel.desc'),
-			category: 'utility',
-			releasedAt: '2026-09-29',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.jptravel',
-			ios: 'https://apps.apple.com/kr/app/id6815037133',
-		},
-		{
-			id: 27,
-			icon: require('@/src/assets/appicons/main_noisemeter.webp'),
-			title: i18n.t('apps.noisemeter.title'),
-			desc: i18n.t('apps.noisemeter.desc'),
-			category: 'utility',
-			releasedAt: '2026-09-15',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.apartmentnoise',
-			ios: 'https://apps.apple.com/kr/app/id6810932339',
-		},
-		{
-			id: 26,
-			icon: require('@/src/assets/appicons/main_qrmaker.webp'),
-			title: i18n.t('apps.qrmaker.title'),
-			desc: i18n.t('apps.qrmaker.desc'),
-			category: 'utility',
-			// 아이콘을 넣은 날 기준 추정값 — 실제 스토어 출시일로 고쳐 주세요
-			releasedAt: '2026-09-04',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.qrbar',
-			ios: 'https://apps.apple.com/kr/app/id6807281540',
-		},
-		{
-			id: 25,
-			icon: require('@/src/assets/appicons/main_spitogenie.webp'),
-			title: i18n.t('apps.spitogenie.title'),
-			desc: i18n.t('apps.spitogenie.desc'),
-			releasedAt: '2026-09-04',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.spitogenie',
-			ios: 'https://apps.apple.com/kr/app/id6807646866',
-			category: 'utility',
-		},
-		{
-			id: 24,
-			icon: require('@/src/assets/appicons/main_koreaquiz.webp'),
-			title: i18n.t('apps.koreaquiz.title'),
-			desc: i18n.t('apps.koreaquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.koreaquiz',
-			ios: 'https://apps.apple.com/kr/app/id6785823631',
-		},
-		{
-			id: 23,
-			icon: require('@/src/assets/appicons/main_hanpick.webp'),
-			title: i18n.t('apps.hanpick.title'),
-			desc: i18n.t('apps.hanpick.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.hanpick',
-			ios: 'https://apps.apple.com/kr/app/id6801430351',
-		},
-		{
-			id: 22,
-			icon: require('@/src/assets/appicons/main_vaulty.webp'),
-			title: i18n.t('apps.vaulty.title'),
-			desc: i18n.t('apps.vaulty.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.picturevault',
-			ios: 'https://apps.apple.com/kr/app/id6789028942',
-		},
-		{
-			id: 21,
-			// icon: require('@/src/assets/appicons/main_mindCare.webp'),
-			icon: require('@/src/assets/appicons/main_mindCare.webp'),
-			title: i18n.t('apps.mindCare.title'),
-			desc: i18n.t('apps.mindCare.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.metalcare',
-			ios: 'https://apps.apple.com/kr/app/id6787877075',
-		},
-		{
-			id: 20,
-			icon: require('@/src/assets/appicons/main_financeCalc.webp'),
-			title: i18n.t('apps.financeCalc.title'),
-			desc: i18n.t('apps.financeCalc.desc'),
-			category: 'calculator',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.lifefinancecalc',
-			ios: 'https://apps.apple.com/kr/app/id6759258758',
-		},
-		{
-			id: 19,
-			icon: require('@/src/assets/appicons/main_infinityOper.webp'),
-			title: i18n.t('apps.infinityOper.title'),
-			desc: i18n.t('apps.infinityOper.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.infinityoperations',
-			ios: 'https://apps.apple.com/kr/app/id6775210879',
-		},
-		{
-			id: 18,
-			icon: require('@/src/assets/appicons/main_bloodType.webp'),
-			title: i18n.t('apps.bloodType.title'),
-			desc: i18n.t('apps.bloodType.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.bloodtype',
-			ios: 'https://apps.apple.com/kr/app/id6769299321',
-		},
-		{
-			id: 17,
-			icon: require('@/src/assets/appicons/main_linkManager.webp'),
-			title: i18n.t('apps.linkManager.title'),
-			desc: i18n.t('apps.linkManager.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.linkmanager',
-			ios: 'https://apps.apple.com/kr/app/id6761520189',
-		},
-		{
-			id: 16,
-			icon: require('@/src/assets/appicons/main_emotionalEmoticon.webp'),
-			title: i18n.t('apps.emotionalEmoticon.title'),
-			desc: i18n.t('apps.emotionalEmoticon.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.emotionalemoticon',
-			ios: 'https://apps.apple.com/kr/app/id6760441156',
-		},
-		{
-			id: 15,
-			icon: require('@/src/assets/appicons/main_purekoreanquiz.webp'),
-			title: i18n.t('apps.purekoreanquiz.title'),
-			desc: i18n.t('apps.purekoreanquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.purekoreanquiz',
-			ios: 'https://apps.apple.com/kr/app/id6759251931',
-		},
-		{
-			id: 14,
-			icon: require('@/src/assets/appicons/main_unitCalc.webp'),
-			title: i18n.t('apps.unitCalc.title'),
-			desc: i18n.t('apps.unitCalc.desc'),
-			category: 'calculator',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.unitcalc',
-			ios: 'https://apps.apple.com/kr/app/id6757512881',
-		},
-		{
-			id: 13,
-			icon: require('@/src/assets/appicons/main_choncalc.webp'),
-			title: i18n.t('apps.choncalc.title'),
-			desc: i18n.t('apps.choncalc.desc'),
-			category: 'calculator',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.choncalcquiz',
-			ios: 'https://apps.apple.com/kr/app/id6755925570',
-		},
-		{
-			id: 12,
-			icon: require('@/src/assets/appicons/main_emotionbutton.webp'),
-			title: i18n.t('apps.emotionbutton.title'),
-			desc: i18n.t('apps.emotionbutton.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.emotionbutton',
-			ios: 'https://apps.apple.com/kr/app/id6755211160',
-		},
-		{
-			id: 11,
-			icon: require('@/src/assets/appicons/main_agecalc.webp'),
-			title: i18n.t('apps.agecalc.title'),
-			desc: i18n.t('apps.agecalc.desc'),
-			category: 'calculator',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.agecalc',
-			ios: 'https://apps.apple.com/kr/app/id6754360556',
-		},
-		{
-			id: 10,
-			icon: require('@/src/assets/appicons/main_spellingquiz.webp'),
-			title: i18n.t('apps.spellingquiz.title'),
-			desc: i18n.t('apps.spellingquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.spellingquiz',
-			ios: 'https://apps.apple.com/kr/app/id6753701785',
-		},
-		{
-			id: 9,
-			icon: require('@/src/assets/appicons/main_idiomquiz.webp'),
-			title: i18n.t('apps.idiomquiz.title'),
-			desc: i18n.t('apps.idiomquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.idiomquiz',
-			ios: 'https://apps.apple.com/kr/app/id6752314974',
-		},
-		{
-			id: 8,
-			icon: require('@/src/assets/appicons/main_catquiz.webp'),
-			title: i18n.t('apps.catquiz.title'),
-			desc: i18n.t('apps.catquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.catquiz',
-			ios: 'https://apps.apple.com/kr/app/id6751539764',
-		},
-		{
-			id: 7,
-			icon: require('@/src/assets/appicons/main_todaycigarette.webp'),
-			title: i18n.t('apps.todaycigarette.title'),
-			desc: i18n.t('apps.todaycigarette.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.todaycigarette',
-			ios: 'https://apps.apple.com/kr/app/id6749576206',
-		},
-		{
-			id: 6,
-			icon: require('@/src/assets/appicons/main_dogquiz.webp'),
-			title: i18n.t('apps.dogquiz.title'),
-			desc: i18n.t('apps.dogquiz.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.dogquiz',
-			ios: 'https://apps.apple.com/kr/app/id6749044123',
-		},
-		{
-			id: 5,
-			icon: require('@/src/assets/appicons/main_fouridioms.webp'),
-			title: i18n.t('apps.fouridioms.title'),
-			desc: i18n.t('apps.fouridioms.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.fouridioms',
-			ios: 'https://apps.apple.com/kr/app/id6747324308',
-		},
-		{
-			id: 4,
-			icon: require('@/src/assets/appicons/main_proverb.webp'),
-			title: i18n.t('apps.proverb.title'),
-			desc: i18n.t('apps.proverb.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.proverbquiz',
-			ios: 'https://apps.apple.com/kr/app/id6746687973',
-		},
-		{
-			id: 3,
-			icon: require('@/src/assets/appicons/main_country.webp'),
-			title: i18n.t('apps.country.title'),
-			desc: i18n.t('apps.country.desc'),
-			category: 'quiz',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.capitalquiz',
-			ios: 'https://apps.apple.com/kr/app/id6746687390',
-		},
-		{
-			id: 2,
-			icon: require('@/src/assets/appicons/main_lotto.webp'),
-			title: i18n.t('apps.lotto.title'),
-			desc: i18n.t('apps.lotto.desc'),
-			category: 'utility',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.lottogenerator',
-			ios: 'https://apps.apple.com/kr/app/id6746621734',
-		},
-		{
-			id: 1,
-			icon: require('@/src/assets/appicons/squaremetercalc2.webp'),
-			title: i18n.t('apps.squaremetercalc.title'),
-			desc: i18n.t('apps.squaremetercalc.desc'),
-			category: 'calculator',
-			android: 'https://play.google.com/store/apps/details?id=com.tha.squaremetercalc',
-			ios: 'https://apps.apple.com/kr/app/id6746688301',
-		},
-	],
+/**
+ * 개발자의 다른 앱 목록 — Supabase Storage 공개 버킷(common-apps)에서 받는다.
+ * -------------------------------------------------
+ * 앱이 하나 늘 때마다 모든 앱을 다시 빌드해 올리지 않으려고 목록·아이콘·번역을 앱 밖에 둔다.
+ * 원본·올리기 스크립트는 3ha-korea-geography 저장소 supabase/storage(yarn upload:apps) 한 곳에만 둔다.
+ */
+const BASE_URL = 'https://hsnyhvcezyavsrgqazup.supabase.co/storage/v1/object/public/common-apps';
+const APP_CATEGORIES: CommonType.AppCategory[] = ['quiz', 'calculator', 'utility'];
+/** 버킷 목록에는 이 앱(세계 상식 퀴즈)도 들어 있다 — 내 앱 안에서 나를 다시 권하지 않는다 */
+const SELF_APP_ID = 34;
+
+// ponytail: 앱이 떠 있는 동안만 들고 있는다 — 껐다 켜면 다시 받는다. 오프라인에서도 보여야 하면 AsyncStorage 에 남긴다
+let cache: Promise<CommonType.AppItem[]> | null = null;
+
+/** 목록을 받는다. 실패하면 들고 있지 않는다 — 다음에 화면에 들어오면 새로 묻는다 */
+export const fetchCommonApps = (): Promise<CommonType.AppItem[]> => {
+	cache ??= fetch(`${BASE_URL}/apps.json`)
+		.then((res) => {
+			if (!res.ok) throw new Error(`apps.json ${res.status}`);
+			return res.json() as Promise<{ apps: CommonType.AppItem[] }>;
+		})
+		// 이 앱이 모르는 분류가 JSON 에 먼저 생겨도(새 앱에서 분류를 늘린 경우) 색·라벨 조회에서 터지지 않게 걸러 낸다
+		.then(({ apps }) => apps.filter((app) => app.id !== SELF_APP_ID && APP_CATEGORIES.includes(app.category)))
+		.catch((e) => {
+			cache = null;
+			throw e;
+		});
+	return cache;
 };
+
+/** apps.json 에는 파일 이름만 적는다 — 버킷 주소가 바뀌어도 JSON 은 그대로 둔다 */
+export const appIconUrl = (app: CommonType.AppItem): string => `${BASE_URL}/icons/${app.icon}`;
 
 /**
  * 지금 기기에서 열 수 있는 스토어 주소. 없으면 null.
@@ -335,4 +60,16 @@ export const isNewApp = (app: CommonType.AppItem, now = DateUtils.now()): boolea
 	// 기기 타임존의 날짜 단위로 센다 — UTC 자정으로 세면 한국에서는 배지가 오전 9시에 바뀌었다
 	const days = DateUtils.differenceInLocalDays(app.releasedAt, DateUtils.getLocalDateString(now));
 	return days >= 0 && days <= NEW_APP_DAYS;
+};
+
+/**
+ * 지금 언어로 보여 줄 이름/설명. 번역이 없는 언어(한국어 포함)는 목록에 적힌 원문으로 떨어진다.
+ * 화면에서는 app.title / app.desc 대신 늘 이 함수를 거친다 — 한 곳이라도 빠지면 그 줄만 한국어로 남는다.
+ */
+export const localizedApp = (app: CommonType.AppItem, language: string): CommonType.AppText => {
+	const texts = app.i18n;
+	// 'en' · 'ja' 처럼 지역 없이 들어와도 같은 언어로 잡는다 — 정확히 'en-EN' 만 찾으면 영어 기기에서 한국어로 떨어진다
+	const key = (Object.keys(texts ?? {}) as Language[]).find((code) => code === language) ??
+		(Object.keys(texts ?? {}) as Language[]).find((code) => code.slice(0, 2) === language.slice(0, 2));
+	return (key && texts?.[key]) || { title: app.title, desc: app.desc };
 };

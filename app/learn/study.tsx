@@ -619,7 +619,7 @@ const styles = themed(() => StyleSheet.create({
 	chipText: { fontSize: Typography.footnote, fontWeight: '800' },
 	// 뒤집기
 	flipArea: { flex: 1, marginTop: SpacingV.sm },
-	flipFace: { ...StyleSheet.absoluteFillObject },
+	flipFace: { ...StyleSheet.absoluteFill },
 	flipFront: { alignItems: 'center', justifyContent: 'center' },
 	flipFrontInner: { flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' },
 	// 태블릿 뒷면은 긴 설명·이야기 단락 — 카드 가득(최대 ~910)이면 한 줄이 너무 길어 읽기 폭으로 묶는다

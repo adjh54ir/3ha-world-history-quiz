@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, ActivityIndicator, Image, InteractionManager, Easing as RNEasing } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, ActivityIndicator, Image, Easing as RNEasing, type ScrollViewInstance } from 'react-native';
 import { Image as ExpoImage, type ImageSource } from 'expo-image';
 import Reanimated, {
 	cancelAnimation,
@@ -213,7 +213,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 	const [prevTimeBest, setPrevTimeBest] = useState<number | null>(null);
 	// 타임챌린지 이번 판의 개인 랭킹 순위 (챌린지 탭과 같은 정렬: 점수 → 최근 판)
 	const [timeRank, setTimeRank] = useState<{ rank: number; total: number } | null>(null);
-	const questionScrollRef = useRef<ScrollView>(null);
+	const questionScrollRef = useRef<ScrollViewInstance>(null);
 	// 결과 화면 긴 오답·정답 목록 — 맨 위로 버튼
 	const resultScrollTop = useScrollTop();
 	const [qTimeLeft, setQTimeLeft] = useState(30);
@@ -399,7 +399,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 			if (restTimerRef.current) clearTimeout(restTimerRef.current);
 			restTimerRef.current = setTimeout(() => {
 				restTimerRef.current = null;
-				restTaskRef.current = InteractionManager.runAfterInteractions(() => {
+				const idleId = requestIdleCallback(() => {
 					try {
 						const rest = generateRest();
 						setQuestions((prev) => {
@@ -416,6 +416,7 @@ const LearnQuizPlayer: React.FC<LearnQuizPlayerProps> = ({
 						console.warn('추가 문항 생성 실패:', e);
 					}
 				});
+				restTaskRef.current = { cancel: () => cancelIdleCallback(idleId) };
 			}, 400);
 		}, 30);
 	};
@@ -1934,7 +1935,7 @@ const styles = themed(() => StyleSheet.create({
 	oxMark: { fontSize: Typography.mark, fontWeight: '900' },
 	oxLabel: { fontSize: Typography.body, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xs },
 
-	confettiFront: { ...StyleSheet.absoluteFillObject, zIndex: 999 },
+	confettiFront: { ...StyleSheet.absoluteFill, zIndex: 999 },
 	resultScroll: { paddingBottom: Layout.screenBottom },
 	resultHero: {
 		alignItems: 'center',

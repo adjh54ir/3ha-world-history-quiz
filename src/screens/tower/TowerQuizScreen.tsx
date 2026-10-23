@@ -2,11 +2,11 @@
 
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, Animated, Easing } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ScrollView, Animated, Easing, type ScrollViewInstance } from 'react-native';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from 'expo-router/react-navigation';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
@@ -171,7 +171,7 @@ const TowerQuizScreen = () => {
 	 * 함께 스크롤도 맨 위로 되돌린다 — 해설을 읽으려 내려간 자리에 그대로 있으면
 	 * 다음 문제가 보스도 문제 칸도 안 보이는 화면(보기 중간)에서 시작됐다.
 	 */
-	const scrollRef = useRef<ScrollView>(null);
+	const scrollRef = useRef<ScrollViewInstance>(null);
 	useEffect(() => {
 		questionAnim.setValue(0);
 		const anim = Animated.timing(questionAnim, { toValue: 1, duration: 250, useNativeDriver: true });
@@ -401,7 +401,7 @@ const TowerQuizScreen = () => {
 	if (isLoading) {
 		return (
 			<View style={styles.container}>
-				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFill} />
 				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.loading')}</Text>
@@ -413,7 +413,7 @@ const TowerQuizScreen = () => {
 	if (!towerLevel) {
 		return (
 			<View style={styles.container}>
-				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFill} />
 				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.notFound')}</Text>
@@ -429,7 +429,7 @@ const TowerQuizScreen = () => {
 	if (quizData.length === 0 || !currentQuestion) {
 		return (
 			<View style={styles.container}>
-				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+				<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFill} />
 				{focused && <StatusBar style="light" />}
 				<SafeAreaView style={[styles.safeArea, { justifyContent: 'center', alignItems: 'center' }]} edges={['left', 'right', 'bottom']}>
 					<Text style={{ color: Colors.textInverse, fontSize: Typography.subtitle }}>{t('tower.quiz.noQuestions', { level })}</Text>
@@ -443,7 +443,7 @@ const TowerQuizScreen = () => {
 
 	return (
 		<View style={styles.container}>
-			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFill} />
 			{/* 테마와 무관하게 어두운 화면 — 라이트 테마의 어두운 상태바 아이콘이 상단 띠(inkSoft)에 묻히지 않게 밝게 */}
 			{focused && <StatusBar style="light" />}
 
@@ -563,7 +563,7 @@ const TowerQuizScreen = () => {
 							colors={[withAlpha(towerLevel.color, '42'), withAlpha(towerLevel.color, '14')]}
 							start={{ x: 0, y: 0 }}
 							end={{ x: 1, y: 1 }}
-							style={StyleSheet.absoluteFillObject}
+							style={StyleSheet.absoluteFill}
 						/>
 						<View style={styles.questionCardGradient}>
 							{/* 층 색 면 위 층 색 글씨는 2.3~3.2:1 로 흐렸다(1층 파랑 최저) — 면만 층 색, 글씨는 어두운 무대용 흰색(5.3:1 이상) */}
@@ -811,7 +811,7 @@ const makeStyles = () => StyleSheet.create({
 	},
 	scoreContainer: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xxs },
 	// 보스 한가운데 겹쳐 뜨는 큰 별 — 보스 자리 높이를 차지하지 않게 absolute
-	bigStar: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', zIndex: 11 },
+	bigStar: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center', zIndex: 11 },
 	bigStarGlow: { position: 'absolute', width: scaleWidth(96), height: scaleWidth(96), borderRadius: scaleWidth(48) },
 	effectText: {
 		position: 'absolute',

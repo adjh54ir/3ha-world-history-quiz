@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import { Animated, Easing, Pressable, StyleSheet, type ImageSourcePropType, type StyleProp, type ViewStyle } from 'react-native';
-import { Image as ExpoImage } from 'expo-image';
-import { useIsFocused } from '@react-navigation/native';
+import { Animated, Easing, Pressable, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
+import { Image as ExpoImage, type ImageProps } from 'expo-image';
+import { useIsFocused } from 'expo-router/react-navigation';
 import { useReducedMotion } from '@/src/screens/common/anim/Motion';
 import { hapticLight } from '@/src/utils/HapticUtils';
 
@@ -14,7 +14,7 @@ import { hapticLight } from '@/src/utils/HapticUtils';
  */
 
 interface Props {
-	source: ImageSourcePropType;
+	source: ImageProps['source'];
 	/** 그림 한 변(px) */
 	size: number;
 	/** 잠긴 단계 미리보기 등 — 움직이지 않는다 */

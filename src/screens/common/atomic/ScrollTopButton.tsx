@@ -3,7 +3,7 @@ import { Animated, Easing, StyleSheet, TouchableOpacity, View, type NativeScroll
 import Svg, { Circle } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BottomTabBarHeightContext } from '@react-navigation/bottom-tabs';
+import { BottomTabBarHeightContext } from 'expo-router/js-tabs';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
 import Colors from '@/src/const/ConstColors';
 import { Layout, Radius, SpacingV } from '@/src/const/ConstDesign';

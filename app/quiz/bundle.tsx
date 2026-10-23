@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, type ScrollViewInstance } from 'react-native';
 import { Image } from 'expo-image';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -48,7 +48,7 @@ const QuizBundle = () => {
 		subDomains.some((d) => initialCats.includes(d.key)) ? 'sub' : 'main',
 	);
 	const visibleDomains = topicTab === 'main' ? mainDomains : subDomains;
-	const listRef = useRef<ScrollView>(null);
+	const listRef = useRef<ScrollViewInstance>(null);
 	const scrollTop = useScrollTop(listRef);
 	/** 탭 전환 — 목록·선택을 갈아 끼우고 스크롤을 맨 위로 되돌린다 */
 	const changeTopicTab = (next: 'main' | 'sub') => {

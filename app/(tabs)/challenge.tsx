@@ -1,8 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { useIsFocused, useScrollToTop } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Animated, Easing, type ViewInstance } from 'react-native';
+import { useIsFocused, useScrollToTop } from 'expo-router/react-navigation';
 import { router, useFocusEffect } from 'expo-router';
 import FitText from '@/src/screens/common/atomic/FitText';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -137,8 +137,8 @@ const Challenge = () => {
 	const dispatch = useDispatch();
 	const { showToast } = useToast();
 	// 기록 공유 — 개인 랭킹 카드를 그대로 캡처한다
-	const timeRankRef = useRef<View>(null);
-	const towerRankRef = useRef<View>(null);
+	const timeRankRef = useRef<ViewInstance>(null);
+	const towerRankRef = useRef<ViewInstance>(null);
 	// 타워 개인 최고층 갱신 축하 (방금 판이 지금까지 깬 층 중 가장 높을 때 1회)
 	const [celebrateTower, setCelebrateTower] = useState<TowerRun | null>(null);
 

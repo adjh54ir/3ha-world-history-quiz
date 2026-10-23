@@ -28,7 +28,7 @@ import { ReconcileNotificationSchedules } from '@/src/utils/NotifactionHelper';
 import { StatusBar } from 'expo-status-bar';
 import Colors, { isDark } from '@/src/const/ConstColors';
 import { KO_FONTS, LATIN_FONTS } from '@/src/const/ConstDesign';
-import { ThemeProvider, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { ThemeProvider, DefaultTheme, DarkTheme } from 'expo-router/react-navigation';
 
 /**
  * 네비게이터 기본 테마 — 지정하지 않으면 라이트(흰색)라 다크 모드에서
@@ -155,7 +155,7 @@ export default function RootLayout() {
 
 	// 시스템 언어·알림 예약·오디오 세션은 앱이 active 인 시점에 동기화합니다.
 	useEffect(() => {
-		const runWhenActive = (state: string = AppState.currentState) => {
+		const runWhenActive = (state = AppState.currentState) => {
 			if (state !== 'active') return;
 			syncSystemLanguage().catch(() => {});
 			ReconcileNotificationSchedules().catch(() => {});
@@ -239,7 +239,7 @@ export default function RootLayout() {
 							<ThemeProvider value={navigationTheme()}>
 								<ToastProvider>
 									{/* 다크 모드면 상태바 아이콘을 밝게 — 어두운 배경에서 시간·배터리가 묻히지 않도록 */}
-									<StatusBar style={isDark() ? 'light' : 'dark'} translucent backgroundColor="transparent" />
+									<StatusBar style={isDark() ? 'light' : 'dark'} />
 									<AppLayout />
 									<VersionCheckModal />
 									<ConfirmModalHost />

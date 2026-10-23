@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, Share, LayoutChangeEvent, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, Share, LayoutChangeEvent, useWindowDimensions, type ListViewToken } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
@@ -85,7 +85,7 @@ const Shorts = () => {
 	// 현재 보이는 페이지 — 스와이프해서 도착한 카드에만 진입 애니메이션을 준다
 	const [activeIndex, setActiveIndex] = useState(0);
 	const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 60 }).current;
-	const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: { index: number | null }[] }) => {
+	const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: ListViewToken[] }) => {
 		const i = viewableItems[0]?.index;
 		if (typeof i === 'number') setActiveIndex(i);
 	}).current;

@@ -478,7 +478,7 @@ const makeStyles = () => StyleSheet.create({
 		opacity: 0.4,
 	},
 	defeatOverlay: {
-		...StyleSheet.absoluteFillObject,
+		...StyleSheet.absoluteFill,
 		justifyContent: 'center',
 		alignItems: 'center',
 		backgroundColor: Colors.backdrop,

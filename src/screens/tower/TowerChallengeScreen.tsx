@@ -1,12 +1,12 @@
 // @/screens/TowerChallengeScreen.tsx
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { Image } from 'expo-image';
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from 'expo-router/react-navigation';
 import { useTranslation } from 'react-i18next';
 
 import { isTablet, scaleArt, scaledSize, scaleHeight, scaleWidth } from '@/src/utils';
@@ -62,7 +62,7 @@ const TowerChallengeScreen = () => {
 	// 위에 다른 화면이 쌓여도 이 화면은 마운트된 채라, 보이는 동안에만 상태바를 밝힌다
 	const focused = useIsFocused();
 
-	const scrollRef = useRef<ScrollView>(null);
+	const scrollRef = useRef<ScrollViewInstance>(null);
 	const scrollTop = useScrollTop(scrollRef);
 
 	useFocusEffect(
@@ -252,7 +252,7 @@ const TowerChallengeScreen = () => {
 			/>
 			<LinearGradient
 				colors={[withAlpha(Colors.nightDeep, '0A'), withAlpha(Colors.nightDeep, 'EB')]}
-				style={StyleSheet.absoluteFillObject}
+				style={StyleSheet.absoluteFill}
 			/>
 			<View style={styles.clearedCopy}>
 				<View style={styles.clearedTitleRow}>
@@ -299,7 +299,7 @@ const TowerChallengeScreen = () => {
 
 	return (
 		<View style={styles.container}>
-			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFillObject} />
+			<LinearGradient colors={[Colors.inkSoft, Colors.ink, Colors.nightDeep]} style={StyleSheet.absoluteFill} />
 			{/* 테마와 무관하게 어두운 화면 — 라이트 테마의 어두운 상태바 아이콘이 상단 띠(inkSoft)에 묻히지 않게 밝게 */}
 			{focused && <StatusBar style="light" />}
 
@@ -607,7 +607,7 @@ const makeStyles = () =>
 			overflow: 'hidden',
 			borderColor: withAlpha(Colors.gold, '80'),
 		},
-		clearedHero: { ...StyleSheet.absoluteFillObject, width: '100%', height: '100%' },
+		clearedHero: { ...StyleSheet.absoluteFill, width: '100%', height: '100%' },
 		clearedCopy: { gap: SpacingV.xs, padding: Spacing.lg },
 		clearedTitleRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
 		allClearedTitle: { fontSize: Typography.callout, fontWeight: FontWeight.heavy, color: Colors.textInverse },

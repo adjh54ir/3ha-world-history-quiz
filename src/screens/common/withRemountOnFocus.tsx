@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useFocusEffect } from 'expo-router';
-import { useNavigation, useRoute, type ParamListBase } from '@react-navigation/native';
-import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation, useRoute, type ParamListBase } from 'expo-router/react-navigation';
+import type { BottomTabNavigationProp } from 'expo-router/js-tabs';
 
 /** 탭 화면의 스크롤 위치 기억 — useScrollTop 이 저장하고, 리마운트 직후 한 번 꺼내 복원한다 */
 export interface ScrollMemory {

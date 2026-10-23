@@ -17,7 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
-import { StyleProp, TextStyle } from 'react-native';
+import { ColorValue, StyleProp, TextStyle } from 'react-native';
 
 
 export type IconType =
@@ -41,7 +41,7 @@ interface IconProps {
 	type: string;
 	name: string;
 	size?: number;
-	color?: string;
+	color?: ColorValue;
 	style?: StyleProp<TextStyle>;
 }
 /**

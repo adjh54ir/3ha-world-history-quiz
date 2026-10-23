@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
 import { Image } from 'expo-image';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +32,7 @@ const StudyBundle = () => {
 	// 주제 탭 — 퀴즈 선택 화면과 같은 형태. 메인 주제 / 서브 퀴즈는 섞이지 않는다
 	const [topicTab, setTopicTab] = useState<'main' | 'sub'>('main');
 	const domains = topicTab === 'main' ? mainDomains : subDomains;
-	const listRef = useRef<ScrollView>(null);
+	const listRef = useRef<ScrollViewInstance>(null);
 	const scrollTop = useScrollTop(listRef);
 	const [selected, setSelected] = useState<string[]>([]);
 	const [showMode, setShowMode] = useState(false);

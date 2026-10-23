@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { useScrollTopOnChange } from '@/src/screens/common/atomic/ScrollTopButton';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Keyboard, type ScrollViewInstance } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import IconComponent from '@/src/screens/common/atomic/IconComponent';
@@ -38,7 +38,7 @@ const BadgeDexModal: React.FC<Props> = ({ visible, badges, unlockedCount, onClos
 	const [query, setQuery] = useState('');
 	const [onlyLocked, setOnlyLocked] = useState(false);
 	// 검색·필터를 바꾸면 목록 맨 위부터 보여 준다
-	const listRef = useRef<ScrollView>(null);
+	const listRef = useRef<ScrollViewInstance>(null);
 	useScrollTopOnChange(listRef, [filter, onlyLocked, query]);
 	const pct = badges.length ? Math.round((unlockedCount / badges.length) * 100) : 0;
 

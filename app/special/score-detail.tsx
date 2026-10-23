@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useCallback, useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, type ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -47,7 +47,7 @@ const ScoreDetail = () => {
 	// 주제별 점수 정렬 (이름순 기본 / 점수순)
 	const [sortBy, setSortBy] = useState<'name' | 'score' | 'rate'>('name');
 	// 상단 이동 FAB — 일정 높이 이상 내려가면 서서히 등장
-	const scrollRef = useRef<ScrollView>(null);
+	const scrollRef = useRef<ScrollViewInstance>(null);
 	const scrollTop = useScrollTop(scrollRef);
 	useFocusEffect(
 		useCallback(() => {

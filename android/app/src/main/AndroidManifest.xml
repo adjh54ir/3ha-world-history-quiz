@@ -73,7 +73,7 @@
       android:value="@string/expo_runtime_version" />
     <activity
       android:name=".MainActivity"
-      android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize"
+      android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode|smallestScreenSize|assetsPaths"
       android:launchMode="singleTask"
       android:windowSoftInputMode="adjustResize"
       android:theme="@style/Theme.App.SplashScreen"

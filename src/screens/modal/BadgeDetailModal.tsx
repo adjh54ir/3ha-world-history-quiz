@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, type ViewInstance } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useTranslation } from 'react-i18next';
 import AppModal from '@/src/screens/common/atomic/AppModal';
@@ -34,7 +34,7 @@ interface Props {
 const BadgeDetailModal: React.FC<Props> = ({ badge, onClose, unlockedCount, totalCount }) => {
 	const { t } = useTranslation();
 	// 공유 시 캡처할 카드 영역
-	const cardRef = useRef<View>(null);
+	const cardRef = useRef<ViewInstance>(null);
 	return (
 	<AppModal visible={!!badge} transparent animationType="fade" onRequestClose={onClose}>
 		<View style={styles.backdrop}>

@@ -2,8 +2,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import withRemountOnFocus from '@/src/screens/common/withRemountOnFocus';
 import useDayChange from '@/src/hooks/useDayChange';
-import { useScrollToTop } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Animated, Easing, LayoutAnimation } from 'react-native';
+import { useScrollToTop } from 'expo-router/react-navigation';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, FlatList, Animated, Easing, LayoutAnimation, type ScrollViewInstance } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import AppModal from '@/src/screens/common/atomic/AppModal';
 import FitText from '@/src/screens/common/atomic/FitText';
@@ -124,7 +124,7 @@ const Hub = () => {
 	const scrollTop = useScrollTop(scrollRef);
 	useScrollToTop(scrollRef);
 	// 캐릭터 선택 팝업 — 주제 탭을 바꾸면 그리드를 맨 위로
-	const charScrollRef = useRef<ScrollView>(null);
+	const charScrollRef = useRef<ScrollViewInstance>(null);
 
 	const [daily, setDaily] = useState<LearnType.StudyCard | null>(null);
 	const [dailyBookmarked, setDailyBookmarked] = useState(false);
@@ -1751,7 +1751,7 @@ const styles = themed(() => StyleSheet.create({
 	characterCellLocked: { opacity: 0.75 },
 	characterImgWrap: { width: scaleArt(78), height: scaleArt(78), alignItems: 'center', justifyContent: 'center' },
 	characterImg: { width: scaleArt(74), height: scaleArt(74), borderRadius: Radius.lg },
-	characterLock: { ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center' },
+	characterLock: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center' },
 	characterTitle: { fontSize: Typography.footnote, lineHeight: scaleHeight(16), fontWeight: '900', color: Colors.textStrong, marginTop: SpacingV.sm, textAlign: 'center' },
 	characterSub: { flexShrink: 1, fontSize: Typography.footnote, fontWeight: '700', color: Colors.textSecondary, marginTop: SpacingV.xs, textAlign: 'center' },
 }));

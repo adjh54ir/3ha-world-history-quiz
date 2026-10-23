@@ -339,7 +339,7 @@ export default TypeTest;
 const styles = themed(() => StyleSheet.create({
 	safe: { flex: 1, backgroundColor: Colors.background },
 	scroll: { flex: 1 },
-	confettiFront: { ...StyleSheet.absoluteFillObject, zIndex: 999 },
+	confettiFront: { ...StyleSheet.absoluteFill, zIndex: 999 },
 	backBtn: { width: scaleWidth(40), height: scaleWidth(40), justifyContent: 'center', alignItems: 'center' },
 	introWrap: { paddingHorizontal: Layout.screenH, paddingTop: Layout.screenTop, paddingBottom: Layout.screenBottom },
 
